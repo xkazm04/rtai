@@ -3,7 +3,7 @@
 Brief `evidence/briefs/n29-04c-collar-rows-live.md`. Sheet `project/features/characters/art/view/p55/rivet_run8.png`
 (8 facing rows x 8 cells). Round `C:/Users/kazda/kiro/gtai-art/rivet-n29/collar_p55_rows/` (STATE.md, scripts/).
 
-IMAGES 3 returned (row3, row4, row3_b); 5 jobs launched (row6 and row7 returned no image within 15 / 10 min).
+IMAGES 5 returned (row3, row4, row3_b, row7 late, row6 relaunched); 6 jobs launched (the first row6 job returned nothing in 15 min).
 
 Method: per row, image 1 = the row's 8 cells at 1.0 in 4x2 slots (384x512) on a 1536x1024 #00B140 key, image 2 = the p70
 run row of the same facing, image 3 = a rigid p55 row 1 neck crop (nearest). The returned image is keyed, each cell
@@ -15,7 +15,9 @@ shipped alpha is kept (`scripts/comp_row.py`).
 |---|---|---|
 | 3 | right profile | FAILED: edit 1 kept the bulky twisted rope; retry (stronger prompt) muddier, stripes lost. Stays shipped. |
 | 4 | back three-quarter | FIXED: a flat ring, straight vermilion/black diagonal stripes, dark outlined edges; shift 0, scale 1.0 in all 8 cells; collar orange 227,92,31 vs rigid rows 1/2/5 225-230,99-112,27-39 |
-| 6, 7, 8 | left rows | not reached: row 6 ran 15 min and row 7 10 min with no image returned; stay shipped |
+| 6 | left three-quarter | FAILED (03:42): still a rounded rope tube, no flat outlined ring. Stays shipped. |
+| 7 | left profile | FAILED (03:42): stripes went greenish (teal tint), still rope-like. Stays shipped. |
+| 8 | left | not reached; stays shipped |
 
 Rows 1, 2, 5 were already rigid (n28 audit).
 
@@ -31,4 +33,4 @@ STATE `Next`.
 
 ## Stills
 `C:/Users/kazda/kiro/gtai-masters/n29/keys/collar/`: `collar_p55_row4_neck_3x.png` (shipped above, new below),
-`collar_p55_row4_1x.png`, `collar_p55_row4_judge_4x.png`, `collar_p55_row3_rejected_3x.png`, `collar_p55_row3b_rejected_3x.png`.
+`collar_p55_row4_1x.png`, `collar_p55_row4_judge_4x.png`, `collar_p55_row3_rejected_3x.png`, `collar_p55_row3b_rejected_3x.png`, `collar_p55_row6_rejected_3x.png`, `collar_p55_row7_rejected_3x.png`.
