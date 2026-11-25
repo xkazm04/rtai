@@ -32,7 +32,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
    the same back-left facing seen from the other side), registered per cell and composited neck-only, 0 images: 5,878 px
    changed, 0 outside the mask, alpha identical, rows 1-7 bit-identical, drift 3.83 cm unchanged
    (`evidence/n29-keys/collar_p55_transplant.md`); `collar/collar_p55_rows68_neck_4x.png` (shipped above new) and
-   `collar/collar_p55_all_rows_64.png` (all 8 facings at 64 px/m, before row above after). Rigid now: rows 1, 2, 4, 5, 8. In game at 64 px/m, the same tick: `collar/collar_p55_before_after_64.png` (pale soft band -> black/vermilion stripes on a flat ring, body identical); p55 sprint drift 3.83 cm before and after (bar 3.83 +- 0.1); clip `collar/collar_p55_32.mp4` (1920x1080 60/1, 962 frames, 16.03 s, before | after). Films `evidence/n29-keys/films.md`.
+   `collar/collar_p55_all_rows_64.png` (all 8 facings at 64 px/m, before row above after). Rigid now: rows 1, 2, 4, 5, 8. Row 8 in game at 64 px/m, the same tick: `collar/collar_p55_row8_before_after_64.png` (rope -> black/vermilion stripes on a flat ring); clip with rows 4 and 8 `collar/collar_p55_32_r8.mp4` (1920x1080 60/1, 962 frames, 16.03 s, before | after; `bcac5c1fb`). Row 4 in game at 64 px/m, the same tick: `collar/collar_p55_before_after_64.png` (pale soft band -> black/vermilion stripes on a flat ring, body identical); p55 sprint drift 3.83 cm before and after (bar 3.83 +- 0.1); clip `collar/collar_p55_32.mp4` (1920x1080 60/1, 962 frames, 16.03 s, before | after). Films `evidence/n29-keys/films.md`.
 5. **Combat's NEED keys served** (red audit rows 12 and 15): the molotov's lit rag and torch flame amber in the item art
    and in Rivet's strips (`0b6814366`, `baf0b209d`, `65578a4be`; held 5860 -> 23 reddish px, pickup 5457 -> 0, 0 px changed
    outside the masks, collar excluded and looked at): `rag/`. The plasma sword's hilt rings steel in Rivet's 12 strips
@@ -128,8 +128,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 | n29-11-sword-run-k | sonnet | 9 | accepted rejection (sweep, none passed; my brief named the wrong octant key) |
 | n29-12-ground-rifle-stock | sonnet | 3 | accepted (no change needed; my brief named the wrong file) |
 | n29-10-collar-transplant | opus | 12 | accepted (row 8; row 6 rejected) |
+| n29-13-collar-row8-film | sonnet | 3 | accepted (row 8 still + clip) |
 
-22 calls, about 500 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
+23 calls, about 503 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
 tool supports the size before briefing a still (the handheld call); give the collar its in-game before|after in the same
 call as the art, not a later films call; for an art item that already failed in n28, budget the owner call from the start
 instead of a third route; look up which file and key the game actually reads before naming them in a brief (two
