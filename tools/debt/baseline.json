@@ -200,7 +200,8 @@
         "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)",
         "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
         "2026-11-25: dev/ground_n31 lift probe for n31 ground (dev_loc 39760 -> 39922)",
-        "2026-11-25: --ppm passthrough on the n31 ground lift probe (dev_loc 39922 -> 39925)"
+        "2026-11-25: --ppm passthrough on the n31 ground lift probe (dev_loc 39922 -> 39925)",
+        "2026-11-25: foe_lift_probe dev probe (+190 dev loc) for n31 ground (dev_loc 39925 -> 40115)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -216,7 +217,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ground_n31": 165,
+        "project/dev/ground_n31": 355,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -243,7 +244,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39925
+      "total": 40115
     },
     "direct_cmdline_reads": {
       "accepted": [
