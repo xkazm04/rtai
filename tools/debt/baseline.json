@@ -200,7 +200,8 @@
         "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)",
         "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
         "2026-11-25: n31 melee 01b gauntlet melee baseline probe, dev-only measurement (dev_loc 39760 -> 39950)",
-        "2026-11-25: n31 melee 01b foe reach probe, dev-only measurement (dev_loc 39950 -> 40103)"
+        "2026-11-25: n31 melee 01b foe reach probe, dev-only measurement (dev_loc 39950 -> 40103)",
+        "2026-11-25: n31 melee 01a: blade_volume dev measurement scene in project/dev/melee_n31 (dev only, measures the before) (dev_loc 40103 -> 40867)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -221,7 +222,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/melee_n31": 343,
+        "project/dev/melee_n31": 1107,
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
@@ -243,7 +244,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40103
+      "total": 40867
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -612,13 +613,12 @@
       "files": {
         "project/dev/audio": 1,
         "project/dev/cheats": 1,
-        "project/dev/controls": 1,
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 7
+      "total": 6
     },
     "unused_class_names": {
       "accepted": [
