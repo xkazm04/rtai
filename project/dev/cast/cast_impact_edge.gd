@@ -19,7 +19,7 @@ var _notes: Array[Dictionary] = []
 
 func _ready() -> void:
 	_out = OS.get_environment("GTAI_CAST_OUT")
-	_ppm = 64
+	_ppm = 32 if OS.get_environment("GTAI_CAST_PPM") == "32" else 64
 	_pitch = 55 if OS.get_environment("GTAI_CAST_PITCH") == "55" else 70
 	if not _out.is_absolute_path():
 		_fail("set GTAI_CAST_OUT")
