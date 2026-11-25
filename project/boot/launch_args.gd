@@ -19,6 +19,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--blood",
 	"--kill-beat",
 	"--gore",
+	"--kill-feed",  # n31 melee 03: the gauntlet street feeds signature kills (GauntletSession)
 	"--rigs",
 	# d7-calls: the old defaults of the owner's 2026-11-05 picks on the main-scene paths (quest 1)
 	"--ghosts-free",

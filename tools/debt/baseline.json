@@ -533,7 +533,8 @@
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)",
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 70 -> 70)",
         "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)",
-        "2026-11-25: --melee-sweep for n31 melee (files_past_soft_cap 69 -> 70)"
+        "2026-11-25: --melee-sweep for n31 melee (files_past_soft_cap 69 -> 70)",
+        "2026-11-25: --kill-feed for n31 melee (files_past_soft_cap 70 -> 70)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -542,7 +543,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 229,
+        "project/boot/launch_args.gd": 230,
         "project/boot/prologue/prologue_command_view.gd": 255,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
