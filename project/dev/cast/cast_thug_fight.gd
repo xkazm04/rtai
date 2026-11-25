@@ -1,16 +1,13 @@
 extends "res://dev/cast/cast_lineup.gd"
-## Rivet against three robot thugs on the gauntlet street, card forced on in this dev process only:
-## walk in, claw tell (telegraph_s, the lunge in its locked end), snap, recover, Rivet's pistol hits
-## and kills; Movie Maker take at 32 px/m, 70 deg. The snap tick is scripted (the claw's shot tick),
-## as the gunner film scripts its rounds; logs every drawing change with its tick.
+## Rivet against three robot thugs, the card from the shipped table: walk in, claw tell, snap
+## (scripted at the claw's shot tick), Rivet's pistol hits and kills; 32 px/m, 70 deg. Logs each
+## thug's drawing (full rig / far card / card on) and every change with its tick.
 
 const RUN_TICKS: int = 1200
 const TELL_FROM: int = 170
 const CENTRE: Vector2 = Vector2(13, 0)
 const RIVET_AT: Vector2 = Vector2(3.2, 1.0)
-## Around Rivet, apart enough that three bodies (about Rivet's height) do not stack.
 const SPOTS: Array[Vector2] = [Vector2(-2.8, -0.4), Vector2(-1.7, 2.3), Vector2(-0.9, -2.7)]
-## Each walks in level from 5.8 m left of its spot (2.4 m/s: there by tick 150).
 const ENTRY: Vector2 = Vector2(-5.8, 0.0)
 
 var _thugs: Array[Fighter] = []
@@ -18,9 +15,9 @@ var _minds: Array[SquadMind] = []
 var _host: ArenaRigs
 var _rows_seen: Dictionary[String, bool] = {}
 var _last_key: Dictionary[int, String] = {}
-var _since: Dictionary[int, int] = {}
 var _first_snap: Dictionary[int, int] = {}
 var _tell_start: Dictionary[int, int] = {}
+var _drawn_as: Dictionary[int, String] = {}
 
 
 func _ready() -> void:
@@ -32,7 +29,6 @@ func _ready() -> void:
 	ViewMode.select("combo")
 	ViewMode.shared().set_pitch(70.0)
 	ViewMode.shared().art = "p70"
-	CastMulroneyPreview.enable(FoeThugCardView.ID)
 	add_child(_board)
 	_host = _open_wave()
 	if _host == null:
@@ -136,7 +132,12 @@ func _card_of(g: Fighter) -> Sprite2D:
 func _observe(tick: int) -> void:
 	for g: Fighter in _thugs:
 		var card: Sprite2D = _card_of(g)
-		if card == null or not card.is_visible_in_tree():
+		var shown: bool = card != null and card.is_visible_in_tree()
+		var how: String = "card on" if shown else ("far card" if card else "full rig")
+		if _drawn_as.get(g.id, "") != how:
+			_drawn_as[g.id] = how
+			Log.info("cast", "tick %d thug %d drawn as: %s" % [tick, g.id, how])
+		if not shown:
 			continue
 		var stem: String = card.texture.resource_path.get_file().get_basename()
 		stem = stem.trim_prefix("robot_thug_").replace("planted8_", "")
@@ -145,10 +146,7 @@ func _observe(tick: int) -> void:
 			_tell_start[g.id] = tick
 		var last: String = _last_key.get(g.id, "")
 		if last != key:
-			if last == "hit/0":
-				Log.info("cast", "thug %d hit held %d ticks" % [g.id, tick - _since[g.id]])
 			_last_key[g.id] = key
-			_since[g.id] = tick
 			Log.info("cast", "tick %d thug %d %s hp %.1f" % [tick, g.id, key, g.hp])
 		_rows_seen[key] = true
 

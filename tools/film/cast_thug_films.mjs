@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Robot thug A's fight (Rivet against three thugs, card forced on in the dev scene) at a true
+// Robot thug A's fight (Rivet against three thugs, card from the shipped table) at a true
 // 1920 x 1080, 32 px/m. Movie Maker takes its size from the project viewport, so a scratch project mounts
 // the live assets with that viewport (as ghost_films).
 // usage: node tools/film/cast_thug_films.mjs <output-dir>
@@ -44,7 +44,7 @@ for (const ppm of sizes) {
   if (r.status !== 0 || !existsSync(avi) || !r.out.includes('thug fight pass true')) {
     throw Error(`take ${ppm} failed (${describe(r)}), see ${join(dir, `fight_${ppm}.log`)}`);
   }
-  const mp4 = resolve(out, 'thug_fight_32.mp4');
+  const mp4 = resolve(out, 'thug_live_32.mp4');
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi, '-c:v', 'libx264', '-crf', '18',
     '-pix_fmt', 'yuv420p', '-r', '60', mp4], { windowsHide: true, stdio: 'inherit' });
   console.log(ppm + ' px/m', mp4, describe(r));
