@@ -36,3 +36,12 @@ other is free in every cell; the collar stays the rigid vermilion/black band. St
 | pistol, 3x), `p55_strips_4x.png` (pistol | n27 | n29, 4x). All looked at.
 
 Not done: held/held_55 art (lives under `features/combat/`, outside the allowlist), in-game 64 px/m p55 firing still.
+
+## p55 diag flash drawn whole (n29-09, commit 9efd28136)
+The diag strip is back on the 224 px padded cut (`gtai-art/rivet-n29/gloria_p55/cut/pad14/`, the pistol's flash unscaled, no
+6 px edge fade). `HELMET_X["p55/gloria"]` 97.5 / 66.5 / 96.5 / 126.5 -> 112.5 / 79.5 / 110.0 / 141.0 (the measured 98.5 / 65.5 /
+96.0 / 127.0 + 14; the body moves 1 px at most per cell, 0 against its own pixels); diag muzzle rows (116,82) (102,24) (9,84)
+(31,25) -> (126,82) (111,24) (18,84) (40,25), the padded measurements. Flash scale 1.0 (was 0.91 / 0.70). Unit `--changed`
+1244 passed, 0 failed. Still `gtai-masters/n29/keys/gloria/p55_diag_flash_64.png` (before | after, 2x, cells seated on the helmet
+x as `RivetGunDiag.seat` does), composed from the strips: the in-game shot could not be taken (arsenal_turn cannot fire Gloria,
+the pilot resets `hold.held`). Mutate: `--lines=72` offers no mutants (a packed-array literal); not run.
