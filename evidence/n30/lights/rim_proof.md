@@ -39,3 +39,12 @@ that reads as a distinct warm ring around the white core, visible but modest, be
 ## Director
 1. `git apply evidence/n30/lights/rim.patch`
 2. `node tools/tests/run_unit.mjs --select=test_light_pool_rim,test_light_explosion_amber,test_light_layer`
+
+## 32 px/m film (c16)
+
+Command (patch applied, then reversed at once): `CHAPTERS=rocket_launcher,mini_nuke QUIT=1500 node evidence/n29/red/film.mjs build/n30rimfilm/rim_after_32.mp4`
+(godot exit 0, not timed out). Copied to `gtai-masters/n30/combat/films/explosion_rim_after_32.mp4`.
+ffprobe: `1920,1080,60/1,25.000000` (width, height, r_frame_rate, duration s).
+Pairs with the before film `films/round_band_32.mp4` (same chapters, same QUIT). Frames compared at t=12.2 s.
+Seen: the two stills are visually near-identical (same ring of star bursts, same soot and floor); at 32 px/m I could not see a rim difference by eye.
+`git status --short project` was empty after `git apply -R`.
