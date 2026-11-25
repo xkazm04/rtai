@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-DRAFT (session 1, 11:40): sections are filled as items land; the final version is written at 18:55.
+DRAFT (session 3, 13:58): sections are filled as items land; the final version is written at 18:55.
 
 ## What works
 
@@ -33,8 +33,15 @@ DRAFT (session 1, 11:40): sections are filled as items land; the final version i
 - **The arsenal turn recorder fires at HEAD again** (`020878888`, `47fb6df5c`, `evidence/n30-keys/arsenal_turn.md`): the
   recorder presses the weapon's slot key on its first step (the wheel had stowed the gun); pistol and Gloria runs exit 0 with
   8 rest + 8 fire stills each (HEAD before: exit 1); unit test `test_arsenal_turn.gd`, the guard's hand mutation caught.
-  Mutate (`--max=6`, changed lines, `test_arsenal_turn`): **16.7 % = 1 / (1 + 5)**: only the slot bit is pinned; `_equip`'s
-  step-0 rule (`:54-55`) and the fire bit (`:168`) survive (their proof is the real runs). A test for both is the next item.
+  Mutate (`--max=6`, changed lines, `test_arsenal_turn`) first scored 16.7 % = 1 / (1 + 5); the equip rule moved into
+  `EQUIP_STEPS` + a static `slot_on_step` and two tests pin it and the fire bit (`4ee6f7b27`, `74fc5e382`): targeted lines
+  **100 % = 4 / (4 + 0)**; a wide run over the arena-bound code 35 % = 7 / (7 + 13) (survivors `_ready`/`_record`, which only
+  the real runs exercise).
+
+## Gate
+
+- `node tools/gate/run.mjs --rev=HEAD` on `74fc5e382` (14:16, 21 min): `gate: PASS; build/gate/74fc5e382e63/gate.json` (lint 19/19,
+  unit 4314 passed / 0 failed / 2 skipped, scenarios 68, parity bit-exact, selftest, export-audit 1003 / 0 failed). Reels gate: owed after the freeze.
 
 ## What does not
 
@@ -91,6 +98,14 @@ DRAFT (session 1, 11:40): sections are filled as items land; the final version i
 
 ## Next steps
 
+1. Rivet's collar still rope in: p70 mini-nuke `_left` c0, gatling `_left` c0, `gatling_diag` c0/c2, `gatling_left_fire`,
+   `mini_nuke_left_fire` (`evidence/n30-keys/eq_collar_audit.md`), and the p55 run row 8 cell 4 notch / cell 8 streak. Same per-cell
+   2x route; for row 8 the mask must reach past the collar hull (the defects sit on the helmet edge), about 8 images in all.
+2. Audit the remaining p70 strips flagged UNSURE (gatling / mini-nuke eq cells, `reload_gatling`) at 4x.
+3. A tools/film shot that sprints Rivet once through all 8 octants (the arena bot shows only row 7 in the 20 s clip), so the
+   collar rows 3 and 6 can be filmed in the real game rather than in the dev harness stills.
+4. The vermilion recolour, once you answer Calls 1: masked recolours (like the n29 sword rings) per weapon in the heat column.
+
 ## Builder ledger
 
 | call | model | min | verdict | note |
@@ -110,6 +125,7 @@ DRAFT (session 1, 11:40): sections are filled as items land; the final version i
 | n30-12 eq-collar-cells | opus | 20 | accepted | 7 of 8 cells, last 8 images |
 | n30-13 collar-film-compare | sonnet | 19 | accepted | row 7 only in frame |
 | n30-14 decision-lines | sonnet | 2 | accepted | |
+| n30-15 arsenal-turn-pins | sonnet | 14 | accepted | mutate 16.7 % -> 100 % on the target lines |
 
 Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
 before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were
