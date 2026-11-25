@@ -41,9 +41,8 @@ var rig: CameraRig = null
 ## A one-off camera offset in world px a host adds this frame (a power's shake with no rig,
 ## features/souls/hauler_kick.gd); inside the print lock like the rig's. Zero = bit-identical.
 var kick_px: Vector2 = Vector2.ZERO
-## Pixel-snapped camera: the camera sits on whole screen px, so a pan moves the world art by whole
-## px (no bilinear swim of the hatching and pen lines) in step with the print's rounded world_px.
-## False is the old sub-pixel camera (A/B: dev/showcase/city_frame.gd --pan --nosnap).
+## The camera on whole render px (PrintStage.snap_cam): a pan moves the world art by whole px in
+## step with world_px. False: the old sub-pixel camera (dev/showcase/city_frame.gd --nosnap).
 var snap_px: bool = true
 ## The camera's world offset in screen px this frame (every print shader's world lock).
 var world_px: Vector2 = Vector2.ZERO
@@ -164,10 +163,11 @@ func _place_camera(focus: Vector2) -> void:
 	camera.zoom = ViewMode.shared().zoom_of(zoom)  # --view: exactly ONE * zoom when flat
 	_update_look()
 	var cam: Vector2 = focus * SimConst.PX_PER_M + offset
-	camera.position = (cam * zoom).round() / zoom if snap_px else cam
+	var xf: Transform2D = get_viewport().get_final_transform()
+	camera.position = PrintStage.snap_cam(cam, camera.zoom, xf, zoom) if snap_px else cam
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus * SimConst.PX_PER_M
-	world_px = _print_px() - get_viewport_rect().size * 0.5
+	world_px = PrintStage.lock_px(_print_px(), get_viewport_rect().size * 0.5, xf)
 	_item_mat.set_shader_parameter(&"world_px", world_px)
 	if crowd.car_print != null:
 		crowd.car_print.set_shader_parameter(&"world_px", world_px)
@@ -194,7 +194,7 @@ func _print_px() -> Vector2:
 	if rig != null and _print_zoom > 0.0 and zoom != _print_zoom:
 		_print_off -= camera.position * (zoom - _print_zoom)
 	_print_zoom = zoom
-	return (camera.position * camera.zoom + _print_off).round()
+	return camera.position * camera.zoom + _print_off
 
 
 func _build_layers() -> void:
