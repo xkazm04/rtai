@@ -38,12 +38,12 @@ func test_arched_line_reads_the_row() -> void:
 	var alpha: float = spec["alpha"]
 	var fade_ticks: int = spec["fade_ticks"]
 	var size_m: Vector2 = spec["size_m"]
-	assert_almost_eq(alpha, 0.75, 0.0001)
+	assert_almost_eq(alpha, 1.0, 0.0001)
 	assert_eq(fade_ticks, 6)
-	assert_eq(size_m, Vector2(1.9, 2.3))
+	assert_eq(size_m, Vector2(2.4, 2.2))
 	var offset_m: Vector2 = spec["offset_m"]
 	var body_m: Vector2 = spec["body_m"]
-	assert_eq(offset_m, Vector2(0.55, -0.6))
+	assert_eq(offset_m, Vector2(0.3, 0.75))
 	assert_eq(body_m, Vector2(0.9, 1.9))
 	assert_eq(PrologueSpanShadow.spans(_plan()).size(), 6)
 
@@ -95,14 +95,14 @@ func test_fade_reaches_full_in_fade_ticks_and_back() -> void:
 	assert_eq(node.strength(), 0.0)
 	for tick: int in range(1, 6):
 		node.step(tick, BELOW_BEAM)
-		assert_almost_eq(node.strength(), 0.75 * tick / 6.0, 0.0001)
+		assert_almost_eq(node.strength(), 1.0 * tick / 6.0, 0.0001)
 	node.step(5, BELOW_BEAM)
-	assert_almost_eq(node.strength(), 0.75 * 5.0 / 6.0, 0.0001, "same tick = no step")
+	assert_almost_eq(node.strength(), 1.0 * 5.0 / 6.0, 0.0001, "same tick = no step")
 	node.step(6, BELOW_BEAM)
 	node.step(7, BELOW_BEAM)
-	assert_almost_eq(node.strength(), 0.75, 0.0001)
+	assert_almost_eq(node.strength(), 1.0, 0.0001)
 	node.step(8, BODY_CLEAR)
-	assert_almost_eq(node.strength(), 0.625, 0.0001)
+	assert_almost_eq(node.strength(), 1.0 * 5.0 / 6.0, 0.0001)
 	for tick: int in range(9, 15):
 		node.step(tick, BODY_CLEAR)
 	assert_eq(node.strength(), 0.0)
@@ -131,9 +131,9 @@ func test_the_blot_is_clipped_to_the_span_art() -> void:
 	assert_not_null(blot)
 	node.step(1, BELOW_BEAM)
 	var rect: Rect2 = node.blot_rect()
-	assert_eq(rect.size, Ink.px(Vector2(1.9, 2.3)))
+	assert_eq(rect.size, Ink.px(Vector2(2.4, 2.2)))
 	assert_almost_eq(
-		rect.get_center(), Ink.px(BELOW_BEAM + Vector2(0.55, -0.6)), Vector2(0.01, 0.01)
+		rect.get_center(), Ink.px(BELOW_BEAM + Vector2(0.3, 0.75)), Vector2(0.01, 0.01)
 	)
 
 
