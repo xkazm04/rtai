@@ -7,6 +7,7 @@ class Call:
 	var piece: PrologueYard.Wreck
 	var tint: Color
 	var skin: PrologueYardDressing.CoverArt
+	var skin_tint: Color
 
 
 class Recorder:
@@ -28,6 +29,7 @@ class Recorder:
 		call.piece = piece
 		call.tint = tint
 		call.skin = skin
+		call.skin_tint = skin_tint
 		calls.append(call)
 
 
@@ -88,6 +90,7 @@ func test_draw_runs_ground_then_wrecks_in_skin_then_debris_then_spans() -> void:
 		assert_eq(call.piece, piece, piece.id)
 		if plan.wrecks.has(piece):
 			assert_eq(call.tint, Color.WHITE, piece.id)
+			assert_eq(call.skin_tint, Color.WHITE, piece.id)
 			var want: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
 			assert_eq(call.skin, want, piece.id)
 		else:
@@ -111,3 +114,72 @@ func test_attach_adds_one_actor_layer_holding_one_blood_node_with_the_floor_tran
 	var node: Node2D = layer.get_child(0) as Node2D
 	assert_eq(node.z_index, RenderLayers.z(&"blood"))
 	assert_eq(node.transform, floor_view.global_transform)
+
+
+func _draw_shaded(plan: PrologueYard, shade: float) -> Array[Call]:
+	plan.dressing.over_print_shade = shade
+	var rec: Recorder = Recorder.new()
+	var node: Node2D = Node2D.new()
+	add_child_autofree(node)
+	PrologueYardOverprint._draw_pieces(node, plan, rec)
+	return rec.calls
+
+
+func test_absent_key_leaves_the_shade_at_one() -> void:
+	assert_eq(_plan().dressing.over_print_shade, 1.0)
+	for call: Call in _draw_shaded(_plan(), 1.0):
+		if call.piece != null and call.skin != null:
+			assert_eq(call.tint, Color.WHITE)
+
+
+func test_shade_reaches_skinned_and_unskinned_wrecks() -> void:
+	var plan: PrologueYard = _plan()
+	var grey: Color = Color(0.5, 0.5, 0.5)
+	var skinned: int = 0
+	var plain: int = 0
+	var first: PrologueYard.Wreck = plan.wrecks[0]
+	for piece: PrologueYard.Wreck in plan.wrecks:
+		if plan.dressing.over_print.has(piece.id):
+			first = piece
+			break
+	plan.dressing.cover[first.id] = PrologueYardDressing.CoverArt.new()
+	for call: Call in _draw_shaded(plan, 0.5):
+		if call.piece == null or not plan.wrecks.has(call.piece):
+			continue
+		assert_eq(call.tint, grey, call.piece.id)
+		assert_eq(call.skin_tint, grey, call.piece.id)
+		if call.skin != null:
+			skinned += 1
+		else:
+			plain += 1
+	assert_eq(skinned, 1)
+	assert_gt(plain, 0)
+
+
+func test_shade_spares_spans_and_the_impression() -> void:
+	var plan: PrologueYard = _plan()
+	var calls: Array[Call] = _draw_shaded(plan, 0.5)
+	assert_not_null(calls[0].layer)
+	for call: Call in calls:
+		if call.piece != null and not plan.wrecks.has(call.piece):
+			assert_eq(call.tint, call.piece.tint, call.piece.id)
+			assert_eq(call.skin_tint, Color.WHITE, call.piece.id)
+
+
+func test_dressing_reads_the_shade_key_and_the_schema_bounds_it() -> void:
+	var raw: Dictionary = JSON.parse_string(
+		FileAccess.get_file_as_string(PrologueYardDressing.TABLE)
+	)
+	raw["dressings"]["arched_line"]["over_print_shade"] = 0.6
+	var table: DataTable = DataTable.parse(JSON.stringify(raw), PrologueYardDressing.SCHEMA, "t")
+	var dressing: PrologueYardDressing = PrologueYardDressing.resolve("arched_line", "", table)
+	assert_almost_eq(dressing.over_print_shade, 0.6, 0.0001)
+	var schema: Dictionary = JSON.parse_string(
+		FileAccess.get_file_as_string("res://data/schemas/prologue_yard_dressings.schema.json")
+	)
+	var text: String = JSON.stringify(schema)
+	var key: int = text.find('"over_print_shade":{')
+	assert_gt(key, -1)
+	var spec: String = text.substr(key, 120)
+	assert_true(spec.contains('"maximum":1'), spec)
+	assert_true(spec.contains('"minimum":0'), spec)

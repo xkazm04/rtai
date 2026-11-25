@@ -47,9 +47,13 @@ static func order(plan: PrologueYard) -> Array[PrologueYard.Wreck]:
 static func _draw_pieces(node: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
 	if plan.dressing.impression != null:
 		paint.ground(node, plan.dressing.impression)
+	var shade: float = plan.dressing.over_print_shade
+	var shaded: Color = Color(shade, shade, shade)
 	for piece: PrologueYard.Wreck in order(plan):
 		if plan.wrecks.has(piece):
 			var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
-			paint.wreck(node, piece, Color.WHITE, skin)
+			paint.skin_tint = shaded
+			paint.wreck(node, piece, shaded, skin)
+			paint.skin_tint = Color.WHITE
 		else:
 			paint.wreck(node, piece, piece.tint, null)

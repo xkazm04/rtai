@@ -4,6 +4,8 @@ extends RefCounted
 
 const OCHRE: Shader = preload("res://boot/prologue/art/yard_ochre.gdshader")
 
+## Modulate for a skinned wreck (cover art); the over-print layer sets it around its draw.
+var skin_tint: Color = Color.WHITE
 var _textures: Dictionary[String, Texture2D] = {}
 
 
@@ -107,7 +109,7 @@ func wreck(
 		canvas.draw_set_transform(Vector2.ZERO)
 		return
 	canvas.draw_set_transform_matrix(cover_transform(box, source.size, piece.shell))
-	canvas.draw_texture_rect_region(art, Rect2(-source.size * 0.5, source.size), source)
+	canvas.draw_texture_rect_region(art, Rect2(-source.size * 0.5, source.size), source, skin_tint)
 	canvas.draw_set_transform(Vector2.ZERO)
 
 

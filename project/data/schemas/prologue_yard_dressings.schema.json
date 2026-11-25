@@ -386,6 +386,12 @@
           },
           "type": "array"
         },
+        "over_print_shade": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "paint_from": {
           "enum": [
             "torn_line"
