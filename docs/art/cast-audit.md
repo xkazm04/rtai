@@ -819,3 +819,59 @@ Brief n29-cast-14. Same 50 frames and method as the section above; `tools/art/ca
 
 Cause: facing. The door carrier is a different drawing per facing: seen from the back (walking up) the door's hazard-striped top edge is held above the head and he reads 64-74 (crop f10, f23); walking down 62; in side view the door is a vertical pole beside him and the figure is 54-55 (crop f7, f14), which matches the 56 of the still (facing (1,1)). The film median 63 is the mix of the four facings (the rectangle walk spends most frames going down and up), so the 7 px gap to the still is the up/down door pose, not a scale error. The max values at corners (73, 75) are the up pose caught early.
 Rivet 80 vs 77: the same effect, smaller: down 77 (= still), sides 78-78.5, up 81.5 (back view, helmet and stride taller); the film median is the facing mix, +3 over the down-facing still. Not measured: whether the up-facing door pose is intended art (it needs the sheet, not this film). Godot not run, no code changed beyond the tool's json.
+
+## Pile-driver, n30
+
+Brief n30-cast-02. **`CastWarAnchors.WALK = EIGHT` ships (`bc22b9749`, the owner's n29 pick). Pads by registration
+(one planted pad per contact, carried across contacts) was built, measured and NOT committed: it lowers the body jump
+but raises the sole slide in every facing, because the art keeps the planted pad torso-fixed through a contact.**
+Measured by `node tools/film/cast_war_films.mjs build/look/n30-c02/feet{A,B} feet four,eight[,eight_reg]`:
+`cast_feet.tscn` at 64 px/m, 1.8 m/s, px in the tool's 32 px/m unit; bars sole <= 2, jump <= 12. Since `bc22b9749`
+the committed tree IS the eight; the tool's `four` stages `WALK = FOUR`. Readers: *pad* = the n29 foe-eight windows
+(contact = drawings 1-4 / 5-8, the n29 column's reader), *contact* = the planted pad per drawing (the lower pad blob by
+> 6 px, a tie keeps the previous drawing's pad), keyed by its contact (a cyclic run of drawings on one pad).
+
+| Pitch | Facing | Four (pad sole, jump) | Eight, Part A = ships (pad / contact sole, jump) | Eight registered (pad / contact sole, jump) |
+|---:|---|---:|---:|---:|
+| 70 | right | 12.50, 16.82 | 18.16 / 18.34, 10.73 | 27.76 / 27.93, 8.92 |
+| 70 | down-right | 18.86, 12.87 | 27.45 / 36.01, 10.37 | 36.75 / 45.21, 9.49 |
+| 55 | right | 21.94, 11.78 | 20.91 / 20.42, 10.74 | 30.00 / 29.50, 1.22 |
+| 55 | down-right | 18.64, 12.87 | 23.86 / 39.43, 9.93 | 31.56 / 48.14, 1.51 |
+
+The Part A eight equals n29's "eight held" column to 0.00 px in every cell (18.16 / 10.73, 27.45 / 10.37,
+20.91 / 10.74, 23.86 / 9.93). Registered vs Part A: sole +9.6 / +9.3 / +9.1 / +7.7 (pad reader), +9.6 / +9.2 /
++9.1 / +8.7 (contact reader), jump -1.81 / -0.88 / -9.52 / -8.42: worse on the failing bar in every facing, so
+not a net win.
+
+**Why registration cannot pass on this art** (planted pad x per drawing, sheet px from the torso, from the packed
+sheets; "carry" = how far the drawn body moves over the planted pad through the contact, "need" = the fighter's path
+through the contact (drawings x 0.3244 m) minus the carry, both px at 32 px/m: what the card must either slide the
+pad by or jump the body by at the boundary):
+
+| Pitch | Facing | Contacts: drawings, planted pad x, carry, need |
+|---:|---|---|
+| 70 | right | R 1-2: +40 +17, 7.9, 12.9; L 3-4: -51 -52, 0.2, 20.6; R 5-7: +42 +17 +34, 2.8, 28.3; L 8: -38, 0, 10.4 |
+| 70 | down-right | L 1-3: -28 -29 -30, 0.3, 30.8; R 4-8: +65 +38 +39 +40 +42, 8.2, 43.7 |
+| 55 | right | R 1-3: +30 +28 +28, 0.7, 30.4; L 4: -54, 0, 10.4; R 5-7: +32 +29 +29, 1.2, 29.9; L 8: -55, 0, 10.4 |
+| 55 | down-right | L 1-3: -28 -28 -29, 0.3, 30.8; R 4-8: +53 +48 +50 +50 +56, -1.0, 53.0 |
+
+The drawn body advances over the planted pad only in p70 right 1 -> 2 and 5 -> 6 (about 8 px each); everywhere else
+the planted pad sits at a fixed offset from the torso for the whole contact (it steps in place). With sole <= 2 the
+boundary jump must be the "need" (10.4 to 53 px, over the 12 bar in 6 of the 8 multi-drawing contacts); with jump
+<= 12 the pad must slide by need - 12. Both bars at once need art where the planted pad moves back about 10 px
+(at 32 px/m, about 30 sheet px) per drawing through every contact: in the right facing that is drawings 3-4 and 5-8 at
+p70 and 1-3 / 5-7 at p55, in down-right 1-3 and 4-8 at both pitches. A director call (one-row image edits; the brief's
+fallback named p70 right 3-4 and 7-8, the table says those and more).
+
+The registered view as built (kept as `build/look/n30-c02/register_pads.patch`, not in the tree): generator
+`cast_war_soles.py` emits `CONTACT70` / `CONTACT55` (Vector3 planted pad x, y, first drawing of its contact);
+`FoeWarCardView.REGISTER_PADS` holds the contact's pad at one ground point, lands a new contact's pad where the card
+already stands (no body jump) and drags the pad once the card lags the fighter by more than `CATCH_UP_M = 0.25` m;
+`cast_war_feet.py --reader=contact`; `cast_war_films.mjs` walk `eight_reg`. Not committed: it loses, and as built it
+pushes the view to 222 lines and the generated anchors to 236 (soft cap 200, debt ratchet) with `sample` at 43 lines.
+
+Ships: the Part A eight. Still `build/look/n30-c02/war8_feet_before_after_64.png` (64 px/m, right, same tick: the
+four staged left | the eight that ships right; "Part A eight | what ships" would be one picture twice). Clip
+`gtai-masters/n30/cast/war8_walk_32.mp4` (the committed eight, 32 px/m, right then down-right; ffprobe 1920x1080,
+60 fps, 25.85 s). Mutate: not run, the view has no committed changed line (Part A changed only the generated
+constant `WALK`; the registered code is not in the tree).
