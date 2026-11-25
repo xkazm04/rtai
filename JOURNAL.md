@@ -147,3 +147,6 @@
 - 16:45 MILESTONE final gate PASS on 7d87cf75a74c with --reels: `gate: PASS; build/gate/7d87cf75a74c/gate.json` (lint 19/19, unit 4335/0 failed/2 skipped, scenarios 68, parity, selftest, export-audit 1004/0, reels exit 0). Lane Godot lock released. Quoted in REPORT's header.
 - 16:48 BUILDER RUNNING shadow-still64 since 16:48 (Sonnet, brief evidence/briefs/n30-03d-shadow-still64.md: evidence only, 64 px/m in-play still seed 42 before|after; commit by 17:05, hard stop 17:08).
 - 16:47 Temp: removed our gate snapshot gtai-gate-7d87cf75a74c (+ its .gtai-snapshot marker) and pruned its worktree entry (`git worktree prune` also drops metadata of any other entry whose dir is already gone: harmless).
+- 16:50 MILESTONE shadow-still64 cd51569c8 (evidence only): evidence/yard30/span_shadow_play_64ppm.png, seed 42 ticks 7300/7450 before|after, masters frames.json 15 entries.
+- 16:50 LOOKED at it: before and after look the same to my eye at both ticks (builder: 7300 max diff 12/255; 7450 ~390 px faint smudge). DECISION: no change after the green gate; REPORT says the shadow does not read in play and recommends a larger SE offset + alpha ~0.9 (data values in arched_line.span_shadow) as the owner call, the in-play still as the bar.
+- 16:50 BUILDER shadow-still64 2 accepted. BUILDER RUNNING none.
