@@ -66,3 +66,43 @@ func test_pistol_fires_its_burst_at_its_own_damage_and_cadence() -> void:
 	# GuardBrain's cadence: the cooldown counts after the last round, whose gap carries over.
 	var cycle: int = w.cooldown_ticks + 2 + w.burst_gap_ticks
 	assert_eq(fired[2] - fired[1], cycle, "the cooldown runs after the burst")
+
+
+func test_carries_is_false_for_explicit_spawn_melee_off_switch_and_a_swapped_gun() -> void:
+	var roster: EnemyRoster = arena.squad_ai.pit.roster
+	var cop: Fighter = arena.squad_ai.spawn_member(arena, Vector2.RIGHT, &"patrol_cop")
+	var e: EnemyAgent = arena.squad_ai.mind_for(cop).agent
+	assert_true(FoeOwnGun.carries(cop, e, roster), "the baseline carries its own gun")
+	e.arch.explicit_spawn = true
+	assert_false(FoeOwnGun.carries(cop, e, roster), "an explicit spawn fires through FoeAttacks")
+	e.arch.explicit_spawn = false
+	cop.weapon = &"pistol"
+	assert_false(FoeOwnGun.carries(cop, e, roster), "a member not on the production rifle")
+	cop.weapon = e.arch.production_weapon
+	var riot: Fighter = arena.squad_ai.spawn_member(arena, Vector2.RIGHT, &"riot_cop")
+	assert_false(FoeOwnGun.carries(riot, arena.squad_ai.mind_for(riot).agent, roster), "melee")
+	roster.own_weapons = false
+	assert_false(FoeOwnGun.carries(cop, e, roster), "the switch off")
+
+
+func test_aim_leads_a_moving_rivet_on_the_first_round_and_keeps_it_through_the_burst() -> void:
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ZERO, &"patrol_cop")
+	var mind: SquadMind = arena.squad_ai.mind_for(h)
+	var pit: EnemyPit = arena.squad_ai.pit
+	var w: EnemyWeapon = mind.agent.arch.weapon
+	assert_gt(pit.roster.aim_lead, 0.0, "the table leads")
+	h.pos = Vector2.ZERO
+	h.facing = Vector2.RIGHT
+	pit.rivet_pos = Vector2(10, 0)
+	pit.rivet_vel = Vector2(0, 5)
+	h.burst_left = w.burst
+	FoeOwnGun.aim(h, mind, pit, w)
+	var flight_s: float = 10.0 / w.speed_mps
+	var led: Vector2 = Vector2(10, 5 * flight_s * pit.roster.aim_lead)
+	assert_almost_eq(h.facing.angle(), led.angle(), 0.001, "it aims at the led point")
+	assert_gt(h.facing.angle(), 0.001, "ahead of where Rivet stands")
+	var first: Vector2 = h.facing
+	h.burst_left = w.burst - 1
+	pit.rivet_vel = Vector2(0, -5)
+	FoeOwnGun.aim(h, mind, pit, w)
+	assert_almost_eq(h.facing.angle(), first.angle(), 0.001, "the line is kept through the burst")
