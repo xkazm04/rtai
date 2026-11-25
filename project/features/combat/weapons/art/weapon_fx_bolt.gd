@@ -5,6 +5,28 @@ extends RefCounted
 ## RNG: kinks hash the bolt's spawn point and the 3-tick jag cell, never its moving position.
 ## `--electro-cells` (WeaponFxElectro.cells) = the before: the arc/spark cells, drawn by the caller.
 
+## The bolt and chain hop swing this many times `ElectricArc`'s kink off the straight line: at the
+## bold width its own 0.075 m read as a striped rope, lightning needs the cells' 0.25 m swing.
+const JAG_K: float = 3.0
+
+
+## `path` with every interior point's offset from the straight line between its two ends scaled
+## by `k` (the ends stay put). Pure: no RNG.
+static func amplify(path: PackedVector2Array, k: float = JAG_K) -> PackedVector2Array:
+	var n: int = path.size()
+	if n < 3:
+		return path
+	var a: Vector2 = path[0]
+	var ab: Vector2 = path[n - 1] - a
+	var len2: float = ab.length_squared()
+	if len2 < 0.000001:
+		return path
+	var out: PackedVector2Array = path.duplicate()
+	for i: int in range(1, n - 1):
+		var along: Vector2 = a + ab * ((path[i] - a).dot(ab) / len2)
+		out[i] = along + (path[i] - along) * k
+	return out
+
 
 ## The strokes of a bolt from `tail` to `head` (m); `k` = 1 / screen scale. Empty under `cells`.
 static func plan(
@@ -13,8 +35,8 @@ static func plan(
 	var out: Array[WeaponFxElectro.Line] = []
 	if WeaponFxElectro.cells:
 		return out
-	var path: PackedVector2Array = ElectricArc.shape(
-		PackedVector2Array([tail, head]), serial, tick, false
+	var path: PackedVector2Array = amplify(
+		ElectricArc.shape(PackedVector2Array([tail, head]), serial, tick, false)
 	)
 	var px: PackedVector2Array = WeaponFxElectro.to_px(path)
 	WeaponFxElectro.add_path(out, px, k)

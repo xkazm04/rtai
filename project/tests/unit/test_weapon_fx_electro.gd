@@ -188,3 +188,13 @@ func test_bolt_plan_is_pure_and_holds_inside_a_jag_cell() -> void:
 
 func test_bolt_serial_is_stable_per_spawn() -> void:
 	assert_eq(WeaponFxBolt.spawn_id(A), WeaponFxBolt.spawn_id(A))
+
+
+func test_amplify_keeps_ends_and_scales_the_offset_exactly() -> void:
+	var sh: PackedVector2Array = ElectricArc.shape(PackedVector2Array([A, B]), 5, 6, false)
+	var big: PackedVector2Array = WeaponFxBolt.amplify(sh)
+	var d: Vector2 = (B - A).normalized()
+	assert_eq([big[0], big[-1]], [sh[0], sh[-1]])
+	for i: int in range(1, sh.size() - 1):
+		assert_almost_eq((big[i] - A).cross(d), (sh[i] - A).cross(d) * WeaponFxBolt.JAG_K, 0.0001)
+		assert_almost_eq((big[i] - A).dot(d), (sh[i] - A).dot(d), 0.0001)

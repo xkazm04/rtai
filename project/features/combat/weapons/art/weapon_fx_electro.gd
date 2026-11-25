@@ -58,8 +58,8 @@ static func chain_plan(a: Vector2, b: Vector2, phase: int, k: float = 1.0) -> Ar
 	if cells:
 		return plan
 	var serial: int = _serial(a, b)
-	var path: PackedVector2Array = ElectricArc.shape(
-		PackedVector2Array([a, b]), serial, phase * 2, false
+	var path: PackedVector2Array = WeaponFxBolt.amplify(
+		ElectricArc.shape(PackedVector2Array([a, b]), serial, phase * 2, false)
 	)
 	add_path(plan, to_px(path), k)
 	plan.append_array(star_plan(b, ElectricArc.FORK_M, serial, phase * 2, k))
