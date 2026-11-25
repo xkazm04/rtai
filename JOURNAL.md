@@ -366,3 +366,5 @@ NEXT (session 5), in order. Use `date`: my journal times this session ran ~3 min
   gunner's centred fall; turret and war views have no hit flash (`sync_tint`); door eight one value away.
 - 06:00 BUILDER cast-12-decisions 1 accepted: `f404e09cb` (three DECISION n29 cast lines). Brief `n29-cast-07b-war8.md`
   written for session 5 step 1a (fill HARDSTOP/COMMIT1/LASTCOMMIT).
+- 06:01 BUILDER RUNNING cast-07b-war8 step 1 (opus) since 06:01: pad placement + test, hard stop 06:16 (the brief's
+  times are this call's; the next call re-fills them and does steps 2-3).

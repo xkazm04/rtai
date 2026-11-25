@@ -1,7 +1,7 @@
 # Brief n29-cast-07b: the pile-driver's eight, pad placement + feet table + the WALK decision (+ film)
 
 Lane `cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd), branch `n29-cast`. You are a builder sub-agent.
-**Hard stop HARDSTOP local** (check `date +%H:%M` often). **Commit 1 by COMMIT1, your last commit by LASTCOMMIT** (hook ~12 min).
+**Hard stop 06:16 local** (check `date +%H:%M` often). **Commit 1 by 06:11, your last commit by 06:13** (hook ~12 min).
 Never end with finished work uncommitted. Keep `C:\Users\kazda\kiro\gtai-art\foes-n29\war8\STATE.md` updated. Report and END.
 
 ## Where it stands
@@ -49,3 +49,8 @@ Forbidden: `war_machine_*.png` (art is final; a NEED if a drawing must be re-cut
 ## Report (then END)
 Commits, the placement diff in two lines, the four's numbers before/after the placement, the feet table, planted pad per
 drawing, WALK shipped and why, `run_unit --changed` line, film + ffprobe, mutate score, NEEDs, what you could not do.
+
+## Added 06:00 (director): THIS CALL = step 1 only (pad placement + its test), commit by 06:11
+Then update STATE.md (what is done, the four's numbers if you measured them) and END. Step 2-3 is a later call.
+The sonnet thug builder works beside you until 06:16 (`foe_thug_card_view.gd`, `project/dev/cast/cast_thug_*`,
+`evidence/n29/thug/**`, `test_cast_thug*`): never stage or revert them.
