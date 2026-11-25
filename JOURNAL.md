@@ -141,7 +141,7 @@ NEXT-OLD (superseded by NEXT-FINAL below) (session 5, from 16:25; commit last ne
 - DECISION: fix it in the card views (cast-owned): a held walk cell pins the planted SOLE. Brief `n30-cast-21-held-sole-pin.md` (door first, measured before commit; then the pile-driver).
 - 16:01 BUILDER c21a (opus) launched: part 1 code + door feet table ONLY, no commit, writes `build/look/n30-c21/NOTES.md` + `fix.patch`, reverts the view, stop 16:21.
 
-NEXT-FINAL (session 5, from 16:25; commit last new work by 17:15, final gate by 17:30):
+NEXT-FINAL-OLD (superseded by NEXT-S5 below) (session 5, from 16:25; commit last new work by 17:15, final gate by 17:30):
 1. Gate: `tail -5 build/gate-n30-s4.out` -> quote `gate: PASS|FAIL; build/gate/5e32a5e72764/gate.json` in REPORT.
 2. Read `build/look/n30-c21/NOTES.md` (+ `fix.patch`). If c21a's table shows the four and eight no worse anywhere and better somewhere: brief c21b (opus) = apply `fix.patch`, unit tests, quick gate, 64 still `door_sole_pin_64.png`, commit; WALK = EIGHT only per the brief's rule; the pile-driver part 2 only if committed by 16:55; audit section. Else: the audit section only (c20 + c21a findings) and a Next step.
 3. c20's audit section ("Door anchors, sole y on the boot contact, n30": hypothesis wrong, gap 0) goes into c21b's audit append.
@@ -149,3 +149,11 @@ NEXT-FINAL (session 5, from 16:25; commit last new work by 17:15, final gate by 
 5. Final gate `node tools/gate/run.mjs --rev=HEAD --reels` after the last code commit (detached, lane lock `gate`), by 17:30.
 6. REPORT: gate line, door row + What does not + Next steps 5 (replace the sole-y hypothesis with the card-view pin finding), ledger rows c20, c21a, session 5 calls; cites; commit.
 - 16:05 MILESTONE gate PASS on `5e32a5e72` (15:49-16:05): unit 4318/0/2, scenarios 68, parity bit for bit (mutation caught at 629), selftest, export-audit 1003/0; `gate: PASS; build/gate/5e32a5e72764/gate.json`. Removed our Temp snapshot gtai-gate-5e32a5e72764.
+- 16:07 BUILDER c21a 6 accepted (measure, no commit): `build/look/n30-c21/fix.patch` (+3/-1 `foe_shield_card_view.gd`: on a held walk cell `position += last_sole - transform * _sole_local()` instead of `position = last_ground`). Door feet (sole/jump): FOUR p70 R 2.42/4.34 -> 0.00/3.41, p70 DR U/10.50 -> U/10.39, p55 R 2.03/5.09 -> 0.00/4.07, p55 DR U/10.43 -> U/9.66; EIGHT soles 0.00 everywhere, jumps p70 R 6.61 -> 7.95, p70 DR 11.999 -> 12.036 (over 12 by 0.04), p55 R 6.98 -> 5.03, p55 DR 11.78 -> 11.77. Sole drift in a held drawing 0.0003-0.0007 px. Tree clean.
+- DECISION 16:08: ship the sole pin for the FOUR (what ships: every number better, the in-hold slide gone); the brief's "eight no worse" clause yields to the shipping walk, the eight does not ship (WALK stays FOUR: p70 dr jump 12.04). Not started now: a commit through the hook would straddle the 16:25 session end (the n30 12:12 stale-lock lesson). Brief `n30-cast-21b-sole-pin-commit.md` for session 5.
+
+NEXT-S5 (session 5, from 16:25; commit last new work by 17:15, final gate by 17:30):
+1. Launch c21b (opus) at once: brief `evidence/briefs/n30-cast-21b-sole-pin-commit.md` (apply fix.patch, tests, still, commit, mutate, then the pile-driver pin if time, audit section). Stop 17:12.
+2. While it runs: nothing else on Godot. After its door commit: one sonnet call for the decisions.md line ("DECISION n30 cast held walk cell pins the sole: ...", numbers from c21a/c21b).
+3. Final gate `node tools/gate/run.mjs --rev=HEAD --reels` after the last code commit (detached via a .cmd like `build/gate-n30-s4.cmd`, lane lock `gate`; ~16 + 14 min), started by 17:30.
+4. REPORT: What works row for the sole pin (four numbers), door row, Next steps 5 -> done or open, ledger rows c21a/c21b/..., gate line on the final commit; `node tools/evidence/cites.mjs REPORT.md`; commit.

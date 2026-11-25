@@ -59,7 +59,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` th
    (`foe_shield_card_view.gd` `update_fighter`, `foe_war_card_view.gd` `hold_foot`), which discards the pose's lean
    correction about the registered sole, so a held drawing leans about its cell pivot and the planted sole slides (c20:
    the still line is y 168 = the pivot in all 8 takes; the anchors' sole y and the feet reader's contact agree to 0 px).
-   Fix: pin the planted sole instead (brief `evidence/briefs/n30-cast-21-held-sole-pin.md`), measured before commit.
+   Fix: pin the planted sole instead (brief `evidence/briefs/n30-cast-21-held-sole-pin.md`). Measured (c21a, not yet committed at
+   16:08): the four p70 right 2.42/4.34 -> 0.00/3.41, p55 right 2.03/5.09 -> 0.00/4.07, down-right jumps 10.50 -> 10.39 and
+   10.43 -> 9.66; the eight soles 0.00 everywhere but p70 down-right jump 12.04 (bar 12).
 
 ## Builder ledger
 
@@ -90,6 +92,7 @@ All Claude sub-agents launched from the director's session, briefs under `eviden
 | c17 | opus | door p55 round 2 (5 images) | 17 | accepted (art ships, WALK stays FOUR) |
 | c19 | opus | door p55 drawing 8, computation (0 images) | 8 | accepted (no drawing-8 edit can pass) |
 | c20 | opus | door sole y vs feet reader, measure only | 3 | accepted (hypothesis wrong; found the card-view pin) |
+| c21a | opus | door held-sole pin, code + measure, no commit | 6 | accepted (four sole 0.00 at right, every jump lower) |
 
 What I would brief differently: one checklist point per call from the start (the short calls c07-c13 were the best value);
 give every measurement call the exact sheet row the game draws at that moment (c06 measured a row the game never shows);
