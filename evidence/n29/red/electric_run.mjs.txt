@@ -1,0 +1,4 @@
+import { runGodot } from '../../tools/lib/godot.mjs';
+const out = process.argv[2];
+const r = await runGodot(['--rendering-driver','d3d12','--windowed','--position','0,1440','--resolution','1920x1080','--fixed-fps','60','-s','C:/Users/kazda/kiro/gtai-wt/n23-street/build/n29elec/entry.gd','--','--out='+out], {headless:false, timeoutMs:300000, name:'n29-elec-still'});
+console.log(r.status, r.timedOut); console.log(r.out.split('\n').filter(l=>/frames|ERROR/.test(l)).join('\n'));
