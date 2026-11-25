@@ -84,3 +84,11 @@ NEXT (session 3, in order):
 Gate slot: ghost = ground + 30 min; commit last new work by 06:00, final gate by 06:15.
 - 23:28 Pre-read for g07-kills (saves its first minutes): readers of weapon `stomp`/`stomp_wave` in code = only `tonnage_crack.gd:20` (crack opens; its own comment at :26 already says "the deployed press can open a walker's front plate": wanted), `gauntlet_combat.gd:36,113` (`stomp` -> `rivet_contact hits_melee`: a stat; check who reads `hits_melee` before choosing A), `hauler_stage.gd:110`; data: `audio_cues.json:945/949` (stomp / stomp_wave cues), `human_reactions.json:20`, `signature_kills.json` tonnage_crush; `enemies.json:316,515` are an enemy's own stomp (unrelated id space? check). Leaning A.
 - 23:28 No builder launched after 23:25: 20 minutes left is under one call plus a 12-minute hook. Session 2 ends with NO builder running; g03's uncommitted probe files stay in the tree (untracked).
+
+## Session 3 (23:26 - )
+
+- 23:27 MILESTONE session start; HEAD 71c4e3914; no `NEED ghost` in the other lanes' journals (grep). g03's probe files still untracked (given to g07 step 0).
+- 23:28 BUILDER g07-kills launched (sonnet, `evidence/briefs/n31-ghost-07-kills.md` + 23:32 addendum: probe commit first, then dump kills -> stomp/stomp_wave), hard stop 00:25.
+- 23:28 BUILDER g04-take launched (opus, `evidence/briefs/n31-ghost-04-drop-take.md` + 22:40 and 23:32 addenda: gauntlet play take main | HEAD, main side first, HEAD side after g07's commit or at 00:10), hard stop 00:45.
+- 23:30 Briefs written: `n31-ghost-09-kick-dust.md` (dump screen kick souls-only via `GhostFormView.camera` -> deploy view, ids `dump_shake`/`dump_hitstop` in the tonnage row; dust ring lighter so the crack rim reads at D+2), `n31-ghost-10-ohm-drop.md` (Ohm: drop mode, charge 0.3 s, full circle + victim radius, radius from the lab sweep to 8-cop >= 75 %, scenarios). g09 and g10 both touch `ghost_attacks.json` + decisions.md: never run them at the same time.
+- 23:30 DECISION Ohm charge start 0.3 s (18 ticks), shorter than Tonnage's 0.45: Ohm is the quick caster and its circle is smaller; one data value.

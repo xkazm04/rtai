@@ -30,3 +30,11 @@ Seed and ticks, files (paths, ffprobe lengths), commits, per-deploy numbers main
 - The main side: on main the deploy is hold-to-aim; the shipped bot handles it. Same seed; the two runs diverge after the first Tonnage deploy, which is fine: label each deploy's tick in the film's notes.
 - Name the dump-tick windows before rendering. Film the gauntlet's default camera (32 px/m, tilt 70, `--pick-view`), wheel controls (default).
 - Also wanted in this call if time remains: the half-speed 64 px/m clip of one whole deploy (lead-in, drop, charge, dump, crater fade; 15-40 s), `ffmpeg setpts=2.0*PTS`.
+
+## Added 23:32 (director, session 3) - overrides the above where they differ
+- Launch 23:33. Hard stop 00:45: commit, report, END. Commit the dev scene by 00:00 and the take notes as soon as the film exists.
+- HEAD now 71c4e3914 (beats landed in `b8e1739eb`). A parallel builder `g07-kills` changes `ghost_deploy_strike.gd` so dump kills play the Tonnage crush (not the bullet fall). Order: (1) your scene + headless seed/window search on main and HEAD, (2) render the MAIN side (main never changes), (3) render the HEAD side with `--rev`-style snapshot of the newest commit at that time; if g07 has committed its kill change by then (git log: "kills" / ghost_deploy_strike), film that commit; do not wait past 00:10 for it.
+- Lane Godot lock `build/n31/godot.lock`: hold it per Godot run, release between runs. g07 runs short tests; let it in between your renders.
+- Use the film kit where it fits: `tools/film/film.mjs` / `compare.mjs` (`tools/README.md` 32-60, 261-300) give same-tick before/after with throwaway checkouts (`--a=ba8e470b0 --b=<sha>`); if they cannot run a custom dev scene, do the temp worktree route above. Check that the movie is 1920x1080 with ffprobe.
+- Stay out of `project/features/**` entirely.
+- Required outputs, in priority order: (a) main | HEAD side-by-side gauntlet take 15-40 s at 32 px/m with 2-3 Tonnage deploys + `evidence/n31/ghost/take-drop.md`; (b) 64 px/m still pair at a dump tick; (c) the half-speed 64 px/m clip of one whole HEAD deploy. Stop after (a) if time is short.

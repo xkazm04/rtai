@@ -24,3 +24,10 @@ Option B: keep `deploy_tonnage` and write a new `signature_kills.json` row `depl
 
 ## Report
 Choice A/B with the reader list, commits, tests, still paths and what differs, mutate score, NEED lines.
+
+## Added 23:32 (director, session 3) - overrides the above where they differ
+- Launch 23:33. First commit by 23:58; hard stop 00:25: commit what passes, report, END.
+- Step 0 (first, 5 minutes): commit g03's untracked stills probe `project/dev/ghost_n31/ghost_n31_beats.gd`, `.gd.uid`, `ghost_n31_beats.tscn`, `ghost_n31_beats_input.gd`, `.gd.uid` (run `node tools/debt/debt.mjs --check`; if dev_loc rises, `node tools/debt/debt.mjs --update --accept-regression="n31 ghost beats probe"` and commit `tools/debt/baseline.json` with them). Reuse that probe for your 64 px/m still pair (it already stages a Tonnage drop on cops).
+- Pre-read (director, 23:28): weapon-id readers for `stomp`/`stomp_wave` = `features/combat/moves/tonnage_crack.gd:20` (crack opens; its own comment at :26 says the deployed press may open a walker's plate: wanted), `features/gauntlet/gauntlet_combat.gd:36,113` (`stomp` -> `hits_melee` stat: find who reads `hits_melee`), `hauler_stage.gd:110`; data `audio_cues.json` stomp/stomp_wave cues, `human_reactions.json:20`, `signature_kills.json` tonnage_crush. Leaning A.
+- A parallel builder `g04-take` films with the same lane Godot lock. Hold the lock only per run (release it between runs), never across your edits. It renders long films: if you wait more than 10 minutes, write a line in `build/n31/lock_wait.txt` and keep waiting.
+- Stay out of: `tonnage_drop_marks.gd`, `tonnage_drop_beats.gd`, `ghost_deploy_effects.gd`, `hauler_kick.gd` (next builder's).
