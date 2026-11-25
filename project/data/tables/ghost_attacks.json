@@ -42,6 +42,7 @@
       "charge_s": 0.3,
       "cooldown_ticks": 480,
       "drop_at": "aim",
+      "dump_shake": "hit",
       "enabled": true,
       "life_ticks": 66,
       "press_mode": "drop",

@@ -13,6 +13,10 @@ var _hit_tick: int = -1
 var _hits: PackedVector2Array = []
 ## n31: Tonnage's drop ground (telegraph, dump, crater); outlives the ghost for the crater.
 var _drop: TonnageDropMarks = null
+## n31 ghost 12: Ohm's drop ground (creep telegraph, arc ring, scorch); outlives him for the scorch.
+var _ohm_drop: OhmDropMarks = null
+## Ohm's ground sits under the actors while his bolts stay on the FX band above them.
+var _ground: Node2D = Node2D.new()
 
 
 func _ready() -> void:
@@ -20,6 +24,17 @@ func _ready() -> void:
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_killed)
+	_ground.z_as_relative = false
+	_ground.z_index = RenderLayers.z(&"actors") - 2
+	@warning_ignore("return_value_discarded")
+	_ground.draw.connect(_draw_ground)
+	add_child(_ground)
+
+
+## Redraw the FX band and the ground layer under the actors.
+func redraw() -> void:
+	queue_redraw()
+	_ground.queue_redraw()
 
 
 func _wounded(foe: Fighter, weapon: StringName) -> void:
@@ -42,22 +57,25 @@ func _contact(weapon: StringName, at: Vector2) -> void:
 	_hits.append(at * PPM)
 
 
-## True while a landed drop's crater still shows after the ghost has gone.
+## True while a landed drop's crater (Tonnage) or scorch (Ohm) still shows after the ghost has gone.
 func lingers() -> bool:
-	if _drop == null or not _drop.live(stage.tick):
-		_drop = null
-		return false
 	# A drop cancelled before its dump (Rivet died) leaves no ground.
 	var active: bool = stage.pilot.ghosts.deploy.phase == GhostDeploy.Phase.ACTIVE
-	if stage.tick < _drop.dump_tick and not active:
+	if (
+		_drop != null
+		and (not _drop.live(stage.tick) or stage.tick < _drop.dump_tick and not active)
+	):
 		_drop = null
-	return _drop != null
+	var ohm: OhmDropMarks = _ohm_drop
+	if ohm != null and (not ohm.live(stage.tick) or stage.tick < ohm.dump_tick and not active):
+		_ohm_drop = null
+	return _drop != null or _ohm_drop != null
 
 
 func _draw() -> void:
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	if ghost.phase != GhostDeploy.Phase.ACTIVE:
-		if lingers():
+		if lingers() and _drop != null:
 			_drop.draw(self, stage.tick, PPM)
 		return
 	var release: int = ghost.strike.release_tick
@@ -96,6 +114,21 @@ func _slam(ghost: GhostDeploy, sec: float, release: int) -> void:
 	var head: float = ghost.strike.attacks.num(ghost.form, &"press_ahead_m")
 	var at: Vector2 = (ghost.spot + head * ghost.facing) * PPM
 	HaulerMarks.draw(self, at, sec, ghost.strike.press.num(&"stomp_radius_m"), PPM, release)
+
+
+## Ohm's drop row draws its ground under the actors from the press (OhmDropMarks); the record
+## outlives him for the scorch.
+func _draw_ground() -> void:
+	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
+	var row: GhostAttacks.DeployRow = ghost.strike.attacks.deploy.get(ghost.form)
+	var live: bool = ghost.phase == GhostDeploy.Phase.ACTIVE and ghost.form == OhmStage.GHOST
+	if live and row.drops():
+		if _ohm_drop == null or _ohm_drop.press_tick != ghost.start_tick:
+			var dump: int = ghost.start_tick + row.charge_ticks
+			_ohm_drop = OhmDropMarks.new(ghost.spot * PPM, ghost.start_tick, dump, row.radius_m)
+	elif not lingers() or _ohm_drop == null:
+		return
+	_ohm_drop.draw(_ground, stage.tick, PPM)
 
 
 func _bolt(ghost: GhostDeploy, target: Vector2, index: int, age: int) -> void:

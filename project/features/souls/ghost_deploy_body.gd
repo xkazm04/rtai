@@ -7,6 +7,8 @@ const PIXELS: Vector2i = Vector2i(768, 768)
 const FOOT: Vector2 = Vector2(384, 480)
 const RES: float = 2.0
 const APPEAR_TICKS: int = 6
+## n31 ghost 12: a dropped Ohm rises this high over the spot while he fades in.
+const OHM_RISE_M: float = 0.5
 
 var source: SubViewport
 var stage: CollectCallStage
@@ -87,15 +89,7 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	drawn.jab = ghost.form == DentStage.GHOST
 	var landed: int = stage.tick - drawn.deploy_age if struck >= 0 else -1
 	drawn.feed(1, -1, stage.tick, struck < 0, landed)
-	position = ghost.spot * SimConst.PX_PER_M
-	if ghost.form == OhmStage.GHOST:
-		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
-		# Use the near quadrant so the fork and Rivet's gun both have a clear outline.
-		var angle: float = deg_to_rad(-30.0 if ghost.facing.x >= 0.0 else 30.0)
-		position -= ghost.facing.rotated(angle) * short_radius * SimConst.PX_PER_M
-	elif drawn.jab:
-		var travel: float = smoothstep(0.0, 7.0, age)
-		position = ghost.origin.lerp(ghost.spot, travel) * SimConst.PX_PER_M
+	_stand(ghost, age, drawn.jab)
 	var at: Vector2 = GhostFormBodies.place_body(drawn, Vector2.ZERO, yaw, steps, true)
 	if _body is DentBody:
 		(_body as DentBody).step(true, at, yaw, steps, stage.tick)
@@ -105,15 +99,30 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 		_body.rotation = yaw
 		_body.set(&"unfold", 1.0)
 		_body.call(&"advance", steps * SimClock.TICK_DT)
-	if _drops(ghost):
+	if _drops(ghost) and ghost.form == HaulerStage.GHOST:
 		_beats(ghost, age, struck)
+	elif _drops(ghost):
+		# n31 ghost 12: a dropped Ohm stands on the spot and rises into his hover as he fades in.
+		position += ViewMode.shared().lift_px(OHM_RISE_M * smoothstep(0.0, APPEAR_TICKS, age))
 	_wash_body(ghost, age)
 	source.render_target_update_mode = SubViewport.UPDATE_ONCE
 
 
-## A drop is a full circle: Tonnage faces the camera (the drop strip's one row).
+func _stand(ghost: GhostDeploy, age: int, jab: bool) -> void:
+	position = ghost.spot * SimConst.PX_PER_M
+	if ghost.form == OhmStage.GHOST and not _drops(ghost):
+		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
+		# Use the near quadrant so the fork and Rivet's gun both have a clear outline.
+		var angle: float = deg_to_rad(-30.0 if ghost.facing.x >= 0.0 else 30.0)
+		position -= ghost.facing.rotated(angle) * short_radius * SimConst.PX_PER_M
+	elif jab:
+		var travel: float = smoothstep(0.0, 7.0, age)
+		position = ghost.origin.lerp(ghost.spot, travel) * SimConst.PX_PER_M
+
+
+## A drop is a full circle: Tonnage and Ohm face the camera (row 0, the drop strip's one row).
 func _drops(ghost: GhostDeploy) -> bool:
-	return ghost.form == HaulerStage.GHOST and ghost.strike.attacks.deploy[ghost.form].drops()
+	return ghost.strike.attacks.deploy[ghost.form].drops()
 
 
 ## Tonnage's drop beats (TonnageDropBeats): the fall and rise, and the strip's cell.

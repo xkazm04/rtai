@@ -215,6 +215,10 @@
               ],
               "type": "string"
             },
+            "dump_shake": {
+              "minLength": 1,
+              "type": "string"
+            },
             "enabled": {
               "type": "boolean"
             },

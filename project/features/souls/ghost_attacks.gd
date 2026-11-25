@@ -25,6 +25,10 @@ class DeployRow:
 	## Ticks from the press to the dump (round(charge_s x TICK_RATE)).
 	var charge_ticks: int = 0
 	var dump_damage: float
+	## Drop rows (n31): the camera.json shake on the dump tick (&"" = none) and the hit-stop id
+	## (in the table, unused: the souls view has no SimClock).
+	var dump_shake: StringName = &""
+	var dump_hitstop: StringName = &""
 
 	func drops() -> bool:
 		return press_mode == &"drop"
@@ -75,6 +79,10 @@ static func _drop_row(t: DataTable, row: Dictionary, def: DeployRow) -> void:
 	def.drop_at = StringName(t.text(row, "drop_at"))
 	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
 	def.radius_m = t.num(row, "radius_m")
+	if row.has("dump_shake"):
+		def.dump_shake = StringName(t.text(row, "dump_shake"))
+	if row.has("dump_hitstop"):
+		def.dump_hitstop = StringName(t.text(row, "dump_hitstop"))
 
 
 func ok() -> bool:

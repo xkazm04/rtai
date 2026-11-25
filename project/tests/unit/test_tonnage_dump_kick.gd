@@ -71,9 +71,25 @@ func test_a_second_dump_kicks_again_and_a_stale_one_does_not() -> void:
 	assert_eq(kick.kicks, 1)
 
 
-func test_other_forms_do_not_kick() -> void:
+func test_hold_forms_do_not_kick() -> void:
 	var kick: TonnageDumpKick = TonnageDumpKick.shipped()
 	var g: GhostDeploy = _ghost()
 	_land(g, 10)
-	g.strike.release_form = OhmStage.GHOST
+	g.strike.release_form = DentStage.GHOST
 	assert_false(kick.step(g, 10, SpyCam.new(), false))
+
+
+## n31 ghost 12: Ohm's drop discharge kicks with its own, lighter row id.
+func test_ohm_discharge_kicks_with_its_own_row_id() -> void:
+	var kick: TonnageDumpKick = TonnageDumpKick.shipped()
+	var cam: SpyCam = SpyCam.new()
+	var g: GhostDeploy = _ghost()
+	_land(g, 40)
+	g.strike.release_form = OhmStage.GHOST
+	assert_true(kick.step(g, 40, cam, false))
+	assert_eq(cam.ids, [&"hit"] as Array[StringName])
+	var rig: CameraRig = autofree(CameraRig.new())
+	assert_true(rig.shakes.has(&"hit"))
+	var row: GhostAttacks.DeployRow = GhostAttacks.shipped().deploy[HaulerStage.GHOST]
+	assert_eq(row.dump_shake, &"crash")
+	assert_eq(row.dump_hitstop, &"boss_hit")

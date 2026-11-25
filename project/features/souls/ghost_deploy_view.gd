@@ -52,7 +52,7 @@ func _process(_delta: float) -> void:
 	if ghost.phase != GhostDeploy.Phase.ACTIVE:
 		_body.dismiss()
 		_fx.visible = _fx.lingers()
-		_fx.queue_redraw()
+		_fx.redraw()
 		return
 	var age: int = stage.tick - ghost.start_tick
 	@warning_ignore("return_value_discarded")
@@ -69,4 +69,4 @@ func _process(_delta: float) -> void:
 		_fx.z_index = RenderLayers.z(&"actors") - 2
 	_body.show_strike(ghost, age, mini(age + 1, steps))
 	_fx.show()
-	_fx.queue_redraw()
+	_fx.redraw()
