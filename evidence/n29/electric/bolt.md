@@ -43,3 +43,19 @@ the same seed, its stills/film are reused). `stills/electro_{bolt,hop}_pair_64_f
 Mutate `weapon_fx_bolt.gd` (--lines=8-30, --max=14, test_weapon_fx_electro; the changed lines now live there): killed 10 / (10 + 4) = 71.4 %.
 The 4 survivors are equivalent: the `n < 3` and `len2 < 1e-6` boundary guards (a 3-point or zero-length path is unchanged either
 way), `len2` guard literal, and `range(1, ...)` -> `range(0, ...)` (the first point's offset is 0 by construction).
+
+## Call 9: hash and fork pins
+
+Tests only: `project/tests/unit/test_weapon_fx_electro_hash.gd` (14 tests; with `test_weapon_fx_electro` 29 pass, 0 fail). It pins
+`WeaponFxBolt.spawn_id` (exact values, 0.25 m cell, coefficients 7 and 13, `posmod` of negatives), `WeaponFxElectro._serial`
+(exact values, the `* 31` weight, cell grouping), the fork count (3 and 4 both occur, exact per serial 0..7, one fork tip pinned),
+`stun_plan` serials 7 + i, the stun under-halo width at k = 0.5, and `add_path` widths, order and count at k = 1 and 0.5.
+
+Commands (commit `4d2e8f403`, `--tests=test_weapon_fx_electro_hash,test_weapon_fx_electro`):
+
+- `node tools/mutate/mutate.mjs --file=features/combat/weapons/art/weapon_fx_bolt.gd --lines=34-40,48-50 --max=12`:
+  score 100.0% = killed 9 / (9 + 0), 0 survivors (`spawn_id` literals and operators all killed).
+- `node tools/mutate/mutate.mjs --file=features/combat/weapons/art/weapon_fx_electro.gd --lines=75-89,137-144,156-157 --max=14`:
+  first run (commit `32f60f1a4`) 69.2% = 9 / (9 + 4); survivors were `:76` (`3 -> 4`, fork-count hash arg), `:80` (`* -> /` and `1.2 -> 2.2`,
+  the bend) and `:87` (`* -> /`, equivalent at k = 1, caught only at k = 0.5). After the extra pins: **100.0% = killed 13 / (13 + 0)**,
+  1 invalid (`:142` delete of the ink append leaves an unused variable, a parse error), 0 timeouts.
