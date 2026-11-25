@@ -54,11 +54,11 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 - Plasma sword run step 8.29 cm against the 7 cm bar (the katana donor's legs: 7.76). One `run_row_k` value cannot fix it:
   a sweep on the lane's octant (`p70/plasma_sword/2`, k 0.94/0.97/1.03/1.06) gave 8.27/8.23/8.31/8.28 cm (`3a758e990`,
   `evidence/n29-keys/grid_plasma_sword.md`); the two planted steps are set by the drawing. Nothing changed in the table.
-- HUD at handheld size: chip 1's plate is now on screen but is clamped right, 3 px from plate 2, and no longer sits under
-  its own chip (`hud/hud_handheld_pair_crop_3x.png`, right half): it reads "12" crowded. Not fixed (seen at 07:03, after the
-  last-commit bar). Next: in the compact layout start the strip's first slot about 12 px further right, or shrink the compact
-  plate, so the plate keeps its chip-centre offset. The 1280x800 still needed a dev-only capture edit in a snapshot
-  (`bond_film_capture.gd:38` takes only 1920x1080; `--device` missing from the gauntlet's `KNOWN_FLAGS`): NEED Director/combat.
+- HUD at handheld size (not on this branch): chip 1's plate is on screen but clamped right, 3 px from plate 2: it reads
+  "12" crowded (`hud/hud_handheld_pair_crop_3x.png`, right half; seen at 07:03, after the last-commit bar). The fix is built
+  and tested but NOT applied: `evidence/n29-keys/hud_compact_gap.patch` (`8df5e2302`; see Merge notes). The 1280x800 still
+  needed a dev-only capture edit in a snapshot (`bond_film_capture.gd:38` takes only 1920x1080; `--device` missing from the
+  gauntlet's `KNOWN_FLAGS`): NEED Director/combat.
 - Item 5 (molotov run, stop-gap back-swing): not started; images at 58/60.
 - Cast's n28 NEED (the dropped rifle reads mauve-pink): measured, no change. A dropped guard rifle draws
   `showcase/p70/assault_rifle.png` (stock brown wood, hue 26), not `ground_rifle_70.png`; the pink in the 1080p film is the
@@ -98,13 +98,20 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
   (append-only), `steam/ai-provenance/2026-11.jsonl` (append-only).
 - Combat recoloured the plasma sword's own held art (rings) in its lane; this lane did Rivet's strips: no file overlap.
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on the add/add conflict.
+- **Optional, the handheld HUD fix as a patch** (built after the freeze, so not committed as code): `git apply
+  evidence/n29-keys/hud_compact_gap.patch` changes `GhostFormLayout.compact()` gap 42 -> 50 and adds
+  `test_adjacent_number_plates_keep_a_gap_and_the_first_clears_the_minimum` to `project/tests/unit/test_ghost_chip_number.gd`.
+  Proven in a snapshot of `a4608d655`: the test fails on n29 code (plates 1 and 2 2.6 px apart) and passes with it (20/0 over
+  chip number, layout, hud tests); gdformat/gdlint clean. 1280x800 frame 20: plate 1-2 gap 3 -> 15 px, strip 32 px wider,
+  every plate inside the strip; desktop unchanged (only `compact()` edits). Still: `hud/hud_handheld_gap_patch_crop_3x.png`.
+  Apply with a `docs/decisions.md` line (compact gap 42 -> 50; option B `number_dx` rejected). Combat's files are untouched.
 
 ## Next steps
 
 1. The p55 collar rows 3, 6, 7 by the owner's pick (hand repaint from row 4, or 2x per-cell edits); row 8's 4x touch-ups.
 2. The molotov's own run set (one row per job, the donor's soles fixed by registration); the stop-gap back-swing.
 3. Combat's red audit row 16 after the owner's call: the per-weapon danger-or-heat list from `evidence/n29-keys/held_red/table.md`.
-4. The compact (handheld) HUD: chip 1's plate crowds plate 2 (3.5 px by the code's arithmetic: compact gap 42 against a 24 px number; the margin cannot help, the clamp moves with it). Ready brief: `evidence/briefs/n30-keys-01-hud-compact-gap.md` (compact gap 42 -> 50, gap about 11.5 px, a test that fails on n29; re-render the 1280x800 pair as `evidence/briefs/n29-01e-hud-handheld-snapshot.md` did).
+4. The compact (handheld) HUD: apply `evidence/n29-keys/hud_compact_gap.patch` if the Director did not at merge (Merge notes), run the quick gate and mutate `ghost_form_layout.gd` on the compact lines.
 5. Gloria's p55 diagonal flash in game (needs a dev scene that fires Gloria at p55; `arsenal_turn` has none).
 
 ## Builder ledger
@@ -135,8 +142,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 | n29-10-collar-transplant | opus | 12 | accepted (row 8; row 6 rejected) |
 | n29-13-collar-row8-film | sonnet | 3 | accepted (row 8 still + clip) |
 | n29-01e-hud-handheld-snapshot | sonnet | 5 | accepted (1280x800 pair from snapshots; showed the crowded plate 1) |
+| n29-14-hud-compact-gap-patch | sonnet | 5 | accepted (patch + failing-then-passing test in a snapshot, 1280x800 still) |
 
-24 calls, about 508 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
+25 calls, about 513 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
 tool supports the size before briefing a still (the handheld call); give the collar its in-game before|after in the same
 call as the art, not a later films call; for an art item that already failed in n28, budget the owner call from the start
 instead of a third route; look up which file and key the game actually reads before naming them in a brief (two
