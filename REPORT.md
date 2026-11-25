@@ -33,6 +33,9 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   amber 957 -> 869 at t1212, red 0, teal 0, 0 px changed outside the round. The stripes keep their dark bars with a 1 px grey
   edge. Units 334/0 (the 54 tests on the PNG), lint 19/19. Still `stills/nuke_round_seam_pair_64.png`. (c07b's dark edge
   made it worse, 39 -> 71 / 60 / 55, `74b56e6db`: a dark amber-brown sits in vermilion's cell.)
+  At 32 px/m (`films/nuke_seam_32.mp4` 1920x1080 60/1 25.0 s, round in flight 7.1-7.9 s, `a7437f819`) before and after look
+  the same: the band is a few px and h264 chroma noise swamps the count (7.6 s: 0 -> 8 px; `stills/nuke_seam_32_pair.png`).
+  The difference is a 64 px/m one.
 
 ### 4. Explosion light rim amber through a new palette token: token and data in, NOT on screen (`d4b6aabcc`, `199faedc7`, `aa824a4da`)
 - `palette.json` token `amber` `#EDAB42` (role accent, no accents row: r - max(g,b) 0.26 < verm_gate 0.31, the accent audit
@@ -147,7 +150,8 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
 ## Builder ledger
-- Session 5: c24 specks-film 3 accepted (evidence only); c23 nuke-seam (Opus) 19 accepted (model first with c18's snap
+- Session 5: c24 specks-film 3 accepted (evidence only); c25 decisions 1 accepted; c26 seam-film 4 accepted (32 px/m shows no
+  difference, said so plainly); c23 nuke-seam (Opus) 19 accepted (model first with c18's snap
   model, then three ticks in game: landed on the first in-game try). What worked: a brief that hands over the cause and its
   model tools.
 - Session 4: c17 rim-ink 18 accepted (negative: deeper ink lowers contrast); c18 blast-specks (Opus) 29 accepted (found the
