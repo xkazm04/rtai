@@ -64,3 +64,26 @@ Forbidden: every PNG, every table, `project/boot/**`, the HUD files, the sim (`f
 ## Report and END (short)
 Commits; the bolt look in numbers; hop proof; film/still paths + ffprobe; how it reads; unit/quick gate; mutate score;
 what was left.
+
+## Notes from the director (session 2)
+- **The print eats translucent colour.** The shipped look prints every non-ink colour to its nearest palette ink
+  (`look_d4_item.gdshader`); amber's nearest used to be vermilion. c2a (12b7c141b) gave the FX view's print an amber ink
+  (`PrintStage.fx_material()`, `look_profiles.json` `fx_amber_ink` true), and c2e found that ElectricArc's a0.5 / a0.18
+  halo strokes dissolve in the print: only the cream core survived on the collect-call views, so CurrentLook got an
+  opaque amber mid stroke. **Check on screen first** (a 64 px/m still of today's chain hop under the shipped look) whether
+  the weapon chain hop / stun current prints cream+amber or cream only. If the halo dissolves there too, the bolt plan
+  (and, only if it is one shared constant, the chain plan) gets an opaque amber mid stroke (alpha 1.0, wider than the
+  core, narrower than the 4.5 px halo); say which in the decisions line. Look at the result at 32 px/m: the bolt must
+  read amber/cream, never vermilion.
+- Quick gate's standalone parse of `weapon_fx_electro.gd` / `weapon_fx_art.gd` fails even unchanged (Log autoload chain):
+  compare against the base commit and do not chase it.
+- `--electro-cells` is already a KNOWN flag (n28). Do not add flags.
+- Another builder (sword hilt PNGs) may run in parallel; one Godot for the lane: check `tasklist` for a Godot you did
+  not start and wait; batch your Godot runs.
+- c2e (collect-call electric) may still be running mutate (a temp worktree, one Godot) until ~03:15: queue behind it.
+
+## Wall clock (binding)
+Started 02:59. The director's session (and you) stop at 03:50. Commit A (restyle + tests + decisions line) by **03:30**.
+Then B: write the take and commit the take file + `evidence/n29/electric/bolt.md` (commands, hop proof from the log) by
+**03:45** even if the films are not rendered (say so in the note: the next call renders them). HARD STOP **03:47**:
+report and END, committed. C (mutate) is for the next call.
