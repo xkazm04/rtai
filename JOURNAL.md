@@ -463,3 +463,7 @@ NEXT update (session 6): step 0 is DONE (gate PASS, in REPORT). Remaining: (1) r
   REPORT against JOURNAL, `node tools/evidence/cites.mjs REPORT.md` (was 12 paths, 11 ok, 1 pattern), commit. No code.
   Temp: the gate snapshots `gtai-gate-42ac8613b0be` / `gtai-gate-9a99caebb*` and `gtai-mutate-49b1f428` are this lane's;
   leave them for the Director's merge cleanup.
+- 07:31 `--reels` gate on `9a99caebb`: evidence part all PASS (unit 4252/0/2, scenarios 68, parity, selftest, export-audit
+  1000/0); in the reel step (`build/gate/9a99caebb973/reels.log`), pid 36216 alive. Session 6: quote its last line.
+- 07:32 MILESTONE session 5 end. Builders this session: 03f (12), 07b steps 2-3 (24), 03d-A (17), 13 (10), 14 (7): all
+  accepted. IMAGES 21/60. BUILDER RUNNING: none. Gate PASS `42ac8613b`; reels gate running (pid 36216).
