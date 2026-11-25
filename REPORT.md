@@ -23,6 +23,10 @@ Masters: `C:\Users\kazda\kiro\gtai-masters\n30\yard\` (`frames.json`, best first
 
 - Item 2: the faint wide tyre arcs read 76 % of before: they are drawn in `raised_line/floor_stains.png` (the stain layer), not a stamp, so the stamp value cannot reach them; Rivet's luminance delta 0.1479 -> 0.1340 (bar -0.01 missed by 0.004; the two arms differ by the whole n30 floor work).
 - Item 3: the luminance delta on a span stays 0.021 -> 0.020 (bar 0.06 not met): the metric takes a signed mean inside his box, where the dark blot and his lighter body cancel; it cannot see a shadow beside him. The 64 px/m still shows the beam darken beside him; at full frame the effect is subtle. 57 px faint trace on the span art's anti-aliased rim.
+- Item 4: frame cost bar (p50 upper CI95 < 0.5 ms) NOT proven: 3 rounds +0.444 ms [-0.402, +1.290], 4 more rounds +0.272 ms [-0.711, +1.254] (`evidence/yard30/roof_frame_cost.md`); the before arm's own p50 moves 2.2 to 3.1 ms between rounds on the shared machine, more than the effect; the after arm also carries the mouth span, so it is an upper bound. The lever the builder named (`ochre: false` on the slabs) turns the skylights and fire holes grey-mauve: rejected by look (`evidence/yard30/roof_ochre_off_64ppm.png`).
+- Item 4 look: the slabs' vertical ribbing still reads a little like cladding at 64 px/m; roof-feed is the flattest slab; shutter_w's ledge line remains.
+- Item 5: the beam's end inside the fire is a hard straight cut (a soft alpha fade of its last 0.3 m is the next lever).
+- Item 6: the span shadow film (`span_shadow_before_after_32ppm.mp4`) does not show the shadow: in that window Rivet fights beside the S span's foot, off the span art.
 
 ## What blocked or slowed you (minutes each)
 
@@ -33,6 +37,7 @@ Masters: `C:\Users\kazda\kiro\gtai-masters\n30\yard\` (`frames.json`, best first
 ## Calls for the owner
 
 1. Tyre arcs in the stain layer (item 2): leave them at 76 % or redraw `floor_stains.png`'s arcs darker (an art job, not a value). Still: `evidence/yard30/decals_over_before_after_mid_32ppm.png`.
+3. Roof frame cost (item 4): ship the roof with its cost not proven under the bar on this shared machine (shipped on), or trade look for cost (ochre off: `evidence/yard30/roof_ochre_off_64ppm.png`; or half-resolution slab textures).
 2. Span shadow (item 3): soft blot beside him on the beam (shipped on) or a stronger alpha / a cast silhouette. Still: `evidence/yard30/span_shadow_before_after_64ppm.png`.
 
 ## Merge notes
