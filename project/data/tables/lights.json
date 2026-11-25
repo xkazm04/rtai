@@ -58,9 +58,9 @@
       "token": "paper"
     },
     {
-      "alt_token": "vermilion",
+      "alt_token": "amber",
       "cone_deg": 0,
-      "doc": "a blast: paper core, the outer band on the vermilion plate (danger)",
+      "doc": "a blast: paper core, the outer band amber (fire, heat; vermilion stays danger only)",
       "flicker_hz": 0,
       "id": "explosion",
       "intensity": 0.75,
