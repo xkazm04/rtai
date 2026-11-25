@@ -132,7 +132,13 @@ func test_thug_soles_sit_on_the_ground_row_after_a_walk_and_a_stop() -> void:
 	var h: Fighter = Fighter.new()
 	h.archetype = FoeThugCardView.ID
 	h.hp = 10.0
-	h.facing = Vector2.DOWN
+	for facing: Vector2 in [Vector2.DOWN, Vector2(1, 1).normalized(), Vector2.RIGHT]:
+		_stand_on_row(host, rig, h, facing)
+	ViewMode._shared = previous
+
+
+func _stand_on_row(host: ArenaRobotRigs, rig: CutRig, h: Fighter, facing: Vector2) -> void:
+	h.facing = facing
 	for step: int in 6:
 		h.pos = Vector2(3.0 + 0.1 * step, 4.0)
 		assert_false(FoeThugCardView.show_rig(host, h, rig, true))
@@ -145,5 +151,4 @@ func test_thug_soles_sit_on_the_ground_row_after_a_walk_and_a_stop() -> void:
 		)
 		var ink: Vector4 = marks[card.frame_coords.x * card.vframes + card.frame_coords.y]
 		var sole: Vector2 = card.transform * Vector2(-ink.x if card.flip_h else ink.x, ink.y)
-		assert_lt(absf(sole.y - h.pos.y * SimConst.PX_PER_M), 1.0)
-	ViewMode._shared = previous
+		assert_lt(absf(sole.y - h.pos.y * SimConst.PX_PER_M), 1.0, str(facing))
