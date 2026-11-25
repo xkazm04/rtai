@@ -429,3 +429,9 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
   walk vs aim cell), cops unjittered 50.0 / 48.2 / 48.6 (50.3), Rivet 80 (77), DOOR CARRIER 63 (56: +7, cause unknown),
   turret not separable (label), war machine by eye 64-68 (65). The film's nominal labels are now backed by measured numbers.
 - 06:48 BUILDER RUNNING cast-14 (sonnet) since 06:48: door height film vs stills, measure only, hard stop 07:12.
+- 06:48 mutate (director) `foe_thug_card_view.gd --lines=72-100 --max=10 --tests=test_cast_thug`: 62.5 % = 5 / (5 + 3),
+  invalid 2, 284 s. Every `sole_gap` line (95-99) killed; survivors on line 84 (`_planted_row >= 0` boundary/literal: no
+  test holds row 0).
+- 06:48 MILESTONE final gate started detached on `42ac8613b` (code final; later commits are docs, journal, report and
+  cast-14's tools/art py): `node tools/gate/run.mjs --rev=HEAD --timeout=60`, PowerShell Start-Process pid 12516, out
+  `build/gate-final.out`, `.err`. No `--reels` yet (after the freeze, next session if time).
