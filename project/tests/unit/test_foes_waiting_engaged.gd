@@ -64,5 +64,19 @@ func test_explicit_spawn_window_reads_its_enemies_json_weapon() -> void:
 	assert_true(arch.explicit_spawn)
 	var w: EnemyWeapon = arch.weapon
 	var want: int = Engaged.window_ticks(w.burst, w.burst_gap_ticks, w.cooldown_ticks)
-	assert_eq(Engaged.foe_window(arch, Fighter.new(), CombatTuning.shipped()), want)
+	assert_eq(Engaged.foe_window(arch, Fighter.new(), CombatTuning.shipped(), null), want)
 	assert_eq(want, w.cooldown_ticks + Engaged.SLACK_TICKS, "the rocket fires one round")
+
+
+func test_own_gun_foe_window_reads_its_enemies_json_weapon() -> void:
+	var roster: EnemyRoster = EnemyRoster.shipped()
+	var arch: EnemyRoster.Archetype = roster.archetype(&"patrol_cop")
+	var h: Fighter = Fighter.new()
+	h.weapon = arch.production_weapon
+	var tuning: CombatTuning = CombatTuning.shipped()
+	var rifle: int = Engaged.foe_window(arch, h, tuning, null)
+	roster.own_weapons = true
+	var w: EnemyWeapon = arch.weapon
+	var want: int = Engaged.window_ticks(w.burst, w.burst_gap_ticks, w.cooldown_ticks)
+	assert_eq(Engaged.foe_window(arch, h, tuning, roster), want)
+	assert_ne(want, rifle, "the own gun cycle differs from the rifle window")

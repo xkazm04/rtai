@@ -175,13 +175,14 @@ func _enroll(h: Fighter, stage: ArenaStage) -> Foe:
 		wave.start_tick = stage.arena.tick
 		wave.shots_begin = stage.shots_fired
 		_waves[foe.wave] = wave
-	var archetype: EnemyRoster.Archetype = stage.arena.squad_ai.pit.roster.archetype(h.archetype)
+	var roster: EnemyRoster = stage.arena.squad_ai.pit.roster
+	var archetype: EnemyRoster.Archetype = roster.archetype(h.archetype)
 	var k: Wave.Kind = _waves[foe.wave].kind(foe.arch)
 	k.n += 1
 	k.melee = archetype.weapon.melee
 	k.attack_m = archetype.attack_m
 	foe.melee = k.melee
-	foe.window = Engaged.foe_window(archetype, h, stage.arena.tuning)
+	foe.window = Engaged.foe_window(archetype, h, stage.arena.tuning, roster)
 	_foes[h.id] = foe
 	return foe
 

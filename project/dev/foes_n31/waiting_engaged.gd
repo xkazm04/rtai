@@ -6,7 +6,6 @@ extends RefCounted
 
 const SLACK_TICKS: int = 6
 const PRESS_MIN: int = 3
-## Advancing: a velocity component toward Rivet above this (TRAVEL or legacy gait).
 const ADVANCE_MPS: float = 0.5
 const ARRIVED_M: float = 0.6
 const TRAVEL: int = 1
@@ -34,17 +33,17 @@ static func pressing(ranged_alive: int, pushers: int) -> bool:
 	return ranged_alive >= PRESS_MIN and pushers >= maxi(PRESS_MIN, ceili(ranged_alive / 3.0))
 
 
-## Explicit spawns fire their enemies.json weapon; the rest the combat tuning weapon they carry.
-static func foe_window(arch: EnemyRoster.Archetype, h: Fighter, tuning: CombatTuning) -> int:
-	if not arch.explicit_spawn and tuning != null and tuning.weapons.has(h.weapon):
-		var t: CombatTuning.Weapon = tuning.weapons[h.weapon]
-		return window_ticks(t.burst, t.burst_gap_ticks, t.cooldown_ticks)
+## Own-gun (squad.own_weapons, duck-typed) foes and explicit spawns fire arch.weapon.
+static func foe_window(arch: EnemyRoster.Archetype, h: Fighter, t: CombatTuning, r: Object) -> int:
+	var own: bool = r != null and r.get(&"own_weapons") == true and not arch.weapon.melee
+	if not own and not arch.explicit_spawn and t != null and t.weapons.has(h.weapon):
+		var t2: CombatTuning.Weapon = t.weapons[h.weapon]
+		return window_ticks(t2.burst, t2.burst_gap_ticks, t2.cooldown_ticks)
 	var w: EnemyWeapon = arch.weapon
 	return window_ticks(w.burst, w.burst_gap_ticks, w.cooldown_ticks)
 
 
-## The FoeGait settle window (TRAVEL -> FIGHT). `split`: the squad runs FoeGait (a rev without
-## it, or the legacy gait, has none). Duck-typed so the probe also compiles at such a rev.
+## The FoeGait settle window (TRAVEL -> FIGHT); duck-typed so old revs (no FoeGait) compile.
 static func settling(agent: EnemyAgent, tick: int, split: bool) -> bool:
 	var g: Object = agent.get(&"gait")
 	if not split or g == null:
