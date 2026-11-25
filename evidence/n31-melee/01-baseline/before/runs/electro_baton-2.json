@@ -1,0 +1,32 @@
+{
+  "alive": true,
+  "damage_taken": 66.367,
+  "death": "",
+  "finished": true,
+  "hits": 37,
+  "kills_all": 50,
+  "kills_by_weapon": {
+    "assault-rifle": 8,
+    "electro_baton": 42
+  },
+  "kills_own_weapon": 42,
+  "melee_all": {
+    "claw": {
+      "landed": 0,
+      "swings": 0,
+      "whiffs": 0
+    },
+    "electro_baton": {
+      "landed": 37,
+      "swings": 38,
+      "whiffs": 1
+    }
+  },
+  "schema": "gtai.play-baseline-run/1",
+  "seed": 2,
+  "swings": 38,
+  "ticks": 4669,
+  "wave_reached": 4,
+  "weapon": "electro_baton",
+  "whiffs": 1
+}
