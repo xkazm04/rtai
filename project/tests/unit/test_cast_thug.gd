@@ -92,3 +92,28 @@ func test_thug_card_shows_hides_his_rig_and_draws_walk_hit_fall() -> void:
 	card.update_fighter(h, host.arena)
 	assert_eq(card.texture.resource_path, card.pose.sheets.fall)
 	ViewMode._shared = previous
+
+
+func test_thug_rings_sit_on_the_ground_point_after_a_walk_and_a_stop() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	CastMulroneyPreview.enable(FoeThugCardView.ID)
+	ViewMode.select("combo")
+	var host: ArenaRobotRigs = add_child_autofree(ArenaRobotRigs.new())
+	host.arena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(5).stream(&"combat")
+	)
+	var rig: CutRig = CutRig.new()
+	host.add_child(rig)
+	var h: Fighter = Fighter.new()
+	h.archetype = FoeThugCardView.ID
+	h.hp = 10.0
+	h.facing = Vector2.DOWN
+	for step: int in 6:
+		h.pos = Vector2(3.0 + 0.1 * step, 4.0)
+		assert_false(FoeThugCardView.show_rig(host, h, rig, true))
+	var card: FoeThugCardView = rig.get_meta(FoeThugCardView.CARD)
+	for _stand: int in 2:
+		assert_false(FoeThugCardView.show_rig(host, h, rig, true))
+		var ring: Vector2 = card.to_global(card._shadow.position)
+		assert_lt(ring.distance_to(h.pos * SimConst.PX_PER_M), 1.0)
+	ViewMode._shared = previous

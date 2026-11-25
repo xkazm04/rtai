@@ -64,6 +64,13 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 	_hold_stop(moved)
 	_shadow.visible = ViewMode.shared().cast_k > 0.0
 	_shadow.scale = Vector2.ONE / transform.get_scale()
+	_shadow.position = ground_local(h)
+
+
+## The rings belong on the ground point, not on the card's transform origin: the walk placement
+## solves the torso mark onto the body, so the origin sits well below the feet at 70 px/m.
+func ground_local(h: Fighter) -> Vector2:
+	return transform.affine_inverse() * (h.pos * SimConst.PX_PER_M)
 
 
 ## A halt keeps the last planted drawing and placement, so the body does not jump to the plain

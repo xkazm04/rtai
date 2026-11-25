@@ -52,3 +52,26 @@ the row at 64 px/m, because the planted pose is solved on the torso/sole mark, n
    (sole <= 2, jump <= 12 must hold, the walk's jump measure includes the planted-row hold).
 4. Unit test (`test_cast_thug.gd`): drive `update_fighter` with a standing fighter after a walk at 70, assert
    `to_global(_shadow.position)` within 1 px of `h.pos * PX_PER_M`.
+
+## Fail 2, stop at 70: cause confirmed, ring fixed (06:03)
+
+Confirmed by a unit test run without the fix: after a walk and a halt at 70, the ring child sat
+**17.3 px** (world px, the test's walk of 0.1 m steps, facing down) from `h.pos * PX_PER_M`
+(`test_thug_rings_sit_on_the_ground_point_after_a_walk_and_a_stop` failed with that number, passes with the fix).
+So the cause is the ring child at the card's transform origin, not the ground point. (The three-direction print
+was not done: one direction only, facing down.)
+
+Fix (`project/features/combat/squad/foe_thug_card_view.gd`): `ground_local(h)` =
+`transform.affine_inverse() * (h.pos * PX_PER_M)`, assigned to `_shadow.position` in `update_fighter` after
+`draw_pose` and `_hold_stop` (the stop's restored `_planted` transform is inverted too).
+
+Stop numbers after, `GTAI_CAST_SHADOW=1` beside at 70 (`build/look/n29-thug/shadow70/`, thug band only, shadow =
+pixels that change when the rings are hidden): 64 px/m rows 522-558, centroid y 542.0; 32 px/m rows 531-548,
+centroid y 540.7. The ground point is screen row about 540 (camera centre); before the fix the ring was
+about 25 px (64) / 12 px (32) below it. Ring now on the ground point: PASS.
+
+NOT done / still open: (a) soles about 4 px above the ground row at 64 px/m in the crop (`crop64.png`, lowest foot
+outline about row 535 vs ring centre 540); bar is within 2. Fix plan unchanged (shift `_planted.origin.y` in
+`_hold_stop` by the stand cell's sole gap from `CastThugAnchors`), not attempted for time. (b) 55 deg numbers
+after the change not re-measured (the fix is pitch-independent; 55 passed before because origin ~ ground).
+(c) walk feet (`cast_feet.mjs`) not re-run; the ring change does not touch the body transform.
