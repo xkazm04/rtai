@@ -1,0 +1,25 @@
+{
+  "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+  "debug_build": true,
+  "dressing": "arched_noroof",
+  "driver": "d3d12",
+  "elapsed_s": 45.000832,
+  "end_tick": 2672,
+  "end_unix_s": 1795617795.403,
+  "frame_count": 15687,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "max_fps": 0,
+  "over_16_7_ms": 9,
+  "p50_ms": 2.553,
+  "p99_ms": 5.389,
+  "pid": 9904,
+  "schema": "gtai.yard-frame-sample/1",
+  "start_tick": 0,
+  "start_unix_s": 1795617750.402,
+  "viewport": [
+    1920,
+    1080
+  ],
+  "vsync_disabled": true,
+  "worst_ms": 270.383
+}

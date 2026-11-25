@@ -1,0 +1,27 @@
+added True True
+15:38:30 c1 before
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":3911,"peakMB":15046,"procs":66,"ts":"2026-11-25T15:39:19.7908508+01:00","pid":37016,"done":false}
+  cpu%: 63.9340138100091
+15:39:27 c1 after
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":5015,"peakMB":15046,"procs":90,"ts":"2026-11-25T15:40:23.6874201+01:00","pid":37016,"done":false}
+  cpu%: 58.2140987444678
+15:40:26 c2 after
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":4207,"peakMB":15046,"procs":60,"ts":"2026-11-25T15:41:21.1191938+01:00","pid":37016,"done":false}
+  cpu%: 37.85470623041
+15:41:24 c2 before
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":4987,"peakMB":15046,"procs":71,"ts":"2026-11-25T15:42:18.4646970+01:00","pid":37016,"done":false}
+  cpu%: 37.7570370557614
+15:42:21 c3 before
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":4751,"peakMB":15046,"procs":79,"ts":"2026-11-25T15:43:15.5249503+01:00","pid":37016,"done":false}
+  cpu%: 50.5511876690061
+15:43:18 c3 after
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":4227,"peakMB":15046,"procs":67,"ts":"2026-11-25T15:44:12.6441813+01:00","pid":37016,"done":false}
+  cpu%: 41.026522972296
+15:44:15 c4 after
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":5219,"peakMB":15046,"procs":79,"ts":"2026-11-25T15:45:04.5814039+01:00","pid":37016,"done":false}
+  cpu%: 45.0069984213639
+15:45:12 c4 before
+  exit 0 ; cap ﻿{"name":"n30","capMB":16384,"usedMB":6803,"peakMB":15046,"procs":103,"ts":"2026-11-25T15:46:03.5387787+01:00","pid":37016,"done":false}
+  cpu%: 60.4973512636968
+restored
+15:46:10 released
