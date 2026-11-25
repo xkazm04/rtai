@@ -134,6 +134,16 @@ func test_arched_line_front_burns_at_the_burst_and_collapsed_bays_with_mouth_lig
 		if pool["kind"] == "yard_hall_mouth":
 			mouths.append(str(pool["id"]))
 	assert_eq(mouths, ["burst_door", "collapsed_wall"])
+	var walls: Array[String] = []
+	for pool: Dictionary in lights["pools"]:
+		if pool["kind"] == "yard_hall_mouth_wall":
+			walls.append("%s %s" % [pool["id"], pool["at"]])
+	assert_eq(walls, ["burst_mouth_wall [11.8, -3.2]", "collapsed_mouth_wall [56.2, -3.2]"])
+	for kind: Dictionary in lights["kinds"]:
+		if kind["id"] == "yard_hall_mouth_wall":
+			var glow: Dictionary = kind["floor_glow"]
+			var strength: float = glow["strength"]
+			assert_eq(strength, 0.0, "the wall light leaves the floor")
 	var raised: Array = _row("raised_line")["factory_front"]
 	assert_true(
 		str(raised).contains("line_fire/burst_bay.png"), "raised_line keeps the shipped front"

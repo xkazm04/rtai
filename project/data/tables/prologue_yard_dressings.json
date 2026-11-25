@@ -1055,6 +1055,22 @@
             "life_ticks": 0,
             "radius_m": 4.5,
             "steps": 6
+          },
+          {
+            "alt_color": "ffb23a",
+            "color": "ff9a1f",
+            "cone_deg": 0,
+            "flicker_hz": 1.5,
+            "floor_glow": {
+              "color": "ff8c14",
+              "radius_m": 1,
+              "strength": 0
+            },
+            "id": "yard_hall_mouth_wall",
+            "intensity": 0.6,
+            "life_ticks": 0,
+            "radius_m": 4.5,
+            "steps": 6
           }
         ],
         "pools": [
@@ -1145,6 +1161,22 @@
             ],
             "id": "conveyor_tail",
             "kind": "yard_fire_mid"
+          },
+          {
+            "at": [
+              11.8,
+              -3.2
+            ],
+            "id": "burst_mouth_wall",
+            "kind": "yard_hall_mouth_wall"
+          },
+          {
+            "at": [
+              56.2,
+              -3.2
+            ],
+            "id": "collapsed_mouth_wall",
+            "kind": "yard_hall_mouth_wall"
           }
         ]
       },
