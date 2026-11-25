@@ -1,0 +1,1 @@
+IDENTICAL: seeds 7,3,11,21,42 ticks, deaths, min_hp, stuck, sha256 match evidence/yard30/prologue-yard-pilots-shadowread.json at HEAD 507f75178 (roof slabs and plumes), one Godot process via yard_pilot_rows

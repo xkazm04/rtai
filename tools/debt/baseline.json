@@ -197,7 +197,8 @@
         "2026-11-25: n30-07: arsenal turn recorder equips the weapon slot before firing, wider still crop (dev_loc 39253 -> 39264) (dev_loc 39253 -> 39264)",
         "2026-11-25: arsenal turn pins for n30 keys (dev_loc 39264 -> 39271)",
         "2026-11-25: sprint tour for n30 keys (dev_loc 39271 -> 39340)",
-        "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)"
+        "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)",
+        "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -222,7 +223,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 490,
-        "project/dev/prologue_yard": 705,
+        "project/dev/prologue_yard": 827,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1183,
@@ -239,7 +240,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39638
+      "total": 39760
     },
     "direct_cmdline_reads": {
       "accepted": [

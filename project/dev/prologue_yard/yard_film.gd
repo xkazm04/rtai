@@ -1,12 +1,21 @@
 extends Node
 ## Seek the seed-7 pilot before the first draw, then expose one tick per movie frame.
 const KNOWN_FLAGS: PackedStringArray = [
-	"--yard-dressing", "--place", "--tick", "--frames", "--ppm", "--still", "--cast-card"
+	"--yard-dressing",
+	"--place",
+	"--tick",
+	"--frames",
+	"--ppm",
+	"--still",
+	"--cast-card",
+	"--seed",
+	"--at"
 ]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
 const SIZE: Vector2i = Vector2i(1920, 1080)
 const LOOKS: Array[String] = ["plain", "torn_line", "line_fire", "raised_line", "arched_line"]
+const PLACES: Array[String] = ["gate", "mid", "front", "roof", "harbor", "commander"]
 
 var _game: PrologueGame
 var _view: PrologueView
@@ -17,6 +26,8 @@ var _ppm: int
 var _count: int = 0
 var _still: String
 var _commander: bool
+var _seed: int = 7
+var _centre: Vector2 = Vector2.INF
 
 
 func _ready() -> void:
@@ -51,7 +62,9 @@ func _without_mulroney_card() -> void:
 
 
 func _start_game(args: ArenaArgs) -> void:
-	LaunchArgs.parse(["--bot", "--seed=7", "--yard-dressing=" + args.text("--yard-dressing")])
+	LaunchArgs.parse(
+		["--bot", "--seed=%d" % _seed, "--yard-dressing=" + args.text("--yard-dressing")]
+	)
 	ViewMode.select("tilt70")
 	_game = preload("res://boot/prologue/prologue.tscn").instantiate()
 	add_child(_game)
@@ -64,7 +77,9 @@ func _start_game(args: ArenaArgs) -> void:
 			_view = child as PrologueView
 	YardCamera.hide_hud(_view)
 	_commander = args.text("--place") == "commander"
-	if not _commander:
+	if _centre.is_finite():
+		_at = _centre
+	elif not _commander:
 		_at = YardCamera.center(_game.stage.plan as PrologueYard, args.text("--place"), _first)
 	_view.px_per_m = float(_ppm)
 	# Run the ordinary view first (including the ringing phone), then lock the print passes.
@@ -84,11 +99,8 @@ func _read_args(args: ArenaArgs) -> String:
 			return "unknown option " + key
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		return "use a 1920x1080 window"
-	if (
-		args.text("--yard-dressing") not in LOOKS
-		or args.text("--place") not in ["gate", "mid", "front", "harbor", "commander"]
-	):
-		return "choose a yard dressing and gate, mid, front, harbor or commander"
+	if args.text("--yard-dressing") not in LOOKS or args.text("--place") not in PLACES:
+		return "choose a yard dressing and gate, mid, front, roof, harbor or commander"
 	for key: String in ["--tick", "--frames", "--ppm"]:
 		if not args.text(key).is_valid_int():
 			return "expected an integer for " + key
@@ -97,6 +109,20 @@ func _read_args(args: ArenaArgs) -> String:
 	_ppm = args.text("--ppm").to_int()
 	if _first < 0 or _frames < 1 or _ppm not in [32, 64]:
 		return "use a nonnegative start, positive frame count and 32 or 64 px/m"
+	return _read_extra(args)
+
+
+## `--seed=<n>` (default 7) picks the pilot's seed; `--at=x,y` centres the camera (metres).
+func _read_extra(args: ArenaArgs) -> String:
+	if args.has("--seed"):
+		if not args.text("--seed").is_valid_int():
+			return "expected an integer for --seed"
+		_seed = args.text("--seed").to_int()
+	if args.has("--at"):
+		var parts: PackedStringArray = args.text("--at").split(",")
+		if parts.size() != 2 or not parts[0].is_valid_float() or not parts[1].is_valid_float():
+			return "expected --at=x,y in metres"
+		_centre = Vector2(parts[0].to_float(), parts[1].to_float())
 	return ""
 
 

@@ -1,0 +1,1 @@
+IDENTICAL: seeds 7,3,11,21,42 ticks, deaths, min_hp, stuck, sha256 match evidence/yard30/prologue-yard-pilots-roof.json with the slab tint a0a0acff on the five hall_roof rows, one Godot process via yard_pilot_rows

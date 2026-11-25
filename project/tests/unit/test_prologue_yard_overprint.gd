@@ -19,6 +19,12 @@ class Recorder:
 		call.layer = layer
 		calls.append(call)
 
+	func stamps(_canvas: CanvasItem, _list: Array[PrologueYardDressing.Piece]) -> void:
+		calls.append(Call.new())
+
+	func scorch(_canvas: CanvasItem, _plan: PrologueYard) -> void:
+		calls.append(Call.new())
+
 	func wreck(
 		_canvas: CanvasItem,
 		piece: PrologueYard.Wreck,
@@ -56,7 +62,7 @@ func test_order_puts_every_span_after_every_wreck() -> void:
 			spans += 1
 		else:
 			last_other = i
-	assert_eq(spans, 5)
+	assert_eq(spans, 6)
 	assert_gt(first_span, last_other)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
 		if plan.dressing.over_print.has(wreck.id):
@@ -79,18 +85,19 @@ func test_draw_runs_ground_then_wrecks_in_skin_then_debris_then_spans() -> void:
 	var rec: Recorder = Recorder.new()
 	var node: Node2D = Node2D.new()
 	add_child_autofree(node)
-	PrologueYardOverprint._draw_pieces(node, plan, rec)
+	PrologueYardOverprint._draw_part(node, plan, rec, PrologueYardOverprint.Part.ALL)
 	var order: Array[PrologueYard.Wreck] = PrologueYardOverprint.order(plan)
-	assert_eq(rec.calls.size(), order.size() + 1)
+	assert_eq(rec.calls.size(), order.size() + 3)
 	assert_null(rec.calls[0].piece)
 	assert_eq(rec.calls[0].layer, plan.dressing.impression)
 	for i: int in order.size():
-		var call: Call = rec.calls[i + 1]
+		var call: Call = rec.calls[i + 3]
 		var piece: PrologueYard.Wreck = order[i]
 		assert_eq(call.piece, piece, piece.id)
 		if plan.wrecks.has(piece):
-			assert_eq(call.tint, Color.WHITE, piece.id)
-			assert_eq(call.skin_tint, Color.WHITE, piece.id)
+			var shaded: Color = Color(0.5, 0.5, 0.5)
+			assert_eq(call.tint, shaded, piece.id)
+			assert_eq(call.skin_tint, shaded, piece.id)
 			var want: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
 			assert_eq(call.skin, want, piece.id)
 		else:
@@ -121,12 +128,12 @@ func _draw_shaded(plan: PrologueYard, shade: float) -> Array[Call]:
 	var rec: Recorder = Recorder.new()
 	var node: Node2D = Node2D.new()
 	add_child_autofree(node)
-	PrologueYardOverprint._draw_pieces(node, plan, rec)
+	PrologueYardOverprint._draw_part(node, plan, rec, PrologueYardOverprint.Part.ALL)
 	return rec.calls
 
 
-func test_absent_key_leaves_the_shade_at_one() -> void:
-	assert_eq(_plan().dressing.over_print_shade, 1.0)
+func test_arched_line_pins_the_shade_at_half_and_one_leaves_wrecks_white() -> void:
+	assert_eq(_plan().dressing.over_print_shade, 0.5)
 	for call: Call in _draw_shaded(_plan(), 1.0):
 		if call.piece != null and call.skin != null:
 			assert_eq(call.tint, Color.WHITE)

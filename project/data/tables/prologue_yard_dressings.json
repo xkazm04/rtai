@@ -1,7 +1,172 @@
 {
   "dressings": {
     "arched_line": {
+      "decal_over_alpha": 1.4,
+      "decals_over_impression": true,
       "factory_front": [
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_roof_shutter_w.png",
+          "at": [
+            -3,
+            -9.95
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.45,
+            5.5
+          ],
+          "tint": "a0a0acff"
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_roof_burst.png",
+          "at": [
+            11.8,
+            -9.95
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.45,
+            5.5
+          ],
+          "tint": "a0a0acff"
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_roof_feed.png",
+          "at": [
+            26.6,
+            -9.95
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.45,
+            5.5
+          ],
+          "tint": "a0a0acff"
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_roof_shutter_e.png",
+          "at": [
+            41.4,
+            -9.95
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.45,
+            5.5
+          ],
+          "tint": "a0a0acff"
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_roof_collapsed.png",
+          "at": [
+            56.2,
+            -9.95
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.45,
+            5.5
+          ],
+          "tint": "a0a0acff"
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_1.png",
+          "at": [
+            3.091,
+            -14.191
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            5.33,
+            5.59
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_2.png",
+          "at": [
+            -7.209,
+            -12.946
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            7.98,
+            3.1
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_3.png",
+          "at": [
+            9.49,
+            -13.075
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            2.33,
+            5.23
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_4.png",
+          "at": [
+            14.64,
+            -13.215
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            4.67,
+            5.51
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_5.png",
+          "at": [
+            26.571,
+            -13.924
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            5.82,
+            6
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_6.png",
+          "at": [
+            41.212,
+            -9.335
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            2.66,
+            2.69
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/arched_line/hall_plume_7.png",
+          "at": [
+            57.365,
+            -11.106
+          ],
+          "ochre": false,
+          "rotation_deg": 0,
+          "size_m": [
+            6.76,
+            5.87
+          ]
+        },
         {
           "art": "res://boot/prologue/art/arched_line/hall_tall_shutter_bay.png",
           "at": [
@@ -167,8 +332,25 @@
           },
           "texture": "res://boot/prologue/art/raised_line/floor_stains.png",
           "tiled": false,
-          "tint": "ffffff58",
+          "tint": "ffffff00",
           "wash": "f6dca880"
+        },
+        {
+          "over_impression": true,
+          "rect_m": {
+            "origin": [
+              0,
+              0
+            ],
+            "size": [
+              60,
+              34
+            ]
+          },
+          "texture": "res://boot/prologue/art/raised_line/floor_stains.png",
+          "tiled": false,
+          "tint": "ffffff58",
+          "wash": "00000000"
         }
       ],
       "ground_impression": {
@@ -967,6 +1149,20 @@
               5.687
             ],
             "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_mouth_door.png",
+            "at": [
+              16.047,
+              -0.963
+            ],
+            "id": "span_mouth_door",
+            "rotation_deg": 0,
+            "size_m": [
+              8.789,
+              5.192
+            ],
+            "tint": "ffffffff"
           }
         ]
       },
@@ -1182,6 +1378,7 @@
           }
         ]
       },
+      "ochre_over_impression": true,
       "over_print": [
         "pallet_west",
         "fuel_vessel",
@@ -1201,8 +1398,10 @@
         "span_feed_turn",
         "span_turn_return",
         "span_return_bend",
-        "span_bend_tail"
+        "span_bend_tail",
+        "span_mouth_door"
       ],
+      "over_print_shade": 0.5,
       "paint_from": "torn_line",
       "phone": {
         "art": "res://boot/prologue/art/line_fire/payphone.png",
@@ -1238,6 +1437,22 @@
           0.78
         ],
         "tint": "201a165c"
+      },
+      "span_shadow": {
+        "alpha": 1,
+        "body_m": [
+          0.9,
+          1.9
+        ],
+        "fade_ticks": 6,
+        "offset_m": [
+          0.3,
+          0.75
+        ],
+        "size_m": [
+          2.4,
+          2.2
+        ]
       }
     },
     "line_fire": {

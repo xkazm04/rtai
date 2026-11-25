@@ -136,11 +136,18 @@
           "required": [],
           "type": "object"
         },
+        "decal_over_alpha": {
+          "minimum": 1,
+          "type": "number"
+        },
         "decals": {
           "items": {
             "$ref": "#/$defs/piece"
           },
           "type": "array"
+        },
+        "decals_over_impression": {
+          "type": "boolean"
         },
         "factory_front": {
           "items": {
@@ -369,6 +376,9 @@
           ],
           "type": "object"
         },
+        "ochre_over_impression": {
+          "type": "boolean"
+        },
         "ochre_strength": {
           "maximum": 1,
           "minimum": 0,
@@ -513,6 +523,54 @@
             "tint"
           ],
           "type": "object"
+        },
+        "span_shadow": {
+          "additionalProperties": false,
+          "properties": {
+            "alpha": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "body_m": {
+              "items": {
+                "minimum": 0.01,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "fade_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "offset_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "size_m": {
+              "items": {
+                "minimum": 0.01,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "alpha",
+            "body_m",
+            "fade_ticks",
+            "offset_m",
+            "size_m"
+          ],
+          "type": "object"
         }
       },
       "required": [],
@@ -561,6 +619,9 @@
     "layer": {
       "additionalProperties": false,
       "properties": {
+        "over_impression": {
+          "type": "boolean"
+        },
         "rect_m": {
           "$ref": "#/$defs/rect"
         },

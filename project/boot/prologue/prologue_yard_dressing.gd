@@ -14,6 +14,8 @@ class Ground:
 	var tile_size: Vector2
 	var tint: Color
 	var wash: Color
+	## Drawn on the over-print layer, after the impression, not in the world pass.
+	var over_impression: bool
 
 
 class Piece:
@@ -52,14 +54,24 @@ var shadow_tint: Color
 var outside: Array[Piece] = []
 var use_stage_decals: bool
 var ochre_strength: float
+## Row flag: the impression and the flagged ground layers and decals sit under the ochre layer.
+var ochre_over_impression: bool = false
 ## Cover and debris ids drawn over the world print, in the art's own colours.
 var over_print: PackedStringArray = PackedStringArray()
 ## A ground layer laid on the over-print layer, under the over-print pieces: a second impression.
 var impression: Ground
 ## Multiplies the own-colour wrecks on the over-print layer (1 = the art as drawn).
 var over_print_shade: float = 1.0
+## Row flag: the stage scorch marks and the decals without `ochre` (stains, tyre marks) print on
+## the over-print layer, after the ground layers there. The split-off decals wait in `decals_over`.
+var decals_over_impression: bool = false
+var decals_over: Array[Piece] = []
+## Row value: multiplies the tint alpha of the tyre-mark stamps over the impression (clamped to 1).
+var decal_over_alpha: float = 1.0
 ## Fire light over the void north of the hall roof (PrologueRoofGlow.read), empty = none.
 var roof_glow: Dictionary = {}
+## Drop shadow under Rivet on an overhead span (PrologueSpanShadow.read), empty = none.
+var span_shadow: Dictionary = {}
 
 
 static func resolve(
@@ -81,6 +93,8 @@ static func resolve(
 		result.lights = PrologueYardLights.new(table, table.object(row, "lights"))
 	if row.has("roof_glow"):
 		result.roof_glow = PrologueRoofGlow.read(table, table.object(row, "roof_glow"))
+	if row.has("span_shadow"):
+		result.span_shadow = PrologueSpanShadow.read(table, table.object(row, "span_shadow"))
 	result.paint_id = row.get("paint_from", wanted)
 	if row.has("layout"):
 		result.layout = table.object(row, "layout")
@@ -100,6 +114,7 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		ground.append(_layer(table, layer))
 	use_stage_decals = not row.has("decals")
 	decals = _pieces(table, row, "decals")
+	_split_decals_over(table, row)
 	factory_front = _pieces(table, row, "factory_front")
 	fixtures = _pieces(table, row, "fixtures")
 	if row.has("phone"):
@@ -112,6 +127,7 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		fixture_shadow_reach = table.vec(shadows, "fixture_reach_m")
 		shadow_tint = Color(table.text(shadows, "tint"))
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
+	ochre_over_impression = row.get("ochre_over_impression", false)
 	if row.has("over_print"):
 		over_print = PackedStringArray(table.array(row, "over_print"))
 	if row.has("over_print_shade"):
@@ -129,6 +145,22 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		outside.append_array(_pieces(table, plain, "outside"))
 
 
+## With `decals_over_impression` the decals without `ochre` move to `decals_over`; the tyre marks
+## among them get their tint alpha times `decal_over_alpha`.
+func _split_decals_over(table: DataTable, row: Dictionary) -> void:
+	decals_over_impression = row.get("decals_over_impression", false)
+	if not decals_over_impression:
+		return
+	decal_over_alpha = table.num(row, "decal_over_alpha") if row.has("decal_over_alpha") else 1.0
+	for piece: Piece in decals.duplicate():
+		if piece.ochre:
+			continue
+		decals.erase(piece)
+		decals_over.append(piece)
+		if piece.art.contains("/tyre_"):
+			piece.tint.a = minf(piece.tint.a * decal_over_alpha, 1.0)
+
+
 static func _layer(table: DataTable, row: Dictionary) -> Ground:
 	var layer: Ground = Ground.new()
 	layer.texture = table.text(row, "texture")
@@ -138,6 +170,7 @@ static func _layer(table: DataTable, row: Dictionary) -> Ground:
 	layer.tile_size = table.vec(row, "tile_size_m") if row.has("tile_size_m") else layer.rect.size
 	layer.tint = Color(str(row.get("tint", "ffffff")))
 	layer.wash = Color(str(row.get("wash", "00000000")))
+	layer.over_impression = row.get("over_impression", false)
 	return layer
 
 

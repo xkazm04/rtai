@@ -1,0 +1,28 @@
+# Brief n30-05d `mouth-fade`: soften the mouth span's end in the fire, then the 1920x1080 mouth film (lane yard, run n30)
+
+HARD STOP 16:50 (report and END). The art change (part 1) COMMITTED by 16:32 or dropped (restore the files, keep HEAD's art) — no code/art commit after 16:35. Film evidence may commit until 16:45. Check `date` often. Never amend, never rebase, never `--no-verify`.
+
+## Setup
+Worktree `C:/Users/kazda/kiro/gtai-wt/n25-yard` (branch `n30-yard`). Bash with absolute paths. Every shell that runs Godot or a commit:
+```
+export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/yard
+export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe
+```
+Renders `--rendering-driver d3d12`, windowed `--position 0,1440`. Godot ONLY through repo tools that use runGodot (`node tools/art/prologue_yard_film.mjs` stills/movies, `node tools/dev/run.mjs`, `node tools/tests/run_unit.mjs`, a plain `--import` through `tools/lib/godot.mjs` runGodot). Lane Godot slot `build/yard-godot.lock` (your tag `mouth-fade` + pid, noclobber, poll 30 s, older than 25 min = stale) around EVERY Godot launch and every `git commit`; another builder (`shadow-film`) shares it and starts first, so do your Godot-free steps first. Table lock `build/yard-table.lock` (tag `mouth-fade`) before any edit of `project/data/tables/prologue_yard_dressings.json`.
+
+## Where it stands (`e4797b637`, `b1e48ab43`)
+`span_mouth_door` (art `project/boot/prologue/art/arched_line/belt_span_mouth_door.png`, 8.789 x 5.192 m, cut by `tools/art/prologue_yard_spans.py` from `tools/art/prologue_yard_sources/n30/belt-span-mouth-deep.png`, layout `tools/art/prologue_yard_spans_layout.py` `MOUTH_AT` (12.2, -2.5)) climbs into the burning burst opening; the director's look (`evidence/yard30/mouth_deeper_before_after_front_64ppm.png`): the line now comes out of the fire, but its end is a HARD HORIZONTAL CUT inside the flames. The film `C:/Users/kazda/kiro/gtai-masters/n30/yard/mouth_deeper_front_32ppm.mp4` is after-only and 960x1080: not the 1920x1080 rule.
+
+## Work
+1. Fade (Godot-free first): in the cutter, an alpha ramp over the last 0.35 m (adjust 0.3..0.5) of the mouth span's open end along the beam (only that span: a per-span option, the other five cuts stay byte-identical: check with sha256). Re-cut into the repo; `python -m pytest tools/art/prologue_yard_spans_test.py` (add one test that the mouth end's alpha ramps and the other end does not). Look at a mock (the cut over the front plate crop or a dark background) first. Then (slot) `--import`, a front still 32 px/m `--place=front --tick=2858` and a 64 px/m crop of the mouth to `evidence/yard30/mouth_fade_64ppm.png` (HEAD's hard cut | fade, labelled). LOOK: the end must melt into the flames with no hard edge and no ghost halo; if it reads worse, restore the png with `git checkout --` and keep HEAD's art (say so). Pilots seeds 7,3,11,21,42 in ONE Godot process (`project/dev/prologue_yard/yard_pilot_rows.tscn`, `--dressings=arched_line`) to `evidence/yard30/prologue-yard-pilots-mouth-fade.json`, identical to `evidence/yard30/prologue-yard-pilots-mouth-deep.json` (else revert, report). `node tools/tests/run_unit.mjs --select=test_prologue_mouth_span,test_prologue_raised_line,test_prologue_span_shadow`. Fix lint and format findings in your own edit and go on. One provenance line is NOT needed (no new generated image). COMMIT 1 (`-- <paths>`).
+2. Film: front camera, seed 7, ticks 2858..about 4057 (20 s), 32 px/m. Before = HEAD with the `span_mouth_door` row removed from `arched_line` by a temporary table edit (the yard as `main` had it: no mouth span; table lock; restore byte-identical, `git diff --quiet` that file), after = HEAD (with your fade if committed). Both through `node tools/art/prologue_yard_film.mjs --movie`, hstack two 960x1080 crops centred on the burst mouth (x about 12 m; labels "before: no mouth span (main)" / "after: span out of the fire"), h264 yuv420p crf 20 60 fps to `C:/Users/kazda/kiro/gtai-masters/n30/yard/mouth_deeper_before_after_front_32ppm.mp4`; ffprobe (must say 1920x1080, 60/1, 15..40 s). Extract one frame to `evidence/yard30/mouth_deeper_film_frame.png`, LOOK. In that folder's `frames.json` (valid JSON) replace the `mouth_deeper_front_32ppm.mp4` entry with the new film (delete the old 960x1080 file) and add `mouth_fade_64ppm.png` if made. Delete scratch avi. COMMIT 2 (evidence only).
+3. If COMMIT 1 happened: one `docs/decisions.md` line `- [2026-11-25] DECISION yard n30 mouth span end fade: ...` (after `git diff --quiet -- docs/decisions.md`; append, commit at once alone).
+
+## Owned files (allowlist). Any other path: stop and report a NEED.
+`tools/art/prologue_yard_spans*.py` (+ test), `project/boot/prologue/art/arched_line/belt_span_mouth_door.png` (+ `.import`), `project/boot/prologue/art/arched_line/belt_spans.json` (mouth entry, only if the cut changes it), `project/data/tables/prologue_yard_dressings.json` (temporary edit only, restored), `evidence/yard30/**`, `docs/decisions.md` (one line), `C:/Users/kazda/kiro/gtai-masters/n30/yard/**`, `build/**`.
+
+## Forbidden
+Every other repo path (`project/dev/**` belongs to `shadow-film` now, prologue `.gd` code, `project/features/**`, `JOURNAL.md`, `REPORT.md`, `evidence/briefs/**`), other worktrees (`n23-controls`, `n23-street`, `n23-prologue`), `C:/Users/kazda/kiro/gtai-art/**` except reading. No image generation. No `git add -A/./-u`, no `git commit -a`, no stash, no amend, no rebase, no reset --hard, never push. Kill only PIDs you started.
+
+## Report (final message, then END)
+Commit shas; fade length chosen; other five cuts byte-identical yes/no; pilots identical yes/no; ffprobe line; what you saw at 64 and 32 px/m; what was not done.

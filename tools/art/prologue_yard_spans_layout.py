@@ -6,9 +6,11 @@ Each section end is measured on its cut (the beam band's centre at the outermost
 direction from the band 15 and 70 px in), placed by the section's `at` and `size_m`. A span is a cubic
 Bezier from one end to the next, leaving and entering along the section's own beam direction, so the
 line alternates sides: door E-feed E, feed W-turn W, turn E-return E, return W-bend W, bend E-tail W
-(the tail's east end is the torn end). `--guide` draws those paths as grey beam bands on a white sheet
-(the art job's layout guide). Without `--write` the span rows and their join gaps are only printed; with
-it the five `span_<a>_<b>` debris rows go into `arched_line` (over_print, no cover, no collision).
+(the tail's east end is the torn end). A sixth span (n30) rises out of the burst bay's fire mouth into
+the door section's free west end: it starts at MOUTH_AT inside the opening heading south. `--guide`
+draws those paths as grey beam bands on white sheets (the art jobs' layout guides, one file per sheet).
+Without `--write` the span rows and their join gaps are only printed; with it the `span_<a>_<b>` debris
+rows the cutter has written go into `arched_line` (over_print, no cover, no collision).
 """
 
 import argparse
@@ -32,7 +34,21 @@ JOINS = [("door", "e", "feed", "e"), ("feed", "w", "turn", "w"), ("turn", "e", "
 # Guide sheet: where each span's path bounding box sits (top-left px) on which 1774x887 sheet.
 SHEET = (1774, 887)
 SHEET_AT = {"door_feed": (0, 90, 70), "feed_turn": (0, 1150, 110), "bend_tail": (2, 650, 140),
-            "turn_return": (1, 140, 140), "return_bend": (1, 1000, 110)}
+            "turn_return": (1, 140, 140), "return_bend": (1, 1000, 110), "mouth_door": (3, 500, 260)}
+SHEETS = 4
+# n30: the burst bay (factory_front at x 11.8, 15.15 m wide, ground line y -0.26) has its fire opening at
+# floor level from about x 9.6 to 14.7 (art px 485..940 of 1355). The span starts in its middle 2.24 m
+# north of the ground line (05c: inside the opening's fire, not at its threshold), leaving south (out of
+# the hall), and its guide band runs MOUTH_LEAD_M further north so the art has no end plate there (the cut
+# clips it at MOUTH_AT).
+MOUTH_AT = (12.2, -2.5)
+MOUTH_DIR = (0.0, 1.0)
+MOUTH_OPENING_X = (9.6, 14.7)
+FACADE_Y = -0.26
+MOUTH_LEAD_M = 0.6
+# The deeper start needs a longer leaving handle so the beam drops out of the opening past the ground line
+# (dip about 0.5 m south of it, as n30's first start) before it turns east, instead of crossing the brick.
+MOUTH_HANDLE_M = 6.5
 # The bend's east end to the tail's west end is too tight for a tangent U (sheet 0's piece curled into a
 # hook): that span leaves the bend at a 45 degree elbow, drawn again alone on sheet 2.
 LEAVE_TURN_DEG = {"bend_tail": 45.0}
@@ -76,11 +92,12 @@ def turned(end: tuple, deg: float) -> tuple:
     return (end[0], np.array([c * d[0] - s * d[1], s * d[0] + c * d[1]]))
 
 
-def span_path(a: tuple, b: tuple, n: int = 80) -> np.ndarray:
-    """A cubic Bezier from end a to end b, leaving a and entering b along their outward directions."""
+def span_path(a: tuple, b: tuple, n: int = 80, leave_m: float = 0.0) -> np.ndarray:
+    """A cubic Bezier from end a to end b, leaving a and entering b along their outward directions
+    (leave_m > 0 sets a's handle length, else both handles are 0.55 of the chord, at least 2.5 m)."""
     (p0, d0), (p3, d3) = a, b
     k = max(2.5, 0.55 * float(np.linalg.norm(p3 - p0)))
-    p1, p2 = p0 + d0 * k, p3 + d3 * k
+    p1, p2 = p0 + d0 * (leave_m or k), p3 + d3 * k
     t = np.linspace(0, 1, n)[:, None]
     return (1 - t) ** 3 * p0 + 3 * (1 - t) ** 2 * t * p1 + 3 * (1 - t) * t**2 * p2 + t**3 * p3
 
@@ -94,7 +111,17 @@ def spans() -> list:
         name = f"{a}_{b}"
         start = turned(ends[a][sa], LEAVE_TURN_DEG.get(name, 0.0))
         out.append((name, start, ends[b][sb], span_path(start, ends[b][sb])))
+    mouth = (np.array(MOUTH_AT), np.array(MOUTH_DIR))
+    out.append(("mouth_door", mouth, ends["door"]["w"], span_path(mouth, ends["door"]["w"], leave_m=MOUTH_HANDLE_M)))
     return out
+
+
+def guide_points(name: str, pts: np.ndarray) -> np.ndarray:
+    """The path the guide draws: the mouth span gets a straight lead MOUTH_LEAD_M back into the opening."""
+    if name != "mouth_door":
+        return pts
+    lead = pts[0] - np.array(MOUTH_DIR) * np.linspace(MOUTH_LEAD_M, 0, 12, endpoint=False)[:, None]
+    return np.vstack([lead, pts])
 
 
 def draw_band(draw: ImageDraw.ImageDraw, pts: np.ndarray, width: float, fill, centre=None) -> None:
@@ -109,22 +136,24 @@ def draw_band(draw: ImageDraw.ImageDraw, pts: np.ndarray, width: float, fill, ce
 
 
 def guide(path: Path) -> None:
-    """Three white sheets (one file each) with each span's path as a grey beam band at SCALE."""
-    sheets = [Image.new("RGB", SHEET, "white") for _ in range(3)]
+    """SHEETS white sheets (one file each) with each span's path as a grey beam band at SCALE."""
+    sheets = [Image.new("RGB", SHEET, "white") for _ in range(SHEETS)]
     for name, _a, _b, pts in spans():
         sheet, x0, y0 = SHEET_AT[name]
-        px = (pts - pts.min(axis=0)) / SCALE + [x0, y0] + BEAM_M / SCALE / 2
+        px = (guide_points(name, pts) - pts.min(axis=0)) / SCALE + [x0, y0] + BEAM_M / SCALE / 2
         draw_band(ImageDraw.Draw(sheets[sheet]), px, BEAM_M / SCALE, (150, 150, 150), (90, 90, 90))
     for i, s in enumerate(sheets):
         s.save(path.with_name(f"{path.stem}_{i + 1}{path.suffix}"))
 
 
 def preview(path: Path, ppm: float = 24.0) -> None:
-    """The six sections and the five span paths at their world places (a plan check, not art)."""
-    origin = np.array([16.0, -4.0])
-    img = Image.new("RGBA", (round(28 * ppm), round(28 * ppm)), (200, 190, 170, 255))
+    """The burst bay, the six sections and the span paths at their world places (a plan check, not art)."""
+    origin = np.array([4.0, -10.0])
+    img = Image.new("RGBA", (round(40 * ppm), round(34 * ppm)), (200, 190, 170, 255))
     placed = [r for r, _a, _b in span_rows()]
-    for row in list(arch_rows().values()) + placed:
+    front = json.loads(TABLE.read_text())["dressings"]["arched_line"]["factory_front"]
+    bays = [r for r in front if "burst_bay" in r["art"]]
+    for row in bays + list(arch_rows().values()) + placed:
         art = Image.open(ART / Path(row["art"]).name).convert("RGBA")
         size = (round(row["size_m"][0] * ppm), round(row["size_m"][1] * ppm))
         top = (np.array(row["at"]) - np.array(row["size_m"]) / 2 - origin) * ppm

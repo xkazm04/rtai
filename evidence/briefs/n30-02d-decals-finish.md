@@ -1,0 +1,26 @@
+# Brief n30-02d `decals-finish`: item 2's tyre-mark depth, bars, film, decisions, mutate (lane yard, run n30)
+
+HARD STOP: see the time in the prompt that launched you (report and END). FIRST COMMIT (the tyre change + tests + pilots) started no later than 25 minutes after launch; LAST COMMIT started no later than 12 minutes before the hard stop. Check `date` often. Never amend, never rebase.
+
+## Setup
+Same as `evidence/briefs/n30-03-span-shadow.md` (env exports, d3d12 at `--position 0,1440`, Godot only through repo tools / runGodot, the lane lock `build/yard-godot.lock` with your tag `decals-finish`). Never stage files you did not edit; always `git commit -m ... -- <paths>`.
+
+## Where item 2 stands (read `evidence/yard30/decals_over.md`, commit `8ae5a1925`)
+Decals print over the i55 impression (`5950ceb34`, `ed6b97278`). Contrast after / before (before = `6c32defe4`): dark tyre sweep A 101 %, stains 123-125 %, bay lines 95-103 %, BUT the faint wide tyre arcs (box B, mid camera (1330,5,1560,100)) 76 % at mid and 77 % at gate. The director's look (`build/dec/tyreB_cmp.png`): the tread is crisper after but lighter: under the impression the multiply darkened the stamp; over it, the stamp shows at its own tint alpha only (`torn_line` decal rows, `tyre_turn.png` / `tyre_sweep.png`, tints like `ffffffb0`, `ffffff7e`; `arched_line` inherits them with `decals_over_impression`).
+The n29 bars were not measured: the builder's dusk frames gave no cop pixels. Overlay projects for a "before" arm exist: `C:/Users/kazda/kiro/gtai-n30/dec-before` and `dec-after` (junctions to this worktree's `project` + changed files from git); `git worktree add` stalls 20+ min here, do not use it. Renders in `build/dec/`.
+
+## Work
+1. Tyre depth (ONE data value): add an optional row value on `arched_line` (e.g. `"decal_over_alpha": 1.4`, a multiplier on the tint alpha of the decal stamps drawn over the impression, clamped to 1; absent = 1.0) in `prologue_yard_dressing.gd` / `prologue_yard_paint.gd` + schema, and pick the smallest value that brings tyre B to >= 100 % of before at both cameras without stains going over 140 %. If a multiplier on all stamps over-darkens the stains, scope it to the tyre arts. A unit test pins the value's effect (absent = old alpha). Pilots seeds 7, 3, 11, 21, 42 in ONE Godot process: identical to `evidence/yard30/prologue-yard-pilots-decals.json`. COMMIT 1.
+2. Contrast table again (same boxes, `evidence/yard30/decal_contrast.py`): i20 / before / after, every class after >= before. LOOK at a before | after crop of tyre B and of a stain at 64 px/m.
+3. Readability bars, BOTH arms (before = `6c32defe4` overlay, after = HEAD) with the n29 method (`evidence/yard29/floor_i55_bars.md`: `readability.py`, `rivet_delta.py`, `dusk_contrast.py`, `bars.sh`; read how n29 got the dusk frames with cops in view: the place and tick it used). Bars: patrol blue >= 65 %, rifle >= 95 %, pellet >= 90 %; Rivet delta after not below before - 0.01. If the dusk frames have no cops, use n29's exact place/tick, never publish a number from a frame without the thing measured. Update `evidence/yard30/decals_over.md`.
+4. Film: 32 px/m mid yard, 1080p60, `--place=mid --tick=1757 --frames=1380`, before | after hstack of two 960x1080 crops with tyre marks, bay lines and the forklift in view, labelled (before = 6c32defe4), to `C:/Users/kazda/kiro/gtai-masters/n30/yard/decals_over_before_after_mid_32ppm.mp4` (ffprobe: h264, 1920x1080, 60 fps, 15..40 s). Copy `evidence/yard30/decals_over_64ppm.png` there; 2 entries in `C:/Users/kazda/kiro/gtai-masters/n30/yard/frames.json` (keep valid). Relabel the left half of `evidence/yard30/decals_over_before_after_mid_32ppm.png` as `before: 6c32defe4`.
+5. One `docs/decisions.md` line (check `git diff --quiet docs/decisions.md` first; append and commit at once): `- [2026-11-25] DECISION yard n30 decals over the impression: ...` (the keys, the alpha value, floor L*, contrast, bars, pilots; rejected: a lower impression tint (owner: draw order)). Mutate `node tools/mutate/mutate.mjs --file=project/boot/prologue/prologue_yard_overprint.gd --max=20 --tests=test_prologue_yard_decals_over,test_prologue_yard_overprint` to `evidence/yard30/decals_mutate.txt`. COMMIT 2.
+
+## Owned files (allowlist). Any other path: stop and report a NEED.
+`project/boot/prologue/prologue_yard_dressing.gd`, `prologue_yard_paint.gd`, `prologue_yard_overprint.gd`, `project/data/tables/prologue_yard_dressings.json` (`arched_line` decal value only), its schema, `project/tests/unit/test_prologue_yard_decals_over.gd`, `evidence/yard30/**`, `docs/decisions.md` (one line), `C:/Users/kazda/kiro/gtai-masters/n30/yard/**`, `C:/Users/kazda/kiro/gtai-n30/dec-*`, `build/**`.
+
+## Forbidden
+Every other repo path (`JOURNAL.md`, `REPORT.md`, `evidence/briefs/**`, `project/features/**`), other worktrees, `C:/Users/kazda/kiro/gtai-art/**`. No image generation. No `git add -A/./-u`, `git commit -a`, stash, amend, rebase, reset --hard, push, `--no-verify`. Fix lint and format findings in your own edit and go on.
+
+## Report (final message, then END)
+Commit shas; the value chosen; contrast table; bars both arms; pilots identical yes/no; ffprobe line; mutate score and survivors; what you saw; what was not done.

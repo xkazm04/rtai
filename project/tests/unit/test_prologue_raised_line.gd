@@ -81,7 +81,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
 	assert_eq(look.id, "arched_line")
 	assert_eq(look.ground_shade, 0.81)
-	assert_eq(look.ground.size(), 2)
+	assert_eq(look.ground.size(), 3)
 	assert_eq(look.ground[0].texture, ART + "floor_tile.png")
 	assert_eq(look.ground[1].texture, ART + "floor_stains.png")
 	assert_eq(look.ground[0].tint, Color("ffe0c8ff"))
@@ -91,17 +91,18 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	var raised: Dictionary = _row("raised_line").duplicate(true)
 	assert_true(arched.erase("ground_impression"))
 	assert_true(arched.erase("roof_glow"), "arched_line alone has the roof glow")
+	assert_true(arched.erase("over_print_shade"), "arched_line alone shades the wrecks")
+	assert_true(arched.erase("decals_over_impression"), "arched_line alone prints decals over")
+	assert_true(arched.erase("ochre_over_impression"), "arched_line alone puts bay lines over")
+	assert_true(arched.erase("span_shadow"), "arched_line alone casts the span shadow")
+	assert_true(arched.erase("decal_over_alpha"), "arched_line alone deepens the tyre marks")
 	for key: String in ["ground", "layout", "over_print", "factory_front", "lights"]:
 		assert_true(arched.erase(key))
 		assert_true(raised.erase(key))
-	assert_eq(
-		str(arched),
-		str(raised),
-		"only ground, layout art, over-print, hall front, roof glow and lights differ"
-	)
+	assert_eq(str(arched), str(raised), "only floor, layout, overprint, front, glow, lights differ")
 	var arched_ground: Array = _row("arched_line")["ground"]
 	var raised_ground: Array = _row("raised_line")["ground"]
-	for i: int in arched_ground.size():
+	for i: int in raised_ground.size():
 		var a_row: Dictionary = arched_ground[i]
 		var r_row: Dictionary = raised_ground[i]
 		for key: String in ["rect_m", "texture", "tiled"]:
@@ -192,5 +193,5 @@ func test_arched_line_joins_its_sections_with_five_overhead_spans_and_no_new_cov
 			spans.append(id)
 			assert_true(over.has(id), id + " draws over the print")
 			assert_true(ResourceLoader.exists(str(piece["art"])), id)
-	assert_eq(spans.size(), 5)
+	assert_eq(spans.size(), 6)
 	assert_eq(spans[0] + spans[4], "span_door_feedspan_bend_tail")

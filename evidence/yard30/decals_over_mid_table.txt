@@ -1,0 +1,10 @@
+| decal box | method | i20 | before (6c32defe4) | after (HEAD) | after / before | after / i20 |
+|---|---|---|---|---|---|---|
+| tyre sweep A (left, 2 arcs) | darkest 30 % | 0.1395 | 0.0792 | 0.0890 | 112 % | 64 % |
+| tyre sweep B (right arc) | darkest 30 % | 0.1324 | 0.0680 | 0.0518 | 76 % | 39 % |
+| bay line run 1 (top, horizontal) | most ochre 30 % | 0.1210 | 0.0645 | 0.0663 | 103 % | 55 % |
+| bay line run 2 (vertical posts) | most ochre 30 % | 0.1210 | 0.0650 | 0.0652 | 100 % | 54 % |
+| stain 1 (oil, left) | darkest 30 % | 0.1854 | 0.1199 | 0.1493 | 125 % | 81 % |
+| stain 2 (dark patch, lower left) | darkest 30 % | 0.0734 | 0.0419 | 0.0497 | 119 % | 68 % |
+| mean, dark classes | | 0.1327 | 0.0772 | 0.0849 | 110 % | 64 % |
+| mean, ochre classes | | 0.1210 | 0.0648 | 0.0657 | 101 % | 54 % |

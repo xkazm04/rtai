@@ -1,0 +1,29 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-7c7d36ab at 38372c12 (reused)
+mutate: 12/40 mutant(s); baseline run of test_prologue_yard_decals_over, test_prologue_yard_overprint
+mutate: baseline green in 42.8 s; per-mutant timeout 129 s
+mutate: [1/12] boot/prologue/prologue_yard_overprint.gd:20 boolean  and -> or  killed  (34.9 s)
+mutate: [2/12] boot/prologue/prologue_yard_overprint.gd:20 literal  0.0 -> 1.0  killed  (28.4 s)
+mutate: [3/12] boot/prologue/prologue_yard_overprint.gd:27 boolean  not -> (removed)  survived  (28.3 s)
+mutate: [4/12] boot/prologue/prologue_yard_overprint.gd:38 boolean  true -> false  killed  (24.4 s)
+mutate: [5/12] boot/prologue/prologue_yard_overprint.gd:39 delete  floor_view.add_child(layer) -> pass  killed  (24.8 s)
+mutate: [6/12] boot/prologue/prologue_yard_overprint.gd:40 literal  2 -> 3  survived  (25.6 s)
+mutate: [7/12] boot/prologue/prologue_yard_overprint.gd:40 arith  - -> +  survived  (24.5 s)
+mutate: [8/12] boot/prologue/prologue_yard_overprint.gd:52 delete  PrologueSpanShadow.attach(node, plan, paint) -> pass  survived  (26.9 s)
+mutate: [9/12] boot/prologue/prologue_yard_overprint.gd:80 cmp_flip  != -> ==  killed  (24.8 s)
+mutate: [10/12] boot/prologue/prologue_yard_overprint.gd:86 delete  paint.ground(node, plan.dressing.impression) -> pass  killed  (21.6 s)
+mutate: [11/12] boot/prologue/prologue_yard_overprint.gd:89 delete  paint.ground(node, layer) -> pass  killed  (23.7 s)
+mutate: [12/12] boot/prologue/prologue_yard_overprint.gd:92 delete  paint.stamps(node, plan.dressing.decals_over) -> pass  killed  (29.6 s)
+mutate boot/prologue/prologue_yard_overprint.gd: 12 mutant(s) (sampled from 40), tests: test_prologue_yard_decals_over, test_prologue_yard_overprint
+  boot/prologue/prologue_yard_overprint.gd:27 boolean  not -> (removed)  survived
+  boot/prologue/prologue_yard_overprint.gd:40 literal  2 -> 3  survived
+  boot/prologue/prologue_yard_overprint.gd:40 arith  - -> +  survived
+  boot/prologue/prologue_yard_overprint.gd:52 delete  PrologueSpanShadow.attach(node, plan, paint) -> pass  survived
+  boot/prologue/prologue_yard_overprint.gd:20 boolean  and -> or  killed
+  boot/prologue/prologue_yard_overprint.gd:20 literal  0.0 -> 1.0  killed
+  boot/prologue/prologue_yard_overprint.gd:38 boolean  true -> false  killed
+  boot/prologue/prologue_yard_overprint.gd:39 delete  floor_view.add_child(layer) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:80 cmp_flip  != -> ==  killed
+  boot/prologue/prologue_yard_overprint.gd:86 delete  paint.ground(node, plan.dressing.impression) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:89 delete  paint.ground(node, layer) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:92 delete  paint.stamps(node, plan.dressing.decals_over) -> pass  killed
+score 66.7% = killed 8 / (killed 8 + survived 4); timeout 0, invalid 0; 362 s
