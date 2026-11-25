@@ -50,3 +50,12 @@ Bare-hands harness at 32 px/m, view `tilt`, 16 beats x 60 frames (walk beats 0-7
 
 ## frames.json
 `C:/Users/kazda/kiro/gtai-masters/n29/keys/frames.json`: 14 entries, the sword clip first, then the Gloria clip, the collar still and clip, the HUD pair, the sword stills, the collar neck cells, the rag crops. Scratch removed: `collar/*` scratch is kept (run_* dirs are the evidence behind the drift number).
+
+## Job 2b: collar row 8 (n29-13)
+HEAD at `8f73a1226` (carries `56cb77065` + `e553b6b9e`: rigid collar on sheet row 8, row 4 mirrored). The "before" stays the c649a15d6 runs. Same `run_hands.py` harness, one Godot at a time under the lane mutex.
+- Runs: `collar/run_after8_64` (64 px/m, 16 per-beat frames) and `collar/run_after8_32` (32 px/m, movie, 963 frames), both exit 0.
+- Frame diff after8 vs the old after (`run_after_64`, per-beat frames, threshold 8): only ticks 688 (0-based row 7, walk beat 5, 843 px) and 1648 (0-based row 7, sprint beat 13, 670 px) differ; the other 14 ticks are 0 px. Matches the brief (1-based row 8 = 0-based row 7).
+- Still `collar/collar_p55_row8_before_after_64.png` (tick 1648): top, 200x220 1:1 crop (before | after); bottom, 3x nearest crop of the neck band. Seen: before is the pale, soft orange band; after is a rigid band with black and vermilion diagonal stripes, the same read as row 4. Body, head, arms, legs and shadow identical in the crop. Note: before vs after8 at tick 1648 also counts 906 differing px (threshold 8) outside the neck window (930..1010 x 410..470) over the full frame; not investigated (the before run is the older c649a15d6 build, so other frame content may differ).
+- Clip `collar/collar_p55_32_r8.mp4`, built like `collar_p55_32.mp4` (before | after, 16 beats x 60 frames from tick 58+120*beat, 480x540 crop at 720,270 scaled 2x nearest per side). The old clip is kept.
+- ffprobe: width=1920, height=1080, r_frame_rate=60/1, duration=16.033333, nb_frames=962.
+- Looked at: the frame at 13.5 s (beat 13, the row-7 sprint): after shows the striped collar, before the pale band; body, shadow and ground the same.
