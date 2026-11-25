@@ -26,13 +26,16 @@ SCALE = 0.011
 BEAM_M = 1.25
 END_M = 1.6
 TIP_M = 1.0
-CLIP_HALF_M = 0.85
+CLIP_HALF_M = 1.0
 JOINS = [("door", "e", "feed", "e"), ("feed", "w", "turn", "w"), ("turn", "e", "return", "e"),
          ("return", "w", "bend", "w"), ("bend", "e", "tail", "w")]
 # Guide sheet: where each span's path bounding box sits (top-left px) on which 1774x887 sheet.
 SHEET = (1774, 887)
-SHEET_AT = {"door_feed": (0, 90, 70), "feed_turn": (0, 1150, 110), "bend_tail": (0, 150, 360),
+SHEET_AT = {"door_feed": (0, 90, 70), "feed_turn": (0, 1150, 110), "bend_tail": (2, 650, 140),
             "turn_return": (1, 140, 140), "return_bend": (1, 1000, 110)}
+# The bend's east end to the tail's west end is too tight for a tangent U (sheet 0's piece curled into a
+# hook): that span leaves the bend at a 45 degree elbow, drawn again alone on sheet 2.
+LEAVE_TURN_DEG = {"bend_tail": 45.0}
 
 
 def arch_rows() -> dict:
@@ -66,6 +69,13 @@ def section_ends(row: dict) -> dict:
     return out
 
 
+def turned(end: tuple, deg: float) -> tuple:
+    """A section end with its outward direction turned by deg (clockwise on screen: an elbow joint)."""
+    c, s = np.cos(np.radians(deg)), np.sin(np.radians(deg))
+    d = end[1]
+    return (end[0], np.array([c * d[0] - s * d[1], s * d[0] + c * d[1]]))
+
+
 def span_path(a: tuple, b: tuple, n: int = 80) -> np.ndarray:
     """A cubic Bezier from end a to end b, leaving a and entering b along their outward directions."""
     (p0, d0), (p3, d3) = a, b
@@ -76,9 +86,15 @@ def span_path(a: tuple, b: tuple, n: int = 80) -> np.ndarray:
 
 
 def spans() -> list:
+    """[(name, end a, end b, path)]; an elbow span's end a carries its turned (leaving) direction."""
     rows = arch_rows()
     ends = {k: section_ends(r) for k, r in rows.items()}
-    return [(f"{a}_{b}", ends[a][sa], ends[b][sb], span_path(ends[a][sa], ends[b][sb])) for a, sa, b, sb in JOINS]
+    out = []
+    for a, sa, b, sb in JOINS:
+        name = f"{a}_{b}"
+        start = turned(ends[a][sa], LEAVE_TURN_DEG.get(name, 0.0))
+        out.append((name, start, ends[b][sb], span_path(start, ends[b][sb])))
+    return out
 
 
 def draw_band(draw: ImageDraw.ImageDraw, pts: np.ndarray, width: float, fill, centre=None) -> None:
@@ -93,8 +109,8 @@ def draw_band(draw: ImageDraw.ImageDraw, pts: np.ndarray, width: float, fill, ce
 
 
 def guide(path: Path) -> None:
-    """Two white sheets (side by side in one file) with each span's path as a grey beam band at SCALE."""
-    sheets = [Image.new("RGB", SHEET, "white") for _ in range(2)]
+    """Three white sheets (one file each) with each span's path as a grey beam band at SCALE."""
+    sheets = [Image.new("RGB", SHEET, "white") for _ in range(3)]
     for name, _a, _b, pts in spans():
         sheet, x0, y0 = SHEET_AT[name]
         px = (pts - pts.min(axis=0)) / SCALE + [x0, y0] + BEAM_M / SCALE / 2

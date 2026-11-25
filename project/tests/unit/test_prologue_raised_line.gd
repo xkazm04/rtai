@@ -164,3 +164,27 @@ func test_arched_line_keeps_the_six_boxes_and_hangs_its_belt_as_arch_pieces() ->
 			assert_true(over.has(id), id + " draws over the print")
 			assert_true(ResourceLoader.exists(str(piece["art"])), id)
 	assert_eq(arches, 6)
+
+
+func test_arched_line_joins_its_sections_with_five_overhead_spans_and_no_new_cover() -> void:
+	var arched: Dictionary[String, Dictionary] = _cover("arched_line")
+	for id: String in arched:
+		assert_false(id.begins_with("span_"), id + " must not block")
+	var over: Array = _row("arched_line")["over_print"]
+	var spans: Array[String] = []
+	for piece: Dictionary in _row("arched_line")["layout"]["debris"]:
+		var id: String = piece["id"]
+		if id.begins_with("span_"):
+			spans.append(id)
+			assert_true(over.has(id), id + " draws over the print")
+			assert_true(ResourceLoader.exists(str(piece["art"])), id)
+	assert_eq(
+		spans,
+		[
+			"span_door_feed",
+			"span_feed_turn",
+			"span_turn_return",
+			"span_return_bend",
+			"span_bend_tail"
+		]
+	)

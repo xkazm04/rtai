@@ -23,7 +23,7 @@ from prologue_yard_hall import MARGIN, OUT, SHADOW, WHITE, red_share
 from prologue_yard_spans_layout import BEAM_M, SCALE, SHEET, SHEET_AT, draw_band, CLIP_HALF_M, TIP_M, end_gap, end_region, spans
 
 HERE = Path(__file__).resolve().parent
-SOURCES = {0: "belt-spans", 1: "belt-spans-b"}
+SOURCES = {0: "belt-spans", 1: "belt-spans-b", 2: "belt-spans-c"}
 REACH_PX = 40
 RIDGE = 0.3
 

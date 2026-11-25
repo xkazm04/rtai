@@ -895,6 +895,76 @@
               3.674
             ],
             "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_door_feed.png",
+            "at": [
+              31.675,
+              0.297
+            ],
+            "id": "span_door_feed",
+            "rotation_deg": 0,
+            "size_m": [
+              8.514,
+              4.928
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_feed_turn.png",
+            "at": [
+              27.607,
+              4.837
+            ],
+            "id": "span_feed_turn",
+            "rotation_deg": 0,
+            "size_m": [
+              6.039,
+              5.269
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_turn_return.png",
+            "at": [
+              36.358,
+              8.977
+            ],
+            "id": "span_turn_return",
+            "rotation_deg": 0,
+            "size_m": [
+              7.161,
+              6.204
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_return_bend.png",
+            "at": [
+              22.707,
+              12.582
+            ],
+            "id": "span_return_bend",
+            "rotation_deg": 0,
+            "size_m": [
+              6.963,
+              7.491
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_bend_tail.png",
+            "at": [
+              28.694,
+              17.395
+            ],
+            "id": "span_bend_tail",
+            "rotation_deg": 0,
+            "size_m": [
+              4.367,
+              5.687
+            ],
+            "tint": "ffffffff"
           }
         ]
       },
@@ -1088,7 +1158,12 @@
         "arch_turn",
         "arch_return",
         "arch_bend",
-        "arch_tail"
+        "arch_tail",
+        "span_door_feed",
+        "span_feed_turn",
+        "span_turn_return",
+        "span_return_bend",
+        "span_bend_tail"
       ],
       "paint_from": "torn_line",
       "phone": {
