@@ -191,3 +191,10 @@ NEXT (session 7):
 3. REPORT final by 18:55: drop the DRAFT line, add n30-22 (5 min, accepted) and n30-23 (6 min, accepted) to the builder ledger,
    frames.json check (15, all exist), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
 4. Temp (this lane's, for the Director's cleanup): gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
+
+## Session 7 (15:55 - 17:25)
+- 15:56 git log: fd8ea31e1 top, as session 6 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free. Images 60/60.
+- 15:58 DECISION reels gate now, not after the freeze: the lane's code and art froze at 22d3c0fb1 (every later commit is evidence/journal/
+  report, inert), this session stops at 17:25, and at 18:45 all four lanes' final gates would contend for the 16 GB cap. n29 keys did the
+  same (its REPORT: reels gate before the freeze on purpose). If a later commit touches code, the reels gate is re-run.
+- 15:58 GATE started by me: `node tools/gate/run.mjs --rev=HEAD --reels` (fd8ea31e1) -> build/n30-dir/gate3.out; lane lock tag director-gate.
