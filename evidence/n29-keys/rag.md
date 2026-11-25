@@ -72,3 +72,8 @@ Tests: `run_unit.mjs --changed`: 1158 passed, 0 failed. No pin changed.
 In-game still: `gtai-masters/n29/keys/rag/molotov_ingame_64.png` (1:1 crop, 64 px/m, after only; the walk-grid capture
 `capture28.py molotov rag2`, tick 670, `rivet_walk_eq_molotov.png`, full frames in
 `gtai-masters/n29/keys/gloria/grid_molotov_arena/rag2_64/`). Flame amber, collar vermilion. No before still (no worktree at the old commit was built).
+
+## The last five cells (n29-06 step 2)
+`evidence/n29-keys/rag/leftover_cells.py` (hand-checked flame boxes after 6x crops; same `_ref.remap`): `p55/rivet_eq_molotov.png` cells 1 and 7,
+`p55/rivet_eq_molotov_left.png` cell 2, `p70/rivet_walk_eq_molotov.png` cells 5 and 9 (changed px 204, 192, 105, 284, 287). Changed outside the boxes 0, alpha
+unchanged (`rag/leftover_proof.json`). Before | after 4x: `gtai-masters/n29/keys/rag/leftover_cells_4x.png` (looked at: flames amber; collar, visor and body unchanged).
