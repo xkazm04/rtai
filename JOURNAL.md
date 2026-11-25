@@ -472,3 +472,8 @@ NEXT update (session 6): step 0 is DONE (gate PASS, in REPORT). Remaining: (1) r
 NEXT: nothing open in the lane. Director merges `n29-cast`; owner calls stand (thug on, pile-driver WALK FOUR/EIGHT, door
   eight). Temp snapshots `gtai-gate-42ac8613b0be`, `gtai-gate-9a99caebb973`, `gtai-mutate-49b1f428` are this lane's for the
   merge cleanup. IMAGES 21/60. BUILDER RUNNING: none.
+- 08:47 MILESTONE session 7 (STABILIZE, iteration 7): tree clean on `8405ce88f`; reels gate PASS already quoted in REPORT;
+  `cites.mjs REPORT.md` 13 paths, 12 ok, 1 pattern (exit 0); no `NEED cast` in the keys, combat or yard journals. No code,
+  no builder, no Godot this session.
+NEXT: nothing open in the lane. Director merges `n29-cast` (gate PASS `build/gate/9a99caebb973/gate.json`, reels PASS).
+  Owner calls stand (thug on, pile-driver WALK FOUR/EIGHT, door eight). IMAGES 21/60. BUILDER RUNNING: none.
