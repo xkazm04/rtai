@@ -168,3 +168,18 @@ NEXT (session 3, from ~04:05), in order:
   except the clip; item 2 (flash) done except mutate and a street clip; item 3 thug step 1 committed; item 4 art for door8
   (10) and war8 (10) generated, cut briefs 06/07 ready. IMAGES 20/60.
 - 03:37 MILESTONE session 2 end. No builder running.
+- 03:36 MILESTONE session 3 start. No `NEED cast` in the other lanes' journals. 03a thug cut is in (`75b0374d0`).
+- 03:38 DECISION thug step 2 and door8 run in parallel on split files: the thug builder owns `cast_cards.json`,
+  `cast_cards.gd`, `cast_card_kinds.gd`, `arena_robot_rigs.gd`, `cast_feet*.gd/.py/.mjs` and new `cast_thug_*`; the door builder
+  owns `cast_door_anchors.gd`, `foe_shield_card_view.gd`, `cast_foe_eight.py`, `cast_foe_soles.py`, `cast_door_*.py`,
+  `test_cast_door.gd`, `cast-audit.md`, provenance, and makes the WALK switch live inside the generated anchors file (or ships
+  WALK = FOUR with a NEED diff). Both commit with a pathspec; one lane Godot lock.
+- 03:38 BUILDER RUNNING cast-03b-thug-card (opus) since 03:38: `evidence/briefs/n29-cast-03b-thug-card.md`, row off, hard stop 04:50.
+- 03:38 BUILDER RUNNING cast-06-door8 (opus) since 03:38: `evidence/briefs/n29-cast-06-door8.md` (+ Added 03:45), hard stop 04:50.
+- 03:37 MILESTONE teal check closed (director, by read): `shield_robot_armed_walk.png` px with hue 160-200, S >= 0.35,
+  V >= 0.35 = 33 (p70) / 68 (p55) of ~0.4 M opaque, all single specks on the blue-steel plate rims (e.g. 46,93,115);
+  marked crop `build/look/dir3/door_teal_p70.png`: no teal read anywhere, not a souls-colour conflict. Without the V floor the
+  count is 9035 (near-black ink with a cyan cast): the n29-05 count of 34 matches the V-floored one.
+- 03:37 MILESTONE looked at `size_after_32.png`: the one patrol cop in each panel is jittered small (43 px at 32 = 0.86), so
+  the contractor (49) and warden (51) read 1.14-1.19x a cop. Matched to the unjittered cop (50 at 32) they are 0.98-1.02.
+  The owed 32 px/m clip (brief `n29-cast-08-films.md`, written) shows three cops with their heights labelled.

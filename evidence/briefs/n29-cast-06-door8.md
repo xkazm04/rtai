@@ -1,7 +1,7 @@
 # Brief n29-cast-06: the door carrier walks on 8 drawings (sole slide under 2 px)
 
 Lane `cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd), branch `n29-cast`. You are a builder sub-agent.
-**Hard stop HARDSTOP local** (check `date +%H:%M` often). **Commit part 1 by COMMIT1, part 2 by COMMIT2.** Never end with
+**Hard stop 04:50 local** (check `date +%H:%M` often). **Commit part 1 by 04:15, part 2 by 04:32 (start it then at the latest).** Never end with
 finished work uncommitted. Then report and END.
 
 ## Goal (owner's pick)
@@ -28,14 +28,14 @@ not fit), regenerate `cast_door_anchors.gd` with `EIGHT`/`FOUR`/`WALK` like the 
 the way the gunner's view takes its EIGHT. The door stays the same size (the card scale builder already wired `body_scale`
 into this view: keep that line).
 
-## Part 1 (commit by COMMIT1): cut, pack, key-clean, provenance, import
+## Part 1 (commit by 04:15): cut, pack, key-clean, provenance, import
 `project/features/characters/art/view/{p70,p55}/shield_robot_planted8_armed_walk.png` (+ `.import` after one Godot `--import`),
 body height = the shipped four-drawing sheet's (quote both), key-clean: zero opaque (alpha >= 128) px with a 50-level green or
 magenta lead (quote counts); no red or vermilion introduced (strict-red px count before/after, hazard stripes stay amber).
 Look at each packed sheet at 1x on grey yourself (Read tool on a PNG you compose under `build/look/n29-door8/`) and say what
 you see per facing. One `steam/ai-provenance/2026-11.jsonl` line per shipped PNG (model: the gunner's lines).
 
-## Part 2 (commit by COMMIT2): anchors, view, audit, film
+## Part 2 (commit by 04:32 (start it then at the latest)): anchors, view, audit, film
 Regenerate the anchors; switch `WALK` to EIGHT; the feet audit table (before = shipped four-drawing anchored walk, after =
 eight) per pitch and facing: sole slide, body jump, PASS/FAIL against the bars, measured the way `cast_door_soles.py` /
 `cast_door_film_soles.py` measured n28 (in the delivered film frames, not a lineup). Append the table to
@@ -76,3 +76,25 @@ Forbidden: `cast_cards.json` unless the 8-drawing sheet must be named there (the
 ## Report (then END)
 Commit shas, per-facing body heights, key-clean counts, what you saw per facing, the feet table before/after, WALK value
 shipped, `run_unit --changed` line, quick gate line, film path + ffprobe duration, mutate score, what you could not do.
+
+## Added 03:45 (director, session 3): a second builder runs beside you; these bind
+- The thug builder works in this worktree at the same time. Its files are **forbidden** to you: `project/data/tables/cast_cards.json`
+  (and its schema), `project/features/characters/cast_cards.gd`, `cast_card_kinds.gd`, `cast_thug_*`, `foe_thug_card_view.gd`,
+  `project/features/arena/arena_robot_rigs.gd`, `project/dev/cast/cast_feet.gd`, `cast_feet_frame.gd`, `project/dev/cast/cast_thug_*`,
+  `tools/art/cast_feet.py`, `cast_feet.mjs`, `tools/art/cast_thug_*`, `evidence/n29/thug/**`. Never stage or revert them;
+  commit only your paths with `git commit -- <paths>`.
+- `cast_card_kinds.gd` reads `CastDoorAnchors.SHEET`, `WALK70/WALK55`, `WALK_STEP_M` (lines ~22, 72-73, 92-93, 99, 106). Make
+  the switch live **inside `cast_door_anchors.gd`** (generated): e.g. `SHEET` resolves to the selected walk
+  (`const SHEET: String = WALK`) and the emitted `WALK70`/`WALK55`/`WALK_STEP_M` are the selected walk's anchors, so
+  `cast_card_kinds.gd` needs no edit. Check that the card code does not assume four columns for the door sheet (read
+  `cast_card_kinds.gd` / `cast_cards.gd`; a column count read from the sheet or a const is fine). If the switch truly cannot
+  go live without editing a forbidden file: ship sheets + anchors with `WALK = FOUR`, write the exact diff the forbidden file
+  needs in your report (a NEED), and still measure the eight-drawing walk if your take tool can force it.
+- `project/dev/cast/cast_feet.gd` is the thug builder's: if your door film needs a change there, use a new
+  `project/dev/cast/cast_door8_*` scene instead (allowed), or report a NEED.
+- Lane Godot lock is shared with the thug builder: hold it for one run at a time and release it right after.
+- If `debt-ratchet` fails, `node tools/debt/debt.mjs --update` (add `--accept-regression="door8 for n29 cast"` if it rises) and
+  include `tools/debt/baseline.json` in your commit. One `docs/decisions.md` line (append) only if WALK switches to EIGHT.
+- Allowed extra: new `project/dev/cast/cast_door8_*` (+ `.uid`, `.tscn`), `docs/decisions.md` (append one line).
+- Never delete anything in Temp (or anywhere) you did not create: report it instead.
+- `node tools/tests/run_unit.mjs --changed`: quote the summary line in the report.
