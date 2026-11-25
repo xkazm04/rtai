@@ -1,9 +1,8 @@
 extends ArenaGame
-## n31 melee 01c: the DRAWN swing from rendered pixels (real arena, --ppm 64, tilt 70, no other
-## body). Rivet swings once per facing (0, 90, 315); per facing raw RGB8 crops around him:
-## `<f>_bg.rgb` (Rivet hidden), `<f>_idle.rgb`, `<f>_k<k>.rgb` (k 0 = the press), plus frames.json
-## (crop, world-to-screen, gun-height lift, cut ticks) for tools/melee/blade_volume.mjs.
-## Env: GTAI_BLADE_WEAPON, GTAI_BLADE_OUT (dir). Windowed GPU run (d3d12), dev only.
+## n31 melee 01c/01d: the DRAWN swing from rendered pixels (arena, --ppm 64, tilt 70, no other body)
+## for tools/melee/blade_volume.mjs. Per facing (0, 90, 315) RGB8 crops: `<f>_bg` (Rivet hidden),
+## `<f>_idle`, each tick k (0 = press) twice, sim held: `<f>_k<k>` and `_nw` (held view hidden:
+## weapon, swipe, smear) + frames.json. Env GTAI_BLADE_WEAPON, GTAI_BLADE_OUT. d3d12, dev only.
 
 const FROM: Vector2 = Vector2(5, -38)
 const FACINGS: Array[float] = [0.0, 90.0, 315.0]
@@ -26,6 +25,8 @@ var _meta: Dictionary = {}
 var _cut: Array[int] = []
 var _land: Array[int] = []
 var _seen: int = 0
+var _nw_frame: bool = false
+var _poses: Dictionary = {}
 
 
 func _ready() -> void:
@@ -53,11 +54,13 @@ func _process(_delta: float) -> void:
 		return
 	if _held == null:
 		_first()
+	_nw_frame = not _nw_frame and _k >= 0 and _k <= K_END
+	if _nw_frame:  # the same tick again, held view hidden (no step: the sim and rigs hold)
+		return
 	if _k == -WAIT - 1:
 		_setup()
 	_k += 1
-	var aim: Vector2 = Vector2.from_angle(deg_to_rad(FACINGS[_fi]))
-	OpeningFilmPad.sticks(Vector2.ZERO, aim)
+	OpeningFilmPad.sticks(Vector2.ZERO, Vector2.from_angle(deg_to_rad(FACINGS[_fi])))
 	OpeningFilmPad.button(&"fire", 1.0 if _k == 0 else 0.0)
 	session.step()
 	_record()
@@ -100,23 +103,26 @@ func _setup() -> void:
 	_cut = []
 	_land = []
 	_seen = session.pilot.melee.landed + session.pilot.melee.whiffs
+	_poses = {}
 
 
-## After the views processed: every other body's rig hidden (an empty arena: no walker mixes in);
-## Rivet's rig and held view hidden for the background frame (k -3) only.
+## After the views: other rigs hidden (empty arena); Rivet's hidden for the bg frame (k -3) only.
 func _late() -> void:
 	var mine: CutRig = _held.rigs.rig_for(_held.rivet_id)
 	for n: Node in find_children("*", "CutRig", true, false):
 		var rig: CutRig = n as CutRig
 		rig.visible = rig == mine and _k != -3
-	_held.visible = _k != -3
+	_held.visible = _k != -3 and not _nw_frame
 
 
 func _record() -> void:
 	var melee: PlayerMelee = session.pilot.melee
 	var rig: CutRig = _held.rigs.rig_for(_held.rivet_id)
-	if _k >= 0 and rig != null and MeleeSwing.cutting(rig.clips.strike_t, rig.clips.strike_ph):
-		_cut.append(_k)
+	if _k >= 0 and rig != null:
+		var d: Vector2 = session.stage.arena.rivet.pos - _origin
+		_poses[str(_k)] = [d.x, d.y, rig.clips.strike_t]
+		if MeleeSwing.cutting(rig.clips.strike_t, rig.clips.strike_ph):
+			_cut.append(_k)
 	if melee.landed + melee.whiffs != _seen:
 		_seen = melee.landed + melee.whiffs
 		_land.append(_k)
@@ -139,35 +145,25 @@ func _capture() -> void:
 	crop = crop.intersection(Rect2i(Vector2i.ZERO, im.get_size()))
 	var part: Image = im.get_region(crop)
 	part.convert(Image.FORMAT_RGB8)
-	var path: String = out_dir.path_join("%s_%s.rgb" % [facing, name])
-	var f: FileAccess = FileAccess.open(path, FileAccess.WRITE)
-	if f == null:
-		_fail("could not write in " + out_dir)
-		return
-	@warning_ignore("return_value_discarded")
-	f.store_buffer(part.get_data())
-	f.close()
+	_write("%s_%s.rgb" % [facing, name], part.get_data())
 	if name == "idle":
 		_meta["facings"][facing] = _facing_meta(crop, world_to_screen, at)
-	if _k >= K_END:
+	if _k >= K_END and _nw_frame:
 		_next(facing)
 
 
 func _name_of(k: int) -> String:
-	if k == -3:
-		return "bg"
-	if k == -1:
-		return "idle"
-	return "k%d" % k if k >= 0 and k <= K_END else ""
+	if k < 0 or k > K_END:
+		return str({-3: "bg", -1: "idle"}.get(k, ""))
+	return "k%d_nw" % k if _nw_frame else "k%d" % k
 
 
 func _facing_meta(crop: Rect2i, t: Transform2D, at: Vector2) -> Dictionary:
-	var lift: Vector2 = ShotLift.up_m()
 	var m: Dictionary = {"crop": [crop.position.x, crop.position.y, crop.size.x, crop.size.y]}
 	m["world_to_screen"] = [t.x.x, t.x.y, t.y.x, t.y.y, t.origin.x, t.origin.y]
 	m["origin_m"] = [_origin.x, _origin.y]
 	m["rivet_screen"] = [at.x, at.y]
-	m["lift_m"] = [lift.x, lift.y]
+	m["lift_m"] = [ShotLift.up_m().x, ShotLift.up_m().y]
 	m["pitch_deg"] = ViewMode.shared().pitch_deg
 	return m
 
@@ -177,21 +173,25 @@ func _next(facing: String) -> void:
 	m["cut_ks"] = _cut.duplicate()
 	m["land_ks"] = _land.duplicate()
 	m["k_end"] = K_END
+	m["poses"] = _poses.duplicate()
 	Log.info("blade_pixels", "%s facing %s cut %s land %s" % [weapon, facing, _cut, _land])
 	_fi += 1
 	_k = -WAIT - 1
 	if _fi < FACINGS.size():
 		return
 	set_process(false)
-	var f: FileAccess = FileAccess.open(out_dir.path_join("frames.json"), FileAccess.WRITE)
+	_write("frames.json", JSON.stringify(_meta, "\t").to_utf8_buffer())
+	get_tree().quit(0)
+
+
+func _write(file: String, bytes: PackedByteArray) -> void:
+	var f: FileAccess = FileAccess.open(out_dir.path_join(file), FileAccess.WRITE)
 	if f == null:
-		_fail("could not write frames.json")
+		_fail("could not write " + file)
 		return
 	@warning_ignore("return_value_discarded")
-	f.store_string(JSON.stringify(_meta, "\t"))
+	f.store_buffer(bytes)
 	f.close()
-	Log.info("blade_pixels", "%s done" % weapon)
-	get_tree().quit(0)
 
 
 func _fail(why: String) -> void:

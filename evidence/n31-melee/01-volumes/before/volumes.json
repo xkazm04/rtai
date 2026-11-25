@@ -3,7 +3,7 @@
 	"source": "pixels",
 	"label": "before",
 	"head": "ba8e470b0",
-	"tree": "C:\\Users\\kazda\\AppData\\Local\\Temp\\gtai-melee-01c-base",
+	"tree": "C:\\Users\\kazda\\AppData\\Local\\Temp\\gtai-melee-01d-base",
 	"hits": "C:\\Users\\kazda\\kiro\\gtai-wt\\n23-street\\evidence\\n31-melee\\01-volumes\\before-model",
 	"ppm": 64,
 	"pitch_deg": 70,
@@ -15,7 +15,74 @@
 			"hit_not_drawn": 0,
 			"both": 8,
 			"neither": 39,
-			"drawn_no_hit_after_test": 11,
+			"drawn_no_hit_after_test": 12,
+			"drawn_no_hit_in_cut": 13,
+			"repeats": [
+				{
+					"k": 1,
+					"strike_t": 0.05,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 7,
+					"strike_t": 0.15,
+					"prev_strike_t": 0.133333333333333
+				},
+				{
+					"k": 8,
+					"strike_t": 0.166666666666667,
+					"prev_strike_t": 0.15
+				},
+				{
+					"k": 9,
+					"strike_t": 0.183333333333333,
+					"prev_strike_t": 0.166666666666667
+				},
+				{
+					"k": 47,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 48,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 50,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 52,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 53,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 54,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 55,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 56,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				}
+			],
+			"overlays": [
+				5,
+				7
+			],
 			"hit_test_ks": [
 				4
 			],
@@ -42,11 +109,68 @@
 		{
 			"weapon": "chainsaw",
 			"weapon_id": "chainsaw",
-			"drawn_no_hit": 27,
+			"drawn_no_hit": 25,
 			"hit_not_drawn": 0,
 			"both": 6,
-			"neither": 27,
-			"drawn_no_hit_after_test": 23,
+			"neither": 29,
+			"drawn_no_hit_after_test": 20,
+			"drawn_no_hit_in_cut": 18,
+			"repeats": [
+				{
+					"k": 13,
+					"strike_t": 0.25,
+					"prev_strike_t": 0.233333333333333
+				},
+				{
+					"k": 48,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 49,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 50,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 51,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 52,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 53,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 54,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 55,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 56,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				}
+			],
+			"overlays": [
+				12,
+				16
+			],
 			"hit_test_ks": [
 				11,
 				22,
@@ -75,11 +199,78 @@
 		{
 			"weapon": "electro_baton",
 			"weapon_id": "electro_baton",
-			"drawn_no_hit": 21,
+			"drawn_no_hit": 18,
 			"hit_not_drawn": 0,
 			"both": 7,
-			"neither": 32,
-			"drawn_no_hit_after_test": 19,
+			"neither": 35,
+			"drawn_no_hit_after_test": 17,
+			"drawn_no_hit_in_cut": 17,
+			"repeats": [
+				{
+					"k": 3,
+					"strike_t": 0.0833333333333333,
+					"prev_strike_t": 0.0666666666666667
+				},
+				{
+					"k": 4,
+					"strike_t": 0.1,
+					"prev_strike_t": 0.0833333333333333
+				},
+				{
+					"k": 47,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 48,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 49,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 50,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 51,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 52,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 53,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 54,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 55,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 56,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				}
+			],
+			"overlays": [
+				4,
+				6
+			],
 			"hit_test_ks": [
 				3
 			],
@@ -89,12 +280,12 @@
 			],
 			"drawn_window": [
 				0,
-				19
+				18
 			],
 			"overlay_k": 4,
 			"overlap_window": [
 				0,
-				19
+				18
 			],
 			"mover": {
 				"trials": 14,
@@ -106,11 +297,63 @@
 		{
 			"weapon": "katana",
 			"weapon_id": "katana",
-			"drawn_no_hit": 19,
+			"drawn_no_hit": 16,
 			"hit_not_drawn": 3,
 			"both": 13,
-			"neither": 25,
+			"neither": 28,
 			"drawn_no_hit_after_test": 13,
+			"drawn_no_hit_in_cut": 13,
+			"repeats": [
+				{
+					"k": 48,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 49,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 50,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 51,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 52,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 53,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 54,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 55,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 56,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				}
+			],
+			"overlays": [
+				7,
+				10
+			],
 			"hit_test_ks": [
 				6
 			],
@@ -137,11 +380,73 @@
 		{
 			"weapon": "plasma_sword",
 			"weapon_id": "plasma_sword",
-			"drawn_no_hit": 19,
-			"hit_not_drawn": 10,
-			"both": 15,
-			"neither": 16,
-			"drawn_no_hit_after_test": 15,
+			"drawn_no_hit": 13,
+			"hit_not_drawn": 8,
+			"both": 17,
+			"neither": 22,
+			"drawn_no_hit_after_test": 10,
+			"drawn_no_hit_in_cut": 10,
+			"repeats": [
+				{
+					"k": 9,
+					"strike_t": 0.183333333333333,
+					"prev_strike_t": 0.166666666666667
+				},
+				{
+					"k": 47,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 48,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 49,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 50,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 51,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 52,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 53,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 54,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 55,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				},
+				{
+					"k": 56,
+					"strike_t": -1,
+					"prev_strike_t": -1
+				}
+			],
+			"overlays": [
+				8,
+				14
+			],
 			"hit_test_ks": [
 				7
 			],
@@ -161,7 +466,7 @@
 			"mover": {
 				"trials": 14,
 				"hit": 14,
-				"drawn": 13,
+				"drawn": 14,
 				"drawn_no_hit": 0
 			}
 		}

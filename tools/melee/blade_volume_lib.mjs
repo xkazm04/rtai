@@ -59,8 +59,8 @@ export function table(summary) {
 
 /** 01c: the per-weapon markdown table of the pixel drawn side (gtai.blade-volumes/2). */
 export function pixelTable(summary) {
-  const head = '| weapon | drawn-no-hit /60 | of them drawn after the test | hit-not-drawn /60 | both | hit test k | cut k (clip) | drawn mask k | overlaps drawn k | mover hit / drawn / drawn-no-hit (of 14) |';
-  const rule = '|---|---|---|---|---|---|---|---|---|---|';
-  const rows = summary.weapons.map((w) => `| ${w.weapon} (${w.weapon_id}) | ${w.drawn_no_hit} | ${w.drawn_no_hit_after_test} | ${w.hit_not_drawn} | ${w.both} | ${w.hit_test_ks.join(', ')} | ${fmtSpan(w.cut_window)} | ${fmtSpan(w.drawn_window)} | ${fmtSpan(w.overlap_window)} | ${w.mover.hit} / ${w.mover.drawn} / ${w.mover.drawn_no_hit} |`);
+  const head = '| weapon | drawn-no-hit /60 | inside the cut ticks | of them drawn after the test | hit-not-drawn /60 | both | hit test k | cut k (clip) | drawn mask k | overlaps drawn k | mover hit / drawn / drawn-no-hit (of 14) |';
+  const rule = '|---|---|---|---|---|---|---|---|---|---|---|';
+  const rows = summary.weapons.map((w) => `| ${w.weapon} (${w.weapon_id}) | ${w.drawn_no_hit} | ${w.drawn_no_hit_in_cut ?? '-'} | ${w.drawn_no_hit_after_test} | ${w.hit_not_drawn} | ${w.both} | ${w.hit_test_ks.join(', ')} | ${fmtSpan(w.cut_window)} | ${fmtSpan(w.drawn_window)} | ${fmtSpan(w.overlap_window)} | ${w.mover.hit} / ${w.mover.drawn} / ${w.mover.drawn_no_hit} |`);
   return [head, rule, ...rows].join('\n') + '\n';
 }

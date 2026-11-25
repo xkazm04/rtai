@@ -11,10 +11,12 @@ const ALL = ['hands', 'chainsaw', 'electro_baton', 'katana', 'plasma_sword'];
 const SCENE = 'res://dev/melee_n31/blade_volume.tscn';
 const BASE = ['--enemy-brain=squad', '--silent', '--seed=20261109'];
 let arg = null;
+// 01d: --game-flags=--melee-sweep (comma list) reaches the hit probe, so an after that changes hit rules is measured.
+const gameFlags = () => (arg('game-flags', '') ? arg('game-flags', '').split(',') : []);
 
 async function measure(weapon, scratch) {
   const env = { ...process.env, GTAI_BLADE_WEAPON: weapon, GTAI_BLADE_OUT: scratch };
-  const r = await runGodot(['--fixed-fps', '60', SCENE, '--', ...BASE], { name: 'blade-volume', env, timeoutMs: 420000, onLine: (l) => /blade_volume|SCRIPT ERROR|ERROR/.test(l) && console.log(l) });
+  const r = await runGodot(['--fixed-fps', '60', SCENE, '--', ...BASE, ...gameFlags()], { name: 'blade-volume', env, timeoutMs: 420000, onLine: (l) => /blade_volume|SCRIPT ERROR|ERROR/.test(l) && console.log(l) });
   writeFileSync(join(scratch, `${weapon}.log`), r.out);
   if (r.status !== 0 || r.timedOut || SCRIPT_ERROR.test(r.out) || /\[ERROR\] blade_/.test(r.out)) {
     throw Error(`${weapon}: exit ${r.status}${r.timedOut ? ' timed out' : ''}; see ${join(scratch, weapon + '.log')}`);
