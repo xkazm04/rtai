@@ -157,3 +157,9 @@ NEXT-S5 (session 5, from 16:25; commit last new work by 17:15, final gate by 17:
 2. While it runs: nothing else on Godot. After its door commit: one sonnet call for the decisions.md line ("DECISION n30 cast held walk cell pins the sole: ...", numbers from c21a/c21b).
 3. Final gate `node tools/gate/run.mjs --rev=HEAD --reels` after the last code commit (detached via a .cmd like `build/gate-n30-s4.cmd`, lane lock `gate`; ~16 + 14 min), started by 17:30.
 4. REPORT: What works row for the sole pin (four numbers), door row, Next steps 5 -> done or open, ledger rows c21a/c21b/..., gate line on the final commit; `node tools/evidence/cites.mjs REPORT.md`; commit.
+- 16:09 BUILDER c21p (sonnet) launched: apply fix.patch, unit door/foe walks, 64 still of the fixed four to build/look/n30-c21p/, REVERT by 16:20, notes appended to build/look/n30-c21/NOTES.md. No commit. If the session dies first: session 5 checks `git status` (foe_shield_card_view.gd may still be patched: then c21b skips its git apply) and deletes a stale `c21p` lane lock.
+- 16:11 BUILDER c21p 2 accepted: fix.patch applied, `unit-tests: 12 passed, 0 failed, 0 skipped` (test_cast_door_walk, test_cast_foe_walks), still `build/look/n30-c21p/after_64.png` (cast_door_films stills, harness: four left | eight right, fix applied), view reverted, lock gone. LOOKED: both door carriers mid-stride with the soles on the footprint row; the four's footprints dense and even, the eight's sparse. Harness still, not the game: c21b still makes the before | after masters still.
+- NEXT-S5 update: c21b may skip its unit run (12/0 on the patch at 16:10) but must re-run it if anything else lands first.
+
+## Session 4 end (written 16:12)
+No builder running; lane lock free; tree clean except this journal. Session 4 ledger: c14 29 acc, c16 34 acc, c18 4 acc, c17 17 acc, c19 8 acc, c20 3 acc, c21a 6 acc, c21p 2 acc. IMAGES 16/60. Gate PASS on 5e32a5e72. Start session 5 with NEXT-S5.
