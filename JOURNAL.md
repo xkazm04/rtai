@@ -127,7 +127,8 @@ Weak spots for REPORT: sword run step 8.29 cm (donor katana 7.76); collar rows 3
 - 05:37 REPORT.md drafted whole except {GATE}; cites 9 paths 8 ok 1 pattern.
 
 NEXT (session 5, from ~06:22):
-1. The gate started 05:37 on 5d956b26e (node pid 32648, `build/gate-n29-final.out`, log `build/gate/5d956b26e27f/evidence.log`, gate.json there). If it is still running, let it finish; then `rm build/n29-godot.lock` (held 'gate'). Quote its `gate:` line + gate.json path into REPORT `{GATE}`. If it FAILS on a load timeout only, re-run the named scenarios alone (as n28) and say so.
+1. DONE: gate PASS on 5d956b26e (05:54, build/gate/5d956b26e27f/gate.json), lock released; REPORT has the line ({REELS} placeholder left for the reels run).
 2. After 08:45 freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once (about 40 + 22 min: start by 07:50 at the latest, it is the only Godot).
 3. No product work queued: rows 3/6/7/8 collar + item-art colours are owner calls; images 58/60. Optional if time: nothing that needs a commit after 07:15.
 4. REPORT: fill {GATE}, re-run `node tools/evidence/cites.mjs REPORT.md`, commit by 08:55.
+- 05:54 MILESTONE gate PASS on 5d956b26e: lint 19/19, unit 4238/0, scenarios 68, parity bit for bit, selftest, export-audit 997/0 (`build/gate/5d956b26e27f/gate.json`); 17 min. Lock released.
