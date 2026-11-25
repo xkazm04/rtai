@@ -326,3 +326,13 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
 - 05:51 DECISION thug `body_scale` 1.45 -> 1.42 (one value; 55 at ~0.99 of Rivet, 70 at ~0.92): the owner's rule keeps
   enemies near Rivet's size, never taller; 1.40 fallback if 55 still > 1.00.
 - 05:52 BUILDER RUNNING cast-03e-thug-fixes (sonnet) since 05:52: `evidence/briefs/n29-cast-03e-thug-fixes.md` (+ Added 05:51), hard stop 06:15.
+- 05:53 STATE of the owner's four items: (1) card foe scale: measured + applied in session 1-2 (`31df5170f`, `51de13fb6`,
+  decisions.md line 1570), films `size_after_{64,32}.png`, `size_beside_32.mp4` (nominal labels, three cops). DONE.
+  (2) hit flash door + gunner: on the live path (`c0a1b816e`), film + 64 still. DONE. (3) robot thug A: cut, card, foot
+  line, poses + fight film, palette/shadow/fall PASS; open: size 55 (03e running), stop at 70, ink, rim; row OFF.
+  (4) walk art: door eight shipped one value away, FOUR kept (measured worse); war eight cut in, anchors/view (p2a running).
+- 05:52 MILESTONE `d9bfe36a7`: thug body_scale 1.45 -> 1.42 (one value). Measured in the beside frames: 55 deg 147/150
+  (64) and 73/75 (32) of Rivet = 0.98 / 0.97; 70 deg 141/154 and 70/77 = 0.92 / 0.91. Size point PASS at both pitches.
+- 05:56 BUILDER cast-03e-thug-fixes (call 1) 4 accepted: `d9bfe36a7` (size), `b9e434fc4` (stop cause, unconfirmed: the ring child
+  at the card origin, solved onto the torso mark by the walk placement). drawings/s ~8.6 computed (not observed).
+- 05:56 BUILDER RUNNING cast-03e-thug-fixes call 2 (sonnet) since 05:57: the stop fix, hard stop 06:16.

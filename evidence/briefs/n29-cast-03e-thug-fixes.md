@@ -46,3 +46,11 @@ before/after, walk feet after, the test, `run_unit --changed` line, NEEDs, what 
 Do fail 1 (size) and commit it by 06:02. Then start fail 2: find and write down the cause in `evidence/n29/thug/fixes.md`
 (commit that file by 06:08 even if the fix is not done); a later call makes the fix from your notes. The opus war builder
 runs beside you until 06:14 (`foe_war_card_view.gd`, `cast_war_*`, `test_cast_war_machine.gd`): never stage or revert them.
+
+## Added 05:56 (director): call 2 = fail 2 (the stop at 70), hard stop 06:16, commit by 06:10
+Fail 1 is in (`d9bfe36a7`). Read `evidence/n29/thug/fixes.md` (`b9e434fc4`): it names the suspected cause (the ring child sits
+at the card's transform origin, which the walk placement solves onto the torso mark) and the fix plan. In order:
+(1) print ground row, ring centre, sole row for a standing 70 thug facing down / dr / right (one Godot run) to confirm;
+(2) the fix in `foe_thug_card_view.gd` + a unit test; (3) stop numbers after at both pitches, walk feet re-run if time.
+`run_unit --changed` (quote). Commit whatever is green by 06:10; append what is left to `fixes.md` and commit it.
+The opus war builder runs beside you until 06:14: never stage or revert its files.
