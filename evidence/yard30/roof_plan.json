@@ -1,0 +1,213 @@
+{
+  "depth_m": 5.5,
+  "notes": [
+    {
+      "bay": "hall_tall_shutter_bay.png",
+      "fire_spot_m": [
+        6.09,
+        -1.7
+      ],
+      "roof_line_m": 1.498,
+      "south_edge_y": -7.527
+    },
+    {
+      "bay": "hall_tall_burst_bay.png",
+      "fire_spot_m": [
+        -2.31,
+        -0.76
+      ],
+      "roof_line_m": 1.475,
+      "south_edge_y": -7.2
+    },
+    {
+      "bay": "hall_tall_feed_bay.png",
+      "fire_spot_m": [
+        0.03,
+        -1.22
+      ],
+      "roof_line_m": 1.951,
+      "south_edge_y": -6.914
+    },
+    {
+      "bay": "hall_tall_shutter_bay.png",
+      "fire_spot_m": [
+        0.19,
+        1.71
+      ],
+      "roof_line_m": 1.498,
+      "south_edge_y": -7.527
+    },
+    {
+      "bay": "hall_tall_collapsed_bay.png",
+      "fire_spot_m": [
+        1.16,
+        1.53
+      ],
+      "roof_line_m": 1.619,
+      "south_edge_y": -6.926
+    }
+  ],
+  "plumes": [
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_1.png",
+      "at": [
+        3.091,
+        -14.518
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        5.33,
+        5.59
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_2.png",
+      "at": [
+        -7.209,
+        -13.273
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        7.98,
+        3.1
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_3.png",
+      "at": [
+        9.49,
+        -13.075
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        2.33,
+        5.23
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_4.png",
+      "at": [
+        14.64,
+        -13.215
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        4.67,
+        5.51
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_5.png",
+      "at": [
+        26.571,
+        -13.638
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        5.82,
+        6.0
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_6.png",
+      "at": [
+        41.212,
+        -9.662
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        2.66,
+        2.69
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_plume_7.png",
+      "at": [
+        57.365,
+        -10.832
+      ],
+      "ochre": false,
+      "rotation_deg": 0,
+      "size_m": [
+        6.76,
+        5.87
+      ]
+    }
+  ],
+  "slabs": [
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_roof_shutter_w.png",
+      "at": [
+        -3,
+        -10.277
+      ],
+      "ochre": true,
+      "rotation_deg": 0,
+      "size_m": [
+        15.45,
+        5.5
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_roof_burst.png",
+      "at": [
+        11.8,
+        -9.95
+      ],
+      "ochre": true,
+      "rotation_deg": 0,
+      "size_m": [
+        15.45,
+        5.5
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_roof_feed.png",
+      "at": [
+        26.6,
+        -9.664
+      ],
+      "flip": true,
+      "ochre": true,
+      "rotation_deg": 0,
+      "size_m": [
+        15.45,
+        5.5
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_roof_shutter_e.png",
+      "at": [
+        41.4,
+        -10.277
+      ],
+      "flip": true,
+      "ochre": true,
+      "rotation_deg": 0,
+      "size_m": [
+        15.45,
+        5.5
+      ]
+    },
+    {
+      "art": "res://boot/prologue/art/arched_line/hall_roof_collapsed.png",
+      "at": [
+        56.2,
+        -9.676
+      ],
+      "ochre": true,
+      "rotation_deg": 0,
+      "size_m": [
+        15.45,
+        5.5
+      ]
+    }
+  ],
+  "tuck_m": 0.6
+}
