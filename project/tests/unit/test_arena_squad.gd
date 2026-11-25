@@ -154,7 +154,7 @@ func test_aggression_moves_the_waiting_ring_inward() -> void:
 	var a: EnemyRoster.Archetype = arena.squad_ai.pit.roster.archetype(g.archetype)
 	for aggression: float in [0.0, 1.0]:
 		a.aggression = aggression
-		for tick: int in 480:
+		for tick: int in 960:
 			arena.step(tick)
 		assert_almost_eq(g.pos.length(), lerpf(a.attack_m, a.preferred_m, aggression), 0.25)
 

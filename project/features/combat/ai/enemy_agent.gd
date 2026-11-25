@@ -43,6 +43,8 @@ var flinch_dir: Vector2 = Vector2.ZERO
 var cover_ref: Array[Rect2] = []
 ## The group this enemy fights with (a pit wave): morale counts only its own fallen.
 var squad: int = 0
+## Ranged wave members: FIGHT (slow, may shoot) or TRAVEL (fast, may not); see FoeGait.
+var gait: FoeGait = FoeGait.new()
 
 
 static func make(p_id: int, p_arch: EnemyRoster.Archetype, at: Vector2) -> EnemyAgent:

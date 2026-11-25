@@ -53,6 +53,8 @@ class Archetype:
 	var acc_near: float = 0.7
 	var acc_far_m: float = 18.0
 	var acc_far: float = 0.3
+	var fight_speed_k: float = 1.0
+	var danger_m: float = 0.0
 
 	## The chance a shot at a standing target `dist_m` away hits (the accuracy curve).
 	func accuracy(dist_m: float) -> float:
@@ -73,6 +75,9 @@ var panic_ticks: int = 180
 var sight_m: float = 24.0
 var sight_cos: float = 0.5
 var hearing_m: float = 22.0
+var gait_split: bool = true
+var gait_min_ticks: int = 36
+var gait_settle_ticks: int = 15
 var _explicit: Dictionary[StringName, Archetype] = {}
 var _errors: Array[String] = []
 
@@ -124,6 +129,9 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 	sight_m = t.num(s, "sight_m")
 	sight_cos = cos(deg_to_rad(t.num(s, "sight_deg")) * 0.5)
 	hearing_m = t.num(s, "hearing_m")
+	gait_split = t.text(s, "gait") != "legacy" if s.has("gait") else true
+	gait_min_ticks = CombatTuning.ticks(t.num(s, "gait_min_mode_s"))
+	gait_settle_ticks = CombatTuning.ticks(t.num(s, "gait_settle_s"))
 
 
 func _archetype(t: DataTable, row: Dictionary) -> Archetype:
@@ -180,6 +188,8 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 			_errors.append("%s: unknown alt_weapon" % a.id)
 	if row.has("alt_telegraph_s"):
 		a.alt_telegraph_ticks = CombatTuning.ticks(t.num(row, "alt_telegraph_s"))
+	a.fight_speed_k = t.num(row, "fight_speed_k") if row.has("fight_speed_k") else 1.0
+	a.danger_m = t.num(row, "danger_m") if row.has("danger_m") else 0.0
 	if row.has("rear_mult"):
 		a.rear_mult = t.num(row, "rear_mult")
 	if row.has("shield_arc_deg"):

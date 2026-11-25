@@ -14,21 +14,27 @@ static func move(
 	steer(e, desired + _separation(e, agents, pit), look_at, pit)
 
 
-static func steer(e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit) -> void:
+## `cap` (a FoeGait FIGHT walk) also bounds the eased velocity; `look_at` INF faces the run.
+static func steer(
+	e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit, cap: float = INF
+) -> void:
 	var arch: EnemyRoster.Archetype = e.arch
 	if arch.speed_mps == 0.0:
 		e.vel = Vector2.ZERO
 		turn_toward(e, look_at - e.pos)
 		return
 	var top: float = arch.speed_mps * (1.6 if e.state == EnemyAgent.State.PANIC else 1.0)
-	want = want.limit_length(top)
+	want = want.limit_length(minf(top, cap))
 	e.vel = e.vel.move_toward(want, arch.accel_mps2 * SimClock.TICK_DT)
+	if cap < top:
+		e.vel = e.vel.limit_length(cap)
 	var pos: Vector2 = e.pos + e.vel * SimClock.TICK_DT
 	if not pit.cover.is_empty():
 		pos = EnemySenses.push_out(pos, e.radius(), pit.cover)
 	e.pos = pos.clamp(pit.bounds.position, pit.bounds.end)
 	var face: Vector2 = look_at - e.pos
-	if e.state == EnemyAgent.State.PANIC or e.state == EnemyAgent.State.PATROL:
+	var runs: bool = e.state == EnemyAgent.State.PANIC or e.state == EnemyAgent.State.PATROL
+	if runs or not look_at.is_finite():
 		face = e.vel if e.vel.length() > 0.3 else e.facing
 	turn_toward(e, face)
 
