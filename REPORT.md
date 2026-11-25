@@ -1,0 +1,116 @@
+# REPORT lane keys, run n29 (2026-11-25 01:15 to 09:15)
+
+Branch `n29-keys` from `main` `c649a15d6`; worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`. Builders: Claude sub-agents
+started from the director's session (Sonnet for wiring/evidence, Opus for art rounds). Final gate: **{GATE}**.
+Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, best first). Images 58/60.
+
+## What works
+
+1. **Gauntlet HUD** (`24fc9c4c3`, tests `568f99552`): the "ATTACK CLAW" box was the bot film's action caption, anchored
+   bottom-left over the ghost chip strip; it now sits bottom centre with centred text (`1dcbdd09c`), 0 px overlap with the
+   strip at 1080p. Chip number plates are anchored inside the strip's plate and at least 8 px from the screen edge on both
+   layouts: chip 1 plate left edge x 7 -> 15 px at 1080p (strip plate starts at 12: the 5 px overhang is gone); in the compact
+   layout slot 0 started at x -1.5 (off screen) before. Same-tick pair `hud/hud_pair_1080.png`,
+   `hud/hud_pair_same_tick_crop_3x.png` (bond_film_64 seed 1 prefill 16, tick 619, before at `c649a15d6`); the n28 frame pair
+   with the caption: `hud/hud_pair_crop_3x.png`. Mutate `ghost_chip_number.gd` lines 26-29: 3/7 -> 7/7 after the anchor tests.
+   Evidence `evidence/n29-keys/hud.md`.
+2. **Plasma sword walks and runs on its own p70 grids, the katana as donor** (walk `3dbef1803`, run `d72d49bd8`; 16 image
+   edits, one row per job; row 1 judged first at 64 px/m against the katana and the stop-gap): amber blade in one claw with a
+   guard, flat striped collar, the katana's legs. foot_slide 32 px/m walk hold 1.00/1.56 cm (bar 2) PASS; run step
+   8.29/9.38 cm (bar 7 mean; the katana donor itself 7.76/9.15). Grids `sword/grid_plasma_sword_64.png`, `_32.png`;
+   evidence `evidence/n29-keys/grid_plasma_sword.md`. Clip `sword/plasma_sword_32.mp4` (1920x1080 60/1, 921 frames, 15.35 s): stop-gap | n29 | katana at 32 px/m over the n29 64 px/m tile (samples held 1 s).
+3. **Gloria's own walk and run set** (walk `eac8b4e34`, run `ba764e395`, evidence `87e3573a4`; image edits of the pistol's
+   sheets, one row per job, brass gun as drawn in n28): `walk_grid.by_weapon.gloria` removed (her own sheet plays first), the
+   old long-gun run sheet removed. foot_slide 32 px/m walk hold 0.36/1.56 cm (pistol 1.20), run step 6.54/9.71 cm (pistol
+   6.10/8.71); walk cycle 74.7 vs the pistol's 76. Her p55 held strips in brass (`7bb6f9cc0`, `b9ca6bf36`) and the left p70
+   strip re-cut so cells 2 and 3 keep the whole muzzle (`7b918750e`, cells 191 -> 215 px, muzzle tips re-measured).
+   Clip `gloria/gloria_walk_32.mp4` (1920x1080 60/1, 16.52 s); grids `gloria/grid_gloria_64.png`, `_32.png`;
+   strips `gloria/p55_strips_4x.png`, `gloria/gloria_left_p70_cells.png`. Clip beside the pistol `gloria/gloria_vs_pistol_32.mp4` (1920x1080 60/1, 921 frames, 15.35 s): stop-gap | n29 | pistol. Her p55 diagonal flash drawn whole on 224 px cells (`9efd28136`: `RivetGunDiag.HELMET_X["p55/gloria"]` 112.5/79.5/110.0/141.0 = measured +14, body within 1 px per cell, flash scale 1.0 where it was 0.91/0.70): `gloria/p55_diag_flash_64.png` (strip composite as `RivetGunDiag.seat` seats it, not a game capture: `arsenal_turn` has no Gloria attack).
+4. **p55 sprint collar, row 4** (`802ecb0c0`): a rigid flat ring with straight vermilion/black stripes, neck-only composite
+   (29,057 px changed, 0 outside the neck masks, other rows bit-identical: `evidence/n29-keys/collar_p55_row4_proof.json`);
+   `collar/collar_p55_row4_neck_3x.png`. In game at 64 px/m, the same tick: `collar/collar_p55_before_after_64.png` (pale soft band -> black/vermilion stripes on a flat ring, body identical); p55 sprint drift 3.83 cm before and after (bar 3.83 +- 0.1); clip `collar/collar_p55_32.mp4` (1920x1080 60/1, 962 frames, 16.03 s, before | after). Films `evidence/n29-keys/films.md`.
+5. **Combat's NEED keys served** (red audit rows 12 and 15): the molotov's lit rag and torch flame amber in the item art
+   and in Rivet's strips (`0b6814366`, `baf0b209d`, `65578a4be`; held 5860 -> 23 reddish px, pickup 5457 -> 0, 0 px changed
+   outside the masks, collar excluded and looked at): `rag/`. The plasma sword's hilt rings steel in Rivet's 12 strips
+   (`0906b2f7c`, 0 px outside the mask): `sword_rings/rings_cells_4x.png`. Row 16 (127 weapon item/held files) triaged:
+   `evidence/n29-keys/held_red/table.md` (21,610 true-red + 56,649 vermilion px), contact sheet `held_red/contact_4x.png`; the
+   crate p70 plank red -> amber wood (`ad4b1377d`, 4371 px, 0 outside the mask); rust speckle and chainsaw marks left.
+
+## What does not
+
+- **p55 collar rows 3, 6, 7, 8 still wear the twisted rope.** Each failed two one-row image edits (rope kept, muddy scarf,
+  teal tint, knitted scarf, crescent stripes on a tube); rejects in `collar/collar_p55_row{3,3b,6,7,8,8b}_rejected_3x.png`,
+  `collar/collar_p55_row8b_vs_row4_mirrored_6x.png`. Per the two-routes rule the image route is closed: see Calls.
+- Plasma sword run step 8.29 cm against the 7 cm bar (the katana donor's legs: 7.76).
+- HUD at handheld size: no 1280x800 still. `BondFilmCapture._capture` (`project/dev/ghost-forms/bond_film_capture.gd:38`,
+  not this lane's file) exits on any frame that is not 1920x1080 (`4535c3cda`); the compact layout is pinned by the unit
+  test only. NEED Director: let the capture take the window size.
+- Item 5 (molotov run, stop-gap back-swing): not started; images at 58/60.
+- Combat's red audit row 16: only the crate plank recoloured; the rest is a Call (design colours, vermilion danger-or-heat).
+
+## What blocked or slowed you (minutes each)
+
+- Image jobs that never returned (codex 900 s timeouts, files stuck before `out/`): about 45 min of builder time over the night.
+- Mutate baseline `--import` timed out at 647 s under load (session 1): 11 min, re-run later.
+- `tools/gate/quick.mjs` Godot parse check failing on untouched committed files (`cut_rig.gd`, `test_rivet_windup.gd`): about 5 min.
+- Codex image jobs stalling on the copy to `out/` (hand copy each time): a few minutes per job.
+- Shared Godot: two builders on one lane Godot through a mutex file (`build/n29-godot.lock`): no clash, some waits.
+
+## Calls for the owner
+
+1. **The p55 collar rows 3, 6, 7, 8**: hand repaint along the shipped centreline using row 4's stripe pattern (mirrored for
+   rows 6-8), or a per-cell edit at 2x? Image edits of one row failed twice on each. Stills: `collar/collar_p55_row4_neck_3x.png`
+   (the target) beside `collar/collar_p55_row8b_vs_row4_mirrored_6x.png` (the latest reject).
+2. **Gloria's run row 5 slide factor** `run_row_k p70/gloria/5` 0.64 (own stride vs the bare run; the pistol has no entry): one
+   value to drop if her sprint should match the pistol's exactly.
+3. **Plasma sword run step** 8.29 cm vs the 7 cm bar: inherited from the katana's legs; a redraw of the katana's run would fix both.
+4. **Weapon item art red (combat's audit row 16)**: the mini-nuke's plum-maroon casing and the homing shard's red-orange
+   hoses are design colours spread over the whole part, not a one-part mask: keep, steel/amber, or redraw? Contact sheet
+   `held_red/contact_4x.png` (#3, #4, #5, #7, #8, #9). The 56,649 vermilion px (ray gun, electro gun, rocket launcher, mini-nuke
+   held) need a danger-or-heat call per weapon.
+
+## Merge notes
+
+- Files: `project/features/characters/art/view/{p55,p70}/rivet_*` sheets and strips, `rivet_motion.json` (`run_row_k`,
+  `walk_grid.by_weapon.gloria` removed), `rivet_muzzle.json` (gloria rows), the HUD files (`ghost_chip_number.gd`,
+  `gauntlet_bot_film.tscn` caption), weapon item art for the molotov (held/pickup/held_55), tests pinning those, decision lines
+  (append-only), `steam/ai-provenance/2026-11.jsonl` (append-only).
+- Combat recoloured the plasma sword's own held art (rings) in its lane; this lane did Rivet's strips: no file overlap.
+- Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on the add/add conflict.
+
+## Next steps
+
+1. The p55 collar rows 3, 6, 7, 8 by the owner's pick (hand repaint from row 4, or 2x per-cell edits).
+2. The molotov's own run set (one row per job, the donor's soles fixed by registration); the stop-gap back-swing.
+3. Combat's red audit row 16 after the owner's call: the per-weapon danger-or-heat list from `evidence/n29-keys/held_red/table.md`.
+4. The HUD handheld still once the bond film capture takes a 1280x800 window.
+5. Gloria's p55 diagonal flash in game (needs a dev scene that fires Gloria at p55; `arsenal_turn` has none).
+
+## Builder ledger
+
+| call | model | minutes | result |
+|---|---|---|---|
+| n29-01-hud | sonnet | 28 | accepted (caption + plates, test) |
+| n29-01b-hud-evidence | sonnet | 27 | accepted (same-tick pair, decision lines, mutate 3/7) |
+| n29-01c-hud-anchor-test | sonnet | 8 | accepted (mutate 7/7) |
+| n29-01d-hud-handheld | sonnet | 2 | bounced: the capture is 1080p-only, not this lane's file |
+| n29-02a-sword-row1 | opus | 18 | accepted (row 1 judged at 64 px/m) |
+| n29-02b-sword-rows | opus | 57 | accepted (walk sheet, run rows 1-3) |
+| n29-02c-sword-run | opus | 30 | accepted (run rows 4-8, wired) |
+| n29-03a-gloria-rows-prep | opus | 44 | accepted (prep) |
+| n29-03c-gloria-rows | opus | 60 | accepted (prep, walk 8/8) |
+| n29-03d-gloria-run-wire | opus | 26 | accepted (walk + run wired) |
+| n29-03b-gloria-strips | opus | 30 | accepted (p55 brass, left p70) |
+| n29-09-gloria-diag-flash | sonnet | 24 | accepted |
+| n29-04c-collar-rows | opus | 44 | accepted-partial (row 4; 3/6/7 rejected) |
+| n29-04d-collar-row8 | opus | 6 | accepted rejection (2 images, rope) |
+| n29-05-molotov-rag | sonnet | 4 | bounced (missed two files) |
+| n29-05b-molotov-rag-strips | sonnet | 15 | accepted |
+| n29-06-sword-rings-strips | sonnet | 9 | accepted |
+| n29-07-held-red-triage | sonnet | 3 | accepted (table, 1 file) |
+| n29-08-films | sonnet | 41 | accepted (3 clips, collar still, drift) |
+
+19 calls, about 476 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
+tool supports the size before briefing a still (the handheld call); give the collar its in-game before|after in the same
+call as the art, not a later films call; for an art item that already failed in n28, budget the owner call from the start
+instead of a third route.
