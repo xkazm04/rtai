@@ -119,3 +119,27 @@ func test_read_takes_the_row_and_floors_step_ticks_at_one() -> void:
 	var floored: Dictionary = PrologueRoofGlow.read(table, row)
 	var floor_ticks: int = floored["step_ticks"]
 	assert_eq(floor_ticks, 1)
+
+
+func _flicker_of(glow: PrologueRoofGlow) -> float:
+	var band: ColorRect = glow.get_node(PrologueRoofGlow.BAND_NAME)
+	var material: ShaderMaterial = band.material
+	return material.get_shader_parameter(&"flicker")
+
+
+func test_process_without_a_stage_keeps_the_flicker_and_does_not_fail() -> void:
+	var glow: PrologueRoofGlow = autofree(PrologueRoofGlow.build(_spec()))
+	var before: float = _flicker_of(glow)
+	glow._process(0.016)
+	assert_eq(_flicker_of(glow), before, "no stage: nothing to follow, the level holds")
+
+
+func test_process_with_a_stage_follows_its_tick() -> void:
+	var stage: ArenaStage = ArenaStage.new(
+		ArenaPlan.shipped(Vector2(524, 524)), ArenaStations.new()
+	)
+	var glow: PrologueRoofGlow = autofree(PrologueRoofGlow.build(_spec()))
+	glow._stage = stage
+	stage.tick = 4 * 7 + 1
+	glow._process(0.016)
+	assert_almost_eq(_flicker_of(glow), 1.0 - 0.4 * _swing(7.0), 0.0001, "step 7 of the stage tick")
