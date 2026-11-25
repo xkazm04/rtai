@@ -15,7 +15,8 @@
           "size_m": [
             15.45,
             5.5
-          ]
+          ],
+          "tint": "a0a0acff"
         },
         {
           "art": "res://boot/prologue/art/arched_line/hall_roof_burst.png",
@@ -28,7 +29,8 @@
           "size_m": [
             15.45,
             5.5
-          ]
+          ],
+          "tint": "a0a0acff"
         },
         {
           "art": "res://boot/prologue/art/arched_line/hall_roof_feed.png",
@@ -42,7 +44,8 @@
           "size_m": [
             15.45,
             5.5
-          ]
+          ],
+          "tint": "a0a0acff"
         },
         {
           "art": "res://boot/prologue/art/arched_line/hall_roof_shutter_e.png",
@@ -56,7 +59,8 @@
           "size_m": [
             15.45,
             5.5
-          ]
+          ],
+          "tint": "a0a0acff"
         },
         {
           "art": "res://boot/prologue/art/arched_line/hall_roof_collapsed.png",
@@ -69,7 +73,8 @@
           "size_m": [
             15.45,
             5.5
-          ]
+          ],
+          "tint": "a0a0acff"
         },
         {
           "art": "res://boot/prologue/art/arched_line/hall_plume_1.png",

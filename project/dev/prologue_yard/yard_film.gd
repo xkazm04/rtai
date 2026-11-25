@@ -7,6 +7,7 @@ const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
 const SIZE: Vector2i = Vector2i(1920, 1080)
 const LOOKS: Array[String] = ["plain", "torn_line", "line_fire", "raised_line", "arched_line"]
+const PLACES: Array[String] = ["gate", "mid", "front", "roof", "harbor", "commander"]
 
 var _game: PrologueGame
 var _view: PrologueView
@@ -84,11 +85,8 @@ func _read_args(args: ArenaArgs) -> String:
 			return "unknown option " + key
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		return "use a 1920x1080 window"
-	if (
-		args.text("--yard-dressing") not in LOOKS
-		or args.text("--place") not in ["gate", "mid", "front", "harbor", "commander"]
-	):
-		return "choose a yard dressing and gate, mid, front, harbor or commander"
+	if args.text("--yard-dressing") not in LOOKS or args.text("--place") not in PLACES:
+		return "choose a yard dressing and gate, mid, front, roof, harbor or commander"
 	for key: String in ["--tick", "--frames", "--ppm"]:
 		if not args.text(key).is_valid_int():
 			return "expected an integer for " + key
