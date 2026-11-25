@@ -270,3 +270,14 @@ fd8ea31e1); every commit since is inert, incl. n30-24's `d5ed2326d`. At 18:55: d
 
 NEXT (final session, report 18:55): as session 10's NEXT. At 18:55: drop the NEAR-FINAL line (header time), `node tools/evidence/cites.mjs
 REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No gate unless code lands.
+
+## Session 12 (16:51 - 18:21)
+- 16:51 git log: 69f36eaa1 top, as session 11 left it; no tracked changes, no builder running, lane lock free, images 60/60.
+  `NEED keys` grep over combat/cast/yard journals: only combat's gauntlet effect-card finding (REPORT Next steps 5; combat's file,
+  needs images). No new lines.
+- 16:53 DECISION no new product work (as sessions 7-11): items 1-4 done, filmed, reels gate PASS `build/gate/fd8ea31e1dec/gate.json`
+  covers the last code commit 22d3c0fb1; open defects need images (60/60) or failed two routes; 22 minutes to the 17:15 last-commit
+  deadline leave no room for a change plus a re-gate. REPORT stays NEAR-FINAL for the final session.
+
+NEXT (final session, report 18:55): as session 11's NEXT. At 18:55: drop the NEAR-FINAL line (header time), `node tools/evidence/cites.mjs
+REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No gate unless code lands.
