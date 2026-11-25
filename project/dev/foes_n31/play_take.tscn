@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://dev/gauntlet/gauntlet.tscn" id="1"]
+[ext_resource type="Script" path="res://dev/foes_n31/play_take.gd" id="2"]
+
+[node name="PlayTake" instance=ExtResource("1")]
+script = ExtResource("2")
