@@ -60,7 +60,7 @@ func test_both_hosts_select_the_registered_eight_and_survive_a_reversal() -> voi
 		assert_eq(contact.drawings, 8)
 		assert_eq(contact.step_m, CastWardenAnchors.STEP_M)
 		var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(pitch, StreetWalkerCards.HEIGHT_M)
-		var scale_px: Vector2 = Vector2.ONE * (32.0 * height * 1.62 / 192.0)
+		var scale_px: Vector2 = Vector2.ONE * (32.0 * height * 1.10 / 192.0)
 		for speed: float in [2.8, 3.8]:
 			var worst: float = _reversal(contact, speed, scale_px)
 			Log.info("cast", "%s %.1f m/s reversal %.3f px at 32 px/m" % [pitch, speed, worst])
@@ -117,7 +117,7 @@ func _jump(path: String, pitch: String, plan: Array, ppm: float) -> Vector3:
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
 	contact.configure(path)
 	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(pitch, StreetWalkerCards.HEIGHT_M)
-	var scale_px: Vector2 = Vector2.ONE * (ppm * height * 1.62 / 192.0)
+	var scale_px: Vector2 = Vector2.ONE * (ppm * height * 1.10 / 192.0)
 	var at: Vector2 = Vector2.ZERO
 	var previous: Vector2 = Vector2.INF
 	var worst: Vector2 = Vector2.ZERO
