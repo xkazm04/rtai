@@ -195,3 +195,29 @@ Files with >= 500 vermilion px in play and classed: every weapon below. Not clas
 - Rivet's cracks, wear and collar overlap in the cell: the rivet row is the collar by component id, cracks sit in the speckle row.
 - Rocket launcher empty: a 329 px orange sliver at the cut edge of the nose ring is counted as speckle; it is a warhead remnant by eye (danger if the owner wants the cut edge kept).
 - Cells for hand cannon, pistol, katana, electro baton, the Rivet walk/run strips and the diag/up views were not classed; they repeat the same collar and the same held parts at other angles.
+
+## Heat -> amber preview (n30-19)
+
+Preview only: no shipped art changed, nothing in `project/` was touched; the previews live in masters.
+
+- Mask: the vermilion px (hue 9..24, s > 0.6, v > 0.6, alpha > 0, undilated) inside the components classed `heat` by `build.py` SPEC (showcase) and `held_build.py` HELD/CELL (in play). Danger, design and speckle px are not in the mask.
+- Formula: amber `#ffbf56` -> HSV (h 36.6 deg, s 0.663). Per masked px: `rgb = hsv2rgb(36.6 deg, 0.663, v_src)` with `v_src = max(r,g,b)/255` of the source px, so shading survives; alpha untouched. The script asserts px outside the mask and every alpha are bit-identical, and that 0 danger px change.
+- Specs are reused, not copied: `preview.py` execs the spec prefix of `build.py` / `held_build.py` (both run on import).
+- Files: `gtai-masters/n30/keys/vermilion/preview_<weapon>_4x.png` (current | proposed, showcase above in play; in play is 2x for held_55, 4x for the Rivet cell) and `preview_contact_4x.png`.
+- Rebuild: `python -I evidence/n30-keys/vermilion/preview.py` from the worktree root (needs comps.json from `comps.py`).
+
+| weapon | px recoloured showcase | px recoloured in play | danger px changed | look check |
+|---|---|---|---|---|
+| ray_gun | 3048 | 269 held_55, 46 cell | 0 | coil, cables, pipe still read as copper wire, paler; on the yellow body the grip coil and rings lose contrast; triangle stays vermilion |
+| electro_gun | 2114 | 425 held_55, 118 cell | 0 | coil reads the same, closer to the arc colour; slash plate stays |
+| rocket_launcher | 130 | - | 0 | fuse cable amber, hardly visible; nose stripes unchanged |
+| mini_nuke | 95 | 935 held_55 | 0 | hoses/arc amber, fine; muzzle stripes unchanged |
+| flamethrower | 400 | - | 0 | pipe and cage read as brass, near the tank colour; no clash with flame |
+| electro_baton | 295 | 889 held_55 | 0 | coil still reads as coil, amber-gold |
+| machine_pistol | 871 | 699 held_55 | 0 | loop reads as brass pipe |
+| plasma_rifle | 351 | 339 held_55 | 0 | cables amber, fine |
+| plasma_sword | 128 | - | 0 | hoses amber beside the amber blade: same family, no fight |
+| chainsaw | - | 679 held_55 | 0 | ignition cable amber |
+| mini_nuke_empty | - | 935 held_55 | 0 | arc amber |
+
+Note: the proposed amber is paler and less saturated than the old copper because the copper source px are darker and redder; the part reads, but it is a brass tone, not a glowing amber.
