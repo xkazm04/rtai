@@ -1,0 +1,622 @@
+{
+  "schema": "gtai.fatality-table/1",
+  "waves": 4,
+  "seeds": 5,
+  "weapons": [
+    "claw",
+    "chainsaw",
+    "electro_baton",
+    "katana",
+    "plasma_sword"
+  ],
+  "table": {
+    "chainsaw": {
+      "patrol_cop": {
+        "chainsaw_grind_patrol_cop": 91
+      },
+      "riot_cop (shield front)": {
+        "chainsaw_grind_riot_cop": 21
+      },
+      "rocket_trooper": {
+        "chainsaw_grind_rocket_trooper": 21
+      },
+      "contractor": {
+        "chainsaw_grind_contractor": 13
+      },
+      "swat": {
+        "chainsaw_grind_swat": 13
+      }
+    },
+    "assault-rifle": {
+      "patrol_cop": {
+        "generic": 228
+      },
+      "swat": {
+        "generic": 28
+      },
+      "riot_cop (shield front)": {
+        "generic": 28
+      },
+      "rocket_trooper": {
+        "generic": 19
+      },
+      "contractor": {
+        "generic": 30
+      }
+    },
+    "deploy_tonnage": {
+      "patrol_cop": {
+        "generic": 40
+      },
+      "riot_cop (shield front)": {
+        "generic": 11
+      },
+      "rocket_trooper": {
+        "generic": 11
+      },
+      "swat": {
+        "generic": 10
+      },
+      "contractor": {
+        "generic": 13
+      },
+      "riot_cop (shield flank)": {
+        "generic": 2
+      }
+    },
+    "claw": {
+      "patrol_cop": {
+        "claw_rake_kill_patrol_cop": 106
+      },
+      "riot_cop (shield front)": {
+        "claw_rake_kill_riot_cop": 16
+      },
+      "swat": {
+        "claw_rake_kill_swat": 14
+      },
+      "rocket_trooper": {
+        "claw_rake_kill_rocket_trooper": 15
+      },
+      "contractor": {
+        "claw_rake_kill_contractor": 11
+      },
+      "riot_cop (shield flank)": {
+        "claw_rake_kill_riot_cop": 1
+      }
+    },
+    "electro_baton": {
+      "patrol_cop": {
+        "baton_overload_patrol_cop": 111
+      },
+      "rocket_trooper": {
+        "baton_overload_rocket_trooper": 24
+      },
+      "contractor": {
+        "baton_overload_contractor": 17
+      },
+      "swat": {
+        "baton_overload_swat": 11
+      },
+      "riot_cop (shield front)": {
+        "baton_overload_riot_cop": 20
+      },
+      "riot_cop (shield flank)": {
+        "baton_overload_riot_cop": 1
+      }
+    },
+    "deploy_dent": {
+      "riot_cop (shield front)": {
+        "generic": 6
+      },
+      "swat": {
+        "generic": 3
+      },
+      "rocket_trooper": {
+        "generic": 3
+      },
+      "patrol_cop": {
+        "generic": 6
+      },
+      "contractor": {
+        "generic": 1
+      }
+    },
+    "katana": {
+      "patrol_cop": {
+        "katana_split_patrol_cop": 101
+      },
+      "riot_cop (shield front)": {
+        "katana_split_riot_cop": 16
+      },
+      "rocket_trooper": {
+        "katana_split_rocket_trooper": 19
+      },
+      "swat": {
+        "katana_split_swat": 13
+      },
+      "contractor": {
+        "katana_split_contractor": 15
+      }
+    },
+    "plasma_sword": {
+      "patrol_cop": {
+        "plasma_sword_split_patrol_cop": 102
+      },
+      "swat": {
+        "plasma_sword_split_swat": 8
+      },
+      "rocket_trooper": {
+        "plasma_sword_split_rocket_trooper": 18
+      },
+      "riot_cop (shield flank)": {
+        "plasma_sword_split_riot_cop": 2
+      },
+      "contractor": {
+        "plasma_sword_split_contractor": 15
+      },
+      "riot_cop (shield front)": {
+        "plasma_sword_split_riot_cop": 16
+      }
+    }
+  },
+  "chainsaw": {
+    "n": 138,
+    "m": 138,
+    "share": 1,
+    "misses": []
+  },
+  "runs": [
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 1,
+      "telemetry": {
+        "by_style": {
+          "split": 20
+        },
+        "signature_kills": 20
+      },
+      "ticks": 4709,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 2,
+      "telemetry": {
+        "by_style": {
+          "split": 22
+        },
+        "signature_kills": 22
+      },
+      "ticks": 4602,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 3,
+      "telemetry": {
+        "by_style": {
+          "split": 41
+        },
+        "signature_kills": 41
+      },
+      "ticks": 6923,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 4,
+      "telemetry": {
+        "by_style": {
+          "split": 40
+        },
+        "signature_kills": 40
+      },
+      "ticks": 6216,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 52,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 5,
+      "telemetry": {
+        "by_style": {
+          "split": 36
+        },
+        "signature_kills": 36
+      },
+      "ticks": 7365,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "records": 52
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 1,
+      "telemetry": {
+        "by_style": {
+          "rake": 23
+        },
+        "signature_kills": 23
+      },
+      "ticks": 3309,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 2,
+      "telemetry": {
+        "by_style": {
+          "rake": 24
+        },
+        "signature_kills": 24
+      },
+      "ticks": 4261,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 3,
+      "telemetry": {
+        "by_style": {
+          "rake": 40
+        },
+        "signature_kills": 40
+      },
+      "ticks": 5790,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 4,
+      "telemetry": {
+        "by_style": {
+          "rake": 38
+        },
+        "signature_kills": 38
+      },
+      "ticks": 4352,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 52,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 5,
+      "telemetry": {
+        "by_style": {
+          "rake": 38
+        },
+        "signature_kills": 38
+      },
+      "ticks": 4668,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "records": 52
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 1,
+      "telemetry": {
+        "by_style": {
+          "cook": 28
+        },
+        "signature_kills": 28
+      },
+      "ticks": 4369,
+      "wave_reached": 4,
+      "weapon": "electro_baton",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 2,
+      "telemetry": {
+        "by_style": {
+          "cook": 42
+        },
+        "signature_kills": 42
+      },
+      "ticks": 4669,
+      "wave_reached": 4,
+      "weapon": "electro_baton",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 3,
+      "telemetry": {
+        "by_style": {
+          "cook": 39
+        },
+        "signature_kills": 39
+      },
+      "ticks": 4399,
+      "wave_reached": 4,
+      "weapon": "electro_baton",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 4,
+      "telemetry": {
+        "by_style": {
+          "cook": 36
+        },
+        "signature_kills": 36
+      },
+      "ticks": 4182,
+      "wave_reached": 4,
+      "weapon": "electro_baton",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 52,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 5,
+      "telemetry": {
+        "by_style": {
+          "cook": 39
+        },
+        "signature_kills": 39
+      },
+      "ticks": 4698,
+      "wave_reached": 4,
+      "weapon": "electro_baton",
+      "records": 52
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 1,
+      "telemetry": {
+        "by_style": {
+          "split": 33
+        },
+        "signature_kills": 33
+      },
+      "ticks": 4800,
+      "wave_reached": 4,
+      "weapon": "katana",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 2,
+      "telemetry": {
+        "by_style": {
+          "split": 31
+        },
+        "signature_kills": 31
+      },
+      "ticks": 4003,
+      "wave_reached": 4,
+      "weapon": "katana",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 3,
+      "telemetry": {
+        "by_style": {
+          "split": 34
+        },
+        "signature_kills": 34
+      },
+      "ticks": 4941,
+      "wave_reached": 4,
+      "weapon": "katana",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 4,
+      "telemetry": {
+        "by_style": {
+          "split": 30
+        },
+        "signature_kills": 30
+      },
+      "ticks": 3877,
+      "wave_reached": 4,
+      "weapon": "katana",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 52,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 5,
+      "telemetry": {
+        "by_style": {
+          "split": 36
+        },
+        "signature_kills": 36
+      },
+      "ticks": 4829,
+      "wave_reached": 4,
+      "weapon": "katana",
+      "records": 52
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 1,
+      "telemetry": {
+        "by_style": {
+          "split": 26
+        },
+        "signature_kills": 26
+      },
+      "ticks": 3288,
+      "wave_reached": 4,
+      "weapon": "plasma_sword",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 50,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 2,
+      "telemetry": {
+        "by_style": {
+          "split": 24
+        },
+        "signature_kills": 24
+      },
+      "ticks": 3357,
+      "wave_reached": 4,
+      "weapon": "plasma_sword",
+      "records": 50
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 3,
+      "telemetry": {
+        "by_style": {
+          "split": 40
+        },
+        "signature_kills": 40
+      },
+      "ticks": 3815,
+      "wave_reached": 4,
+      "weapon": "plasma_sword",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 51,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 4,
+      "telemetry": {
+        "by_style": {
+          "split": 37
+        },
+        "signature_kills": 37
+      },
+      "ticks": 3957,
+      "wave_reached": 4,
+      "weapon": "plasma_sword",
+      "records": 51
+    },
+    {
+      "alive": true,
+      "finished": true,
+      "kills_all": 52,
+      "schema": "gtai.fatality-probe-run/1",
+      "seed": 5,
+      "telemetry": {
+        "by_style": {
+          "split": 34
+        },
+        "signature_kills": 34
+      },
+      "ticks": 4471,
+      "wave_reached": 4,
+      "weapon": "plasma_sword",
+      "records": 52
+    }
+  ],
+  "log": [
+    "claw seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "claw seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "claw seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "claw seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "claw seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "chainsaw seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "chainsaw seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "chainsaw seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "chainsaw seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "chainsaw seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "electro_baton seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "electro_baton seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "electro_baton seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "electro_baton seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "electro_baton seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "katana seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "katana seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "katana seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "katana seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "katana seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "plasma_sword seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "plasma_sword seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "plasma_sword seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "plasma_sword seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)",
+    "plasma_sword seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/melee_n31/fatality_probe.gd)"
+  ]
+}
