@@ -52,7 +52,11 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` th
    eight on the drawn boot, n30"; in-hold slide max, 32 px/m unit, p70 R / p70 DR / p55 R / p55 DR): four 2.10 / 1.50 / 1.53 /
    1.94, eight 1.71 / 1.89 / 1.72 / 2.03. Both walks sit at the bar; the eight is better only at p70 right and just over at p55
    down-right (the front toe slides about 4 px back at 64 inside one hold: `build/look/n30-c22/eight_p55_contact_2x.png`).
-   The slide across a drawing change is not measured (no tracker held one boot through it). Nothing argues for the switch.
+   Contact slide (plant to lift over one contact, c25 `c54ef8539` on c22's frames, mean / max at 32 px/m; right facings only,
+   down-right not measured: the tracker lost the boot): four p70 R 6.36 / 8.38 (its drawing 0 -> 1 hops the grounded boot
+   back 13.3 px at 64), eight p70 R 8.93 / 9.31 (worst change 4.5 px at 64, but every hold drifts back), four p55 R 3.34 / 3.74
+   (drawings 2-3 only), eight p55 R 5.24 / 6.08. The eight trades the four's one hop for a steady drift and travels further
+   per contact in both right facings. Nothing argues for the switch.
 3. Appliance warden at death: no sheet draws him larger (cap walk / hit / fall row 0 at 64 px/m: p70 36 / 28 / 28-31, p55 30 / 23 / 22-31). What changes at the switch is the drawing angle and the hat: the walk wears a grey bucket hat seen from above, hit and fall a tan camo cap seen frontally. Keep, or recolour the walk's hat tan: a masked recolour candidate (no new shapes, ink untouched) on four cells is in `warden_hat_candidate_2x.png` (shipped walk | recoloured | hit cap): it reads as the hit's tan camo family; the shape stays a bucket hat against the peaked cap. Shipping it = the recolour over every walk cell, both pitches, with a per-cell mask check and an in-game 64 still. Still `warden_switch_64.png`.
 
 ## Merge notes
@@ -109,6 +113,7 @@ All Claude sub-agents launched from the director's session, briefs under `eviden
 | c21w | opus | the same pin on the pile-driver | 2 | accepted (finding: the war card has no lean; nothing to pin) |
 | c23 | sonnet | masters frames.json (door eight still back, two clips out) | 1 | accepted |
 | c22 | opus | door four and eight on the drawn sole, 8 takes, measure only | 44 | accepted-partial (in-hold table; contact slide not measured) |
+| c25 | opus | door contact slide on c22's frames, no Godot | 8 | accepted-partial (right facings measured, down-right lost) |
 
 What I would brief differently: one checklist point per call from the start (the short calls c07-c13 were the best value);
 give every measurement call the exact sheet row the game draws at that moment (c06 measured a row the game never shows);
