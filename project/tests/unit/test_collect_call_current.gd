@@ -38,3 +38,35 @@ func test_plan_has_an_opaque_amber_body_wider_than_the_core() -> void:
 			core = l.width
 	assert_gt(body, core)
 	assert_eq(body, ElectricArc.MID_PX)
+
+
+func test_arc_serial_hashes_both_ends_at_quarter_metre_cells() -> void:
+	assert_eq(CurrentLook._serial(Vector2.ZERO, Vector2(1.0, 0.5)), 54, "cells (0,0) and (4,2)")
+	assert_eq(CurrentLook._serial(Vector2(1.25, -0.5), Vector2(2.5, 0.75)), 388, "negative cell")
+	assert_eq(CurrentLook._serial(Vector2.ZERO, Vector2(-1.0, -1.0)), 917, "posmod keeps it >= 0")
+	assert_eq(
+		CurrentLook._serial(Vector2(0.1, 0.1), Vector2(0.2, 0.2)), 0, "the same cell is the same"
+	)
+
+
+func test_plan_polyline_is_the_arc_shape_at_double_phase_in_view_px() -> void:
+	var a: Vector2 = Vector2(1.25, -0.5)
+	var b: Vector2 = Vector2(2.5, 0.75)
+	var shape: PackedVector2Array = ElectricArc.shape(
+		PackedVector2Array([a, b]), CurrentLook._serial(a, b), 6, false
+	)
+	var px: PackedVector2Array = PackedVector2Array()
+	for p: Vector2 in shape:
+		@warning_ignore("return_value_discarded")
+		px.append(Ink.px(p))
+	var plan: Array[CurrentLook.Pass] = CurrentLook.plan(a, b, 3)
+	for l: CurrentLook.Pass in plan:
+		assert_eq(l.points, px, "every pass draws the one jagged line: phase 3 jags as cell 6")
+
+
+func test_plan_stroke_widths_follow_the_screen_scale() -> void:
+	var near: Array[CurrentLook.Pass] = CurrentLook.plan(Vector2.ZERO, Vector2.RIGHT, 1, 1.0)
+	var far: Array[CurrentLook.Pass] = CurrentLook.plan(Vector2.ZERO, Vector2.RIGHT, 1, 2.0)
+	assert_eq(near.size(), far.size())
+	for i: int in near.size():
+		assert_almost_eq(far[i].width, near[i].width * 2.0, 0.001, "k doubles every width")
