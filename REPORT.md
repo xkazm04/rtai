@@ -28,7 +28,11 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
    strips `gloria/p55_strips_4x.png`, `gloria/gloria_left_p70_cells.png`. Clip beside the pistol `gloria/gloria_vs_pistol_32.mp4` (1920x1080 60/1, 921 frames, 15.35 s): stop-gap | n29 | pistol. Her p55 diagonal flash drawn whole on 224 px cells (`9efd28136`: `RivetGunDiag.HELMET_X["p55/gloria"]` 112.5/79.5/110.0/141.0 = measured +14, body within 1 px per cell, flash scale 1.0 where it was 0.91/0.70): `gloria/p55_diag_flash_64.png` (strip composite as `RivetGunDiag.seat` seats it, not a game capture: `arsenal_turn` has no Gloria attack).
 4. **p55 sprint collar, row 4** (`802ecb0c0`): a rigid flat ring with straight vermilion/black stripes, neck-only composite
    (29,057 px changed, 0 outside the neck masks, other rows bit-identical: `evidence/n29-keys/collar_p55_row4_proof.json`);
-   `collar/collar_p55_row4_neck_3x.png`. In game at 64 px/m, the same tick: `collar/collar_p55_before_after_64.png` (pale soft band -> black/vermilion stripes on a flat ring, body identical); p55 sprint drift 3.83 cm before and after (bar 3.83 +- 0.1); clip `collar/collar_p55_32.mp4` (1920x1080 60/1, 962 frames, 16.03 s, before | after). Films `evidence/n29-keys/films.md`.
+   `collar/collar_p55_row4_neck_3x.png`. **Row 8** (`56cb77065`, `e553b6b9e`): row 4's shipped rigid collar, mirrored (row 8 is
+   the same back-left facing seen from the other side), registered per cell and composited neck-only, 0 images: 5,878 px
+   changed, 0 outside the mask, alpha identical, rows 1-7 bit-identical, drift 3.83 cm unchanged
+   (`evidence/n29-keys/collar_p55_transplant.md`); `collar/collar_p55_rows68_neck_4x.png` (shipped above new) and
+   `collar/collar_p55_all_rows_64.png` (all 8 facings at 64 px/m, before row above after). Rigid now: rows 1, 2, 4, 5, 8. In game at 64 px/m, the same tick: `collar/collar_p55_before_after_64.png` (pale soft band -> black/vermilion stripes on a flat ring, body identical); p55 sprint drift 3.83 cm before and after (bar 3.83 +- 0.1); clip `collar/collar_p55_32.mp4` (1920x1080 60/1, 962 frames, 16.03 s, before | after). Films `evidence/n29-keys/films.md`.
 5. **Combat's NEED keys served** (red audit rows 12 and 15): the molotov's lit rag and torch flame amber in the item art
    and in Rivet's strips (`0b6814366`, `baf0b209d`, `65578a4be`; held 5860 -> 23 reddish px, pickup 5457 -> 0, 0 px changed
    outside the masks, collar excluded and looked at): `rag/`. The plasma sword's hilt rings steel in Rivet's 12 strips
@@ -38,14 +42,22 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 
 ## What does not
 
-- **p55 collar rows 3, 6, 7, 8 still wear the twisted rope.** Each failed two one-row image edits (rope kept, muddy scarf,
-  teal tint, knitted scarf, crescent stripes on a tube); rejects in `collar/collar_p55_row{3,3b,6,7,8,8b}_rejected_3x.png`,
+- **p55 collar rows 3, 6, 7 still wear the twisted rope.** Each failed two one-row image edits (rope kept, muddy scarf,
+  teal tint, knitted scarf, crescent stripes on a tube); row 6 also failed the mirrored transplant from row 2 (row 2's collar
+  sits higher on the chin and crosses the visor: `collar/collar_p55_rows68_neck_4x.png`, top block); rows 3 and 7 are the
+  profiles and have no rigid mirror donor. Row 8 at 4x keeps small faults (cell 4 a 2-3 px notch at the helmet, cell 8 a
+  light streak). Rejects in `collar/collar_p55_row{3,3b,6,7,8,8b}_rejected_3x.png`,
   `collar/collar_p55_row8b_vs_row4_mirrored_6x.png`. Per the two-routes rule the image route is closed: see Calls.
-- Plasma sword run step 8.29 cm against the 7 cm bar (the katana donor's legs: 7.76).
+- Plasma sword run step 8.29 cm against the 7 cm bar (the katana donor's legs: 7.76). One `run_row_k` value cannot fix it:
+  a sweep on the lane's octant (`p70/plasma_sword/2`, k 0.94/0.97/1.03/1.06) gave 8.27/8.23/8.31/8.28 cm (`3a758e990`,
+  `evidence/n29-keys/grid_plasma_sword.md`); the two planted steps are set by the drawing. Nothing changed in the table.
 - HUD at handheld size: no 1280x800 still. `BondFilmCapture._capture` (`project/dev/ghost-forms/bond_film_capture.gd:38`,
   not this lane's file) exits on any frame that is not 1920x1080 (`4535c3cda`); the compact layout is pinned by the unit
   test only. NEED Director: let the capture take the window size.
 - Item 5 (molotov run, stop-gap back-swing): not started; images at 58/60.
+- Cast's n28 NEED (the dropped rifle reads mauve-pink): measured, no change. A dropped guard rifle draws
+  `showcase/p70/assault_rifle.png` (stock brown wood, hue 26), not `ground_rifle_70.png`; the pink in the 1080p film is the
+  brightest grain plus yuv420 chroma on grey (`ab9e1ebe8`, `evidence/n29-keys/ground_rifle.md`, `ground_rifle/before_p70_4x.png`).
 - Combat's red audit row 16: only the crate plank recoloured; the rest is a Call (design colours, vermilion danger-or-heat).
 
 ## What blocked or slowed you (minutes each)
@@ -58,12 +70,16 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 
 ## Calls for the owner
 
-1. **The p55 collar rows 3, 6, 7, 8**: hand repaint along the shipped centreline using row 4's stripe pattern (mirrored for
-   rows 6-8), or a per-cell edit at 2x? Image edits of one row failed twice on each. Stills: `collar/collar_p55_row4_neck_3x.png`
-   (the target) beside `collar/collar_p55_row8b_vs_row4_mirrored_6x.png` (the latest reject).
+1. **The p55 collar rows 3, 6, 7**: hand repaint along the shipped centreline using row 4's stripe pattern, or a per-cell
+   edit at 2x? Image edits of one row failed twice on each; row 8 was fixed by a mirrored transplant of row 4, which does not
+   fit row 6 (from row 2) or the profiles. Stills: `collar/collar_p55_all_rows_64.png` (where the sheet stands),
+   `collar/collar_p55_rows68_neck_4x.png`.
 2. **Gloria's run row 5 slide factor** `run_row_k p70/gloria/5` 0.64 (own stride vs the bare run; the pistol has no entry): one
    value to drop if her sprint should match the pistol's exactly.
-3. **Plasma sword run step** 8.29 cm vs the 7 cm bar: inherited from the katana's legs; a redraw of the katana's run would fix both.
+3. **Plasma sword run step** 8.29 cm vs the 7 cm bar: inherited from the katana's legs (no `run_row_k` value fixes it, swept);
+   a redraw of the katana's run legs would fix both.
+5. **The dropped rifle in video**: its stock is brown wood (no colour-law break); lower its saturation 0.6 -> 0.45 only if
+   it should read calmer in encoded films (`ground_rifle/before_p70_4x.png`).
 4. **Weapon item art red (combat's audit row 16)**: the mini-nuke's plum-maroon casing and the homing shard's red-orange
    hoses are design colours spread over the whole part, not a one-part mask: keep, steel/amber, or redraw? Contact sheet
    `held_red/contact_4x.png` (#3, #4, #5, #7, #8, #9). The 56,649 vermilion px (ray gun, electro gun, rocket launcher, mini-nuke
@@ -80,7 +96,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 
 ## Next steps
 
-1. The p55 collar rows 3, 6, 7, 8 by the owner's pick (hand repaint from row 4, or 2x per-cell edits).
+1. The p55 collar rows 3, 6, 7 by the owner's pick (hand repaint from row 4, or 2x per-cell edits); row 8's 4x touch-ups.
 2. The molotov's own run set (one row per job, the donor's soles fixed by registration); the stop-gap back-swing.
 3. Combat's red audit row 16 after the owner's call: the per-weapon danger-or-heat list from `evidence/n29-keys/held_red/table.md`.
 4. The HUD handheld still once the bond film capture takes a 1280x800 window.
@@ -109,8 +125,12 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 | n29-06-sword-rings-strips | sonnet | 9 | accepted |
 | n29-07-held-red-triage | sonnet | 3 | accepted (table, 1 file) |
 | n29-08-films | sonnet | 41 | accepted (3 clips, collar still, drift) |
+| n29-11-sword-run-k | sonnet | 9 | accepted rejection (sweep, none passed; my brief named the wrong octant key) |
+| n29-12-ground-rifle-stock | sonnet | 3 | accepted (no change needed; my brief named the wrong file) |
+| n29-10-collar-transplant | opus | 12 | accepted (row 8; row 6 rejected) |
 
-19 calls, about 476 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
+22 calls, about 500 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
 tool supports the size before briefing a still (the handheld call); give the collar its in-game before|after in the same
 call as the art, not a later films call; for an art item that already failed in n28, budget the owner call from the start
-instead of a third route.
+instead of a third route; look up which file and key the game actually reads before naming them in a brief (two
+session 5 briefs named the wrong ones; both builders caught it).
