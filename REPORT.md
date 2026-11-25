@@ -48,7 +48,7 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   beside `films/round_band_32.mp4` (same chapters): the films differ only at 8.17-8.3 s (the light's life on screen); at 8.2 s
   the blast centre prints warmer amber (`stills/explosion_rim_32_pair.png`, ~8k px at 1080p).
 
-### 7. Raised after the list: the blast floor's vermilion outline and specks are gone (`8809bb21d`)
+### 7. Raised after the list: the blast cells' vermilion outline and specks are gone (`8809bb21d`, `93d37aea1`)
 - Cause: the FX item print (`look_d4_item`, nearest ink) snaps every amber->ink blend of the blast cell `blast_1.png` (frame 1,
   every rocket and the nuke) to vermilion: the rim's fringe printed a vermilion outline, the darker grain vermilion specks.
   This is also why the nuke band's sprite tries made things worse.
@@ -57,7 +57,8 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   and a flame sprite, 7 new); red 0 added, teal 0, amber -2 to -4 %, 0 px changed outside the blast box. The edge is now a
   ragged 2-4 px soot seam. Units 334/0 (the 54 tests that reach the PNG), lint 19/19.
   Still `stills/nuke_floor_specks_pair_64.png`. `evidence/n30/floor/specks.md`.
-- (c20: blast_0.png, pending)
+- Frame 0 (`blast_0.png`) the same way (`93d37aea1`): its grain specks (no amber/ink fringe in that cell) -> amber; rocket
+  t65-68 vermilion (not blood) 6 / 8 / 6 / 10 -> 0, 0 px outside the box. `stills/rocket_blast0_specks_pair_64.png`.
 
 ### 6a. `current_look.gd` draw() survivors pinned (`5fd6c1eaa`, `2566b97d0`)
 - `CurrentLook.k_of(ci)` and `const ANTIALIAS` carry draw()'s scale and AA flag (pixels identical by construction); 4 tests,
@@ -141,6 +142,10 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
 ## Builder ledger
+- Session 4: c17 rim-ink 18 accepted (negative: deeper ink lowers contrast); c18 blast-specks (Opus) 29 accepted (found the
+  print's nearest-ink snap, fixed the cell); c19 rim-wide 14 accepted (negative); c20 blast0 14 accepted; c21 decisions 1
+  accepted. What I would brief differently: ask for the cause before a fix (c07b tried sprite fixes blind; c18 explained it
+  in one call by reading the print shader first).
 - Session 3: c09 street-identity 14 accepted; c10 bond-natural 11 accepted; c13 split-test 15 accepted; c12 rim-proof 29
   accepted; c14 thin 3|4 still 2 accepted; c15 decisions 1 accepted; c16 rim film 3 accepted (compared the wrong second; re-checked).
 - Session 2: c04 explosion-rim 30 accepted-partial (data in, its takes missed the light: brief should have named the tick
