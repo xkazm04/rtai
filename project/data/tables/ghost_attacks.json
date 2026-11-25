@@ -50,6 +50,8 @@
       "cooldown_ticks": 480,
       "drop_at": "aim",
       "dump_damage": 3,
+      "dump_hitstop": "boss_hit",
+      "dump_shake": "crash",
       "enabled": true,
       "life_ticks": 81,
       "press_mode": "drop",
