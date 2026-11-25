@@ -198,7 +198,8 @@
         "2026-11-25: arsenal turn pins for n30 keys (dev_loc 39264 -> 39271)",
         "2026-11-25: sprint tour for n30 keys (dev_loc 39271 -> 39340)",
         "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)",
-        "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)"
+        "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
+        "2026-11-25: n31 foes b1: the waiting probe lives in project/dev/foes_n31 as brief b1 names it (dev_loc 39760 -> 40114)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -210,6 +211,7 @@
         "project/dev/cast": 4195,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
+        "project/dev/foes_n31": 354,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
@@ -240,7 +242,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39760
+      "total": 40114
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -524,7 +526,8 @@
         "2026-11-25: card scale for n29 cast (files_past_soft_cap 67 -> 68)",
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)",
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 70 -> 70)",
-        "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)"
+        "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)",
+        "2026-11-25: n31 foes b1: the waiting probe lives in project/dev/foes_n31 as brief b1 names it (files_past_soft_cap 69 -> 69)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -533,7 +536,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 227,
+        "project/boot/launch_args.gd": 228,
         "project/boot/prologue/prologue_command_view.gd": 255,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
