@@ -42,3 +42,16 @@ cell, so 01a read nothing for them. Without a trustworthy drawn volume the "draw
 ## Acceptance
 - Overlay frames for baton, katana, claw where the outline sits on the drawn blade (you looked; say what you saw).
 - before.md table for all 5 weapons from pixels; commits per part; the re-run command for an after on HEAD.
+
+## Session 2 additions (22:20 launch; HARD STOP: commit each part by 22:50, report and END by 23:15 sharp)
+- Batch: render all weapons/facings/ticks in as FEW Godot processes as the tool allows (one per weapon at most);
+  each Godot run holds the lane lock only while it runs. Builder `02p2` shares the lock: it runs unit tests,
+  scenarios and the gauntlet baseline. If the lock is busy, do Godot-free work (projection code, tests, plots).
+- Also write `evidence/n31-melee/01-volumes/<label>/drawn_ticks.json`: per weapon, per tick k of one swing
+  (facing 0, 90, 315): the drawn blade/swipe mask's angle range about Rivet (deg, signed off the aim) and its
+  max ground reach from Rivet's centre (m). Item 02's next call sets the sweep's arc and reach from this file.
+- Before killing ANY PID: print its CommandLine (`Get-CimInstance Win32_Process -Filter "ProcessId=<pid>"`) and
+  kill only if it names this worktree (`n23-street`) or your own tool. Another lane's Godot was killed by a builder
+  in session 1. Never kill by name.
+- The tree is shared with builder 02p2 (it edits player_melee.gd/melee_sweep.gd/melee tables, flag-gated): your
+  before comes from the temp worktree at ba8e470b0; do not film or measure HEAD as "after" in this call.
