@@ -132,3 +132,5 @@
 - 15:52 BUILDER RUNNING shadow-film since 15:52 (Sonnet, brief evidence/briefs/n30-03c-span-shadow-film.md: find an on-span window over 5 seeds from strength(), `--seed` flag on yard_film, before|after 32 px/m 1920x1080; hard stop 16:40).
 - 15:52 BUILDER RUNNING mouth-fade since 15:52 (Sonnet, brief evidence/briefs/n30-05d-mouth-fade.md: alpha ramp on the mouth end, pilots, 1920x1080 before (no span, main) | after film; art commit by 16:32; hard stop 16:50).
 - 15:50 (clock note: the 15:52 entries above were written at machine 15:49) REPORT draft: calls reordered (roof cost first), Next steps, ledger through roof-cost.
+- 15:54 MILESTONE mouth-fade 89c56895c (cutter `FADE_FIRST_M` mouth_door 0.5 m smoothstep alpha ramp, re-cut, pytest +1, pilots identical: sha256 lines of prologue-yard-pilots-mouth-fade.json equal mouth-deep's, checked by the director) + fa82a5e81 decisions line.
+- 15:55 LOOKED at evidence/yard30/mouth_fade_64ppm.png: the hard horizontal cut is gone, the beam's top dissolves into the flames with no halo. Accepted. Film part running.
