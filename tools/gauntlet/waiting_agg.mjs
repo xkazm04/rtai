@@ -18,7 +18,8 @@ const round = (x, d = 2) => (x == null ? null : Math.round(x * 10 ** d) / 10 ** 
 
 function emptyPool() {
   return { n: 0, react: [], reactAny: [], firedBeforeClear: 0, never: 0, neverClear: 0, neverClearIn: 0,
-    rounds: 0, dist: [], clear: 0, clearIdle: 0, clearIn: 0, clearInIdle: 0, token: 0, alive: 0 };
+    rounds: 0, dist: [], clear: 0, clearIdle: 0, clearIn: 0, clearInIdle: 0, token: 0, alive: 0,
+    clearLoose: 0, clearInLoose: 0, engagedRule: true };
 }
 
 function addKind(pool, k) {
@@ -37,15 +38,22 @@ function addKind(pool, k) {
   pool.clearInIdle += k.clear_in_idle_s;
   pool.token += k.token_s;
   pool.alive += k.alive_s;
+  // Run files from before b4a carry only the strict rule: the engaged share is then unknown.
+  if (k.clear_in_unengaged_s == null) pool.engagedRule = false;
+  pool.clearLoose += k.clear_unengaged_s ?? 0;
+  pool.clearInLoose += k.clear_in_unengaged_s ?? 0;
 }
+
+const ratio = (a, b, ok = true) => (ok && b > 0 ? round(a / b, 3) : null);
 
 function finishPool(p) {
   return { n: p.n, react_p50: pct(p.react, 50), react_p90: pct(p.react, 90), react_n: p.react.length,
     react_any_p50: pct(p.reactAny, 50), react_any_p90: pct(p.reactAny, 90),
     fired_before_clear: p.firedBeforeClear, never_fired: p.never, never_fired_clear: p.neverClear,
     never_fired_clear_in: p.neverClearIn, rounds: p.rounds,
-    idle_share: p.clear > 0 ? round(p.clearIdle / p.clear, 3) : null,
-    idle_share_in_range: p.clearIn > 0 ? round(p.clearInIdle / p.clearIn, 3) : null,
+    idle_share: ratio(p.clearInLoose, p.clearIn, p.engagedRule),
+    idle_share_any: ratio(p.clearLoose, p.clear, p.engagedRule),
+    idle_strict: ratio(p.clearIdle, p.clear), idle_strict_in_range: ratio(p.clearInIdle, p.clearIn),
     clear_s: round(p.clear), token_share: p.alive > 0 ? round(p.token / p.alive, 3) : null,
     dist_p10: pct(p.dist, 10), dist_p50: pct(p.dist, 50), dist_p90: pct(p.dist, 90),
     dist_hist_2m: histogram(p.dist) };
@@ -62,7 +70,7 @@ function histogram(list) {
 
 function emptyWave() {
   return { reached: 0, kinds: {}, melee: {}, all: emptyPool(), firing: [], alive: [], damage: [], deaths: 0,
-    seconds: [], shotsChecked: 0, shotsMismatch: 0 };
+    seconds: [], shotsChecked: 0, shotsMismatch: 0, press: 0, pressEligible: 0, pressKnown: true };
 }
 
 function addWave(w, row) {
@@ -71,6 +79,9 @@ function addWave(w, row) {
   w.alive.push(row.ranged_alive_mean);
   w.damage.push(row.damage_taken);
   w.deaths += row.died ? 1 : 0;
+  if (row.press_s == null) w.pressKnown = false;
+  w.press += row.press_s ?? 0;
+  w.pressEligible += row.press_eligible_s ?? 0;
   if (row.seconds >= 0) w.seconds.push(row.seconds);
   w.shotsChecked += 1;
   w.shotsMismatch += row.shots_probe === row.shots_result ? 0 : 1;
@@ -89,7 +100,8 @@ function finishWave(w, runs) {
     firing_per_s_mean: round(mean(w.firing)), firing_per_s_p50: pct(w.firing, 50),
     firing_per_s_max: w.firing.length ? Math.max(...w.firing) : null, ranged_alive_mean: round(mean(w.alive)),
     damage_taken_mean: round(mean(w.damage), 1), deaths: w.deaths, seconds_mean: round(mean(w.seconds), 1),
-    shots_checked: w.shotsChecked, shots_mismatch: w.shotsMismatch };
+    shots_checked: w.shotsChecked, shots_mismatch: w.shotsMismatch,
+    pressing_share: ratio(w.press, w.pressEligible, w.pressKnown), press_eligible_s: round(w.pressEligible, 1) };
 }
 
 /** {schema, profiles: {<profile>: {runs, seeds, waves: {<n>: wave}, totals}}} from run documents. */
@@ -117,21 +129,21 @@ export function aggregate(docs) {
 const f = (x, d = 2) => (x == null ? '-' : String(round(x, d)));
 const pair = (a, b) => f(a) + ' / ' + f(b);
 const share = (x) => (x == null ? '-' : Math.round(x * 100) + ' %');
-const HEAD = '| wave | archetype | n | react in range p50 / p90 s | react any dist p50 / p90 s | never fired (clear line, in range) | idle share (in range) | token share | shot dist p10 / p50 / p90 m | firing / s mean (max) | ranged alive | dmg taken mean | deaths |';
-const RULE = '|' + ' --- |'.repeat(13);
+const HEAD = '| wave | archetype | n | react in range p50 / p90 s | react any dist p50 / p90 s | never fired (clear line, in range) | idle share (strict: any, in range) | token share | shot dist p10 / p50 / p90 m | firing / s mean (max) | ranged alive | pressing share | dmg taken mean | deaths |';
+const RULE = '|' + ' --- |'.repeat(14);
 
 function kindRow(label, id, k) {
   return `| ${label} | ${id} | ${k.n} | ${pair(k.react_p50, k.react_p90)} | ${pair(k.react_any_p50, k.react_any_p90)} | `
-    + `${k.never_fired} (${k.never_fired_clear}, ${k.never_fired_clear_in}) | ${share(k.idle_share)} (${share(k.idle_share_in_range)}) | ${share(k.token_share)} | `
+    + `${k.never_fired} (${k.never_fired_clear}, ${k.never_fired_clear_in}) | ${share(k.idle_share)} (${share(k.idle_strict)}, ${share(k.idle_strict_in_range)}) | ${share(k.token_share)} | `
     + `${f(k.dist_p10, 1)} / ${f(k.dist_p50, 1)} / ${f(k.dist_p90, 1)} |`;
 }
 
 function waveRows(label, w) {
-  if (!w.reached) return [`| ${label} | not reached (0/${w.runs} seeds) |` + ' |'.repeat(11)];
+  if (!w.reached) return [`| ${label} | not reached (0/${w.runs} seeds) |` + ' |'.repeat(12)];
   const reach = w.reached < w.runs ? ` (reached ${w.reached}/${w.runs})` : '';
-  const rows = Object.entries(w.kinds).map(([id, k]) => kindRow(label + reach, id, k) + ' | | | |');
+  const rows = Object.entries(w.kinds).map(([id, k]) => kindRow(label + reach, id, k) + ' | | | | |');
   rows.push(kindRow(`**${label}**${reach}`, '**all ranged**', w.all_ranged)
-    + ` ${f(w.firing_per_s_mean)} (${f(w.firing_per_s_max, 0)}) | ${f(w.ranged_alive_mean, 1)} | ${f(w.damage_taken_mean, 1)} | ${w.deaths} |`);
+    + ` ${f(w.firing_per_s_mean)} (${f(w.firing_per_s_max, 0)}) | ${f(w.ranged_alive_mean, 1)} | ${share(w.pressing_share)} | ${f(w.damage_taken_mean, 1)} | ${w.deaths} |`);
   return rows;
 }
 
@@ -140,7 +152,11 @@ export function markdown(summary, { title = 'Foes waiting (n31)', note = '' } = 
   const out = ['# ' + title, ''];
   if (note) out.push(note, '');
   out.push('react = seconds from a first clear line to Rivet (inside the weapon range, or at any distance) to the first round; '
-    + 'idle share = enemy-seconds with a clear line and no round, wind-up or burst / enemy-seconds with a clear line; '
+    + 'idle share = enemy-seconds with a clear line inside the weapon range and not engaged / those enemy-seconds, where engaged = '
+    + 'a round within the last burst + cooldown + 0.1 s of the weapon it fires, a wind-up, a burst or the FoeGait settle window; '
+    + 'strict = the old rule (no round, wind-up or burst this tick), over every clear-line second and inside the range; '
+    + 'pressing share = wave seconds with >= 3 ranged alive where engaged + advancing (TRAVEL or legacy, > 0.5 m/s toward Rivet, '
+    + 'or walking to a spot inside attack_m with a clear line) >= max(3, ceil(ranged alive / 3)); '
     + 'token share = enemy-seconds holding a squad shooting token / enemy-seconds alive. '
     + `Wave ${STOMP_WAVE} (the stomp) is measured in waiting.json but left out of this table and the totals.`, '');
   for (const [name, p] of Object.entries(summary.profiles)) {

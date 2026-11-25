@@ -7,10 +7,12 @@
 // --rev runs in a temp detached worktree at that commit (the probe files copied in), removed after.
 // --from re-aggregates <dir>/runs/*.json without Godot. --parity also runs plain `gauntlet` with the
 // same args and compares the two run results. --check only parse-checks the probe (in the --rev tree).
+//   node tools/gauntlet/waiting.mjs --compare=<dirA>,<dirB>[,...] [--labels=main,gait] [--out=<file.md>]
+// prints (or writes) the headline of each dir's waiting.json side by side (waiting_compare.mjs).
 import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { basename, join, resolve } from 'node:path';
 import { isDeepStrictEqual, parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
@@ -18,6 +20,7 @@ import { copyRuntime, MARKER, removeWorktree } from '../mutate/worktree.mjs';
 import { seedImportCache } from './prepare_worktree.mjs';
 import { entryArgs } from './commands.mjs';
 import { aggregate, markdown, SCHEMA } from './waiting_agg.mjs';
+import { compareMarkdown } from './waiting_compare.mjs';
 
 const PROBE_DIR = 'project/dev/foes_n31';
 const PROBE_RES = ['res://dev/foes_n31/waiting_probe.gd', 'res://dev/foes_n31/waiting_probe.tscn'];
@@ -25,7 +28,7 @@ const LOCK = join(ROOT, 'build', 'n31', 'godot.lock');
 
 export function parse(argv) {
   const { values: v } = parseArgs({ args: argv, options: Object.fromEntries(
-    ['profiles', 'seeds', 'seed0', 'waves', 'out', 'rev', 'from', 'tag'].map((k) => [k, { type: 'string' }])
+    ['profiles', 'seeds', 'seed0', 'waves', 'out', 'rev', 'from', 'tag', 'compare', 'labels'].map((k) => [k, { type: 'string' }])
       .concat([['parity', { type: 'boolean' }], ['check', { type: 'boolean' }]])) });
   const int = (name, x, min) => {
     if (!/^\d+$/.test(x) || Number(x) < min) throw new Error(`--${name} must be an integer >= ${min}`);
@@ -33,10 +36,15 @@ export function parse(argv) {
   };
   const profiles = (v.profiles ?? 'novice,average').split(',');
   for (const p of profiles) if (!['novice', 'average', 'expert'].includes(p)) throw new Error('unknown profile ' + p);
-  if (!v.out && !v.check && !v.from) throw new Error('--out=<dir> is required');
+  if (!v.out && !v.check && !v.from && !v.compare) throw new Error('--out=<dir> is required');
+  const compare = v.compare ? v.compare.split(',').map((d) => resolve(d)) : null;
+  if (compare && compare.length < 2) throw new Error('--compare needs two or more dirs');
+  const labels = v.labels ? v.labels.split(',') : compare?.map((d) => basename(d));
+  if (compare && labels.length !== compare.length) throw new Error('--labels must name every --compare dir');
   return { profiles, seeds: int('seeds', v.seeds ?? '10', 1), seed0: int('seed0', v.seed0 ?? '1', 0),
     waves: int('waves', v.waves ?? '7', 1), out: v.out ? resolve(v.out) : null, rev: v.rev ?? null,
-    from: v.from ? resolve(v.from) : null, parity: v.parity ?? false, check: v.check ?? false, tag: v.tag ?? 'b1' };
+    from: v.from ? resolve(v.from) : null, parity: v.parity ?? false, check: v.check ?? false, tag: v.tag ?? 'b1',
+    compare, labels };
 }
 
 /** The dev-runner argv for one probe run (mirrors commands.mjs entryArgs for a bot run). */
@@ -91,7 +99,8 @@ export function inRevTree(rev, action, root = ROOT) {
     writeFileSync(join(tree, MARKER), JSON.stringify({ root: resolve(root) }), { flag: 'wx' });
     copyRuntime(root, tree);
     seedImportCache(root, tree);
-    cpSync(join(root, PROBE_DIR), join(tree, PROBE_DIR), { recursive: true });
+    cpSync(join(root, PROBE_DIR), join(tree, PROBE_DIR), { recursive: true,
+      filter: (src) => src === join(root, PROBE_DIR) || basename(src).startsWith('waiting_') });
     return action(tree, sha);
   } finally {
     removeWorktree({ root, path: tree });
@@ -127,6 +136,7 @@ function runAll(a, tree, log) {
 
 export function main(argv, { log = console.log } = {}) {
   const a = parse(argv);
+  if (a.compare) return compareDirs(a, log);
   if (a.check) {
     const check = (tree) => devCheck(tree, a.tag, log);
     return a.rev ? inRevTree(a.rev, check) : check(ROOT);
@@ -145,6 +155,16 @@ export function main(argv, { log = console.log } = {}) {
   writeFileSync(join(out, 'waiting.json'), JSON.stringify({ ...summary, meta }, null, 2) + '\n');
   writeFileSync(join(out, 'waiting.md'), markdown(summary, { note: `Measured at ${rev}, gauntlet --controls=wheel --pick=greedy --waves=${a.waves}.` }));
   log(`wrote ${join(out, 'waiting.md')}`);
+  return 0;
+}
+
+function compareDirs(a, log) {
+  const sums = a.compare.map((d) => JSON.parse(readFileSync(join(d, 'waiting.json'), 'utf8')));
+  const md = compareMarkdown(sums, a.labels);
+  if (a.out) {
+    writeFileSync(a.out, md + '\n');
+    log(`wrote ${a.out}`);
+  } else log(md);
   return 0;
 }
 
