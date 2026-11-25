@@ -37,6 +37,7 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 		rig.tree_exiting.connect(card.queue_free, CONNECT_ONE_SHOT)
 	card.pose.sheets = sheets
 	card.update_fighter(h, host.arena)
+	card.sync_tint(rig.is_tinted())
 	card.visible = shown
 	return false
 

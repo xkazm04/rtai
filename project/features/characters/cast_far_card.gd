@@ -6,6 +6,15 @@ var _contact: StreetCopWalk.Contact
 var _base_scale: Vector2
 
 
+## The hit flash of the rig it stands in for (rig.is_tinted()): tint material while lit, raw after.
+func sync_tint(on: bool) -> void:
+	var want: Material = null
+	if on:
+		want = PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0)
+	if material != want:
+		material = want
+
+
 func draw_pose(pose: CastCardPose, h: Fighter, moving: bool, tick: int) -> void:
 	var path: String = pose.sheets.walk
 	var row: int = StreetWalkerCards.stride_frame(pose.walked / StreetQuestCards.STRIDE_M, moving)

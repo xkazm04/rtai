@@ -66,3 +66,17 @@ func _check_walk_contact(card: FoeShieldCardView, h: Fighter, arena: CombatArena
 	assert_eq(card.frame_coords, Vector2i(2, 1))
 	var reach: float = CastDoorAnchors.WALK_STEP_M * 2.0 * SimConst.PX_PER_M
 	assert_lt(card.position.distance_to(h.pos * SimConst.PX_PER_M), reach)
+
+
+func test_door_and_gunner_cards_flash_with_their_rig() -> void:
+	for card: CastFarCard in [FoeShieldCardView.new(), FoeGunnerCardView.new()]:
+		autofree(card)
+		var rig: CutRig = autofree(CutRig.new())
+		card.sync_tint(rig.is_tinted())
+		assert_null(card.material)
+		rig.set_tint(true)
+		card.sync_tint(rig.is_tinted())
+		assert_eq(card.material, PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0))
+		rig.set_tint(false)
+		card.sync_tint(rig.is_tinted())
+		assert_null(card.material)
