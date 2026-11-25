@@ -194,3 +194,4 @@ NEXT (session 6, if any, before the 18:45 freeze; no new code after 17:15):
 1. REPORT is final apart from polish: drop "DRAFT" from line 3 at 18:55, re-run `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL + REPORT (inert).
 2. Optional, docs/evidence only: copy `build/look/n30-c22/eight_p55_contact_2x.png` to masters only if a frames.json entry can go (cap 15).
 3. Never delete `build/film/c22-*` with rm -rf (junctions into the tree).
+- 17:16 BUILDER c24 1 accepted: `0e59be37e` one decisions.md line (door held-sole pin not shipped, WALK stays FOUR, re-check when the door anchors are re-registered); diff 1 insertion. Its cites run shows a pre-existing MISSING `evidence/cop-gate.json` at decisions.md:137 (not ours).
