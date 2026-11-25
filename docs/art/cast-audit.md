@@ -1011,3 +1011,43 @@ Feet (`node tools/film/cast_door_films.mjs build/look/n30-c17/feet3 feet`, sole 
 Next, if wanted: both remaining p55 soles sit in the hold before drawing 8 (right D8 hold -2.04, down-right D7 hold
 -1.97), so the only one-cell lever left is drawing 8 itself, which moves `EIGHT_STEP_M` and so every facing at both
 pitches; it needs the director's call and a full re-measure. No further D5 / D6 / D7 edit is expected to cross 2.
+
+## Door eight, p55 drawing 8, n30
+
+**Verdict: no drawing-8 move works; no images, no art change, WALK stays FOUR.** No p55 right drawing-8 sole move brings
+p55 right's sole to 2 or under while p70 keeps passing, so the round stopped after the computation (`door8f`: 0 images).
+
+Method (no Godot; scratch `build/look/n30-c19/`, `model.py`, `predict.py`, `scan.py`, `scan_fine.log`): a port of
+`StreetCopWalk.Contact` and `StreetPatrolPose` (pose, settle, centre stance) reads `EIGHT70` / `EIGHT55` and recomputes
+`EIGHT_STEP_M` the way `cast_door_soles.py` does. On c17's tracks (`build/look/n30-c17/feet3`) it reproduces the drawing
+sequence in all four facings (225 of 225 frames) and the card shear within 0.02-0.10. The tracks show that a planted
+sole drifts inside one drawing's hold by the change in lean times the registered sole's height below the cell pivot
+(p55 right drawing 8: 0.200 x 20.5 / 2 = 2.05 tool units, measured 2.04). The roll pivots on the cell's pivot line,
+not on the sole. Prediction = the feet3 hold drift + the model's change for a drawing-8 sole moved dx sheet px (right p55
+drawing 8 moves `EIGHT_STEP_M` by 0.000868 m per px; down-right drawing 8 is not in the step).
+
+| Move (sheet px) | `EIGHT_STEP_M` | p70 right | p70 down-right | p55 right | p55 down-right |
+|---|---:|---:|---:|---:|---:|
+| none (c17, measured) | 0.1799 | 1.96 (D1) | 1.36 (D7) | 2.04 (D8), 2.00 (D3) | 1.97 (D7) |
+| right D8 -6 / -3 | 0.1851 / 0.1825 | 2.16 / 2.12 | 1.36 / 1.35 | 2.08 / 2.05 | 1.97 / 1.95 |
+| right D8 +3 / +6 / +10 | 0.1773 / 0.1747 / 0.1712 | 2.09 / 2.02 / 1.99 | 1.37 / 1.38 / 1.41 | 2.21 / 2.30 / 2.36 | 1.99 / 2.00 / 2.04 |
+| right D8 +12 / +16 / +20 | 0.1695 / 0.1660 / 0.1625 | 1.99 / 1.96 / 1.89 | 1.41 / 1.37 / 1.34 | 2.03 / 2.31 / 2.06 | 1.86 / 1.82 / 1.75 (dr +4) |
+| down-right D8 +3 / +6 / +10 | 0.1799 | 1.96 | 1.36 | 2.04 | 1.84 / 1.72 / 1.66 (D3) |
+
+(worst hold's x drift in tool units, bar 2; the rows marked "dr +4" also move down-right drawing 8 by +4.)
+
+Why: the right drawing-8 hold drifts with the lean from the drawing-7 knot to the next half's drawing-1 knot. Moving the
+drawing-8 sole shifts lean between the drawing-7 and drawing-8 holds, but their sum stays the same. The step change it
+brings moves every half-boundary hold (p70 right D1, p55 right D4 / D8). No step in the scanned range (0.1625-0.1886) puts
+p55 right under 2. p55 right's half-A drawing-3 hold (2.00) does not depend on drawing 8 at all. Down-right drawing 8 forward 3-6
+sheet px (about 7-15 source px) would take p55 down-right under 2 and move nothing else. That alone does not pass the
+owner's rule, so it was not drawn.
+
+Caveat: the model matches the mid-half holds (p55 right D3 2.03 vs 2.00 measured, D7 1.97 vs 1.93) but reads low on
+the half-boundary holds (p55 right D8 1.71 vs 2.04, p70 right D1 1.00 vs 1.96; the settle and stance shift). Its deltas
+there jitter with dx because of frame sampling. The right-facing verdict rests on those holds; a Godot re-measure of
+one candidate would settle it.
+
+Next, if wanted (director's call): down-right drawing 8 forward (fixes p55 down-right alone). p55 right needs a non-D8 change
+to both its drawing-3 hold (2.00) and its drawing-8 hold (2.04), or a pose-code change (roll the hold about the
+registered sole, not the pivot line), which would move every facing of every foe eight and is not this lane's.
