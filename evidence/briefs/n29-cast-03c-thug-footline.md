@@ -1,7 +1,7 @@
 # Brief n29-cast-03c: robot thug A, the shoe foot line in the cutter + the attack, hit and fall on the ground
 
 Lane `cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd), branch `n29-cast`. You are a builder sub-agent.
-**Hard stop HARDSTOP local** (check `date +%H:%M` often). **Start commit 1 by COMMIT1, your last commit by LASTCOMMIT** (hook
+**Hard stop 06:05 local** (check `date +%H:%M` often). **Start commit 1 by 05:30, your last commit by 05:50** (hook
 ~12 min). Never end with finished work uncommitted. Then report and END.
 
 ## Read first
@@ -63,3 +63,12 @@ root `JOURNAL.md`, `REPORT.md`, `evidence/briefs/**`.
 Commits, the gap table before/after, key-clean / red / stripe numbers, feet audit before/after if the walk moved, the still
 and clip paths + ffprobe, what you saw per pose, the tell/hit/fall frame numbers, the `run_unit --changed` line, NEEDs, what
 you could not do.
+
+## Added 04:57 (director)
+- A sonnet builder works beside you until 06:00 on the robot flash live path (`arena_robot_rigs.gd`, `rig_clips.gd`,
+  `cast_flash_fight*`, `tools/film/cast_n29_films.mjs`, a robot flash test): never stage or revert those. The lane Godot lock is
+  shared: one run at a time, release right after.
+- If its fix lands before your film, your fight clip will show the thug's flash on hits too: say whether it does.
+- The quick gate's Godot parse step failed on untouched files last session: `node tools/gate/quick.mjs --no-godot` plus GUT is
+  accepted; say so.
+- Order of value if time runs short: commit 1 (measured table + fixed cutter) beats the clip; the 64 px/m still beats the clip.

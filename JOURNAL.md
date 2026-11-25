@@ -251,3 +251,11 @@ NEXT (session 4, from ~05:05), in order:
   rendering only) and re-films the flash without the scene driving it. Until then item 2 is NOT live for robots in the street.
 NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash live-path check + fix above (sonnet, small),
   and measure heights in `size_beside_32.mp4` frames (not nominal labels) in the same call if cheap.
+
+## Session 4 (04:50, iteration 4, BUILD)
+- 04:50 read JOURNAL, git log (HEAD `416c47a21`, tree clean), grep `NEED cast` in keys/combat/yard journals: none.
+- 04:52 checked the flash live-path finding by read: `set_tint` is called only from `RigClips.sample` (`hit_t >
+  HIT_TINT_FROM`); `hit_t` is set only by `RigClips.hit` / a feed `Clip.HIT` row (cops in `arena_rigs.gd:212`);
+  `ArenaRobotRigs._react` calls only `rig.hit(away, 40)`. Confirmed: no robot card flashes in a live fight.
+- 04:58 BUILDER RUNNING cast-10-flash-live (sonnet) since 04:58: `evidence/briefs/n29-cast-10-flash-live.md`, hard stop 06:00.
+- 04:58 BUILDER RUNNING cast-03c-thug-footline (opus) since 04:58: `evidence/briefs/n29-cast-03c-thug-footline.md`, hard stop 06:05.
