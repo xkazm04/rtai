@@ -780,3 +780,24 @@ pad-pinned test is dropped, the held-walk test is the `20be6ffaa` one, the stand
 `WALK = EIGHT` would ship: jump passes in every facing (9.93 to 10.74), sole slides 18 to 27 px (the four: 12.50 to
 21.94); the owner decides. `war8_feet_before_after_64.png` = the four held (left, ships) beside the eight held (right,
 staged), and `war8_walk_32.mp4` = the eight held as a staged preview.
+
+## Heights in size_beside_32.mp4, n29
+
+Brief n29-cast-13. Film `gtai-masters/n29/cast/size_beside_32.mp4` (1920x1080, 33.75 s, 32 px/m, tilt 70; its on-screen labels are nominal: 50 px x actor scale). Tool `tools/art/cast_film_heights.py` over 51 frames (1.5 fps, `build/look/n29-size-film/all/`); 50 frames separated all 12 figures. Method: camera and street are static and the row walks, so the per-pixel median of 26 frames is the empty street; a figure is the changed pixels (sum |frame - median| > 60) minus the ground shadow (an even darkening: frame/median 0.45-0.95 with the same ratio in all channels, spread < 0.12), grouped by connected components (5x9 dilation), left to right = warden, contractor, gunner, rocket_trooper, sentry_turret, mulroney, door_carrier, war_machine, cop 0.92, cop 0.85, cop 1.10, rivet. The label bands are cut off at the first dense text row minus 5 px. Height = first to last row with at least 2 changed pixels. Looked at: `crop_{rivet,war_machine,door_carrier,sentry_turret,mulroney}_{10,30}.png` (4x, top red line, bottom green line) and `boxes_*.png`.
+
+Stills column = part B applied, 32 px/m. Unjittered cop: the three film cops divided by their nominal scale (46 / 0.92 = 50.0, 41 / 0.85 = 48.2, 53.5 / 1.10 = 48.6) against the stills' 50.3.
+
+| figure | frames | film px median (min-max) | stills 32 px/m | delta | / Rivet (film, stills) | verdict |
+|---|---|---|---|---|---|---|
+| appliance_warden | 50 | 51 (43-80) | 51 | 0 | 0.64, 0.66 | PASS |
+| contractor | 50 | 50 (34-84) | 49 | +1 | 0.63, 0.64 | PASS |
+| robot_gunner | 50 | 55 (42-65) | 55 | 0 | 0.69, 0.71 | PASS |
+| rocket_trooper | 50 | 48 (37-53) | 51 | -3 | 0.60, 0.66 | marginal: the film draws the lancer in his walk cell, the still in the aim cell |
+| sentry_turret | 50 | 45 (41-48), lower bound | 53 | n/a | - | NOT SEPARABLE: the plate's bottom runs under the name label (stills: plate bottom 50 px below its ground point); every frame hits the label cut, so the 45 is a lower bound, not a height |
+| sergeant_mulroney | 50 | 54 (49-65) | 53 | +1 | 0.68, 0.69 | PASS |
+| shield_robot (door carrier) | 50 | 63 (54-75) | 56 | +7 | 0.79, 0.73 | OVER the 2 px bar: eye check (`crop_door_carrier_10.png`) shows him whole, facing down, door held in front, top hazard stripe to boots 63; the still faces (1,1) in the idle cell. Cause not measured here (facing and walk cell scale are the candidates) |
+| war_machine | 50 | 73.5 (67-82) with its ground shadow | 65 | +8.5 | 0.92, 0.84 | SHADOW NOT REMOVED (it is darker than 0.45 of the street): eye read from the crops, lamp top to foot bottom, 64 (frame 10) and 68 (frame 30): within 3 of the still, no number is claimed beyond that |
+| cop 0.92 / 0.85 / 1.10 | 50 | 46 / 41 / 53.5 | 50.3 unjittered | -0.3 / -2.1 / -1.7 | 0.58 / 0.51 / 0.67 | PASS within 2.1 (unjittered 50.0 / 48.2 / 48.6) |
+| rivet | 50 | 80 (74-85) | 77 | +3 | 1.00 | +3: walk bob and a facing-down pose; looked at, whole, soles at the lowest row (`crop_rivet_10.png`) |
+
+Could not do: the turret (label overlap, above) and a clean war machine number (shadow). A looser shadow rule (0.2-0.97) was tried and rejected: it also ate outlines (Rivet 76, unjittered cops 47-48). Nothing here is re-rendered; Godot was not run.
