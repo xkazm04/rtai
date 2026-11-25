@@ -1,0 +1,26 @@
+# n31 ghost 07 - a kill by Tonnage's dump plays the press crush, not the bullet fall
+
+Builder tag: `g07-kills`. **First commit within 25 minutes; hard stop 45 minutes after launch: commit what passes, report, END.** Never end with a commit in the pre-commit hook (~12 min budget).
+Worktree (cwd): `C:\Users\kazda\kiro\gtai-wt\n25-yard`, branch `n31-ghost`. Read `AGENTS.md`, `git log --oneline -12`.
+
+## Why
+Owner: "Animations from weapons/projectiles and impact on enemies are inconsistent". Today a foe killed by Tonnage's deploy dump dies the generic bullet fall: `ghost_deploy_strike.gd` passes weapon `deploy_tonnage`, which has no `signature_kills.json` row and no `weapons.json` row (so `ReactLink.hit_class_of` -> light). The Q-form stomp already has the right deaths: `hauler_stage.gd:110` passes `stomp` inside `ghost_attacks.json` tonnage `crush_m` (2 m) of the press head (row `tonnage_crush`: flattened into the street) and `stomp_wave` beyond (`human_reactions.json` `stomp_wave: blast`, a thrown death).
+
+## Decide first (read, then write your choice in the report with file:line)
+Option A (lane-local, preferred if benign): the dump's `_hit` passes `stomp` for a foe within `crush_m` of the drop centre and `stomp_wave` beyond, exactly like `hauler_stage.gd:110`. Before choosing it, list EVERY reader of the weapon id for these hits and say what changes: `features/gauntlet/gauntlet_combat.gd:35-36,113` (`stomp` counts as a melee contact: `hits_melee` stat), `features/combat/moves/tonnage_crack.gd:20` (the war machine crack opens on `stomp`/`stomp_wave`/`ram`: is that wanted for the deploy? the brief's guard rail says the crack must still work), bond / mastery / the deploy tally (`ghost_deploy_tally.gd` counts `release_kills`, not the weapon), hit-feel, armour (`kind` stays `shot`), the bot, stats/achievements (`grep -rn '"stomp"\|&"stomp"' project/features project/core project/data`). If any reader changes balance (bond gain, mastery, damage), choose B.
+Option B: keep `deploy_tonnage` and write a new `signature_kills.json` row `deploy_tonnage` (style crush, copy of `tonnage_crush`) as a patch file `evidence/n31/ghost/deploy_kills.patch` (`git diff` format against HEAD; do NOT commit the table change: the kills table is the melee lane's) and report `NEED melee: apply evidence/n31/ghost/deploy_kills.patch`.
+
+## Do
+1. Implement A (or write B's patch). The crush ring `crush_m` is read from the row, never a constant.
+2. Tests (a new `project/tests/unit/test_tonnage_dump_kills.gd`): a cop killed at 1 m from the drop centre lands with weapon `stomp`, one at 4 m with `stomp_wave` (connect `arena.kill_landed` or read what the existing tonnage drop tests use; copy the setup of `test_tonnage_drop.gd`), and the war machine crack still opens on a deploy hit if it did before (or the test pins what it does).
+3. Proof in pixels: a 64 px/m still pair (before = HEAD before your commit, after) of a cop killed inside crush_m by the dump, at the tick his death has played ~20 ticks, through a probe under `project/dev/ghost_n31/` with `node tools/dev/run.mjs` (`--rendering-driver d3d12 --position 0,1440`). To `C:\Users\kazda\kiro\gtai-masters\n31\ghost\` (png only) and append entries to its `frames.json`. Look at both stills yourself (Read the png) and describe what differs.
+4. Mutate the changed lines: `node tools/mutate/mutate.mjs --file=project/features/souls/ghost_deploy_strike.gd --lines=<changed> --max=12 --tests=test_tonnage_dump_kills,test_tonnage_drop` and quote the score.
+
+## Rules
+- `export APPDATA=C:/Users/kazda/kiro/gtai-n31/appdata/ghost` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'` before every Godot-using command. **Lane Godot lock** `build/n31/godot.lock`: wait until absent, write `g07-kills <pid>`, delete yours after; never delete another's. One Godot at a time.
+- Allowlist: `project/features/souls/ghost_deploy_strike.gd` (+ a small new helper in `project/features/souls/` if it would pass 200 lines), `project/tests/unit/test_tonnage_dump_kills.gd`, `project/dev/ghost_n31/**`, `evidence/n31/ghost/**`, `docs/decisions.md` (append ONE line: the choice and why; `git diff docs/decisions.md` must show only your line before staging), `C:\Users\kazda\kiro\gtai-masters\n31\ghost\**` (stills + frames.json only), `build/n31/**`. NOT: `project/features/combat/**`, `project/data/tables/signature_kills.json`, `human_reactions.json`, `weapons.json` (melee's), other lanes' files. Any other path: STOP and report a NEED.
+- Typed GDScript, ~200 lines/file (hard 300), <= 40 lines/function, <= 5 params, `Log` not `print`. New `.gd` -> `--import` through runGodot, commit the `.uid`.
+- Fix lint and format findings in your own edit and go on. Stage per path, `git commit -m "..." -- <paths>`; no add -A/./-u, stash, amend, rebase, reset --hard; never skip the hook (a fail on `kill_reel_*.break.test.mjs` = stale class cache: `--import`, commit again). Commit messages end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+
+## Report
+Choice A/B with the reader list, commits, tests, still paths and what differs, mutate score, NEED lines.
