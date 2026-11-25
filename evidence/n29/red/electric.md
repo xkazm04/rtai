@@ -27,3 +27,25 @@ first new `arena.burst_arcs` entry; `burn_ticks == 90` at the crates), `electric
 
 ## Not done
 Film D (`red_elec_mertz_after.mp4`) and the mutate run: out of wall clock.
+
+## After2 (commit 3bf74f0c7: cast view amber ink + opaque amber body stroke)
+
+Files `red_elec_<tazer|burst|tuckin>_after2_64.png` and `_pair2_64.png` (before | after2, 3x nearest) next to the others, from
+`elec_stills.py` (frames `build/n29elec/after2/`, same ticks 15874 / 16132 / 16393; a fourth `cops` frame at 16393 has Rivet's collar in shot).
+
+| crop | before | after (c2c) | after2 |
+|---|---|---|---|
+| tazer | 2370 | 1745 | 1366 |
+| burst | 327 | 203 | 196 |
+| tuckin | 0 | 0 | 0 |
+
+LOOK: the tazer stripe prints amber, the prongs are a cream core inside an amber body (no vermilion left in the current); the remaining reddish px
+in the tazer crop are Mertz's gloves, untouched. Burst arc the same (the 196 left are other red in the crop, not the arc).
+
+Ink scope: only `PrintStage.cast_material()` (cast view = Rivet, cops, allies, Mertz, pickups) gets `amber_ink`, switched by `look_profiles.json`
+`fx_amber_ink` (same key as the FX view). Pixel diff of after2 vs a control render with the cast amber ink forced off (same frames, threshold 24/255):
+outside the electric boxes 5 (tazer), 58 (burst), 5 (tuckin), 5 (cops frame, Rivet's collar and a patrol cop in shot) px; inside tazer 933 / burst 5 / tuckin 0.
+The outside px are all amber-ward re-prints of the ember / flame speckle in the cast view (vermilion or grey -> amber, a handful of px at the fire edge);
+Rivet's collar, the cops and Mertz's gloves did not move (checked by eye in the 6x crops). I did not re-render to test for render noise.
+
+D: `StageView._bolt_robot` still has no caller (TUCK-IN on screen is the `tuckin_crate` PNG); left alone. `CurrentLook._serial` stays a copy.
