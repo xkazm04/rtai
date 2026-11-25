@@ -22,3 +22,6 @@ NEXT (session 2, first): commit evidence/n31/foes/takes/wave1_side.json; look at
 - 22:28 read journal, git log (HEAD 19cb2decd), status: only evidence/n31/foes/takes/ untracked.
 - 22:30 BUILDER b2b-gait (sonnet) launched: item 2 checks (full unit, scenarios, LEGACY_TRACE pin). Brief evidence/briefs/b2b-gait-checks.md, hard stop 23:05.
 - 22:30 BUILDER b4a-idle (opus) launched: item 3 Part A (engaged/idle definition, pressing share, --compare, main re-aggregate, HEAD gait measurement, item3-compare.md). Brief evidence/briefs/b4-open-fire.md Part A, hard stop 23:30.
+- 22:38 looked at wave1_side frames (seed 3, s 3/8/14/22): both sides, cops stand 10-12 m out and few fire (mean fired/s 0.6 main, 0.5 HEAD); the gait is not readable at 32 px/m stills, needs the 64 px/m clip. Halves are centre crops of 960 px.
+- NEED foes from melee (informational, n23-street 21:52): enemy melee reach measured as drawn tip. No action.
+- 22:45 briefs b4b-levers.md (lever 1 max_shooters share, lever 2 attack_m; rockets keep fixed max_shooters) and b3b-takes.md (crf, wave 3/6, 64 px/m gait clip). Per-kind weapons need combat.json rows (melee's file) or the explicit_spawn path: decide in the weapon brief.
