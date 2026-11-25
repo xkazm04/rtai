@@ -127,3 +127,19 @@ NEXT (session 5, from ~16:16):
 3. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (lane lock tag director-gate, ~20-35 min; start 18:45 sharp so it ends before 19:15), quote its line + gate.json path in REPORT Gate.
 4. REPORT final by 18:55: drop the DRAFT line, check frames.json (15 entries, all files exist: node one-liner in JOURNAL 15:12), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
 5. Temp: gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c and gtai-film-* snapshots are this lane's: leave for the Director's post-merge cleanup (list them in Merge notes).
+
+## Session 5 (15:39 - 17:09)
+- 15:39 git log: 6624c9446 top, as session 4 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free.
+- 15:41 CHECKED masters frames.json: 15 entries, every file exists. `cites.mjs REPORT.md`: 23/23 ok.
+- 15:42 NOTE `molotov/grid_molotov_64.png` (11:27) predates the run-step fix 0e399a732 (12:48: row 1 cols 5, 6 moved 1 px). The current
+  64 px/m molotov grid at HEAD is `molotov_p70_sprint_tour_64.png` (8 octants in the real arena, stop-gap above HEAD); REPORT says so.
+- 15:43 DECISION row 8 touch-ups (r8c4 notch, r8c8 streak) stay listed, no third route: the brief's rule (a cell that fails twice keeps
+  the shipped cell) and the lane rule (two failed routes = stop) both apply; images 60/60 in any case.
+- 15:45 BUILDER n30-21 vermilion-glow launched (sonnet, bg, no Godot, no images): a third GLOW column (value lift 0.55) in the
+  Calls 1 preview, so the owner picks brass or glow in one look (session 4 saw the heat parts come out brass). New files
+  `preview3_*`, the cited `preview_*` kept. Commit by 16:05, END 16:10.
+- 15:50 BUILDER n30-21 vermilion-glow 5 accepted: bc87ac787 (preview.py `recolour(lift)`, GLOW_LIFT 0.55 / `--lift=`; vermilion_list.md
+  section). BRASS panel identical to the cited preview in 19/19 panels; danger px changed 0 (brass and glow). I read the diff (lift 0 =
+  old formula) and looked at `preview3_electro_gun_4x.png`: the glow coil reads as light lit amber, brass as dark copper-brass; warning
+  slash plate and collar stay vermilion. REPORT Calls 1 now offers brass | glow | another lift.
+- 15:52 frames.json: preview_contact_4x.png -> preview3_contact_4x.png (15 entries, file kept).

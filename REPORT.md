@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-DRAFT (session 4, 15:40): sections are filled as items land; the final version is written at 18:55.
+DRAFT (session 5, 15:47): sections are filled as items land; the final version is written at 18:55.
 
 ## What works
 
@@ -24,7 +24,8 @@ DRAFT (session 4, 15:40): sections are filled as items land; the final version i
   (10 images), soles registered to the donor; rows 4 and 8 cols 2, 6 on the donor's legs under a seam. Walk hold 0.43 / 1.56 cm
   (bar 2); run step 5.77 / 6.85 cm (bar 7; donor 6.69 / 8.93) after row 1 cols 5, 6 were registered 1 px to the donor's planted
   sole x (`0e399a732`; it was 7.28 / 9.86; `run_row_k` cannot move it: the cycle floor binds). Evidence `evidence/n30-keys/grid_molotov.md`, grid
-  `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/grid_molotov_64.png`.
+  `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/grid_molotov_64.png` (rendered before the 1 px fix; the 64 px/m grid at HEAD is
+  the tour still `molotov/molotov_p70_sprint_tour_64.png`, 8 octants, stop-gap above HEAD).
 - **p70 aim-left collar rigid** (not an owner pick; the rigid-collar law): audit `57c72c41a` (`evidence/n30-keys/eq_collar_audit.md`)
   found the band drawn as a knit rope in the p70 `_left` aim strips of the rocket launcher, mini-nuke and gatling (p70 is the
   in-play default). The lane's last 8 images: 7 cells rigid by per-cell 2x edits with Gloria's `_left` cell as the reference
@@ -87,7 +88,10 @@ DRAFT (session 4, 15:40): sections are filled as items land; the final version i
    proposed per weapon (showcase, then in play), heat parts only, recoloured to the game's amber `#ffbf56` hue and saturation with each
    pixel's own value kept; danger px changed 0, alpha identical (`evidence/n30-keys/vermilion/preview.py`). The copper parts come out
    as warm brass rather than glowing amber, because the source px are dark; if you want them to glow, the recolour can also lift the
-   value (one number in the script).
+   value (one number in the script): **brass or glow side by side** (`bc87ac787`): `vermilion/preview3_contact_4x.png` and
+   `preview3_<weapon>_4x.png`, CURRENT | BRASS (value kept) | GLOW (value lifted 0.55: `v' = 0.55 + 0.45 v`); BRASS identical to the
+   first preview in 19/19 panels, danger px changed 0 in both. Glow reads as lit amber on the same parts, flatter shading; on the
+   pale bodies (machine pistol, plasma rifle) it sits close to the body tone. Say "brass", "glow", or another lift.
 
    | weapon | danger (stays vermilion) | heat (to amber on your yes) | design / wear (keep) |
    |---|---|---|---|
