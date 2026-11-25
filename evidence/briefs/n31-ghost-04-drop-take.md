@@ -23,3 +23,10 @@ The owner judges by films of real play. Item 2 (commit `d7db0eb24`) made Tonnage
 
 ## Report
 Seed and ticks, files (paths, ffprobe lengths), commits, per-deploy numbers main vs HEAD, the one-sentence feel, what you could not do.
+
+## Added 22:40 (director, session 2) - overrides the above where they differ
+- HEAD now: radius 6.5 m (`0f81d27dd`), the four drawn beats from `g03-beats` (read its commits in `git log`: telegraph cracks over the charge, shock ring + crack at the true radius, crater 2 s + 1 s fade, body strip). Film after them. Read `evidence/n31/ghost/measure-head.md` and the 6.5 m numbers in JOURNAL 22:17.
+- Reuse first: `project/dev/ghost_n31/ghost_n31_play.gd` already unlocks/selects Tonnage for the measure's play mode; `tools/ghost/deploy_measure.mjs` already runs a main temp worktree (read how it does it). Do not rebuild what exists.
+- The main side: on main the deploy is hold-to-aim; the shipped bot handles it. Same seed; the two runs diverge after the first Tonnage deploy, which is fine: label each deploy's tick in the film's notes.
+- Name the dump-tick windows before rendering. Film the gauntlet's default camera (32 px/m, tilt 70, `--pick-view`), wheel controls (default).
+- Also wanted in this call if time remains: the half-speed 64 px/m clip of one whole deploy (lead-in, drop, charge, dump, crater fade; 15-40 s), `ffmpeg setpts=2.0*PTS`.
