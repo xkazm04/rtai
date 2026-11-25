@@ -18,7 +18,7 @@ same seed, same ticks. This brief builds the film tool and shoots the BEFORE|HEA
 - `project/dev/gauntlet/gauntlet.gd` (shared, READ-ONLY): `--pick-view` = `ViewMode.select("tilt70")`,
   32 px/m (`camera_ppm`), the pick cards; with `--bot=<profile>` the bot plays and picks.
   `project/dev/test_player/gauntlet_bot_film.gd` shows how to extend it (`extends "res://dev/gauntlet/gauntlet.gd"`).
-- `tools/gauntlet/waiting.mjs` (built by b1 tonight, may still be landing; read it) has a `--rev=<commit>`
+- `tools/gauntlet/waiting.mjs` + `project/dev/foes_n31/waiting_probe.gd`, `waiting_tally.gd` (b1, committed; read them) has a `--rev=<commit>`
   temp-worktree mechanism (tools/mutate/worktree.mjs + tools/gauntlet/prepare_worktree.mjs) that runs a
   probe at another commit. Reuse it (import its helper; if it is not exported, factor it into a small shared
   module under `tools/gauntlet/` that both use, without changing waiting.mjs behaviour).
@@ -39,8 +39,9 @@ same seed, same ticks. This brief builds the film tool and shoots the BEFORE|HEA
 2. `tools/gauntlet/play_takes.mjs` (+ a node:test for its arg parsing and plan): 
    `--seed=<n> --wave=<n> --seconds=<15..40> --profile=average --out=<abs masters dir> --name=<stem>
    [--left=rev:<commit>|flags:<extra flags>] [--right=HEAD|flags:<extra flags>] [--ppm=32|64]`.
-   Renders the left take (default `rev:ba8e470b0`) and the right take (default the live tree at HEAD,
-   refuse when `git status --short project/` is dirty), each with `--bot=<profile> --pick=greedy
+   Renders the left take (default `rev:ba8e470b0`) and the right take (default `rev:<HEAD sha at launch>`;
+   `--right=live` = the live tree, refused when `git status --short project/` is dirty: another builder (b2)
+   edits project/ in this worktree right now, so use revs), both through the temp-worktree mechanism, each with `--bot=<profile> --pick=greedy
    --controls=wheel --pick-view`, then writes `<name>_left.mp4`, `<name>_right.mp4` (1080p60, h264, crf 20)
    and `<name>_side.mp4` (centre 960 px of each, `hstack`, with a small `drawtext` label "main" / "HEAD"
    (or the flag set) top-left of each half, crf 23), and checks each with `ffprobe` (duration within 0.1 s
@@ -49,8 +50,7 @@ same seed, same ticks. This brief builds the film tool and shoots the BEFORE|HEA
 3. **Shoot** into `C:\Users\kazda\kiro\gtai-masters\n31\foes\` (create it): seed 3 (or the first seed in
    1..10 where the average bot reaches wave 7 in b1's run files under `evidence/n31/foes/waiting-main/`):
    `wave1_side` (wave 1, 30 s), `wave3_side` (wave 3 or 4, 30 s), `wave6_side` (wave 6 or 7, 30 s), left
-   = main, right = HEAD. If HEAD still equals main in `project/`, shoot right = `flags:--foe-moves=split`
-   and left = `flags:--foe-moves=legacy` on the live tree instead, and say so. Look at 3 frames of each
+   = main, right = HEAD (HEAD now has b2's fight/travel gait: `--foe-moves=split` is the default there). Look at 3 frames of each
    side film yourself (extract with ffmpeg, Read the png) and describe in one line each what the enemies
    do. Write/update `C:\Users\kazda\kiro\gtai-masters\n31\foes\frames.json` (array, best first:
    `{file,title,ppm,before,note}`; `before` = the left take file or null).
