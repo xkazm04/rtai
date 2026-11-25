@@ -9,6 +9,10 @@ unit 4270 passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit o
 step 629; selftest; export-audit 999 loaded, 0 failed), `build/gate/2aa9e6748681/gate.json`. The gate before it, at
 `30d4cf525`, also passed (`build/gate/30d4cf52551b/gate.json`); between the two only tests and evidence were added. Every
 later commit is JOURNAL/REPORT only (inert).
+Reel gate (code frozen since `2aa9e6748`, run at `03b9c4aaf` because this lane's last session stops before the 08:45 freeze;
+`git diff 2aa9e6748 03b9c4aaf` = JOURNAL and REPORT only): `node tools/gate/run.mjs --rev=HEAD --reels`, 07:04-07:31, `gate: PASS`
+(the same lint, unit 4270/0, scenarios 68, parity, selftest, export-audit 999/0, plus `reels: exit 0`, views top 284 s, tilt70
+283 s, combo 283 s), `build/gate/03b9c4aafe04/gate.json`.
 
 ## What works
 
