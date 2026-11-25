@@ -125,3 +125,9 @@ Weak spots for REPORT: sword run step 8.29 cm (donor katana 7.76); collar rows 3
 - 05:37 DECISION start the final gate now on HEAD (code final), detached so it outlives this session; `--reels` once after the freeze by the next session.
 - 05:37 GATE started detached: `node tools/gate/run.mjs --rev=HEAD` on 5d956b26e (pid 32648 = node, out build/gate-n29-final.out); the lane's Godot lock build/n29-godot.lock is held for it ('gate'): delete it when the gate ends.
 - 05:37 REPORT.md drafted whole except {GATE}; cites 9 paths 8 ok 1 pattern.
+
+NEXT (session 5, from ~06:22):
+1. The gate started 05:37 on 5d956b26e (node pid 32648, `build/gate-n29-final.out`, log `build/gate/5d956b26e27f/evidence.log`, gate.json there). If it is still running, let it finish; then `rm build/n29-godot.lock` (held 'gate'). Quote its `gate:` line + gate.json path into REPORT `{GATE}`. If it FAILS on a load timeout only, re-run the named scenarios alone (as n28) and say so.
+2. After 08:45 freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once (about 40 + 22 min: start by 07:50 at the latest, it is the only Godot).
+3. No product work queued: rows 3/6/7/8 collar + item-art colours are owner calls; images 58/60. Optional if time: nothing that needs a commit after 07:15.
+4. REPORT: fill {GATE}, re-run `node tools/evidence/cites.mjs REPORT.md`, commit by 08:55.
