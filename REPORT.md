@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-NEAR-FINAL (session 9, 16:43): items 1-4 done, filmed and gated with reels; the final session only re-checks and drops this line at 18:55.
+FINAL (session 14, 17:09): items 1-4 done, filmed and gated with reels (`build/gate/fd8ea31e1dec/gate.json` PASS, covers the last product commit 22d3c0fb1; every commit since is inert docs/evidence). Cites 26/26 ok, masters frames.json 15 entries, all exist.
 
 ## What works
 

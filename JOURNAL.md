@@ -291,3 +291,14 @@ REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No ga
 
 NEXT (final session, report 18:55): as session 12's NEXT. At 18:55: drop the NEAR-FINAL line (header time), `node tools/evidence/cites.mjs
 REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No gate unless code lands.
+
+## Session 14 (17:07 - 18:37)
+- 17:07 git log: f3c447660 top, as session 13 left it; no tracked changes, no builder running, images 60/60. `NEED keys` grep over
+  combat/cast/yard journals: no new lines.
+- 17:08 DECISION no new product work (as sessions 7-13): 7 minutes to the 17:15 last-commit deadline; reels gate PASS
+  `build/gate/fd8ea31e1dec/gate.json` covers the last product commit 22d3c0fb1.
+- 17:09 MILESTONE REPORT FINAL: this session ends by 18:37, before the 18:55 slot, so the NEAR-FINAL line is replaced now (cites 26/26 ok,
+  masters frames.json 15/15 exist). A later session only re-checks.
+
+NEXT (if a session runs at 18:55): REPORT is FINAL; re-run `node tools/evidence/cites.mjs REPORT.md` and the frames.json check, update
+the line-3 time if anything changed, commit JOURNAL/REPORT with a pathspec. No product work, no gate.
