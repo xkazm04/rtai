@@ -85,7 +85,7 @@ func test_draw_runs_ground_then_wrecks_in_skin_then_debris_then_spans() -> void:
 	var rec: Recorder = Recorder.new()
 	var node: Node2D = Node2D.new()
 	add_child_autofree(node)
-	PrologueYardOverprint._draw_pieces(node, plan, rec)
+	PrologueYardOverprint._draw_part(node, plan, rec, PrologueYardOverprint.Part.ALL)
 	var order: Array[PrologueYard.Wreck] = PrologueYardOverprint.order(plan)
 	assert_eq(rec.calls.size(), order.size() + 3)
 	assert_null(rec.calls[0].piece)
@@ -128,7 +128,7 @@ func _draw_shaded(plan: PrologueYard, shade: float) -> Array[Call]:
 	var rec: Recorder = Recorder.new()
 	var node: Node2D = Node2D.new()
 	add_child_autofree(node)
-	PrologueYardOverprint._draw_pieces(node, plan, rec)
+	PrologueYardOverprint._draw_part(node, plan, rec, PrologueYardOverprint.Part.ALL)
 	return rec.calls
 
 

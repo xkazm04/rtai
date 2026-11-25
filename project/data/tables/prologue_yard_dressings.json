@@ -156,6 +156,22 @@
           "wash": "00000000"
         },
         {
+          "rect_m": {
+            "origin": [
+              0,
+              0
+            ],
+            "size": [
+              60,
+              34
+            ]
+          },
+          "texture": "res://boot/prologue/art/raised_line/floor_stains.png",
+          "tiled": false,
+          "tint": "ffffff00",
+          "wash": "f6dca880"
+        },
+        {
           "over_impression": true,
           "rect_m": {
             "origin": [
@@ -170,7 +186,7 @@
           "texture": "res://boot/prologue/art/raised_line/floor_stains.png",
           "tiled": false,
           "tint": "ffffff58",
-          "wash": "f6dca880"
+          "wash": "00000000"
         }
       ],
       "ground_impression": {
@@ -1184,6 +1200,7 @@
           }
         ]
       },
+      "ochre_over_impression": true,
       "over_print": [
         "pallet_west",
         "fuel_vessel",

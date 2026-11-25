@@ -17,12 +17,9 @@ func _ready() -> void:
 		return
 	var shade: float = plan.dressing.ground_shade
 	self_modulate = Color(shade, shade, shade)
-	if plan.dressing.ochre_strength > 0.0:
-		_paint.attach_ochre(self, plan)
+	PrologueYardOverprint.attach_ochre_first(self, plan, _paint)
 	if plan.dressing.paint_id == "torn_line":
 		_use_painted_cracks()
-	if not plan.dressing.over_print.is_empty() or plan.dressing.impression != null:
-		PrologueYardOverprint.attach(self, plan, _paint)
 
 
 ## The default D5 pass also stamps two diagonal crack families on light surfaces. The factory

@@ -81,7 +81,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
 	assert_eq(look.id, "arched_line")
 	assert_eq(look.ground_shade, 0.81)
-	assert_eq(look.ground.size(), 2)
+	assert_eq(look.ground.size(), 3)
 	assert_eq(look.ground[0].texture, ART + "floor_tile.png")
 	assert_eq(look.ground[1].texture, ART + "floor_stains.png")
 	assert_eq(look.ground[0].tint, Color("ffe0c8ff"))
@@ -93,6 +93,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	assert_true(arched.erase("roof_glow"), "arched_line alone has the roof glow")
 	assert_true(arched.erase("over_print_shade"), "arched_line alone shades the wrecks")
 	assert_true(arched.erase("decals_over_impression"), "arched_line alone prints decals over")
+	assert_true(arched.erase("ochre_over_impression"), "arched_line alone puts bay lines over")
 	for key: String in ["ground", "layout", "over_print", "factory_front", "lights"]:
 		assert_true(arched.erase(key))
 		assert_true(raised.erase(key))
@@ -103,7 +104,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	)
 	var arched_ground: Array = _row("arched_line")["ground"]
 	var raised_ground: Array = _row("raised_line")["ground"]
-	for i: int in arched_ground.size():
+	for i: int in raised_ground.size():
 		var a_row: Dictionary = arched_ground[i]
 		var r_row: Dictionary = raised_ground[i]
 		for key: String in ["rect_m", "texture", "tiled"]:

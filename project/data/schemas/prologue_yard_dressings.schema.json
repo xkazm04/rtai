@@ -372,6 +372,9 @@
           ],
           "type": "object"
         },
+        "ochre_over_impression": {
+          "type": "boolean"
+        },
         "ochre_strength": {
           "maximum": 1,
           "minimum": 0,

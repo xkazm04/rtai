@@ -54,6 +54,8 @@ var shadow_tint: Color
 var outside: Array[Piece] = []
 var use_stage_decals: bool
 var ochre_strength: float
+## Row flag: the impression and the flagged ground layers and decals sit under the ochre layer.
+var ochre_over_impression: bool = false
 ## Cover and debris ids drawn over the world print, in the art's own colours.
 var over_print: PackedStringArray = PackedStringArray()
 ## A ground layer laid on the over-print layer, under the over-print pieces: a second impression.
@@ -124,6 +126,7 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		fixture_shadow_reach = table.vec(shadows, "fixture_reach_m")
 		shadow_tint = Color(table.text(shadows, "tint"))
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
+	ochre_over_impression = row.get("ochre_over_impression", false)
 	if row.has("over_print"):
 		over_print = PackedStringArray(table.array(row, "over_print"))
 	if row.has("over_print_shade"):
