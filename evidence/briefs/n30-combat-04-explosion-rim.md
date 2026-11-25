@@ -1,7 +1,6 @@
 # n30 combat call 04: the explosion light's rim amber through a new palette token
 
-Worktree `C:\Users\kazda\kiro\gtai-wt\n23-street`, branch `n30-combat`. Check `date +%H:%M` at start.
-**Commit A (data + tests) by minute 25, evidence by minute 50, report and END at minute 60.** Never end uncommitted.
+Worktree `C:\Users\kazda\kiro\gtai-wt\n23-street`, branch `n30-combat`. Started 12:35. **Commit A (data + tests) by 13:00, evidence commit B by 13:30, report and END by 13:40 (hard: the session dies at 14:00).** Never end uncommitted.
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/combat GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 **One Godot at a time in this worktree**: another builder may run Godot here too. Before each Godot launch (unit tests
 included) wait until no file in `$LOCALAPPDATA/gtai/runs/*.json` names `n23-street`
@@ -63,3 +62,7 @@ print/look profiles, weapon art PNGs, `project/features/combat/kills/**`, other 
 
 ## Report and END
 Files, commits, commands with result lines, counts, what you saw, what you could not do, the `fire` light as a call.
+
+
+## Another builder runs beside you
+c07b edits `project/features/combat/weapons/art/fx/nuke_shell.png` and `evidence/n30/rounds/**` and renders with Godot: never touch those, and wait for the runs ledger as above. Commit with a pathspec: `git commit -m ... -- <your paths>` (never a plain `git commit`: the index is shared). Mutate is not needed (data only).
