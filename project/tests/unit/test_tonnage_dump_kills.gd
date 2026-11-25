@@ -104,3 +104,11 @@ func test_the_dump_still_counts_its_kills_and_cracks_a_walker() -> void:
 	assert_true(
 		TonnageCrack.is_open(squad.mind_for(walker), squad.moves.tonnage_armour_crack, stage.tick)
 	)
+
+
+func test_a_foe_exactly_on_the_crush_ring_is_flattened() -> void:
+	var crush: float = ghost.strike.attacks.num(&"tonnage", &"crush_m")
+	var edge: Fighter = _spawn(Vector2(30, 0))
+	_dump({edge: Vector2(crush, 0)})
+	assert_eq(edge.pos.distance_to(ghost.spot), crush)
+	assert_eq(_weapon_of(edge), &"stomp")
