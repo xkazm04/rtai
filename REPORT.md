@@ -1,4 +1,4 @@
-# REPORT lane combat, run n30 (2026-11-25, day run) — DRAFT (session 5, 16:40; final at 18:55)
+# REPORT lane combat, run n30 (2026-11-25, day run) — final (session 6, 17:40)
 
 Branch `n30-combat`, worktree `gtai-wt/n23-street`, cut from `main` `5114a4441`. Director Opus 5.5; builders Claude
 sub-agents (Agent tool; Sonnet 5.5, Opus 5.5 for the card fall). Films and stills: `C:/Users/kazda/kiro/gtai-masters/n30/combat/`
@@ -8,7 +8,9 @@ passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit over 1200 s
 selftest (look goldens 11/11, no new off-doctrine accents); export-audit 1004 loaded, 0 failed),
 `build/gate/b0fcfedf5f94/gate.json` (earlier PASS on `93d37aea1`, `3398da308` and `2566b97d0`).
 Later commits: docs, JOURNAL, REPORT, evidence.
-`--reels` once after the freeze: (pending).
+`--reels` gate on `ac27d74e5` (17:02-17:35; product identical to `b0fcfedf5`, run before the freeze because a
+full reels gate does not fit between the 18:45 freeze and the 19:15 deadline): `gate: PASS` (the same six gates, plus reels
+top / tilt70 / combo OK, 288 / 289 / 287 s), `build/gate/ac27d74e5b1a/gate.json`.
 
 ## What works
 
