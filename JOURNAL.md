@@ -477,3 +477,8 @@ NEXT: nothing open in the lane. Director merges `n29-cast`; owner calls stand (t
   no builder, no Godot this session.
 NEXT: nothing open in the lane. Director merges `n29-cast` (gate PASS `build/gate/9a99caebb973/gate.json`, reels PASS).
   Owner calls stand (thug on, pile-driver WALK FOUR/EIGHT, door eight). IMAGES 21/60. BUILDER RUNNING: none.
+- 08:57 MILESTONE session 8 (REPORT phase, iteration 8): REPORT re-checked against the masters folder; the tilt55 flash
+  still is under `extra/` and the thug ink still sits in git-ignored `build/`: both pointers corrected. `cites.mjs REPORT.md`
+  exit 0. No code, no builder, no Godot.
+NEXT: nothing open in the lane. Director merges `n29-cast` (gate PASS `build/gate/9a99caebb973/gate.json`, reels PASS).
+  Owner calls stand (thug on, pile-driver WALK FOUR/EIGHT, door eight). IMAGES 21/60. BUILDER RUNNING: none.
