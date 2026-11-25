@@ -44,7 +44,8 @@ func _process(_delta: float) -> void:
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	if ghost.phase != GhostDeploy.Phase.ACTIVE:
 		_body.dismiss()
-		_fx.hide()
+		_fx.visible = _fx.lingers()
+		_fx.queue_redraw()
 		return
 	var age: int = stage.tick - ghost.start_tick
 	_body.calm = reduced_motion

@@ -11,6 +11,8 @@ var calm: bool
 var body: GhostDeployBody
 var _hit_tick: int = -1
 var _hits: PackedVector2Array = []
+## n31: Tonnage's drop ground (telegraph, dump, crater); outlives the ghost for the crater.
+var _drop: TonnageDropMarks = null
 
 
 func _ready() -> void:
@@ -40,9 +42,23 @@ func _contact(weapon: StringName, at: Vector2) -> void:
 	_hits.append(at * PPM)
 
 
+## True while a landed drop's crater still shows after the ghost has gone.
+func lingers() -> bool:
+	if _drop == null or not _drop.live(stage.tick):
+		_drop = null
+		return false
+	# A drop cancelled before its dump (Rivet died) leaves no ground.
+	var active: bool = stage.pilot.ghosts.deploy.phase == GhostDeploy.Phase.ACTIVE
+	if stage.tick < _drop.dump_tick and not active:
+		_drop = null
+	return _drop != null
+
+
 func _draw() -> void:
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	if ghost.phase != GhostDeploy.Phase.ACTIVE:
+		if lingers():
+			_drop.draw(self, stage.tick, PPM)
 		return
 	var release: int = ghost.strike.release_tick
 	var age: int = stage.tick - release
@@ -64,14 +80,18 @@ func _draw() -> void:
 				RamMarks.draw(self, _hits[i], ghost.facing, sec, PPM)
 
 
-## A drop-mode dump draws its full circle on the spot from the dump tick, at the deploy's own
-## radius (the drawn ring is the damage ring); a hold-mode stomp keeps the half-disc ahead.
+## A drop-mode deploy draws its own ground (TonnageDropMarks: the charge's crack front reaches
+## the deploy's radius on the dump tick, the drawn ring is the damage ring); a hold-mode stomp
+## keeps HaulerMarks' half-disc ahead.
 func _slam(ghost: GhostDeploy, sec: float, release: int) -> void:
-	if ghost.dump.pending():
-		return
 	var row: GhostAttacks.DeployRow = ghost.strike.attacks.deploy[ghost.form]
 	if row.drops():
-		HaulerMarks.draw(self, ghost.spot * PPM, sec, row.radius_m, PPM, release)
+		if _drop == null or _drop.press_tick != ghost.start_tick:
+			var dump: int = ghost.start_tick + row.charge_ticks
+			_drop = TonnageDropMarks.new(ghost.spot * PPM, ghost.start_tick, dump, row.radius_m)
+		_drop.draw(self, stage.tick, PPM)
+		return
+	if ghost.dump.pending():
 		return
 	var head: float = ghost.strike.attacks.num(ghost.form, &"press_ahead_m")
 	var at: Vector2 = (ghost.spot + head * ghost.facing) * PPM

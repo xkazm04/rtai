@@ -78,7 +78,7 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	var pitch: float = ViewMode.shared().ground_k()
 	source.canvas_transform = Transform2D(0.0, Vector2(RES, RES * pitch), 0.0, FOOT)
 	scale = Vector2(1.0 / RES, 1.0 / (RES * pitch))
-	var yaw: float = ghost.facing.angle()
+	var yaw: float = PI * 0.5 if _drops(ghost) else ghost.facing.angle()
 	var drawn: GhostDrawn = _body.get(&"drawn")
 	# Keep the authored follow-through cell while the apparition lingers. A charging drop
 	# (n31 Tonnage) holds its wind-up until the dump tick, the strike's own age 0.
@@ -105,8 +105,22 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 		_body.rotation = yaw
 		_body.set(&"unfold", 1.0)
 		_body.call(&"advance", steps * SimClock.TICK_DT)
+	if _drops(ghost):
+		_beats(ghost, age, struck)
 	_wash_body(ghost, age)
 	source.render_target_update_mode = SubViewport.UPDATE_ONCE
+
+
+## A drop is a full circle: Tonnage faces the camera (the drop strip's one row).
+func _drops(ghost: GhostDeploy) -> bool:
+	return ghost.form == HaulerStage.GHOST and ghost.strike.attacks.deploy[ghost.form].drops()
+
+
+## Tonnage's drop beats (TonnageDropBeats): the fall and rise, and the strip's cell.
+func _beats(ghost: GhostDeploy, age: int, struck: int) -> void:
+	position += ViewMode.shared().lift_px(TonnageDropBeats.lift_m(age, struck))
+	var charge: int = ghost.strike.attacks.deploy[ghost.form].charge_ticks
+	TonnageDropBeats.paint(_body, TonnageDropBeats.col(age, charge, struck))
 
 
 func _wash_body(ghost: GhostDeploy, age: int) -> void:
