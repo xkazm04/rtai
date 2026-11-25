@@ -55,3 +55,15 @@ Allowlist: `project/features/characters/art/view/{p70,p55}/war_machine_planted8_
 ## Report (then END)
 Shas, heights, key-clean counts, the planted-pad sequence per facing, the feet table, WALK shipped, unit/quick lines, film +
 duration, mutate score, what you could not do.
+
+## Added session 4 (director, lessons from the door's eight)
+- The door's eight (`073321ae7`, `fac845dd9`, `61c383438`) came out WORSE than its four until a placement bug was fixed:
+  `FoeShieldCardView` rescaled after the anchored placement, so every sole slid 1.41x. If you add an anchored contact to
+  `foe_war_card_view.gd` (today it sets `position` to the ground point then `scale`, no `CastFarCard`), scale FIRST, then
+  place the anchored sole (see `FoeShieldCardView._rescale` in `61c383438`), and quote the sole slide with and without.
+- Order of value if time runs short: part 1 commit (packed + key-clean + provenance) > the feet table (eight vs four, tool
+  `cast_feet.tscn` path as in `tools/film/cast_door_films.mjs feet`) > the film. Measure the feet BEFORE spending on the film:
+  if every facing of the eight clearly fails, ship `WALK = FOUR`, commit, and report which drawings break the exchange.
+- The quick gate's Godot parse step failed on untouched files: `node tools/gate/quick.mjs --no-godot` + GUT is accepted, say so.
+- `node tools/tests/run_unit.mjs --changed`: quote its line in every commit's report.
+- Do not grow the machine: `body_scale` stays 0.84 (owner: no heavy slow giants as the rule).

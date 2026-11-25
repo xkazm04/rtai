@@ -259,3 +259,7 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
   `ArenaRobotRigs._react` calls only `rig.hit(away, 40)`. Confirmed: no robot card flashes in a live fight.
 - 04:58 BUILDER RUNNING cast-10-flash-live (sonnet) since 04:58: `evidence/briefs/n29-cast-10-flash-live.md`, hard stop 06:00.
 - 04:58 BUILDER RUNNING cast-03c-thug-footline (opus) since 04:58: `evidence/briefs/n29-cast-03c-thug-footline.md`, hard stop 06:05.
+- 04:56 IMAGES 21/60: one edit job (director-run gen.mjs, `gtai-art/foes-n29/door8b/`, 187 s, no stall) of
+  `door8/out/door8_70_right.png`: only drawing 7 redrawn (support boot back ~30 px of drawing 6, other boot lifts and passes),
+  1-6 and 8 kept. Looked at `door8b/out/door8_70_right_f7.png`: drawing 7 now reads as the mirror of drawing 3, same robot,
+  shield fixed, key green. Not cut yet (next: brief 11, re-pack p70 right + one-value EIGHT switch + door height test).
