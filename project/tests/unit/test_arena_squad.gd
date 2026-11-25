@@ -69,7 +69,8 @@ func test_firing_bearings_spread_and_bursts_obey_token_limit() -> void:
 		peak = maxi(peak, bursts)
 	assert_gt(rad_to_deg(spread), 60.0)
 	assert_gt(peak, 0)
-	assert_lte(peak, arena.squad_ai.pit.roster.max_shooters)
+	# n31 foes lever 1: the cap is the share of the ranged squad, not the fixed max_shooters.
+	assert_lte(peak, EnemySquad.shooter_slots(arena.squad_ai.pit.roster, arena.hostiles.size()))
 
 
 func test_local_query_deduplicates_large_boxes_and_filters_by_distance() -> void:

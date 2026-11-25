@@ -309,6 +309,16 @@
           "minimum": 0,
           "type": "integer"
         },
+        "max_shooters_min": {
+          "maximum": 8,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "max_shooters_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "panic_s": {
           "maximum": 30,
           "minimum": 0,

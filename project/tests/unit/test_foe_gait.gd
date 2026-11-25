@@ -126,6 +126,9 @@ func _run(split: bool) -> Trace:
 	arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), [], null, 0.45)
 	arena.squad_ai = ArenaSquad.new(arena.guard_map)
 	arena.squad_ai.gaits.split = split
+	# n31 foes lever 1: legacy also keeps the pre-n31 fixed token cap.
+	if not split:
+		arena.squad_ai.pit.roster.max_shooters_share = 0.0
 	arena.rivet.hp = 100000
 	arena.rivet.max_hp = 100000
 	var row: int = 0

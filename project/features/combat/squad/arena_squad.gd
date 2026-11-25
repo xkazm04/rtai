@@ -114,7 +114,7 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 			mind.agent.token = false
 	minds = active
 	_schedule()
-	EnemySquad.assign(shooters, pit.rivet_pos, pit.roster)
+	EnemySquad.assign(shooters, pit.rivet_pos, pit.roster, EnemySquad.ranged(pit.agents))
 	_update_morale()
 	ordered.append_array(others)
 	return ordered

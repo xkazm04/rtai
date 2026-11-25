@@ -1,7 +1,6 @@
 class_name EnemyRoster
 extends RefCounted
-## enemies.json (gtai.enemies/1) read once into typed archetypes, weapons and squad limits,
-## times already in 60 Hz ticks (SIM-01). Archetypes and weapons are keyed by their string id.
+## enemies.json (gtai.enemies/1) as typed archetypes, weapons and squad limits, in ticks (SIM-01).
 
 const TABLE: String = "res://data/tables/enemies.json"
 const SCHEMA: String = "gtai.enemies/1"
@@ -65,7 +64,12 @@ class Archetype:
 
 var archetypes: Dictionary[StringName, Archetype] = {}
 var weapons: Dictionary[StringName, Weapon] = {}
-var max_shooters: int = 2
+var max_shooters: int = 2:
+	set(value):
+		max_shooters = value
+		max_shooters_share = 0.0
+var max_shooters_share: float = 0.0
+var max_shooters_min: int = 0
 var max_melee: int = 2
 var token_hold_ticks: int = 150
 var aim_lock_ticks: int = 12
@@ -132,6 +136,8 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 	gait_split = t.text(s, "gait") != "legacy" if s.has("gait") else true
 	gait_min_ticks = CombatTuning.ticks(t.num(s, "gait_min_mode_s"))
 	gait_settle_ticks = CombatTuning.ticks(t.num(s, "gait_settle_s"))
+	max_shooters_share = t.num(s, "max_shooters_share") if s.has("max_shooters_share") else 0.0
+	max_shooters_min = t.integer(s, "max_shooters_min") if s.has("max_shooters_min") else 0
 
 
 func _archetype(t: DataTable, row: Dictionary) -> Archetype:
@@ -180,8 +186,7 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 		_errors.append("%s: tier must be an integer from 1 to 5" % a.id)
 	a.explicit_spawn = row.get("explicit_spawn", false) == true
 	a.machine = row.get("machine", false) == true
-	if row.has("placement"):
-		a.placement = StringName(t.text(row, "placement"))
+	a.placement = StringName(t.text(row, "placement")) if row.has("placement") else &"any"
 	if row.has("alt_weapon"):
 		a.alt_weapon = weapons.get(StringName(t.text(row, "alt_weapon")))
 		if a.alt_weapon == null:
@@ -190,7 +195,6 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 		a.alt_telegraph_ticks = CombatTuning.ticks(t.num(row, "alt_telegraph_s"))
 	a.fight_speed_k = t.num(row, "fight_speed_k") if row.has("fight_speed_k") else 1.0
 	a.danger_m = t.num(row, "danger_m") if row.has("danger_m") else 0.0
-	if row.has("rear_mult"):
-		a.rear_mult = t.num(row, "rear_mult")
+	a.rear_mult = t.num(row, "rear_mult") if row.has("rear_mult") else 1.0
 	if row.has("shield_arc_deg"):
 		a.shield_cos = cos(deg_to_rad(t.num(row, "shield_arc_deg") * 0.5))
