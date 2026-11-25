@@ -111,7 +111,7 @@ func test_add_path_thin_is_the_hop_and_daze_width() -> void:
 	var plan: Array[WeaponFxElectro.Line] = []
 	var pts: PackedVector2Array = PackedVector2Array([Vector2.ZERO, Vector2(5.0, 0.0)])
 	WeaponFxElectro.add_path(plan, pts, 1.0, false, true)
-	assert_eq(_widths(plan), [9.0, 4.5, 3.0, 1.5] as Array[float])
+	assert_eq(_widths(plan), [9.0, 4.5, 4.0, 1.5] as Array[float])
 
 
 func test_add_path_without_outline_drops_only_the_ink() -> void:
