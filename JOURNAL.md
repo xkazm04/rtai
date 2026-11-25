@@ -439,3 +439,7 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
   war8, door8, then 32 px/m and harness extras); size film note now quotes the measured heights; three dropped stills moved to
   `gtai-masters/n29/cast/extra/` (not deleted). ffprobe: all five clips 1920x1080 60/1, 20.0-33.75 s. Looked at
   `war8_walk_32.mp4` at 12 s: the feet harness on the grey plate (contact boxes per step), the machine beside Rivet; not a street take.
+- 06:55 BUILDER cast-14 7 accepted: `a36fab587`. Door carrier height in the film by facing (32 px/m): down 62, right 55,
+  up 69 (door top held above the head, back view), left 54; still 56 = the side/three-quarter. Rivet down 77, sides 78,
+  up 81.5. Cause: facing, not scale. The door stays under Rivet in every facing.
+- 06:56 REPORT updated (ledger, film heights). No builder running. Gate pid 12516 on `42ac8613b` running.

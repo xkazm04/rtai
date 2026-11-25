@@ -28,7 +28,8 @@ art for the door carrier (8 drawings), the pile-driver and the war machine. Film
 - **Door carrier eight**: body jump worse than the four in every facing even after the re-plant and the redrawn drawing 7; stays one value away.
 - **The war machine is on in the game and still walks the four** (fails the feet rule, as before tonight); the eight is the one-value alternative.
 - Turret and war machine views have no hit flash (`sync_tint`): outside the owner's item, not done.
-- `size_beside_32.mp4` labels are nominal (50 px x actor scale), not measured in its frames; the measured numbers are the stills' table.
+- `size_beside_32.mp4` shows nominal labels on screen (50 px x actor scale). The heights were then measured in its frames (`ff06ff086`, median of 50 frames): warden 51, contractor 50, gunner 55, Mulroney 54, lancer 48 (walk cell; still 51 in the aim cell), cops unjittered 50.0 / 48.2 / 48.6 (stills 50.3), Rivet 80 (77). The door carrier reads 63 against 56 in the stills. The cause is facing (`a36fab587`): side-on 55, walking down 62, walking up 69 with the door held over his head, against Rivet's 81.5 in that facing. The turret could not be separated from its label. The war machine reads 64-68 by eye (still 65).
+- `war8_walk_32.mp4` and `door8_walk_32.mp4` are feet-harness takes on the grey plate (contact boxes per step), not street takes.
 
 ## What blocked or slowed you (minutes each)
 
@@ -61,7 +62,7 @@ art for the door carrier (8 drawings), the pile-driver and the war machine. Film
 
 ## Builder ledger
 
-24 calls, about 600 builder minutes, none abandoned. Minutes are wall clock from launch to report.
+25 calls, about 600 builder minutes, none abandoned. Minutes are wall clock from launch to report.
 
 | Call | Model | Min | Result |
 |---|---|---:|---|
@@ -86,6 +87,7 @@ art for the door carrier (8 drawings), the pile-driver and the war machine. Film
 | 03f thug soles | sonnet | 12 | accepted |
 | 07b steps 2-3 feet table + revert | opus | 24 | accepted |
 | 03d-A thug ink + rim | sonnet | 17 | accepted (ink FAIL on numbers) |
-| 13 decisions + size film heights | sonnet | FILL | FILL |
+| 13 decisions + size film heights | sonnet | 10 | accepted |
+| 14 door height film vs stills | sonnet | 7 | accepted (cause: facing) |
 
 What I would brief differently: (1) measure before building a placement: 07b step 1 shipped a pad placement whose feet table came one call later and showed a regression; the measurement belongs in the same call, before the commit. (2) Write the size rule against the measured unjittered cop from the start (my first rule used Rivet's x1.5 visual height and cost a revert). (3) Give every film call "labels measured in the frames, never nominal" in the first brief. (4) Short calls (10-25 min, one point each) were the best value tonight; the 60+ min calls all ended partial.
