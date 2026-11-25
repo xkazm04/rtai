@@ -49,3 +49,8 @@
   (b) n30-03b-span-shadow-read (Opus, ~55 min) beside it under the table lock (both touch prologue_yard_dressing.gd: the second waits for the first's commit 1).
   (c) session 4: n30-04b-roof-place (Opus; bench lock for frame cost), then n30-05b-mouth-span-place (Sonnet), then item 6 (whole prologue film menu Start -> quest 1 first line + plate beside game from three cameras). Last new work committed by 17:15, final gate `node tools/gate/run.mjs --rev=HEAD` started by 17:30, REPORT by 18:55.
   Overlay "before" projects (git worktree add stalls here): C:/Users/kazda/kiro/gtai-n30/dec-before|dec-after.
+
+## Session 3 (13:15 to 14:45 at the latest)
+- 13:16 Read JOURNAL, git log (HEAD 9b0c38846). No `NEED yard` in n23-controls / n23-street / n23-prologue journals. No lane lock held. Tracked tree clean.
+- 13:19 BUILDER RUNNING decals-finish since 13:19 (Sonnet, brief evidence/briefs/n30-02d-decals-finish.md, hard stop 14:30, last commit by 14:18).
+- 13:19 BUILDER RUNNING span-shadow-read since 13:19 (Opus, brief evidence/briefs/n30-03b-span-shadow-read.md, hard stop 14:30). Both under the TABLE LOCK build/yard-table.lock (dressing.gd / dressings.json / schema) and the shared Godot lock; pathspec commits, decisions line committed at once after a `git diff --quiet` check.
