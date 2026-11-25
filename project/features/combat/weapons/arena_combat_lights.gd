@@ -3,12 +3,12 @@ extends Node
 ## n12 E1 (light from combat): the arena's and the city block fight's shots and blasts light the
 ## street like the city riot's already do (FxSystem kinds -> LightLayer): a new round within
 ## `radius_m` of the focus starts the `muzzle_flash` light (a 4-tick paper fan) at its muzzle along
-## its flight, a new blast the `explosion` light (paper core, vermilion rim, 36 ticks). Into the
-## stage's LightLayer: its pool cap (lights.json max_lights) and its eviction of the oldest timed
-## light hold; nothing is allocated per shot. Each start spends from the shared photosensitivity
-## budget (FlashBudget.spend_light: a kill beat always still fits). Off under reduced motion,
-## `--feel=off` or lights.json combat_lights.on false (the before). Render only: it reads the
-## arena on its own tick and writes nothing back.
+## its flight, a new blast the `explosion` light (paper core, amber rim by lights.json `rim`,
+## 36 ticks). Into the stage's LightLayer: its pool cap (lights.json max_lights) and its
+## eviction of the oldest timed light hold; nothing is allocated per shot. Each start spends
+## from the shared photosensitivity budget (FlashBudget.spend_light: a kill beat always still
+## fits). Off under reduced motion, `--feel=off` or lights.json combat_lights.on false (the
+## before). Render only: it reads the arena on its own tick and writes nothing back.
 
 const TABLE: String = "res://data/tables/lights.json"
 const ENEMY_MUZZLE: StringName = &"enemy_muzzle_flash"

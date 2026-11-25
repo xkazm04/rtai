@@ -72,12 +72,26 @@ func write(mm: MultiMesh, kinds: Dictionary[StringName, Dictionary], tick: int) 
 		var col: Color = k["alt_color"] if alt else k["color"]
 		var radius: float = k["radius_m"]
 		var strength: float = k["intensity"]
-		var steps: float = k["steps"]
-		var cone: float = k["cone_deg"]
 		col.a = strength * fade
 		mm.set_instance_transform_2d(n, xf[i].scaled_local(Vector2.ONE * radius * PX_PER_M))
 		mm.set_instance_color(n, col)
-		mm.set_instance_custom_data(n, Color(steps, deg_to_rad(cone), 0.0, 0.0))
+		mm.set_instance_custom_data(n, custom_data(k))
 		n += 1
 	mm.visible_instance_count = n
 	return n
+
+
+## A colour as one float the light shader unpacks (r8 * 65536 + g8 * 256 + b8; exact in a float32).
+static func pack_rgb(c: Color) -> float:
+	return float(c.r8 * 65536 + c.g8 * 256 + c.b8)
+
+
+## The shader's per-light data: (steps, cone half-angle rad, rim on, packed alt ink). A rim kind
+## (lights.json `rim`, no flicker) prints its outer band in `alt_color`.
+static func custom_data(k: Dictionary) -> Color:
+	var steps: float = k["steps"]
+	var cone: float = k["cone_deg"]
+	var hz: float = k["flicker_hz"]
+	var rim: bool = hz <= 0.0 and k.get("rim", false) == true
+	var alt: Color = k["alt_color"]
+	return Color(steps, deg_to_rad(cone), 1.0 if rim else 0.0, pack_rgb(alt) if rim else 0.0)

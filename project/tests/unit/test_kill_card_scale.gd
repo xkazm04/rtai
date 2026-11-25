@@ -113,3 +113,21 @@ func test_the_same_id_draws_the_same_size() -> void:
 	assert_eq(a.actor_id, b.actor_id)
 	assert_eq(KillFallCells.victim_scale(a), KillFallCells.victim_scale(b))
 	assert_ne(KillFallCells.victim_scale(_ped(2, 7)), KillFallCells.victim_scale(_ped(2, 12)))
+
+
+func test_a_street_cop_dies_at_his_cop_build() -> void:
+	var pool: RigPool = RigPool.new()
+	add_child_autoqfree(pool)
+	@warning_ignore("return_value_discarded")
+	pool.prewarm(BodyPlan.Kind.COP, 1)
+	var rig: CutRig = pool.acquire(BodyPlan.Kind.COP, RigVariant.crowd(5), Vector2.ZERO, 0.0)
+	assert_eq(rig.plan.art_dir, "cop")
+	assert_null(CastCardPose.of(rig))
+	var differs: int = 0
+	for id: int in [7, 12, 19]:
+		rig.actor_id = id
+		var want: float = StreetCrowdCards.body_scale_of(rig)
+		assert_almost_eq(KillFallCells.victim_scale(rig), want, 1e-9, str(id))
+		assert_true(absf(want - 1.0) <= StreetCrowdCards.COP_SCALE_VAR + 1e-9)
+		differs += int(absf(want - StreetCrowdCards.body_scale(id)) > 1e-6)
+	assert_gt(differs, 0, "the cop build is not the crowd build")

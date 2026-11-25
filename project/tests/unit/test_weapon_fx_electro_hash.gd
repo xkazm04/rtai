@@ -143,8 +143,8 @@ func test_fork_tip_is_pinned_by_the_bend_hash() -> void:
 
 func test_stun_under_halo_width_scales_with_k() -> void:
 	var stun: Array[WeaponFxElectro.Line] = WeaponFxElectro.stun_plan(Vector2.ZERO, 0, 0, 0.5)
-	# the ink under-halo (9 px * k), then the thin add_path without outline: 4.5, 2.25, 1.5, 0.75
-	assert_eq(_widths(stun).slice(0, 5), [4.5, 4.5, 2.25, 1.5, 0.75] as Array[float])
+	# the ink under-halo (9 px * k), then the thin add_path without outline: 4.5, 2.25, 2.0, 0.75
+	assert_eq(_widths(stun).slice(0, 5), [4.5, 4.5, 2.25, 2.0, 0.75] as Array[float])
 
 
 func _opaque_amber(plan: Array[WeaponFxElectro.Line]) -> Array[WeaponFxElectro.Line]:
@@ -176,7 +176,7 @@ func test_bolt_keeps_the_bold_width_and_hop_and_stun_use_the_thin_one() -> void:
 	var bold: Array[float] = [WeaponFxElectro.BODY_PX, WeaponFxElectro.CORE_PX]
 	var thin: Array[float] = [WeaponFxElectro.THIN_BODY_PX, WeaponFxElectro.THIN_CORE_PX]
 	assert_eq(bold, [10.0, 4.0] as Array[float], "the bolt's pixels do not change")
-	assert_eq(thin, [3.0, 1.5] as Array[float])
+	assert_eq(thin, [4.0, 1.5] as Array[float])
 	_check_layers(WeaponFxBolt.plan(A, B, 11, 6), 1.0, bold[0], bold[1])
 	_check_layers(WeaponFxElectro.chain_plan(A, B, 5), 1.0, thin[0], thin[1])
 	_check_layers(WeaponFxElectro.chain_plan(A, B, 5, 0.5), 0.5, thin[0], thin[1])

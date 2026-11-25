@@ -90,9 +90,10 @@ static func height_px(rig: CutRig, ppm: float) -> float:
 
 ## The one size a dying body draws at (n29): a card foe (CastCardPose) keeps the scale his
 ## living card draws (StreetWalkerCards.place: the crowd build times his row's body_scale), so a
-## kill never resizes him mid-death; a street walker keeps his crowd build.
+## kill never resizes him mid-death; a street walker keeps his crowd build (a cop his +-8 %
+## cop build).
 static func victim_scale(rig: CutRig) -> float:
-	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
+	var k: float = StreetCrowdCards.body_scale_of(rig)
 	var pose: CastCardPose = CastCardPose.of(rig)
 	return k if pose == null else pose.sheets.scale_of(rig.actor_id)
 

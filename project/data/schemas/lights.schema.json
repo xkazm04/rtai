@@ -171,6 +171,9 @@
             "minimum": 0.1,
             "type": "number"
           },
+          "rim": {
+            "type": "boolean"
+          },
           "steps": {
             "maximum": 8,
             "minimum": 1,

@@ -22,6 +22,8 @@ func test_the_explosion_rim_names_the_amber_token() -> void:
 	var alt_token: String = row["alt_token"]
 	assert_eq(token, "paper", "the core stays paper")
 	assert_eq(alt_token, "amber")
+	var rim: bool = row.get("rim", false)
+	assert_true(rim, "the rim flag is on")
 	var lights: LightLayer = autofree(LightLayer.new())
 	var kind: Dictionary = lights.kinds[&"explosion"]
 	var alt: Color = kind["alt_color"]
@@ -40,7 +42,7 @@ func test_no_other_light_kind_changed() -> void:
 		"muzzle_flash": ["paper", ""],
 		"headlight": ["paper", ""],
 		"siren": ["cop_blue_hi", "paper"],
-		"fire": ["vermilion", "paper"],
+		"fire": ["amber", "paper"],
 		"street_lamp": ["paper", ""],
 	}
 	for kid: String in want:

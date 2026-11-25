@@ -27,7 +27,7 @@ const STUN_UNDER_ALPHA: float = 0.3
 ## amber body under a cream core.
 const BODY_PX: float = 10.0
 const CORE_PX: float = 4.0
-const THIN_BODY_PX: float = 3.0
+const THIN_BODY_PX: float = 4.0
 const THIN_CORE_PX: float = 1.5
 ## The bold ink outline, px wider than the body: amber alone vanishes on the pale floor.
 const INK_EXTRA_PX: float = 3.0

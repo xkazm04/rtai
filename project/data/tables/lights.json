@@ -66,6 +66,7 @@
       "intensity": 0.75,
       "life_ticks": 36,
       "radius_m": 6,
+      "rim": true,
       "steps": 3,
       "token": "paper"
     },
@@ -95,14 +96,14 @@
     {
       "alt_token": "paper",
       "cone_deg": 0,
-      "doc": "burning wreck or barrel: a flickering vermilion core",
+      "doc": "burning wreck or barrel: a flickering amber core",
       "flicker_hz": 2.5,
       "id": "fire",
       "intensity": 0.5,
       "life_ticks": 0,
       "radius_m": 3.5,
       "steps": 3,
-      "token": "vermilion"
+      "token": "amber"
     },
     {
       "cone_deg": 0,

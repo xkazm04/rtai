@@ -34,5 +34,10 @@ void fragment() {
 	float line = abs(fract((w.x - w.y) / hatch_px) - 0.5) * 2.0;
 	band += step(line, smoothstep(0.6, 1.0, f));
 	float level = band / steps;
-	COLOR = vec4(page_age(COLOR.rgb) * level * COLOR.a, 1.0);   // a paper light adds the aged paper
+	// a rim kind (INSTANCE_CUSTOM.z 1) prints its lowest lit band (band 1 and its hatched fringe) in the alt ink
+	// packed in INSTANCE_CUSTOM.w (r8 * 65536 + g8 * 256 + b8)
+	float packed_ink = custom.w;
+	vec3 alt = vec3(floor(packed_ink / 65536.0), mod(floor(packed_ink / 256.0), 256.0), mod(packed_ink, 256.0)) / 255.0;
+	vec3 ink = mix(COLOR.rgb, alt, custom.z * step(band, 1.0));
+	COLOR = vec4(page_age(ink) * level * COLOR.a, 1.0);   // a paper light adds the aged paper
 }
