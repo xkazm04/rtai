@@ -13,6 +13,16 @@ p50 9 m, damage w1-4 62.9. Item 2 alone: idle 70 %, firing/s 0.66, damage 39.0 (
 contractor 20). Bars: react p50 <= 1.0 s, p90 <= 2.5 s, idle < 35 %, guard rail damage w1-4 (average) in
 53.5..72.3.
 
+## UPDATE 23:26 (director, after b4b's lever 1 numbers): ORDER CHANGED
+Lever 1 measured (77eea2b13): react p50 0.75 s (bar holds), p90 4.13, idle 60 %, firing/s 0.94, token share
+42 %, damage w1-4 **77.4** (w3 31.7, w4 29.2: guard rail broken HIGH). Lever 2 was not run. So do, in this order:
+(a) **lever 5 own weapons first** (point 3 below) on top of lever 1 and measure: it is the fairness lever that
+must bring damage back into 53.5..72.3; (b) only if damage is back in the band: lever 2 (`attack_m`) and lever 4
+(firing ring), each measured; (c) if idle is still >= 35 % with the rail held, raise `max_shooters_share`
+(0.35 -> 0.5) as one more measured lever; (d) lever 3 (`cover_bias`) last. (e) b4b found the gait column's novice
+seeds 3-10 and average 1-2 may carry lever 1 (b4b's edits were in the live tree while b4a measured): re-run those
+from `--rev=f1dfc7492` into `waiting-gait/` and regenerate the compare before quoting the gait column.
+
 ## Do, in order, each measured (average bot, seeds 1-10, `--waves=7`; novice only for the final setting), each one commit with its `docs/decisions.md` line and the re-pins it moves
 1. **Lever 3, `cover_bias`** patrol and contractor 1 -> 0.5 (only if the bars still fail after levers 1-2).
 2. **Lever 4, advance to a firing spot:** a token-less ranged foe's strafe ring = `attack_m - 1` (in
