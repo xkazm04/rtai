@@ -1,7 +1,7 @@
 // n31 melee 01c: the drawn swing from rendered pixels (pure). blade_pixels.gd saves raw RGB8 crops
 // around Rivet: bg (Rivet hidden), idle (Rivet standing, before the press) and each swing tick k.
-// The drawn swing mask = pixels of tick k that differ from bg beyond a threshold, less Rivet's idle
-// body (idle vs bg, dilated) and less pure darkening (a cast shadow on the floor). Each mask pixel is
+// The drawn swing mask = pixels of tick k that differ from idle beyond a threshold, less Rivet's idle
+// body (idle vs bg, dilated: what idle drew) and less pure darkening (a cast shadow on the floor). Each mask pixel is
 // put on the ground with the camera's real world-to-screen transform, as the game draws Rivet's gun:
 // at gun height (ShotLift.up_m, GUN_H_M 1 m), so ground = T^-1(screen) / px_per_m - lift.
 
@@ -36,9 +36,9 @@ export function dilate(mask, w, h, r) {
   return out;
 }
 
-/** The drawn swing mask of one tick: changed against bg, not Rivet's idle body, not a shadow. */
-export function swingMask(frame, bg, body, n) {
-  const m = diffMask(frame, bg, n, THRESHOLD, true);
+/** The drawn swing mask of one tick: changed against the idle frame, not Rivet's idle body, not a shadow. */
+export function swingMask(frame, idle, body, n) {
+  const m = diffMask(frame, idle, n, THRESHOLD, true);
   let count = 0;
   for (let i = 0; i < n; i++) {
     if (body[i]) m[i] = 0;

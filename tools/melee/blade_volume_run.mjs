@@ -7,7 +7,9 @@ import { runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { BODY_DILATE, THRESHOLD, diffMask, dilate, groundToScreen, maskPoints, polar, swingMask } from './blade_volume_pixels.mjs';
 
 const SCENE = 'res://dev/melee_n31/blade_pixels.tscn';
-const BASE = ['--enemy-brain=squad', '--silent', '--seed=20261109'];
+// --cam-lock holds the camera on Rivet's start (blade_pixels FROM, plan base 0,0): every frame's floor is
+// the same pixels (a following camera's sub-pixel moves resample the whole floor).
+const BASE = ['--enemy-brain=squad', '--silent', '--seed=20261109', '--cam-lock=5,-38'];
 
 /** One windowed Godot run for `weapon` in `tree` (a checkout with blade_pixels.*); raw crops land in `scratch`. */
 export async function render(weapon, tree, scratch) {
@@ -35,10 +37,11 @@ export function read(scratch) {
     const [, , w, h] = meta.crop;
     const n = w * h;
     const bg = raw(scratch, facing, 'bg');
-    const body = dilate(diffMask(raw(scratch, facing, 'idle'), bg, n), w, h, BODY_DILATE);
+    const idle = raw(scratch, facing, 'idle');
+    const body = dilate(diffMask(idle, bg, n), w, h, BODY_DILATE);
     const ticks = {}, pol = {}, masks = {};
     for (let k = 0; k <= m.k_end; k++) {
-      const mask = swingMask(raw(scratch, facing, `k${k}`), bg, body, n);
+      const mask = swingMask(raw(scratch, facing, `k${k}`), idle, body, n);
       const pts = maskPoints(mask, meta);
       if (pts.length === 0) continue;
       ticks[k] = pts;

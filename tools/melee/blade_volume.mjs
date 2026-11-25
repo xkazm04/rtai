@@ -44,10 +44,25 @@ async function locked(fn) {
   try { return await fn(); } finally { rmSync(LOCK, { force: true }); }
 }
 
+/** Keeps the ticks the swing is on screen (01a's views: blade/crescent shown or the strip cell's swing,
+ * from the press): later diffs are Rivet's moved body or the arena's own motion, not the swing. */
+function clip(px, win) {
+  for (const d of Object.values(px.facings)) {
+    for (const k of Object.keys(d.ticks).map(Number)) {
+      if (win && k >= 0 && k <= win[1]) continue;
+      delete d.ticks[k];
+      delete d.polar[k];
+      delete d.masks[k];
+    }
+    d.window = win;
+  }
+  return px;
+}
+
 /** Per tick k of facing f: the mask's angle range off the aim and reach (Item 02 reads this). */
 function drawnTicks(px) {
   const out = {};
-  for (const [f, d] of Object.entries(px.facings)) out[f] = { cut_ks: d.meta.cut_ks, land_ks: d.meta.land_ks, ticks: d.polar };
+  for (const [f, d] of Object.entries(px.facings)) out[f] = { cut_ks: d.meta.cut_ks, land_ks: d.meta.land_ks, window: d.window, ticks: d.polar };
   return out;
 }
 
@@ -68,8 +83,8 @@ async function main() {
   for (const w of weapons) {
     const scratch = join(ROOT, 'build/n31/01c/raw', label, w);
     if (!process.argv.includes('--no-render')) await locked(() => render(w, tree, scratch));
-    const px = read(scratch);
     const hit = JSON.parse(readFileSync(join(hitsDir, `${w}.json`), 'utf8'));
+    const px = clip(read(scratch), span([...hit.shown_ks, ...hit.pixel_ks]));
     const f0 = px.facings['0'];
     const judged = judge(hit, f0.ticks);
     const drawnKs = Object.keys(f0.ticks).map(Number);
