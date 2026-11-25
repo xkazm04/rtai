@@ -317,3 +317,12 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
   strict red 0 (the four ships 149/189 burnt-orange px; the cutter lifted them to amber). First-pass planted-pad table in
   `foes-n29/war8/STATE.md`: 70 dr and 55 dr exchange cleanly (L x3, R x5), 70 ur weak (R alone in 1 of 8), 70 up shifted by 2.
 - 05:49 BUILDER RUNNING cast-07-war8-p2a (opus) since 05:49: anchors + view switch at WALK = FOUR + feet into STATE.md, hard stop 06:14.
+- 05:51 BUILDER cast-03d-B 17 accepted: `c8b794054`. Palette PASS (strict red <= 60 px of 867k, isolated; teal 6 px; navy
+  1.9-2.9 %, the war machine/door are navy-plated too, shipped look), shadow PASS (394 vs patrol 161), up-facing fall PASS
+  (drawing 1 stands, 2-3 lie: I misread `fall70_after.png` at 05:07, the back view lying feet-first looked standing).
+  FAIL: size at 55, 64 px/m: 151 vs Rivet 150 (1.007); FAIL: the stop at 70 (soles 4 px above the ground row at 64, the ring
+  25 px below it). Flash scene: the committed blob was LF already (working copy only). Quick's `test_cast_door_walk.gd`
+  would-reformat is working-copy only too: `gdformat --check` on the HEAD blob = unchanged.
+- 05:51 DECISION thug `body_scale` 1.45 -> 1.42 (one value; 55 at ~0.99 of Rivet, 70 at ~0.92): the owner's rule keeps
+  enemies near Rivet's size, never taller; 1.40 fallback if 55 still > 1.00.
+- 05:52 BUILDER RUNNING cast-03e-thug-fixes (sonnet) since 05:52: `evidence/briefs/n29-cast-03e-thug-fixes.md` (+ Added 05:51), hard stop 06:15.
