@@ -38,8 +38,9 @@ var look_zones: Array[LookZone] = []
 var _look_rect: ColorRect = ColorRect.new()
 var _look_mat: ShaderMaterial = ShaderMaterial.new()
 var _item_mat: ShaderMaterial = ShaderMaterial.new()
-## The FX view's copy of the item print, plus the amber ink when the table turns it on.
+## The FX and cast views' copies of the item print, plus the amber ink when the table turns it on.
 var _fx_mat: ShaderMaterial = ShaderMaterial.new()
+var _cast_mat: ShaderMaterial = ShaderMaterial.new()
 var _actors: CanvasLayer = CanvasLayer.new()
 var _overlays: Array[LookOverlay] = []
 var _print_off: Vector2 = Vector2.ZERO
@@ -88,6 +89,11 @@ func fx_material() -> ShaderMaterial:
 	return _fx_mat
 
 
+## The cast view's print: as the FX view's (n29, electric).
+func cast_material() -> ShaderMaterial:
+	return _cast_mat
+
+
 ## Once a frame: the camera on `focus_m` (metres) at the rig's zoom, the look for that zoom, and
 ## every print / light / FX / marker pass stepped on the sim tick with this frame's world_px.
 func place(focus_m: Vector2) -> void:
@@ -106,6 +112,7 @@ func place(focus_m: Vector2) -> void:
 	world_px = _print_px() - get_viewport_rect().size * 0.5
 	_item_mat.set_shader_parameter(&"world_px", world_px)
 	_fx_mat.set_shader_parameter(&"world_px", world_px)
+	_cast_mat.set_shader_parameter(&"world_px", world_px)
 	_look_mat.set_shader_parameter(&"world_px", world_px)
 	for o: LookOverlay in _overlays:
 		o.update(look_id, zoom * SimConst.PX_PER_M, world_px)
@@ -134,7 +141,11 @@ func _update_look(focus_m: Vector2) -> void:
 	p.apply(_look_mat, _item_mat)
 	_fx_mat.shader = _item_mat.shader
 	p.apply(null, _fx_mat)
-	_fx_mat.set_shader_parameter(&"amber_ink", 1.0 if LookProfiles.shared().fx_amber_ink else 0.0)
+	var amber: float = 1.0 if LookProfiles.shared().fx_amber_ink else 0.0
+	_fx_mat.set_shader_parameter(&"amber_ink", amber)
+	_cast_mat.shader = _item_mat.shader
+	p.apply(null, _cast_mat)
+	_cast_mat.set_shader_parameter(&"amber_ink", amber)
 	_look_rect.visible = p.printed
 
 

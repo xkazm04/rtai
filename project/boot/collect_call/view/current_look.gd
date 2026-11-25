@@ -37,6 +37,10 @@ static func plan(a: Vector2, b: Vector2, phase: int, k: float = 1.0) -> Array[Pa
 	var out: Array[Pass] = []
 	for s: ElectricArc.Stroke in ElectricArc.strokes(k):
 		out.append(Pass.new(px, s))
+	@warning_ignore("return_value_discarded")
+	out.insert(
+		out.size() - 1, Pass.new(px, ElectricArc.Stroke.new(Ink.AMBER, ElectricArc.MID_PX * k))
+	)
 	return out
 
 
