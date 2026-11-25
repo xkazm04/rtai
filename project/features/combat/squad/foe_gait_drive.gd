@@ -5,6 +5,8 @@ extends RefCounted
 ## squad.gait "legacy") never consults a gait: today's single gait, bit for bit.
 
 const FLAG: String = "--foe-moves"
+## A shield escort's FIGHT walk keeps at least this share over the carrier's pace (stays shadowed).
+const ESCORT_PACE_K: float = 1.2
 
 var split: bool = true
 
@@ -31,13 +33,25 @@ func steer(mind: SquadMind, want: Vector2, pit: EnemyPit) -> void:
 	var mode: FoeGait.Mode = FoeGait.wanted(now, far, moving(mind))
 	g.update(pit.tick, mode, now, pit.roster.gait_min_ticks, pit.roster.gait_settle_ticks)
 	if g.mode == FoeGait.Mode.FIGHT:
-		EnemyMotor.steer(e, want, pit.rivet_pos, pit, g.speed_cap(e.arch))
+		var cap: float = g.speed_cap(e.arch)
+		if mind.mobile_goal.is_finite():
+			cap = maxf(cap, ESCORT_PACE_K * pit.roster.archetype(&"shield_robot").speed_mps)
+		EnemyMotor.steer(e, want, pit.rivet_pos, pit, cap)
 	else:
 		EnemyMotor.steer(e, want, Vector2.INF, pit)
 
 
 func may_fire(mind: SquadMind, tick: int) -> bool:
 	return not uses(mind.agent) or mind.agent.gait.may_fire(tick)
+
+
+## A ranged wave member on a TRAVEL run carries its gun low: no aim row, no aim arm.
+static func gun_down(arena: CombatArena, h: Fighter) -> bool:
+	var squad: ArenaSquad = arena.squad_ai
+	if squad == null or not squad.minds.has(h.id):
+		return false
+	var e: EnemyAgent = squad.minds[h.id].agent
+	return squad.gaits.uses(e) and e.gait.mode == FoeGait.Mode.TRAVEL
 
 
 ## Walking to cover, a flank spot, a shield shoulder or along a route (not strafing or holding).

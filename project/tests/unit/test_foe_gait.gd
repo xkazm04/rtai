@@ -91,6 +91,25 @@ func test_legacy_never_consults_the_gait() -> void:
 		assert_eq(legacy.digest, LEGACY_TRACE, "legacy = the pre-n31 trace")
 
 
+func test_a_travelling_foe_carries_its_gun_low() -> void:
+	var arena: CombatArena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(22).stream(&"combat")
+	)
+	arena.guard_map = GuardRouteMap.new(Rect2(-20, -20, 40, 40), [], null, 0.45)
+	arena.squad_ai = ArenaSquad.new(arena.guard_map)
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ONE, &"sergeant_mulroney")
+	var e: EnemyAgent = arena.squad_ai.mind_for(h).agent
+	arena.tick = 23
+	e.shot_tick = arena.tick
+	assert_false(FoeGaitDrive.gun_down(arena, h))
+	assert_eq(FoeCastView.attack_row(h, arena), 1, "FIGHT shows the shot row")
+	e.gait.update(arena.tick, T, true, MIN, SETTLE)
+	assert_true(FoeGaitDrive.gun_down(arena, h))
+	assert_eq(FoeCastView.attack_row(h, arena), -1, "TRAVEL shows the walk cells")
+	arena.squad_ai.gaits.split = false
+	assert_false(FoeGaitDrive.gun_down(arena, h), "legacy keeps the gun up")
+
+
 class Trace:
 	extends RefCounted
 	var shots: int = 0

@@ -93,6 +93,8 @@ static func attack_row(h: Fighter, arena: CombatArena) -> int:
 	var age: int = arena.tick - mind.agent.shot_tick if mind != null else -1
 	if h.archetype == FoeWardenCardView.ID:
 		return FoeWardenCardView.attack_row(h, mind, arena.tick)
+	if FoeGaitDrive.gun_down(arena, h):
+		return -1
 	if h.archetype == &"sergeant_mulroney":
 		if h.has_meta(PUMP):
 			return h.get_meta(PUMP)
