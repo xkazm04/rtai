@@ -119,8 +119,68 @@ def main(dry):
         Image.fromarray(b, "RGBA").save(ATLAS, optimize=True)
 
 
+# n29 combat 02d: the plasma sword's hilt rings, red/copper -> steel (#8a9099 family), a masked mode.
+SWORD = "project/features/combat/weapons/art/"
+SWORD_FILES = [SWORD + "plasma_sword/held_long.png", SWORD + "plasma_sword/held.png", SWORD + "plasma_sword/pickup.png",
+               SWORD + "held_55/plasma_sword.png"]
+# NOT repainted: held_55/plasma_sword_small and showcase/{icon,p55,p70}/plasma_sword are other designs (maroon housing,
+# orange blade, no copper rings): their reddish px are not the rings; listed in the report for the director.
+STEEL_HUE, STEEL_SAT = 218.0, 0.10  # #8a9099 is h 218, s 0.10, v 0.60
+RING_MIN_COMPONENT = 25  # px; the rust specks on the guard plates are smaller and stay
+
+
+def _hsv(a):
+    rgb = a[..., :3].astype(np.float64)
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    d = np.where(mx > mn, mx - mn, 1.0)
+    r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+    h = np.where(mx == r, ((g - b) / d) % 6.0, np.where(mx == g, (b - r) / d + 2.0, (r - g) / d + 4.0)) * 60.0
+    return h, np.where(mx > 0, (mx - mn) / np.where(mx > 0, mx, 1.0), 0.0), mx / 255.0
+
+
+def ring_mask(a):
+    """Copper/orange-red ring pixels: hue <= 24 or >= 345, s > 0.50, v > 0.45, in connected parts (8-way) of at
+    least RING_MIN_COMPONENT px, plus the 1 px fringe around them (hue <= 26, s > 0.40, v > 0.30)."""
+    from scipy import ndimage
+    h, s, v = _hsv(a)
+    solid = a[..., 3] > 0
+    core = ((h <= 24.0) | (h >= 345.0)) & (s > 0.50) & (v > 0.45) & solid
+    lab, n = ndimage.label(core, structure=np.ones((3, 3)))
+    sizes = ndimage.sum(core, lab, range(1, n + 1))
+    keep = np.isin(lab, [i + 1 for i, z in enumerate(sizes) if z >= RING_MIN_COMPONENT])
+    near = ndimage.binary_dilation(keep, structure=np.ones((3, 3)))
+    fringe = near & ~keep & ((h <= 26.0) | (h >= 345.0)) & (s > 0.40) & (v > 0.30) & solid
+    return keep | fringe
+
+
+def steel(a):
+    """Returns (new array, mask). Same value (max channel) and alpha, hue 218, saturation 0.10."""
+    import colorsys
+    m = ring_mask(a)
+    out = a.copy()
+    ys, xs = np.nonzero(m)
+    for y, x in zip(ys, xs):
+        v = a[y, x, :3].max() / 255.0
+        out[y, x, :3] = [int(round(c * 255)) for c in colorsys.hsv_to_rgb(STEEL_HUE / 360.0, STEEL_SAT, v)]
+    return out, m
+
+
+def sword(dry):
+    for p in SWORD_FILES:
+        a = load(p)
+        b, m = steel(a)
+        ys, xs = np.nonzero(m)
+        box = "none" if not len(xs) else "x %d..%d y %d..%d" % (xs.min(), xs.max(), ys.min(), ys.max())
+        print("%s mask %d px box %s; reddish %d -> %d; alpha kept %s" % (p, int(m.sum()), box, int(reddish(a).sum()),
+              int(reddish(b).sum()), bool((a[..., 3] == b[..., 3]).all())))
+        if not dry and m.any():
+            Image.fromarray(b, "RGBA").save(p, optimize=True)
+
+
 if __name__ == "__main__":
-    if "--muzzle" in sys.argv:  # python -I evidence/n29/red/recolour.py --muzzle [--dry]
+    if "--sword" in sys.argv:  # python -I evidence/n29/red/recolour.py --sword [--dry]
+        sword("--dry" in sys.argv)
+    elif "--muzzle" in sys.argv:  # python -I evidence/n29/red/recolour.py --muzzle [--dry]
         muzzle("--dry" in sys.argv)
     elif "--fire-loop" in sys.argv:  # python -I evidence/n29/red/recolour.py --fire-loop
         one(FIRE_LOOP, "--dry" in sys.argv)
