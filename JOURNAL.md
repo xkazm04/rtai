@@ -198,3 +198,7 @@ NEXT (session 7):
   report, inert), this session stops at 17:25, and at 18:45 all four lanes' final gates would contend for the 16 GB cap. n29 keys did the
   same (its REPORT: reels gate before the freeze on purpose). If a later commit touches code, the reels gate is re-run.
 - 15:58 GATE started by me: `node tools/gate/run.mjs --rev=HEAD --reels` (fd8ea31e1) -> build/n30-dir/gate3.out; lane lock tag director-gate.
+- 16:36 GATE PASS with reels on fd8ea31e1 (38 min): `gate: PASS; build/gate/fd8ea31e1dec/gate.json` (lint 19/19, unit 4316/0/2, scenarios 68
+  with rig_stress p50 1.083 ms CONTENDED (4 other runs), parity bit-exact + mutation at 629, selftest, export-audit 1003/0, reels top 286 s,
+  tilt70 292 s, combo 288 s). MILESTONE lane green with reels. Lane lock released. REPORT Gate quotes it; no post-freeze gate needed
+  unless code lands (none planned).

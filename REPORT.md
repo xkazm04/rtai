@@ -58,11 +58,17 @@ DRAFT (session 7, 16:00): sections are filled as items land; the final version i
 
 ## Gate
 
+- **Final, with reels:** `node tools/gate/run.mjs --rev=HEAD --reels` on `fd8ea31e1` (15:58-16:36, 38 min; run before the freeze on
+  purpose: the lane's last code commit is `22d3c0fb1`, every commit after it is evidence/journal/report, and the 18:45 slot would
+  contend with every lane's final gate): `gate: PASS; build/gate/fd8ea31e1dec/gate.json` (lint 19/19 over 2292 files, unit 4316 passed /
+  0 failed / 2 skipped, scenarios 68 with `rig_stress.rigMsP50` 1.083 > 1.000 logged CONTENDED (4 other runs, never quiet in 5 min,
+  budget not judged), parity bit-exact + mutation caught at 629, selftest, export-audit 1003 / 0, reels exit 0: top 286 s, tilt70 292 s,
+  combo 288 s).
 - `node tools/gate/run.mjs --rev=HEAD` on `a09f9be52` (15:37, 26 min; the lane's last code commit is `22d3c0fb1`, later commits are
   evidence/journal only): `gate: PASS; build/gate/a09f9be527a0/gate.json` (lint 19/19 over 2292 files, unit 4316 passed / 0 failed /
   2 skipped, scenarios 68, parity bit-exact + planted mutation caught at step 629, selftest, export-audit 1003 / 0 failed).
 - Earlier: `node tools/gate/run.mjs --rev=HEAD` on `74fc5e382` (14:16, 21 min): `gate: PASS; build/gate/74fc5e382e63/gate.json` (lint 19/19,
-  unit 4314 passed / 0 failed / 2 skipped, scenarios 68, parity bit-exact, selftest, export-audit 1003 / 0 failed). Reels gate: owed after the freeze.
+  unit 4314 passed / 0 failed / 2 skipped, scenarios 68, parity bit-exact, selftest, export-audit 1003 / 0 failed).
 
 ## What does not
 
