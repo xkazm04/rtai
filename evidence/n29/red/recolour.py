@@ -177,8 +177,38 @@ def sword(dry):
             Image.fromarray(b, "RGBA").save(p, optimize=True)
 
 
+def specks(dry):
+    """n29 combat 02f: the last reddish px of the four sword files (the emitter prongs' lights) plus their 1 px
+    reddish-orange fringe move to the fire remap's amber hue (remap()); nothing else changes."""
+    from scipy import ndimage
+    for p in SWORD_FILES:
+        a = load(p)
+        core = reddish(a)
+        h, s, v = _hsv(a)
+        near = ndimage.binary_dilation(core, structure=np.ones((3, 3)))
+        fringe = near & ~core & ((h <= 26.0) | (h >= 345.0)) & (s > 0.40) & (v > 0.30) & (a[..., 3] > 0)
+        m = core | fringe
+        if "--hot" in sys.argv:  # also the small hot-copper lights the gate misses (a lit render pushes them over it)
+            hot = ((h <= 24.0) | (h >= 345.0)) & (s > 0.52) & (v > 0.40) & (a[..., 3] > 0)
+            m = m | hot
+        new, _ = remap(a)
+        out = a.copy()
+        out[m] = new[m]
+        changed = (out != a).any(axis=2)
+        lab, n = ndimage.label(m, structure=np.ones((3, 3)))
+        boxes = ["x %d..%d y %d..%d" % (sl[1].start, sl[1].stop - 1, sl[0].start, sl[0].stop - 1)
+                 for sl in ndimage.find_objects(lab)]
+        print("%s moved %d px (core %d + fringe %d), changed %d (outside list: %d); reddish %d -> %d; boxes %s"
+              % (p, int(m.sum()), int(core.sum()), int(fringe.sum()), int(changed.sum()), int((changed & ~m).sum()),
+                 int(core.sum()), int(reddish(out).sum()), "; ".join(boxes) or "none"))
+        if not dry and m.any():
+            Image.fromarray(out, "RGBA").save(p, optimize=True)
+
+
 if __name__ == "__main__":
-    if "--sword" in sys.argv:  # python -I evidence/n29/red/recolour.py --sword [--dry]
+    if "--sword-specks" in sys.argv:
+        specks("--dry" in sys.argv)
+    elif "--sword" in sys.argv:  # python -I evidence/n29/red/recolour.py --sword [--dry]
         sword("--dry" in sys.argv)
     elif "--muzzle" in sys.argv:  # python -I evidence/n29/red/recolour.py --muzzle [--dry]
         muzzle("--dry" in sys.argv)

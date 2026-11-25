@@ -31,3 +31,14 @@ Four sword chapters: combo on a cop ahead, left, below, then the deflect against
 In the wind-up swing (2 s, `stills/red_sword_film_crop_4x.png`) the sword is Rivet's own `rivet_eq_plasma_sword*` sheet art, whose copper-red rings
 are still there (NEED keys); the repainted `held_long` is what draws at the rest and in the deflect (the 64 px/m pair above).
 At 32 px/m the held part is `held_55`/small variants under 56 px/m, whose rings the repaint also covers (held_55/plasma_sword.png 224 -> 13).
+
+## After2 (02f): the last specks
+`python -I evidence/n29/red/recolour.py --sword-specks --hot` (new mode; `--dry` lists only): per file the pixels the audit counter still counts
+(R>170, G<110, B<90) plus their 1 px reddish-orange fringe, and with `--hot` the small hot-copper lights the gate misses
+(hue <= 24 or >= 345, s > 0.52) take the fire remap's amber hue (alpha, max and min channel kept). Pixels changed == pixels listed in every file
+(outside the list: 0). Reddish px before -> after: held_long 15 -> 0, held 3 -> 0, pickup 16 -> 0, held_55/plasma_sword 13 -> 0.  Pass 1 (reddish + fringe) moved 51 / 14 / 57 / 34 px; `--hot` then moved 41 / 14 / 28 / 14, and after a widened threshold 36 / 44 / 14 / 45 more.
+The first pass (reddish + fringe only) changed 1 px of the 64 px/m still: the three dots in game (222,77,40) were not the gate's reddish px but
+orange-copper lights (hue 11-16, s 0.6-0.7) that the lit render pushes over the gate, hence `--hot`.
+Still `stills/red_sword_after2_64.png` (+ `_crop.png`, pair `red_sword_pair2_64.png`, before left): sword box 805,440,895,500 reddish 3 -> 0,
+crop box 795,420,895,500 41 -> 38 (the rest is Rivet's own hazard stripes); 4 px differ from the after still (y 475-494, x 804-829).
+Seen: no red dot on the hilt. The amber lights are 1 px at 64 px/m and print dark/steel, not as a readable amber speck.
