@@ -1,7 +1,7 @@
 # Brief n29-cast-03d: robot thug A, the remaining checklist points, then the switch
 
 Lane `cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd), branch `n29-cast`. You are a builder sub-agent.
-**Hard stop HARDSTOP local** (check `date +%H:%M` often). **Commit 1 by COMMIT1, your last commit by LASTCOMMIT** (hook ~12 min).
+**Hard stop 06:12 local** (check `date +%H:%M` often). **Commit 1 by 05:55, your last commit by 06:02** (hook ~12 min).
 Never end with finished work uncommitted. Then report and END.
 **Your PART is named in the launch line (A or B). Do only that part.**
 
@@ -69,3 +69,15 @@ file, `cast_door_*`, `cast_war_*`, `docs/**`, root `JOURNAL.md`, `REPORT.md`, `e
 ## Report (then END)
 Commits, the rows of your table (point, number, bar, verdict), crops/stills you looked at and what you saw, the
 `run_unit --changed` line, NEEDs, what you could not do.
+
+## Added 05:33 (director), PART B call
+- First, 5 minutes: `project/dev/cast/cast_flash_fight.gd` (committed by another call, `8d665f61e`) has mixed CRLF/LF line
+  endings and a long line: `node tools/gate/quick.mjs --no-godot` fails on it. Normalise to LF, fix the long line, run
+  gdformat/gdlint on it, commit alone (`git commit -- project/dev/cast/cast_flash_fight.gd`). It is on your allowlist for this.
+- The opus door builder works beside you until 06:12 (`shield_robot_*`, `cast_door_*`, `test_cast_door*`,
+  `docs/art/cast-audit.md`, `tools/film/cast_door_films.mjs`): never stage or revert them; its files are staged in the index
+  right now, so commit ONLY with `git commit -- <your paths>`.
+- Order of value: the flash scene fix > palette > 55 size > shadow > the up-facing fall.
+- Also look at the eight-drawing walk's STOP: the 03c builder saw thug 3 standing after its walk-in, facing down
+  (`thug_fight_32.mp4` frame 640), with its shoes ~8-10 px above the shadow centre. Measure it in that frame (or a re-take)
+  and table it as a point (stop placement, bar: soles within 2 px of the ground row at 64 px/m); do not fix the anchors.

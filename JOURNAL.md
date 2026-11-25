@@ -279,3 +279,18 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
   door / 20 gunner in 25 s. run_unit --changed full 4231/0/2 (FLAKY test_audio_driving). Mutate 5/6 = 83.3 % (survivor:
   the shove direction sign). Item 2 (hit flash door + gunner) DONE on the live path.
 - 05:19 BUILDER RUNNING cast-11-door8-f7 (opus) since 05:19: `evidence/briefs/n29-cast-11-door8-f7.md`, hard stop 06:12.
+- 05:22 MILESTONE `f867fd556` (cast-11 commit 1): door eight p70 right drawing 7 re-packed from the f7 edit (only that cell),
+  EIGHT70 regenerated, provenance. Feet table pending.
+- 05:30 MILESTONE `a679e3fa5` (cast-03c commit 2): `thug_poses_64ppm_tilt70.png`, `thug_fight_32.mp4` (ffprobe 1920x1080
+  60/1 20.02 s). Looked at the still: wind-up, lunge, snap, hit, fall rest read, soles on the shadows, a head under Rivet,
+  but the five poses OVERLAP (spacing ~1.3 m for a 2 m reach): hard to read each; re-space next time. Looked at 5 clip frames
+  (every 4 s, crop): three thugs ring Rivet with claws out, one goes pale on a hit (the live flash), dead ones lie dark on
+  the street with debris; no teal; the red star on Rivet at 12 s is combat's impact spark on him (not our art).
+- 05:33 BUILDER cast-03c-thug-footline 38 accepted: `588c7b706`, `a679e3fa5`. Gaps up to 26 -> <= 1 texel on every
+  attack/hit/fall/p55-walk cell (moved cells pure translations, others byte-identical); p70 four-walk kept (support shoe
+  hidden behind the claw; the row walks the planted8). Tell 48 ticks before the snap, hits hold 12 ticks (0.20 s), falls
+  reach rest (frames 638 / 765 / 891). Flash visible (frame 288). Strict red 1-5 px per sheet, all shipped rust edges (75b0374d0).
+  run_unit full 4231/0/2. Open: the stop after a walk-in floats 8-10 px (frame 640, by eye); the lunge needs `guard_tell`,
+  which the live game sets (`gunplay_hook.gd:47`, `arena_arsenal.gd:56`): checked by grep, fine.
+- 05:33 FINDING `cast_flash_fight.gd` (`8d665f61e`) has CRLF/LF mix + a long line: quick --no-godot red. Fix in 03d-B first.
+- 05:34 BUILDER RUNNING cast-03d-B (sonnet) since 05:34: `evidence/briefs/n29-cast-03d-thug-checklist.md` PART B, hard stop 06:12.
