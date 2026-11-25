@@ -59,3 +59,27 @@ Code: `Ink.AMBER` (`#edab42`, appended to `boot/collect_call/view/ink.gd`) in `r
 Stills: `C:/Users/kazda/kiro/gtai-masters/n29/combat/stills/red_fire_<effect>_{before,after,after_colour}_64[_crop].png`,
 `red_fire_<effect>_pair_64.png` (before | after), `red_fire_<effect>_triple_64.png` (before | after | after `--fx-colour=on`).
 No before exists under `--fx-colour=on` (the PNGs had changed when the colour path was found).
+
+## After2: the amber ink in the FX view's print (director-authorised, 01:46)
+
+`look_d4_item.gdshader` gains `uniform float amber_ink` (0 = the D4 inks alone) and `AMBER` (#edab42) as a nearest-ink
+candidate; `PrintStage.fx_material()` is a copy of the item print (same uniforms each look update, same world_px) with
+`amber_ink` from `look_profiles.json` `"fx_amber_ink"` (true; **false = off**); `CollectCallView` gives it to `fx_view`
+only. Takes: the same reel command with `--film-stills=65,70,470,1000 --shot-tick=1005` into `build/n29red/after2/reel`
+and `fxshow.mjs build/n29red/after2/fxshow`; `stills.py after2`, `stills.py pair2` -> `red_fire_<effect>_after2_64.png`
+(+ `_crop`), `red_fire_<effect>_pair2_64.png` (before | after2).
+
+| effect | crop px before | after (PNG remap) | after, amber ink |
+|---|---:|---:|---:|
+| blast | 53046 | 52948 | 953 |
+| flame + cone | 38143 | 38089 | 17342 (blood and the hit bursts) |
+| burning ground | 22026 | 22026 | 21934 |
+| explosion cloud | 18217 | 1127 | 1127 |
+
+Proof nothing else moved (`python -I evidence/n29/red/ink_diff.py build/n29red/after build/n29red/after2`, a pixel
+counts when a channel moves > 24): blast 52416 px inside the box, **0 outside**; flame 24883 inside, **0 outside**;
+burning ground 181 inside, 0 outside; explosion 0 / 0. Rivet's collar, the cops and pickups are outside the boxes.
+
+Read: the blast is an amber star with its cream core and ink rim; the flame tongues are amber with cream hearts.
+**Left red:** the flamethrower's hit bursts and the molotov's burning-ground bursts (the ragged starbursts at t470 and
+t1000) do not move with either change: they come from another source than the PNGs of this call (not traced in time).

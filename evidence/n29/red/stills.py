@@ -1,5 +1,5 @@
 """Copies the take frames to the masters as red_fire_<effect>_<side>_64.png (+ _crop) and prints the
-reddish px per crop. python -I evidence/n29/red/stills.py <before|after|after_colour|pair>  (run from the repo root)"""
+reddish px per crop. python -I evidence/n29/red/stills.py <before|after|after_colour|after2|pair|pair2>  (run from the repo root)"""
 import sys, os, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image
@@ -24,6 +24,21 @@ def main(side):
         shutil.copyfile(src, full)
         Image.open(src).crop(box).save(full.replace("_64.png", "_64_crop.png"))
         print(name, src, box, "reddish crop px", crop_count(src, box))
+
+
+def pairs2():
+    """red_fire_<effect>_pair2_64.png: before | after2 (the FX view's print with the amber ink)."""
+    from PIL import ImageDraw
+    for name in SHOTS:
+        a = Image.open("%s/red_fire_%s_before_64_crop.png" % (OUT, name)).convert("RGB")
+        b = Image.open("%s/red_fire_%s_after2_64_crop.png" % (OUT, name)).convert("RGB")
+        s = Image.new("RGB", (a.width + b.width + 12, a.height + 28), (23, 19, 27))
+        s.paste(a, (0, 28))
+        s.paste(b, (a.width + 12, 28))
+        d = ImageDraw.Draw(s)
+        d.text((8, 7), "BEFORE %s (red)" % name, fill=(242, 232, 213))
+        d.text((a.width + 20, 7), "AFTER2 %s (amber remap + amber ink in the FX print)" % name, fill=(242, 232, 213))
+        s.save("%s/red_fire_%s_pair2_64.png" % (OUT, name))
 
 
 def pairs():
@@ -52,5 +67,7 @@ def pairs():
 if __name__ == "__main__":
     if sys.argv[1] == "pair":
         pairs()
+    elif sys.argv[1] == "pair2":
+        pairs2()
     else:
         main(sys.argv[1])

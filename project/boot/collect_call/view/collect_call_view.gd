@@ -93,7 +93,7 @@ func _ready() -> void:
 	stage_view.z_index = RenderLayers.z(&"ground")
 	print_stage.add_child(stage_view)
 	fx_view.z_index = RenderLayers.z(&"fx")
-	fx_view.material = print_stage.item_material()
+	fx_view.material = print_stage.fx_material()
 	cast_view.z_index = RenderLayers.z(&"actors")
 	cast_view.material = print_stage.item_material()
 	print_stage.actor_layer().add_child(cast_view)

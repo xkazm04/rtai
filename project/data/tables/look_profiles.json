@@ -1,6 +1,7 @@
 {
   "default": "auto",
   "doc": "Look profiles: every print-pass parameter of the D4 world pass (look_d4.gdshader: world), the item pass (look_d4_item.gdshader: item) and the cutout part print (parts_flat_below: below this many screen px per part px Rivet's limbs, collar and core print as flat stickers). zoom_blend is the default look (--look=auto): profile `from` up to start_ppm, blending to profile `to` at full_ppm and above. --look=<id> pins one profile; --look=off draws the raw art. core/render/README.md.",
+  "fx_amber_ink": true,
   "overlays": [
     {
       "amount_ppm": [
