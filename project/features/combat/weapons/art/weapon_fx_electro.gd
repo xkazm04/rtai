@@ -24,6 +24,13 @@ const FORKS_MAX: int = 4
 const STUN_FORK_M: float = 0.3
 const FORK_K: float = 1.0
 const STUN_UNDER_ALPHA: float = 0.3
+## The one width of live current (screen px at k = 1) for the bolt, the chain hop and the stun:
+## an opaque amber body (the print dissolves the translucent halo) under a cream core.
+const BODY_PX: float = 10.0
+const CORE_PX: float = 4.0
+## The ink outline under the body (screen px wider than it): amber alone does not separate from
+## the pale floor in the print, the cells' zigzag read through its ink rim (not on the daze stars).
+const INK_EXTRA_PX: float = 3.0
 
 
 ## One polyline pass of the live look: points (view px), colour, width (screen px).
@@ -79,7 +86,7 @@ static func star_plan(
 			plan.append(
 				Line.new(pts, ElectricArc.Stroke.new(rim, ElectricArc.HALO_PX * k * FORK_K))
 			)
-		add_path(plan, pts, k * FORK_K)
+		add_path(plan, pts, k * FORK_K, not under)
 	return plan
 
 
@@ -124,9 +131,17 @@ static func stun_plan(p: Vector2, tick: int, i: int, k: float = 1.0) -> Array[Li
 	return star_plan(p, STUN_FORK_M, 7 + i, tick, k, true)
 
 
-static func add_path(plan: Array[Line], pts: PackedVector2Array, k: float) -> void:
-	for s: ElectricArc.Stroke in ElectricArc.strokes(k):
-		plan.append(Line.new(pts, s))
+static func add_path(
+	plan: Array[Line], pts: PackedVector2Array, k: float, outline: bool = true
+) -> void:
+	var halo: Array[ElectricArc.Stroke] = ElectricArc.strokes(k)
+	plan.append(Line.new(pts, halo[0]))
+	plan.append(Line.new(pts, halo[1]))
+	if outline:
+		var ink: Color = Color(Ink.INK, 1.0)
+		plan.append(Line.new(pts, ElectricArc.Stroke.new(ink, (BODY_PX + INK_EXTRA_PX) * k)))
+	plan.append(Line.new(pts, ElectricArc.Stroke.new(ElectricArc.HALO, BODY_PX * k)))
+	plan.append(Line.new(pts, ElectricArc.Stroke.new(ElectricArc.CORE, CORE_PX * k)))
 
 
 static func to_px(pts: PackedVector2Array) -> PackedVector2Array:

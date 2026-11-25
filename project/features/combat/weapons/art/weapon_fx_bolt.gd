@@ -5,9 +5,6 @@ extends RefCounted
 ## RNG: kinks hash the bolt's spawn point and the 3-tick jag cell, never its moving position.
 ## `--electro-cells` (WeaponFxElectro.cells) = the before: the arc/spark cells, drawn by the caller.
 
-## The opaque amber body stroke between the halo and the core (screen px).
-const BODY_PX: float = 5.0
-
 
 ## The strokes of a bolt from `tail` to `head` (m); `k` = 1 / screen scale. Empty under `cells`.
 static func plan(
@@ -21,10 +18,6 @@ static func plan(
 	)
 	var px: PackedVector2Array = WeaponFxElectro.to_px(path)
 	WeaponFxElectro.add_path(out, px, k)
-	# the print dissolves the translucent halo: an opaque amber body keeps the bolt amber
-	var body: ElectricArc.Stroke = ElectricArc.Stroke.new(ElectricArc.HALO, BODY_PX * k)
-	@warning_ignore("return_value_discarded")
-	out.insert(out.size() - 1, WeaponFxElectro.Line.new(px, body))
 	out.append_array(WeaponFxElectro.star_plan(head, ElectricArc.FORK_M, serial, tick, k))
 	return out
 
