@@ -121,12 +121,51 @@ func test_forks_are_two_half_reach_pieces() -> void:
 
 func test_widths_follow_the_screen_scale() -> void:
 	var loose: Node2D = autofree(Node2D.new())
-	assert_eq(WeaponFxElectro._k(loose), 1.0, "off the tree: screen px")
+	assert_eq(WeaponFxElectro.screen_k(loose), 1.0, "off the tree: screen px")
 	var live: Node2D = add_child_autofree(Node2D.new())
 	live.scale = Vector2.ONE * 2.0
-	assert_almost_eq(WeaponFxElectro._k(live), 0.5, 0.001, "a 2x canvas halves the width")
+	assert_almost_eq(WeaponFxElectro.screen_k(live), 0.5, 0.001, "a 2x canvas halves the width")
 
 
 func test_a_zero_length_hop_draws_nothing() -> void:
 	var node: Node2D = autofree(Node2D.new())
 	assert_false(WeaponFxElectro.chain(node, A, A, 1))
+
+
+func test_bolt_has_no_ink_and_a_thin_cream_core() -> void:
+	var plan: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6)
+	assert_gt(plan.size(), 3)
+	for l: WeaponFxElectro.Line in plan:
+		assert_false(
+			l.color.is_equal_approx(Color(Ink.INK, l.color.a)), "no ink stroke on the bolt"
+		)
+	var core: WeaponFxElectro.Line = plan[2]
+	assert_eq(core.color, ElectricArc.CORE, "the first path's last pass is the core")
+	assert_eq(core.color.a, 1.0)
+	assert_lte(core.width, 2.5)
+	for l: WeaponFxElectro.Line in plan:
+		assert_gte(l.width, core.width, "the core is the narrowest")
+
+
+func test_bolt_star_has_three_or_four_forks() -> void:
+	var forks: int = 0
+	for l: WeaponFxElectro.Line in WeaponFxBolt.plan(A, B, 11, 6):
+		if l.color == ElectricArc.CORE and l.points.size() == 3:
+			forks += 1
+	assert_between(forks, 3, 4)
+
+
+func test_bolt_plan_is_pure_and_holds_inside_a_jag_cell() -> void:
+	var a: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6)
+	var b: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6)
+	var c: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 7)
+	var d: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 9)
+	assert_eq(a.size(), b.size())
+	for i: int in a.size():
+		assert_eq(a[i].points, b[i].points, "same inputs, same plan")
+		assert_eq(a[i].points, c[i].points, "ticks 6 and 7 share a 3-tick cell")
+	assert_false(a[0].points == d[0].points, "tick 9 re-jags")
+
+
+func test_bolt_serial_is_stable_per_spawn() -> void:
+	assert_eq(WeaponFxBolt.spawn_id(A), WeaponFxBolt.spawn_id(A))

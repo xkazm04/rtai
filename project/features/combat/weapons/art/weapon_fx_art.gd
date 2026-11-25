@@ -32,8 +32,7 @@ const BOTTLE_SHADOW_K: float = 0.8
 const BOTTLE_SHADOW_INK: float = 0.6
 ## The flamethrower's nozzle lick: the jet's tongue cell at this scale (1.0 read as a balloon).
 const NOZZLE_K: float = 0.45
-## The cone slices' lick swing (rad) about the aim (the teardrops keep 0.18: at 0.18 the long
-## cone slices lay parallel and banded like planks at 48 px/m).
+## The cone slices' lick swing (rad) about the aim (0.18 laid the long slices banded like planks).
 const CONE_LICK: float = 0.24
 ## A round's art (and smoke) shows once this far past the body centre: never over Rivet's chest.
 const CLEAR_M: float = 1.1

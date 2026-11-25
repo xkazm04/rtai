@@ -54,7 +54,7 @@ static func chain_plan(a: Vector2, b: Vector2, phase: int, k: float = 1.0) -> Ar
 	var path: PackedVector2Array = ElectricArc.shape(
 		PackedVector2Array([a, b]), serial, phase * 2, false
 	)
-	_add(plan, _px(path), k)
+	add_path(plan, to_px(path), k)
 	plan.append_array(star_plan(b, ElectricArc.FORK_M, serial, phase * 2, k))
 	return plan
 
@@ -73,13 +73,13 @@ static func star_plan(
 		var bend: float = (ElectricArc.hash01(serial, jag, 10 + i) - 0.5) * 1.2
 		var mid: Vector2 = at + d * reach * 0.5
 		var tip: Vector2 = mid + d.rotated(bend) * reach * 0.5
-		var pts: PackedVector2Array = _px(PackedVector2Array([at, mid, tip]))
+		var pts: PackedVector2Array = to_px(PackedVector2Array([at, mid, tip]))
 		if under:
 			var rim: Color = Color(Ink.INK, STUN_UNDER_ALPHA)
 			plan.append(
 				Line.new(pts, ElectricArc.Stroke.new(rim, ElectricArc.HALO_PX * k * FORK_K))
 			)
-		_add(plan, pts, k * FORK_K)
+		add_path(plan, pts, k * FORK_K)
 	return plan
 
 
@@ -88,7 +88,7 @@ static func chain(ci: CanvasItem, a: Vector2, b: Vector2, phase: int) -> bool:
 	if not WeaponFxArt.enabled or a.distance_to(b) < 0.05:
 		return false
 	if not cells:
-		_draw_plan(ci, chain_plan(a, b, phase, _k(ci)))
+		draw_lines(ci, chain_plan(a, b, phase, screen_k(ci)))
 		return true
 	var span_m: float = a.distance_to(b)
 	var k: float = WeaponFxArt.cell_scale()
@@ -115,7 +115,7 @@ static func stun(ci: CanvasItem, at: Vector2, tick: int, sparks: int = 2) -> boo
 				ci, &"spark", (tick / 3 + i) % 3, p, ang, Vector2.ONE * STUN_SPARK_K
 			)
 		else:
-			_draw_plan(ci, stun_plan(p, tick, i, _k(ci)))
+			draw_lines(ci, stun_plan(p, tick, i, screen_k(ci)))
 	return true
 
 
@@ -124,12 +124,12 @@ static func stun_plan(p: Vector2, tick: int, i: int, k: float = 1.0) -> Array[Li
 	return star_plan(p, STUN_FORK_M, 7 + i, tick, k, true)
 
 
-static func _add(plan: Array[Line], pts: PackedVector2Array, k: float) -> void:
+static func add_path(plan: Array[Line], pts: PackedVector2Array, k: float) -> void:
 	for s: ElectricArc.Stroke in ElectricArc.strokes(k):
 		plan.append(Line.new(pts, s))
 
 
-static func _px(pts: PackedVector2Array) -> PackedVector2Array:
+static func to_px(pts: PackedVector2Array) -> PackedVector2Array:
 	var out: PackedVector2Array = PackedVector2Array()
 	for p: Vector2 in pts:
 		@warning_ignore("return_value_discarded")
@@ -143,13 +143,13 @@ static func _serial(a: Vector2, b: Vector2) -> int:
 
 
 ## Screen px -> canvas units: the widths stay thin at every zoom.
-static func _k(ci: CanvasItem) -> float:
+static func screen_k(ci: CanvasItem) -> float:
 	if not ci.is_inside_tree():
 		return 1.0
 	return 1.0 / maxf(0.01, ci.get_global_transform_with_canvas().get_scale().x)
 
 
-static func _draw_plan(ci: CanvasItem, plan: Array[Line]) -> void:
+static func draw_lines(ci: CanvasItem, plan: Array[Line]) -> void:
 	for l: Line in plan:
 		if l.points.size() > 1:
 			ci.draw_polyline(l.points, l.color, l.width, true)
