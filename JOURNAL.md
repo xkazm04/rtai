@@ -195,3 +195,10 @@ NEXT (session 6, if any, before the 18:45 freeze; no new code after 17:15):
 2. Optional, docs/evidence only: copy `build/look/n30-c22/eight_p55_contact_2x.png` to masters only if a frames.json entry can go (cap 15).
 3. Never delete `build/film/c22-*` with rm -rf (junctions into the tree).
 - 17:16 BUILDER c24 1 accepted: `0e59be37e` one decisions.md line (door held-sole pin not shipped, WALK stays FOUR, re-check when the door anchors are re-registered); diff 1 insertion. Its cites run shows a pre-existing MISSING `evidence/cop-gate.json` at decisions.md:137 (not ours).
+
+## Session 6 (17:11 - )
+
+- 17:11 read JOURNAL, git log (b3601012a top), tree clean, no lane lock, no open `NEED cast` (combat's warden NEED withdrawn 13:47). No new code: final gate PASS on f3364498e stands.
+- 17:13 director film (no builder, no repo change): `node tools/film/cast_door_films.mjs build/look/n30-s6 clip` under the lane lock (exit 0, right 49.3 s + down-right 24.0 s) -> the edited door eight at 32 px/m; ffmpeg hstack with n29's `door8_walk_32.mp4` (960 crops, same ticks) -> masters `door8_n29_n30_32.mp4` (1920x1080 60/1 25.85 s). LOOKED at t9/t15/t20: one carrier per half walking the same path, Rivet standing; the n30 half carries the tool's footprint markers, evenly spaced.
+- 17:14 masters frames.json: `war8_feet_before_after_64.png` (harness pair, superseded by the live pair) out and deleted, `door8_n29_n30_32.mp4` in after `door8_edits_64.png`; 15 entries, none missing, none unreferenced.
+- 17:15 REPORT final: DRAFT line dropped (this session may be the last), door row + call 2 cite the clip, war8_feet still dropped; `cites.mjs REPORT.md` no MISSING.
