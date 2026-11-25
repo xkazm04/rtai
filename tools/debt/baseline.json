@@ -191,7 +191,8 @@
         "2026-11-25: films for n29 cast (dev_loc 38534 -> 38816)",
         "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)",
         "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)",
-        "2026-11-25: war eight for n29 cast (dev_loc 39127 -> 39128)"
+        "2026-11-25: war eight for n29 cast (dev_loc 39127 -> 39128)",
+        "2026-11-25: war placement revert for n29 cast; dev/cast +123 is the thug builder's untracked cast_thug_edge.gd on disk (dev_loc 39128 -> 39251)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -200,7 +201,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3772,
+        "project/dev/cast": 3895,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -233,7 +234,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39128
+      "total": 39251
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -566,7 +567,6 @@
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/crowd_react.gd": 235,
         "project/features/combat/react/react_link.gd": 288,
-        "project/features/combat/squad/foe_war_card_view.gd": 214,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
         "project/features/combat/weapons/fight_areas.gd": 227,
@@ -583,14 +583,14 @@
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
-        "project/tests/unit/test_cast_war_machine.gd": 237,
+        "project/tests/unit/test_cast_war_machine.gd": 209,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 70
+      "total": 69
     },
     "lane_named_dev_dirs": {
       "accepted": [

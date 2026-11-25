@@ -770,3 +770,13 @@ Files: `tools/film/cast_war_films.mjs` (the `cast_door_films.mjs` twin: stills /
 `four`, `eight`, `eight_held`), `tools/art/cast_war_feet.py` (pad / n28 readers, `--film-soles`), a `war_machine` step
 entry in `project/dev/cast/cast_feet.gd` (`CastWarAnchors.WALK_STEP_M`). `test_cast_war_machine.gd`: the stand-row pins
 now follow `WALK` (`_walk()` / `_stand_row()`), so a later `WALK = EIGHT` is the one generator line.
+
+**Placement reverted (director, 06:28).** `FoeWarCardView` is back to its `20be6ffaa` held-foot behaviour (the one-value
+`WALK` switch, `walk_sheet` / `walk_rows` / `walk_step_m` kept; `_plant` / `pad_local` gone), `WALK` stays `FOUR`; the
+pad-pinned test is dropped, the held-walk test is the `20be6ffaa` one, the stand-row pins still follow `WALK`. Re-run
+(`node tools/film/cast_war_films.mjs build/look/n29-war8/feet_reverted feet four`): pad sole / jump 70 right 12.50 /
+16.82, 70 down-right 18.86 / 12.87, 55 right 21.94 / 11.78, 55 down-right 18.64 / 12.87; n28 sole U / 24.36 / 28.11 /
+20.94: identical to the "before" column (difference 0.00 px). With the placement gone the "eight held" column is what
+`WALK = EIGHT` would ship: jump passes in every facing (9.93 to 10.74), sole slides 18 to 27 px (the four: 12.50 to
+21.94); the owner decides. `war8_feet_before_after_64.png` = the four held (left, ships) beside the eight held (right,
+staged), and `war8_walk_32.mp4` = the eight held as a staged preview.

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // The pile-driver (war_machine card) at a true 1920 x 1080 on its walks, the cast_door_films.mjs twin. Staged copies,
-// the real tree is never touched: "four" = the committed tree (CastWarAnchors.WALK as committed); "eight" = a copy
-// whose cast_war_anchors.gd selects WALK = EIGHT; "before" = the four with FoeWarCardView from 20be6ffaa (the held
+// the real tree is never touched: "four" = the committed tree (CastWarAnchors.WALK as committed; the held-foot view
+// again since the n29 pad placement was reverted); "eight" = a copy whose cast_war_anchors.gd selects WALK = EIGHT;
+// "before" = the four with FoeWarCardView from 20be6ffaa (the held
 // foot before the n29 pad placement 5d8e4b6f8: that commit changed only the view and its test); "eight_held" = the
 // eight on that held-foot view (what the eight art does without the pad placement).
 //   stills: 64 px/m, right facing, the same tick, four left | eight right -> war8_feet_before_after_64.png
-//   clip:   what ships (the committed tree) at 32 px/m, right then down-right -> war8_walk_32.mp4
+//   clip:   the eight (staged preview, WALK = EIGHT) at 32 px/m, right then down-right -> war8_walk_32.mp4
 //   feet:   cast_feet.tscn at 64 px/m on war_machine, both pitches, cast_war_feet.py (pad, + n28 on the four)
 // usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|feet|all] [feet walks, default before,four,eight]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
@@ -58,7 +59,7 @@ const work = join(ROOT, 'build', 'film');
 mkdirSync(work, { recursive: true });
 const feetWalks = feetArg.split(',');
 if (feetWalks.some((w) => !['before', 'four', 'eight', 'eight_held'].includes(w))) throw Error(`feet walks: ${feetArg}`);
-const walks = { stills: ['four', 'eight'], clip: ['four'], feet: feetWalks,
+const walks = { stills: ['four', 'eight'], clip: ['eight'], feet: feetWalks,
   all: [...new Set(['four', 'eight', ...feetWalks])] }[what];
 const dirs = {};
 for (const walk of walks) {
@@ -104,13 +105,13 @@ if (what === 'stills' || what === 'all') {
 if (what === 'clip' || what === 'all') {
   const mp4s = [];
   for (const [name, ticks] of [['right', 900], ['downright', 600]]) {
-    const avi = join(dirs.four, `war8_${name}.avi`);
-    await take('four', 32, name, ticks, null, avi);
+    const avi = join(dirs.eight, `war8_${name}.avi`);
+    await take('eight', 32, name, ticks, null, avi);
     mp4s.push(avi.replace('.avi', '.mp4'));
     execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi, '-c:v', 'libx264', '-crf', '18',
       '-pix_fmt', 'yuv420p', '-r', '60', mp4s.at(-1)], { windowsHide: true, stdio: 'inherit' });
   }
-  const list = join(dirs.four, 'list.txt');
+  const list = join(dirs.eight, 'list.txt');
   writeFileSync(list, mp4s.map((m) => `file '${m.split('\\').join('/')}'`).join('\n'));
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list,
     '-c', 'copy', join(outDir, 'war8_walk_32.mp4')], { windowsHide: true, stdio: 'inherit' });

@@ -75,15 +75,12 @@ func test_held_walk_cell_plants_its_foot_and_next_contact_advances() -> void:
 	_host._process(0.0)
 	var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
 	var start: Vector2 = card.position
-	var stood: Vector2 = card.transform * _pad(card)
 	_h.pos.x += 0.1
 	_host._process(0.0)
-	assert_almost_eq(card.transform * _pad(card), stood, Vector2.ONE * 0.01)
-	# The next contact (half the cycle on) is placed from the fighter's ground again.
-	var walk: String = FoeWarCardView.walk_sheet(CastCards.current(WALKER).walk)
-	_h.pos.x = start.x / SimConst.PX_PER_M + FoeWarCardView.walk_step_m(walk) * 2.0 + 0.02
+	assert_eq(card.position, start)
+	_h.pos.x += 0.3
 	_host._process(0.0)
-	assert_eq(card.frame_coords.y, FoeWarCardView.walk_rows(walk) >> 1)
+	assert_eq(card.frame_coords.y, 1)
 	assert_eq(card.position, _h.pos * SimConst.PX_PER_M)
 	assert_true(card._shadow.is_visible_in_tree())
 	assert_eq(card._shadow.get_child_count(), RigCastShadows.CONTACT_RINGS.size())
@@ -201,31 +198,6 @@ func _expect(path: String, row: int, column: int = 2) -> void:
 	assert_eq(Vector2i(card.hframes, card.vframes) * 288, Vector2i(card.texture.get_size()))
 	if _mind.agent.state == EnemyAgent.State.WINDUP:
 		assert_true(card._vent == null or not card._vent.visible)
-
-
-func test_registered_pad_stays_put_across_the_drawings_of_one_contact() -> void:
-	_host._process(0.0)
-	var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
-	var walk: String = FoeWarCardView.walk_sheet(CastCards.current(WALKER).walk)
-	var contact_m: float = FoeWarCardView.walk_step_m(walk) * (FoeWarCardView.walk_rows(walk) >> 1)
-	_h.pos.x -= 0.01
-	_host._process(0.0)
-	var planted: Vector2 = card.transform * _pad(card)
-	assert_ne(_pad(card), Vector2.ZERO)
-	var drawings: Dictionary = {}
-	for i: int in 9:
-		_h.pos.x -= (contact_m - 0.03) / 9.0
-		_host._process(0.0)
-		drawings[card.frame_coords.y] = true
-		assert_almost_eq(card.transform * _pad(card), planted, Vector2.ONE * 0.01)
-	assert_eq(drawings.size(), FoeWarCardView.walk_rows(walk) >> 1)
-	assert_eq(card.texture.resource_path, walk)
-
-
-func _pad(card: FoeWarCardView) -> Vector2:
-	return FoeWarCardView.pad_local(
-		card.texture.resource_path, card.frame_coords, card.flip_h, card.vframes
-	)
 
 
 ## The walk WALK selects and its standing drawing (the four's STAND_FRAME at the walk's rows).
