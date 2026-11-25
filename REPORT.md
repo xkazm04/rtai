@@ -44,6 +44,9 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   `node tools/tests/run_unit.mjs --select=test_light_pool_rim,test_light_explosion_amber,test_light_layer` (15/0 patched;
   lint 19/19). At t486 64 px/m the outer bands go cream -> amber (mean RGB of changed px 255,241,187 -> 255,235,161),
   red/teal/vermilion added 0, one light as before. Still `stills/explosion_rim_patched_pair_64.png`. `evidence/n30/lights/rim_proof.md`.
+- 32 px/m film with the patch applied (`591d4cacf`, patch reversed after): `films/explosion_rim_after_32.mp4` 1920x1080 60/1 25.0 s
+  beside `films/round_band_32.mp4` (same chapters): the films differ only at 8.17-8.3 s (the light's life on screen); at 8.2 s
+  the blast centre prints warmer amber (`stills/explosion_rim_32_pair.png`, ~8k px at 1080p).
 
 ### 6a. `current_look.gd` draw() survivors pinned (`5fd6c1eaa`, `2566b97d0`)
 - `CurrentLook.k_of(ci)` and `const ANTIALIAS` carry draw()'s scale and AA flag (pixels identical by construction); 4 tests,
