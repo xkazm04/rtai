@@ -929,3 +929,45 @@ down-right drawing 8 again with the x ask alone (rear boot ~1/2 foot forward, sa
 Still `gtai-masters/n30/cast/door8_edits_64.png` (`cast_door_films.mjs stills`: p70 right, tick 150, four left, eight
 right, sole brackets; no edited drawing is in that frame); old | new cell crops of the three edits (with the preceding
 drawing) `build/look/n30-c05/edited_cells_2x.png`.
+
+## Door eight, p55 round, n30
+
+**Verdict: WALK stays FOUR; the art ships (`15590aa9b`).** Two one-cell edits make both blocking p55 numbers better and none
+worse (p55 right 2.15 / 7.69 -> 2.05 / 6.98, p55 down-right 3.06 / 11.93 -> 2.72 / 11.78; p70 sheet byte-identical), but
+neither p55 facing reaches the owner's rule yet: right sole 2.05 (bar 2), down-right sole 2.72 (bar 2).
+
+Plan (from `EIGHT55` at `da11ce846` and the probe, per drawing sole x in sheet px from the cell centre, D1..D4 | D5..D8):
+right 14, 10.5, 6, -43.5 | 15, 11, 11.5, -42: half B stalls on 6 -> 7 (-0.5 where half A advances 4.5) and then takes 53.5 on
+7 -> 8 (half A 49.5); the contact slide follows the largest knot gap inside the contact (2.00 at 49.5, 2.15 at 53.5).
+Down-right (x, y) (29.5, 17.5) (30.5, 17.5) (30.5, 17.5) (-18.5, 0.5) | (4, 23.5) (22.5, 21.5) (16.5, 21.5) (-32, -0.5):
+the boot landed in D5 sits 18.5 px behind where D6 plants it, so the body runs backwards inside the 5-8 contact.
+p55 right's jump under the four's 5.09 is out of reach of any one cell (3 -> 4 is 6.77 and 4 -> 5 6.98, neither touches
+D7/D8), so right takes the bars route (jump already <= 12, sole must go <= 2). Cells: right D7 support boot back ~5 sheet
+px (~12 source px, landmark: the toe-to-bar gap as wide as the bar, as in D3); down-right D5 landed boot right ~20 sheet
+px (~45 source px, landmark: centred under the slab's lower edge, as in D6). Neither cell is in `EIGHT_STEP_M` (right
+D1/D4/D5/D8 only): 0.1799 unchanged.
+
+Images (`gtai-art/foes-n30/door8d`, 6 of 8, Ref 1 = the current source row incl. the n30 drawing 8 splice): right f7
+accepted (boot 193-295 -> 185-287 source px, D3's place); down-right f5 accepted as partial (boot 189-277 -> 211-301, half
+the ask); f5b / f5c / f5d (further, toe under the slab's right corner, copy D6's leg) moved the boot 3 / 0 / 0 px: the
+model holds that boot. Right f7b ("a few px more") overshot (169-269): measured, worse, not shipped. Each splice: other
+cells' silhouettes xor 0; sheet byte compare vs the previous p55 sheet: 38 of 40 cells identical (right 7: 343 px,
+down-right 5: 601 px); p70 byte-identical. Registered soles: right D7 11.5 -> 8, down-right D5 4 -> 13.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n30-c16/feet feet`, sole / jump, tool's 32 px/m unit; culprit =
+`build/look/n30-c16/probe_all.py`, worst jump per transition and worst contact):
+
+| Pitch | Facing | Four | Eight n30 (`da11ce846`) | Eight c16 (`15590aa9b`) | Culprit (eight c16) |
+|---:|---|---:|---:|---:|---|
+| 70 | right | 2.42 / 4.34 | 1.96 / 6.61 PASS | 1.96 / 6.61 PASS (sheet unchanged) | jump 4 -> 5, sole 1-4 |
+| 70 | down-right | U / 10.50 | 1.39 / 12.00 PASS | 1.39 / 12.00 PASS (sheet unchanged) | jump 8 -> 1 |
+| 55 | right | 2.03 / 5.09 | 2.15 / 7.69 FAIL | 2.05 / 6.98 FAIL | jump 4 -> 5 (7 -> 8 now 6.88, was 7.69), sole 2.05 on 5-8 (1-4: 2.00) |
+| 55 | down-right | U / 10.43 | 3.06 / 11.93 FAIL | 2.72 / 11.78 FAIL | jump 4 -> 5, sole 2.72 on 5-8 (1-4: 1.69) |
+
+What the rejected f7b taught: right D7's sole at 11.5 / 8 / 0 gives the 5-8 slide 2.15 / 2.05 / 2.23, a minimum near 6.5 of
+about 2.04, so D7 alone cannot bring p55 right under 2; the 5-8 contact needs a second cell (D8 moves `EIGHT_STEP_M` and so
+every facing; D5 / D6 do not). Down-right needs the D5 boot ~11 sheet px further right (an image edit would not move it:
+three asks, 3 / 0 / 0 px) or D6 and D7 set back to meet it, and very likely D8 forward as well (7 -> 8 knot gap 53 vs half
+A's 52). Next round, if wanted: down-right D6 + D7 boots back (the model moves boots back readily, and overshoots: ask
+for half), then re-measure; right D5 or D6 as the second cell. Crop of the two edited sheet cells with their neighbours
+and registered soles: `build/look/n30-c16/edited_cells_sheet_2x.png`.
