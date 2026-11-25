@@ -24,6 +24,9 @@ top / tilt70 / combo OK, 288 / 289 / 287 s), `build/gate/ac27d74e5b1a/gate.json`
 - Hop box at t121: amber 1056 -> 10, red 0, teal 0; stun box amber 373 -> 0 (the thin stars read cream/tan). Units 31/0;
   mutate 10/12 = 83.3 % (2 equivalent). `evidence/n30/electric/thin.md`.
 - Stills `stills/hop_thin_pair_64.png`, `stills/stun_thin_pair_64.png`; film `films/hop_thin_32.mp4` 1920x1080 60/1 18.0 s.
+- Before | after at 32 px/m, same take: `films/hop_pair_32.mp4` 1920x1080 60/1 18.0 s (native 32 px/m 960x1080 crops of n29's
+  `electro_bolt_current_32.mp4` on `5114a4441` and `films/hop_thin_32.mp4`; outside the effect the takes differ only in a
+  HUD corner, 797 px at 1.0 s). At 2.05 s the bold amber hop (left) is a thin hairline with small stars (right).
 
 ### 3. Rivet's rocket and nuke nose band amber (`42e7af756`, `201763968`, `b0fcfedf5`, evidence `b67599ee5`)
 - Masked recolour (value and alpha kept, 0 PNG px changed > 1 px from the band core). In game at 64 px/m: rocket t836
