@@ -28,3 +28,4 @@
   (c) item 4b roof-place: brief evidence/briefs/n30-04b-roof-place.md ready (Opus; frame cost under the bench lock).
   (d) item 5b mouth span: write brief n30-05b from mouth-span-art's report (in this journal 11:49/11:50 and gtai-art/factory-n30/span-state.md): cut + `--write` + import + game test + lanes >= 2.5 m (evidence/yard29/belt_lanes.txt method) + stills + film; try MOUTH_AT 1 to 1.5 m deeper so the beam's end sits in the fire.
   (e) item 6 whole prologue film + plate beside game from three cameras. Commit the last new work by 17:15, final gate `node tools/gate/run.mjs --rev=HEAD` started by 17:30.
+- 12:16 Briefs ready for session 2: evidence/briefs/n30-02c-decals-evidence.md (item 2 evidence, launch first), n30-03-span-shadow.md, n30-04b-roof-place.md, n30-05b-mouth-span-place.md. Order: 02c -> 03 -> 04b -> 05b, one table-editing builder at a time (02c is evidence-only, so 03 may run beside it if 02c holds no table swap at that moment: safer sequential).
