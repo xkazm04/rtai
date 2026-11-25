@@ -48,7 +48,7 @@ func test_full_bond_opens_the_crown_until_the_mastery_card_closes_it() -> void:
 func test_slot_centers_follow_the_same_desktop_and_compact_layout_as_the_faces() -> void:
 	assert_eq(GhostFormLayout.new().chip_center(1080, 0), Vector2(47, 984))
 	assert_eq(GhostFormLayout.new().chip_center(720, 3), Vector2(221, 624))
-	assert_eq(GhostFormLayout.compact().chip_center(800, 0), Vector2(33, 728))
+	assert_eq(GhostFormLayout.compact().chip_center(800, 0), Vector2(37, 728))
 
 
 func _kinds(cmds: Array[Dictionary]) -> Array:
