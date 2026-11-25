@@ -467,3 +467,8 @@ NEXT update (session 6): step 0 is DONE (gate PASS, in REPORT). Remaining: (1) r
   1000/0); in the reel step (`build/gate/9a99caebb973/reels.log`), pid 36216 alive. Session 6: quote its last line.
 - 07:32 MILESTONE session 5 end. Builders this session: 03f (12), 07b steps 2-3 (24), 03d-A (17), 13 (10), 14 (7): all
   accepted. IMAGES 21/60. BUILDER RUNNING: none. Gate PASS `42ac8613b`; reels gate running (pid 36216).
+- 08:46 MILESTONE session 6 (STABILIZE): `--reels` gate on `9a99caebb` PASS: `PASS reels: exit 0` (top, tilt70, combo OK),
+  `gate: PASS; build/gate/9a99caebb973/gate.json`. REPORT "REELS PENDING" replaced. No code, no builder this session.
+NEXT: nothing open in the lane. Director merges `n29-cast`; owner calls stand (thug on, pile-driver WALK FOUR/EIGHT, door
+  eight). Temp snapshots `gtai-gate-42ac8613b0be`, `gtai-gate-9a99caebb973`, `gtai-mutate-49b1f428` are this lane's for the
+  merge cleanup. IMAGES 21/60. BUILDER RUNNING: none.
