@@ -21,3 +21,16 @@ Contrast at 32 px/m, mid camera (south fence: gate camera), tick 300, seed 7: me
 | south fence | 0.0776 | 0.0477 | 0.0877 | 113 % | 62 % |
 
 Verdict: the bar (each prop within 10 % of its i20 contrast) is met only by the south fence (113 %, it is crisp and dark again where the impression had hazed it to 62 %). The three wrecks are NOT within 10 %: 55, 47, 29 %. Reason, from the stills: the i20 wrecks were drawn in the world pass under the dusk grade, dark burnt brown (prop mean 0.074 / 0.081 / 0.053 against a ring of 0.23 / 0.31 / 0.20). Now they draw over the impression in their own colours: yellow forklift, white-grey scrap and fridge bank, mean 0.145 / 0.170 / 0.161. They are crisp and saturated (hue and chroma contrast up, see the stills) but their luminance sits nearer the lit floor, so the luminance metric says "less contrast than i20". The "before" haze and the "after" brightness are different failures: before the wrecks were washed toward the floor tint, after they are lifted by their own paint. The fridge bank is the worst (a pale bank on a pale ring, 0.0426). Not fixed here (the i55 tint was the owner's pick, lowering it is rejected; a grade on the over-print layer is a code change outside this call); decision for the owner: accept the own-colour wrecks, or give `over_print` props the dusk grade.
+
+## Owner's alternative: `over_print_shade` (n29-13b, `overprint-shade`)
+Code landed in `785d96bc9`: optional row key `over_print_shade` (0..1, absent = 1) multiplies the own-colour wrecks on the over-print layer (ground wrecks only; spans, debris and the ochre impression are untouched). No committed row carries it. No-change proof: mid still, 32 px/m, tick 300, `arched_line`, HEAD code vs the new code, key absent: max channel difference 0 (identical 1920x1080).
+
+Contrast with a TEMPORARY key in `arched_line` (same method as above, mid camera, 32 px/m, tick 300; the table restored byte for byte, `git diff` empty), HEAD table rows:
+
+| prop | i20 | today (1.0) | shade 0.6 | 0.6 / i20 | shade 0.5 | 0.5 / i20 |
+|---|---|---|---|---|---|---|
+| forklift (burnt_pickup) | 0.1544 | 0.0851 (55 %) | 0.1588 | 103 % | 0.1705 | 110 % |
+| scrap_skip | 0.2257 | 0.1050 (47 %) | 0.1965 | 87 % | 0.2117 | 94 % |
+| fallen_fridges | 0.1451 | 0.0426 (29 %) | 0.1320 | 91 % | 0.1446 | 100 % |
+
+0.6 misses the 10 % bar on the skip (87 %); 0.5 puts all three within 10 % (110 / 94 / 100 %), the forklift at the edge. To adopt it the owner adds `"over_print_shade": 0.5` to `arched_line` (a tuned value between 0.5 and 0.6, e.g. 0.55, is one more still). Stills: `evidence/yard29/impression_props_shade_mid_32ppm.png` (today | shade 0.6, full frame) and `evidence/yard29/impression_props_shade_fridges_64ppm.png` (front camera 64 px/m, crop of the fridge bank and the belt, today | 0.6): the white fridge bank goes from pale-on-pale to a grey, readable bank with the same linework, the belt spans above stay as bright as before.
