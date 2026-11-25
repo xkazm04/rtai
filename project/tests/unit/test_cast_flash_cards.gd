@@ -39,3 +39,11 @@ func test_war_card_flashes_with_its_rig_and_the_vent_keeps_its_glow() -> void:
 	card.sync_tint(rig.is_tinted())
 	assert_null(card.material)
 	assert_eq(card._vent.material, glow)
+
+
+func test_far_card_sync_tint_follows_the_rig() -> void:
+	var card: CastFarCard = add_child_autofree(CastFarCard.new())
+	card.sync_tint(true)
+	assert_eq(card.material, PartMaterials.get_mat(LIT, true, 0))
+	card.sync_tint(false)
+	assert_null(card.material)
