@@ -40,3 +40,6 @@ teal 0 in the bolt and the hop effect boxes (both arms). Only the current arm wa
 the same seed, its stills/film are reused). `stills/electro_{bolt,hop}_pair_64_flat.png` keep the near-straight 3b look. Films:
 `electro_bolt_{cells,current}_32.mp4` 1920x1080 60 fps 18.000 s 1080 frames, `electro_bolt_pair_32.mp4` 1920x540 same
 (labelled cells | live current), all ffprobe-checked.
+Mutate `weapon_fx_bolt.gd` (--lines=8-30, --max=14, test_weapon_fx_electro; the changed lines now live there): killed 10 / (10 + 4) = 71.4 %.
+The 4 survivors are equivalent: the `n < 3` and `len2 < 1e-6` boundary guards (a 3-point or zero-length path is unchanged either
+way), `len2` guard literal, and `range(1, ...)` -> `range(0, ...)` (the first point's offset is 0 by construction).
