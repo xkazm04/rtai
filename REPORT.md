@@ -1,0 +1,116 @@
+# REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
+
+DRAFT (session 1, 11:40): sections are filled as items land; the final version is written at 18:55.
+
+## What works
+
+- **p55 sprint collar rows 3, 6, 7 rigid, 8/8 cells each, by per-cell 2x image edits** (row 4's cell of the same column, or a
+  mirrored row 2 cell / an accepted neighbour, as the reference; neck-only composite): row 3 (`bf7b78fd6`, `0b1a1cd27`), row 7
+  (`47aed0529`), row 6 (`6ba1b9d68`), the four front-end leftovers r7c3 r7c4 r6c2 r6c6 (`2641a10fe`) and row 6's orange visor kept
+  pixel-exact inside protect boxes (`68d873f9e`: 40/6/55/39 visor px -> 0). Every accepted cell: 0 px changed outside its mask,
+  alpha identical, the other cells bit-identical, registration IoU 0.976-0.991. In game at 64 px/m only the changed rows' ticks
+  differ, in the neck window. Sprint drift at 64 px/m 3.83 cm (bar 3.83 +- 0.1), identical to n27. Evidence
+  `evidence/n30-keys/collar_cells.md`; stills in `C:/Users/kazda/kiro/gtai-masters/n30/keys/collar/` (`row67_64_ingame_final.png`
+  before | after at 4 ticks, `row3_64_ingame.png`, `r3c1_4x.png`, `row3_4x.png`, `row6_4x.png`, `row7_4x.png`). In the real
+  game (arena, bot Rivet, view tilt = p55 art, `tools/film/compare.mjs` 5114a4441 | HEAD): `collar/collar_p55_64_compare.png`
+  (tick 300, row 7 sprint: soft rope -> flat striped ring) and `collar/collar_p55_rows367_32.mp4` (1920x1080 60/1, 1200 frames,
+  20.0 s; Rivet is small in it, the still is the proof; `b129dbee9`, `evidence/n30-keys/films.md`).
+- **The molotov runs on its own p70 run sheet** (`4513bda2a`): rows edited from the plasma rifle's run rows one row per job
+  (10 images), soles registered to the donor; rows 4 and 8 cols 2, 6 on the donor's legs under a seam. Walk hold 0.43 / 1.56 cm
+  (bar 2); run step 5.77 / 6.85 cm (bar 7; donor 6.69 / 8.93) after row 1 cols 5, 6 were registered 1 px to the donor's planted
+  sole x (`0e399a732`; it was 7.28 / 9.86; `run_row_k` cannot move it: the cycle floor binds). Evidence `evidence/n30-keys/grid_molotov.md`, grid
+  `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/grid_molotov_64.png`.
+- **p70 aim-left collar rigid** (not an owner pick; the rigid-collar law): audit `57c72c41a` (`evidence/n30-keys/eq_collar_audit.md`)
+  found the band drawn as a knit rope in the p70 `_left` aim strips of the rocket launcher, mini-nuke and gatling (p70 is the
+  in-play default). The lane's last 8 images: 7 cells rigid by per-cell 2x edits with Gloria's `_left` cell as the reference
+  (`8776d8711` gatling c1 c2, `f371eddb6` rocket launcher c0 c1 c2, `f3aefd0a2` mini-nuke c1 c2); mini-nuke c0 rejected on sight.
+  Per cell alpha identical, 0 px outside a declared band box, 0 px changed in the weapon box. In game (arsenal turn, p70,
+  64 px/m) only neck px change: `C:/Users/kazda/kiro/gtai-masters/n30/keys/eq_collar/{rocket_launcher,mini_nuke,gatling}_left_64_ingame.png`.
+- **The vermilion list** (`fb93bfd25`, `391d529fa`, `evidence/n30-keys/vermilion_list.md`): see Calls 1.
+- **Molotov film** (`cb361f4f8`, `evidence/n30-keys/films.md`): `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/molotov_32.mp4`
+  (stop-gap | n30 | plasma rifle at 32 px/m over a 64 px/m tile; 1920x1080 60/1, 921 frames, 15.35 s by ffprobe) and
+  `molotov_before_after_64.png`.
+- **The arsenal turn recorder fires at HEAD again** (`020878888`, `47fb6df5c`, `evidence/n30-keys/arsenal_turn.md`): the
+  recorder presses the weapon's slot key on its first step (the wheel had stowed the gun); pistol and Gloria runs exit 0 with
+  8 rest + 8 fire stills each (HEAD before: exit 1); unit test `test_arsenal_turn.gd`, the guard's hand mutation caught.
+  Mutate (`--max=6`, changed lines, `test_arsenal_turn`): **16.7 % = 1 / (1 + 5)**: only the slot bit is pinned; `_equip`'s
+  step-0 rule (`:54-55`) and the fire bit (`:168`) survive (their proof is the real runs). A test for both is the next item.
+
+## What does not
+
+- Row 8's touch-ups (cell 4: a notch where the helmet meets the ring's left end; cell 8: a light streak on the helmet right of
+  the ring) kept shipped: two image edits each did not touch the defect (both lie just outside the collar hull).
+
+## What blocked or slowed you (minutes each)
+
+- Lane Godot lock, 21 min (11:46-12:07): builder n30-07's mutate held it while n30-06's collar install waited; n30-06 ended
+  uncommitted and its waiting script ran on after it (installed at 12:21), picked up by n30-08.
+
+- gtai-masters `n24` and `n26` were deleted at ~12:56 (not by this lane): the dev capture harnesses that n29/n30 films used
+  (`run_hands.py`, `capture_film.py`) copied their Godot sources from there. The collar film moved to `tools/film/compare.mjs`.
+- 25 min on builder n30-11 (collar film): its before sheet was taken with `git show`, which writes the git-LFS pointer; Godot
+  imported it as an empty texture. Stopped; the sheet and its `.import` restored to HEAD and re-imported.
+
+## Calls for the owner
+
+1. **Vermilion per weapon, danger or heat (no recolour made).** Showcase (item art) and in play (`held_55` + Rivet's p70 strip
+   cell); stills `C:/Users/kazda/kiro/gtai-masters/n30/keys/vermilion/<weapon>_4x.png` (showcase) and `<weapon>_held_4x.png`
+   (in play), contact sheets `contact_4x.png`, `contact_held_4x.png`. Proposal = what goes amber on your yes; danger stays vermilion.
+
+   | weapon | danger (stays vermilion) | heat (to amber on your yes) | design / wear (keep) |
+   |---|---|---|---|
+   | rocket launcher | warhead nose stripes (in play 4008 px, the whole nose) | showcase fuse cables (130 px; absent in play) | rust patches |
+   | mini-nuke | warhead nose stripes (in play 6082 px); showcase muzzle stripes | coolant arc over the body (935 px in play), showcase hoses | plum casing, yellow/black hazard bands |
+   | ray gun | showcase warning triangle (117 px; absent in play) | grip coil, feed cables, top pipe, emitter rings (3048 px showcase, 269 in play) | - |
+   | electro gun | showcase warning plate (127 px; absent in play) | barrel coil, feed arcs (2114 showcase, 425 in play) | - |
+   | homing shard | showcase stripe plates (362 px) | - | red-orange hoses (design colour, keep) |
+   | gatling | showcase stripe panel (117 px) | - | - |
+   | plasma sword | hilt stripes (52 px) | hilt hoses (128 px) | - |
+   | flamethrower | - | showcase feed pipe and nozzle cage (400 px) | tank rust |
+   | machine pistol | - | coolant / cable loop (871 showcase, 699 in play) | - |
+   | plasma rifle | - | feed cables (351 / 339) | - |
+   | electro baton | - | coil winding (295 / 889) | - |
+   | chainsaw | - | ignition cable loop (679 in play) | rust wear |
+   | katana, hand cannon, pistol, assault rifle, Gloria | - | - | rust flecks only: no change |
+
+   Unsure: the ray gun's two emitter rings are classed heat (a charged coil); if you read them as the live emitter they stay
+   vermilion. The rocket launcher's empty tube keeps a 329 px orange sliver at the nose ring's cut edge (counted wear).
+
+2. **p70 aim-left collar (made without your pick).** Seven `_left` aim cells of the rocket launcher, mini-nuke and gatling now
+   wear the rigid striped ring like Gloria's, chainsaw's and the assault rifle's: `eq_collar/<weapon>_left_64_ingame.png` (before |
+   after, 64 px/m). Keep, or revert the three art commits. Still rope: mini-nuke `_left` c0, gatling `_left` c0, `gatling_diag`
+   c0/c2, the two `_left_fire` strips (no images left this run).
+
+## Merge notes
+
+- Files: `project/features/characters/art/view/p70/rivet_eq_{rocket_launcher,mini_nuke,gatling}_left.png`,
+  `project/features/characters/art/view/p55/rivet_run8.png`, `project/features/characters/art/view/p70/rivet_run8_eq_molotov.png`
+  (+ `.import`), `project/data/tables/rivet_motion.json` (molotov `run_row_k` rows), `project/tests/unit/test_rivet_grid_stride.gd`,
+  `project/tests/unit/test_rivet_walk_sprint_fallback.gd`, `steam/ai-provenance/2026-11.jsonl` (append), `docs/decisions.md` (append).
+- Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on the add/add conflict.
+
+## Next steps
+
+## Builder ledger
+
+| call | model | min | verdict | note |
+|---|---|---|---|---|
+| n30-01 collar-cell-r3c1 | opus | 7 | accepted | proved the per-cell 2x route on one cell |
+| n30-02 vermilion-list | sonnet | 3 | accepted | showcase classes; held art left for 02b |
+| n30-02b vermilion-held | sonnet | 5 | accepted | in-play classes |
+| n30-03 molotov-run-rows | opus | 24 | accepted | 8/8 rows, 10 images |
+| n30-04 collar-cells | opus | 24 | accepted | rows 3, 6, 7 (20 cells), 30 images |
+| n30-05 molotov-film | sonnet | 8 | accepted | |
+| n30-06 collar-leftovers | opus | 30 | bounced | 4 cells accepted in the round, not installed: lock starved by n30-07's mutate |
+| n30-07 arsenal-turn-fire | sonnet | 38 | accepted | mutate not scored |
+| n30-08 collar-install | opus | 15 | accepted | caught a stale import in n30-06's leftover run |
+| n30-09 molotov-step | sonnet | 19 | accepted | 1 px registration, 7.28 -> 5.77 cm |
+| n30-10 eq-collar-audit | sonnet | 6 | accepted | |
+| n30-11 collar-film | sonnet | 18+ | abandoned | harness source deleted; LFS pointer as before sheet; stopped |
+| n30-12 eq-collar-cells | opus | 20 | accepted | 7 of 8 cells, last 8 images |
+| n30-13 collar-film-compare | sonnet | 19 | accepted | row 7 only in frame |
+| n30-14 decision-lines | sonnet | 2 | accepted | |
+
+Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
+before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were
+again the best value.
