@@ -114,3 +114,68 @@ func test_carrier_steps_from_windup_to_shove_to_recovery() -> void:
 		assert_not_null(sheets)
 		for path: String in [sheets.walk, sheets.attack, sheets.hit, sheets.fall]:
 			assert_true(ResourceLoader.exists(path))
+
+
+func test_card_foe_scale_is_one_value_for_every_actor_id_without_build_jitter() -> void:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	assert_eq(table.num(table.raw, "build_jitter"), 0.0)
+	var sheets: CastCards.Sheets = CastCards.from_table(table).lookup(TROOPER, "p70")
+	var h: Fighter = Fighter.new()
+	h.hp = 10
+	h.facing = Vector2.RIGHT
+	h.hurt_tick = -100
+	var seen: Array[Vector2] = []
+	for id: int in [0, 1, 7]:
+		var pose: CastCardPose = CastCardPose.new()
+		pose.sheets = sheets
+		pose.actor_id = id
+		pose.attack = -1
+		var far: CastFarCard = autofree(CastFarCard.new())
+		far.draw_pose(pose, h, false, 0)
+		seen.append(far._base_scale)
+		assert_eq(sheets.scale_of(id), sheets.body_scale, "id %d" % id)
+	assert_almost_eq(seen[1], seen[0], Vector2.ONE * 0.000001)
+	assert_almost_eq(seen[2], seen[0], Vector2.ONE * 0.000001)
+	@warning_ignore("return_value_discarded")
+	table.raw.erase("build_jitter")
+	var old: CastCards.Sheets = CastCards.from_table(table).lookup(TROOPER, "p70")
+	for id: int in [0, 1, 7]:
+		var want: float = StreetCrowdCards.body_scale(id) * old.body_scale
+		assert_almost_eq(old.scale_of(id), want, 0.000001, "absent key = the crowd's jitter")
+	assert_ne(old.scale_of(1), old.scale_of(7))
+
+
+func test_shield_and_war_views_scale_with_their_row_body_scale() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	var previous_cards: CastCards = CastCards.shipped()
+	ViewMode.select("combo")
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	var host: ArenaRobotRigs = add_child_autofree(ArenaRobotRigs.new())
+	host.arena = CombatArena.new(CombatTuning.shipped(), Events, RngRegistry.new(5).stream(&"c"))
+	for k: float in [1.0, 1.5]:
+		table.raw.archetypes.shield_robot.body_scale = k
+		table.raw.archetypes.war_machine.body_scale = k
+		CastCards._library = CastCards.from_table(table)
+		var rig: CutRig = CutRig.new()
+		host.add_child(rig)
+		var door: Fighter = _foe(&"shield_robot")
+		assert_false(FoeShieldCardView.show_rig(host, door, rig, true))
+		var shield: FoeShieldCardView = rig.get_meta(FoeShieldCardView.CARD)
+		var want: float = FoeShieldCardView.HEIGHT_M * k * SimConst.PX_PER_M
+		assert_almost_eq(shield.scale.x, want / FoeShieldCardView.BODY_PX, 0.0001)
+		var war: FoeWarCardView = add_child_autofree(FoeWarCardView.new())
+		war.sample(_foe(&"war_machine"), host.arena, CastCards.current(&"war_machine"))
+		want = FoeWarCardView.HEIGHT_M * k * SimConst.PX_PER_M
+		assert_almost_eq(war.scale.x, want / FoeWarCardView.BODY_PX, 0.0001)
+	CastCards._library = previous_cards
+	ViewMode._shared = previous
+
+
+func _foe(id: StringName) -> Fighter:
+	var h: Fighter = Fighter.new()
+	h.archetype = id
+	h.machine = true
+	h.hp = 10.0
+	h.pos = Vector2(3, 4)
+	h.facing = Vector2.LEFT
+	return h

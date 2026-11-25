@@ -77,7 +77,7 @@ func _configure(pose: CastCardPose, path: String) -> void:
 	offset = -cell * Vector2(0.5, 0.5 if fall else foot_y)
 	var art: String = ViewMode.shared().art
 	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-	var k: float = StreetCrowdCards.body_scale(pose.actor_id) * pose.sheets.body_scale
+	var k: float = pose.sheets.scale_of(pose.actor_id)
 	if _contact != null or CastCards.padded(path):
 		k *= CastCardKinds.cell_ratio(path, StreetCopWalk.CELL_RATIO)
 	_base_scale = (

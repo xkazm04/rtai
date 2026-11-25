@@ -71,6 +71,11 @@
       },
       "type": "object"
     },
+    "build_jitter": {
+      "maximum": 0.3,
+      "minimum": 0,
+      "type": "number"
+    },
     "schema": {
       "const": "gtai.cast_cards/1"
     }

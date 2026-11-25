@@ -12,6 +12,7 @@ var _pose: CastCardPose = CastCardPose.new()
 var _vent: Sprite2D
 var _shadow: Node2D = Node2D.new()
 var _step: int = -1
+var _k: float = 1.0
 
 
 static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool) -> bool:
@@ -38,6 +39,7 @@ func sample(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:
 	var moving: bool = _pose.previous.is_finite() and h.pos != _pose.previous
 	_pose.travel(h.pos)
 	var path: String = sheets.walk
+	_k = sheets.body_scale
 	var row: int = StreetWalkerCards.stride_frame(_pose.walked / StreetQuestCards.STRIDE_M, moving)
 	var rows: int = StreetWalkerCards.STRIDE_FRAMES
 	var since: int = arena.tick - h.hurt_tick
@@ -112,7 +114,11 @@ func _cell(path: String, rows: int, row: int, h: Fighter) -> void:
 	flip_h = face.y != 0
 	position = h.pos * SimConst.PX_PER_M
 	scale = (
-		Vector2(1.0, 1.0 / ViewMode.shared().ground_k()) * HEIGHT_M * SimConst.PX_PER_M / BODY_PX
+		Vector2(1.0, 1.0 / ViewMode.shared().ground_k())
+		* HEIGHT_M
+		* _k
+		* SimConst.PX_PER_M
+		/ BODY_PX
 	)
 
 

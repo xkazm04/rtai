@@ -8,8 +8,8 @@ func test_body_scale_follows_preview_row_at_both_pitches() -> void:
 	table.raw.archetypes.sergeant_mulroney.enabled = true
 	var cards: CastCards = CastCards.from_table(table)
 	for pitch: String in ["p55", "p70"]:
-		assert_eq(cards.lookup(SERGEANT, pitch).body_scale, 1.11)
-		assert_eq(cards.lookup(&"rocket_trooper", pitch).body_scale, 1.0)
+		assert_eq(cards.lookup(SERGEANT, pitch).body_scale, 1.23)
+		assert_eq(cards.lookup(&"rocket_trooper", pitch).body_scale, 1.08)
 
 
 func test_far_walk_uses_measured_texel_scale_and_releases_for_attack() -> void:

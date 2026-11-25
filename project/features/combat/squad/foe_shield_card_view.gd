@@ -61,7 +61,7 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 		_walk_cell = cell
 	else:
 		_walk_cell = -1
-	scale = Vector2.ONE * HEIGHT_M * SimConst.PX_PER_M / BODY_PX
+	scale = Vector2.ONE * HEIGHT_M * pose.sheets.body_scale * SimConst.PX_PER_M / BODY_PX
 
 
 static func attack_row(h: Fighter, arena: CombatArena) -> int:

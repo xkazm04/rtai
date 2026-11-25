@@ -106,7 +106,8 @@ func test_walker_card_projects_the_boot_line_and_two_point_six_metre_body() -> v
 		assert_false(card.centered)
 		assert_eq(card.offset, Vector2(-144, -264))
 		var projected: Vector2 = card.scale * Vector2(1.0, sin(deg_to_rad(deg))) * 200.0
-		assert_almost_eq(projected, Vector2.ONE * 2.6 * SimConst.PX_PER_M, Vector2.ONE * 0.001)
+		var tall: float = 2.6 * CastCards.current(WALKER).body_scale  # n29: one value per row
+		assert_almost_eq(projected, Vector2.ONE * tall * SimConst.PX_PER_M, Vector2.ONE * 0.001)
 
 
 func test_recovery_glow_tracks_the_printed_grille_at_both_pitches() -> void:
