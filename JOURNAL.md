@@ -54,3 +54,9 @@ NEXT (session 3):
 2. In parallel: 03 part 2 (opus): `tools/melee/fatality_table.mjs` per evidence/briefs/n31-melee-03-fatalities.md step 2 (run with `--kill-feed` passed through the play_baseline probe; weapon x victim -> row counts; chainsaw on shieldless cop share over >= 40 kills, bar 100 %), riot cop shield case, card foes list. Then step 3 quest 1 install behind the same flag.
 3. After 01e: 02p3 (evidence/briefs/n31-melee-02p3-flip.md): geometry from clean pixels, chainsaw lever (sweep ends at first bite), katana reach ~2.5, guard rail, flip ON + re-pin digests + mutate survivors.
 4. After the flip: 02p4 play takes `node tools/melee/play_take.mjs --label=after --frames=2100` (katana, plasma, claw; seed 7) + 64 px/m slow clip per weapon with the hit volume drawn; frames.json under gtai-masters/n31/melee. Then flip --kill-feed on (re-pin, one decisions line) and film fatality takes.
+
+## Session 3 (23:27 - 00:57)
+- 23:27 START. Tree clean at ffedbbe48 (only old n26-n28 brief .err files untracked). No new `NEED melee` (ghost's stomp kill note stays inside ghost's files). No lane lock held.
+- 23:30 BUILDER RUNNING 01e (opus, evidence/briefs/n31-melee-01e-body.md, commit by 23:58, END 00:08) since 23:30
+- 23:30 BUILDER RUNNING 03p2 (opus, evidence/briefs/n31-melee-03p2-fatal-table.md: fatality table via a NEW fatality_probe, the chainsaw rule to 100 %, then quest 1 install; commit 00:00/00:20, END 00:30) since 23:30
+- 23:30 IMAGES 0/60

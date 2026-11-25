@@ -36,3 +36,13 @@ call; report and END 55 min after launch. Commit with `git commit -- <paths>`.
 5. Mutate survivors (`evidence/n31-melee/02-sweep/mutate.md`): add tests that kill the cut window's first tick and
    the state byte; re-run `node tools/mutate/mutate.mjs --file=project/features/player/melee_sweep.gd --max=20
    --tests=test_melee_sweep`; quote the score; remove the temp worktree it leaves if it is yours.
+
+## Session 3 window (launch ~00:08): parts 1-3 ONLY, no flip in this call
+Commit part 1+2 by 00:35, part 3 by 00:45, report and END by 00:50 (the session dies at 00:57: uncommitted work is
+lost). Parts 4-5 are the next call. Inputs: 01e's body-free numbers (commits after ffedbbe48 touching
+`evidence/n31-melee/01-volumes/` and `02-sweep/volumes/`, `after.md`, `before_after.png`, `drawn_ticks.json`):
+read `git log --oneline -8` and those files first; use 01e's mask rule for part 3. Guard rail runs
+(`tools/melee/play_baseline.mjs`) and blade_volume runs each take the lane Godot lock; another builder may hold it
+(item 4 audit, Godot-free, should not). Keep the reach choice explainable in ONE table row per weapon.
+Chainsaw: prefer the lever "the sweep window ends at its first bite" (the saw grinds what it caught) - DECISION it
+in `docs/decisions.md` (one line, `- [2026-11-25] DECISION melee n31 ...`) only if the guard passes with it.

@@ -28,3 +28,7 @@ sheets - check).
    sheet `before_after.png` (row = weapon, left before, right after). Rewrite `drawn_ticks.json` for both.
 Before killing any PID print its CommandLine; kill only `n23-street` or your own tool. Another builder (03) shares
 the Godot lock.
+
+## Session 3 window (launched 23:35)
+Commit by 23:58. Report and END by 00:08. If step 2's rule is in and the after is not re-run by 23:55, commit the
+before with the rule and say so - the director judges on what is committed. Godot lock: builder `03p2` shares it.
