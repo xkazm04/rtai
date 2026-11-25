@@ -1,6 +1,6 @@
-# REPORT lane yard, run n29 (2026-11-25), branch `n29-yard` (DRAFT, in progress, session 5)
+# REPORT lane yard, run n29 (2026-11-25), branch `n29-yard`, base `c649a15d6`. Images 7 of 25 (none after session 2). Last code commit `f5898d1b2`; everything after it is docs and evidence.
 
-**Gate:** `node tools/gate/run.mjs --rev=HEAD` on `f5898d1b2` (last code commit; `eb5f5ab19` and later are inert docs): `gate: PASS; build/gate/f5898d1b2074/gate.json` (scenarios 68/68, parity, selftest, export-audit 998 loaded / 0 failed). The earlier gate on `f090247dd` also passed (`build/gate/f090247ddeab/gate.json`). `--reels` not run (it belongs after the 08:45 freeze; this session ends at 07:48).
+**Gate:** `node tools/gate/run.mjs --rev=HEAD` on `f5898d1b2` (last code commit; `eb5f5ab19` and later are inert docs): `gate: PASS; build/gate/f5898d1b2074/gate.json` (scenarios 68/68, parity, selftest, export-audit 998 loaded / 0 failed). The earlier gate on `f090247dd` also passed (`build/gate/f090247ddeab/gate.json`). **Reels gate:** `node tools/gate/run.mjs --rev=HEAD --reels` on `29749d82c` (same code as `f5898d1b2`), started 07:08 instead of after the 08:45 freeze because the lane's code was frozen and the machine was light: `gate: PASS; build/gate/29749d82c140/gate.json` at 07:40 (lint 19/19, unit 4251 passed / 0 failed / 2 skipped, scenarios 68 with `city_chase.nav_max_us` CONTENDED (2 other runs, budget not judged), parity, selftest, export-audit 998 / 0, reels exit 0).
 
 ## What works
 | item | evidence | number |
@@ -62,6 +62,7 @@
 | overprint-shade | Sonnet | 20 | accepted |
 | decisions-shade | Sonnet | 2 | accepted |
 | shade-film | Sonnet | 4 | accepted |
+| lamp-film | Sonnet | (running) | |
 
 What I would brief differently:
 - Give the lane's Godot slot lock an owner field (the builder's tag and a long-lived pid such as its node process, not a shell that exits), and forbid deleting a lock whose tag is not your own: three builders removed another's lock this run.
