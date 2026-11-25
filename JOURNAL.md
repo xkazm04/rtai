@@ -150,3 +150,7 @@ NEXT (session 7, report phase): (0) `git log --oneline -6`, `git status --short 
 - 18:46 Gate: reels PASS on ac27d74e5 (product-identical to HEAD) stands; no re-gate needed (nothing to fix). `node tools/evidence/cites.mjs REPORT.md`: 15 paths, 14 ok, 1 pattern, exit 0. frames.json 14 entries, all files exist. REPORT final as written in session 6; no change.
 - 18:47 Nothing running, no builder this session.
 NEXT: none for this lane; the Director merges `n30-combat` (apply `evidence/n30/kills/cop_scale.patch` after n30-cast, keep our JOURNAL/REPORT on add/add) and deletes the Temp leftovers: gtai-gate-2566b97d0829, gtai-gate-3398da308002, gtai-gate-93d37aea1356, gtai-gate-b0fcfedf5f94, gtai-gate-ac27d74e5b1a (`git worktree remove`), gtai-mutate-cardfall, gtai-film-73895c4a35fa.
+
+## Session 8 (18:45, STABILIZE)
+- 18:46 Checked again: `git diff b0fcfedf5 HEAD -- project tools native` empty (product frozen), project/ tools/ docs/ clean, cites 15 paths 14 ok 1 pattern exit 0. The only `NEED combat` in the other lanes' journals is still the kill_fall_cells.gd:95 cop scale note, served by `evidence/n30/kills/cop_scale.patch`. The reels gate PASS on ac27d74e5 (`build/gate/ac27d74e5b1a/gate.json`) still covers HEAD. Nothing to fix, no builder, REPORT left as it is.
+NEXT: none for this lane (same as session 7: Director merges, applies cop_scale.patch after n30-cast, deletes the Temp leftovers listed there).
