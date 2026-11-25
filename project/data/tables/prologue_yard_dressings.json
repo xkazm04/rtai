@@ -991,7 +991,7 @@
           {
             "at": [
               11.8,
-              -0.8
+              -2.9
             ],
             "id": "burst_door",
             "kind": "yard_hall_mouth"
@@ -1007,7 +1007,7 @@
           {
             "at": [
               56.2,
-              -0.8
+              -2.9
             ],
             "id": "collapsed_wall",
             "kind": "yard_hall_mouth"
@@ -1097,6 +1097,23 @@
           0.82,
           1.19
         ]
+      },
+      "roof_glow": {
+        "color": "ff8c14",
+        "flicker": 0.25,
+        "hot_color": "ffb23a",
+        "rect_m": {
+          "origin": [
+            -10.6,
+            -13.5
+          ],
+          "size": [
+            74.4,
+            6.5
+          ]
+        },
+        "step_ticks": 9,
+        "strength": 0.85
       },
       "shadows": {
         "fixture_reach_m": [

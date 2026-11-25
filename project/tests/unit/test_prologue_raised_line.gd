@@ -90,13 +90,14 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	var arched: Dictionary = _row("arched_line").duplicate(true)
 	var raised: Dictionary = _row("raised_line").duplicate(true)
 	assert_true(arched.erase("ground_impression"))
+	assert_true(arched.erase("roof_glow"), "arched_line alone has the roof glow")
 	for key: String in ["ground", "layout", "over_print", "factory_front", "lights"]:
 		assert_true(arched.erase(key))
 		assert_true(raised.erase(key))
 	assert_eq(
 		str(arched),
 		str(raised),
-		"only ground, layout art, over-print, hall front and lights differ"
+		"only ground, layout art, over-print, hall front, roof glow and lights differ"
 	)
 	var arched_ground: Array = _row("arched_line")["ground"]
 	var raised_ground: Array = _row("raised_line")["ground"]
