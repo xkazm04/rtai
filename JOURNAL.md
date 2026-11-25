@@ -458,3 +458,8 @@ NEXT (session 6, REPORT phase):
   4252/0/2, scenarios 68 with corpse_horde re-judged alone, parity, selftest, export-audit 1000/0). 18 min.
 - 07:06 MILESTONE `--reels` gate started detached on `9a99caebb` (HEAD; no code after `42ac8613b`), pid 36216,
   `--timeout=90`, out `build/gate-reels.out`. Next session quotes it in REPORT (replace "REELS PENDING").
+NEXT update (session 6): step 0 is DONE (gate PASS, in REPORT). Remaining: (1) read `build/gate-reels.out` (pid 36216) and
+  replace "REELS PENDING" in REPORT with its last line + gate.json path; if it failed, say which reel and why. (2) Re-read
+  REPORT against JOURNAL, `node tools/evidence/cites.mjs REPORT.md` (was 12 paths, 11 ok, 1 pattern), commit. No code.
+  Temp: the gate snapshots `gtai-gate-42ac8613b0be` / `gtai-gate-9a99caebb*` and `gtai-mutate-49b1f428` are this lane's;
+  leave them for the Director's merge cleanup.
