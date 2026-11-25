@@ -5,6 +5,8 @@
 //   node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,kind>] [--dirs=0,90,180,270]
 //     [--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames]
 //     [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- <extra game flags>]
+// Game flags after `--` get `--controls=legacy` appended unless one is a `--controls=<x>` (the dev arena's wheel/hands
+// controls take the lab's gun away); a passed --controls= wins.
 // --timeout: seconds per film; without it each film gets 120 + 2.5 per still it saves (at least 300).
 // --resheet=<reel dir>: rebuild that reel's sheets, overview and reel.md from its reel.json (no Godot).
 // --quick: 32 px/m only, dir 90 unless --dirs/--ppm name others (the inner loop: one film per weapon).
@@ -59,6 +61,9 @@ export function stillCount(window) {
 /** The film's timeout in seconds: the reel's --timeout when given, else sized to the stills it saves. */
 export const filmTimeout = (reel, window) => String(reel.timeout ?? Math.max(300, Math.ceil(FILM_BASE_S + PER_STILL_S * stillCount(window))));
 
+/** The game flags plus `--controls=legacy`, unless a flag already sets `--controls=`. */
+export const withControls = (flags) => (flags.some((a) => a.startsWith('--controls=')) ? flags : [...flags, '--controls=legacy']);
+
 /** Plans one film of the reel through film.mjs: {shot, opts} or {error}. With the kill tick `known` (from
  *  this combo's first zoom or its scout run: the zoom is view only and the seed fixed, so the sim kills on the
  *  same tick) and no clip wanted, the film saves filmTicks only: a full window is ~165 PNGs, and writing them
@@ -72,7 +77,7 @@ export function planFilm(job, side, reel, known = undefined, scout = false) {
   if (job.victim) flags.victim = job.victim;
   if (reel.clips && reel.feel === 'on') flags.movie = true;
   const turn = job.dir_deg === 'wall' ? ['--sig-wall'] : job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : [];
-  const extra = [...turn, ...reel.extra];
+  const extra = withControls([...turn, ...reel.extra]);
   return plan(flags, `kill:${job.weapon}`, extra);
 }
 
@@ -177,7 +182,12 @@ export async function main(argv, { out = console.log, err = console.error, runne
   const began = live ? state(live.tree) : null;
   const dirtyAtStart = dirtyStartLine(began, jobs.filter((j) => j.side === live?.name).length);
   if (dirtyAtStart) out(dirtyAtStart);
-  if (reel.dryRun) { out('kill_reel: dry run, nothing launched'); return EXIT.pass; }
+  if (reel.dryRun) {
+    const first = jobs[0] && planFilm(jobs[0], sides.find((s) => s.name === jobs[0].side), reel, TRIGGER_TICK + 1);
+    if (first?.opts) out(`kill_reel: game flags of the first film: ${first.opts.extra.join(' ')}`);
+    out('kill_reel: dry run, nothing launched');
+    return EXIT.pass;
+  }
   mkdirSync(reel.out, { recursive: true });
   const rows = [];
   const kills = new Map();

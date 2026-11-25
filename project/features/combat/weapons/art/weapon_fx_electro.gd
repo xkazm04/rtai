@@ -1,39 +1,39 @@
 class_name WeaponFxElectro
 extends RefCounted
-## weapon-art's electro cells for gunplay's chain arcs and stunned humans (FightAreasArt asks these
-## first; false = not drawn, so gunplay's procedural zigzags draw instead). Render-only: reads the
-## sim's arc ends and stun state, no RNG, no delta. `--weapon-fx=shapes` turns them off.
+## weapon-art's electro look for gunplay's chain arcs and stunned humans (FightAreasArt asks these
+## first; false = not drawn, gunplay's zigzags draw). Render-only; `--weapon-fx=shapes` = off.
+
+enum { STAR_BOLD, STAR_THIN, STAR_DAZE }
 
 ## The spark where a chain arc lands, and the daze sparks, in cell scale.
 const SPARK_K: float = 1.6
 const STUN_SPARK_K: float = 1.3
-## Two sparks circle a stunned head this far out (m), this high above the body centre (m).
+## Two sparks circle a stunned head: radius and lift above the body centre (m).
 const STUN_RING_M: float = 0.4
 const STUN_LIFT_M: float = 0.55
-## The arc's paper stroke read thinnest of the energy rounds on cream paving at 32 px/m (call 3):
-## the same arc frame is drawn first in ink at ARC_INK_DIRS offsets ARC_INK_M out (the held rim's
-## method), so its ink outline thickens around the paper. 0 (or `--arc-ink=off`) = the before.
-## (Scaling the ink silhouette taller was tried first: its peaks missed the paper's, a smudge.)
+## The paper arc read thin on cream paving (call 3): its frame is drawn first in ink at ARC_INK_DIRS
+## offsets ARC_INK_M out (the held rim's method). 0 (or `--arc-ink=off`) = the before.
 const ARC_INK_M: float = 0.06
 const ARC_INK_DIRS: int = 8
 
-## Live current (the halo look of `ElectricArc`): a star of FORKS_MIN..FORKS_MAX short forks where
-## the arc lands (FORK_M long), STUN_FORK_M long on a daze mark; forks run at FORK_K of the width.
+## Live current: a star of FORKS_MIN..FORKS_MAX forks where the arc lands, STUN_FORK_M long on a
+## daze mark; forks run at FORK_K of the width.
 const FORKS_MIN: int = 3
 const FORKS_MAX: int = 4
 const STUN_FORK_M: float = 0.3
 const FORK_K: float = 1.0
 const STUN_UNDER_ALPHA: float = 0.3
-## The one width of live current (screen px at k = 1) for the bolt, the chain hop and the stun:
-## an opaque amber body (the print dissolves the translucent halo) under a cream core.
+## Bold (screen px at k = 1, the bolt's only) and thin (the hop and daze; no ink rim): an opaque
+## amber body under a cream core.
 const BODY_PX: float = 10.0
 const CORE_PX: float = 4.0
-## The ink outline under the body (screen px wider than it): amber alone does not separate from
-## the pale floor in the print, the cells' zigzag read through its ink rim (not on the daze stars).
+const THIN_BODY_PX: float = 3.0
+const THIN_CORE_PX: float = 1.5
+## The bold ink outline, px wider than the body: amber alone vanishes on the pale floor.
 const INK_EXTRA_PX: float = 3.0
 
 
-## One polyline pass of the live look: points (view px), colour, width (screen px).
+## One pass: points (view px), colour, width (screen px).
 class Line:
 	extends RefCounted
 	var points: PackedVector2Array
@@ -51,25 +51,25 @@ static var arc_ink: bool = not OS.get_cmdline_user_args().has("--arc-ink=off")
 static var cells: bool = OS.get_cmdline_user_args().has("--electro-cells")
 
 
-## The jagged arc from `a` to `b` (m) with a star at `b` (view px); `k` = 1 / screen scale. No
-## RNG: kinks hash the ends (to 0.25 m) and `phase`. Empty under `cells` (the before).
+## The thin jagged arc `a` to `b` (m) with a star at `b`; `k` = 1 / screen scale. No RNG: kinks
+## hash the ends (to 0.25 m) and `phase`. Empty under `cells`.
 static func chain_plan(a: Vector2, b: Vector2, phase: int, k: float = 1.0) -> Array[Line]:
 	var plan: Array[Line] = []
 	if cells:
 		return plan
 	var serial: int = _serial(a, b)
-	var path: PackedVector2Array = WeaponFxBolt.amplify(
-		ElectricArc.shape(PackedVector2Array([a, b]), serial, phase * 2, false)
+	var path: PackedVector2Array = ElectricArc.shape(
+		PackedVector2Array([a, b]), serial, phase * 2, false
 	)
-	add_path(plan, to_px(path), k)
-	plan.append_array(star_plan(b, ElectricArc.FORK_M, serial, phase * 2, k))
+	add_path(plan, to_px(path), k, false, true)
+	plan.append_array(star_plan(b, ElectricArc.FORK_M, serial, phase * 2, k, STAR_THIN))
 	return plan
 
 
-## `forks` short forks radiating `reach` m from `at` (m), turned and counted by a hash of
-## `serial` and the 3-tick jag cell of `tick`; the same strokes as the arc, at FORK_K width.
+## Forks `reach` m long from `at` (m), counted and turned by a hash of `serial` and the 3-tick
+## jag cell of `tick`; `style` is a STAR_*: the bolt's bold, the hop's thin, the daze's.
 static func star_plan(
-	at: Vector2, reach: float, serial: int, tick: int, k: float = 1.0, under: bool = false
+	at: Vector2, reach: float, serial: int, tick: int, k: float = 1.0, style: int = STAR_BOLD
 ) -> Array[Line]:
 	var plan: Array[Line] = []
 	var jag: int = ElectricArc.cell(tick, false)
@@ -81,12 +81,12 @@ static func star_plan(
 		var mid: Vector2 = at + d * reach * 0.5
 		var tip: Vector2 = mid + d.rotated(bend) * reach * 0.5
 		var pts: PackedVector2Array = to_px(PackedVector2Array([at, mid, tip]))
-		if under:
+		if style == STAR_DAZE:
 			var rim: Color = Color(Ink.INK, STUN_UNDER_ALPHA)
 			plan.append(
 				Line.new(pts, ElectricArc.Stroke.new(rim, ElectricArc.HALO_PX * k * FORK_K))
 			)
-		add_path(plan, pts, k * FORK_K, not under)
+		add_path(plan, pts, k * FORK_K, style == STAR_BOLD, style != STAR_BOLD)
 	return plan
 
 
@@ -126,22 +126,23 @@ static func stun(ci: CanvasItem, at: Vector2, tick: int, sparks: int = 2) -> boo
 	return true
 
 
-## One daze star at `p` (m): each fork gets a faint ink under-halo (never a solid rim).
+## One daze star at `p` (m): thin, each fork with a faint ink under-halo.
 static func stun_plan(p: Vector2, tick: int, i: int, k: float = 1.0) -> Array[Line]:
-	return star_plan(p, STUN_FORK_M, 7 + i, tick, k, true)
+	return star_plan(p, STUN_FORK_M, 7 + i, tick, k, STAR_DAZE)
 
 
 static func add_path(
-	plan: Array[Line], pts: PackedVector2Array, k: float, outline: bool = true
+	plan: Array[Line], pts: PackedVector2Array, k: float, outline: bool = true, thin: bool = false
 ) -> void:
+	var w: Vector2 = Vector2(THIN_BODY_PX, THIN_CORE_PX) if thin else Vector2(BODY_PX, CORE_PX)
 	var halo: Array[ElectricArc.Stroke] = ElectricArc.strokes(k)
 	plan.append(Line.new(pts, halo[0]))
 	plan.append(Line.new(pts, halo[1]))
 	if outline:
 		var ink: Color = Color(Ink.INK, 1.0)
 		plan.append(Line.new(pts, ElectricArc.Stroke.new(ink, (BODY_PX + INK_EXTRA_PX) * k)))
-	plan.append(Line.new(pts, ElectricArc.Stroke.new(ElectricArc.HALO, BODY_PX * k)))
-	plan.append(Line.new(pts, ElectricArc.Stroke.new(ElectricArc.CORE, CORE_PX * k)))
+	plan.append(Line.new(pts, ElectricArc.Stroke.new(ElectricArc.HALO, w.x * k)))
+	plan.append(Line.new(pts, ElectricArc.Stroke.new(ElectricArc.CORE, w.y * k)))
 
 
 static func to_px(pts: PackedVector2Array) -> PackedVector2Array:

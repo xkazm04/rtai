@@ -9,6 +9,8 @@ const STRIPE: Color = Ink.AMBER
 const BOLT: Color = Ink.AMBER
 const BOLT_PX: float = 3.0
 const STRIPE_PX: float = 4.0
+## The owner's look is antialiased: a thin current drawn without AA prints stair steps.
+const ANTIALIAS: bool = true
 
 
 ## One polyline pass: view-px points, colour, width (screen px).
@@ -46,11 +48,16 @@ static func plan(a: Vector2, b: Vector2, phase: int, k: float = 1.0) -> Array[Pa
 
 ## Draws the current on `ci` at its screen scale.
 static func draw(ci: CanvasItem, a: Vector2, b: Vector2, phase: int) -> void:
+	for l: Pass in plan(a, b, phase, k_of(ci)):
+		ci.draw_polyline(l.points, l.color, l.width, ANTIALIAS)
+
+
+## 1 / screen scale of `ci` (1 off the tree), the scale floored at 0.01.
+static func k_of(ci: CanvasItem) -> float:
 	var scale: float = 1.0
 	if ci.is_inside_tree():
 		scale = ci.get_global_transform_with_canvas().get_scale().x
-	for l: Pass in plan(a, b, phase, 1.0 / maxf(0.01, scale)):
-		ci.draw_polyline(l.points, l.color, l.width, true)
+	return 1.0 / maxf(0.01, scale)
 
 
 static func _serial(a: Vector2, b: Vector2) -> int:

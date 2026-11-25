@@ -1,6 +1,9 @@
 extends GutTest
 ## Pins the electro live-current arithmetic: spawn_id, _serial, the fork count and add_path widths.
 
+const A: Vector2 = Vector2(1.0, 2.0)
+const B: Vector2 = Vector2(4.0, 2.5)
+
 var _was: bool = false
 
 
@@ -104,6 +107,13 @@ func test_add_path_widths_scale_with_k() -> void:
 	assert_eq(_widths(plan), [4.5, 2.25, 6.5, 5.0, 2.0] as Array[float])
 
 
+func test_add_path_thin_is_the_hop_and_daze_width() -> void:
+	var plan: Array[WeaponFxElectro.Line] = []
+	var pts: PackedVector2Array = PackedVector2Array([Vector2.ZERO, Vector2(5.0, 0.0)])
+	WeaponFxElectro.add_path(plan, pts, 1.0, false, true)
+	assert_eq(_widths(plan), [9.0, 4.5, 3.0, 1.5] as Array[float])
+
+
 func test_add_path_without_outline_drops_only_the_ink() -> void:
 	var plan: Array[WeaponFxElectro.Line] = _path_plan(1.0, false)
 	assert_eq(_widths(plan), [9.0, 4.5, 10.0, 4.0] as Array[float])
@@ -133,5 +143,51 @@ func test_fork_tip_is_pinned_by_the_bend_hash() -> void:
 
 func test_stun_under_halo_width_scales_with_k() -> void:
 	var stun: Array[WeaponFxElectro.Line] = WeaponFxElectro.stun_plan(Vector2.ZERO, 0, 0, 0.5)
-	# the ink under-halo (9 px * k), then add_path without outline: 4.5, 2.25, 5, 2
-	assert_eq(_widths(stun).slice(0, 5), [4.5, 4.5, 2.25, 5.0, 2.0] as Array[float])
+	# the ink under-halo (9 px * k), then the thin add_path without outline: 4.5, 2.25, 1.5, 0.75
+	assert_eq(_widths(stun).slice(0, 5), [4.5, 4.5, 2.25, 1.5, 0.75] as Array[float])
+
+
+func _opaque_amber(plan: Array[WeaponFxElectro.Line]) -> Array[WeaponFxElectro.Line]:
+	var out: Array[WeaponFxElectro.Line] = []
+	for l: WeaponFxElectro.Line in plan:
+		if l.color == ElectricArc.HALO and l.color.a == 1.0:
+			out.append(l)
+	return out
+
+
+func _check_layers(
+	plan: Array[WeaponFxElectro.Line], k: float, body_px: float, core_px: float
+) -> void:
+	var body: Array[WeaponFxElectro.Line] = _opaque_amber(plan)
+	assert_gt(body.size(), 0, "an opaque amber body")
+	for l: WeaponFxElectro.Line in body:
+		assert_eq(l.width, body_px * k, "body is exactly the body px * k")
+	assert_lt(core_px, body_px)
+	var core_n: int = 0
+	for l: WeaponFxElectro.Line in plan:
+		if l.color == ElectricArc.CORE:
+			core_n += 1
+			assert_eq(l.width, core_px * k)
+	assert_gt(core_n, 0)
+
+
+func test_bolt_keeps_the_bold_width_and_hop_and_stun_use_the_thin_one() -> void:
+	WeaponFxElectro.cells = false
+	var bold: Array[float] = [WeaponFxElectro.BODY_PX, WeaponFxElectro.CORE_PX]
+	var thin: Array[float] = [WeaponFxElectro.THIN_BODY_PX, WeaponFxElectro.THIN_CORE_PX]
+	assert_eq(bold, [10.0, 4.0] as Array[float], "the bolt's pixels do not change")
+	assert_eq(thin, [3.0, 1.5] as Array[float])
+	_check_layers(WeaponFxBolt.plan(A, B, 11, 6), 1.0, bold[0], bold[1])
+	_check_layers(WeaponFxElectro.chain_plan(A, B, 5), 1.0, thin[0], thin[1])
+	_check_layers(WeaponFxElectro.chain_plan(A, B, 5, 0.5), 0.5, thin[0], thin[1])
+	_check_layers(WeaponFxElectro.stun_plan(A, 30, 0), 1.0, thin[0], thin[1])
+
+
+func test_the_hop_keeps_the_arcs_own_kink_without_jag_k() -> void:
+	WeaponFxElectro.cells = false
+	var hop: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 3)
+	var serial: int = WeaponFxElectro._serial(A, B)
+	var want: PackedVector2Array = WeaponFxElectro.to_px(
+		ElectricArc.shape(PackedVector2Array([A, B]), serial, 6, false)
+	)
+	assert_eq(hop[0].points, want, "no JAG_K on the hop")

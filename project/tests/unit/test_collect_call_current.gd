@@ -76,3 +76,29 @@ func test_amber_body_is_drawn_under_the_core() -> void:
 	var plan: Array[CurrentLook.Pass] = CurrentLook.plan(Vector2.ZERO, Vector2(1.0, 0.5), 4)
 	assert_eq(plan[plan.size() - 1].color, ElectricArc.CORE, "the core is drawn last, on top")
 	assert_eq(plan[plan.size() - 2].color, Ink.AMBER, "the amber body sits just under it")
+
+
+func test_k_of_is_one_off_the_tree() -> void:
+	var n: Node2D = Node2D.new()
+	assert_eq(CurrentLook.k_of(n), 1.0)
+	n.free()
+
+
+func test_k_of_is_the_inverse_screen_scale() -> void:
+	var n: Node2D = Node2D.new()
+	add_child_autofree(n)
+	n.scale = Vector2(2.0, 2.0)
+	assert_almost_eq(CurrentLook.k_of(n), 0.5, 0.0001)
+	n.scale = Vector2(0.5, 0.5)
+	assert_almost_eq(CurrentLook.k_of(n), 2.0, 0.0001)
+
+
+func test_k_of_floors_the_scale_at_one_hundredth() -> void:
+	var n: Node2D = Node2D.new()
+	add_child_autofree(n)
+	n.scale = Vector2(0.004, 0.004)
+	assert_almost_eq(CurrentLook.k_of(n), 100.0, 0.001)
+
+
+func test_current_is_drawn_antialiased() -> void:
+	assert_true(CurrentLook.ANTIALIAS)

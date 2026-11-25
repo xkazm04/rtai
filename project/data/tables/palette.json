@@ -86,6 +86,12 @@
   "schema": "gtai.palette/1",
   "tokens": [
     {
+      "doc": "amber: fire, heat, electric current and overload; the explosion light's rim. Not vermilion (r - max(g, b) = 0.26 stays under verm_gate), so classify() reads it as a base tone and it has no accents row.",
+      "hex": "#EDAB42",
+      "id": "amber",
+      "role": "accent"
+    },
+    {
       "doc": "the cream paper: pavements, roofs, the sticker rim",
       "hex": "#F2E8D5",
       "id": "paper",

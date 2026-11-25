@@ -3,7 +3,7 @@ import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { FILM_BASE_S, PER_STILL_S, filmTicks, main, planFilm, stillCount } from './kill_reel.mjs';
+import { FILM_BASE_S, PER_STILL_S, filmTicks, main, planFilm, stillCount, withControls } from './kill_reel.mjs';
 import { MOVIE_FRAME_OF_PROCESS_1, anchorShifts, boxAt, cellLabel, killWindow, movieSpan, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
 
 function tree() {
@@ -347,4 +347,10 @@ test('gone leaves out where the victim stood at the trigger frame, so an empty s
   const masked = measureBeats(frames, [60, 213], 63, [0, 0, 10, 10], diffImages, { mask: [0, 0, 3, 10] });
   assert.deepEqual([masked.aftermath_curve, masked.aftermath_gone_after, masked.aftermath_share], [[[150, 0.3]], 150, 0.3], 'the curve and share stay the whole window; gone leaves his spot out');
   assert.deepEqual(masked.aftermath_mask, [0, 0, 3, 10]);
+});
+
+test('withControls adds --controls=legacy unless the caller passed --controls=, keeping other flags in order', () => {
+  assert.deepEqual(withControls(['--a', '--b=1']), ['--a', '--b=1', '--controls=legacy']);
+  assert.deepEqual(withControls([]), ['--controls=legacy']);
+  assert.deepEqual(withControls(['--a', '--controls=wheel', '--b']), ['--a', '--controls=wheel', '--b']);
 });
