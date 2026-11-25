@@ -253,3 +253,10 @@ NEXT (final session, report 18:55):
   seams. Rejection right. Mini-nuke c0 has now failed two routes (edit, transplant): stop per the lane rule; both c0 cells stay in Next
   steps 1 as image edits. Product files unchanged (git status clean of tracked changes), so the reels gate on fd8ea31e1 still covers the
   lane's code and art; no re-gate. Lane lock free.
+- 16:52 DECISION no further product work: every open defect needs an image (60/60) or has failed two routes (row 8 c4/c8, mini-nuke
+  `_left` c0); a code-only change now (e.g. more arsenal recorder tests for the 35 % wide mutate) would cost a re-gate inside the
+  every-lane gate window for a dev-only file. cites 26/26 ok.
+
+NEXT (final session, report 18:55): as session 9's NEXT. Last commit with product files is still 22d3c0fb1 (reels gate PASS
+fd8ea31e1); every commit since is inert, incl. n30-24's `d5ed2326d`. At 18:55: drop the NEAR-FINAL line, cites, frames.json check
+(15), commit JOURNAL/REPORT with a pathspec.
