@@ -8,6 +8,9 @@
 //   clip:   the eight (the committed tree) at 32 px/m, right then down-right -> war8_walk_32.mp4
 //   pair:   the four (staged) and the eight, 32 px/m, the clip's ticks, each cropped to 960x1080, hstack four | eight
 //           -> war8_four_eight_32.mp4
+//   live:   cast_flash_fight.tscn (GTAI_CAST_FLASH_FOES=turret_war, the live sentry + war machine fight), the four and the
+//           eight on the same 1500 ticks, each cropped to 960 wide, hstack four | eight -> war8_live_four_eight_32.mp4,
+//           plus movie frame 471 of the eight's 64 px/m run -> war8_live_64.png
 //   feet:   cast_feet.tscn at 64 px/m on war_machine, both pitches, cast_war_feet.py (pad, + n28 on the four)
 // usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|all] [feet walks, default before,four,eight]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
@@ -18,8 +21,8 @@ import { ROOT } from '../lib/repo.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 
 const [out, what = 'all', feetArg = 'before,four,eight'] = process.argv.slice(2);
-if (!out || !['stills', 'clip', 'pair', 'feet', 'all'].includes(what)) {
-  console.error('usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|all]'); process.exit(2);
+if (!out || !['stills', 'clip', 'pair', 'feet', 'live', 'all'].includes(what)) {
+  console.error('usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|live|all]'); process.exit(2);
 }
 const SPEED = 1.8;
 const CHARS = 'features/characters';
@@ -60,7 +63,7 @@ const work = join(ROOT, 'build', 'film');
 mkdirSync(work, { recursive: true });
 const feetWalks = feetArg.split(',');
 if (feetWalks.some((w) => !['before', 'four', 'eight', 'eight_held'].includes(w))) throw Error(`feet walks: ${feetArg}`);
-const walks = { stills: ['four', 'eight'], clip: ['eight'], pair: ['four', 'eight'], feet: feetWalks,
+const walks = { stills: ['four', 'eight'], clip: ['eight'], pair: ['four', 'eight'], live: ['four', 'eight'], feet: feetWalks,
   all: [...new Set(['four', 'eight', ...feetWalks])] }[what];
 const dirs = {};
 for (const walk of walks) {
@@ -126,6 +129,29 @@ if (what === 'pair') {
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', four, '-i', eight, '-filter_complex',
     '[0]crop=960:1080:480:0[a];[1]crop=960:1080:480:0[b];[a][b]hstack,fps=60', '-c:v', 'libx264', '-crf', '18',
     '-pix_fmt', 'yuv420p', join(outDir, 'war8_four_eight_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+}
+if (what === 'live') {
+  const LIVE = 1500, STILL_TICK = 440, avis = {};
+  for (const walk of ['four', 'eight']) {
+    avis[walk] = join(dirs[walk], 'live.avi');
+    await godot(walk, ['--resolution', '1920x1080', '--write-movie', avis[walk], '--quit-after', String(LIVE + 60),
+      'res://dev/cast/cast_flash_fight.tscn'], { GTAI_CAST_FLASH_FOES: 'turret_war', GTAI_CAST_TICKS: String(LIVE) },
+    `${walk} live 32`, avis[walk]);
+  }
+  const size = (f) => execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v', '-show_entries', 'stream=width,height',
+    '-of', 'csv=p=0', f], { encoding: 'utf8' }).trim();
+  console.log('raw capture size', size(avis.four), size(avis.eight));
+  const [w, h] = size(avis.eight).split(',').map(Number), cw = Math.min(960, w);
+  const crop = `crop=${cw}:${h}:${Math.floor((w - cw) / 2)}:0`;
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avis.four, '-i', avis.eight, '-filter_complex',
+    `[0]${crop}[a];[1]${crop}[b];[a][b]hstack,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,fps=60`, '-c:v', 'libx264', '-crf', '18',
+    '-pix_fmt', 'yuv420p', join(outDir, 'war8_live_four_eight_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+  const avi64 = join(dirs.eight, 'live64.avi');
+  await godot('eight', ['--resolution', '1920x1080', '--write-movie', avi64, '--quit-after', '560',
+    'res://dev/cast/cast_flash_fight.tscn'], { GTAI_CAST_FLASH_FOES: 'turret_war', GTAI_CAST_TICKS: '500',
+    GTAI_CAST_FLASH_PPM: '64' }, 'eight live 64', avi64);
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi64, '-vf', `select='eq(n,${STILL_TICK})'`,
+    '-frames:v', '1', join(outDir, 'war8_live_64.png')], { windowsHide: true, stdio: 'inherit' });
 }
 if (what === 'feet' || what === 'all') {
   for (const walk of feetWalks) {
