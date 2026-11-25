@@ -113,7 +113,8 @@ func test_arched_line_lays_the_brown_tile_as_a_second_impression_and_raised_line
 	assert_eq(look.impression.texture, ART.replace("raised_line", "arched_line") + "floor_tile.png")
 	assert_true(look.impression.tiled)
 	assert_eq(look.impression.tile_size, Vector2(8, 8))
-	assert_eq(look.impression.rect, look.ground[0].rect)
+	assert_eq(look.impression.rect.end, look.ground[0].rect.end)
+	assert_almost_eq(look.impression.rect.position.y, -1.1, 0.001, "starts at the hall wall base")
 	assert_eq(look.impression.tint, Color("ffffff8c"))
 	assert_null(PrologueYardDressing.resolve("raised_line").impression)
 	assert_false(_row("raised_line").has("ground_impression"))
@@ -124,7 +125,7 @@ func test_arched_line_front_burns_at_the_burst_and_collapsed_bays_with_mouth_lig
 	var arts: Array[String] = []
 	for piece: PrologueYardDressing.Piece in look.factory_front:
 		arts.append(piece.art.get_file())
-	assert_true(arts.has("hall_burst_bay.png") and arts.has("hall_collapsed_bay.png"))
+	assert_true(arts.has("hall_tall_burst_bay.png") and arts.has("hall_collapsed_bay.png"))
 	assert_false(arts.has("burst_bay.png") or arts.has("collapsed_bay.png"))
 	var lights: Dictionary = _row("arched_line")["lights"]
 	var mouths: Array[String] = []

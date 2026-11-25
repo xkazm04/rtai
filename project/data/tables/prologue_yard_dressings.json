@@ -3,55 +3,55 @@
     "arched_line": {
       "factory_front": [
         {
-          "art": "res://boot/prologue/art/line_fire/shutter_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_shutter_bay.png",
           "at": [
             -3,
-            -2.9250000000000003
+            -4.94
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            6.95
+            9.37
           ]
         },
         {
-          "art": "res://boot/prologue/art/arched_line/hall_burst_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_burst_bay.png",
           "at": [
             11.8,
-            -2.7250000000000005
+            -4.765
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            7.35
+            9.02
           ]
         },
         {
-          "art": "res://boot/prologue/art/line_fire/feed_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_feed_bay.png",
           "at": [
             26.6,
-            -2.4750000000000005
+            -4.86
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            7.85
+            9.21
           ]
         },
         {
-          "art": "res://boot/prologue/art/line_fire/shutter_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_shutter_bay.png",
           "at": [
             41.4,
-            -2.9250000000000003
+            -4.94
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            6.95
+            9.37
           ]
         },
         {
@@ -173,11 +173,11 @@
         "rect_m": {
           "origin": [
             -1,
-            -6
+            -1.1
           ],
           "size": [
             62,
-            40
+            35.1
           ]
         },
         "texture": "res://boot/prologue/art/arched_line/floor_tile.png",
