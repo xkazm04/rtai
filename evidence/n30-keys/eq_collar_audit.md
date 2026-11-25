@@ -145,3 +145,14 @@ sampled ones were not in the UNSURE list and were not looked at; the run8 `r2c4`
 | 9 | `rivet_reload_gatling.png` c6 | `rivet_reload_pistol.png` c6 | low-medium (drop first if capped at 8) |
 
 Image count: 9 (8 if the cap holds). Check `_noflash` twins of `gatling` and `electro_gun` for shared band px. All other UNSURE cells need no edit.
+
+## Transplant (n30-24)
+Route: Gloria p70 aim-left c0 rigid collar moved by integer shift into the target c0 (0 images, no drawing; `gtai-art/rivet-n30/eq_collar/scripts/transplant.py`, proofs `gtai-art/rivet-n30/eq_collar/n30-24/*.png.json`). Registration is searched broad (-60..120 x, -60..60 y: the cells have different canvases, Gloria 215x170, mini-nuke 275x207, gatling 299x187), then +-4 by the lowest seam; IoU is alpha IoU on the head/shoulder rows (band y0-45 .. y1+5).
+
+| Cell | Shift (try 1 / try 2) | IoU (bar 0.97) | Band box | Mask px | Changed | Weapon px | Seam | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| `rivet_eq_mini_nuke_left.png` c0 | 30,39 / 33,38 | 0.861 / 0.868 | 98,114,172,142 (protect 85,128,150,152 + visor) | 261 / 232 | 261 / 232 (0 outside band, alpha identical, other cells identical, teal 0, all Gloria px) | 0 | 42.5 / 46.6 | REJECTED, kept shipped |
+| `rivet_eq_gatling_left.png` c0 | 67,14 / 63,17 | 0.815 / 0.835 | 122,98,166,122 (protect 100,100,118,130; 150,114,180,130 + visor) | 243 / 243 | 243 / 243 (same proofs) | 0 | 46.6 / 59.5 | REJECTED, kept shipped |
+
+Why: Gloria c0 is not the same figure drawing as these cells. The head/shoulder IoU is 0.87 / 0.83 at best (the brief's 0.993 was n30-12's generated edit against the shipped mini-nuke c0, not Gloria). Gloria's ring sits about 12 px lower than the mini-nuke rope at the helmet registration, so try 1 and try 2 leave rope pieces above a part-ring with a 42-47 seam. For gatling, Gloria's collar hull falls outside the band at every shift (0 px), so the mask only paints body px over the rope (one try pasted a yellow pistol chip). Look at 4x: no flat ring, broken stripes, visible seams. Stills: `gtai-masters/n30/keys/eq_collar/n30-24_{mini_nuke,gatling}_c0_judge4x.png`. No png installed, so there is no in-game after still and no provenance line. The before run of the arsenal turn is in `build/n30-24/before/` (git-ignored).
+Owed: both c0 cells still need a per-cell 2x image edit (n30-12 route). For mini-nuke, add the arch sentence (the yellow handle crosses the band). For gatling, use band 122,98,166,122. Or a hand-paint pass, which is outside this lane's rules.
