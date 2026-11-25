@@ -33,17 +33,17 @@ N30 = Path('C:/Users/kazda/kiro/gtai-art/foes-n30/door8c/out')
 # (landed boot under the slab as in drawing 6), each spliced into the door8c splice above, so the source rows
 # carry both edits; the f8 cells keep their sheet bytes.
 N30D = Path('C:/Users/kazda/kiro/gtai-art/foes-n30/door8d/out')
-# n30-17 (p55 round 2, door8e): down-right drawings 6 + 7 (planted boot back to drawing 5's), spliced into the
-# door8d splice above; the door8d cells keep their sheet bytes.
+# n30-17 (p55 round 2, door8e): down-right drawing 6 (planted boot back to drawing 5's) and drawing 7 (rolled back
+# behind it), spliced into the door8d splice above; the door8d cells and the c17 row 6 cell keep their bytes.
 N30E = Path('C:/Users/kazda/kiro/gtai-art/foes-n30/door8e/out')
 REDRAWN = {(70, 'right'): Path('C:/Users/kazda/kiro/gtai-art/foes-n29/door8b/out/door8_70_right_f7_splice.png'),
            (70, 'dr'): N30 / 'door8_70_dr_f1_splice.png',
            (55, 'right'): N30D / 'door8_55_right_f7_splice.png',
-           (55, 'dr'): N30E / 'door8_55_dr_f67_splice.png'}
+           (55, 'dr'): N30E / 'door8_55_dr_f7c_splice.png'}
 # (facing column, drawing row), 0-based: the sheet cells this cut replaces. The n29 p70 right row 7 (2, 6) is
 # already in the sheet and keeps its bytes (re-toning the new pack moves it by a level; silhouette identical);
 # so do the n30-05 p55 row 7 cells (2, 7) and (1, 7) and the n30-16 cells (2, 6) and (1, 4).
-REDRAWN_CELLS = {70: [(1, 0)], 55: [(1, 5), (1, 6)]}
+REDRAWN_CELLS = {70: [(1, 0)], 55: [(1, 6)]}
 
 
 def keep_others(dest, before, cells):
