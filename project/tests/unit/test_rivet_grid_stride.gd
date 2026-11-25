@@ -26,6 +26,7 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p55/gatling": 81.0,
 }
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/plasma_sword/1": 0.98,
 	"p70/electro_gun/5": 0.96,
 	"p70/electro_gun/4": 0.86,
 	"p70/electro_gun/3": 0.93,
@@ -156,9 +157,7 @@ func test_only_the_boot_with_enough_travel_uses_its_measured_cycle() -> void:
 	rig.face_to = -PI / 4.0  # back right, [0, 13.30]
 	cycles = RivetWalk._bare_cycles(rig.head_card, "p55", rig, 0.72)
 	assert_almost_eq(cycles, Vector2.ONE * 212.0 * 0.72, Vector2.ONE * 0.0001)
-	rig = _bare_rig("p70/rivet_walk8.png")
-	rig.face_to = PI / 4.0  # front right, [30.17, 0]
-	rig.speed_now = 32.0
+	rig = _bare_rig("p70/rivet_walk8.png", PI / 4.0, 32.0)  # front right, [30.17, 0]
 	cycles = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 0.72)
 	assert_almost_eq(cycles, Vector2(30.17, 60.0) * 0.72, Vector2.ONE * 0.0001)
 
