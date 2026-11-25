@@ -74,3 +74,4 @@
 - 14:24 BUILDER roof-place-try1 11 accepted. BUILDER RUNNING none. IMAGES 8/25.
 - 14:22 BUILDER RUNNING roof-pilots since 14:22 (Sonnet, 18 min: pilots 5 seeds on 507f75178 -> evidence/yard30/prologue-yard-pilots-roof.json/.txt, commit by 14:36). Session 4: check for its commit first; if absent, rerun it.
 - 14:24 BUILDER roof-pilots 2 accepted (02deb375d): pilots seeds 7/3/11/21/42 IDENTICAL on 507f75178 (evidence/yard30/prologue-yard-pilots-roof.json). BUILDER RUNNING none. Session 3 ends; NEXT as at 14:17 (04b remainder starts from the tint try, pilots already done for try 1).
+- 14:23 BUILDER RUNNING roof-stills since 14:23 (Sonnet, 17 min, stills only: evidence/yard30/roof_front_64ppm.png + before|after front 32 if a same-tick before exists; commit by 14:36). Session 4: check for its commit; if absent, fold the stills into the 04b remainder.
