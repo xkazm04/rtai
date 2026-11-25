@@ -62,3 +62,24 @@ Stills, pair, film are for the next call: write in your report exactly what is l
 
 ## Follow-up call (next session): A and C only
 B is committed (85c6b0c53). Do A (before still: render from the 4 PNGs at `3e2fde824`, e.g. `git show 3e2fde824:<png> | git lfs smudge` into a temp copy or a temp worktree; never touch the committed PNGs) and C (after still same tick, pair, px table in `evidence/n29/red/sword.md`, LOOK: do steel rings print grey/ink, not cream or vermilion, at 64 px/m; film `films/red_sword_after_32.mp4` 1920x1080 60 fps 15-40 s, ffprobe; frames.json entries). Wall clock: appended by the director at launch.
+
+## Wall clock for the follow-up call (session 4, binding)
+Launched 04:55. One question per step, in this order:
+1. **A + C stills** (64 px/m, the same tick before and after): before rendered from the 4 PNGs at `3e2fde824` (LFS
+   smudge into a temp copy, or a temp worktree in `%TEMP%\gtai-n29-sword-before`; say which; never change the committed
+   PNGs; remove your temp worktree with `git worktree remove` when done). After at HEAD. Pair `red_sword_pair_64.png`
+   (before left) + crops; reddish px in the crop before -> after (the counter in `evidence/n29/red/audit_count.py` or
+   `count_red.py`). LOOK at it: do the rings print grey/ink, not cream or vermilion? Write `evidence/n29/red/sword.md`
+   (commands, tick, px table, what you saw). Also update `evidence/n29/red/audit.md` row 15 (sword: stills + numbers)
+   and row 18 (electric: the bolt, chain hop and stun now one bold 10 px amber body, 4 px core, ink outline, jag 3.0:
+   commits a33cfc186, 87a5688c0; see `evidence/n29/electric/bolt.md`) - one line each. **Commit A by 05:30.**
+2. **Film** `films/red_sword_after_32.mp4`: 1920x1080 60 fps 15-40 s, 32 px/m, tilt 70, Rivet swinging the plasma sword
+   in a fight (the deflect blade / pressure take, or the gauntlet with the sword given; use the 1920x1080 staging trick
+   of `evidence/n29/red/film.mjs`: the movie writer records project.godot's 1280x800 otherwise). ffprobe it. A 64 px/m
+   still from the film with the hilt visible. `frames.json` entries (re-read the file right before writing; keep every
+   other entry). **Commit B by 05:55.**
+3. **HARD STOP 06:05**: report and END, committed. Another builder (c4 mutate) runs in parallel: one Godot for the lane
+   between you two: before any Godot launch, check `tasklist` / `wmic process where "name like 'Godot%'" get
+   processid,commandline` for a Godot whose command line names `n23-street` or `gtai-mutate` that you did not start, and
+   wait for it (poll every 30 s, max 10 min, then go on and say so). Commit with `git commit -- <paths>`; do not stage
+   `docs/decisions.md` unless your own line is the only pending change.

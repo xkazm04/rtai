@@ -27,3 +27,22 @@ only if a survivor reveals a real bug (then say so). Anything else: `NEED`.
 
 ## Report and END (short)
 Commit; score before -> after; survivors explained; gate lines.
+
+## Added by the director (session 4)
+C. `project/boot/collect_call/view/current_look.gd` (n29 c2e, the tazer + burst arc current): mutate
+   `--tests=test_collect_call_current --max=20` (budget 15 min), quote the score; pin a behaviour-changing survivor in
+   `project/tests/unit/test_collect_call_current.gd` the same way as B. Allowlist adds that test file.
+D. `project/dev/ghost-forms/bond_film.gd:68` crashes at `--prefill=0`: `forms.table.order if _prefill > 0 else []` puts
+   an untyped `[]` into `Array[StringName]`. Fix it (e.g. a typed empty `var none: Array[StringName] = []`), check with
+   `node tools/godot/check.mjs res://dev/ghost-forms/bond_film.gd`, and run the bond film entry once headless with
+   `--prefill=0` through `node tools/dev/run.mjs` to show the crash is gone (paste its verdict line). Allowlist adds
+   that file.
+Mutate runs need Godot: the other builder (c2d2 sword stills + film) runs in parallel: one Godot for the lane between
+you two. Before every mutate/Godot launch check `wmic process where "name like 'Godot%'" get processid,commandline` for a
+Godot naming `n23-street` you did not start; wait for it (poll 30 s, max 10 min, then go on and say so). Mutate's Godot
+runs in a Temp worktree `gtai-mutate-*`: that one is yours. Mutate leaves its Temp worktree when it ends cleanly; if one
+is left from your run, remove it (never one you did not create).
+
+## Wall clock (binding)
+Launched 04:55. Order A+B (pressure_rifles), then D (quick, a bug), then C. Commit A+B by **05:30**, D by **05:40**,
+C by **05:55**. **HARD STOP 06:05**: report and END, committed. Write `evidence/n29/mutate/<file>.md` per file.
