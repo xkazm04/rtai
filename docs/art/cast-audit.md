@@ -880,13 +880,13 @@ constant `WALK`; the registered code is not in the tree).
 
 Owner pick: a cop's whole-figure build varies +-8 % (`StreetCrowdCards.COP_SCALE_VAR` 0.08, `body_scale_of(rig)`: a rig whose plan `art_dir` is `cop`, plus the arena wave cop in `arena_wave_cards.gd`), the crowd keeps +-16 % (`SCALE_VAR`, byte-identical per id: unit test over ids 0..999). Commit `c2281acbb`.
 
-Measured (re-run of `cast_size_beside.gd`, 64 px/m, tilt 70, `tools/art/cast_size_measure.py`): patrol cop actor id 1 is 93 px (n29: 86 at jitter 0.855; now 1 + 0.08 x vary = 0.927 x 100.6 = 93.3 predicted). Rivet 154 px. The unjittered cop is 100.6 px (n29 measurement). The min and max rows are COMPUTED from that measurement, not rendered (no scene change in the time left): `vary(710, 3)` = -0.9966 and `vary(230, 3)` = +0.9994 are the extreme ids over 0..999.
+Measured (re-run of `cast_size_beside.gd`, 64 px/m, tilt 70, `tools/art/cast_size_measure.py`): patrol cop actor id 1 is 93 px (n29: 86 at jitter 0.855; now 1 + 0.08 x vary = 0.927 x 100.6 = 93.3 predicted). Rivet 154 px. The unjittered cop is 100.6 px (n29 measurement). The min and max rows were first COMPUTED; they are now MEASURED in `cop_jitter_64.png` (`project/dev/cast/cast_cop_jitter.gd`, not yet committed: the `dev_loc` debt ratchet refuses +85 lines, NEED director; cops spawned with Fighter.id forced to 710, 793 (vary 0.00002, the unjittered build) and 230, beside the card foes and Rivet, `tools/art/cast_size_measure.py`): 92 / 100 / 108 px. `vary(710, 3)` = -0.9966 and `vary(230, 3)` = +0.9994 are the extreme ids over 0..999.
 
 | cop | scale before (+-16 %) | px at 64 before | scale after (+-8 %) | px at 64 after | / unjittered (after) | / Rivet 154 (after) |
 |---|---|---|---|---|---|---|
-| min (id 710) | 0.841 | 84.6 | 0.920 | 92.6 | 0.920 | 0.60 |
-| unjittered | 1.000 | 100.6 | 1.000 | 100.6 | 1.000 | 0.65 |
-| max (id 230) | 1.160 | 116.7 | 1.080 | 108.6 | 1.080 | 0.71 |
+| min (id 710) | 0.841 | 84.6 | 0.920 | 92 (measured; computed 92.6) | 0.920 | 0.60 |
+| unjittered (id 793) | 1.000 | 100.6 | 1.000 | 100 (measured) | 1.000 | 0.65 |
+| max (id 230) | 1.160 | 116.7 | 1.080 | 108 (measured; computed 108.6) | 1.080 | 0.71 |
 | id 1 (measured) | 0.855 | 86 | 0.927 | 93 | 0.927 | 0.60 |
 
 Same run, card foes beside the cop (64 px/m, px): contractor 100, appliance_warden 101, rocket_trooper 100, robot_gunner 110, robot_thug 141 (the other n30 lanes' changes are in this tree; not this part's). Known gap: `kill_fall_cells.gd` `victim_scale` sizes a killed pose-less cop by `body_scale(actor_id)` (0.16), so a killed street cop would jump to the crowd build at death (NEED combat). Card cops with a cast row are unaffected (they use `scale_of`).

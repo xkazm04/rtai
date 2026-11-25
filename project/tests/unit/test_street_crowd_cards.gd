@@ -94,3 +94,15 @@ func test_a_cop_build_stays_within_eight_percent_and_a_ped_keeps_sixteen() -> vo
 	assert_between(cop_hi, 1.07, 1.08)
 	assert_between(ped_lo, 0.84, 0.85)
 	assert_between(ped_hi, 1.15, 1.16)
+
+
+func test_body_scale_of_picks_the_cop_spread_only_for_a_cop_plan() -> void:
+	var rig: CutRig = CutRig.new()
+	autofree(rig)
+	rig.actor_id = 230
+	assert_eq(StreetCrowdCards.body_scale_of(rig), StreetCrowdCards.body_scale(230), "no plan")
+	rig.plan = BodyPlan.new()
+	rig.plan.art_dir = "cop"
+	assert_eq(StreetCrowdCards.body_scale_of(rig), StreetCrowdCards.body_scale(230, 0.08), "cop")
+	rig.plan.art_dir = "walker"
+	assert_eq(StreetCrowdCards.body_scale_of(rig), StreetCrowdCards.body_scale(230), "not a cop")
