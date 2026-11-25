@@ -83,13 +83,12 @@ func _draw() -> void:
 	_named = named_chip(shown)
 	var w: float = l.card_w(shown.size())
 	var top: Vector2 = Vector2(l.margin, get_viewport_rect().size.y - l.margin - l.card_h)
-	draw_style_box(_plate, Rect2(top, Vector2(w, l.card_h)).grow(6.0))
+	draw_style_box(_plate, Rect2(top, Vector2(w, l.card_h)).grow(GhostChipNumber.STRIP_GROW))
 	for i: int in shown.size():
 		var c: Vector2 = l.chip_center(get_viewport_rect().size.y, i)
 		_chip(shown[i], c)
-		var at: Vector2 = c + Vector2(-1.2, 1.15) * l.chip_r
 		var label: String = number_hints.get(shown[i], "")
-		_number(at, label)
+		_number(GhostChipNumber.anchor(l, get_viewport_rect().size.y, i, label), label)
 	_madness(Rect2(top + Vector2(4.0, l.bar_y), Vector2(w - 12.0, l.bar_h)))
 
 

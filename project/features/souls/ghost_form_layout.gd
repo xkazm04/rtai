@@ -51,3 +51,9 @@ func card_w(chips: int) -> float:
 ## Shared by the portraits and their bond arcs, including the folded story strip.
 func chip_center(view_height: float, slot: int) -> Vector2:
 	return Vector2(margin + gap * (slot + 0.5), view_height - margin - card_h + chip_y)
+
+
+## The least x a key number plate's left edge may take: inside the strip's grown background plate
+## (margin - 6 px) with a 3 px inset, and never closer than 8 px to the screen's left edge.
+func number_min_x() -> float:
+	return maxf(8.0, margin - GhostChipNumber.STRIP_GROW + 3.0)

@@ -8,6 +8,8 @@ const INK: Color = Color("17131b")
 const PLATE: Color = Color(INK, 0.92)
 const PAD: float = 3.0
 const OUTLINE_PX: int = 4
+## How far the strip's background plate is grown past the card (GhostFormHud._draw).
+const STRIP_GROW: float = 6.0
 
 
 ## The plate rect for `label` centred on `at` (a square at least, wider for a long key name).
@@ -16,6 +18,16 @@ static func plate(font: Font, at: Vector2, label: String, size: int) -> Rect2:
 	var h: float = font.get_height(size)
 	var box: Vector2 = Vector2(maxf(w, h * 0.62) + PAD * 2.0, h * 0.62 + PAD * 2.0)
 	return Rect2(at - box * 0.5, box)
+
+
+## Where slot `slot`'s number plate is centred: the avatar's lower-left rim, pushed right just
+## enough that the plate's left edge stays inside the strip's plate and off the screen edge.
+static func anchor(l: GhostFormLayout, view_h: float, slot: int, label: String) -> Vector2:
+	var c: Vector2 = l.chip_center(view_h, slot)
+	var at: Vector2 = c + Vector2(-1.2, 1.15) * l.chip_r
+	var rect: Rect2 = plate(ThemeDB.fallback_font, at, label, l.number_size)
+	at.x += maxf(0.0, l.number_min_x() - rect.position.x)
+	return at
 
 
 static func draw(canvas: CanvasItem, at: Vector2, label: String, size: int) -> void:

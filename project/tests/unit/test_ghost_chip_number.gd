@@ -28,3 +28,20 @@ func test_plate_size_and_centre_follow_the_label_exactly() -> void:
 	var wide: Rect2 = GhostChipNumber.plate(font, at, "BACKSPACE", size)
 	assert_gt(wide.size.x, plate.size.x, "a long key name widens the plate")
 	assert_almost_eq(wide.size.y, plate.size.y, 0.01, "height does not depend on the label")
+
+
+func test_every_number_plate_lies_inside_the_strip_and_off_the_screen_edge() -> void:
+	var font: Font = ThemeDB.fallback_font
+	var full: GhostFormLayout = GhostFormLayout.new()
+	full.gap = 72.0  # GhostFormHud._ready's desktop gap
+	for l: GhostFormLayout in [full, GhostFormLayout.compact()]:
+		var view_h: float = 1080.0
+		var top: Vector2 = Vector2(l.margin, view_h - l.margin - l.card_h)
+		var strip: Rect2 = Rect2(top, Vector2(l.card_w(4), l.card_h))
+		strip = strip.grow(GhostChipNumber.STRIP_GROW)
+		for slot: int in 4:
+			var label: String = str(slot + 1)
+			var at: Vector2 = GhostChipNumber.anchor(l, view_h, slot, label)
+			var rect: Rect2 = GhostChipNumber.plate(font, at, label, l.number_size)
+			assert_gte(rect.position.x, 8.0, "slot %d: 8 px off the screen edge" % slot)
+			assert_true(strip.encloses(rect), "slot %d: %s inside %s" % [slot, rect, strip])
