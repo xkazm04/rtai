@@ -1,0 +1,19 @@
+mutate: [14/15] boot/prologue/prologue_roof_glow.gd:76 literal  0.37 -> 1.37  killed  (22.7 s)
+mutate: [15/15] boot/prologue/prologue_roof_glow.gd:80 cmp_flip  != -> ==  survived  (21.4 s)
+mutate boot/prologue/prologue_roof_glow.gd: 15 mutant(s) (sampled from 36), tests: test_prologue_roof_glow
+  boot/prologue/prologue_roof_glow.gd:80 cmp_flip  != -> ==  survived
+  boot/prologue/prologue_roof_glow.gd:75 delete  _material.set_shader_parameter(&"flicker", 1.0 - _flicker * swing) -> pass  invalid
+  boot/prologue/prologue_roof_glow.gd:53 delete  node._material.set_shader_parameter(&"hot_color", spec["hot_color"]) -> pass  killed
+  boot/prologue/prologue_roof_glow.gd:60 arith  * -> /  killed
+  boot/prologue/prologue_roof_glow.gd:61 arith  * -> /  killed
+  boot/prologue/prologue_roof_glow.gd:70 cmp_flip  == -> !=  killed
+  boot/prologue/prologue_roof_glow.gd:74 arith  * -> /  killed
+  boot/prologue/prologue_roof_glow.gd:74 arith  * -> /  killed
+  boot/prologue/prologue_roof_glow.gd:74 literal  1.7 -> 2.7  killed
+  boot/prologue/prologue_roof_glow.gd:74 arith  * -> /  killed
+  boot/prologue/prologue_roof_glow.gd:74 literal  1.0 -> 0.0  killed
+  boot/prologue/prologue_roof_glow.gd:75 literal  1.0 -> 0.0  killed
+  boot/prologue/prologue_roof_glow.gd:75 arith  * -> /  killed
+  boot/prologue/prologue_roof_glow.gd:76 delete  _material.set_shader_parameter(&"phase", k * 0.37) -> pass  killed
+  boot/prologue/prologue_roof_glow.gd:76 literal  0.37 -> 1.37  killed
+score 92.9% = killed 13 / (killed 13 + survived 1); timeout 0, invalid 1; 389 s
