@@ -24,6 +24,8 @@ func _reset_pilot() -> void:
 	pilot = StagePilot.new(actions)
 	stage.pilot = pilot
 	deploy = pilot.ghosts.deploy
+	# n31: these pin the hold-aim-release flow; the shipped Tonnage drop is test_tonnage_drop.gd.
+	deploy.strike.attacks.deploy[&"tonnage"].press_mode = &"hold"
 
 
 func _drive(bits: int = 0, move: int = 0) -> void:
