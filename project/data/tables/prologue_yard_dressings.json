@@ -34,6 +34,7 @@
             26.6,
             -4.86
           ],
+          "flip": true,
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
@@ -47,6 +48,7 @@
             41.4,
             -4.94
           ],
+          "flip": true,
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
