@@ -5,8 +5,7 @@ extends RefCounted
 ## shapes when this answers false: Rivet's rounds (tracer, Gloria's nail, the rocket with its
 ## smoke puffs, flame puffs, the electro arc, the spinning molotov bottle), the muzzle flash
 ## frames on the gun, and the rocket blast (paper burst, vermilion fireball, smoke ring, a dying
-## ring) over its scorch decal. World px via Ink.px. Render only: reads the sim, writes nothing.
-## `enabled` false (or `--weapon-fx=shapes`) is the before: gunplay's shapes.
+## ring) over its scorch decal. Render only. `enabled` false (`--weapon-fx=shapes`) = the before.
 
 const BLAST_FRAMES: PackedInt32Array = [0, 4, 10, 20, 30]
 ## A bottle's burst (its fire patch is the splash) holds only the star frame this long, fading
@@ -84,6 +83,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_jet(ci, s, dir, went, tick)
 		WeaponSpec.Kind.BOLT when WeaponFxRay.FX.has(art().projectile_fx(s.spec.id)):
 			WeaponFxRay.draw(ci, art().projectile_fx(s.spec.id), at, dir, went, tick)
+		WeaponSpec.Kind.BOLT when WeaponFxBolt.draw(ci, s, at, dir, tick):
+			pass
 		WeaponSpec.Kind.BOLT:
 			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
