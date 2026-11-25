@@ -1,6 +1,8 @@
 extends RefCounted
 ## n31 foes: one gauntlet wave's waiting counters, per archetype (read-only tallies, no sim state).
 
+const Engaged = preload("res://dev/foes_n31/waiting_engaged.gd")
+
 
 class Kind:
 	extends RefCounted
@@ -19,6 +21,9 @@ class Kind:
 	var clear_idle_ticks: int = 0
 	var clear_in_ticks: int = 0
 	var clear_in_idle_ticks: int = 0
+	## Clear-line ticks not engaged (waiting_engaged.gd); the *_idle_* ones are the strict rule.
+	var clear_loose_ticks: int = 0
+	var clear_in_loose_ticks: int = 0
 	var token_ticks: int = 0
 	var alive_ticks: int = 0
 	var idle_speed_sum: float = 0.0
@@ -41,6 +46,8 @@ class Kind:
 			"clear_idle_s": r2(clear_idle_ticks * dt),
 			"clear_in_s": r2(clear_in_ticks * dt),
 			"clear_in_idle_s": r2(clear_in_idle_ticks * dt),
+			"clear_unengaged_s": r2(clear_loose_ticks * dt),
+			"clear_in_unengaged_s": r2(clear_in_loose_ticks * dt),
 			"token_s": r2(token_ticks * dt),
 			"alive_s": r2(alive_ticks * dt),
 			"idle_speed_mps": r2(idle_speed_sum / maxi(clear_idle_ticks, 1)),
@@ -60,6 +67,9 @@ var kinds: Dictionary[StringName, Kind] = {}
 var _fired: Dictionary[int, Dictionary] = {}
 var _ranged_alive_ticks: int = 0
 var _ticks: int = 0
+## Ticks with >= 3 ranged alive, and those of them that pressed (waiting_engaged.gd).
+var _press_eligible: int = 0
+var _press: int = 0
 var _open: bool = false
 
 
@@ -88,6 +98,13 @@ func close_tick(tick: int, alive: int, ranged_alive: int, shots_fired: int) -> v
 		shots_end = shots_fired
 
 
+func close_press(alive: int, ranged_alive: int, pushing: int) -> void:
+	if alive <= 0 or ranged_alive < Engaged.PRESS_MIN:
+		return
+	_press_eligible += 1
+	_press += int(Engaged.pressing(ranged_alive, pushing))
+
+
 func finish(shots_fired: int) -> void:
 	if _open or shots_end < 0:
 		shots_end = shots_fired
@@ -111,5 +128,7 @@ func to_dict(row: Dictionary, death_wave: int) -> Dictionary:
 		"shots_probe": shots_end - shots_begin,
 		"firing_per_s": firing,
 		"ranged_alive_mean": Kind.r2(float(_ranged_alive_ticks) / maxi(_ticks, 1)),
+		"press_eligible_s": Kind.r2(_press_eligible * SimClock.TICK_DT),
+		"press_s": Kind.r2(_press * SimClock.TICK_DT),
 		"archetypes": by_kind,
 	}

@@ -3,6 +3,7 @@ extends RefCounted
 ## to shoot. Read-only: clear_line (not sight_line, which bumps a counter), no RNG, no writes.
 
 const Wave = preload("res://dev/foes_n31/waiting_wave.gd")
+const Engaged = preload("res://dev/foes_n31/waiting_engaged.gd")
 const SCHEMA: String = "gtai.foes-waiting/1"
 
 
@@ -15,7 +16,10 @@ class Foe:
 	var first_clear_in: int = -1
 	var first_clear_any: int = -1
 	var first_shot: int = -1
+	var last_shot: int = -1
+	var window: int = 0
 	var last_pos: Vector2 = Vector2.INF
+	var speed: float = 0.0
 	var done: bool = false
 
 
@@ -25,6 +29,7 @@ var _waves: Dictionary[int, Wave] = {}
 ## Wave number -> archetype -> members already matched to that row's `enemies` count.
 var _claimed: Dictionary[int, Dictionary] = {}
 var _shots: int = 0
+var _split: bool = false
 
 
 func _init(run: GauntletRun) -> void:
@@ -37,8 +42,10 @@ func observe(stage: ArenaStage) -> void:
 	if squad == null:
 		return
 	_shots = stage.shots_fired
+	_split = Engaged.split_of(squad)
 	var alive: Dictionary[int, int] = {}
 	var ranged: Dictionary[int, int] = {}
+	var pushing: Dictionary[int, int] = {}
 	for h: Fighter in arena.hostiles:
 		if not squad.owns(h):
 			continue
@@ -53,11 +60,14 @@ func observe(stage: ArenaStage) -> void:
 		alive[foe.wave] = alive.get(foe.wave, 0) + 1
 		ranged[foe.wave] = ranged.get(foe.wave, 0) + int(not foe.melee)
 		var mind: SquadMind = squad.minds[h.id] if squad.minds.has(h.id) else null
-		_sample(foe, h, arena, mind)
+		var push: bool = _sample(foe, h, arena, mind)
+		pushing[foe.wave] = pushing.get(foe.wave, 0) + int(push and not foe.melee)
 	for n: int in _waves:
 		var living: int = alive.get(n, 0)
 		var shooters: int = ranged.get(n, 0)
+		var pushers: int = pushing.get(n, 0)
 		_waves[n].close_tick(arena.tick, living, shooters, stage.shots_fired)
+		_waves[n].close_press(living, shooters, pushers)
 
 
 func to_dict() -> Dictionary:
@@ -82,41 +92,49 @@ func to_dict() -> Dictionary:
 	}
 
 
-func _sample(foe: Foe, h: Fighter, arena: CombatArena, mind: SquadMind) -> void:
+## Tallies one living member's tick; true when it is engaged or advancing (pressing share).
+func _sample(foe: Foe, h: Fighter, arena: CombatArena, mind: SquadMind) -> bool:
 	var wave: Wave = _waves[foe.wave]
 	var k: Wave.Kind = wave.kind(foe.arch)
 	var tick: int = arena.tick
 	var dist: float = h.pos.distance_to(arena.rivet.pos)
 	var clear: bool = arena.guard_map == null or arena.guard_map.clear_line(h.pos, arena.rivet.pos)
-	var in_range: bool = clear and dist <= k.attack_m
 	var shot_at: int = mind.agent.shot_tick if mind != null else -1
 	var fired: bool = (h.swing_tick if foe.melee else shot_at) == tick
 	var state: EnemyAgent.State = mind.agent.state if mind != null else EnemyAgent.State.PATROL
-	var busy: bool = (
-		fired
-		or h.burst_left > 0
-		or state == EnemyAgent.State.WINDUP
-		or state == EnemyAgent.State.FIRE
-	)
-	var speed: float = 0.0
-	if foe.last_pos.is_finite():
-		speed = h.pos.distance_to(foe.last_pos) / SimClock.TICK_DT
+	var busy: bool = Engaged.strict_busy(fired, h.burst_left, state)
+	foe.last_shot = tick if fired else foe.last_shot
+	var settling: bool = mind != null and Engaged.settling(mind.agent, tick, _split)
+	var engaged: bool = Engaged.engaged(tick, foe.last_shot, foe.window, busy, settling)
+	var step: Vector2 = h.pos - foe.last_pos if foe.last_pos.is_finite() else Vector2.ZERO
 	foe.last_pos = h.pos
+	foe.speed = step.length() / SimClock.TICK_DT
 	k.alive_ticks += 1
 	k.token_ticks += int(mind != null and mind.agent.token)
 	if clear:
-		k.clear_ticks += 1
-		k.clear_idle_ticks += int(not busy)
-		k.idle_speed_sum += 0.0 if busy else speed
-		if foe.first_clear_any < 0:
-			foe.first_clear_any = tick
-	if in_range:
-		k.clear_in_ticks += 1
-		k.clear_in_idle_ticks += int(not busy)
-		if foe.first_clear_in < 0:
-			foe.first_clear_in = tick
+		_clear(foe, k, tick, busy, engaged)
+	if clear and dist <= k.attack_m:
+		_clear_in(foe, k, tick, busy, engaged)
 	if fired:
 		_fired(foe, k, wave, tick, dist)
+	return engaged or (mind != null and Engaged.pushing(mind, step, arena, _split))
+
+
+func _clear(foe: Foe, k: Wave.Kind, tick: int, busy: bool, engaged: bool) -> void:
+	k.clear_ticks += 1
+	k.clear_idle_ticks += int(not busy)
+	k.clear_loose_ticks += int(not engaged)
+	k.idle_speed_sum += 0.0 if busy else foe.speed
+	if foe.first_clear_any < 0:
+		foe.first_clear_any = tick
+
+
+func _clear_in(foe: Foe, k: Wave.Kind, tick: int, busy: bool, engaged: bool) -> void:
+	k.clear_in_ticks += 1
+	k.clear_in_idle_ticks += int(not busy)
+	k.clear_in_loose_ticks += int(not engaged)
+	if foe.first_clear_in < 0:
+		foe.first_clear_in = tick
 
 
 func _fired(foe: Foe, k: Wave.Kind, wave: Wave, tick: int, dist: float) -> void:
@@ -163,6 +181,7 @@ func _enroll(h: Fighter, stage: ArenaStage) -> Foe:
 	k.melee = archetype.weapon.melee
 	k.attack_m = archetype.attack_m
 	foe.melee = k.melee
+	foe.window = Engaged.foe_window(archetype, h, stage.arena.tuning)
 	_foes[h.id] = foe
 	return foe
 
