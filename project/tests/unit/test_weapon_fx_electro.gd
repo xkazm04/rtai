@@ -30,38 +30,16 @@ func _ink_opaque(plan: Array[WeaponFxElectro.Line]) -> int:
 	return n
 
 
-func test_chain_ink_outline_is_wider_than_the_body_and_stun_has_none() -> void:
+func test_bolt_ink_outline_is_wider_than_the_body_and_hop_and_stun_have_none() -> void:
 	WeaponFxElectro.cells = false
-	var plan: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 5)
+	var plan: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6)
 	assert_gt(plan.size(), 0, "live current is planned")
 	assert_gt(_ink_opaque(plan), 0, "an ink outline under the body")
+	assert_eq(_ink_opaque(WeaponFxElectro.chain_plan(A, B, 5)), 0, "no solid rim on the thin hop")
 	for l: WeaponFxElectro.Line in plan:
 		if l.color.a == 1.0 and l.color.r == Ink.INK.r:
 			assert_eq(l.width, WeaponFxElectro.BODY_PX + WeaponFxElectro.INK_EXTRA_PX)
 	assert_eq(_ink_opaque(WeaponFxElectro.stun_plan(A, 30, 0)), 0, "no solid rim on the daze")
-
-
-func _opaque_amber(plan: Array[WeaponFxElectro.Line]) -> Array[WeaponFxElectro.Line]:
-	var out: Array[WeaponFxElectro.Line] = []
-	for l: WeaponFxElectro.Line in plan:
-		if l.color == ElectricArc.HALO and l.color.a == 1.0:
-			out.append(l)
-	return out
-
-
-func _check_layers(plan: Array[WeaponFxElectro.Line], k: float) -> void:
-	var body: Array[WeaponFxElectro.Line] = _opaque_amber(plan)
-	assert_gt(body.size(), 0, "an opaque amber body")
-	for l: WeaponFxElectro.Line in body:
-		assert_eq(l.width, WeaponFxElectro.BODY_PX * k, "body is exactly BODY_PX * k")
-	assert_lt(WeaponFxElectro.CORE_PX, WeaponFxElectro.BODY_PX)
-	assert_lt(WeaponFxElectro.CORE_PX, WeaponFxElectro.BODY_PX)
-	var core_n: int = 0
-	for l: WeaponFxElectro.Line in plan:
-		if l.color == ElectricArc.CORE:
-			core_n += 1
-			assert_eq(l.width, WeaponFxElectro.CORE_PX * k)
-	assert_gt(core_n, 0)
 
 
 func test_chain_keeps_both_halos_and_scales_the_ink_with_k() -> void:
@@ -72,16 +50,11 @@ func test_chain_keeps_both_halos_and_scales_the_ink_with_k() -> void:
 	assert_almost_eq(plan[0].color.a, 0.18, 0.001)
 	assert_eq(plan[1].width, ElectricArc.MID_PX * k, "mid halo second")
 	assert_almost_eq(plan[1].color.a, 0.5, 0.001)
-	assert_eq(plan[2].color, Color(Ink.INK, 1.0))
-	assert_eq(plan[2].width, (WeaponFxElectro.BODY_PX + WeaponFxElectro.INK_EXTRA_PX) * k)
-
-
-func test_chain_and_bolt_share_the_opaque_amber_body() -> void:
-	WeaponFxElectro.cells = false
-	_check_layers(WeaponFxElectro.chain_plan(A, B, 5), 1.0)
-	_check_layers(WeaponFxElectro.chain_plan(A, B, 5, 0.5), 0.5)
-	_check_layers(WeaponFxBolt.plan(A, B, 11, 6), 1.0)
-	_check_layers(WeaponFxElectro.stun_plan(A, 30, 0), 1.0)
+	assert_eq(plan[2].color, ElectricArc.HALO, "the thin hop has no ink rim: amber body next")
+	assert_eq(plan[2].width, WeaponFxElectro.THIN_BODY_PX * k)
+	var bolt: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6, k)
+	assert_eq(bolt[2].color, Color(Ink.INK, 1.0))
+	assert_eq(bolt[2].width, (WeaponFxElectro.BODY_PX + WeaponFxElectro.INK_EXTRA_PX) * k)
 
 
 func test_the_star_at_b_has_three_or_four_forks() -> void:
