@@ -36,7 +36,8 @@ func run_seed(
 		_grant(session.stage.pilot.ghosts.forms)
 		var before: GhostDeploy.Phase = ghost.phase
 		session.step()
-		if before == GhostDeploy.Phase.IDLE and ghost.phase == GhostDeploy.Phase.AIMING:
+		# Key down: AIMING on main's hold flow, ACTIVE at once on a drop-mode press.
+		if before == GhostDeploy.Phase.IDLE and ghost.phase != GhostDeploy.Phase.IDLE:
 			strike.press_tick = session.stage.tick
 			strike.press_rivet = session.stage.arena.rivet.pos
 		strike.resolve_due(session.stage)

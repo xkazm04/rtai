@@ -7,6 +7,7 @@ extends RefCounted
 ## GhostDeployStrike.land resolves it (GhostN31Strike only swaps the footprint for a what-if).
 
 const FOE: StringName = &"patrol_cop"
+const DROP_WAIT: int = 120
 
 
 func trial(shape: Dictionary, geometry: GhostN31Geometry, shipped: bool) -> Dictionary:
@@ -34,9 +35,13 @@ func shipped_geometry() -> GhostN31Geometry:
 	var data: DataStore = DataStore.new()
 	var stage: ArenaStage = _stage(World.build_context(bus, data, 1))
 	var strike: GhostDeployStrike = stage.pilot.ghosts.deploy.strike
-	var out: GhostN31Geometry = GhostN31Geometry.shipped(
-		strike.attacks.num(HaulerStage.GHOST, &"press_ahead_m"), strike.press.num(&"stomp_radius_m")
-	)
+	var ahead: float = strike.attacks.num(HaulerStage.GHOST, &"press_ahead_m")
+	var out: GhostN31Geometry = GhostN31Geometry.shipped(ahead, strike.press.num(&"stomp_radius_m"))
+	# A drop-mode row (n31 g02, optional fields): a full circle of the row's radius_m.
+	var row: GhostAttacks.DeployRow = strike.attacks.deploy[HaulerStage.GHOST]
+	if row.has_method(&"drops") and row.call(&"drops"):
+		var at_rivet: bool = row.get(&"drop_at") == &"rivet"
+		out = GhostN31Geometry.new(row.radius_m, true, at_rivet, ahead)
 	data.free()
 	bus.free()
 	return out
@@ -82,6 +87,11 @@ func _deploy(
 	stage.step(stage.tick + 1, TickInput.new(aim | 1 << actions.bit(&"ghost_deploy")))
 	strike.press_rivet = rivet.pos
 	stage.step(stage.tick + 1, TickInput.new(aim))
+	# A drop-mode deploy lands after its charge: step on with no input until it does.
+	for _i: int in DROP_WAIT:
+		if not strike.deploys.is_empty():
+			break
+		stage.step(stage.tick + 1, TickInput.new())
 	var size: int = foes.size()
 	if strike.deploys.is_empty():
 		return {"size": size, "hits": 0, "kills": 0, "landed": false}
