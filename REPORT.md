@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-DRAFT (session 7, 16:00): sections are filled as items land; the final version is written at 18:55.
+NEAR-FINAL (session 9, 16:43): items 1-4 done, filmed and gated with reels; the final session only re-checks and drops this line at 18:55.
 
 ## What works
 

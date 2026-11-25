@@ -231,3 +231,10 @@ notes line with the new tips.
   fix is icon art (images spent). DECISION not served: outside keys' files, no images; written into REPORT Next steps 5.
 - 16:41 DECISION no new product work (as sessions 7, 8): items 1-4 done, filmed, reels gate PASS on fd8ea31e1 covers the last code
   commit 22d3c0fb1; the open defects all need images.
+- 16:43 CHECKED cites 26/26 ok, masters frames.json 15 entries, all exist. REPORT DRAFT line -> NEAR-FINAL.
+
+NEXT (final session, report 18:55):
+1. No new product work, no gate (reels gate PASS `build/gate/fd8ea31e1dec/gate.json` covers code commit 22d3c0fb1; all since inert).
+   If code lands after all: `node tools/gate/run.mjs --rev=HEAD` (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys).
+2. At 18:55: drop the NEAR-FINAL line (header time), re-run `node tools/evidence/cites.mjs REPORT.md`, frames.json check (15),
+   commit JOURNAL/REPORT with a pathspec. If merge-tree is re-run, update the Merge notes line with the new tips.
