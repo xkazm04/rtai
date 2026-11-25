@@ -192,3 +192,7 @@ NEXT (any later session): nothing owed. REPORT complete and cited (18 paths, 17 
 - 08:45 READ journal + git log; NEED keys grep: combat rows 12, 15, 16 (served in earlier sessions), cast and yard none. Lane code frozen at e553b6b9e, gate with reels PASS on cbca1a8c9 (`build/gate/cbca1a8c991f/gate.json`); HEAD 8449e572b adds docs/evidence only. Images 58/60.
 - 08:46 cites on REPORT.md: 18 paths, 17 ok, 1 pattern, 0 MISSING. DECISION no builder and no Godot this session: 10 minutes to the report bar leaves no room for a call, a hook and a re-gate; nothing is broken to fix.
 NEXT (any later session): nothing owed. Director at merge: optionally `git apply evidence/n29-keys/hud_compact_gap.patch` + a decisions line (Merge notes); NEED Director: `arsenal_turn_rec.gd` fires nothing at HEAD (fix in `evidence/n29-keys/gloria_strips.md`).
+
+## Session 10 (08:45, STABILIZE, past freeze)
+- 08:46 READ journal + git log. `git diff --name-only cbca1a8c9..HEAD` touches only evidence/, docs/, JOURNAL.md, REPORT.md: the gate with reels on cbca1a8c9 (`build/gate/cbca1a8c991f/gate.json`) still covers every code path at HEAD. cites on REPORT.md: 18 paths, 17 ok, 1 pattern. No builder, no Godot; nothing broken to fix. Images 58/60.
+NEXT (any later session): nothing owed. Director at merge: optionally `git apply evidence/n29-keys/hud_compact_gap.patch` + a decisions line (Merge notes); NEED Director: `arsenal_turn_rec.gd` fires nothing at HEAD (fix in `evidence/n29-keys/gloria_strips.md`).
