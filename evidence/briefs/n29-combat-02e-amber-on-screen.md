@@ -49,3 +49,15 @@ other worktrees, root `JOURNAL.md` / `REPORT.md`.
 
 ## Report and END (short)
 Commits; the ink scope; the diff counts outside the boxes; px table; pairs/film + ffprobe; mutate; what was left.
+
+## Notes from the director (session 2, 02:22)
+- A parallel call (c2b, muzzle flashes) runs at the same time: it only READS `print_stage.gd` / `look_profiles.json`;
+  you own them for this call. It touches PNGs under `project/features/combat/weapons/art/fx/` and `fx_atlas.png`: do not
+  touch those. One Godot for the lane: before each Godot launch check `tasklist` for a Godot started by the other call
+  and wait (runGodot queues on memory, not on the lane): keep your Godot runs short and batched.
+- Quick gate's standalone parse of some view files can fail even unchanged (Log autoload chain): compare against the
+  base commit `341ea95ef` and do not chase it.
+
+## Wall clock (binding)
+Started 02:22. Commit A (ink scope + opaque amber stroke + test + decisions line) by **02:57**. Commit B (stills) by
+**03:10**. HARD STOP **03:22**: report and END, committed, even mid-task (film/mutate may be left: say so).

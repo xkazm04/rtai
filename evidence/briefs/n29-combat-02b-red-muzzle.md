@@ -42,3 +42,22 @@ code outside tests, `project/boot/prologue/**`, the HUD files, other worktrees, 
 
 ## Report and END (short)
 Commits; px table; pair/film paths + ffprobe; how they read; gates; re-pins; row 11 call; what was left.
+
+## Notes from the director (session 2, 02:22)
+- The PNG-only repaint was INVISIBLE for the fire group at first: the look prints every non-ink colour to its nearest
+  palette ink, and amber's nearest is vermilion. c2a fixed it for the FX view only (commit 12b7c141b:
+  `PrintStage.fx_material()`, `look_d4_item.gdshader` `amber_ink`, `look_profiles.json` `fx_amber_ink`). BEFORE you
+  commit the repaint, check under which view/material the muzzle flashes and the d4 `muzzle` kind are drawn and confirm
+  in an after still that amber reaches the screen. You may only READ `print_stage.gd` / `look_profiles.json` /
+  the shader (a parallel call c2e owns them right now, for the collect-call cast view). If a muzzle is drawn under a
+  view without the amber ink, commit the PNG repaint anyway (it is right in source) and write
+  `NEED amber-ink <view> <file:line>` in your report: the director routes it.
+- A parallel call (c2e) runs Godot too. One Godot for the lane: before each launch check `tasklist` for a Godot started
+  by the other call and wait; keep your Godot runs short and batched (one take process for all guns).
+- c2a's take tools: `evidence/n29/red/film.mjs` (1920x1080 trick: stages a project copy with base viewport 1920x1080),
+  `take.mjs`, `stills.py`. Reuse.
+
+## Wall clock (binding)
+Started 02:22. Commit A (before stills + muzzle.md) by **02:40**. Commit B (repaint + decisions line) by **02:58**.
+Commit C (after stills + pairs + px table) by **03:12**. HARD STOP **03:25**: report and END, committed, even mid-task
+(the film may be left: say so).
