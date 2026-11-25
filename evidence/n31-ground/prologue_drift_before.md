@@ -82,3 +82,38 @@ the 5.5 s pan, per-frame max < 0.5 px), measured with `--clip=play`, not the fil
 still across the four tiles (rocks, the cable, the blood, the dead worker); the print's grime blotches
 and the pale diagonal grime streaks do not: between 2401 and 2430 they shift across the stationary
 floor, east, the way Rivet runs (the json: +744 px east over the pan at 64 px/m).
+
+# n31-12 after (item 3 part B): the print lock in render px
+
+Fix `fbe6abf03`: `PrintStage.place()` and `CityView._place_camera()` snap the camera to whole render
+px (`PrintStage.snap_cam`: `camera.zoom * get_final_transform().get_scale()`) and set
+`world_px = round(cam * zoom * s) - (half * s + origin)` (`PrintStage.lock_px`), so FRAGCOORD +
+world_px is one value per world point at any window stretch. Every `world_px` consumer is a
+`FRAGCOORD.xy + world_px` phase (no logical-px position use), so no consumer changed.
+`PrintStage.PRINT_IN_RENDER_PX = false` is the old logical lock; headless (no render target, the
+dummy window's stretch is about 0.05) keeps the old lock too (`PrintStage.in_render_px`).
+Same probes, same flags, worktree `fbe6abf03`. Numbers: `prologue_drift_after.json`.
+
+| take | stretch | print drift vs floor over the pan, before -> after | per frame, print vs camera (images, k=1) max, before -> after | per 30 ticks, print vs floor max, before -> after |
+|---|---|---|---|---|
+| prologue play path, 32 px/m (`--bot --clip=play`) | 1.35 | 392 px -> **0.0001 px** (log, per tick max 0.0002) | 1.97 -> **0.002 px** | 109 -> **0.004 px** (80 pairs with a confident floor peak) |
+| prologue play path, 64 px/m (`--clip=play64`) | 1.35 | 786 px -> **0.0003 px** (per tick max 0.0003) | 3.33 -> **0.0015 px** | 277 -> **0.001 px** (70 confident pairs) |
+| prologue film path, 32 px/m (stretch off) | 1.0 | 0.12 px -> **0.00002 px** (the 0.5 px rounding swim is gone: the camera is snapped now) | 0.77 -> **0.001 px** | 1.29 -> **0.003 px** |
+| gauntlet play path log (`--bot=average`, 900 frames) | 1.35 | 548 px -> **0.0002 px** (per tick max 0.0002) | (log only) | (log only) |
+
+- Bar (< 0.5 px per frame and < 0.5 px over the pan, stretch ON): met in all three play takes.
+  Film path: not worse (better).
+- Caveat on the per-frame floor figure: the k=1 *floor* correlation in the play takes reads about
+  (0, 0) on some pairs (low floor peak, 0.33-0.5), giving a false 4.9 / 9.9 px "print vs floor"
+  at k=1; it did the same on every k=1 play pair of the before take. The print follows the logged
+  camera to 0.002 px on every k=1 pair and the floor follows the camera at k=30, so the per-frame
+  figure above is print vs camera. Large k=30 shifts at 64 px/m also break the floor peak on some
+  pairs (0.12-0.23), as before; those are left out of the k=30 column (the json keeps them all).
+- Quest 1's city (CityView): same code path, not measured.
+- Strip: `C:\Users\kazda\kiro\gtai-masters\n31\ground\item3\prologue_drift_after_play64.png`
+  (before row above, after row below; ticks 2400, 2401, 2430, 2431, same world box).
+- Scenarios at `fbe6abf03`: `"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd`
+  -> `run_scenarios: 68 ran, 0 failed`, exit 0 (render-side change; headless keeps the old lock).
+- Strip, by eye: in the after row the grime blotches and pale streaks sit at the same place against
+  the rock and the hook between 2400/2401 and between 2430/2431; the 2401 -> 2430 step is partly
+  covered by Rivet in the crop, so the hold across it rests on the phase numbers above.
