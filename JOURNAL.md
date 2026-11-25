@@ -131,3 +131,4 @@
 - 15:52 DECISION: gate moves earlier: this session ends at 17:17, so the final gate `node tools/gate/run.mjs --rev=HEAD` starts detached by ~16:50 after the last art commit (16:35), films only after.
 - 15:52 BUILDER RUNNING shadow-film since 15:52 (Sonnet, brief evidence/briefs/n30-03c-span-shadow-film.md: find an on-span window over 5 seeds from strength(), `--seed` flag on yard_film, before|after 32 px/m 1920x1080; hard stop 16:40).
 - 15:52 BUILDER RUNNING mouth-fade since 15:52 (Sonnet, brief evidence/briefs/n30-05d-mouth-fade.md: alpha ramp on the mouth end, pilots, 1920x1080 before (no span, main) | after film; art commit by 16:32; hard stop 16:50).
+- 15:50 (clock note: the 15:52 entries above were written at machine 15:49) REPORT draft: calls reordered (roof cost first), Next steps, ledger through roof-cost.

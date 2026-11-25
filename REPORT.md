@@ -1,6 +1,6 @@
 # REPORT lane yard, run n30 (2026-11-25, day run), branch `n30-yard`, base `5114a4441`
 
-DRAFT (session 4, 14:40): items 4 to 6, the gate line and the ledger are filled in sessions 4 and 5.
+DRAFT (session 5, 16:00): the gate line and session 5's films are filled in at the end.
 
 Owner's picks for this lane: `over_print_shade` 0.5; floor decals drawn over the i55 impression; a soft drop
 shadow under Rivet when he stands on a span; per-bay roof art and per-bay plumes; one more span drawn into the
@@ -36,9 +36,9 @@ Masters: `C:\Users\kazda\kiro\gtai-masters\n30\yard\` (`frames.json`, best first
 
 ## Calls for the owner
 
-1. Tyre arcs in the stain layer (item 2): leave them at 76 % or redraw `floor_stains.png`'s arcs darker (an art job, not a value). Still: `evidence/yard30/decals_over_before_after_mid_32ppm.png`.
-3. Roof frame cost (item 4): ship the roof with its cost not proven under the bar on this shared machine (shipped on), or trade look for cost (ochre off: `evidence/yard30/roof_ochre_off_64ppm.png`; or half-resolution slab textures).
+1. Roof frame cost (item 4): ship the roof with its cost not proven under the bar on this shared machine (shipped on), or trade look for cost (ochre off: `evidence/yard30/roof_ochre_off_64ppm.png`; or half-resolution slab textures). Before | after: `evidence/yard30/roof_before_after_front_32ppm.png`.
 2. Span shadow (item 3): soft blot beside him on the beam (shipped on) or a stronger alpha / a cast silhouette. Still: `evidence/yard30/span_shadow_before_after_64ppm.png`.
+3. Tyre arcs in the stain layer (item 2): leave them at 76 % or redraw `floor_stains.png`'s arcs darker (an art job, not a value). Still: `evidence/yard30/decals_over_before_after_mid_32ppm.png`.
 
 ## Merge notes
 
@@ -46,6 +46,11 @@ Masters: `C:\Users\kazda\kiro\gtai-masters\n30\yard\` (`frames.json`, best first
 - Root `JOURNAL.md` / `REPORT.md`: keep this lane's on an add/add conflict.
 
 ## Next steps
+
+- Roof cost: measure on a quiet machine with an A/A twin (the `tools/perf/fight_gate.mjs` method) before trading any look; if it is still over 0.5 ms, half-resolution slab textures first (keeps the ochre print).
+- Plate gaps the three cameras still show (`evidence/yard30/plate_judgement.md`): warm lamp pools and cast shadows in the mid yard, a skyline behind the roof, a foreground set at the gate, the belt entering a visible breach in the hall.
+- Tyre arcs: redraw `raised_line/floor_stains.png`'s arcs darker if the owner wants them at 100 %.
+- Roof look: a slab edit pass for roof-feed (flattest) and shutter_w's ledge line; less vertical ribbing at 64 px/m.
 
 ## Builder ledger
 
@@ -68,3 +73,7 @@ Masters: `C:\Users\kazda\kiro\gtai-masters\n30\yard\` (`frames.json`, best first
 | mouth-span-place (05b) | Sonnet | 20 | accepted |
 | prologue-film (06) | Sonnet | 40 | accepted (span shadow film a miss) |
 | mouth-deeper (05c A) | Opus | 7 | accepted |
+| mouth-place (05c B) | Sonnet | 5 | accepted |
+| mouth-evid (05c) | Sonnet | 2 | accepted (film 960x1080, redone) |
+| ochre-look (04c 1) | Sonnet | 2 | accepted (look: ochre stays on) |
+| roof-cost (04c) | Sonnet | 9 | accepted (bar still not proven) |
