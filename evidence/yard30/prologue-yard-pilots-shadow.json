@@ -1,0 +1,84 @@
+{
+ "identical": true,
+ "note": "arched_line at 726550b45 (span_shadow row) vs evidence/yard29/prologue-yard-pilots-props.json and evidence/yard30/prologue-yard-pilots-shade05.json; one Godot process via yard_pilot_rows; identical = ticks, deaths, min_hp, stuck, sha256",
+ "runs": [
+  {
+   "deaths": 0,
+   "dressing": "arched_line",
+   "ended": true,
+   "min_hp": 36.0,
+   "seed": 7,
+   "sha256": "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba",
+   "stuck": [],
+   "ticks": 11701
+  },
+  {
+   "deaths": 1,
+   "dressing": "arched_line",
+   "ended": true,
+   "min_hp": 0.0,
+   "seed": 3,
+   "sha256": "18f4a6f8f89b7208128d90678a224b8bf36b478b1f243bb9997db12330dfc4fe",
+   "stuck": [
+    {
+     "at": "(34.37444, 32.20227)",
+     "id": 24,
+     "tick": 7329
+    }
+   ],
+   "ticks": 11958
+  },
+  {
+   "deaths": 0,
+   "dressing": "arched_line",
+   "ended": true,
+   "min_hp": 44.0,
+   "seed": 11,
+   "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+   "stuck": [
+    {
+     "at": "(36.26509, 21.42038)",
+     "id": 3,
+     "tick": 3277
+    },
+    {
+     "at": "(35.9387, 31.32078)",
+     "id": 11,
+     "tick": 5153
+    }
+   ],
+   "ticks": 10392
+  },
+  {
+   "deaths": 0,
+   "dressing": "arched_line",
+   "ended": true,
+   "min_hp": 28.0,
+   "seed": 21,
+   "sha256": "b0710b0dd9d4888beacbebad6f07aa4612c29a371fb6542e898a4fa35e77a1c7",
+   "stuck": [
+    {
+     "at": "(35.01331, 32.52198)",
+     "id": 14,
+     "tick": 5558
+    },
+    {
+     "at": "(36.19063, 32.50399)",
+     "id": 15,
+     "tick": 5558
+    }
+   ],
+   "ticks": 12158
+  },
+  {
+   "deaths": 1,
+   "dressing": "arched_line",
+   "ended": true,
+   "min_hp": 0.0,
+   "seed": 42,
+   "sha256": "cccffbae11389a2d54fe19716f51489f0962733a4f1bd11c7d99768595d4b3a5",
+   "stuck": [],
+   "ticks": 13278
+  }
+ ]
+}

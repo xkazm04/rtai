@@ -1,0 +1,145 @@
+extends Node
+## n30 span shadow probe (n29's yard_stand): at one tick of the seed-7 pilot, stand Rivet or a cop
+## on chosen points; exposures: with the span shadow faded in (<label>), the shadow hidden
+## (<label>_off = the look before the shadow), and actors + shadow hidden (<label>_ground: no Rivet,
+## no shadow), plus sample_points.json. The shadow steps on fake ticks; no sim step after the move.
+
+const KNOWN_FLAGS: PackedStringArray = [
+	"--dressing", "--tick", "--out", "--ppm", "--targets", "--track"
+]
+const NEEDS_WINDOW: bool = true
+const FIXED_FPS: int = 60
+const SIZE: Vector2i = Vector2i(1920, 1080)
+
+var _game: PrologueGame
+var _view: PrologueView
+var _out: String
+var _ppm: int = 32
+var _frames: Array[Dictionary] = []
+var _shadow: PrologueSpanShadow
+var _fake_tick: int = 1000000
+
+
+func _ready() -> void:
+	var args: ArenaArgs = ArenaArgs.parse()
+	for key: String in args.values:
+		if key not in KNOWN_FLAGS:
+			_fail("unknown option " + key)
+			return
+	_out = args.text("--out")
+	_ppm = args.text("--ppm", "32").to_int()
+	if not _out.is_absolute_path() or DisplayServer.get_name() == "headless":
+		_fail("use an absolute --out and a window")
+		return
+	if DirAccess.make_dir_recursive_absolute(_out) != OK:
+		_fail("cannot create " + _out)
+		return
+	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+	get_window().size = SIZE
+	LaunchArgs.parse(["--bot", "--seed=7", "--yard-dressing=" + args.text("--dressing")])
+	ViewMode.select("tilt70")
+	_game = preload("res://boot/prologue/prologue.tscn").instantiate()
+	add_child(_game)
+	_game.world.set_process(false)
+	for child: Node in _game.get_children():
+		if child is PrologueView:
+			_view = child as PrologueView
+	YardCamera.hide_hud(_view)
+	_shadow = _view.find_child(PrologueSpanShadow.NODE_NAME, true, false) as PrologueSpanShadow
+	if _shadow != null:
+		_shadow.stage = null
+	_view.set_process(false)
+	if args.has("--track"):
+		_track.call_deferred(args.text("--track").to_int())
+		return
+	_run.call_deferred(args.text("--tick", "2290").to_int(), args.text("--targets"))
+
+
+## Steps the pilot and writes track.json: Rivet's feet each 10 ticks and every on-span tick.
+func _track(ticks: int) -> void:
+	var rows: Array[Dictionary] = []
+	while _game.stage.tick < ticks:
+		_game.world.loop().step()
+		var at: Vector2 = _game.stage.arena.rivet.pos
+		var on: bool = _shadow != null and _shadow.on_span(at)
+		if on or _game.stage.tick % 10 == 0:
+			rows.append({"tick": _game.stage.tick, "x": at.x, "y": at.y, "on": on})
+	var file: FileAccess = FileAccess.open(_out.path_join("track.json"), FileAccess.WRITE)
+	var wrote: bool = file.store_string(JSON.stringify({"track": rows}))
+	get_tree().quit(0 if wrote else 2)
+
+
+## targets: "rivet:28.67:16.87,cop:30.72:-1.24" (kind, x, y metres; feet point).
+func _run(tick: int, targets: String) -> void:
+	while _game.stage.tick < tick:
+		_game.world.loop().step()
+	var n: int = 0
+	for item: String in targets.split(","):
+		var part: PackedStringArray = item.split(":")
+		var at: Vector2 = Vector2(part[1].to_float(), part[2].to_float())
+		await _expose("s%d_%s" % [n, part[0]], part[0], at)
+		n += 1
+	var file: FileAccess = FileAccess.open(_out.path_join("sample_points.json"), FileAccess.WRITE)
+	var _wrote: bool = file.store_string(JSON.stringify({"frames": _frames}, "  ", true) + "\n")
+	Log.info("yard-span-stand", "%d exposures at tick %d" % [n, _game.stage.tick])
+	get_tree().quit(0)
+
+
+func _expose(label: String, kind: String, at: Vector2) -> void:
+	var arena: CombatArena = _game.stage.arena
+	var points: Array[Dictionary] = []
+	var spots: Array[Vector2] = []
+	if kind == "rivet":
+		arena.rivet.pos = at
+	for h: Fighter in arena.hostiles:
+		if h.archetype == &"patrol_cop" and h.alive():
+			if kind == "cop" and points.is_empty():
+				h.pos = at
+			points.append(_point("patrol_cop", h.pos, h.id))
+			spots.append(h.pos)
+	points.append(_point("rivet", arena.rivet.pos, 0))
+	spots.append(arena.rivet.pos)
+	_view._process(SimClock.TICK_DT)
+	if _shadow != null:
+		for _i: int in _shadow.fade_ticks * 2 + 1:
+			_fake_tick += 1
+			_shadow.step(_fake_tick, arena.rivet.pos)
+	_view.print_stage.kick_px = Vector2.ZERO
+	YardCamera.place(_view, at + Vector2(0.0, -1.2), _ppm)
+	_view.print_stage.lights.step(_game.stage.tick, _view.print_stage.world_px)
+	_view.blood.step(_game.stage.tick, _view.print_stage.world_px)
+	var tx: Transform2D = _view.get_viewport().get_canvas_transform()
+	for i: int in points.size():
+		var q: Vector2i = Vector2i((tx * (spots[i] * SimConst.PX_PER_M)).round())
+		points[i]["xy"] = [q.x, q.y]
+	await _write(label)
+	if _shadow != null:
+		_shadow.hide()
+	await _write(label + "_off")
+	_view.print_stage.actor_layer().hide()
+	await _write(label + "_ground")
+	_view.print_stage.actor_layer().show()
+	if _shadow != null:
+		_shadow.show()
+	_frames.append({"frame": label, "tick": _game.stage.tick, "points": points})
+
+
+func _point(kind: String, at: Vector2, id: int) -> Dictionary:
+	return {"kind": kind, "id": id, "xy": [0, 0], "pos_m": [at.x, at.y]}
+
+
+func _write(label: String) -> void:
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	var frame: Image = get_viewport().get_texture().get_image()
+	if (
+		frame == null
+		or frame.get_size() != SIZE
+		or frame.save_png(_out.path_join(label + ".png")) != OK
+	):
+		_fail("could not save " + label)
+
+
+func _fail(message: String) -> void:
+	Log.error("yard-span-stand", message)
+	get_tree().quit(2)
