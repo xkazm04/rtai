@@ -49,3 +49,43 @@ n29-cast (31df5170f) changes `place` to `k = pose.sheets.scale_of(rig.actor_id)`
 `test_kill_card_scale.gd::test_a_card_victim_falls_at_his_live_card_scale` measures the live card through
 `StreetWalkerCards.place` (scale with the pose over scale without it, times the crowd build), so a merge that
 keeps the stale line fails there (Mulroney 1.23 x 0.85 against 1.23) rather than on screen.
+
+## Test
+
+`project/tests/unit/test_kill_card_scale.gd`, 4 tests, green (`node tools/tests/run_unit.mjs
+--select=test_kill_card_scale,test_claw_card_victims,test_kill_new_styles`: 16 passed, junit suites
+checked: the three files only):
+- `test_a_card_victim_falls_at_his_live_card_scale`: Mulroney, the warden and the contractor on a near
+  FoeCastView rig; `victim_scale`, `height_px(64)` and the attached fall grid's scale all equal the build
+  measured from `StreetWalkerCards.place`.
+- `test_a_sized_card_is_not_drawn_at_the_crowd_build`: Mulroney's (1.11) differs from the crowd build.
+- `test_a_street_walker_keeps_his_crowd_build`: ped actor 7 pinned at 1.066937056534676 (the old
+  inline value), height_px with it.
+- `test_the_same_id_draws_the_same_size`.
+
+## Evidence: no stills this run
+
+Headless numbers instead (combo view, p70, actor id 1, crowd build 0.8549, fall grid `molotov_torch`, which
+has no own cells, so the generic `cop/head_swat` fall grid):
+
+| foe | living card global_scale | fall grid scale before | after | before / living |
+|---|---|---|---|---|
+| sergeant_mulroney (1.11) | 0.268874 | 0.242229 | 0.268875 | 0.901 (fails the 3 % bar) |
+| appliance_warden (1.1) | 0.266452 | 0.242229 | 0.266452 | 0.909 |
+| contractor (1.0) | 0.242229 | 0.242229 | 0.242229 | 1.000 |
+| rocket_trooper (1.0) | 0.242229 | 0.242229 | 0.242229 | 1.000 |
+
+(The living walk strip and the fall grid are both 192 px cells, so the two scales compare directly.)
+No 64 px/m still: the kill lab (`kill_lab.gd:208`) only swaps its contractor line to another archetype
+(`--foe-mix`) for a blade, the gun kill styles that use the fall grid (snap/pistol, stitch, torch...) kill a
+contractor, whose body_scale is 1.0 on this branch, so the lab film shows no change; Mulroney under a
+fall-grid style needs a lab change and a GPU film that did not fit the 20 minutes left beside the yard
+lane's GPU films. The test is the evidence.
+
+## Mutate
+
+`node tools/mutate/mutate.mjs --file=features/combat/kills/kill_fall_cells.gd --max=15 --lines=74-94
+--tests=test_kill_card_scale` at 6d1fa395: **score 87.5 % = killed 7 / (killed 7 + survived 1)**, 408 s.
+The survivor is `kill_fall_cells.gd:74` `path.get_slice("/", 0)` -> `1` (an older line inside the range):
+equivalent under p70, where the default height and the p70 height are both 1.7 m; only a p55 case
+(HEIGHT_BY_ART 2.0) would kill it.
