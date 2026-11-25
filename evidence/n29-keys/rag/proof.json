@@ -1,0 +1,449 @@
+{
+ "project/features/combat/weapons/art/molotov/held.png": {
+  "before": 5860,
+  "after": 23,
+  "changed": 7519,
+  "outside": 0,
+  "mask": 19760,
+  "cells": []
+ },
+ "project/features/combat/weapons/art/molotov/pickup.png": {
+  "before": 5457,
+  "after": 0,
+  "changed": 6571,
+  "outside": 0,
+  "mask": 20664,
+  "cells": []
+ },
+ "project/features/combat/weapons/art/held_55/molotov.png": {
+  "before": 17,
+  "after": 17,
+  "changed": 0,
+  "outside": 0,
+  "mask": 54441,
+  "cells": []
+ },
+ "project/features/characters/art/view/p55/rivet_eq_molotov.png": {
+  "before": 2903,
+  "after": 2402,
+  "changed": 1337,
+  "outside": 0,
+  "mask": 1337,
+  "cells": [
+   [
+    0,
+    243,
+    93,
+    343,
+    "flame"
+   ],
+   [
+    1,
+    0,
+    377,
+    377,
+    "no flame"
+   ],
+   [
+    2,
+    192,
+    66,
+    284,
+    "flame"
+   ],
+   [
+    3,
+    205,
+    76,
+    295,
+    "flame"
+   ],
+   [
+    4,
+    194,
+    56,
+    324,
+    "flame"
+   ],
+   [
+    5,
+    208,
+    83,
+    202,
+    "flame"
+   ],
+   [
+    6,
+    295,
+    128,
+    173,
+    "flame"
+   ],
+   [
+    7,
+    0,
+    214,
+    214,
+    "no flame"
+   ]
+  ]
+ },
+ "project/features/characters/art/view/p55/rivet_eq_molotov_left.png": {
+  "before": 1332,
+  "after": 1258,
+  "changed": 428,
+  "outside": 0,
+  "mask": 428,
+  "cells": [
+   [
+    0,
+    272,
+    38,
+    420,
+    "flame"
+   ],
+   [
+    1,
+    156,
+    37,
+    336,
+    "flame"
+   ],
+   [
+    2,
+    0,
+    462,
+    462,
+    "no flame"
+   ]
+  ]
+ },
+ "project/features/characters/art/view/p70/rivet_eq_molotov.png": {
+  "before": 5637,
+  "after": 4655,
+  "changed": 2816,
+  "outside": 0,
+  "mask": 2816,
+  "cells": [
+   [
+    0,
+    639,
+    230,
+    562,
+    "flame"
+   ],
+   [
+    1,
+    56,
+    37,
+    557,
+    "flame"
+   ],
+   [
+    2,
+    85,
+    0,
+    538,
+    "flame"
+   ],
+   [
+    3,
+    421,
+    141,
+    554,
+    "flame"
+   ],
+   [
+    4,
+    394,
+    118,
+    713,
+    "flame"
+   ],
+   [
+    5,
+    624,
+    252,
+    384,
+    "flame"
+   ],
+   [
+    6,
+    90,
+    46,
+    618,
+    "flame"
+   ],
+   [
+    7,
+    507,
+    160,
+    547,
+    "flame"
+   ]
+  ]
+ },
+ "project/features/characters/art/view/p70/rivet_eq_molotov_left.png": {
+  "before": 2151,
+  "after": 1812,
+  "changed": 1057,
+  "outside": 0,
+  "mask": 1057,
+  "cells": [
+   [
+    0,
+    379,
+    125,
+    546,
+    "flame"
+   ],
+   [
+    1,
+    349,
+    114,
+    572,
+    "flame"
+   ],
+   [
+    2,
+    329,
+    104,
+    664,
+    "flame"
+   ]
+  ]
+ },
+ "project/features/characters/art/view/p70/rivet_walk_eq_molotov.png": {
+  "before": 13370,
+  "after": 11972,
+  "changed": 6058,
+  "outside": 0,
+  "mask": 6058,
+  "cells": [
+   [
+    0,
+    275,
+    86,
+    313,
+    "flame"
+   ],
+   [
+    1,
+    257,
+    86,
+    330,
+    "flame"
+   ],
+   [
+    2,
+    272,
+    88,
+    352,
+    "flame"
+   ],
+   [
+    3,
+    247,
+    77,
+    324,
+    "flame"
+   ],
+   [
+    4,
+    242,
+    0,
+    344,
+    "flame"
+   ],
+   [
+    5,
+    0,
+    395,
+    395,
+    "no flame"
+   ],
+   [
+    6,
+    134,
+    0,
+    353,
+    "flame"
+   ],
+   [
+    7,
+    133,
+    0,
+    383,
+    "flame"
+   ],
+   [
+    8,
+    64,
+    0,
+    361,
+    "flame"
+   ],
+   [
+    9,
+    0,
+    383,
+    383,
+    "no flame"
+   ],
+   [
+    10,
+    290,
+    6,
+    357,
+    "flame"
+   ],
+   [
+    11,
+    59,
+    1,
+    393,
+    "flame"
+   ],
+   [
+    12,
+    277,
+    73,
+    267,
+    "flame"
+   ],
+   [
+    13,
+    284,
+    86,
+    293,
+    "flame"
+   ],
+   [
+    14,
+    279,
+    71,
+    263,
+    "flame"
+   ],
+   [
+    15,
+    260,
+    75,
+    296,
+    "flame"
+   ],
+   [
+    16,
+    241,
+    67,
+    376,
+    "flame"
+   ],
+   [
+    17,
+    239,
+    67,
+    388,
+    "flame"
+   ],
+   [
+    18,
+    225,
+    56,
+    357,
+    "flame"
+   ],
+   [
+    19,
+    269,
+    64,
+    377,
+    "flame"
+   ],
+   [
+    20,
+    52,
+    0,
+    414,
+    "flame"
+   ],
+   [
+    21,
+    52,
+    0,
+    424,
+    "flame"
+   ],
+   [
+    22,
+    103,
+    0,
+    403,
+    "flame"
+   ],
+   [
+    23,
+    117,
+    0,
+    440,
+    "flame"
+   ],
+   [
+    24,
+    245,
+    60,
+    392,
+    "flame"
+   ],
+   [
+    25,
+    195,
+    57,
+    359,
+    "flame"
+   ],
+   [
+    26,
+    161,
+    55,
+    391,
+    "flame"
+   ],
+   [
+    27,
+    210,
+    65,
+    385,
+    "flame"
+   ],
+   [
+    28,
+    222,
+    81,
+    471,
+    "flame"
+   ],
+   [
+    29,
+    246,
+    75,
+    446,
+    "flame"
+   ],
+   [
+    30,
+    167,
+    58,
+    443,
+    "flame"
+   ],
+   [
+    31,
+    241,
+    63,
+    415,
+    "flame"
+   ]
+  ]
+ }
+}
