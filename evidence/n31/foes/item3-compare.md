@@ -107,3 +107,46 @@ Notes (b4b):
   run read the live tree (gait runs `novice-3` .. `novice-10` finished 22:58:43 .. 23:01:27, `average-1` 23:01:42,
   `average-2` 23:01:55). Those runs may carry lever 1 (the novice gait token share 38 % vs main 23 % fits that). Re-run
   the gait novice seeds 3-10 and average 1-2 from `--rev=f1dfc7492` (game code as 19cb2decd) before quoting the gait novice column.
+
+## Lever 5: each kind its own gun (b4c, 0fbe651eb) and lever 2 measured on top (b4c, rejected)
+
+`squad.own_weapons` true: patrol cop / SWAT / contractor / robot gunner fire their enemies.json pistol / rifle / cannon
+(FoeOwnGun) at `squad.own_weapon_damage` pistol 3 / rifle 2 / cannon 8 Rivet hp per round, instead of the shared
+assault-rifle (4 rounds / 0.61 s, 1.2 per round). Lever 2 (`attack_m` patrol 14 -> 20, SWAT 20 -> 26, contractor
+15 -> 20) measured on top of lever 5 and NOT kept. Average bot, seeds 1-10, `--waves=7`, live tree holding exactly the
+measured setting: `waiting-l5-weapons/`, `waiting-l2-reach/`. Novice not measured.
+
+| metric | main | gait | lever1 | lever5 (kept) | lever5+2 (rejected) |
+| --- | --- | --- | --- | --- | --- |
+| react in range p50 / p90 s | 1.05 / 6.15 | 1.13 / 6.32 | 0.75 / 4.13 | 0.72 / 3.57 | 1.02 / 4.6 |
+| react any distance p50 / p90 s | 3.37 / 8.72 | 3.13 / 9.07 | 2.13 / 6.5 | 1.95 / 6.37 | 1.65 / 6.27 |
+| idle share (engaged rule, in range) | 66 % | 70 % | 60 % | 69 % | 67 % |
+| idle strict (any distance / in range) | 89 % / 86 % | 92 % / 90 % | 88 % / 85 % | 92 % / 90 % | 91 % / 90 % |
+| pressing share | 69 % | 62 % | 65 % | 66 % | 69 % |
+| enemies firing / s (ranged alive) | 1.02 (6.4) | 0.66 (6.3) | 0.94 (6.4) | 0.65 (6.7) | 0.77 (6.5) |
+| never fired / ranged foes | 173 / 569 | 308 / 570 | 194 / 554 | 219 / 509 | 209 / 572 |
+| token share | 25 % | 26 % | 42 % | 39 % | 39 % |
+| damage taken w1 / w2 / w3 / w4 mean | 12.5 / 10.6 / 22.6 / 17.2 | 6 / 4 / 15.3 / 13.7 | 8.2 / 8.3 / 31.7 / 29.2 | 11.7 / 7.5 / 27.9 / 7.9 | 10.8 / 8.4 / 19.5 / 18.4 |
+| damage taken w1-4 sum | 62.9 | 39 | 77.4 | 55 | 57.1 |
+| deaths (runs) / waves 6, 7 reached | 5 (10) / 6, 6 | 4 (10) / 6, 6 | 7 (10) / 6, 5 | 8 (10) / 4, 3 | 5 (10) / 6, 6 |
+
+| bar (average) | lever 1 | lever 5 | lever 5 + 2 |
+| --- | --- | --- | --- |
+| react in range p50 <= 1.0 s | 0.75: yes | 0.72: **yes** | 1.02: no |
+| react in range p90 <= 2.5 s | 4.13: no | 3.57: no | 4.6: no |
+| idle share (engaged rule) < 35 % | 60 %: no | 69 %: no | 67 %: no |
+| pressing share >= 0.6 | 0.65: yes | 0.66: yes | 0.69: yes |
+| guard rail: damage w1-4 in 53.5..72.3 | 77.4: no (over) | 55.0: **yes** (low edge) | 57.1: yes |
+
+Notes (b4c):
+- Lever 5 brings the guard rail back (77.4 -> 55.0) and keeps react p50 under 1 s (0.72), p90 down to 3.57. Idle rises
+  60 -> 69 %, but the probe (`waiting_engaged.gd` `foe_window`) still judges these foes on the assault-rifle window
+  (burst + cooldown + 0.1 s = ~1 s) while a pistol cycle is ~1.9 s and a rifle ~2.1 s, so idle is over-counted for
+  own-gun foes; the probe was not changed in this call (re-measure with the own gun's window before quoting idle).
+- Lever 2 on top: damage stays in band (57.1) and deaths fall (8 -> 5), but react p50 loses its bar (0.72 -> 1.02) and
+  idle moves 2 points: rejected, data reverted (enemies.json at 0fbe651eb).
+- Flank check (point 4): the scenario's own counter (FLANK foe within 1 m of its spot) finds 0 arrivals on all five
+  probe seeds; the live seed has no FLANK tick; seed 5's flankers (444 flank ticks) get no closer than 2.97 m to a
+  spot that moves with Rivet. Recorded in `arena-squad.json`, not judged.
+- Gait column re-run from `--rev=f1dfc7492` (e) and levers 4 / share 0.5 / cover_bias not run (time).
+- Checks at lever 5 (0fbe651eb) + the flank counter: `node tools/tests/run_scenarios.mjs` 68 passed; `node tools/tests/run_unit.mjs` 4391 passed, 0 failed, 2 skipped. Mutate not run (time).

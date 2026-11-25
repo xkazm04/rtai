@@ -530,7 +530,8 @@
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 70 -> 70)",
         "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)",
         "2026-11-25: n31 foes b1: the waiting probe lives in project/dev/foes_n31 as brief b1 names it (files_past_soft_cap 69 -> 69)",
-        "2026-11-25: n31 foes b4c lever 5 own weapons + flank arrivals: enemy_roster 209, squad_mind 202, scenario_arena_squad 215 (the squad table's own-gun switch and damage, the own gun's cooldown cap, the flank-arrival counter) (files_past_soft_cap 69 -> 72)"
+        "2026-11-25: n31 foes b4c lever 5 own weapons + flank arrivals: enemy_roster 209, squad_mind 202, scenario_arena_squad 215 (the squad table's own-gun switch and damage, the own gun's cooldown cap, the flank-arrival counter) (files_past_soft_cap 69 -> 72)",
+        "2026-11-25: n31 foes b4c flank check: scenario_arena_squad records flank arrivals + closest approach per seed (215 -> 224 lines) (files_past_soft_cap 72 -> 72)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -597,7 +598,7 @@
         "project/features/souls/dent_stage.gd": 257,
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
-        "project/tests/scenarios/scenario_arena_squad.gd": 215,
+        "project/tests/scenarios/scenario_arena_squad.gd": 224,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
         "project/tests/unit/test_cast_war_machine.gd": 209,
         "project/tests/unit/test_crowd_react.gd": 234,

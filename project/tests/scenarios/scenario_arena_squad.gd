@@ -10,6 +10,11 @@ const CITY_COVER: float = 0.4419
 const CROWD_LIMIT: float = 0.02
 ## n31 foes two moves: a flanking foe now TRAVELS (no fire) and fires only once it holds, so the
 ## live seed flank-bearing shooters went 1+ -> 0 (measured); the underfilled seed flanks (444).
+## n31 foes b4c: the evidence counts flank ARRIVALS (a FLANK foe within FLANK_ARRIVE_M of its
+## spot) and the closest approach per seed. Not judged yet: measured 0 arrivals on all five seeds
+## (the live seed has no FLANK tick; seed 5's flankers get no closer than 2.97 m to a spot that
+## moves with Rivet), so a REACHES check fails at HEAD. Call for the director (b4c report).
+const FLANK_ARRIVE_M: float = 1.0
 
 
 func run(_tree: SceneTree) -> String:
@@ -19,13 +24,20 @@ func run(_tree: SceneTree) -> String:
 	var live: Dictionary = _fight(false)
 	var complete: bool = live.cleared == WAVES and live.spawned == WAVES and live.replayed
 	var flank_ticks: Array[int] = [live.flank_ticks]
+	var arrivals: Array[int] = [live.flank_arrivals]
+	var closest: Array[float] = [live.flank_closest_m]
 	for i: int in range(1, SEEDS):
 		var other: Dictionary = _fight(false, ArenaSession.MASTER_SEED + i)
 		complete = complete and other.cleared == WAVES and other.spawned == WAVES and other.replayed
 		flank_ticks.append(other.flank_ticks)
+		arrivals.append(other.flank_arrivals)
+		closest.append(other.flank_closest_m)
 	var bad: Dictionary = _fight(true)
+	var out: Dictionary = {"live": live, "no_separation": bad, "flanks": flank_ticks}
+	out.arrivals = arrivals
+	out.flank_closest_m = closest
 	@warning_ignore("return_value_discarded")
-	write_evidence("arena-squad.json", {"live": live, "no_separation": bad, "flanks": flank_ticks})
+	write_evidence("arena-squad.json", out)
 	if not complete:
 		return "one or more city squads failed to clear five waves and replay"
 	if live.crowded >= CROWD_LIMIT or live.cover <= CITY_COVER or flank_ticks.max() <= 0:
@@ -53,7 +65,11 @@ func _fight(plant: bool, seed: int = ArenaSession.MASTER_SEED) -> Dictionary:
 	meter.walls = s.stage.walls
 	meter.cells = s.stage.cells
 	meter.observing = true
-	arena.sampled = meter.sample
+	var arrived: Dictionary[int, bool] = {}
+	var closest: Array[float] = [INF]
+	arena.sampled = func() -> void:
+		meter.sample()
+		_flank_arrivals(arena.squad_ai, arrived, closest)
 	s.world.loop().set_input(ArenaPitBot.new(s.stage, s.actions))
 	s.world.loop().start_recording()
 	while s.tick() < LIMIT and s.stage.pit.waves_cleared < WAVES:
@@ -67,6 +83,8 @@ func _fight(plant: bool, seed: int = ArenaSession.MASTER_SEED) -> Dictionary:
 		"cover": float(meter.covered) / maxi(meter.hostile_ticks, 1),
 		"flankers": meter.flankers.size(),
 		"flank_ticks": meter.states.get("flank", 0),
+		"flank_arrivals": arrived.size(),
+		"flank_closest_m": snappedf(closest[0], 0.01) if closest[0] < INF else -1.0,
 	}
 	arena.sampled = Callable()
 	_close(s)
@@ -75,6 +93,17 @@ func _fight(plant: bool, seed: int = ArenaSession.MASTER_SEED) -> Dictionary:
 		result.replayed = again.world.verify_replay(log) == ""
 		_close(again)
 	return result
+
+
+func _flank_arrivals(
+	squad: ArenaSquad, arrived: Dictionary[int, bool], closest: Array[float]
+) -> void:
+	for id: int in squad.minds:
+		var e: EnemyAgent = squad.minds[id].agent
+		if e.state == EnemyAgent.State.FLANK:  # the probe's "flank" state
+			closest[0] = minf(closest[0], e.pos.distance_to(e.goal))
+			if e.pos.distance_to(e.goal) <= FLANK_ARRIVE_M:
+				arrived[id] = true
 
 
 func _close(s: ArenaSession) -> void:
