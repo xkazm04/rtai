@@ -6,6 +6,15 @@ var _contact: StreetCopWalk.Contact
 var _base_scale: Vector2
 
 
+## The hit flash of the rig it stands in for (rig.is_tinted()): tint material while lit, raw after.
+func sync_tint(on: bool) -> void:
+	var want: Material = null
+	if on:
+		want = PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0)
+	if material != want:
+		material = want
+
+
 func draw_pose(pose: CastCardPose, h: Fighter, moving: bool, tick: int) -> void:
 	var path: String = pose.sheets.walk
 	var row: int = StreetWalkerCards.stride_frame(pose.walked / StreetQuestCards.STRIDE_M, moving)
@@ -68,7 +77,7 @@ func _configure(pose: CastCardPose, path: String) -> void:
 	offset = -cell * Vector2(0.5, 0.5 if fall else foot_y)
 	var art: String = ViewMode.shared().art
 	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-	var k: float = StreetCrowdCards.body_scale(pose.actor_id) * pose.sheets.body_scale
+	var k: float = pose.sheets.scale_of(pose.actor_id)
 	if _contact != null or CastCards.padded(path):
 		k *= CastCardKinds.cell_ratio(path, StreetCopWalk.CELL_RATIO)
 	_base_scale = (

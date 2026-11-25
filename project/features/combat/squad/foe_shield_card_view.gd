@@ -35,10 +35,19 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 		rig.set_meta(CARD, card)
 		@warning_ignore("return_value_discarded")
 		rig.tree_exiting.connect(card.queue_free, CONNECT_ONE_SHOT)
+	sheets.walk = walk_sheet(sheets.walk)
 	card.pose.sheets = sheets
 	card.update_fighter(h, host.arena)
+	card.sync_tint(rig.is_tinted())
 	card.visible = shown
 	return false
+
+
+## The shipped four-drawing walk gives way to the one CastDoorAnchors.WALK selects (n29: the eight).
+static func walk_sheet(path: String) -> String:
+	if path.get_file() != CastDoorAnchors.FOUR:
+		return path
+	return path.get_base_dir().path_join(CastDoorAnchors.WALK)
 
 
 func update_fighter(h: Fighter, arena: CombatArena) -> void:
@@ -49,6 +58,7 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 	pose.attack = attack_row(h, arena)
 	var last_ground: Vector2 = position
 	draw_pose(pose, h, moved, arena.tick)
+	_rescale(moved)
 	if texture.resource_path == pose.sheets.walk:
 		var cell: int = frame * 2 + int(flip_h)
 		if (
@@ -60,7 +70,25 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 		_walk_cell = cell
 	else:
 		_walk_cell = -1
-	scale = Vector2.ONE * HEIGHT_M * SimConst.PX_PER_M / BODY_PX
+
+
+## The door's own height replaces the placement's base scale. A walking drawing keeps its
+## anchored sole where the placement planted it, so the rescale cannot slide it (n29).
+func _rescale(moved: bool) -> void:
+	var sole: Vector2 = _sole_local()
+	var planted: Vector2 = transform * sole
+	scale = Vector2.ONE * HEIGHT_M * pose.sheets.body_scale * SimConst.PX_PER_M / BODY_PX
+	if moved:
+		position += planted - transform * sole
+
+
+## The anchored sole of the drawn cell in the sprite's own space (zero when not anchored).
+func _sole_local() -> Vector2:
+	if _contact == null or _contact.registered == null:
+		return Vector2.ZERO
+	var p: StreetPatrolPose = _contact.registered
+	var ink: Vector4 = p.marks[p.face * p.count + p.row]
+	return Vector2(-ink.x if flip_h else ink.x, ink.y)
 
 
 static func attack_row(h: Fighter, arena: CombatArena) -> int:

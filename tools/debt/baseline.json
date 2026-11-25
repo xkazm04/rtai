@@ -183,7 +183,17 @@
         "2026-11-24: contractor feet take for n28 cast (dev_loc 37773 -> 37778)",
         "2026-11-24: contractor measurement scenes (turns, poses, lineup) in project/dev/cast for n28 cast (dev_loc 37778 -> 38011)",
         "2026-11-24: contractor poses control and calm-frame takes in project/dev/cast for n28 cast (dev_loc 38011 -> 38037)",
-        "2026-11-24: contractor fight dev scene (film take) for n28 cast (dev_loc 38037 -> 38209)"
+        "2026-11-24: contractor fight dev scene (film take) for n28 cast (dev_loc 38037 -> 38209)",
+        "2026-11-25: cast_size_beside dev scene for n29 cast (brief n29-cast-01) (dev_loc 38208 -> 38409)",
+        "2026-11-25: cast_impact_edge pitch for n29 cast (dev_loc 38409 -> 38414)",
+        "2026-11-25: card scale for n29 cast (dev_loc 38414 -> 38419)",
+        "2026-11-25: robot_thug card for n29 cast (dev_loc 38419 -> 38534)",
+        "2026-11-25: films for n29 cast (dev_loc 38534 -> 38816)",
+        "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)",
+        "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)",
+        "2026-11-25: war eight for n29 cast (dev_loc 39127 -> 39128)",
+        "2026-11-25: war placement revert for n29 cast; dev/cast +123 is the thug builder's untracked cast_thug_edge.gd on disk (dev_loc 39128 -> 39251)",
+        "2026-11-25: cast_thug_edge dev scene for n29 cast thug rim (dev_loc 39251 -> 39253)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -192,7 +202,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 2852,
+        "project/dev/cast": 3897,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -225,7 +235,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 38208
+      "total": 39253
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -505,7 +515,10 @@
         "2026-11-24: merge of n27 lanes: cast dev scenes (files_past_soft_cap 65 -> 65)",
         "2026-11-24: prologue_command_view.gd 244 lines: its draw geometry, cues and switches are pure static helpers so tests can kill planted faults (n27-04); split later if it grows (files_past_soft_cap 65 -> 66)",
         "2026-11-24: prologue_command_view.gd 255 lines and its test file 221 lines: chevron and plate-edge helpers (n27-04) (files_past_soft_cap 66 -> 67)",
-        "2026-11-24: --electro-cells for n28 combat (files_past_soft_cap 67 -> 67)"
+        "2026-11-24: --electro-cells for n28 combat (files_past_soft_cap 67 -> 67)",
+        "2026-11-25: card scale for n29 cast (files_past_soft_cap 67 -> 68)",
+        "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)",
+        "2026-11-25: war eight for n29 cast (files_past_soft_cap 70 -> 70)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -521,6 +534,7 @@
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,
         "project/dev/bench/node_spans.gd": 263,
+        "project/dev/cast/cast_size_beside.gd": 204,
         "project/dev/enemy_ai/enemy_rig_fight.gd": 243,
         "project/dev/ghost-powers/ghost_reel.gd": 209,
         "project/dev/gunplay/pistol_fight.gd": 255,
@@ -570,13 +584,14 @@
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
+        "project/tests/unit/test_cast_war_machine.gd": 209,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 67
+      "total": 69
     },
     "lane_named_dev_dirs": {
       "accepted": [
@@ -597,6 +612,9 @@
       "total": 7
     },
     "unused_class_names": {
+      "accepted": [
+        "2026-11-25: robot_thug for n29 cast (unused_class_names 29 -> 30)"
+      ],
       "files": {
         "project/dev/bench/rig_bench_run.gd": 1,
         "project/dev/bench/rig_footprint_run.gd": 1,

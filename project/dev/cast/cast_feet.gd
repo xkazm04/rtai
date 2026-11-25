@@ -17,7 +17,7 @@ func _ready() -> void:
 		forced.raw["archetypes"]["contractor"]["enabled"] = true
 		CastCards._library = CastCards.from_table(forced)
 	var preview: StringName = StringName(OS.get_environment("GTAI_CAST_PREVIEW"))
-	if preview in [CastMulroneyPreview.ID, FoeWardenCardView.ID, FoeGunnerCardView.ID]:
+	if preview in _previews():
 		CastMulroneyPreview.enable(preview)
 	if not _out.is_absolute_path() or _ppm not in [32, 64] or _pitch not in [55, 70]:
 		_fail("set GTAI_CAST_OUT, GTAI_CAST_PPM and GTAI_CAST_PITCH")
@@ -47,6 +47,11 @@ func _ready() -> void:
 	file.close()
 	Log.info("cast", "saved %s" % path)
 	get_tree().quit()
+
+
+## The card foes a dev process may force on (their shipping rows stay gated by the audit).
+func _previews() -> Array[StringName]:
+	return [CastMulroneyPreview.ID, FoeWardenCardView.ID, FoeGunnerCardView.ID, FoeThugCardView.ID]
 
 
 func _far_patrol(_foe: Fighter) -> void:
@@ -103,8 +108,10 @@ func _prepare(host: ArenaRigs, take: Dictionary) -> void:
 		"riot_cop": CastRiotAnchors.WALK_STEP_M,
 		"rocket_trooper": CastLancerAnchors.WALK_STEP_M,
 		"robot_gunner": CastGunnerAnchors.WALK_STEP_M,
+		"robot_thug": CastThugAnchors.WALK_STEP_M,
 		"contractor": CastContractorAnchors.WALK_STEP_M,
 		"shield_robot": CastDoorAnchors.WALK_STEP_M,
+		"war_machine": CastWarAnchors.WALK_STEP_M,
 		"swat": CastSwatAnchors.WALK_STEP_M
 	}
 	if steps.has(take.archetype):

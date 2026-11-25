@@ -18,6 +18,7 @@ static func anchored(path: String) -> bool:
 			CastSwatAnchors.RUN_EIGHT,
 			CastLancerAnchors.EIGHT,
 			CastGunnerAnchors.EIGHT,
+			CastThugAnchors.EIGHT,
 			CastContractorAnchors.EIGHT,
 			CastDoorAnchors.SHEET,
 		]
@@ -31,6 +32,7 @@ static func padded(path: String) -> bool:
 		(
 			file.begins_with("appliance_warden_")
 			or file.begins_with("robot_gunner_")
+			or file.begins_with("robot_thug_")
 			or file == "contractor_attack.png"
 			or file == "contractor_cast_hit.png"
 		)
@@ -49,6 +51,8 @@ static func four_of(file: String) -> String:
 			return CastLancerAnchors.FOUR
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.FOUR
+		CastThugAnchors.EIGHT:
+			return CastThugAnchors.FOUR
 		CastContractorAnchors.EIGHT:
 			return CastContractorAnchors.FOUR
 	return ""
@@ -67,6 +71,8 @@ static func foe_marks(file: String, low: bool) -> Array[Vector4]:
 			return CastLancerAnchors.WALK55 if low else CastLancerAnchors.WALK70
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.WALK55 if low else CastGunnerAnchors.WALK70
+		CastThugAnchors.EIGHT:
+			return CastThugAnchors.WALK55 if low else CastThugAnchors.WALK70
 		CastContractorAnchors.EIGHT:
 			return CastContractorAnchors.WALK55 if low else CastContractorAnchors.WALK70
 		CastDoorAnchors.SHEET:
@@ -87,6 +93,8 @@ static func foe_step(file: String) -> float:
 			return CastLancerAnchors.WALK_STEP_M
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.WALK_STEP_M
+		CastThugAnchors.EIGHT:
+			return CastThugAnchors.WALK_STEP_M
 		CastContractorAnchors.EIGHT:
 			return CastContractorAnchors.WALK_STEP_M
 		CastDoorAnchors.SHEET:
@@ -96,14 +104,14 @@ static func foe_step(file: String) -> float:
 
 ## Drawings per facing: the door carrier's shipped four, else eight for an eight or anchored sheet.
 static func rows(path: String, patrol_eight: bool) -> int:
-	if path.get_file() == CastDoorAnchors.SHEET:
+	if path.get_file() == CastDoorAnchors.FOUR:
 		return 4
 	return 8 if patrol_eight or anchored(path) else 4
 
 
 ## The door carrier keeps its shipped 192 px sheet; other anchored sheets are 256 px.
 static func cell_ratio(path: String, ratio: float) -> float:
-	return 1.0 if path.get_file() == CastDoorAnchors.SHEET else ratio
+	return 1.0 if path.get_file() in [CastDoorAnchors.FOUR, CastDoorAnchors.EIGHT] else ratio
 
 
 ## A walk cell's fill: the padded and eight-drawing cells carry the 256/192 cell ratio.

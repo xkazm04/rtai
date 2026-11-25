@@ -48,6 +48,7 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 	if host.pipe != null:
 		card.pose.death_length = host.pipe.table.length(&"death_robot")
 	card.update_fighter(h, host.arena)
+	card.sync_tint(rig.is_tinted())
 	card.visible = shown
 	return false
 

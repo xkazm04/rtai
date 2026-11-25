@@ -107,6 +107,11 @@ func hit(rig: CutRig, from_dir: Vector2) -> void:
 	rig.hit(from_dir if from_dir != Vector2.ZERO else -rig.fwd(), HIT_SHOVE)
 
 
+## The hit flash alone (the tint window and the HIT label), for a host that shoves the rig itself.
+func flash() -> void:
+	hit_t = HIT_S
+
+
 func rolling() -> bool:
 	return roll_t > 0.0
 

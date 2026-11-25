@@ -40,7 +40,7 @@ func test_robot_host_swaps_rig_and_restores_main_with_row_off() -> void:
 	assert_true(card.visible)
 	assert_true(card.flip_h)
 	assert_eq(card.position, _h.pos * SimConst.PX_PER_M)
-	assert_eq(card.frame_coords, Vector2i(2, StreetWalkerCards.STAND_FRAME))
+	assert_eq(card.frame_coords, Vector2i(2, _stand_row()))
 	_host.consumed[_h.id] = true
 	_host._process(0.0)
 	assert_false(card.visible)
@@ -86,27 +86,40 @@ func test_held_walk_cell_plants_its_foot_and_next_contact_advances() -> void:
 	assert_eq(card._shadow.get_child_count(), RigCastShadows.CONTACT_RINGS.size())
 
 
+func test_walk_sheet_is_the_one_value_cast_war_anchors_walk_selects() -> void:
+	var eight: bool = CastWarAnchors.WALK == CastWarAnchors.EIGHT
+	assert_eq(CastWarAnchors.WALK70, CastWarAnchors.EIGHT70 if eight else CastWarAnchors.FOUR70)
+	assert_eq(CastWarAnchors.WALK55, CastWarAnchors.EIGHT55 if eight else CastWarAnchors.FOUR55)
+	assert_eq(CastWarAnchors.FOUR_STEP_M * 4, StreetQuestCards.STRIDE_M)
+	var walk: String = FoeWarCardView.walk_sheet(CastCards.current(WALKER).walk)
+	assert_eq(walk.get_file(), CastWarAnchors.WALK)
+	assert_eq(FoeWarCardView.walk_rows(walk), 8 if eight else 4)
+	var tex: Texture2D = StreetStrips.get_tex(walk.get_base_dir() + "/" + CastWarAnchors.EIGHT)
+	assert_eq(tex.get_size() / 288.0, Vector2(RigHeadCard.FRAMES, 8))
+
+
 func test_stomp_without_art_keeps_the_locomotion_pose() -> void:
 	var sheets: CastCards.Sheets = CastCards.current(WALKER)
 	sheets.stomp = ""
 	_mind.walker.attack = _mind.agent.arch.alt_weapon
 	_mind.agent.enter(EnemyAgent.State.WINDUP, 1)
-	_expect(sheets.walk, StreetWalkerCards.STAND_FRAME)
+	_expect(_walk(), _stand_row())
 	_mind.agent.enter(EnemyAgent.State.RECOVER)
 	_h.cooldown = 1
-	_expect(sheets.walk, StreetWalkerCards.STAND_FRAME)
+	_expect(_walk(), _stand_row())
 
 
 func test_walker_card_projects_the_boot_line_and_two_point_six_metre_body() -> void:
 	for deg: int in [55, 70]:
 		ViewMode.shared().pitch_deg = deg
 		ViewMode.shared().art = "p%d" % deg
-		_expect(CastCards.current(WALKER).walk, StreetWalkerCards.STAND_FRAME)
+		_expect(_walk(), _stand_row())
 		var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
 		assert_false(card.centered)
 		assert_eq(card.offset, Vector2(-144, -264))
 		var projected: Vector2 = card.scale * Vector2(1.0, sin(deg_to_rad(deg))) * 200.0
-		assert_almost_eq(projected, Vector2.ONE * 2.6 * SimConst.PX_PER_M, Vector2.ONE * 0.001)
+		var tall: float = 2.6 * CastCards.current(WALKER).body_scale  # n29: one value per row
+		assert_almost_eq(projected, Vector2.ONE * tall * SimConst.PX_PER_M, Vector2.ONE * 0.001)
 
 
 func test_recovery_glow_tracks_the_printed_grille_at_both_pitches() -> void:
@@ -185,3 +198,12 @@ func _expect(path: String, row: int, column: int = 2) -> void:
 	assert_eq(Vector2i(card.hframes, card.vframes) * 288, Vector2i(card.texture.get_size()))
 	if _mind.agent.state == EnemyAgent.State.WINDUP:
 		assert_true(card._vent == null or not card._vent.visible)
+
+
+## The walk WALK selects and its standing drawing (the four's STAND_FRAME at the walk's rows).
+func _walk() -> String:
+	return FoeWarCardView.walk_sheet(CastCards.current(WALKER).walk)
+
+
+func _stand_row() -> int:
+	return StreetWalkerCards.STAND_FRAME * (FoeWarCardView.walk_rows(_walk()) >> 2)

@@ -66,3 +66,93 @@ func _check_walk_contact(card: FoeShieldCardView, h: Fighter, arena: CombatArena
 	assert_eq(card.frame_coords, Vector2i(2, 1))
 	var reach: float = CastDoorAnchors.WALK_STEP_M * 2.0 * SimConst.PX_PER_M
 	assert_lt(card.position.distance_to(h.pos * SimConst.PX_PER_M), reach)
+
+
+func test_door_and_gunner_cards_flash_with_their_rig() -> void:
+	for card: CastFarCard in [FoeShieldCardView.new(), FoeGunnerCardView.new()]:
+		autofree(card)
+		var rig: CutRig = autofree(CutRig.new())
+		card.sync_tint(rig.is_tinted())
+		assert_null(card.material)
+		rig.set_tint(true)
+		card.sync_tint(rig.is_tinted())
+		assert_eq(card.material, PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0))
+		rig.set_tint(false)
+		card.sync_tint(rig.is_tinted())
+		assert_null(card.material)
+
+
+func test_walk_switch_swaps_only_the_four_drawing_door_walk() -> void:
+	var dir: String = RigHeadCard.ART_DIR + "p70"
+	var four: String = dir.path_join(CastDoorAnchors.FOUR)
+	assert_eq(FoeShieldCardView.walk_sheet(four), dir.path_join(CastDoorAnchors.WALK))
+	var eight: String = dir.path_join(CastDoorAnchors.EIGHT)
+	assert_eq(FoeShieldCardView.walk_sheet(eight), eight)
+	var attack: String = dir.path_join("shield_robot_attack.png")
+	assert_eq(FoeShieldCardView.walk_sheet(attack), attack)
+	assert_eq(CastDoorAnchors.SHEET, CastDoorAnchors.WALK)
+	assert_eq(CastDoorAnchors.EIGHT70.size(), 40)
+	assert_eq(CastDoorAnchors.EIGHT55.size(), 40)
+	assert_eq(CastDoorAnchors.FOUR70.size(), 20)
+	var low: bool = CastDoorAnchors.WALK == CastDoorAnchors.FOUR
+	assert_eq(CastDoorAnchors.WALK70, CastDoorAnchors.FOUR70 if low else CastDoorAnchors.EIGHT70)
+
+
+func test_door_card_draws_the_selected_walk() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	var host: ArenaRobotRigs = add_child_autofree(ArenaRobotRigs.new())
+	host.arena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(5).stream(&"combat")
+	)
+	var rig: CutRig = CutRig.new()
+	host.add_child(rig)
+	var h: Fighter = Fighter.new()
+	h.archetype = &"shield_robot"
+	h.machine = true
+	h.hp = 10.0
+	@warning_ignore("return_value_discarded")
+	FoeShieldCardView.show_rig(host, h, rig, true)
+	var card: FoeShieldCardView = rig.get_meta(FoeShieldCardView.CARD)
+	assert_eq(card.pose.sheets.walk.get_file(), CastDoorAnchors.WALK)
+	ViewMode._shared = previous
+
+
+func test_rescale_keeps_the_anchored_sole_where_the_placement_planted_it() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	for facing: Vector2 in [Vector2.RIGHT, Vector2.LEFT]:
+		var h: Fighter = Fighter.new()
+		h.archetype = &"shield_robot"
+		h.machine = true
+		h.hp = 10.0
+		h.hurt_tick = -SimClock.TICK_RATE * 10
+		h.facing = facing
+		h.pos = Vector2(3, 4)
+		var card: FoeShieldCardView = autofree(FoeShieldCardView.new())
+		var twin: FoeShieldCardView = autofree(FoeShieldCardView.new())
+		card.pose.sheets = CastCards.current(h.archetype)
+		card.pose.sheets.walk = FoeShieldCardView.walk_sheet(card.pose.sheets.walk)
+		twin.pose.sheets = card.pose.sheets
+		twin.pose.hit_hold = FoeShieldCardView.HIT_HOLD_S
+		var arena: CombatArena = CombatArena.new(
+			CombatTuning.shipped(), Events, RngRegistry.new(5).stream(&"combat")
+		)
+		for moved: bool in [false, true]:
+			h.pos += facing * (0.5 if moved else 0.0)
+			card.update_fighter(h, arena)
+			twin.pose.travel(h.pos)
+			twin.draw_pose(twin.pose, h, moved, arena.tick)
+		assert_ne(card.scale, twin.scale)
+		assert_eq(card.frame_coords, twin.frame_coords)
+		var sole: Vector2 = card.transform * card._sole_local()
+		assert_almost_eq(sole, twin.transform * twin._sole_local(), Vector2(0.5, 0.5))
+		assert_ne(card._sole_local(), Vector2.ZERO)
+	ViewMode._shared = previous
+
+
+func test_door_switch_keys_rows_and_cell_ratio_on_four_and_eight() -> void:
+	var dir: String = RigHeadCard.ART_DIR + "p70"
+	assert_eq(CastCardKinds.rows(dir.path_join(CastDoorAnchors.FOUR), false), 4)
+	for file: String in [CastDoorAnchors.FOUR, CastDoorAnchors.EIGHT]:
+		assert_eq(CastCardKinds.cell_ratio(dir.path_join(file), 1.5), 1.0)

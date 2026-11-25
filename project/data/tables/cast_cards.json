@@ -1,7 +1,7 @@
 {
   "archetypes": {
     "appliance_warden": {
-      "body_scale": 1.1,
+      "body_scale": 1.18,
       "enabled": true,
       "id": "appliance_warden",
       "p55": {
@@ -18,6 +18,7 @@
       }
     },
     "contractor": {
+      "body_scale": 1,
       "enabled": true,
       "id": "contractor",
       "p55": {
@@ -34,7 +35,7 @@
       }
     },
     "robot_gunner": {
-      "body_scale": 1,
+      "body_scale": 1.1,
       "enabled": true,
       "id": "robot_gunner",
       "p55": {
@@ -50,7 +51,25 @@
         "hit": "robot_gunner_hit.png"
       }
     },
+    "robot_thug": {
+      "body_scale": 1.42,
+      "enabled": false,
+      "id": "robot_thug",
+      "p55": {
+        "armed_walk": "robot_thug_planted8_armed_walk.png",
+        "attack": "robot_thug_attack.png",
+        "fall": "robot_thug_fall.png",
+        "hit": "robot_thug_hit.png"
+      },
+      "p70": {
+        "armed_walk": "robot_thug_planted8_armed_walk.png",
+        "attack": "robot_thug_attack.png",
+        "fall": "robot_thug_fall.png",
+        "hit": "robot_thug_hit.png"
+      }
+    },
     "rocket_trooper": {
+      "body_scale": 1.08,
       "enabled": true,
       "id": "rocket_trooper",
       "p55": {
@@ -83,7 +102,7 @@
       }
     },
     "sergeant_mulroney": {
-      "body_scale": 1.11,
+      "body_scale": 1.23,
       "enabled": true,
       "id": "sergeant_mulroney",
       "p55": {
@@ -100,6 +119,7 @@
       }
     },
     "shield_robot": {
+      "body_scale": 1.03,
       "enabled": true,
       "id": "shield_robot",
       "p55": {
@@ -116,6 +136,7 @@
       }
     },
     "war_machine": {
+      "body_scale": 0.84,
       "enabled": true,
       "id": "war_machine",
       "p55": {
@@ -134,5 +155,6 @@
       }
     }
   },
+  "build_jitter": 0,
   "schema": "gtai.cast_cards/1"
 }

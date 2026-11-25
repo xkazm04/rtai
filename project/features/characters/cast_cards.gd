@@ -12,11 +12,17 @@ var _by_id: Dictionary[StringName, Dictionary] = {}
 class Sheets:
 	extends RefCounted
 	var body_scale: float = 1.0
+	## The +- share of the per-actor build variety (table `build_jitter`; absent = the crowd's).
+	var build_jitter: float = StreetCrowdCards.SCALE_VAR
 	var walk: String
 	var attack: String
 	var stomp: String
 	var hit: String
 	var fall: String
+
+	## The card's drawn scale for one actor: its row's body_scale times the build variety.
+	func scale_of(actor_id: int) -> float:
+		return (1.0 + build_jitter * StreetCrowdCards.vary(actor_id, 3)) * body_scale
 
 
 static func current(id: StringName) -> Sheets:
@@ -33,6 +39,9 @@ static func shipped() -> CastCards:
 static func from_table(table: DataTable) -> CastCards:
 	var result: CastCards = CastCards.new()
 	var entries: Dictionary = table.object(table.raw, "archetypes")
+	var jitter: float = StreetCrowdCards.SCALE_VAR
+	if table.raw.has("build_jitter"):
+		jitter = table.num(table.raw, "build_jitter")
 	for key: String in entries:
 		var row: Dictionary = table.object(entries, key)
 		if table.text(row, "id") != key or not row.get("enabled") is bool:
@@ -42,6 +51,7 @@ static func from_table(table: DataTable) -> CastCards:
 		for pitch: String in ["p55", "p70"]:
 			var paths: Dictionary = table.object(row, pitch)
 			pitches[pitch] = _sheets(table, paths, pitch)
+			pitches[pitch].build_jitter = jitter
 			if row.has("body_scale"):
 				pitches[pitch].body_scale = table.num(row, "body_scale")
 		if row.enabled:
@@ -68,6 +78,8 @@ static func _sheets(table: DataTable, row: Dictionary, pitch: String) -> Sheets:
 		walk = CastLancerAnchors.WALK
 	if walk == CastGunnerAnchors.FOUR:
 		walk = CastGunnerAnchors.WALK
+	if walk in [CastThugAnchors.FOUR, CastThugAnchors.EIGHT]:
+		walk = CastThugAnchors.WALK
 	if walk == CastContractorAnchors.FOUR:
 		walk = CastContractorAnchors.WALK
 	out.walk = dir + (StreetMulroneyAnchors.WALK if walk == StreetMulroneyAnchors.FOUR else walk)

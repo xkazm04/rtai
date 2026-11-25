@@ -19,15 +19,15 @@ var _notes: Array[Dictionary] = []
 
 func _ready() -> void:
 	_out = OS.get_environment("GTAI_CAST_OUT")
-	_ppm = 64
-	_pitch = 70
+	_ppm = 32 if OS.get_environment("GTAI_CAST_PPM") == "32" else 64
+	_pitch = 55 if OS.get_environment("GTAI_CAST_PITCH") == "55" else 70
 	if not _out.is_absolute_path():
 		_fail("set GTAI_CAST_OUT")
 		return
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	ViewMode.select("combo")
 	ViewMode.shared().set_pitch(float(_pitch))
-	ViewMode.shared().art = "p70"
+	ViewMode.shared().art = "p%d" % _pitch
 	CastMulroneyPreview.enable(&"appliance_warden")
 	_host = _open_wave()
 	if _host == null:
@@ -78,7 +78,7 @@ func _subject(id: StringName) -> bool:
 	note["natural_tint"] = rig.is_tinted()
 	var ok: bool = true
 	for pulse: bool in [true, false]:
-		rig.set_tint(pulse)
+		_flash(rig, card, pulse)
 		note["material_%s" % pulse] = (
 			card.material.get_instance_id() if card.material != null else 0
 		)
@@ -89,6 +89,13 @@ func _subject(id: StringName) -> bool:
 	for tick: int in 4:
 		await _advance()
 	return ok
+
+
+## The whole-sprite views sync the tint on their next step; this scene is frozen, so do it here.
+func _flash(rig: CutRig, card: Sprite2D, on: bool) -> void:
+	rig.set_tint(on)
+	if card is CastFarCard:
+		(card as CastFarCard).sync_tint(on)
 
 
 func _card_of(rig: CutRig) -> Sprite2D:

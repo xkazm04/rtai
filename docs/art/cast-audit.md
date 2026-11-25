@@ -552,3 +552,270 @@ Shadow re-run: stand 237, tell 234, fire 235, hit_1 203, hit_4 201, hit_6 224 (P
 Rule added to `docs/art/cast-checklist.md` (Rim row). The two earlier FAIL rows (hit pulse, fall cells 0 and 1, size jump) now read PASS under the rule and the padded fix.
 
 **Contractor, n28: live height vs the lineup (brief 10, measured from `gtai-masters/n28/cast/contractor_close_64.mp4`, no Godot).** Close film 1920x1080, 64 px/m, tilt 70, frames extracted with ffmpeg, silhouette = outline-dark / bright / saturated pixels inside a window per figure, shadow excluded, hat top to lowest boot px, screen px. Rivet and the patrol cop do not move in the film (149 px, rows 450-598; cop 112 px, rows 339-450, every frame). The contractor, walking in at 0.5 s then standing and aiming: 1 s, 1.5 s, 2 s, 2.5 s, 4 s 78 px (rows 401-478); 3 s 87; 5 s and 6 s 82; 8 s 88; 9 s 84; 10 s 71 (aim / fire / hit poses). Ratio contractor / cop 78/112 = 0.70 on the five steady frames (0.63-0.79 over all), contractor / Rivet 0.52. The live game's numbers are these (the film's spawn path, `cast_contractor_fight.gd:74` `patrol_cop` via `spawn_member`, is the game's), and they agree with `cast_contractor_poses` (stand 86 before the pad, tell 64-65, hit 55-69 then padded to 0.94-1.05). The beside still (`cast_contractor_lineup.gd`, made 20:59 before the 22:12 pad commit) says contractor 111 / 117, cop 87 / 88, Rivet 154 / 146: Rivet agrees within 3 %, the contractor is about 1.3-1.4 times the live height and the cop about 0.78 times, so the still reverses the live order (contractor taller than the cop there, a third shorter than the cop in the film) and must not be used as a size reference. What the lineup does (file:line): it spawns both through `spawn_member` (`cast_contractor_lineup.gd:18`), pins Rivet 12 m away and the subject at MARK with a forced facing and 32 idle ticks (`cast_lineup.gd` `_portrait`), then `CastPlate.add_portrait` takes the body-only bounds of a 640x704 crop with the shadow hidden (`cast_plate.gd:33,43,64-72`); there is no scaling in the plate, and the cop's 87 is the same in the 07:40 baseline log (`build/cast/gl/log_70_64.txt`), so it is not new. The cause of the 87 / 111 against the film's 112 / 78 is NOT established: the plate code cannot produce it by itself, and the likeliest suspects (unproven, they need a launch) are that the lineup's idle, MARK-spaced layout draws the cop and the contractor through a different representation than the fight scene does (`ArenaWaveCards` card vs full rig, `arena_wave_cards.gd:62-80` scales the card by `StreetWalkerCards.HEIGHT_BY_ART` and `fill_of`, `arena_rigs.gd:14` FOCUS_REACH_M) or a different cell (idle stand vs aim). Action: judge size from the films (live), re-take the lineup in the fight scene's setup before it is quoted again.
+
+## Card foes beside the rig patrol cop, n29
+
+Brief n29-cast-01, part A. Scene `project/dev/cast/cast_size_beside.gd` (the fight street of `cast_contractor_fight.gd`, combo, tilt 70, `p70`, HUD and light layers hidden, 1920x1080, content scale off) spawns, in one process, the patrol cop (`spawn_member(..., &"patrol_cop")`) and then every row `CastCards.shipped().lookup(id, "p70")` returns (all eight are `enabled: true`, so the table itself admits them: no `CastMulroneyPreview.enable` call), each through `ArenaSquad.spawn_member`. Per foe: foe at x -3 m, cop at 0, Rivet at +3 m on one ground row, all facing (1, 1), 44 idle ticks, then a beside still (`build/look/n29-size/<id>_<ppm>.png`), the rig shadow layer hidden (`<id>_<ppm>_body.png`) and the figure parked (`_gone_<who>.png`). All figures logged `full rig true, far card false`. `tools/art/cast_size_measure.py` takes the changed pixels between body and gone inside a 3 m band (a robot's own ground shadow, an even darkening at or below the ground row, removed), the densest row run, top px to lowest px. Eye check: the war machine crop (`crop_war_machine_64_war_machine.png`, 3x) reads lamp top to foot ring bottom 155 px, as measured. Stills `gtai-masters/n29/cast/size_before_{64,32}.png`.
+
+Rivet 154 / 77 px (64 / 32 px/m). Patrol cop (actor id 1) 86 / 43 px; its whole-figure card carries the per-actor scale `StreetCrowdCards.body_scale(1)` = 0.855, so the unjittered cop is 100.6 / 50.3 px. "/ cop" below is against the measured cop of this run (86 / 43), "/ cop base" against 100.6.
+
+| id | current body_scale | 64 px/m | 32 px/m | / cop (64, 32) | / cop base | / Rivet (64, 32) | notes |
+|---|---|---|---|---|---|---|---|
+| appliance_warden | 1.1 | 104 | 52 | 1.21, 1.21 | 1.03 | 0.68, 0.68 | actor id 2, jitter 1.104; enemies.json `body: human` |
+| contractor | (1.0) | 104 | 51 | 1.21, 1.19 | 1.03 | 0.68, 0.66 | actor id 3, jitter 1.032 |
+| robot_gunner | 1 | 93 | 46 | 1.08, 1.07 | 0.92 | 0.60, 0.60 | `FoeGunnerCardView` never sets `pose.actor_id`, so every gunner draws with `body_scale(0)` = 0.926 |
+| rocket_trooper | (1.0) | 83 | 35 | 0.97, 0.81 | 0.83 | 0.54, 0.45 | actor id 5, jitter 0.890; crouched aim cell; enemies.json `body: human` |
+| sentry_turret | (1.0) | 107 | 53 | 1.24, 1.23 | 1.06 | 0.69, 0.69 | body_scale NOT read: `foe_turret_card_view.gd:77` scales by `PLATE_M`; plate bottom 50 px below its ground point |
+| sergeant_mulroney | 1.11 | 102 | 51 | 1.19, 1.19 | 1.01 | 0.66, 0.66 | actor id 7, jitter 1.067 |
+| shield_robot | (1.0) | 108 | 53 | 1.26, 1.23 | 1.07 | 0.70, 0.69 | body_scale NOT applied: `foe_shield_card_view.gd:64` sets `scale` from `HEIGHT_M` 2.0 after `draw_pose`; door bottom 14 px below the ground point (in front of the feet) |
+| war_machine | (1.0) | 155 | 77 | 1.80, 1.79 | 1.54 | 1.01, 1.00 | body_scale NOT read: `foe_war_card_view.gd:7,114` `HEIGHT_M` 2.6 |
+
+Readers of `body_scale` (every one): `cast_cards.gd:45-46` parses it; `street_walker_cards.gd:168-169` (`place`, the whole-figure card on a full rig: warden, contractor, rocket trooper, Mulroney, and the cop with no row) and `cast_far_card.gd:80` (`_configure`: the far card and its subclasses `FoeGunnerCardView`, `FoeShieldCardView`) multiply it by `StreetCrowdCards.body_scale(actor_id)` (`street_crowd_cards.gd:68-69`, `SCALE_VAR` 0.16 at `:22`). The turret and war machine views never read it, and the shield view overwrites it.
+
+**Why the lineup said contractor 111 / cop 87 and the film 78 / 112 (cause found).** Not the representation: in the lineup's own layout (subject on the mark, Rivet 12 m right, `cast_lineup.gd` `_portrait`) the cop and the contractor are full rigs here too (logged), and the re-run lineup (`cast_contractor_lineup`, 64 px/m, tilt 70, 2026-11-25 01:20) again says cop 87 / 88, contractor 111 / 117. The cause is the per-actor build jitter: every whole-figure card is scaled by `StreetCrowdCards.body_scale(actor_id)` = 1 +- 0.16 (`street_walker_cards.gd:168`, `street_crowd_cards.gd:68-69`, `SCALE_VAR` `:22`), a hash of the fighter id. The lineup spawns Rivet (id 0), then the cop (id 1, 0.855), then the contractor (id 2, 1.104) (`cast_contractor_lineup.gd:17-18`); the fight film spawns the contractor first (id 1, 0.855) and the cop second (id 2, 1.104) (`cast_contractor_fight.gd:66,74`). The ids, and so the jitters, are swapped. Check with this run's unjittered heights (cop 100.6, contractor 104 / 1.032 = 100.7): lineup cop 100.6 x 0.855 = 86 (measured 87), lineup contractor 100.7 x 1.104 = 111 (111), film cop 100.6 x 1.104 = 111 (112), film contractor 100.7 x 0.855 = 86 (the film's standing 78 was measured by colour thresholds over aim cells; `cast_contractor_poses` said stand 86). Both stills were right for their ids; neither is "the" size: any card human is drawn 0.84 to 1.16 of its row's height depending on its id. So every size comparison has to divide by the logged jitter, as the table does.
+
+**n29 part B: proposal under the first rule, NOT applied.** (Committed in d198af897 by mistake after the director withdrew the rule at 02:18: the rule used Rivet's 1.5x visual height and warden and lancer are body human; the values were reverted in the next commit, `cast_cards.json` is back to warden 1.1, gunner 1, Mulroney 1.11. The decisions.md line of 2026-11-25 "n29 cast card scale" is therefore void.) Humans: unjittered height = cop base x 1.00 (contractor), x 1.05 (Mulroney), +-4 %. Street robots (appliance_warden, robot_gunner, rocket_trooper, shield_robot as the brief lists them): 0.90 x Rivet, +-4 %. War machine <= 1.10 x Rivet. Turret: only if above Rivet. New `body_scale` = current x target / measured (unjittered, 64 px/m): appliance_warden 1.1 -> 1.62, robot_gunner 1 -> 1.49, rocket_trooper (1.0) -> 1.49, sergeant_mulroney 1.11 -> 1.23; contractor stays (1.00 x cop base already), sentry_turret and war_machine stay. Re-run of the same scene (2026-11-25 01:56), same actor ids:
+
+| id | body_scale before -> after | 64 px/m before -> after | 32 px/m before -> after | after, unjittered / target (64, 32) | verdict |
+|---|---|---|---|---|---|
+| appliance_warden | 1.1 -> 1.62 | 104 -> 154 (hat to boot 147) | 52 -> 77 (74) | hat to boot: 0.865, 0.871 of Rivet (bar 0.864-0.936); with the noose loop 0.906 | PASS at the low edge: the 1.62 came from the before height that included the noose hanging 3 px below the boots; hat-to-boot alone gives 1.67 (not re-measured) |
+| contractor | (1.0) | 104 -> 104 | 51 -> 51 | 1.002, 0.982 of cop base | PASS |
+| robot_gunner | 1 -> 1.49 | 93 -> 139 | 46 -> 69 | 0.903, 0.896 of Rivet | PASS |
+| rocket_trooper | (1.0) -> 1.49 | 83 -> 123 | 35 -> 62 | 0.898, 0.905 of Rivet | PASS (its 32 px/m before was a crouched cell) |
+| sentry_turret | (1.0) | 107 -> 107 | 53 -> 53 | 0.695, 0.688 of Rivet, under Rivet | PASS (left) |
+| sergeant_mulroney | 1.11 -> 1.23 | 102 -> 113 | 51 -> 57 | 1.003, 1.012 of cop base x 1.05 | PASS |
+| shield_robot | (1.0), not changed | 108 -> 108 | 53 -> 53 | 0.701, 0.688 of Rivet | FAIL: `body_scale` has no effect, `foe_shield_card_view.gd:64` sets its scale from `HEIGHT_M` 2.0; the rule needs `HEIGHT_M` about 2.57 (x 1.28) in that file, which this lane may not touch (the other builder's file) |
+| war_machine | (1.0) | 155 -> 155 | 77 -> 77 | 1.006, 1.000 of Rivet (<= 1.10) | PASS (left) |
+
+Unjittered = measured / `StreetCrowdCards.body_scale(actor_id)` for the whole-figure cards (warden, contractor, lancer, Mulroney); the gunner's card always uses `body_scale(0)` (its pose never gets an actor id), so its measured height is every gunner's. In the game each card human still varies 0.84-1.16 around these by its id. Feet: the after crops (`build/look/n29-size/crop_*_64_*.png`, contact `gtai-masters/n29/cast/size_after_64.png`) show every scaled card's soles on the street at its ground row (boot soles at the ground row, -1 to +1 px, at 64 px/m; the warden's lowest px +6 is her noose loop, her boots end at 539), no float. The war machine's and turret's views are unchanged. The shield door ends 14 px below its ground point because it stands in front of the feet. Open for the director: `enemies.json` gives appliance_warden and rocket_trooper `body: human`, and their art is human, so the robot rule makes them 1.38 x the cop base (154 px beside an 86 px cop in this run); under the human rule they would be 1.1 x 100.6 / 94.2 = 1.17 (warden) and 1.0 x 100.6 / 93.3 = 1.08 (lancer).
+
+**n29 part B, applied** (brief n29-cast-01b, 2026-11-25 03:08). Card foes drop the per-actor build jitter (`cast_cards.json` `build_jitter` 0; `CastCards.Sheets.scale_of`, read by `cast_far_card.gd` `_configure` and the card branch of `street_walker_cards.gd` `place`); the shield and war machine views multiply `HEIGHT_M` by the row's `body_scale`. Same scene, same actor ids as part A (warden 2, contractor 3, gunner 4, lancer 5, turret 6, Mulroney 7, shield 8, war machine 9), plus two more spawns each of the contractor (ids 10, 11) and the gunner (ids 12, 13). "/ cop" is against the unjittered patrol cop (100.6 / 50.3 px); target from the director's rule, +-4 %.
+
+| id | old body_scale | new | 64 px/m | 32 px/m | / cop (64, 32) | target | verdict |
+|---|---|---|---|---|---|---|---|
+| appliance_warden | 1.1 | 1.18 | 101 | 51 | 1.004, 1.014 | 1.00 | PASS |
+| contractor | (1.0) | 1.00 | 100 | 49 | 0.994, 0.974 | 1.00 | PASS |
+| robot_gunner | 1 | 1.10 | 110 | 55 | 1.093, 1.093 | 1.10 | PASS |
+| rocket_trooper | (1.0) | 1.08 | 100 | 51 | 0.994, 1.014 | 1.00 | PASS |
+| sentry_turret | (1.0), not read | (1.0) | 107 | 53 | 1.064, 1.054 | unchanged (107) | PASS (unchanged) |
+| sergeant_mulroney | 1.11 | 1.23 | 106 | 53 | 1.054, 1.054 | 1.05 | PASS |
+| shield_robot | (1.0), overwritten | 1.03 | 111 | 56 | 1.103, 1.113 | 1.10 | PASS |
+| war_machine | (1.0), not read | 0.84 | 130 | 65 | 1.292, 1.292 | 1.30 | PASS (0.84 of Rivet's 154 px) |
+
+Jitter proof: contractor ids 3 / 10 / 11 (old jitter 1.032 / 0.853 / 1.102) measure 100 / 100 / 100 px at 64 and 49 / 49 / 49 at 32; gunner ids 4 / 12 / 13 measure 110 / 110 / 110 and 55 / 55 / 55 (the gunner's pose never carries an actor id, so it was one size before too; it now draws at its body_scale instead of `body_scale(0)` 0.926). Eye check of the 64 crops (`build/look/n29-size/crop_<id>_64_<id>.png`): every figure whole, nothing clipped, soles on the ground row (lowest px 539-543, the warden's noose loop at 543), no float; the turret plate still ends 50 px below its ground point and the shield door 14 px below (both as in part A). The cop in these stills has no cast row, so it keeps the crowd's own jitter (actor id 1, 0.855, 86 px): in the game, patrol cops still vary 0.84-1.16 while card foes do not. Fall and corpse: `street_walker_cards.gd` `place` passes the card's `scale_of` into `StreetWalkerFall.draw`, and the far card and both robot views size their fall cells with the same scale, so a scaled card falls at its own size. `street_crowd_corpse.gd` bakes crowd looks only (no card foe). Open: `features/combat/kills/kill_fall_cells.gd` `_scale` and `height_px` size a kill victim with `1 + SCALE_VAR x vary(actor_id)` and no `body_scale` or `build_jitter`, so a killed card foe in a kill style is drawn at the crowd jitter (Mulroney 1.23 would drop to 0.84-1.16); outside this lane's allowlist. Stills `gtai-masters/n29/cast/size_after_{64,32}.png`.
+
+## Door carrier on eight drawings, n29
+
+**Verdict: WALK stays FOUR.** The eight-drawing walk is cut, packed, anchored and switchable, but it is worse than the
+shipped four in the right facing at both pitches, so the rule "ship only if every facing is no worse" keeps the four.
+Sheets `shield_robot_planted8_armed_walk.png` (p70 151x192 cells, p55 144x192, 5 facings x 8 drawings), cut by
+`tools/art/cast_door_eight.py` from `gtai-art/foes-n29/door8/out/door8_{70,55}_{facing}.png`: each facing scaled to the
+shipped four's mean body height (p70 161.5 / 146.2 / 139.5 / 149.0 / 175.2 px four, 161.5 / 146.0 / 139.5 / 148.8 / 175.5
+eight; p55 155.5 / 144.2 / 133.0 / 146.8 / 178.2 four, 155.5 / 144.4 / 132.8 / 146.9 / 178.4 eight, down to up), torso
+registered, the tallest up drawings (p70 up 1 and 5, 4 px; p55 up 1 and 5, 2 px; p55 dr 5, 1 px) rested on the cell
+floor. Key-clean 0 opaque px with a 50-level green or magenta lead at both pitches; strict red (green under 0.45 red)
+four 17 / 5 px, eight 0 / 0 after 129 / 148 burnt-orange stripe-shadow px from the source were lifted to amber.
+Anchors: `cast_door_anchors.gd` now carries FOUR70/55 (unchanged values) and EIGHT70/55 (`tools/art/cast_door_soles.py`,
+the foe-eight sole windows with the profile slab bar dropped), `WALK`, `SHEET = WALK`, and WALK70/55/WALK_STEP_M = the
+selected walk's. EIGHT_STEP_M 0.1842 (the drawn advance; 8.65 drawings/s observed at 1.6 m/s).
+
+Feet, measured in the delivered frames (`cast_feet.tscn` at 64 px/m, 1.6 m/s, analysed by `cast_feet.py` through
+`tools/art/cast_door_feet.py`; px in the tool's 32 px/m unit as in n28, double them for raw 64 px/m pixels). Before =
+the shipped anchored four, after = the eight in a staged copy with the switch applied (`tools/film/cast_door_films.mjs
+feet`). Bars: sole <= 2, jump <= 12.
+
+| Pitch | Facing | Four (sole / jump) | Eight (sole / jump) | Eight vs four |
+|---:|---|---:|---:|---|
+| 70 | right | 5.08 / 6.04 FAIL | 8.88 / 8.90 FAIL | worse (+3.80 sole) |
+| 70 | down-right | U / 11.01 FAIL | 5.22 / 13.71 FAIL | sole now measurable; jump +2.70, over the bar |
+| 55 | right | 3.29 / 6.29 FAIL | 6.16 / 10.90 FAIL | worse (+2.87 sole) |
+| 55 | down-right | U / 10.31 FAIL | 4.62 / 13.02 FAIL | jump +2.71, over the bar |
+
+Cause found on the way (a probe, not shipped): `FoeShieldCardView.update_fighter` sets `scale` (HEIGHT_M 2.0 x body_scale
+/ BODY_PX 160 = 0.824 px/texel at 64 px/m) after `CastFarCard` placed the anchored drawing at its own `_base_scale`
+(1.7 x body_scale / 192 = 0.584 at p70), so every sole lands 1.41x (p55 1.2x) farther from the pivot than the
+placement planted it and slides as the drawings change. Re-planting the sole after the rescale (`cast_door_films.mjs
+keep`, the view patch applied to the staged copy only): four 2.42 / 4.34 (70 right), 2.03 / 5.09 (55 right), down-right
+U / 10.50, U / 10.43; eight 2.83 / 6.47, 2.16 / 9.61, down-right 1.39 / 12.21, 3.45 / 13.28. With it the four is still
+the better right-facing walk and neither passes every bar. The eight's second contact (drawings 5-8) is drawn unplanted
+in the p70 profile (support sole at +18, +8, +12, -34 px from the torso: drawing 7 steps forward), its first contact is
+even (+19, -4, -18, -37).
+
+Held drawings: the director's flagged facings `70_ur`, `55_right`, `55_dr` are not repeated poses (leg-mask change
+0.08 to 0.29 between neighbours) except `55_dr` 4 -> 5 (0.04); `55_down` holds near-identical legs in pairs (0.02, the
+slab hides them). Film `gtai-masters/n29/cast/door8_walk_32.mp4` (the eight, right then down-right, 32 px/m, tilt 70,
+1920x1080, 60 fps, 25.85 s); still `door8_feet_before_after_64.png` (tick 150, four left, eight right, sole brackets).
+Switching to EIGHT also needs two lines in `cast_card_kinds.gd` (not this lane's file this session): `rows()` must return
+4 for `CastDoorAnchors.FOUR` (not `SHEET`), and `cell_ratio()` must return 1.0 for both `FOUR` and `EIGHT`; the sheet swap
+itself is `FoeShieldCardView.walk_sheet`.
+
+### Re-plant shipped, n29 (brief 09)
+
+`FoeShieldCardView._rescale` (`project/features/combat/squad/foe_shield_card_view.gd`) now re-plants the anchored sole
+after the view's HEIGHT_M / BODY_PX rescale: the sole's world point under the placement's base scale is kept, the sprite
+is moved by the difference (walking drawings only; a standing door scales about its ground point as before). The
+`SOLE_PATCH` probe and the `keep` mode left `tools/film/cast_door_films.mjs`; its eight switch lost the two
+`cast_card_kinds.gd` lines, which are now in the tree (`rows()` returns 4 for `CastDoorAnchors.FOUR`, `cell_ratio()`
+returns 1.0 for `FOUR` and `EIGHT`). The switch to the eight is still four lines of `cast_door_anchors.gd` (`WALK`,
+`WALK70`, `WALK55`, `WALK_STEP_M` each name the four's table), not one value. WALK stays FOUR.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n29-door9 feet`, the tree's code, `cast_feet.tscn` at 64 px/m,
+1.6 m/s, `cast_door_feet.py`, px in the tool's 32 px/m unit). Before = `fac845dd9`'s table above. Bars: sole <= 2, jump <= 12.
+
+| Pitch | Facing | Four before | Four after | Eight before | Eight after |
+|---:|---|---:|---:|---:|---:|
+| 70 | right | 5.08 / 6.04 FAIL | 2.42 / 4.34 FAIL (jump passes) | 8.88 / 8.90 FAIL | 2.83 / 6.47 FAIL (jump passes) |
+| 70 | down-right | U / 11.01 FAIL | U / 10.50 (jump passes) | 5.22 / 13.71 FAIL | 1.39 / 12.21 FAIL (sole passes) |
+| 55 | right | 3.29 / 6.29 FAIL | 2.03 / 5.09 FAIL (0.03 over; jump passes) | 6.16 / 10.90 FAIL | 2.16 / 9.61 FAIL (jump passes) |
+| 55 | down-right | U / 10.31 FAIL | U / 10.43 (jump passes) | 4.62 / 13.02 FAIL | 3.45 / 13.28 FAIL |
+
+The after values equal the builder's `keep` probe to the hundredth, so the shipped code is the probe. The four's sole
+slide roughly halves at both pitches; no right-facing sole reaches the 2 px bar (p55 misses by 0.03), the down-right
+contact stays unmeasurable behind the slab. The four is still the better right-facing walk, so WALK stays FOUR.
+
+Size: `cast_size_beside.tscn` (run in a junction mirror, `build/film/door9-size`, so `build/look/n29-size` of the tree
+was not rewritten; `tools/art/cast_size_measure.py`): shield_robot 111 px at 64 px/m (56 at 32), same as after
+`51de13fb6`; patrol cop 86, Rivet 154. A standing door is not moved by the re-plant, so its height cannot change.
+
+Other card views: none rescales after an anchored placement. `foe_gunner_card_view.gd:62-65` and
+`foe_thug_card_view.gd:63-66` call `draw_pose` and then scale only their shadow child (`_shadow.scale`), the sprite keeps
+the placement's transform; `foe_war_card_view.gd:115-122` and `foe_turret_card_view.gd:74-77` set `position` to the
+ground point and then `scale`, but they have no anchored contact (no `CastFarCard`, the pivot is the ground point, so
+nothing slides); `foe_warden_card_view.gd` is a RefCounted row picker that draws nothing.
+
+## Door eight with the redrawn drawing 7, n29
+
+**Verdict: WALK stays FOUR.** The director's image edit `gtai-art/foes-n29/door8b/out/door8_70_right_f7.png` redraws
+drawing 7 of the p70 right facing with the support boot behind drawing 6's. The edit did not keep the other drawings'
+pixels: every drawing was re-encoded (drawings 1-6 and 8: mean 4.6-4.9 levels, max 67-85, 0.2-0.35 % of a cell over
+24 levels; their silhouettes xor 0 against the accepted source; drawing 7: mean 16.8, 25 643 px over 24, silhouette xor
+6 695 px). So `tools/art/cast_door_eight.py` cuts from `door8b/out/door8_70_right_f7_splice.png` (the accepted source
+with only drawing 7's grid cell taken from the edit) and replaces only that sheet cell (p70, right, row 7): the tone
+pass is global (it moved the other cells by 1 level), so every other cell keeps the previous sheet's bytes (byte
+compare: 39 of 40 p70 cells and all 40 p55 cells identical). Body heights unchanged (p70 four 161.5 / 146.2 / 139.5 /
+149.0 / 175.2, eight 161.5 / 146.0 / 139.5 / 148.8 / 175.5), key-lead 0, strict red 0. The registered sole of drawing 7
+moves from +12 to -6 sheet px of the torso, so the second contact reads +18.5, +8, -6, -34 (first: +19, -4.5, -17.5,
+-37): planted now. `EIGHT70` regenerated by `cast_door_soles.py`; `EIGHT_STEP_M` stays 0.1842.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n29-door11 feet`, `cast_feet.tscn` at 64 px/m, 1.6 m/s,
+`cast_door_feet.py`, px in the tool's 32 px/m unit; the four re-measured to the hundredth of brief 09's). Bars: sole <=
+2, jump <= 12.
+
+| Pitch | Facing | Four (09, = now) | Eight before (09) | Eight with f7 | Eight vs four |
+|---:|---|---:|---:|---:|---|
+| 70 | right | 2.42 / 4.34 | 2.83 / 6.47 | 2.04 / 6.47 | sole better (-0.38, 0.04 over the bar), jump worse (+2.13) |
+| 70 | down-right | U / 10.50 | 1.39 / 12.21 | 1.39 / 12.21 | jump worse (+1.71, over the bar) |
+| 55 | right | 2.03 / 5.09 | 2.16 / 9.61 | 2.16 / 9.61 | sole worse (+0.13), jump worse (+4.52) |
+| 55 | down-right | U / 10.43 | 3.45 / 13.28 | 3.45 / 13.28 | jump worse (+2.85, over the bar) |
+
+The redraw fixed what it targeted (p70 right sole 2.83 -> 2.04, the eight's best right-facing contact), but the
+eight is still worse than the four in every facing's jump, so the four ships. Where the eight still fails, by drawing
+(scratch probe `build/look/n29-door11/probe.py` over the takes): p70 right sole 2.04 on drawings 5-8 and the 6.47 jump
+on 4 -> 5; p70 down-right jump 12.21 on 8 -> 1; p55 right jump 9.61 on 7 -> 8 and sole 2.16 on 1-4; p55 down-right
+jump 13.28 on 7 -> 8 and sole 3.45 on 5-8. The largest misses are p55 drawing 8 (right and down-right: the torso
+jumps entering it) and p70 down-right drawing 1 (entering it from 8); those are the next one-row edits.
+
+One-value switch: `cast_door_soles.py` now emits `WALK70` / `WALK55` / `WALK_STEP_M` as constant ternaries on `WALK`
+(`const WALK70: Array[Vector4] = EIGHT70 if WALK == EIGHT else FOUR70`), so switching the walk is the one `WALK` line;
+the film tool's staged switch is that one line. `test_cast_door_walk.gd` pins that every derived table (and
+`CastCardKinds.foe_marks` / `foe_step`) follows `WALK`, its four-only counts now follow `WALK`, and a height test pins
+`FoeShieldCardView._rescale`'s formula: 2 m over the 160-texel body, 0.4 px per texel at 32 px/m at body_scale 1
+(0.412 at the table's 1.03, i.e. 0.824 at 64 px/m: the size scene's 111 px door), linear in body_scale.
+
+## Pile-driver on eight drawings, n29
+
+**Verdict: `WALK` stays `FOUR`. The n29 pad placement (`5d8e4b6f8`) made the four WORSE than `20be6ffaa` in every
+measured facing (body jump +7 to +21 px); reported to the director, not reverted. The eight is worse than the four
+(HEAD) in 3 of 4 facings.** Measured by `node tools/film/cast_war_films.mjs build/look/n29-war8/feet feet` (+ `feet
+eight_held`): `cast_feet.tscn` at 64 px/m, the roster's 1.8 m/s, both pitches, right and down-right, analysed by
+`tools/art/cast_war_feet.py`, px in the tool's 32 px/m unit; bars sole <= 2, jump <= 12. Four staged copies, the tree
+untouched: **before** = `FoeWarCardView` from `20be6ffaa` (held foot; `5d8e4b6f8` changed only the view and its test,
+so this is the `20be6ffaa` render without a second worktree), **four** = HEAD (`WALK = FOUR`, pad placement),
+**eight** = HEAD with `WALK = EIGHT`, **eight held** = the eight on the `20be6ffaa` view. Two sole readers: *pad* = the
+`CastWarAnchors` registered pad (four: lowest band of the cell, contact = drawings 1-2 / 3-4; eight: the foe-eight
+windows, contact = drawings 1-4 / 5-8), *n28* = `cast_feet.pile_points`, the n28 audit's reader (four only; U = it
+refuses the p70 profile: the rear pad never lifts). Under the pad placement the pad reader reads 0.00 by construction
+(the pinned point IS the measured point), so the jump is the number that tells.
+
+| Pitch | Facing | Before (pad / n28 sole, jump) | Four, HEAD | Eight, HEAD | Eight held | Eight vs four (HEAD) |
+|---:|---|---:|---:|---:|---:|---|
+| 70 | right | 12.50 / U, 16.82 | 0.00 / U, 23.80 | 0.00, 41.54 | 18.16, 10.73 | jump worse (+17.74) |
+| 70 | down-right | 18.86 / 24.36, 12.87 | 0.00 / 28.59, 28.77 | 0.00, 37.69 | 27.45, 10.37 | jump worse (+8.92) |
+| 55 | right | 21.94 / 28.11, 11.78 | 0.00 / 35.36, 32.50 | 0.00, 30.80 | 20.91, 10.74 | jump better (-1.70) |
+| 55 | down-right | 18.64 / 20.94, 12.87 | 0.00 / 43.07, 27.19 | 0.00, 31.60 | 23.86, 9.93 | jump worse (+4.41) |
+
+(n28's main numbers were 24.75 / 22.97 sole, 13.22 / 13.35 jump down-right: the "before" n28 column reproduces them
+within 2.1 px on today's tree.) Every cell FAILS a bar. **Why the placement hurts** (frame-by-frame body jumps over the
+takes): it pins one registered point per contact, but that point is not one physical pad through the contact. The
+four's lowest band flips from the front pad to the rear pad inside a contact (p70 right sole x 191.5 -> 125.5 sheet px
+in drawings 3 -> 4: the 21.7 px jump on 3 -> 4; 23.8 on 2 -> 3, the contact boundary, where the body snaps back to the
+fighter's ground). The eight's windows register the trailing pad in drawings 4 and 8 of dr / right / ur and the lead
+pad in 1-3 / 5-7, so its jumps sit inside a contact where the registered pad changes (p55 right 30.5 / 30.8 on
+3 -> 4 / 7 -> 8; down-right 29.3 / 31.6 on 7 -> 8; p70 right 23.8 on 2 -> 3, 26.2 on 7 -> 8) and on the snap to the
+fighter's ground at the contact boundary (4 -> 5: p70 right 41.5, down-right 37.7 / 30.7; 8 -> 1: down-right 23.7 /
+23.8). On the held-foot view the eight's jump PASSES in every facing (9.93 to 10.74, the four's
+before: 11.78 to 16.82) while its sole slides 18-27 px: the art carries the body evenly, the placement does not.
+What would fix it (not done, a director call): register per contact the pad that is planted through all of that
+contact's drawings (one window per contact, not per drawing), and carry the body across the contact boundary instead
+of snapping to the fighter's ground.
+
+**Planted pad per drawing** (read from the packed sheets, `gtai-art/foes-n29/war8/STATE.md`; L / R = screen-left /
+screen-right pad, "blob" = both pads overlap in silhouette) for the measured facings, and what the eight's anchor
+registers: p70 right R R L L R R R L (the support moves front -> rear twice a cycle, not a 4 / 4 exchange; registered:
+front front rear rear front front front rear); p70 down-right L L L R R R R R; p55 right R R R L R R R L (row 2
+repeats row 1); p55 down-right L L L R R R R R. The four (`war_machine_armed_walk.png`): the rear pad flat in all four
+p70 profile drawings (n28).
+
+Files: `tools/film/cast_war_films.mjs` (the `cast_door_films.mjs` twin: stills / clip / feet; feet walks `before`,
+`four`, `eight`, `eight_held`), `tools/art/cast_war_feet.py` (pad / n28 readers, `--film-soles`), a `war_machine` step
+entry in `project/dev/cast/cast_feet.gd` (`CastWarAnchors.WALK_STEP_M`). `test_cast_war_machine.gd`: the stand-row pins
+now follow `WALK` (`_walk()` / `_stand_row()`), so a later `WALK = EIGHT` is the one generator line.
+
+**Placement reverted (director, 06:28).** `FoeWarCardView` is back to its `20be6ffaa` held-foot behaviour (the one-value
+`WALK` switch, `walk_sheet` / `walk_rows` / `walk_step_m` kept; `_plant` / `pad_local` gone), `WALK` stays `FOUR`; the
+pad-pinned test is dropped, the held-walk test is the `20be6ffaa` one, the stand-row pins still follow `WALK`. Re-run
+(`node tools/film/cast_war_films.mjs build/look/n29-war8/feet_reverted feet four`): pad sole / jump 70 right 12.50 /
+16.82, 70 down-right 18.86 / 12.87, 55 right 21.94 / 11.78, 55 down-right 18.64 / 12.87; n28 sole U / 24.36 / 28.11 /
+20.94: identical to the "before" column (difference 0.00 px). With the placement gone the "eight held" column is what
+`WALK = EIGHT` would ship: jump passes in every facing (9.93 to 10.74), sole slides 18 to 27 px (the four: 12.50 to
+21.94); the owner decides. `war8_feet_before_after_64.png` = the four held (left, ships) beside the eight held (right,
+staged), and `war8_walk_32.mp4` = the eight held as a staged preview.
+
+## Heights in size_beside_32.mp4, n29
+
+Brief n29-cast-13. Film `gtai-masters/n29/cast/size_beside_32.mp4` (1920x1080, 33.75 s, 32 px/m, tilt 70; its on-screen labels are nominal: 50 px x actor scale). Tool `tools/art/cast_film_heights.py` over 51 frames (1.5 fps, `build/look/n29-size-film/all/`); 50 frames separated all 12 figures. Method: camera and street are static and the row walks, so the per-pixel median of 26 frames is the empty street; a figure is the changed pixels (sum |frame - median| > 60) minus the ground shadow (an even darkening: frame/median 0.45-0.95 with the same ratio in all channels, spread < 0.12), grouped by connected components (5x9 dilation), left to right = warden, contractor, gunner, rocket_trooper, sentry_turret, mulroney, door_carrier, war_machine, cop 0.92, cop 0.85, cop 1.10, rivet. The label bands are cut off at the first dense text row minus 5 px. Height = first to last row with at least 2 changed pixels. Looked at: `crop_{rivet,war_machine,door_carrier,sentry_turret,mulroney}_{10,30}.png` (4x, top red line, bottom green line) and `boxes_*.png`.
+
+Stills column = part B applied, 32 px/m. Unjittered cop: the three film cops divided by their nominal scale (46 / 0.92 = 50.0, 41 / 0.85 = 48.2, 53.5 / 1.10 = 48.6) against the stills' 50.3.
+
+| figure | frames | film px median (min-max) | stills 32 px/m | delta | / Rivet (film, stills) | verdict |
+|---|---|---|---|---|---|---|
+| appliance_warden | 50 | 51 (43-80) | 51 | 0 | 0.64, 0.66 | PASS |
+| contractor | 50 | 50 (34-84) | 49 | +1 | 0.63, 0.64 | PASS |
+| robot_gunner | 50 | 55 (42-65) | 55 | 0 | 0.69, 0.71 | PASS |
+| rocket_trooper | 50 | 48 (37-53) | 51 | -3 | 0.60, 0.66 | marginal: the film draws the lancer in his walk cell, the still in the aim cell |
+| sentry_turret | 50 | 45 (41-48), lower bound | 53 | n/a | - | NOT SEPARABLE: the plate's bottom runs under the name label (stills: plate bottom 50 px below its ground point); every frame hits the label cut, so the 45 is a lower bound, not a height |
+| sergeant_mulroney | 50 | 54 (49-65) | 53 | +1 | 0.68, 0.69 | PASS |
+| shield_robot (door carrier) | 50 | 63 (54-75) | 56 | +7 | 0.79, 0.73 | OVER the 2 px bar: eye check (`crop_door_carrier_10.png`) shows him whole, facing down, door held in front, top hazard stripe to boots 63; the still faces (1,1) in the idle cell. Cause not measured here (facing and walk cell scale are the candidates) |
+| war_machine | 50 | 73.5 (67-82) with its ground shadow | 65 | +8.5 | 0.92, 0.84 | SHADOW NOT REMOVED (it is darker than 0.45 of the street): eye read from the crops, lamp top to foot bottom, 64 (frame 10) and 68 (frame 30): within 3 of the still, no number is claimed beyond that |
+| cop 0.92 / 0.85 / 1.10 | 50 | 46 / 41 / 53.5 | 50.3 unjittered | -0.3 / -2.1 / -1.7 | 0.58 / 0.51 / 0.67 | PASS within 2.1 (unjittered 50.0 / 48.2 / 48.6) |
+| rivet | 50 | 80 (74-85) | 77 | +3 | 1.00 | +3: walk bob and a facing-down pose; looked at, whole, soles at the lowest row (`crop_rivet_10.png`) |
+
+Could not do: the turret (label overlap, above) and a clean war machine number (shadow). A looser shadow rule (0.2-0.97) was tried and rejected: it also ate outlines (Rivet 76, unjittered cops 47-48). Nothing here is re-rendered; Godot was not run.
+
+## Door carrier height, film vs stills, n29
+
+Brief n29-cast-14. Same 50 frames and method as the section above; `tools/art/cast_film_heights.py` now also writes each figure's bounding box into `h.json`, and the facing of a frame is the direction of the figure's bottom-centre move to the next frame (dominant axis, moves under 8 px skipped; frames at a corner are noisy). Looked at: `build/look/n29-door-height/sheet_door_carrier.png` and `sheet_rivet.png` (4x, frames 3 down, 7 right, 10 up, 14 left, 23 up).
+
+| figure | facing | frames | height median (min-max) |
+|---|---|---|---|
+| shield_robot (door carrier) | down | 18 | 62 (54-67) |
+| | right | 10 | 55 (54-64) |
+| | up | 14 | 69 (64-74) |
+| | left | 7 | 54 (54-73) |
+| rivet | down | 18 | 77 (75-84) |
+| | right | 8 | 78.5 (74-81) |
+| | up | 16 | 81.5 (74-85) |
+| | left | 7 | 78 (75-83) |
+
+Cause: facing. The door carrier is a different drawing per facing: seen from the back (walking up) the door's hazard-striped top edge is held above the head and he reads 64-74 (crop f10, f23); walking down 62; in side view the door is a vertical pole beside him and the figure is 54-55 (crop f7, f14), which matches the 56 of the still (facing (1,1)). The film median 63 is the mix of the four facings (the rectangle walk spends most frames going down and up), so the 7 px gap to the still is the up/down door pose, not a scale error. The max values at corners (73, 75) are the up pose caught early.
+Rivet 80 vs 77: the same effect, smaller: down 77 (= still), sides 78-78.5, up 81.5 (back view, helmet and stride taller); the film median is the facing mix, +3 over the down-facing still. Not measured: whether the up-facing door pose is intended art (it needs the sheet, not this film). Godot not run, no code changed beyond the tool's json.
