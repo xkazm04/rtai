@@ -104,14 +104,14 @@ static func foe_step(file: String) -> float:
 
 ## Drawings per facing: the door carrier's shipped four, else eight for an eight or anchored sheet.
 static func rows(path: String, patrol_eight: bool) -> int:
-	if path.get_file() == CastDoorAnchors.SHEET:
+	if path.get_file() == CastDoorAnchors.FOUR:
 		return 4
 	return 8 if patrol_eight or anchored(path) else 4
 
 
 ## The door carrier keeps its shipped 192 px sheet; other anchored sheets are 256 px.
 static func cell_ratio(path: String, ratio: float) -> float:
-	return 1.0 if path.get_file() == CastDoorAnchors.SHEET else ratio
+	return 1.0 if path.get_file() in [CastDoorAnchors.FOUR, CastDoorAnchors.EIGHT] else ratio
 
 
 ## A walk cell's fill: the padded and eight-drawing cells carry the 256/192 cell ratio.

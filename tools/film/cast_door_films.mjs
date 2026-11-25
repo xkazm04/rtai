@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 // The door carrier at a true 1920 x 1080 on its two walks. "four" = the committed tree (the shipped four-drawing
 // anchored walk while CastDoorAnchors.WALK is FOUR); "eight" = a staged copy whose features/characters files select
-// the n29 eight-drawing walk (CastDoorAnchors.WALK = EIGHT plus the two CastCardKinds lines the switch needs: rows
-// and cell ratio keyed on FOUR; FoeShieldCardView.walk_sheet does the sheet swap; the real tree is never touched).
+// the n29 eight-drawing walk (CastDoorAnchors.WALK = EIGHT; CastCardKinds keys rows and cell ratio on FOUR / EIGHT and
+// FoeShieldCardView.walk_sheet does the sheet swap; the real tree is never touched). FoeShieldCardView re-plants the
+// anchored sole after its height rescale in the tree since n29-09, so the old "keep" probe is gone.
 //   stills: 64 px/m, right facing, the same tick, four left | eight right -> door8_feet_before_after_64.png
 //   clip:   the eight at 32 px/m, right then down-right -> door8_walk_32.mp4
 //   feet:   cast_feet.tscn at 64 px/m on shield_robot, both pitches, both walks, analysed by cast_door_feet.py
-//   keep:   feet on both walks with SOLE_PATCH too (a probe: FoeShieldCardView's HEIGHT_M/BODY_PX rescale after the
-//           anchored placement moves the sole; the patch re-plants it), outputs feet_four_keep / feet_eight_keep
-// usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|feet|keep|all]
+// usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|feet|all]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
   writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -17,8 +16,8 @@ import { ROOT } from '../lib/repo.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 
 const [out, what = 'all'] = process.argv.slice(2);
-if (!out || !['stills', 'clip', 'feet', 'keep', 'all'].includes(what)) {
-  console.error('usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|feet|keep|all]'); process.exit(2);
+if (!out || !['stills', 'clip', 'feet', 'all'].includes(what)) {
+  console.error('usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|feet|all]'); process.exit(2);
 }
 const SPEED = 1.6;
 const CHARS = 'features/characters';
@@ -28,34 +27,7 @@ const EIGHT_PATCH = [
   ['cast_door_anchors.gd', '= FOUR70\n', '= EIGHT70\n'],
   ['cast_door_anchors.gd', '= FOUR55\n', '= EIGHT55\n'],
   ['cast_door_anchors.gd', '= FOUR_STEP_M\n', '= EIGHT_STEP_M\n'],
-  ['cast_card_kinds.gd', 'if path.get_file() == CastDoorAnchors.SHEET:\n\t\treturn 4',
-    'if path.get_file() == CastDoorAnchors.FOUR:\n\t\treturn 4'],
-  ['cast_card_kinds.gd', 'return 1.0 if path.get_file() == CastDoorAnchors.SHEET else ratio',
-    'return 1.0 if path.get_file() in [CastDoorAnchors.FOUR, CastDoorAnchors.EIGHT] else ratio'],
 ];
-
-const VIEW = '../combat/squad/foe_shield_card_view.gd';
-const SCALE = '\tscale = Vector2.ONE * HEIGHT_M * pose.sheets.body_scale * SimConst.PX_PER_M / BODY_PX\n';
-const DRAW = '\tdraw_pose(pose, h, moved, arena.tick)\n';
-const SOLE_LINES = [
-  DRAW.slice(0, -1),
-  '\tvar sole: Vector2 = _sole_local()',
-  '\tvar planted: Vector2 = transform * sole',
-  SCALE.slice(0, -1),
-  '\tif moved:',
-  '\t\tposition += planted - transform * sole',
-];
-const SOLE_FUNC = [
-  'func _sole_local() -> Vector2:',
-  '\tif _contact == null or _contact.registered == null:',
-  '\t\treturn Vector2.ZERO',
-  '\tvar p: StreetPatrolPose = _contact.registered',
-  '\tvar ink: Vector4 = p.marks[p.face * p.count + p.row]',
-  '\treturn Vector2(-ink.x if flip_h else ink.x, ink.y)',
-];
-// Re-plant right after the placement, before the hold (a held cell then keeps the re-planted ground point).
-const SOLE_PATCH = [[VIEW, DRAW, SOLE_LINES.join('\n') + '\n'],
-  [VIEW, '\n\n\nstatic func attack_row', '\n\n\n' + SOLE_FUNC.join('\n') + '\n\n\nstatic func attack_row']];
 
 function link(a, b) { symlinkSync(a, b, process.platform === 'win32' ? 'junction' : 'dir'); }
 
@@ -69,13 +41,13 @@ function mirror(source, dst, deep) {
   }
 }
 
-function stageProject(dir, eight, keep) {
+function stageProject(dir, eight) {
   const source = join(ROOT, 'project'), dst = join(dir, 'project');
   mirror(source, dst, { features: { characters: {}, combat: { squad: {} } } });
   const config = readFileSync(join(source, 'project.godot'), 'utf8');
   writeFileSync(join(dst, 'project.godot'), config.replace(/viewport_width=\d+/, 'viewport_width=1920')
     .replace(/viewport_height=\d+/, 'viewport_height=1080') + '\n[threading]\nworker_pool/max_threads=4\n');
-  for (const [file, from, to] of [...(eight ? EIGHT_PATCH : []), ...(keep ? SOLE_PATCH : [])]) {
+  for (const [file, from, to] of eight ? EIGHT_PATCH : []) {
     const path = join(dst, CHARS, file), text = readFileSync(path, 'utf8');
     if (!text.includes(from)) throw Error(`eight switch: ${file} has no "${from}"`);
     writeFileSync(path, text.replace(from, to));
@@ -85,10 +57,10 @@ function stageProject(dir, eight, keep) {
 const work = join(ROOT, 'build', 'film');
 mkdirSync(work, { recursive: true });
 const dirs = {};
-const walks = what === 'keep' ? ['four_keep', 'eight_keep'] : ['four', 'eight'];
+const walks = ['four', 'eight'];
 for (const walk of walks) {
-  dirs[walk] = mkdtempSync(join(work, `door8-${walk}-`));
-  stageProject(dirs[walk], walk.startsWith('eight'), walk.endsWith('_keep'));
+  dirs[walk] = mkdtempSync(join(work, `door9-${walk}-`));
+  stageProject(dirs[walk], walk === 'eight');
 }
 const outDir = resolve(out);
 mkdirSync(outDir, { recursive: true });
@@ -139,7 +111,7 @@ if (what === 'clip' || what === 'all') {
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list,
     '-c', 'copy', join(outDir, 'door8_walk_32.mp4')], { windowsHide: true, stdio: 'inherit' });
 }
-if (what === 'feet' || what === 'keep' || what === 'all') {
+if (what === 'feet' || what === 'all') {
   for (const walk of walks) {
     const dest = join(outDir, `feet_${walk}`);
     mkdirSync(dest, { recursive: true });

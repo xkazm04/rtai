@@ -648,3 +648,37 @@ slab hides them). Film `gtai-masters/n29/cast/door8_walk_32.mp4` (the eight, rig
 Switching to EIGHT also needs two lines in `cast_card_kinds.gd` (not this lane's file this session): `rows()` must return
 4 for `CastDoorAnchors.FOUR` (not `SHEET`), and `cell_ratio()` must return 1.0 for both `FOUR` and `EIGHT`; the sheet swap
 itself is `FoeShieldCardView.walk_sheet`.
+
+### Re-plant shipped, n29 (brief 09)
+
+`FoeShieldCardView._rescale` (`project/features/combat/squad/foe_shield_card_view.gd`) now re-plants the anchored sole
+after the view's HEIGHT_M / BODY_PX rescale: the sole's world point under the placement's base scale is kept, the sprite
+is moved by the difference (walking drawings only; a standing door scales about its ground point as before). The
+`SOLE_PATCH` probe and the `keep` mode left `tools/film/cast_door_films.mjs`; its eight switch lost the two
+`cast_card_kinds.gd` lines, which are now in the tree (`rows()` returns 4 for `CastDoorAnchors.FOUR`, `cell_ratio()`
+returns 1.0 for `FOUR` and `EIGHT`). The switch to the eight is still four lines of `cast_door_anchors.gd` (`WALK`,
+`WALK70`, `WALK55`, `WALK_STEP_M` each name the four's table), not one value. WALK stays FOUR.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n29-door9 feet`, the tree's code, `cast_feet.tscn` at 64 px/m,
+1.6 m/s, `cast_door_feet.py`, px in the tool's 32 px/m unit). Before = `fac845dd9`'s table above. Bars: sole <= 2, jump <= 12.
+
+| Pitch | Facing | Four before | Four after | Eight before | Eight after |
+|---:|---|---:|---:|---:|---:|
+| 70 | right | 5.08 / 6.04 FAIL | 2.42 / 4.34 FAIL (jump passes) | 8.88 / 8.90 FAIL | 2.83 / 6.47 FAIL (jump passes) |
+| 70 | down-right | U / 11.01 FAIL | U / 10.50 (jump passes) | 5.22 / 13.71 FAIL | 1.39 / 12.21 FAIL (sole passes) |
+| 55 | right | 3.29 / 6.29 FAIL | 2.03 / 5.09 FAIL (0.03 over; jump passes) | 6.16 / 10.90 FAIL | 2.16 / 9.61 FAIL (jump passes) |
+| 55 | down-right | U / 10.31 FAIL | U / 10.43 (jump passes) | 4.62 / 13.02 FAIL | 3.45 / 13.28 FAIL |
+
+The after values equal the builder's `keep` probe to the hundredth, so the shipped code is the probe. The four's sole
+slide roughly halves at both pitches; no right-facing sole reaches the 2 px bar (p55 misses by 0.03), the down-right
+contact stays unmeasurable behind the slab. The four is still the better right-facing walk, so WALK stays FOUR.
+
+Size: `cast_size_beside.tscn` (run in a junction mirror, `build/film/door9-size`, so `build/look/n29-size` of the tree
+was not rewritten; `tools/art/cast_size_measure.py`): shield_robot 111 px at 64 px/m (56 at 32), same as after
+`51de13fb6`; patrol cop 86, Rivet 154. A standing door is not moved by the re-plant, so its height cannot change.
+
+Other card views: none rescales after an anchored placement. `foe_gunner_card_view.gd:62-65` and
+`foe_thug_card_view.gd:63-66` call `draw_pose` and then scale only their shadow child (`_shadow.scale`), the sprite keeps
+the placement's transform; `foe_war_card_view.gd:115-122` and `foe_turret_card_view.gd:74-77` set `position` to the
+ground point and then `scale`, but they have no anchored contact (no `CastFarCard`, the pivot is the ground point, so
+nothing slides); `foe_warden_card_view.gd` is a RefCounted row picker that draws nothing.
