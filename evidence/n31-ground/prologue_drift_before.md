@@ -56,9 +56,15 @@ viewport's logical px:
   `CONTENT_SCALE_MODE_DISABLED`, s = 1, where the only error left is the 0.5 px rounding swim
   (`print_stage.gd:107` sets the camera unsnapped while `world_px` is rounded).
 
-Quest 1's city and the gauntlet: `CityView` builds `world_px` the same way
+Gauntlet, measured (log only, `drift_log_probe.gd`, `res://dev/gauntlet/gauntlet.tscn -- --bot=average`
+WITHOUT `--pick-view`, because `--pick-view` is its film path and sets `CONTENT_SCALE_MODE_DISABLED`,
+`gauntlet.gd:102`): stretch 1.35, 900 frames, the floor moved (-2108.4, -143.3) px, the print
+(-1562, -106): **548 px** of print drift with the player over 15 s, per frame max 3.29 / mean 0.92 px.
+Same cause. (Log only: in the prologue the log and the images agreed within 0.1 px.)
+
+Quest 1's city: NOT measured. `CityView` builds `world_px` the same way
 (`project/features/city/view/city_view.gd:167-171`: snapped in LOGICAL px, `- get_viewport_rect().size * 0.5`),
-so by code they share the cause; NOT measured in this call (see report).
+so by code it shares the cause.
 
 ## Proposed fix (next call)
 

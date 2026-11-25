@@ -3805,6 +3805,33 @@
      "print_zero_peak": 0.0008664789840319581
     }
    ]
+  },
+  "gauntlet_play32_log": {
+   "what": "res://dev/gauntlet/gauntlet.tscn --bot=average, project canvas_items stretch, log only (drift_log_probe.gd)",
+   "stretch": [
+    1.35021102428436,
+    1.35000002384186,
+    0,
+    0
+   ],
+   "pan": {
+    "start": 0,
+    "end": 899,
+    "camera_px": [
+     -2108.3761883396683,
+     -143.34665933090912
+    ],
+    "print_px": [
+     -1562.0,
+     -106.0
+    ],
+    "drift_px": [
+     546.3761883396683,
+     37.34665933090912
+    ],
+    "per_tick_max_px": 3.2914073146986302,
+    "per_tick_mean_px": 0.9160928536736428
+   }
   }
  }
 }
