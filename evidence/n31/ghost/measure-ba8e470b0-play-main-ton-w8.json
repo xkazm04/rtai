@@ -1,0 +1,1176 @@
+{
+  "schema": "gtai.ghost-n31-measure-summary/1",
+  "rev": "ba8e470b0",
+  "args": [
+    "--form=tonnage",
+    "--seeds=10",
+    "--waves=8"
+  ],
+  "mode": "play",
+  "run_s": 117.88,
+  "godot_wall_s": 106.587,
+  "profile": "average",
+  "summary": [
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 1",
+      "deploys": 10,
+      "mean_hits": 3.2,
+      "median_hits": 3,
+      "mean_kills": 2.8,
+      "share_hit": 0.6274509803921569,
+      "mean_near": 5.1,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 2",
+      "deploys": 10,
+      "mean_hits": 2.2,
+      "median_hits": 2.5,
+      "mean_kills": 2,
+      "share_hit": 0.5116279069767442,
+      "mean_near": 4.3,
+      "zero_hit": 1,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 3",
+      "deploys": 9,
+      "mean_hits": 2.6666666666666665,
+      "median_hits": 3,
+      "mean_kills": 2.4444444444444446,
+      "share_hit": 0.5853658536585366,
+      "mean_near": 4.555555555555555,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 4",
+      "deploys": 10,
+      "mean_hits": 3.1,
+      "median_hits": 3,
+      "mean_kills": 2.6,
+      "share_hit": 0.5849056603773585,
+      "mean_near": 5.3,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 5",
+      "deploys": 12,
+      "mean_hits": 2.75,
+      "median_hits": 3,
+      "mean_kills": 2.3333333333333335,
+      "share_hit": 0.66,
+      "mean_near": 4.166666666666667,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 6",
+      "deploys": 10,
+      "mean_hits": 3.5,
+      "median_hits": 3,
+      "mean_kills": 3,
+      "share_hit": 0.603448275862069,
+      "mean_near": 5.8,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 7",
+      "deploys": 7,
+      "mean_hits": 2.5714285714285716,
+      "median_hits": 3,
+      "mean_kills": 2.4285714285714284,
+      "share_hit": 0.5294117647058824,
+      "mean_near": 4.857142857142857,
+      "zero_hit": 1,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 8",
+      "deploys": 11,
+      "mean_hits": 2.4545454545454546,
+      "median_hits": 3,
+      "mean_kills": 1.7272727272727273,
+      "share_hit": 0.5294117647058824,
+      "mean_near": 4.636363636363637,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 9",
+      "deploys": 12,
+      "mean_hits": 2.9166666666666665,
+      "median_hits": 3,
+      "mean_kills": 2.0833333333333335,
+      "share_hit": 0.6140350877192983,
+      "mean_near": 4.75,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "seed 10",
+      "deploys": 15,
+      "mean_hits": 2.6666666666666665,
+      "median_hits": 3,
+      "mean_kills": 2.1333333333333333,
+      "share_hit": 0.5633802816901409,
+      "mean_near": 4.733333333333333,
+      "zero_hit": 0,
+      "press_to_damage_ticks": 1
+    },
+    {
+      "mode": "play",
+      "variant": "half r4 at spot (main)",
+      "group": "total",
+      "deploys": 106,
+      "mean_hits": 2.80188679245283,
+      "median_hits": 3,
+      "mean_kills": 2.330188679245283,
+      "share_hit": 0.5834970530451866,
+      "mean_near": 4.80188679245283,
+      "zero_hit": 2,
+      "press_to_damage_ticks": 1
+    }
+  ],
+  "report": {
+    "form": "tonnage",
+    "mode": "play",
+    "profile": "average",
+    "rows": [
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 446,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 1025,
+            "wave": 1
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 10,
+            "press_to_damage_ticks": 1,
+            "tick": 1537,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 2788,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 3455,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 4008,
+            "wave": 3
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 4703,
+            "wave": 4
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 6213,
+            "wave": 5
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 7098,
+            "wave": 6
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 8380,
+            "wave": 7
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 1,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 10831,
+        "wave": 8
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 524,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 1146,
+            "wave": 1
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 9,
+            "press_to_damage_ticks": 1,
+            "tick": 1933,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 2795,
+            "wave": 3
+          },
+          {
+            "hits": 2,
+            "kills": 2,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 3277,
+            "wave": 4
+          },
+          {
+            "hits": 0,
+            "kills": 0,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 4110,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 4592,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 1,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 5074,
+            "wave": 5
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 5891,
+            "wave": 6
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 7039,
+            "wave": 7
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 2,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 9435,
+        "wave": 8
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 342,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 824,
+            "wave": 1
+          },
+          {
+            "hits": 2,
+            "kills": 2,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 1770,
+            "wave": 2
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 2252,
+            "wave": 2
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 3259,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 5033,
+            "wave": 4
+          },
+          {
+            "hits": 2,
+            "kills": 2,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 5515,
+            "wave": 4
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 6832,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 1,
+            "press_to_damage_ticks": 1,
+            "tick": 7314,
+            "wave": 5
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 3,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 7479,
+        "wave": 5
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 343,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 993,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 1693,
+            "wave": 2
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 2175,
+            "wave": 2
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 9,
+            "press_to_damage_ticks": 1,
+            "tick": 3040,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 3522,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 9,
+            "press_to_damage_ticks": 1,
+            "tick": 4060,
+            "wave": 4
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 4745,
+            "wave": 5
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 5715,
+            "wave": 6
+          },
+          {
+            "hits": 3,
+            "kills": 0,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 6387,
+            "wave": 6
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 4,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 7236,
+        "wave": 6
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 317,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 901,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 1443,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 2100,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 2732,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 3214,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 4232,
+            "wave": 4
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 4774,
+            "wave": 4
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 5970,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 1,
+            "press_to_damage_ticks": 1,
+            "tick": 7044,
+            "wave": 5
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 9597,
+            "wave": 7
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 11490,
+            "wave": 8
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 5,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 12495,
+        "wave": 8
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 6,
+            "kills": 6,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 523,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 1005,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 1487,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 2333,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 2916,
+            "wave": 3
+          },
+          {
+            "hits": 2,
+            "kills": 2,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 3493,
+            "wave": 4
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 4488,
+            "wave": 5
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 5887,
+            "wave": 6
+          },
+          {
+            "hits": 5,
+            "kills": 2,
+            "near": 8,
+            "press_to_damage_ticks": 1,
+            "tick": 6369,
+            "wave": 7
+          },
+          {
+            "hits": 6,
+            "kills": 6,
+            "near": 11,
+            "press_to_damage_ticks": 1,
+            "tick": 7589,
+            "wave": 8
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 6,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 8513,
+        "wave": 8
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 455,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 937,
+            "wave": 1
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 10,
+            "press_to_damage_ticks": 1,
+            "tick": 1449,
+            "wave": 2
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 1961,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 2988,
+            "wave": 4
+          },
+          {
+            "hits": 0,
+            "kills": 0,
+            "near": 0,
+            "press_to_damage_ticks": 1,
+            "tick": 3688,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 4170,
+            "wave": 5
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 7,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 4337,
+        "wave": 5
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 451,
+            "wave": 1
+          },
+          {
+            "hits": 4,
+            "kills": 4,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 993,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 2773,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 8,
+            "press_to_damage_ticks": 1,
+            "tick": 3396,
+            "wave": 4
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 4200,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 4770,
+            "wave": 5
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 5692,
+            "wave": 6
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 6554,
+            "wave": 6
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 7588,
+            "wave": 7
+          },
+          {
+            "hits": 2,
+            "kills": 2,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 8100,
+            "wave": 7
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 9,
+            "press_to_damage_ticks": 1,
+            "tick": 9622,
+            "wave": 8
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 8,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 10284,
+        "wave": 8
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 355,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 994,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 1630,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 2931,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 3766,
+            "wave": 4
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 4248,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 1,
+            "press_to_damage_ticks": 1,
+            "tick": 4779,
+            "wave": 5
+          },
+          {
+            "hits": 4,
+            "kills": 3,
+            "near": 6,
+            "press_to_damage_ticks": 1,
+            "tick": 5414,
+            "wave": 6
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 6021,
+            "wave": 6
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 7031,
+            "wave": 7
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 7860,
+            "wave": 8
+          },
+          {
+            "hits": 3,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 8354,
+            "wave": 8
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 9,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 9298,
+        "wave": 8
+      },
+      {
+        "at": "spot",
+        "charge_ticks": 0,
+        "deploys": [
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 322,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 936,
+            "wave": 1
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 10,
+            "press_to_damage_ticks": 1,
+            "tick": 1708,
+            "wave": 2
+          },
+          {
+            "hits": 2,
+            "kills": 2,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 2349,
+            "wave": 2
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 3126,
+            "wave": 3
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 3996,
+            "wave": 4
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 4653,
+            "wave": 4
+          },
+          {
+            "hits": 1,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 5853,
+            "wave": 5
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 2,
+            "press_to_damage_ticks": 1,
+            "tick": 6335,
+            "wave": 5
+          },
+          {
+            "hits": 1,
+            "kills": 0,
+            "near": 1,
+            "press_to_damage_ticks": 1,
+            "tick": 6847,
+            "wave": 5
+          },
+          {
+            "hits": 3,
+            "kills": 3,
+            "near": 4,
+            "press_to_damage_ticks": 1,
+            "tick": 8465,
+            "wave": 6
+          },
+          {
+            "hits": 3,
+            "kills": 2,
+            "near": 7,
+            "press_to_damage_ticks": 1,
+            "tick": 10195,
+            "wave": 7
+          },
+          {
+            "hits": 3,
+            "kills": 0,
+            "near": 5,
+            "press_to_damage_ticks": 1,
+            "tick": 11320,
+            "wave": 7
+          },
+          {
+            "hits": 2,
+            "kills": 1,
+            "near": 3,
+            "press_to_damage_ticks": 1,
+            "tick": 12603,
+            "wave": 7
+          },
+          {
+            "hits": 5,
+            "kills": 4,
+            "near": 13,
+            "press_to_damage_ticks": 1,
+            "tick": 13115,
+            "wave": 8
+          }
+        ],
+        "done": true,
+        "fit": "shipped",
+        "label": "half r4.0",
+        "opened": true,
+        "radius_m": 4,
+        "seed": 10,
+        "shape": "half",
+        "shipped": true,
+        "ticks": 13355,
+        "wave": 8
+      }
+    ],
+    "schema": "gtai.ghost-n31-measure/1",
+    "tick_hz": 60,
+    "wall_s": 106.587
+  }
+}
