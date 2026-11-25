@@ -1,7 +1,7 @@
 # REPORT lane keys, run n29 (2026-11-25 01:15 to 09:15)
 
 Branch `n29-keys` from `main` `c649a15d6`; worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`. Builders: Claude sub-agents
-started from the director's session (Sonnet for wiring/evidence, Opus for art rounds). Final gate: `node tools/gate/run.mjs --rev=HEAD` on `5d956b26e` (all code; later commits are docs only): **`gate: PASS`** (05:37 to 05:54): PASS lint (19 checks, 2269 files), PASS unit-tests (4238 passed, 0 failed, 2 skipped), PASS scenario-tests (68 passed), PASS parity (bit for bit, mutation caught at step 629), PASS selftest, PASS export-audit (997/0); `build/gate/5d956b26e27f/gate.json`. {REELS}.
+started from the director's session (Sonnet for wiring/evidence, Opus for art rounds). Final gate: `node tools/gate/run.mjs --rev=HEAD --reels` on `cbca1a8c9` (all code and art; later commits are docs and evidence only), 06:13 to 06:52: **`gate: PASS`**: PASS lint (19 checks, 2269 files), PASS unit-tests (4238 passed, 0 failed, 2 skipped), PASS scenario-tests (68 passed), PASS parity (bit for bit, mutation caught at step 629), PASS selftest, PASS export-audit (997/0), PASS reels (exit 0); `build/gate/cbca1a8c991f/gate.json`. Run before the 08:45 freeze on purpose: the lane's code and art froze at `e553b6b9e` (06:12), and reels started after 08:45 would end past 09:15. The earlier no-reels gate on `5d956b26e` also passed (`build/gate/5d956b26e27f/gate.json`).
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, best first). Images 58/60.
 
 ## What works
