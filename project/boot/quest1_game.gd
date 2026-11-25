@@ -235,8 +235,7 @@ func _settings_panel() -> Quest1SettingsPanel:
 ## today's ship) the sprite cast stays, and the ghost forms and voices show through StoryForms
 ## (the rigs bring their own, StoryForms.follow folds it). RIGS_UNDER_CARDS false = sprites always.
 func _dev_rigs() -> void:
-	var dev: bool = LaunchArgs.has("--rigs") and OS.is_debug_build()
-	if not dev and not (RIGS_UNDER_CARDS and ViewMode.shared().cards):
+	if not QuestKillFeed.rig_cast(RIGS_UNDER_CARDS):
 		_story = StoryForms.attach(self, view, session.stage, settings.reduced_motion)
 		return
 	var cast: ArenaRigs = ArenaRigs.new()
@@ -244,6 +243,7 @@ func _dev_rigs() -> void:
 	var ok: bool = cast.attach(session.stage, view, session.world.context())
 	HideTuck.attach(cast, session.stage, ok)  # logs; n15: hide spots
 	StoryForms.follow(self, view, session.stage, cast.ghost_view)
+	QuestKillFeed.attach(session.kills_feed, self, view)  # n31 melee: kills over the rigs
 
 
 ## The cast (_dev_rigs), then the ghosts' attack views over either cast (lane ghost-powers,
