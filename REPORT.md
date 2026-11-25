@@ -60,6 +60,9 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   Still `stills/nuke_floor_specks_pair_64.png`. `evidence/n30/floor/specks.md`.
 - Frame 0 (`blast_0.png`) the same way (`93d37aea1`): its grain specks (no amber/ink fringe in that cell) -> amber; rocket
   t65-68 vermilion (not blood) 6 / 8 / 6 / 10 -> 0, 0 px outside the box. `stills/rocket_blast0_specks_pair_64.png`.
+- 32 px/m film `films/blast_floor_after_32.mp4` 1920x1080 60/1 25.0 s beside `films/round_band_32.mp4` (same chapters): at
+  8.3 s (nuke floor) vermilion px in the frame 2149 -> 491, at 1.3 s (rocket) 324 -> 252; the thin outline on the amber edge
+  is gone (`stills/blast_floor_32_pair.png`).
 
 ### 6a. `current_look.gd` draw() survivors pinned (`5fd6c1eaa`, `2566b97d0`)
 - `CurrentLook.k_of(ci)` and `const ANTIALIAS` carry draw()'s scale and AA flag (pixels identical by construction); 4 tests,
@@ -146,7 +149,8 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - Session 4: c17 rim-ink 18 accepted (negative: deeper ink lowers contrast); c18 blast-specks (Opus) 29 accepted (found the
   print's nearest-ink snap, fixed the cell); c19 rim-wide 14 accepted (negative); c20 blast0 14 accepted; c21 decisions 1
   accepted. What I would brief differently: ask for the cause before a fix (c07b tried sprite fixes blind; c18 explained it
-  in one call by reading the print shader first).
+  in one call by reading the print shader first). c22 floor-film 2 accepted-partial (film rendered, its Bash was then
+  denied; I finished the copy, ffprobe and still).
 - Session 3: c09 street-identity 14 accepted; c10 bond-natural 11 accepted; c13 split-test 15 accepted; c12 rim-proof 29
   accepted; c14 thin 3|4 still 2 accepted; c15 decisions 1 accepted; c16 rim film 3 accepted (compared the wrong second; re-checked).
 - Session 2: c04 explosion-rim 30 accepted-partial (data in, its takes missed the light: brief should have named the tick
