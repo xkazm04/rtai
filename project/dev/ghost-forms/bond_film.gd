@@ -65,7 +65,7 @@ func _tick() -> int:
 ## gauntlet starts with no ghost owned, so every ghost's bond is filled: each is near master the
 ## moment a card hands it over.
 func _fill(forms: GhostForms) -> void:
-	var ids: Array[StringName] = forms.table.order if _prefill > 0 else []
+	var ids: Array[StringName] = forms.table.order.slice(0, _prefill * 1000)
 	for id: StringName in ids:
 		var points: float = forms.table.master_at_for(id) - float(_prefill)
 		var kills: int = floori(points / forms.table.per_kill)
