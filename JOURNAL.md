@@ -223,3 +223,11 @@ NEXT (final session, report 18:55):
 NEXT (final session, report 18:55): as session 7's NEXT. REPORT final: drop the DRAFT line, header time, frames.json check (15, all
 exist), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec. If merge-tree is re-run, update the Merge
 notes line with the new tips.
+
+## Session 9 (16:38 - 18:08)
+- 16:39 git log: 1498f370e top, as session 8 left it. No builder running, lane lock free, images 60/60.
+- 16:40 `NEED keys` grep: combat's JOURNAL has one FINDING "NEED Director / keys": gauntlet effect cards ("Overkill Carry") draw a
+  blank card face. The card view is `project/dev/gauntlet/gauntlet_pick_card.gd` (combat's `project/dev/gauntlet/**` this run) and the
+  fix is icon art (images spent). DECISION not served: outside keys' files, no images; written into REPORT Next steps 5.
+- 16:41 DECISION no new product work (as sessions 7, 8): items 1-4 done, filmed, reels gate PASS on fd8ea31e1 covers the last code
+  commit 22d3c0fb1; the open defects all need images.

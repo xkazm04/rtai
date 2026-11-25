@@ -152,6 +152,9 @@ DRAFT (session 7, 16:00): sections are filled as items land; the final version i
 3. `tools/film/arsenal_turn.mjs` could pass `--sprint-tour` and re-import its snapshots (a snapshot copies the worktree's import
    cache, so an edited sheet renders as HEAD's until `--import`); today the tour film uses a scratch script under `build/n30-16/`.
 4. The vermilion recolour, once you answer Calls 1: masked recolours (like the n29 sword rings) per weapon in the heat column.
+5. Combat's finding (its JOURNAL, session 3): the gauntlet's effect cards ("Overkill Carry", `gauntlet_bonuses.json` `kind: effect`)
+   draw a blank card face (no icon art exists for effects). The card view is `project/dev/gauntlet/gauntlet_pick_card.gd` (combat's
+   file this run) and the icon needs images (keys at 60/60), so it is not served here: next run, one icon per effect row.
 
 ## Builder ledger
 
