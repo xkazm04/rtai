@@ -26,3 +26,16 @@ without recolouring the stripes or touching print code (forbidden).
 Film `films/round_band_32.mp4`: `CHAPTERS=rocket_launcher,mini_nuke QUIT=1500 node evidence/n29/red/film.mjs <out>` ->
 `h264,1920,1080,60/1,25.000000`; frame at 12 s shows the nuke blast ring in amber/cream, Rivet left; the round is too small to judge at 32 px/m.
 Commits: 42e7af756 (strict mask), 201763968 (edge fringe).
+
+## c07b: `--stripe-edge` (nuke stripe-edge px dark amber) - NOT landed, count rose
+`recolour_band.py --stripe-edge` (191 px of nuke_shell, 0 outside the mask) then `godot --headless --path project --import` (a windowed take does NOT reimport a changed PNG:
+my first take after the edit still drew the old ctex and counted 39), t1212 at 64 px/m, same take flags as above, round box 395,328,440,401, is_red gate (= r-max(g,b) >= 0.31 count):
+| edge value cap | in-game vermilion px |
+|---|---|
+| HEAD (no step) | 39 |
+| 0.30 | 71 |
+| 0.14 | 60 |
+| 0.09 | 55 |
+Darker edges help monotonically but never get below the HEAD count: the vermilion px sit one px off the stripe where the downscale blends the (unchanged) amber with ink, so
+recolouring the sprite's edge px moves the blend, not removes it. The PNG was restored (`git checkout`), the HEAD sprite stays. Next option needs the stripe's own px or the print (forbidden here).
+Still `gtai-masters/n30/combat/stills/round_band_nuke_pair2_64.png` = HEAD (left, 39) | cap 0.09 (right, 55), 6x, tick 1212.
