@@ -53,3 +53,29 @@ Brief `evidence/briefs/n30-17-molotov-tour.md`. Same recorder as n30-16 (`--spri
 | 7 NE | rivet_run8.png / 4 | eq_molotov / 4 | 25130 | bottle + flame at right, trailing leg |
 
 Log lines are identical row for row on both sides (9.3 m/s at 64 px/m; 18.6 at 32 because it divides by 32); only the sheet differs. The after body is a different drawing (bulkier, collar flat), not only a bottle overlay. I judged feet/collar from the 3x zoom of E, S, W only; the other five octants from the 8-wide sheet.
+
+## p70 aim-left collar clip (n30-18)
+
+Clip of the `_left` aim cells with the rigid collar (`8776d8711`, `f371eddb6`, `f3aefd0a2`), before = `5114a4441` snapshot
+(`build/turn-snapshots/gtai-film-5114a4441cef`, one `--import` run in the tree first, HEAD recorder files copied to
+`res://dev/film_turn_probe/`), after = worktree HEAD. Driver `build/n30-18/film.mjs <before|after> 32 <weapon>`
+(`arsenal_turn.gd --weapon=<w> --pitch=p70 --ppm=32`, d3d12, windowed `--position 0,1440 --resolution 1920x1080 --fixed-fps 60`),
+6 captures, one Godot at a time. Compose `build/n30-18/comp.py` (clip frames are 640x360 crops: scaled x1.5 nearest to 960x540,
+centred in each 960x1080 half, label above; x2 does not fit), then
+`ffmpeg -framerate 15 -i comp/f_%05d.png -r 60 -c:v libx264 -pix_fmt yuv420p -crf 16 eq_collar_left_turn32.mp4`.
+
+ffprobe: `width=1920 height=1080 r_frame_rate=60/1 nb_frames=1920 duration=32.000000` (rocket launcher, mini-nuke, gatling in turn, 160 frames each at 15 fps).
+
+| Weapon | Clip frames | before != after | Max changed px in one frame | Frame |
+|---|---|---|---|---|
+| rocket_launcher | 160 | 55 | 283 | clip_0089 |
+| mini_nuke | 160 | 37 | 422 | clip_0081 |
+| gatling | 160 | 36 | 320 | clip_0093 |
+
+The import did not leak: differing frames are a minority (the W/SW octants) and the changed pixels sit in a 40x20 px box at the neck
+(x 300-347, y 152-175 of the crop). Seen at 3x nearest (worst frame per weapon, `eq_collar_left_32_zoom.png`, before | after, three weapons stacked):
+before is a wavy, rope-like scarf with ragged stripes; after is a flatter outlined ring with straighter parallel stripes. Weapon, visor, claws,
+backpack and hose look identical on both sides. Not checked frame by frame outside the worst frame per weapon.
+
+Paths (`C:\Users\kazda\kiro\gtai-masters\n30\keys\eq_collar\`): `eq_collar_left_turn32.mp4`, `eq_collar_left_32_zoom.png`; added to `..\frames.json`
+(15 entries; dropped `collar/row7_4x.png` from the list, file kept).
