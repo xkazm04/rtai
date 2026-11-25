@@ -11,6 +11,7 @@ const HIT_TICKS: int = 12
 const APRON: Rect2 = Rect2(0, 214, CELL, 10)
 
 var _apron: Sprite2D
+var _shadow: CardContactShadow
 
 
 static func enabled(h: Fighter) -> bool:
@@ -83,6 +84,9 @@ func update_fighter(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) ->
 	# Bolt-plane depth from rear edge to front lip in the registered idle cells.
 	var depth_px: float = 138.0 if ViewMode.shared().art == "p70" else 131.0
 	scale = Vector2(1.0 / PLATE_PX, 1.0 / depth_px) * PLATE_M * SimConst.PX_PER_M
+	if _shadow == null:
+		_shadow = CardContactShadow.mount(self)
+	_shadow.follow(self, position)
 
 
 func _sync_apron(path: String) -> void:
