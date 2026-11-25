@@ -7,7 +7,7 @@ patrol cop, then one scale value each; (2) hit flash on the door carrier and rob
 art for the door carrier (8 drawings), the pile-driver and the war machine. Films and stills:
 `C:\Users\kazda\kiro\gtai-masters\n29\cast\` (`frames.json` there, best first). IMAGES 21/60.
 
-**Gate:** DRAFT, filled after the final gate (`node tools/gate/run.mjs --rev=HEAD`, started by 07:30).
+**Gate: green.** `node tools/gate/run.mjs --rev=HEAD` on `42ac8613b` (the last code commit; every later commit is docs, journal, report or the python art tool `tools/art/cast_film_heights.py`), started 06:48 and finished 07:06: `gate: PASS; build/gate/42ac8613b0be/gate.json`. Lint 19/19 checks over 2282 files, unit 4252 passed / 0 failed / 2 skipped, scenarios 68 (corpse_horde missed its budget under contention and passed when re-judged alone), parity bit for bit over 1200 steps with the planted mutation caught, selftest, export-audit 1000 loaded / 0 failed. The `--reels` gate on `9a99caebb` (07:06, detached, `build/gate-reels.out`) is quoted below when it ends: REELS PENDING.
 
 ## What works
 

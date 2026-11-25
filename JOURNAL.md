@@ -454,3 +454,7 @@ NEXT (session 6, REPORT phase):
      commit. frames.json already curated (15).
   Owner calls stand: thug on (one value), pile-driver WALK FOUR/EIGHT (one value), door eight (one value).
   IMAGES 21/60. BUILDER RUNNING: none.
+- 07:06 MILESTONE final gate PASS on `42ac8613b`: `gate: PASS; build/gate/42ac8613b0be/gate.json` (lint 19/19, unit
+  4252/0/2, scenarios 68 with corpse_horde re-judged alone, parity, selftest, export-audit 1000/0). 18 min.
+- 07:06 MILESTONE `--reels` gate started detached on `9a99caebb` (HEAD; no code after `42ac8613b`), pid 36216,
+  `--timeout=90`, out `build/gate-reels.out`. Next session quotes it in REPORT (replace "REELS PENDING").
