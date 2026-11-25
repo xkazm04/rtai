@@ -1051,3 +1051,43 @@ one candidate would settle it.
 Next, if wanted (director's call): down-right drawing 8 forward (fixes p55 down-right alone). p55 right needs a non-D8 change
 to both its drawing-3 hold (2.00) and its drawing-8 hold (2.04), or a pose-code change (roll the hold about the
 registered sole, not the pivot line), which would move every facing of every foe eight and is not this lane's.
+
+## Held walk cell pins the sole, n30
+
+**Fault (c20).** The gap between the registered anchor and the feet reader is 0. Inside a held walk drawing, though, the
+line that stays still is the cell pivot (y 168), not the registered sole (y 188.5), in all 8 takes:
+`FoeShieldCardView.update_fighter` sets `position = last_ground` on a held cell. That throws away the
+`StreetPatrolPose` shear about the registered sole, so the drawing leans about its pivot.
+
+**Fix tried (c21a, committed dae6d8982).** On a held cell: `position += last_sole - transform * _sole_local()`, which
+pins the registered sole. c21a's feet table (`cast_door_films.mjs ... feet`, 64 px/m, sole / jump, bars 2 / 12):
+
+| walk | p70 right | p70 down-right | p55 right | p55 down-right |
+|---|---|---|---|---|
+| four before | 2.42 / 4.34 | U / 10.50 | 2.03 / 5.09 | U / 10.43 |
+| four sole pin | 0.00 / 3.41 | U / 10.39 | 0.00 / 4.07 | U / 9.66 |
+| eight before | 1.96 / 6.61 | 1.39 / 11.999 | 2.05 / 6.98 | 2.08 / 11.78 |
+| eight sole pin | 0.00 / 7.95 | 0.00 / 12.04 | 0.00 / 5.03 | 0.00 / 11.77 |
+
+**Delivered frames (c21b).** Door four, p70 right, 64 px/m, 1920x1080 raw movie, before fe4139075 and after dae6d8982,
+same ticks. Horizontal shift of a screen row band from the first frame of each held drawing to its last (SSD with a
+sub-pixel fit, `build/look/n30-c21/c21b_holds.py`, frames `build/look/n30-c21/c21b/{sb,sa}`):
+
+| band (screen rows) | 11 holds, ticks 114-180 | before | after |
+|---|---|---|---|
+| 527-533 (boot bottom) | mean / max of the absolute slide | 0.86 / 1.65 px, backward | 1.60 / 3.15 px, forward |
+| 520-527 (boot) | mean / max of the absolute slide | 0.09 / 0.20 px | 2.56 / 5.03 px |
+
+The still line moves from the boot (y ~524) to y ~541, the marker row, about 7 px below the drawn sole. The front boot
+heel goes 934 -> 933 before and 934 -> 938 after over hold 132-138. Strip: masters `n30/cast/door_sole_pin_64.png`.
+
+**Verdict.** NOT shipped. The feet reader tracks the registered point. That point sits about 7 screen px below the drawn
+boot at 64 px/m, so the reader cannot see the drawn boot slide. Pinning the registered point moves the slide onto the
+boot that the player actually sees. Reverted in 97bb564a2, so the pivot pin ships again. Mutate on dae6d8982 lines 60 and
+71: 0 / (0 + 2) killed, 2 invalid, so the unit tests do not pin either behaviour.
+
+War card: see c21w (`build/look/n30-c21w/NOTES.md`). The war card applies no lean, so its pivot pin is already the
+sole pin.
+
+Next: register the door sole at the drawn boot bottom (this regenerates every door anchor), then measure with
+`c21b_holds.py` in the delivered frames, not with the feet reader alone.
