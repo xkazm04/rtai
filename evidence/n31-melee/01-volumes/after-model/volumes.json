@@ -1,0 +1,805 @@
+{
+	"schema": "gtai.blade-volumes/1",
+	"label": "after-model",
+	"head": "bcd19ed2d",
+	"tick_rate": 60,
+	"weapons": [
+		{
+			"weapon": "hands",
+			"weapon_id": "claw",
+			"cells": 60,
+			"drawn_no_hit": 0,
+			"hit_not_drawn": 9,
+			"both": 5,
+			"neither": 46,
+			"drawn_no_hit_after_test": 0,
+			"hit_test_ks": [
+				3
+			],
+			"cut_window": [
+				1,
+				7
+			],
+			"shown_window": [
+				2,
+				6
+			],
+			"overlap_window": [
+				2,
+				6
+			],
+			"pixel_window": null,
+			"reach_m": 1.4,
+			"cone_dot": 0.5,
+			"mover": {
+				"trials": 14,
+				"hit": 12,
+				"drawn": 12,
+				"drawn_no_hit": 0,
+				"hit_not_drawn": 0,
+				"rows": [
+					{
+						"lag": -10,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5
+						]
+					},
+					{
+						"lag": 0,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5
+						]
+					},
+					{
+						"lag": 10,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5
+						]
+					},
+					{
+						"lag": 20,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5,
+							6
+						]
+					},
+					{
+						"lag": 30,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							3,
+							4,
+							5,
+							6
+						]
+					},
+					{
+						"lag": 45,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							3,
+							4,
+							5
+						]
+					},
+					{
+						"lag": 60,
+						"dir": 1,
+						"hit": false,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": -10,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5,
+							6
+						]
+					},
+					{
+						"lag": 0,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5
+						]
+					},
+					{
+						"lag": 10,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4,
+							5
+						]
+					},
+					{
+						"lag": 20,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"lag": 30,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"lag": 45,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"lag": 60,
+						"dir": -1,
+						"hit": false,
+						"drawn": false,
+						"drawn_ks": []
+					}
+				]
+			}
+		},
+		{
+			"weapon": "chainsaw",
+			"weapon_id": "chainsaw",
+			"cells": 60,
+			"drawn_no_hit": 0,
+			"hit_not_drawn": 13,
+			"both": 0,
+			"neither": 47,
+			"drawn_no_hit_after_test": 0,
+			"hit_test_ks": [
+				9,
+				22,
+				30
+			],
+			"cut_window": [
+				8,
+				15
+			],
+			"shown_window": null,
+			"overlap_window": null,
+			"pixel_window": [
+				0,
+				48
+			],
+			"reach_m": 1.65,
+			"cone_dot": 0.8,
+			"mover": {
+				"trials": 14,
+				"hit": 14,
+				"drawn": 0,
+				"drawn_no_hit": 0,
+				"hit_not_drawn": 14,
+				"rows": [
+					{
+						"lag": -10,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 0,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 10,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 20,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 30,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 45,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": -10,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 0,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 10,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 20,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 30,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 45,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					}
+				]
+			}
+		},
+		{
+			"weapon": "electro_baton",
+			"weapon_id": "electro_baton",
+			"cells": 60,
+			"drawn_no_hit": 10,
+			"hit_not_drawn": 1,
+			"both": 12,
+			"neither": 37,
+			"drawn_no_hit_after_test": 9,
+			"hit_test_ks": [
+				2
+			],
+			"cut_window": [
+				0,
+				5
+			],
+			"shown_window": [
+				0,
+				19
+			],
+			"overlap_window": [
+				0,
+				19
+			],
+			"pixel_window": null,
+			"reach_m": 1.5,
+			"cone_dot": 0.6,
+			"mover": {
+				"trials": 14,
+				"hit": 13,
+				"drawn": 12,
+				"drawn_no_hit": 1,
+				"hit_not_drawn": 2,
+				"rows": [
+					{
+						"lag": -10,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							14,
+							15,
+							16
+						]
+					},
+					{
+						"lag": 0,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							15,
+							16,
+							17,
+							18,
+							19
+						]
+					},
+					{
+						"lag": 10,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							16,
+							17,
+							18,
+							19
+						]
+					},
+					{
+						"lag": 20,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							17,
+							18,
+							19
+						]
+					},
+					{
+						"lag": 30,
+						"dir": 1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							18,
+							19
+						]
+					},
+					{
+						"lag": 45,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": -10,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							16,
+							17,
+							18,
+							19
+						]
+					},
+					{
+						"lag": 0,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							15,
+							16,
+							17,
+							18,
+							19
+						]
+					},
+					{
+						"lag": 10,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							15,
+							16
+						]
+					},
+					{
+						"lag": 20,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							14,
+							15
+						]
+					},
+					{
+						"lag": 30,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							13,
+							14,
+							15
+						]
+					},
+					{
+						"lag": 45,
+						"dir": -1,
+						"hit": true,
+						"drawn": true,
+						"drawn_ks": [
+							1,
+							12,
+							13,
+							14
+						]
+					},
+					{
+						"lag": 60,
+						"dir": -1,
+						"hit": false,
+						"drawn": true,
+						"drawn_ks": [
+							3,
+							4,
+							5,
+							6,
+							7,
+							8,
+							9,
+							10,
+							15,
+							16,
+							17,
+							18,
+							19
+						]
+					}
+				]
+			}
+		},
+		{
+			"weapon": "katana",
+			"weapon_id": "katana",
+			"cells": 60,
+			"drawn_no_hit": 0,
+			"hit_not_drawn": 24,
+			"both": 0,
+			"neither": 36,
+			"drawn_no_hit_after_test": 0,
+			"hit_test_ks": [
+				5
+			],
+			"cut_window": [
+				3,
+				9
+			],
+			"shown_window": null,
+			"overlap_window": null,
+			"pixel_window": [
+				0,
+				25
+			],
+			"reach_m": 1.8,
+			"cone_dot": 0.32,
+			"mover": {
+				"trials": 14,
+				"hit": 14,
+				"drawn": 0,
+				"drawn_no_hit": 0,
+				"hit_not_drawn": 14,
+				"rows": [
+					{
+						"lag": -10,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 0,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 10,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 20,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 30,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 45,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": -10,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 0,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 10,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 20,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 30,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 45,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					}
+				]
+			}
+		},
+		{
+			"weapon": "plasma_sword",
+			"weapon_id": "plasma_sword",
+			"cells": 60,
+			"drawn_no_hit": 0,
+			"hit_not_drawn": 31,
+			"both": 0,
+			"neither": 29,
+			"drawn_no_hit_after_test": 0,
+			"hit_test_ks": [
+				7
+			],
+			"cut_window": [
+				4,
+				13
+			],
+			"shown_window": null,
+			"overlap_window": null,
+			"pixel_window": [
+				0,
+				31
+			],
+			"reach_m": 1.9,
+			"cone_dot": -0.2,
+			"mover": {
+				"trials": 14,
+				"hit": 14,
+				"drawn": 0,
+				"drawn_no_hit": 0,
+				"hit_not_drawn": 14,
+				"rows": [
+					{
+						"lag": -10,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 0,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 10,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 20,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 30,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 45,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": 1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": -10,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 0,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 10,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 20,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 30,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 45,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					},
+					{
+						"lag": 60,
+						"dir": -1,
+						"hit": true,
+						"drawn": false,
+						"drawn_ks": []
+					}
+				]
+			}
+		}
+	]
+}
