@@ -443,3 +443,14 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
   up 69 (door top held above the head, back view), left 54; still 56 = the side/three-quarter. Rivet down 77, sides 78,
   up 81.5. Cause: facing, not scale. The door stays under Rivet in every facing.
 - 06:56 REPORT updated (ledger, film heights). No builder running. Gate pid 12516 on `42ac8613b` running.
+- 06:50 DECISION no new code after `42ac8613b` (the gate's rev): later commits are inert docs/journal/report plus
+  `tools/art/cast_film_heights.py` (a36fab587, h.json bbox only, python art tool). No Godot in the lane while the gate runs.
+NEXT (session 6, REPORT phase):
+  0. Gate: `tail build/gate-final.out` (detached pid 12516, started 06:48, `--timeout=60`), `build/gate/42ac8613b*/gate.json`.
+     Quote its last line + gate.json path in REPORT "Gate". If red: read `unit-triage.json` / the failing step, fix only
+     if it is ours and small (sonnet, before 08:45), else REPORT it plainly.
+  1. If the gate is green and time allows after the freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once (detached).
+  2. REPORT.md: the "Gate" line; check every number against JOURNAL; `node tools/evidence/cites.mjs REPORT.md` (exit 0),
+     commit. frames.json already curated (15).
+  Owner calls stand: thug on (one value), pile-driver WALK FOUR/EIGHT (one value), door eight (one value).
+  IMAGES 21/60. BUILDER RUNNING: none.
