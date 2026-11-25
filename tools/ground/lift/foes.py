@@ -40,6 +40,8 @@ def measure(a, b, c):
     m = lift.measure(a, b, c)
     body = lift.body_mask(b, c)
     sh = lift.ellipse_of(erode(lift.shadow_mask(a, b, body)))
+    if sh is not None and m["sole_y"] is not None and sh["cy"] <= m["helmet_y"] + 0.3 * (m["sole_y"] - m["helmet_y"]):
+        sh = None  # a fit on the upper body is body shading, not a drop shadow
     if sh is not None:
         sh["rx"] += 2.0
         sh["ry"] += 2.0
