@@ -1,7 +1,7 @@
 {
   "archetypes": {
     "appliance_warden": {
-      "body_scale": 1.1,
+      "body_scale": 1.62,
       "enabled": true,
       "id": "appliance_warden",
       "p55": {
@@ -34,7 +34,7 @@
       }
     },
     "robot_gunner": {
-      "body_scale": 1,
+      "body_scale": 1.49,
       "enabled": true,
       "id": "robot_gunner",
       "p55": {
@@ -51,6 +51,7 @@
       }
     },
     "rocket_trooper": {
+      "body_scale": 1.49,
       "enabled": true,
       "id": "rocket_trooper",
       "p55": {
@@ -83,7 +84,7 @@
       }
     },
     "sergeant_mulroney": {
-      "body_scale": 1.11,
+      "body_scale": 1.23,
       "enabled": true,
       "id": "sergeant_mulroney",
       "p55": {
