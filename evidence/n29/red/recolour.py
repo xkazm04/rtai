@@ -1,5 +1,5 @@
 """n29 combat 02a: the fire cells' red/vermilion/orange-red moved onto the amber hue of ElectricArc.HALO
-(#edab42, 36.8 deg), deterministic, per pixel. Run from the repo root: python -I evidence/n29/red/recolour.py [--dry]
+(#edab42, 36.8 deg), deterministic, per pixel. Run from the repo root: python -I evidence/n29/red/recolour.py [--fire-loop] [--dry]
 
 A pixel moves when alpha > 0 and it is reddish by the n28 counter's gate (R>170, G<110, B<90) or its HSV hue is
 in 345..25 deg with saturation > 0.35. It keeps alpha, its max channel (HSV value) and its min channel (so its
@@ -18,6 +18,8 @@ FILES += [FX + "flame_%d.png" % i for i in range(3)]
 FILES += [FX + "colour/flame_cone_%d.png" % i for i in range(3)]
 FILES += [FX + "colour/flame_%d.png" % i for i in range(3)]
 FILES += [FX + "colour/ground_fire.png"]
+# n29 call 2 (director 02:04): quest 1's fire loop draws the burning ground and the burn bursts
+FIRE_LOOP = "project/features/fx/art/fx_fire.png"
 ATLAS = "project/features/fx/art/fx_atlas.png"
 ATLAS_CELLS = [9, 10, 11, 12]  # the explosion kind; 8 columns of 256 px
 CELL = 256
@@ -62,6 +64,14 @@ def cell_hash(a, i):
     return hashlib.sha256(a[r * CELL:(r + 1) * CELL, c * CELL:(c + 1) * CELL].tobytes()).hexdigest()[:16]
 
 
+def one(path, dry):
+    a = load(path)
+    b, n = remap(a)
+    print("%s reddish %d -> %d, changed %d px" % (path, int(reddish(a).sum()), int(reddish(b).sum()), n))
+    if not dry:
+        Image.fromarray(b, "RGBA").save(path, optimize=True)
+
+
 def main(dry):
     for p in FILES:
         a = load(p)
@@ -86,4 +96,7 @@ def main(dry):
 
 
 if __name__ == "__main__":
-    main("--dry" in sys.argv)
+    if "--fire-loop" in sys.argv:  # python -I evidence/n29/red/recolour.py --fire-loop
+        one(FIRE_LOOP, "--dry" in sys.argv)
+    else:
+        main("--dry" in sys.argv)

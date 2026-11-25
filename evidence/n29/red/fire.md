@@ -83,3 +83,15 @@ burning ground 181 inside, 0 outside; explosion 0 / 0. Rivet's collar, the cops 
 Read: the blast is an amber star with its cream core and ink rim; the flame tongues are amber with cream hearts.
 **Left red:** the flamethrower's hit bursts and the molotov's burning-ground bursts (the ragged starbursts at t470 and
 t1000) do not move with either change: they come from another source than the PNGs of this call (not traced in time).
+
+## After3: quest 1's fire loop (director 02:04)
+
+The spiky bursts (cream star, jagged tongues, ink rim) of the flamethrower hits and ALL of the molotov's burning
+ground are `project/features/fx/art/fx_fire.png` (`collect_call_art.json` `fx_fire`, drawn by
+`FightAreasArt._fire_ink` on the FX view, so under the FX print with the amber ink; also the crate fire in
+`fx_view` and `vehicle_fire`: all fire). `colour/ground_fire.png` is only the `--fx-colour=on` loop.
+`python -I evidence/n29/red/recolour.py --fire-loop`: reddish 61253 -> 1, changed 77321 px.
+Reel ticks 470 / 1000 (`build/n29red/after3/reel`): crop reddish flame 17342 -> 3379, burning ground 21934 -> 2819
+(the rest is blood); `ink_diff.py` after2 -> after3: 14716 / 20387 px inside the boxes, **0 outside**.
+Stills `red_fire_{flame,ground_fire}_after3_64[_crop].png`, `red_fire_{flame,ground_fire}_pair3_64.png` (before |
+after3): the bursts read amber with cream centres and ink rims.
