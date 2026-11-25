@@ -91,3 +91,57 @@ In game (arsenal turn, p70, 64 px/m, before = HEAD run `build/n30-12/before/`): 
 (octants 3/4/5 = cells 0/1/2, before | after).
 Owed: `mini_nuke_left` c0 (retry with a weapon-arch sentence, or the chainsaw c0 as image two), the next-wave cells above
 (`gatling_diag` c0/c2, `gatling_left_fire`, `mini_nuke_left_fire`, `gatling_left` c0 not in this call's list).
+
+## UNSURE settled (n30-20)
+Analysis only, 0 images. Script `evidence/n30-keys/eq_collar_unsure.py` (python -I, from the worktree root) cuts each cell (cols x rows from the
+strip size) and writes cell | reference, 4x NEAREST neck crops, to `C:/Users/kazda/kiro/gtai-masters/n30/keys/eq_collar/unsure_<strip>_4x.png`
+(`walk_eq_electro_baton` in 3 sheets `_0.._2`). Reference = same cell index of a rigid strip of the same facing (`rivet_eq_pistol`,
+`rivet_eq_hand_cannon_diag`, `rivet_eq_gloria_left`, `rivet_reload_pistol`, `rivet_run8`, `rivet_walk_eq_gloria`). Every crop was looked at.
+Weak ROPE = a visible defect, but milder than the director's cells (rocket/mini_nuke/gatling left).
+
+| Cell | Verdict | Reference | Why |
+|---|---|---|---|
+| `gatling` eq c0 | RIGID | `pistol` eq c0 | narrower stripes, but outline smooth and stripes parallel |
+| `gatling` eq c1 | RIGID | `pistol` eq c1 | thin, straight, constant thickness |
+| `gatling` eq c3 | ROPE (weak) | `pistol` eq c3 | lower edge stair-stepped, band thickness lumpy, stripes tilt unevenly |
+| `gatling` eq c5 | RIGID | `pistol` eq c7 (c5 of the pistol is the back view, no band) | thin but flat, outlined |
+| `gatling` eq c7 | RIGID | `pistol` eq c7 | thin, edges clean |
+| `mini_nuke` eq c1 | RIGID | `pistol` eq c1 | flat outlined ring |
+| `mini_nuke` eq c3 | RIGID | `pistol` eq c3 | smooth, parallel stripes |
+| `mini_nuke` eq c5 | RIGID | `pistol` eq c7 | slightly soft stripe ends, outline clean |
+| `mini_nuke` eq c7 | RIGID | `pistol` eq c7 | slight lump at the right end only |
+| `electro_gun_diag` c0 | ROPE | `hand_cannon_diag` c0 | thin, stripes twist and break where the gun crosses; reads as a cord |
+| `electro_gun_diag` c2 | ROPE | `hand_cannon_diag` c2 | chevron-wavy stripes, ragged outline |
+| `flamethrower_left` c2 | ROPE (weak) | `gloria_left` c2 | small band, ragged lower edge, stripes torn into blobs (band mostly hidden by the tank) |
+| `reload_gatling` c0 | RIGID | `reload_pistol` c0 | clean |
+| `reload_gatling` c1 | RIGID | `reload_pistol` c1 | thin, straight |
+| `reload_gatling` c2 | RIGID | `reload_pistol` c2 | clean |
+| `reload_gatling` c3 | ROPE (weak) | `reload_pistol` c3 | stripes broken, wavy lower edge |
+| `reload_gatling` c4 | RIGID | `reload_pistol` c4 | clean |
+| `reload_gatling` c5 | ROPE (weak) | `reload_pistol` c5 | wavy, lumpy band, rope-like curve |
+| `reload_gatling` c6 | ROPE (weak) | `reload_pistol` c6 | wavy, stripes uneven |
+| `reload_gatling` c7 | RIGID | `reload_pistol` c7 | thin, straight |
+| `run8_eq_plasma_sword` r2c4 | ROPE | `rivet_run8` r2c4 | round tube with a sheen line, stripes curve around it like a twisted cord (the run8 ref is also a little tubular; compare against `run8_eq_gloria` r2c4 before editing) |
+| `run8_eq_plasma_sword` r3c1 | RIGID | `rivet_run8` r3c1 | matches the ref |
+| `run8_eq_plasma_sword` r5c5 | RIGID | `rivet_run8` r5c5 | softness is the blade glow laid over the band, stripes straight |
+| `run8_eq_assault_rifle` r2c4 | ROPE (weak) | `rivet_run8` r2c4 | same pose as the plasma cell: tube, sheen, stripes wrap like a cord |
+| `walk_eq_electro_baton` r0-r5 (all 24 cells) | RIGID | `walk_eq_gloria` same cell | thin band with a grey sheen line, but straight parallel stripes, clean outline, constant thickness |
+
+Counts: gatling eq 1 ROPE / 4 RIGID; mini_nuke eq 0 / 4; electro_gun_diag 2 / 0; flamethrower_left 1 / 0; reload_gatling 3 / 5; run8 plasma_sword 1 / 2;
+run8 assault_rifle 1 / 0; walk baton 0 / 24. Total 9 ROPE, 41 RIGID. Could not judge: baton walk rows 6-7 and the run8 cells outside the
+sampled ones were not in the UNSURE list and were not looked at; the run8 `r2c4` ref is itself tubular, so those two verdicts are the least certain.
+
+### Next run edit list (ROPE cells by how often seen; one image per cell, 2x per-cell route)
+| # | Cell | Reference cell | Seen |
+|---|---|---|---|
+| 1 | `rivet_run8_eq_plasma_sword.png` r2c4 | `rivet_run8_eq_gloria.png` r2c4 (not `rivet_run8`, tubular) | highest (grid, moving with the weapon) |
+| 2 | `rivet_run8_eq_assault_rifle.png` r2c4 | `rivet_run8_eq_gloria.png` r2c4 | highest (weak) |
+| 3 | `rivet_eq_gatling.png` c3 | `rivet_eq_pistol.png` c3 | high (standing, octant 3) |
+| 4 | `rivet_eq_electro_gun_diag.png` c0 | `rivet_eq_hand_cannon_diag.png` c0 | medium (diagonal fire) |
+| 5 | `rivet_eq_electro_gun_diag.png` c2 | `rivet_eq_hand_cannon_diag.png` c2 | medium |
+| 6 | `rivet_eq_flamethrower_left.png` c2 | `rivet_eq_gloria_left.png` c2 | high if flamethrower uses the left strip, band small |
+| 7 | `rivet_reload_gatling.png` c3 | `rivet_reload_pistol.png` c3 | low-medium |
+| 8 | `rivet_reload_gatling.png` c5 | `rivet_reload_pistol.png` c5 | low-medium |
+| 9 | `rivet_reload_gatling.png` c6 | `rivet_reload_pistol.png` c6 | low-medium (drop first if capped at 8) |
+
+Image count: 9 (8 if the cap holds). Check `_noflash` twins of `gatling` and `electro_gun` for shared band px. All other UNSURE cells need no edit.
