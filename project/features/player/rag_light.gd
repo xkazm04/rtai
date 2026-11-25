@@ -26,7 +26,7 @@ func _draw() -> void:
 	var r: float = lerpf(SPARK_M, FLAME_M, k) * WeaponArt.WORLD_PX_PER_M
 	var turn: float = float(flicker % 4) * PI / float(POINTS * 2)
 	draw_colored_polygon(_star(r * 1.25, turn), Ink.INK)
-	draw_colored_polygon(_star(r, turn), Ink.VERMILION)
+	draw_colored_polygon(_star(r, turn), Ink.AMBER)
 	draw_colored_polygon(_star(r * 0.45, -turn), Ink.CREAM)
 
 

@@ -29,6 +29,12 @@ var destination: String
 var gap: int = HUMAN_GAP
 var last_frame: int = 0
 var stop_tick: int = 960
+## GTAI_TAKE_HOP=1: a second thug stands HOP_M behind the first, inside the electro gun's chain
+## radius, held on its mark until the bolt lands; hop_log is the proof (chain hits, its daze).
+var hop_extra: Fighter = null
+var hop_mark: Vector2 = Vector2.ZERO
+var hop_log: Dictionary = {}
+const HOP_M: float = 2.5
 
 
 func _ready() -> void:
@@ -47,7 +53,8 @@ func _ready() -> void:
 		stop_tick += (gap - HUMAN_GAP) * (ROBOT.size() - 1)
 	if OS.get_environment("GTAI_MELEE_CLOSE") == "1":
 		stop_tick = FIRST + 75
-	session.stage.arena.rivet.pos = session.plan.base + Vector2(5, -38)
+	var hop: bool = OS.get_environment("GTAI_TAKE_HOP") == "1"
+	session.stage.arena.rivet.pos = session.plan.base + Vector2(-1 if hop else 5, -38)
 	if OS.get_environment("GTAI_MELEE_NATIVE") == "1":
 		@warning_ignore("return_value_discarded")
 		RenderingServer.frame_post_draw.connect(_capture)
@@ -81,6 +88,38 @@ func _spawn(id: StringName, i: int) -> void:
 		{"victim": id, "initial_hp": foe.hp, "cue": 0 if i == 0 else FIRST + i * gap - 96}
 	)
 	session.stage.pit.standing.append(foe)
+	if i == 0 and OS.get_environment("GTAI_TAKE_HOP") == "1":
+		_spawn_extra(at + Vector2(HOP_M, 0.0), id)
+
+
+func _spawn_extra(at: Vector2, id: StringName) -> void:
+	var arena: CombatArena = session.stage.arena
+	hop_extra = arena.squad_ai.spawn_member(arena, at, id)
+	hop_extra.max_hp = arena.squad_ai.pit.roster.archetype(id).hp
+	hop_extra.hp = hop_extra.max_hp
+	hop_mark = at
+	session.stage.pit.standing.append(hop_extra)
+	hop_log = {"chain_hits": 0, "hop_m": HOP_M, "extra_hp": hop_extra.hp}
+
+
+## Holds the second thug on its mark until the first is struck, then logs what the hop did to it.
+func _watch_hop() -> void:
+	var arena: CombatArena = session.stage.arena
+	var mind: SquadMind = arena.squad_ai.mind_for(hop_extra)
+	if not observations[0].has("hit_tick"):
+		hop_extra.pos = hop_mark
+		mind.agent.pos = hop_mark
+		mind.agent.cooldown = 100
+		hop_extra.cooldown = 100
+	var now: int = session.tick()
+	var hits: int = arena.areas.chain_hits if arena.areas != null else -1
+	hop_log["chain_hits"] = hits
+	if hits > 0 and not hop_log.has("first_hop_tick"):
+		hop_log["first_hop_tick"] = now
+	if mind.stun_until > arena.tick and not hop_log.has("stun_tick"):
+		hop_log["stun_tick"] = now
+	if hop_extra.hp < hop_log["extra_hp"] and not hop_log.has("hurt_tick"):
+		hop_log["hurt_tick"] = now
 
 
 func _process(_delta: float) -> void:
@@ -102,7 +141,7 @@ func _process(_delta: float) -> void:
 		OpeningFilmPad.scroll(session.live)
 	var again: int = _followup(idx)
 	var engage: bool = age < 0 or (again > 0 and age > 8 and age < again)
-	_approach(idx, engage and age >= -83)
+	_approach(idx, engage and age >= -83 and hop_extra == null)
 	_press(age, again)
 	var pilot: StagePilot = session.pilot
 	var count: int = pilot.melee_swings
@@ -114,6 +153,8 @@ func _process(_delta: float) -> void:
 	if wielded == pilot.melee and landed < pilot.melee.landed:
 		contacts.append(session.tick())
 	_observe(idx, age)
+	if hop_extra != null:
+		_watch_hop()
 
 
 func _press(age: int, again: int) -> void:
@@ -212,7 +253,7 @@ func _finish() -> void:
 		get_tree().quit(1)
 		return
 	var result: Dictionary = {"starts": starts, "contacts": contacts, "opponents": observations}
-	result.merge({"weapon": weapon, "frames": last_frame})
+	result.merge({"weapon": weapon, "frames": last_frame, "hop": hop_log})
 	@warning_ignore("return_value_discarded")
 	f.store_line(JSON.stringify(result, "\t"))
 	f.close()

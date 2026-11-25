@@ -23,6 +23,9 @@ var profiles: Dictionary[StringName, LookParams] = {}
 ## is present, its zoom_looks / full_looks ids resolve to its `base` profile: the overlay carries
 ## the D5 detail over the untouched D4 print instead of the placeholder d5 row.
 var overlays: Array[Dictionary] = []
+## n29: the FX view's item print adds the amber ink (look_profiles.json `fx_amber_ink`;
+## false = off).
+var fx_amber_ink: bool = false
 
 
 static func shared() -> LookProfiles:
@@ -51,6 +54,7 @@ static func from_json(text: String) -> LookProfiles:
 	for row: Dictionary in d["profiles"]:
 		var pid: String = row["id"]
 		out.profiles[StringName(pid)] = LookParams.from_row(row)
+	out.fx_amber_ink = d.get("fx_amber_ink", false)
 	var tones: Dictionary = d.get("tones", {})
 	for p: LookParams in out.profiles.values():
 		p.add_tones(tones, PaletteTokens.shared())

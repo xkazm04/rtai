@@ -10,6 +10,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "fx_amber_ink": {
+      "description": "n29: true = the FX view's item print adds the amber ink (fire); false = off",
+      "type": "boolean"
+    },
     "overlays": {
       "items": {
         "additionalProperties": false,

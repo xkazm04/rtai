@@ -19,10 +19,14 @@ uniform ivec2 cells = ivec2(1, 1);
 // classification centres the art is painted in
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
 uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
+// n29: 1 = AMBER (fire, heat, current) is a nearest-ink candidate; set only on the FX view's print
+// (PrintStage.fx_material, look_profiles.json fx_amber_ink); 0 = the D4 inks alone
+uniform float amber_ink = 0.0;
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
+const vec3 AMBER = vec3(0.929, 0.671, 0.259);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
 const vec3 STEEL = vec3(0.561, 0.533, 0.506);
 const vec3 BLOOD = vec3(0.639, 0.020, 0.035);
@@ -74,6 +78,8 @@ void fragment() {
 		if (di < best) { best = di; o = ink_tone; }
 		float dv = distance(col, VERM);
 		if (dv < best) { best = dv; o = VERM; }
+		float da = amber_ink > 0.5 ? distance(col, AMBER) : 9.0;
+		if (da < best) { best = da; o = AMBER; }
 		float dt = distance(col, TEAL);
 		if (dt < best) { o = TEAL; }
 		COLOR = vec4(o * g, 1.0);

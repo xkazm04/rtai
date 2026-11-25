@@ -29,7 +29,7 @@ static func shell(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	ci.draw_line(Ink.px(at - dir * 0.45), Ink.px(at + dir * 0.4), Ink.INK, 30.0)
 	ci.draw_line(Ink.px(at - dir * 0.36), Ink.px(at + dir * 0.3), Ink.CREAM, 18.0)
 	ci.draw_line(Ink.px(at - dir * 0.04), Ink.px(at + dir * 0.08), Ink.INK, 18.0)
-	ci.draw_circle(Ink.px(at + dir * 0.4), 9.0, Ink.VERMILION)
+	ci.draw_circle(Ink.px(at + dir * 0.4), 9.0, Ink.AMBER)
 	var fins: PackedVector2Array = PackedVector2Array(
 		[
 			Ink.px(at - dir * 0.6 + side * 0.3),

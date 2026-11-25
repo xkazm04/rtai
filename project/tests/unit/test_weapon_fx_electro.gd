@@ -30,24 +30,58 @@ func _ink_opaque(plan: Array[WeaponFxElectro.Line]) -> int:
 	return n
 
 
-func test_default_chain_has_no_opaque_ink() -> void:
+func test_chain_ink_outline_is_wider_than_the_body_and_stun_has_none() -> void:
 	WeaponFxElectro.cells = false
 	var plan: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 5)
 	assert_gt(plan.size(), 0, "live current is planned")
-	assert_eq(_ink_opaque(plan), 0, "no ink outline on the new path")
+	assert_gt(_ink_opaque(plan), 0, "an ink outline under the body")
+	for l: WeaponFxElectro.Line in plan:
+		if l.color.a == 1.0 and l.color.r == Ink.INK.r:
+			assert_eq(l.width, WeaponFxElectro.BODY_PX + WeaponFxElectro.INK_EXTRA_PX)
+	assert_eq(_ink_opaque(WeaponFxElectro.stun_plan(A, 30, 0)), 0, "no solid rim on the daze")
 
 
-func test_core_is_the_narrowest_opaque_stroke_at_most_2_5_px() -> void:
+func _opaque_amber(plan: Array[WeaponFxElectro.Line]) -> Array[WeaponFxElectro.Line]:
+	var out: Array[WeaponFxElectro.Line] = []
+	for l: WeaponFxElectro.Line in plan:
+		if l.color == ElectricArc.HALO and l.color.a == 1.0:
+			out.append(l)
+	return out
+
+
+func _check_layers(plan: Array[WeaponFxElectro.Line], k: float) -> void:
+	var body: Array[WeaponFxElectro.Line] = _opaque_amber(plan)
+	assert_gt(body.size(), 0, "an opaque amber body")
+	for l: WeaponFxElectro.Line in body:
+		assert_eq(l.width, WeaponFxElectro.BODY_PX * k, "body is exactly BODY_PX * k")
+	assert_lt(WeaponFxElectro.CORE_PX, WeaponFxElectro.BODY_PX)
+	assert_lt(WeaponFxElectro.CORE_PX, WeaponFxElectro.BODY_PX)
+	var core_n: int = 0
+	for l: WeaponFxElectro.Line in plan:
+		if l.color == ElectricArc.CORE:
+			core_n += 1
+			assert_eq(l.width, WeaponFxElectro.CORE_PX * k)
+	assert_gt(core_n, 0)
+
+
+func test_chain_keeps_both_halos_and_scales_the_ink_with_k() -> void:
 	WeaponFxElectro.cells = false
-	var core: float = 99.0
-	for l: WeaponFxElectro.Line in WeaponFxElectro.chain_plan(A, B, 5):
-		if l.color.a >= 1.0:
-			core = minf(core, l.width)
-			assert_eq(l.color, ElectricArc.CORE, "the only opaque pass is the cream core")
-	assert_lte(core, 2.5, "thin core")
-	assert_gt(core, 0.0)
-	for l: WeaponFxElectro.Line in WeaponFxElectro.chain_plan(A, B, 5):
-		assert_gte(l.width, core - 0.0001, "nothing is narrower than the core")
+	var k: float = 0.5
+	var plan: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 5, k)
+	assert_eq(plan[0].width, ElectricArc.HALO_PX * k, "outer halo first")
+	assert_almost_eq(plan[0].color.a, 0.18, 0.001)
+	assert_eq(plan[1].width, ElectricArc.MID_PX * k, "mid halo second")
+	assert_almost_eq(plan[1].color.a, 0.5, 0.001)
+	assert_eq(plan[2].color, Color(Ink.INK, 1.0))
+	assert_eq(plan[2].width, (WeaponFxElectro.BODY_PX + WeaponFxElectro.INK_EXTRA_PX) * k)
+
+
+func test_chain_and_bolt_share_the_opaque_amber_body() -> void:
+	WeaponFxElectro.cells = false
+	_check_layers(WeaponFxElectro.chain_plan(A, B, 5), 1.0)
+	_check_layers(WeaponFxElectro.chain_plan(A, B, 5, 0.5), 0.5)
+	_check_layers(WeaponFxBolt.plan(A, B, 11, 6), 1.0)
+	_check_layers(WeaponFxElectro.stun_plan(A, 30, 0), 1.0)
 
 
 func test_the_star_at_b_has_three_or_four_forks() -> void:
@@ -121,12 +155,46 @@ func test_forks_are_two_half_reach_pieces() -> void:
 
 func test_widths_follow_the_screen_scale() -> void:
 	var loose: Node2D = autofree(Node2D.new())
-	assert_eq(WeaponFxElectro._k(loose), 1.0, "off the tree: screen px")
+	assert_eq(WeaponFxElectro.screen_k(loose), 1.0, "off the tree: screen px")
 	var live: Node2D = add_child_autofree(Node2D.new())
 	live.scale = Vector2.ONE * 2.0
-	assert_almost_eq(WeaponFxElectro._k(live), 0.5, 0.001, "a 2x canvas halves the width")
+	assert_almost_eq(WeaponFxElectro.screen_k(live), 0.5, 0.001, "a 2x canvas halves the width")
 
 
 func test_a_zero_length_hop_draws_nothing() -> void:
 	var node: Node2D = autofree(Node2D.new())
 	assert_false(WeaponFxElectro.chain(node, A, A, 1))
+
+
+func test_bolt_star_has_three_or_four_forks() -> void:
+	var forks: int = 0
+	for l: WeaponFxElectro.Line in WeaponFxBolt.plan(A, B, 11, 6):
+		if l.color == ElectricArc.CORE and l.points.size() == 3:
+			forks += 1
+	assert_between(forks, 3, 4)
+
+
+func test_bolt_plan_is_pure_and_holds_inside_a_jag_cell() -> void:
+	var a: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6)
+	var b: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 6)
+	var c: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 7)
+	var d: Array[WeaponFxElectro.Line] = WeaponFxBolt.plan(A, B, 11, 9)
+	assert_eq(a.size(), b.size())
+	for i: int in a.size():
+		assert_eq(a[i].points, b[i].points, "same inputs, same plan")
+		assert_eq(a[i].points, c[i].points, "ticks 6 and 7 share a 3-tick cell")
+	assert_false(a[0].points == d[0].points, "tick 9 re-jags")
+
+
+func test_bolt_serial_is_stable_per_spawn() -> void:
+	assert_eq(WeaponFxBolt.spawn_id(A), WeaponFxBolt.spawn_id(A))
+
+
+func test_amplify_keeps_ends_and_scales_the_offset_exactly() -> void:
+	var sh: PackedVector2Array = ElectricArc.shape(PackedVector2Array([A, B]), 5, 6, false)
+	var big: PackedVector2Array = WeaponFxBolt.amplify(sh)
+	var d: Vector2 = (B - A).normalized()
+	assert_eq([big[0], big[-1]], [sh[0], sh[-1]])
+	for i: int in range(1, sh.size() - 1):
+		assert_almost_eq((big[i] - A).cross(d), (sh[i] - A).cross(d) * WeaponFxBolt.JAG_K, 0.0001)
+		assert_almost_eq((big[i] - A).dot(d), (sh[i] - A).dot(d), 0.0001)

@@ -69,21 +69,29 @@ static func step(cells: Sprite2D, u: float) -> void:
 
 
 ## StreetWalkerFall.draw's size: the art's standing height at the still strip's px per metre,
-## times the person's crowd scale.
+## times the victim's drawn build (victim_scale).
 static func _scale(rig: CutRig, path: String) -> float:
 	var art: String = path.get_slice("/", 0)
 	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	return h * CharacterRigs.PX_PER_M * k / StreetWalkerFall.STILL_PX
+	return h * CharacterRigs.PX_PER_M * victim_scale(rig) / StreetWalkerFall.STILL_PX
 
 
 ## The victim's standing height on the street (px at `ppm`): the view art's figure height times
-## his crowd scale (StreetWalkerCards), the length a card victim's drawn figure stands.
+## his drawn build (victim_scale), the length a card victim's drawn figure stands.
 static func height_px(rig: CutRig, ppm: float) -> float:
 	var art: String = ViewMode.shared().art
 	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	return h * ppm * k
+	return h * ppm * victim_scale(rig)
+
+
+## The one size a dying body draws at (n29): a card foe (CastCardPose) keeps the scale his
+## living card draws (StreetWalkerCards.place: the crowd build times his row's body_scale), so a
+## kill never resizes him mid-death; a street walker keeps his crowd build. After n29-cast
+## merges, the card branch is `pose.sheets.scale_of(rig.actor_id)` (test_kill_card_scale).
+static func victim_scale(rig: CutRig) -> float:
+	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
+	var pose: CastCardPose = CastCardPose.of(rig)
+	return k if pose == null else k * pose.sheets.body_scale
 
 
 ## The drawn figure's feet in `body` (the BODY group at its centroid, before the wrap): the copy

@@ -3,7 +3,7 @@
     "enabled": true,
     "master_at": 30,
     "master_at_by_form": {
-      "tonnage": 85
+      "tonnage": 70
     },
     "mastery_free": true,
     "per_boss_cut": 5,

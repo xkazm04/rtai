@@ -423,7 +423,7 @@
         "2026-11-23: --skip-prologue for n25 path (files_near_cap 13 -> 13)"
       ],
       "files": {
-        "project/boot/collect_call/view/fx_view.gd": 271,
+        "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
@@ -512,7 +512,7 @@
         "project/boot/collect_call/stage_pilot.gd": 234,
         "project/boot/collect_call/view/cast_view.gd": 230,
         "project/boot/collect_call/view/collect_call_view.gd": 238,
-        "project/boot/collect_call/view/fx_view.gd": 271,
+        "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/launch_args.gd": 226,
         "project/boot/prologue/prologue_command_view.gd": 255,
