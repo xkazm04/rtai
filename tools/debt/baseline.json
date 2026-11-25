@@ -201,7 +201,8 @@
         "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
         "2026-11-25: n31 melee 01b gauntlet melee baseline probe, dev-only measurement (dev_loc 39760 -> 39950)",
         "2026-11-25: n31 melee 01b foe reach probe, dev-only measurement (dev_loc 39950 -> 40103)",
-        "2026-11-25: n31 melee 01a: blade_volume dev measurement scene in project/dev/melee_n31 (dev only, measures the before) (dev_loc 40103 -> 40867)"
+        "2026-11-25: n31 melee 01a: blade_volume dev measurement scene in project/dev/melee_n31 (dev only, measures the before) (dev_loc 40103 -> 40867)",
+        "2026-11-25: 2026-11-25: n31 melee 01c: blade_pixels dev probe renders the drawn swing (pixels, not the node model) for the drawn-vs-hit before/after (dev_loc 40867 -> 41068)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -222,7 +223,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/melee_n31": 1107,
+        "project/dev/melee_n31": 1308,
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
@@ -244,7 +245,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40867
+      "total": 41068
     },
     "direct_cmdline_reads": {
       "accepted": [
