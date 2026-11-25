@@ -40,7 +40,19 @@ leg in the air, the fix does not remove that, it only removes the whole-body hop
 ## Films (masters `C:\Users\kazda\kiro\gtai-masters\n31\ground\item1\`)
 - `gauntlet_side_32.mp4`, `gauntlet_side_64.mp4`: main | HEAD, centre 960x1080 of each take, labelled, ticks ~1230-2230 (E, SW, W runs), 1920x1080 60/1,
   16.68 s, 1001 frames, crf 28 (50 MB, 29 MB).
-- Tour: see the end of this file.
+- `sprint_tour_p70_32.mp4`: the arsenal recorder `--weapon=hands --pitch=p70 --sprint-tour=on` (E, SE, S, SW, W, NW, N, NE, 90 ticks each), main | HEAD, centre 960x1080 of each 1920x1080 run, real speed (a frame every 2 ticks at 30 fps, then -r 60), played twice: 24.0 s, 1440 frames, 1920x1080 60/1.
+
+## Sprint tour (item 4)
+Harness: scratch `build/n31/n31-05/tour.mjs` (snapshots of ba8e470b0 and HEAD under `%TEMP%/gtai-film-*`, `--import` each, `res://dev/rivet_arsenal/arsenal_turn.gd -- --weapon=hands --pitch=p70 --ppm=32|64 --sprint-tour=on`).
+PITFALL (cost two reruns): the ba8e470b0 snapshot is shared with `play_take.mjs`, which leaves an `override.cfg` (viewport 1920x1080) in it; a plain HEAD snapshot has none
+(default viewport 1280x800). The first tour pair therefore drew Rivet and the ground ~1.3x larger on the HEAD side (orange body mask 1242 vs 2138 px, same at 64 px/m: 4916 vs 8884) and
+was discarded; the delivered pair has the same `override.cfg` in both trees (mask 1242 vs 1165 px at clip frame 10). Any film of one arm from a play_take snapshot needs this check.
+Result at 32 px/m, same ticks: stills `sprint_oct0..7` differ in 2581-3550 px of 119k each (Rivet's body and shadow), clip frames differing per octant (of 45): E 44, SE..NE 45 each: every octant changes, since
+the bob rule acts on every run cell, not only some rows. Looked at: HEAD frames sit about a pixel or two lower with the shadow a little nearer the sole; the difference is subtle at 32 px/m.
+64 px/m tour stills: see the report (not in the repo).
+
+## Mutation (item 7)
+Not run: the Godot lane mutex was busy with the tour renders until the deadline; no killed/(killed+survived) figure exists for `rig_cast_shadows.gd` or `rivet_bob.gd` from this call.
 
 ## What a player feels
 At 32 px/m the change is small (about 1-2 px at 1080p on average): the hop that read as flying is gone and the shadow now sits under the foot, but the run
