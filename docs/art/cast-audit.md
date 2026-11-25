@@ -971,3 +971,43 @@ three asks, 3 / 0 / 0 px) or D6 and D7 set back to meet it, and very likely D8 f
 A's 52). Next round, if wanted: down-right D6 + D7 boots back (the model moves boots back readily, and overshoots: ask
 for half), then re-measure; right D5 or D6 as the second cell. Crop of the two edited sheet cells with their neighbours
 and registered soles: `build/look/n30-c16/edited_cells_sheet_2x.png`.
+
+## Door eight, p55 round 2, n30
+
+**Verdict: WALK stays FOUR; the art ships (`4c62f3b65`, `6ee306fd8`).** Three one-cell edits to p55 down-right (drawing 6,
+then drawing 7 twice; the second D7 replaces the first) take its 5-8 contact slide 2.72 -> 2.08 with the jump unchanged
+(11.78) and p70 byte-identical, but no facing newly passes: p55 down-right sole 2.08 (bar 2), p55 right 2.05 (bar 2).
+
+What the probe says (`build/look/n30-c17/probe_all.py`, round 1's probe plus the per-frame track of each slipping
+contact; every drawing restarts the planted sole at 0, so the slide is the worst drift inside one drawing's hold):
+- p55 right 5-8: holds drift D5 -0.60, D6 -0.31, D7 -1.93, D8 -2.04. D5 and D6 do not set the number; the D8 hold
+  does (half A's D4 hold: -1.93). The right drawing 6 edit (`door8e` right f6, support boot 193-299 -> 192-297 source px,
+  registered sole 11 -> 12) measured 2.05 / 6.98, identical, and 7 -> 8 jump 6.88 -> 6.92: not shipped. Neither D5 nor D6
+  can bring p55 right under 2; only D8 (`EIGHT_STEP_M`, every facing) can, and that stays out of scope.
+- p55 down-right 5-8 at `15590aa9b`: holds D5 +0.38, D6 +0.37, D7 -2.33 (diameter 2.71): the planted boot slid forward
+  across D5 -> D6 (registered x 13 -> 22.5). D6 back to D5's place (226-332 -> 215-301 source px, sole 22.5 -> 13.5) and
+  D7 a few px back (218-310 -> 216-303, 16.5 -> 15) remove the forward drift (D5 / D6 holds +0.06 / +0.08): 2.15. D7 rolled
+  back about a tenth of a boot (216-303 -> 200-286, 15 -> 8.5): 2.08, 7 -> 8 jump 8.79 -> 8.50. What is left is the late
+  D7 hold (-1.97; half A's D3: -1.67), the body running into the D8 knot: like right, a D8 matter.
+
+Images (`gtai-art/foes-n30/door8e`, 5 of 6, Ref 1 = the current source row incl. every accepted splice): dr f6
+accepted (asked "toe where drawing 7's toe ends", toe moved 31 px, landing on D5's place, as the overshoot rule predicts);
+dr f7 accepted ("a few pixels", 7 px); right f6 measured, no change, not shipped; dr f7b ("heel in line with D5 / D6",
+Ref 1 = the f6 + f7 splice) moved 0 px, not used; dr f7c ("rolled back about a tenth of a boot") 16 px, accepted. dr f6
+stalled in `gen.mjs`; copied by hand from `~/.codex/generated_images/`. Every splice: other cells' silhouettes xor 0;
+LOOKED at the 2x crops (identity, slab, body unchanged). Sheet: 38 of 40 p55 cells byte-identical to `15590aa9b` (down-
+right rows 6 and 7 changed), p70 byte-identical, `EIGHT_STEP_M` 0.1799 unchanged. Crop of the sheet's down-right
+drawings 5-8 before / after: `build/look/n30-c17/edited_cells_sheet_2x.png`.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n30-c17/feet3 feet`, sole / jump, tool's 32 px/m unit):
+
+| Pitch | Facing | Four | Eight c16 (`15590aa9b`) | Eight c17 (`6ee306fd8`) | Culprit (eight c17) |
+|---:|---|---:|---:|---:|---|
+| 70 | right | 2.42 / 4.34 | 1.96 / 6.61 PASS | 1.96 / 6.61 PASS (sheet unchanged) | jump 4 -> 5, sole 1-4 |
+| 70 | down-right | U / 10.50 | 1.39 / 12.00 PASS | 1.39 / 12.00 PASS (sheet unchanged) | jump 8 -> 1 |
+| 55 | right | 2.03 / 5.09 | 2.05 / 6.98 FAIL | 2.05 / 6.98 FAIL (cells unchanged) | jump 4 -> 5, sole 2.05 on the D8 hold of 5-8 |
+| 55 | down-right | U / 10.43 | 2.72 / 11.78 FAIL | 2.08 / 11.78 FAIL | jump 4 -> 5, sole 2.08 on the late D7 hold of 5-8 |
+
+Next, if wanted: both remaining p55 soles sit in the hold before drawing 8 (right D8 hold -2.04, down-right D7 hold
+-1.97), so the only one-cell lever left is drawing 8 itself, which moves `EIGHT_STEP_M` and so every facing at both
+pitches; it needs the director's call and a full re-measure. No further D5 / D6 / D7 edit is expected to cross 2.
