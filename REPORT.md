@@ -137,13 +137,16 @@ top / tilt70 / combo OK, 288 / 289 / 287 s), `build/gate/ac27d74e5b1a/gate.json`
 - After merging `n30-cast` (`c2281acbb`, cop build +-8 %): `project/features/combat/kills/kill_fall_cells.gd:95`
   becomes `var k: float = StreetCrowdCards.body_scale_of(rig)` (cast's NEED combat: a killed street cop is sized at the
   crowd's +-16 % while his living card draws at +-8 %; `body_scale_of` exists only on n30-cast, so it cannot be done here).
+  Ready as one command: `git apply evidence/n30/kills/cop_scale.patch` (the line + `test_a_street_cop_dies_at_his_cop_build`;
+  `6cdb5ed12`, `6bc803db4`). Proven on a throwaway merge of n30-cast: `--select=test_kill_card_scale,test_street_crowd_cards,test_kill_card_fall`
+  25/0; with line 95 reverted the new test fails (id 7: 1.0669 vs 1.0335). `evidence/n30/kills/cop_scale.md`.
 - `--kill-card-fall` was added to `KNOWN_FLAGS` (debt accepted, launch_args 226 -> 227).
 
 ## Next steps
 - Director, after merging: `git apply evidence/n30/lights/rim.patch`, then
   `node tools/tests/run_unit.mjs --select=test_light_pool_rim,test_light_explosion_amber,test_light_layer`; film the nuke
   blast at t486 64 px/m.
-- Director, after merging n30-cast: `kill_fall_cells.gd:95` -> `StreetCrowdCards.body_scale_of(rig)` (Merge notes).
+- Director, after merging n30-cast: `git apply evidence/n30/kills/cop_scale.patch` (`kill_fall_cells.gd:95` -> `body_scale_of(rig)` + test).
 - Overkill Carry card icon (keys / weapon icons): NEED Director.
 - The FX item print (`look_d4_item`, core/render) has no dark-amber ink, so every amber->ink blend snaps to vermilion (any
   future amber cell; our nuke band and blast cells are fixed in the art with soot seams). A print rule (vermilion only when nearer it than the amber->ink segment)
@@ -152,6 +155,8 @@ top / tilt70 / combo OK, 288 / 289 / 287 s), `build/gate/ac27d74e5b1a/gate.json`
 - Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
 ## Builder ledger
+- Session 6: c27 cop-scale-patch 33 accepted (evidence only: cast's NEED combat merge note as a patch + test, proven on a
+  throwaway merge; it fixed its own first test draft, a hat-less variant, before committing the proof).
 - Session 5: c24 specks-film 3 accepted (evidence only); c25 decisions 1 accepted; c26 seam-film 4 accepted (32 px/m shows no
   difference, said so plainly); c23 nuke-seam (Opus) 19 accepted (model first with c18's snap
   model, then three ticks in game: landed on the first in-game try). What worked: a brief that hands over the cause and its
