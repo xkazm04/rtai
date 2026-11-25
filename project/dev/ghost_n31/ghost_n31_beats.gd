@@ -2,8 +2,9 @@ extends Node
 ## n31 ghost 03 (dev only): stills of Tonnage's drop deploy at named ticks after the press, in
 ## the gauntlet street at tilt 70 and --ppm (32 or 64), 1920x1080, one sim tick a frame.
 ## --at=<since press,...> names the stills (beats-<ppm>-p<since>.png in --out).
+## --kill adds a one-hit cop 1 m from the drop centre (inside crush_m): his death on film.
 
-const KNOWN_FLAGS: PackedStringArray = ["--ppm", "--out", "--at", "--position"]
+const KNOWN_FLAGS: PackedStringArray = ["--ppm", "--out", "--at", "--position", "--kill"]
 const RESOLUTION: Vector2i = Vector2i(1920, 1080)
 const TAIL_TICKS: int = 4
 
@@ -22,6 +23,7 @@ func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	ppm = args.text("--ppm", "64").to_int()
 	out_dir = args.text("--out")
+	input.kill = args.has("--kill")
 	for part: String in args.text("--at", "0,7,22,27,30,60,110").split(",", false):
 		wanted.append(part.to_int())
 	if ppm not in [32, 64] or not out_dir.is_absolute_path():
@@ -65,6 +67,11 @@ func _open() -> bool:
 	add_child(rigs)
 	if not rigs.attach(session.stage, street, session.world.context()):
 		return false
+	if input.kill:  # the brutality station: signature deaths drawn (crush vs the standard death)
+		var sig: BrutalityHook = BrutalityHook.new()
+		session.stage.hooks.append(sig)
+		sig.setup(session.stage, session.world.context())
+		sig.attach_view(street)
 	street.print_stage.place(street.focus)
 	street.print_stage.camera.make_current()
 	street.print_stage.camera.force_update_scroll()
@@ -77,6 +84,8 @@ func _process(_delta: float) -> void:
 	if input.press_tick < 0:
 		return
 	var since: int = session.stage.tick - input.press_tick
+	if input.crush_cop != null and since < 27:  # held 1 m from the drop centre until the dump
+		input.crush_cop.pos = session.pilot.ghosts.deploy.spot + Vector2(-1.0, 0.0)
 	if since in wanted:
 		await RenderingServer.frame_post_draw
 		_save(since)

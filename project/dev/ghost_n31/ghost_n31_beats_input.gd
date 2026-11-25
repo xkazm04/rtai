@@ -13,6 +13,8 @@ const RING: Array[Vector2] = [
 var stage: ArenaStage
 var spot: Vector2
 var press_tick: int = -1
+var kill: bool = false
+var crush_cop: Fighter = null
 
 
 func bind(source: ArenaStage) -> void:
@@ -23,6 +25,14 @@ func bind(source: ArenaStage) -> void:
 			stage.arena, spot + Vector2.from_angle(at.y) * at.x, &"patrol_cop"
 		)
 		foe.brain_owned = true
+	if kill:
+		var cop: Fighter = stage.arena.squad_ai.spawn_member(
+			stage.arena, spot + Vector2(-1.0, 0.0), &"patrol_cop"
+		)
+		cop.brain_owned = true
+		cop.max_hp = 1.0
+		cop.hp = 1.0
+		crush_cop = cop
 
 
 func sample(tick: int) -> TickInput:

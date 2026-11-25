@@ -202,7 +202,8 @@
         "2026-11-25: n31 ghost measure dev tool (dev_loc 39760 -> 40320)",
         "2026-11-25: n31 ghost measure: drop-mode support (dev_loc 40320 -> 40331)",
         "2026-11-25: n31 ghost measure dev tool (dev_loc 40331 -> 40552)",
-        "2026-11-25: n31 ghost take scene (dev_loc 40552 -> 40704)"
+        "2026-11-25: n31 ghost take scene (dev_loc 40552 -> 40704)",
+        "2026-11-25: n31 ghost beats probe --kill (dev_loc 40704 -> 40723)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -218,7 +219,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ghost_n31": 944,
+        "project/dev/ghost_n31": 963,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -245,7 +246,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40704
+      "total": 40723
     },
     "direct_cmdline_reads": {
       "accepted": [
