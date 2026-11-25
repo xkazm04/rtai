@@ -156,3 +156,8 @@
 - 16:57 LOOKED at evidence/yard30/span_shadow_reads_64ppm.png: after, the beam south of Rivet at tick 7450 is darker; modest, no edge, no floor spill; crops slightly misaligned. Accepted (better than shipped, bar "at a glance" not met: next lever is code, a multiply blend or sprite silhouette).
 - 16:57 BUILDER shadow-reads 8 accepted. BUILDER RUNNING none.
 - 16:58 Gate re-started detached on the final commit cec6791f2a91 with --reels (pid 37188, out build/gate-final2.out, lock build/yard-godot.lock = gate-final2). REPORT header says so; the report session quotes the line. NEXT as at 16:52 case (a), the gate is already running: do not start another; wait for build/gate/cec6791f2a91/gate.json (~32 min, ~17:30).
+
+## Session 6 (report, 18:45 to 18:55)
+- 18:45 Read JOURNAL, git log (HEAD e9316f76d). Gate on cec6791f2a91 with --reels finished: `gate: PASS; build/gate/cec6791f2a91/gate.json` (lint 19/19, unit 4335/0/2, scenarios 68, parity, selftest, export-audit 1004/0, reels exit 0). Gate pid 37188 gone; lane lock build/yard-godot.lock (gate-final2) released; no Temp snapshot left for cec6791f2a91. REPORT header quotes the line. No code changes this session (STABILIZE, build green).
+- 18:47 BUILDER RUNNING none.
+- 18:47 NEXT: none for this lane; Director merges `n30-yard` at the REPORT commit. Owner calls in REPORT `## Calls for the owner` (roof cost not proven under 0.5 ms; span shadow reads only modestly: next lever is a multiply blend or a sprite silhouette in prologue_span_shadow.gd).

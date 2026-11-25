@@ -1,6 +1,6 @@
 # REPORT lane yard, run n30 (2026-11-25, day run), branch `n30-yard`, base `5114a4441`
 
-Gate: re-run on the final commit `cec6791f2` (span shadow values `d3805a903`, started 16:58, `build/gate-final2.out`, result `build/gate/cec6791f2a91/gate.json`: the report session quotes it here). The previous code commit `7d87cf75a` with reels: `gate: PASS; build/gate/7d87cf75a74c/gate.json` (git-ignored; lint 19/19, unit 4335 passed 0 failed 2 skipped, scenarios 68, parity bit for bit, selftest, export-audit 1004 loaded 0 failed, reels exit 0). Everything after it is JOURNAL / REPORT / evidence (inert).
+Gate on the final code commit `cec6791f2` with reels: `gate: PASS; build/gate/cec6791f2a91/gate.json` (git-ignored; lint 19/19 over 2297 files, unit 4335 passed 0 failed 2 skipped, scenarios 68, parity bit for bit over 1200 steps with the planted mutation caught at step 629, selftest, export-audit 1004 loaded 0 failed, reels exit 0). The earlier code commit `7d87cf75a` also passed with reels (`build/gate/7d87cf75a74c/gate.json`). Everything after `cec6791f2` is JOURNAL / REPORT (inert).
 
 Owner's picks for this lane: `over_print_shade` 0.5; floor decals drawn over the i55 impression; a soft drop
 shadow under Rivet when he stands on a span; per-bay roof art and per-bay plumes; one more span drawn into the
