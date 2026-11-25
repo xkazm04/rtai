@@ -183,7 +183,8 @@
         "2026-11-24: contractor feet take for n28 cast (dev_loc 37773 -> 37778)",
         "2026-11-24: contractor measurement scenes (turns, poses, lineup) in project/dev/cast for n28 cast (dev_loc 37778 -> 38011)",
         "2026-11-24: contractor poses control and calm-frame takes in project/dev/cast for n28 cast (dev_loc 38011 -> 38037)",
-        "2026-11-24: contractor fight dev scene (film take) for n28 cast (dev_loc 38037 -> 38209)"
+        "2026-11-24: contractor fight dev scene (film take) for n28 cast (dev_loc 38037 -> 38209)",
+        "2026-11-25: cast_size_beside dev scene for n29 cast (brief n29-cast-01) (dev_loc 38208 -> 38409)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -192,7 +193,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 2852,
+        "project/dev/cast": 3053,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -225,7 +226,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 38208
+      "total": 38409
     },
     "direct_cmdline_reads": {
       "accepted": [
