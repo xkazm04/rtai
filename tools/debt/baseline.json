@@ -199,7 +199,8 @@
         "2026-11-25: sprint tour for n30 keys (dev_loc 39271 -> 39340)",
         "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)",
         "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
-        "2026-11-25: n31 melee 01b gauntlet melee baseline probe, dev-only measurement (dev_loc 39760 -> 39950)"
+        "2026-11-25: n31 melee 01b gauntlet melee baseline probe, dev-only measurement (dev_loc 39760 -> 39950)",
+        "2026-11-25: n31 melee 01b foe reach probe, dev-only measurement (dev_loc 39950 -> 40103)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -220,7 +221,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/melee_n31": 190,
+        "project/dev/melee_n31": 343,
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
@@ -242,7 +243,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39950
+      "total": 40103
     },
     "direct_cmdline_reads": {
       "accepted": [
