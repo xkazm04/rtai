@@ -1203,6 +1203,7 @@
         "span_return_bend",
         "span_bend_tail"
       ],
+      "over_print_shade": 0.5,
       "paint_from": "torn_line",
       "phone": {
         "art": "res://boot/prologue/art/line_fire/payphone.png",

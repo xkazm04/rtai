@@ -89,8 +89,9 @@ func test_draw_runs_ground_then_wrecks_in_skin_then_debris_then_spans() -> void:
 		var piece: PrologueYard.Wreck = order[i]
 		assert_eq(call.piece, piece, piece.id)
 		if plan.wrecks.has(piece):
-			assert_eq(call.tint, Color.WHITE, piece.id)
-			assert_eq(call.skin_tint, Color.WHITE, piece.id)
+			var shaded: Color = Color(0.5, 0.5, 0.5)
+			assert_eq(call.tint, shaded, piece.id)
+			assert_eq(call.skin_tint, shaded, piece.id)
 			var want: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
 			assert_eq(call.skin, want, piece.id)
 		else:
@@ -125,8 +126,8 @@ func _draw_shaded(plan: PrologueYard, shade: float) -> Array[Call]:
 	return rec.calls
 
 
-func test_absent_key_leaves_the_shade_at_one() -> void:
-	assert_eq(_plan().dressing.over_print_shade, 1.0)
+func test_arched_line_pins_the_shade_at_half_and_one_leaves_wrecks_white() -> void:
+	assert_eq(_plan().dressing.over_print_shade, 0.5)
 	for call: Call in _draw_shaded(_plan(), 1.0):
 		if call.piece != null and call.skin != null:
 			assert_eq(call.tint, Color.WHITE)
