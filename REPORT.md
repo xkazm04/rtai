@@ -92,7 +92,13 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
   `evidence/n29/mutate/pressure_rifles.md`).
 - `current_look.gd` (`test_collect_call_current`): 1/20 = 5 % -> 15/20 = 75 %. The 5 survivors are in `draw()` and change
   pixels only (`evidence/n29/mutate/current_look.md`).
-- `weapon_fx_bolt.gd` 10/14 = 71 %, `kill_fall_cells.gd` 7/8 = 87.5 % (above).
+- `weapon_fx_bolt.gd` 10/14 = 71 % (`amplify`, lines 8-30), `kill_fall_cells.gd` 7/8 = 87.5 % (above).
+- The electro hash and fork arithmetic are pinned (tests only, `32f60f1a4`, `4d2e8f403`, `2aa9e6748`;
+  `test_weapon_fx_electro_hash.gd`): `spawn_id` and `_serial` exact values worked out by hand (including posmod and
+  the `* 31` weight), `add_path` widths, order and count at k = 1 and 0.5, and a fork sweep that hits both 3 and 4.
+  The exact fork count per serial and one fork tip are pinned from observed values. Mutate: `weapon_fx_bolt.gd`
+  `spawn_id`/`draw` lines 9/9 = 100 %; `weapon_fx_electro.gd` star/add_path/_serial lines 9/13 = 69 % -> 13/13 =
+  100 % (14 of 54 mutants sampled, 1 invalid). `evidence/n29/electric/bolt.md` "Call 9".
 - `dev/ghost-forms/bond_film.gd`: `--bond-prefill=0` no longer crashes (`820c8dfe5`; SCRIPT ERROR 0).
 
 ## What does not
@@ -131,7 +137,8 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
 2. Keys: repaint the molotov rag, the `rivet_eq_plasma_sword*` sheets and the showcase/small swords with the same masked
    recolour (`python -I evidence/n29/red/recolour.py --sword` / `--sword-specks --hot` already handles the hilt mask).
    Then re-run `evidence/n29/red/audit_count.py` for rows 12 and 16.
-3. Pin `current_look.gd`'s five `draw()` survivors with a render readback, and `weapon_fx_bolt.gd`'s `spawn_id` hash.
+3. Pin `current_look.gd`'s five `draw()` survivors with a render readback; mutate the rest of `weapon_fx_electro.gd` (40 of
+   54 mutants unsampled).
 4. Fold `CurrentLook`'s copied `_serial` back into `WeaponFxElectro`, and replace the match-guard side effect in
    `weapon_fx_art.gd` (`Kind.BOLT when WeaponFxBolt.draw(...)`) with a plain branch.
 5. `kill_reel.mjs`: pass `--controls=legacy` by default (or arm the lab gun under the new controls).
@@ -141,8 +148,8 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
    (owner call: it changes a kill's look).
 
 ## Builder ledger
-16 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 494 minutes in all.
-15 accepted, 1 bounced (c2c: its code was right, but amber did not reach the screen; c2e finished it).
+18 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 531 minutes in all.
+17 accepted, 1 bounced (c2c: its code was right, but amber did not reach the screen; c2e finished it).
 
 | call | min | result | note |
 |---|---:|---|---|
@@ -162,6 +169,8 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
 | c6 kill card scale | 55 | accepted | Opus; served cast's NEED |
 | c7 card kill still | 16 | accepted | found the `--controls=legacy` trap |
 | c4 mutate | 51 | accepted | 3 files, dev crash fix |
+| c8 frames curate | 1 | accepted | frames.json to 15 best first, full list kept |
+| c9 electro pins | 36 | accepted | tests only; both mutate runs at 100 % |
 
 What I would brief differently: (1) every art/colour brief asks for an in-game still at 64 px/m before commit A ("does
 the change reach the screen through the print?"): the item print snapping amber to vermilion cost two calls; (2) "prove
