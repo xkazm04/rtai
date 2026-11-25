@@ -172,3 +172,8 @@ NEXT (session 6, from ~17:09):
 - 15:48 BUILDER n30-23 molotov-clip-head launched (sonnet, bg): re-film the n30 tile of `molotov/molotov_32.mp4` (stop-gap | n30 | plasma
   rifle, filmed before 0e399a732) at HEAD as `molotov_head_32.mp4`, reusing the stop-gap and donor captures; frame diff old vs new
   middle tile. Commit by 16:25, END 16:35. Sole lane Godot user.
+- 15:56 BUILDER n30-23 molotov-clip-head 6 accepted: 3882f1694, 0fe1e0ac2 (films.md section). `molotov/molotov_head_32.mp4` (1920x1080
+  60/1, 921 frames, 15.35 s); n30 tile + 64 px/m tile re-captured at HEAD, stop-gap/donor captures reused. Old vs new n30 capture: 17/991
+  frames differ (167-179, 643-646, max 1021 px). I looked at the frame at 12 s (`build/n30-dir/mhead_12s.png`): three tiles aligned,
+  labels readable, n30 bottle + flame in the claw, 64 px/m tile clean. frames.json entry -> molotov_head_32.mp4 (15). REPORT: What works
+  updated, the "molotov_32.mp4 predates the fix" line removed from What does not.

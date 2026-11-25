@@ -40,7 +40,9 @@ DRAFT (session 6, 15:50): sections are filled as items land; the final version i
 - **The vermilion list** (`fb93bfd25`, `391d529fa`, `evidence/n30-keys/vermilion_list.md`): see Calls 1.
 - **Molotov film** (`cb361f4f8`, `evidence/n30-keys/films.md`): `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/molotov_32.mp4`
   (stop-gap | n30 | plasma rifle at 32 px/m over a 64 px/m tile; 1920x1080 60/1, 921 frames, 15.35 s by ffprobe) and
-  `molotov_before_after_64.png`.
+  `molotov_before_after_64.png`. Re-filmed at HEAD after the run-step fix (`3882f1694`): `molotov/molotov_head_32.mp4`, same layout
+  (ffprobe 1920x1080 60/1, 921 frames, 15.35 s); the n30 tile was re-captured from HEAD, the stop-gap and donor captures reused (their
+  sheets did not change). Old vs new n30 capture: 17 of 991 frames differ (frames 167-179 and 643-646, at most 1021 px), the rest identical.
   **Molotov sprint tour at p70** (`88a0b7ff6`, after the run-step fix): the arsenal recorder's `--sprint-tour=on --weapon=molotov
   --pitch=p70` in the real arena, 5114a4441 (stop-gap, `rivet_run8.png`) | HEAD (`rivet_run8_eq_molotov.png`), same ticks:
   `molotov/molotov_p70_sprint_tour_32.mp4` (1920x1080 60/1, 1440 frames, 24.0 s, real speed, the tour played twice),
@@ -69,7 +71,6 @@ DRAFT (session 6, 15:50): sections are filled as items land; the final version i
 - Rivet's collar still reads as rope in some p70 cells, and the run's 60 images are spent: mini-nuke `_left` c0 (its edit was
   rejected on sight), gatling `_left` c0, `gatling_diag` c0/c2, the two `_left_fire` strips, and the 9 cells listed in Next steps 2.
   The `_left_fire` cells are another drawing, so a shot swaps the new ring for a few torn bits under the visor, not for a clear rope.
-- `molotov/molotov_32.mp4` (n30-05) was filmed before the run-step fix `0e399a732`; the p70 sprint tour clip is the current one.
 
 ## What blocked or slowed you (minutes each)
 
