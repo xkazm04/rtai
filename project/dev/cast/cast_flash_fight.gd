@@ -4,7 +4,8 @@ extends "res://dev/cast/cast_lineup.gd"
 ## plenty of hp); the scene logs every tick a foe's hit flash (rig.is_tinted()) turns on, so the
 ## film can be cut at those ticks. The flash is the live path's own (ArenaRobotRigs._react),
 ## no scene drives it.
-## GTAI_CAST_TICKS sets the length; GTAI_CAST_FLASH_OUT, when set,
+## GTAI_CAST_TICKS sets the length, GTAI_CAST_FLASH_PPM=64 the 64 px/m still take;
+## GTAI_CAST_FLASH_OUT, when set,
 ## gets one png per logged flash tick (foe_<archetype>_<hit>_<k>.png, k = 0..2).
 
 const CENTRE: Vector2 = Vector2(13, 0)
@@ -21,7 +22,7 @@ var _grab: Dictionary[int, int] = {}
 
 
 func _ready() -> void:
-	_ppm = 32
+	_ppm = 64 if OS.get_environment("GTAI_CAST_FLASH_PPM") == "64" else 32
 	var ticks: int = OS.get_environment("GTAI_CAST_TICKS").to_int()
 	if ticks <= 0 or get_window().size != Vector2i(1920, 1080):
 		_fail("set GTAI_CAST_TICKS at 1920x1080")
