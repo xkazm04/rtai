@@ -30,3 +30,13 @@ labelled cells | live current).
 `weapon_fx_electro.gd` (--lines=28-33,134-146, --max=12): killed 6 / (6 + 5) = 54.5 % (1 invalid); the survivors were the two
 translucent halo passes and the ink width at k != 1; a test (`test_chain_keeps_both_halos_and_scales_the_ink_with_k`) now
 pins them (not re-mutated).
+
+## Call 3c: lightning-sized kinks (`WeaponFxBolt.JAG_K` 3.0)
+`WeaponFxBolt.amplify` scales every interior point's perpendicular offset from the end-to-end line by `JAG_K` (ends fixed, pure,
+no RNG) after `ElectricArc.shape`, for the bolt (`WeaponFxBolt.plan`) and the chain hop (`chain_plan`); `electric_arc.gd` is
+untouched, so kills and wrecks keep their arcs. 3.0 takes the 0.075 m kink to about 0.22 m. Measured in the 64 px/m bolt still
+(tick 114, mean-y per column, peak to peak across the end-to-end line): cells zigzag 22.4 px, current 24.9 px. Red/vermilion 0 and
+teal 0 in the bolt and the hop effect boxes (both arms). Only the current arm was re-rendered (the cells arm is unchanged code and
+the same seed, its stills/film are reused). `stills/electro_{bolt,hop}_pair_64_flat.png` keep the near-straight 3b look. Films:
+`electro_bolt_{cells,current}_32.mp4` 1920x1080 60 fps 18.000 s 1080 frames, `electro_bolt_pair_32.mp4` 1920x540 same
+(labelled cells | live current), all ffprobe-checked.
