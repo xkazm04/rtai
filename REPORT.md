@@ -24,7 +24,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` th
 ## What does not
 
 - **Pile-driver pads by registration: built, measured, not shipped.** Sole worse by 7.7-9.6 px in every facing, jump better. The art keeps the planted pad at a fixed offset from the torso through each contact; registration needs whole-column redraws at both pitches (table in `docs/art/cast-audit.md` "Pile-driver, n30"). Patch `build/look/n30-c02/register_pads.patch`.
-- **Door eight** passes both bars at p70 but not at p55 (soles 2.05 and 2.08 after two p55 rounds, each 0.05-0.08 over the 2 px bar). What is left is the drift in the hold before drawing 8, and drawing 8 feeds `EIGHT_STEP_M`, so the last fix moves every facing at both pitches.
+- **Door eight** passes both bars at p70 but not at p55 (soles 2.05 and 2.08 after two p55 rounds, each 0.05-0.08 over the 2 px bar). A computation (c19, `docs/art/cast-audit.md` "Door eight, p55 drawing 8, n30", a Python copy of the walk checked against the measured take) closes the art route: the remaining slide inside a hold is the lean change times the sole's depth below the cell pivot, halved (p55 right drawing 8: 0.200 x 20.5 / 2 = 2.05, measured 2.04), because a hold leans about the pivot line, not the planted sole; no drawing-8 edit fixes p55 right, and any drawing-8 edit changes `EIGHT_STEP_M` and pushes p70 right over the bar.
 
 ## What blocked or slowed you (minutes each)
 
@@ -55,6 +55,11 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` th
 2. Owner call 3 (warden hat): the masked recolour over all walk cells at both pitches, per-cell mask check, in-game 64 still.
 3. NEED combat at merge: `kill_fall_cells.gd` `victim_scale` -> `StreetCrowdCards.body_scale_of(rig)` (see Merge notes).
 4. NEED director: `compare.mjs` / windowed film size check on this machine (clamped 1422x800).
+5. Door eight: `StreetPatrolPose.pose` shears a held drawing so the point at the registered sole height (`ink.y` of
+   `CastDoorAnchors`) stays put; c19's model puts the remaining in-hold slide at the lean change times the boot's depth below
+   that height (p55 right drawing 8: 20.5 sheet px). If the registered sole y sat on the boot bottom that the feet tool reads,
+   the slide inside a hold should vanish: a `cast_door_soles.py` change (door anchors only), to measure four and eight
+   before any switch. Not measured tonight.
 
 ## Builder ledger
 
@@ -83,6 +88,7 @@ All Claude sub-agents launched from the director's session, briefs under `eviden
 | c16 | opus | door p55 round 1 (6 images) | 34 | accepted (art ships, WALK stays FOUR) |
 | c18 | sonnet | two decisions.md lines, frames.json prune | 4 | accepted |
 | c17 | opus | door p55 round 2 (5 images) | 17 | accepted (art ships, WALK stays FOUR) |
+| c19 | opus | door p55 drawing 8, computation (0 images) | 8 | accepted (no drawing-8 edit can pass; lever is the walk code) |
 
 What I would brief differently: one checklist point per call from the start (the short calls c07-c13 were the best value);
 give every measurement call the exact sheet row the game draws at that moment (c06 measured a row the game never shows);
