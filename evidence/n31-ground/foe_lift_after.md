@@ -99,3 +99,100 @@ after (this tree), crop x2, labelled. t006 (mid-walk): the gunner's and the thug
 both; after, the gunner's shadow is the same size, the thug's a little larger. t000 (the first tick after the
 probe's facing switch, see the gunner note): before, the shadow rides the jumped card under its feet; after,
 the card is drawn ~25 px (64 px/m) above a shadow that stays on the ground, so the gunner floats for that tick.
+
+## Head pump (n31-10): the side-view toe-off registration
+
+Probe (placement only, no render): `foe_place_probe.gd --strip=<p70 sheet> --mps=<m/s> --stances=8` now logs
+`head` = the cell's alpha bbox top (topmost opaque row, bbox centre column) through the placed transform.
+Head travel = max - min of head y minus ground point y per full stride, strides 2-4, 32 px/m, texel 0.3173.
+
+The term: on every walk sheet the drawn head top is steady in the cell (patrol side column -167 cell px in all
+8 drawings, riot -168..-170, SWAT -162..-163) and some boot always touches the foot line (cell alpha bottom
+-2..+2), but on the toe-off drawings (3 and 7, some 2/4) the anchor's sole is the LIFTING planted heel, 15-46
+cell px above the foot line (patrol side -45.5 and -32.5, riot side -15.5). `_ground` registered that heel to
+the ground, so the whole drawing (head and the other, standing boot) dropped by the lift (14 / 10 px): the cap
+dip of the W walkers in play. Not pose roll/stretch/settle (the sole column is constant to 0.4 px).
+
+Fix: `StreetPatrolPose.HOLD_TOE_OFF` (true; false = the old registration): on the side column (`SIDE_COLUMN` 2)
+of a walk (not a run: lifted run marks are the flight, and match the alpha bottom), a mark higher than
+`TOE_OFF_PX` 13 cell px registers on the foot line. Applied on every column it made S worse (patrol walk S 9.4
+-> 15.9, SE 9.8 -> 11.5, riot SE 9.2 -> 14.7): there the screen vertical is also the travel and the drop
+stands in for the step forward the drawing lacks, so those columns keep it.
+
+Probe, head travel per stride px (strides 2 / 3 / 4), before | after:
+
+| kind | W, E | S | N | SE | NE |
+|---|---|---|---|---|---|
+| patrol walk 3.2 | 8.1 / 7.6 / 7.9 -> 0.6 / 0.5 / 0.6 | 9.0-12.2 (same) | 15.5-18.5 (same) | 9.3-10.1 (same) | 10.7-12.4 (same) |
+| patrol run 6.0 | 5.0-5.3 (same) | 22-26 | 24-28 | 15-19 | 16-18 |
+| riot walk 2.8 | 5.2 / 5.4 / 4.9 -> 1.8 / 1.7 / 1.9 | 21-30 (same) | 20-28 (same) | 9-12 (same) | 15 (same) |
+| SWAT walk 3.4 | 1.1-1.2 (same) | 22-36 (same) | 23-35 (same) | 11-12 (same) | 16-18 (same) |
+| SWAT run 6.0 | 2.9-3.0 (same) | 28-36 | 28-36 | 16-22 | 21-25 |
+
+Bars (32 px/m, walk <= 4 px, run <= 7 px): MET side-on (the facing the gauntlet waves walk in): patrol walk
+0.6, riot 1.8, SWAT 1.2, patrol run 5.0, SWAT run 3.0 (probe). NOT MET toward/away and three-quarter (9-36 px):
+that is the drawing, not a placement term I can damp with the feet on the floor. Those columns draw no forward
+progression in the cell (head top and both soles at one cell height through the stance), so with the planted
+boot locked to the ground the whole figure holds for a stance while the ground point runs a stance (22.6 px patrol
+walk, 31 px SWAT walk) and then steps: the head line can only run steady if the boots slide a stance (the old
+four-drawing look) or the legs stretch ~60 % (MAX_STRETCH is 0.12). Sole slide: unchanged (sole column of the
+held drawing constant to 0.4 px; the side-view sole-y range 0.4 -> 9.1 px is the toe-off heel now drawn lifted).
+Unit: `test_side_walk_torso_holds_its_line_within_four_screen_pixels` (patrol, riot, SWAT side walk, torso mark
+travel <= 4 px over strides 2-3; 8.28 px with the old constant), and
+`test_registered_soles_hold_through_drawings_and_wrap_in_both_pitches` now expects the toe-off heel at its lift.
+
+### Rendered before | after (foes_capture --ppm=32 + foes.py)
+
+`node tools/ground/lift/foes_capture.mjs --ppm=32 --subjects=patrol_cop,riot_cop,swat --out=build/n31/n31-10/after32`
+then `python -I tools/ground/lift/foes.py --run 32=build/n31/n31-10/after32 --json ... --md ...` (40 rows, 1600
+frames; 40 captured ticks per facing, the before had 48). JSON: `foe_lift_after_n31-10.json`. Before = the rows of
+`foe_lift_before.md` (main `ba8e470b0`); after = this tree (n31-09 `fe5712271` mid-stance landing + n31-10
+`e3393e180` N stance shift + HOLD_TOE_OFF), so the sole/gap columns also carry n31-09's half-stance landing.
+
+| kind | gait | dir | head travel px | sole lift planted px | sole lift max px | gap planted max | gap all max |
+|---|---|---|---|---|---|---|---|
+| patrol_cop | run | E | 5.0 / 5.0 | -2.56 / -2.43 | 3.0 / 3.0 | 2.5 / 2.5 | 4.0 / 4.0 |
+| patrol_cop | run | N | 24.0 / 22.0 | -37.92 / -12.67 | -4.12 / 20.07 | 25.0 / 12.0 | 25.0 / 21.0 |
+| patrol_cop | run | NE | 16.0 / 16.0 | -25.25 / -8.75 | -1.15 / 14.26 | 25.0 / 8.0 | 25.0 / 15.0 |
+| patrol_cop | run | NW | 16.0 / 16.0 | -25.25 / -8.75 | -1.15 / 14.26 | 25.0 / 8.5 | 25.0 / 15.0 |
+| patrol_cop | run | S | 22.0 / 22.0 | 1.34 / -23.07 | 34.98 / 10.01 | 3.0 / 12.5 | 36.0 / 12.5 |
+| patrol_cop | run | SE | 15.0 / 14.0 | -1.46 / -17.75 | 22.62 / 5.13 | 2.5 / 16.5 | 23.5 / 16.5 |
+| patrol_cop | run | SW | 15.0 / 14.0 | -1.46 / -17.75 | 22.62 / 5.13 | 1.0 / 16.5 | 23.5 / 16.5 |
+| patrol_cop | run | W | 5.0 / 5.0 | -2.56 / -6.0 | 3.0 / 3.0 | 2.5 / 4.0 | 4.0 / 4.0 |
+| patrol_cop | walk | E | 8.0 / 1.0 | -7.6 / 0.0 | 0.0 / 0.0 | 9.5 / 2.5 | 9.5 / 2.5 |
+| patrol_cop | walk | N | 21.0 / 15.0 | -33.88 / -9.93 | -9.13 / 9.76 | 22.0 / 9.0 | 22.0 / 11.0 |
+| patrol_cop | walk | NE | 11.0 / 10.0 | -8.87 / -1.76 | 4.01 / 12.47 | 8.0 / 1.5 | 8.0 / 13.5 |
+| patrol_cop | walk | NW | 11.0 / 10.0 | -8.87 / -1.76 | 4.01 / 12.47 | 8.0 / 1.5 | 8.0 / 13.0 |
+| patrol_cop | walk | S | 10.0 / 9.0 | 0.06 / -10.24 | 14.72 / 4.13 | 2.0 / 6.5 | 15.5 / 6.5 |
+| patrol_cop | walk | SE | 10.0 / 9.0 | -3.33 / -10.54 | 11.05 / 3.59 | 1.5 / 10.0 | 12.0 / 10.0 |
+| patrol_cop | walk | SW | 10.0 / 9.0 | -3.33 / -10.54 | 11.05 / 3.59 | 1.5 / 9.5 | 12.0 / 9.5 |
+| patrol_cop | walk | W | 8.0 / 1.0 | -7.6 / 0.0 | 0.0 / 0.0 | 8.0 / 2.5 | 8.5 / 2.5 |
+| riot_cop | walk | E | 5.0 / 1.0 | -5.0 / 0.0 | 0.0 / 0.0 | 2.0 / 2.5 | 2.5 / 2.5 |
+| riot_cop | walk | N | 20.0 / 19.0 | -31.96 / -12.93 | -6.72 / 12.66 | 13.0 / 9.5 | 13.0 / 13.5 |
+| riot_cop | walk | NE | 17.0 / 15.0 | -22.4 / -9.91 | -0.18 / 8.85 | 20.5 / 8.5 | 20.5 / 10.0 |
+| riot_cop | walk | NW | 15.0 / 14.0 | -23.4 / -8.94 | -3.18 / 8.85 | 18.5 / 7.5 | 18.5 / 10.0 |
+| riot_cop | walk | S | 23.0 / 20.0 | -4.28 / -12.75 | 26.65 / 13.26 | 3.5 / 5.5 | 27.5 / 14.0 |
+| riot_cop | walk | SE | 8.0 / 9.0 | -8.97 / -8.84 | 3.93 / 3.9 | 7.5 / 8.5 | 7.5 / 8.5 |
+| riot_cop | walk | SW | 8.0 / 9.0 | -8.97 / -8.84 | 3.93 / 3.9 | 8.0 / 8.5 | 8.0 / 8.5 |
+| riot_cop | walk | W | 5.0 / 1.0 | -5.0 / 0.0 | 0.0 / 0.0 | 2.0 / 2.5 | 2.5 / 2.5 |
+| swat | run | E | 3.0 / 3.0 | 0.0 / 0.0 | 4.0 / 4.0 | 2.5 / 2.5 | 5.0 / 5.0 |
+| swat | run | N | 27.0 / 27.0 | -38.6 / -14.94 | 1.06 / 28.03 | 38.5 / 14.0 | 38.5 / 29.0 |
+| swat | run | NE | 19.0 / 20.0 | -22.83 / -9.5 | 5.01 / 20.11 | 22.0 / 8.5 | 22.0 / 21.0 |
+| swat | run | NW | 19.0 / 19.0 | -28.01 / -9.5 | 0.61 / 20.11 | 27.5 / 10.0 | 27.5 / 21.0 |
+| swat | run | S | 27.0 / 28.0 | -15.06 / -27.96 | 25.17 / 13.94 | 13.5 / 11.0 | 26.0 / 15.0 |
+| swat | run | SE | 16.0 / 17.0 | -8.31 / -19.81 | 21.36 / 8.86 | 6.5 / 12.5 | 22.5 / 12.5 |
+| swat | run | SW | 15.0 / 16.0 | -16.01 / -19.81 | 12.03 / 8.86 | 13.0 / 19.5 | 13.0 / 19.5 |
+| swat | run | W | 13.0 / 12.0 | -12.0 / -12.0 | -1.0 / 4.0 | 10.5 / 7.0 | 10.5 / 7.0 |
+| swat | walk | E | 1.0 / 1.0 | -0.08 / -0.1 | 0.0 / 0.0 | 2.5 / 2.5 | 2.5 / 2.5 |
+| swat | walk | N | 21.0 / 21.0 | -34.71 / -14.06 | -6.9 / 14.26 | 7.5 / 10.0 | 7.5 / 15.0 |
+| swat | walk | NE | 20.0 / 15.0 | -24.11 / -10.99 | -1.95 / 8.23 | 24.5 / 9.0 | 24.5 / 9.0 |
+| swat | walk | NW | 20.0 / 15.0 | -24.11 / -10.99 | -1.95 / 8.23 | 23.5 / 9.0 | 23.5 / 9.5 |
+| swat | walk | S | 21.0 / 21.0 | -0.74 / -14.24 | 27.22 / 14.07 | 1.0 / 4.5 | 28.0 / 15.0 |
+| swat | walk | SE | 11.0 / 11.0 | -10.01 / -9.67 | 4.93 / 4.75 | 8.5 / 8.5 | 8.5 / 8.5 |
+| swat | walk | SW | 11.0 / 11.0 | -10.01 / -9.67 | 4.93 / 4.75 | 9.0 / 8.5 | 9.0 / 8.5 |
+| swat | walk | W | 1.0 / 1.0 | -0.08 / -0.1 | 0.0 / 0.0 | 2.5 / 2.5 | 2.5 / 2.5 |
+
+Read: side-on walks now hold the head line in the frames too (patrol W/E 8 -> 1 px, riot 5 -> 1 px, SWAT 1 px);
+patrol run W/E 5 px (bar 7: met), SWAT run E 3 px, W 12 px (13 before; the probe gives 3.0 for both, so the W
+render row is another term: not found in this call). Toward/away and diagonal rows 9-28 px, essentially as before
+(the drawing; see above).

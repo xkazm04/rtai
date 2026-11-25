@@ -15,6 +15,16 @@ const LANDING_EASE: float = 0.06
 ## stance walking up, to the 14.4 px limit. false = the old shift, the planted sole up to
 ## 14 px off the disc walking N.
 const SHIFT_ACROSS_TRAVEL: bool = true
+## n31-10: on a walk's toe-off drawings the marked sole is the lifting planted heel, 15-46 cell
+## px above the foot line, while the other boot already stands on it (cell alpha bottom 0..2).
+## Registering that heel to the ground dropped the whole drawing (patrol side walk: the head
+## pumped 8 px a stride). A side-view walk mark higher than TOE_OFF_PX registers on the foot
+## line instead. false = the old registration. Runs keep every mark (lifted = the flight). The
+## toward/away and three-quarter columns keep it: their screen vertical is also the travel, and
+## the drop there stands in for the step forward the drawing lacks (held: S head travel 9 -> 15).
+const HOLD_TOE_OFF: bool = true
+const TOE_OFF_PX: float = 13.0
+const SIDE_COLUMN: int = 2
 
 ## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
 ## contact on the stance interval so his moving hip shadow crosses the planted boot.
@@ -109,12 +119,18 @@ func _ground(phase: int) -> Vector2:
 	var draw: int = posmod(start + phase, count)
 	var first: Vector4 = marks[face * count + draw - posmod(draw, half)]
 	var ink: Vector4 = marks[face * count + draw]
-	var delta: Vector2 = Vector2(first.x - ink.x + ink.z, first.y - ink.y + ink.w)
+	var delta: Vector2 = Vector2(first.x - ink.x + ink.z, foot_y(first.y) - foot_y(ink.y) + ink.w)
 	if centre_stance:
 		var left: Vector4 = marks[face * count]
 		var right: Vector4 = marks[face * count + half]
-		delta -= Vector2(left.x + right.x, left.y + right.y) * 0.5
+		delta -= Vector2(left.x + right.x, foot_y(left.y) + foot_y(right.y)) * 0.5
 	return stride * floorf(float(phase) / half) + delta * texel
+
+
+## The sole height a mark registers at (HOLD_TOE_OFF).
+func foot_y(sole_y: float) -> float:
+	var side: bool = HOLD_TOE_OFF and not flight and face == SIDE_COLUMN
+	return 0.0 if side and sole_y < -TOE_OFF_PX else sole_y
 
 
 ## A strafe can hand over between opposing drawn leads while the aim stays fixed.

@@ -35,8 +35,15 @@ func _check_contacts(path: String, face: Vector2i) -> void:
 			previous = anchor
 		if path.ends_with(StreetCopWalk.RUN) and row % 4 == 3:
 			continue
+		# n31-10 HOLD_TOE_OFF: a side-view walk toe-off heel is drawn at its lift above the foot line.
+		var first: Vector4 = contact.registered.marks[face.x * 8 + row - row % 4]
+		var lift: float = _lift(contact.registered, ink.y) - _lift(contact.registered, first.y)
 		assert_almost_eq(sole.x, anchor.x, 0.001)
-		assert_almost_eq(sole.y, anchor.y, 0.001)
+		assert_almost_eq(sole.y, anchor.y + lift * TEXEL.y, 0.001)
+
+
+func _lift(pose: StreetPatrolPose, sole_y: float) -> float:
+	return sole_y - pose.foot_y(sole_y)
 
 
 func test_four_drawing_fallback_and_contact_reset() -> void:

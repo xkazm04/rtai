@@ -67,3 +67,27 @@ func test_lancer_card_walks_the_eight_and_keeps_the_four_selectable() -> void:
 		assert_true(CastCards.anchored(sheets.walk))
 	assert_eq(CastCardKinds.four_of(CastLancerAnchors.EIGHT), CastLancerAnchors.FOUR)
 	assert_between(CastLancerAnchors.WALK_STEP_M, 0.15, 0.30)
+
+
+## n31-10: walking sideways the upper body holds its line (the toe-off drawings used to drop the
+## whole cop 5-8 px at 32 px/m, the cap dip seen in play). The torso mark stands for the head:
+## its cell height is fixed and the drawn head top sits within 2 cell px of steady on these sheets.
+func test_side_walk_torso_holds_its_line_within_four_screen_pixels() -> void:
+	for strip: String in [StreetCopWalk.EIGHT, CastRiotAnchors.EIGHT, CastSwatAnchors.EIGHT]:
+		var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
+		contact.configure("p70".path_join(strip))
+		contact.travel = Vector2.LEFT
+		var face: Vector2i = RigHeadCard.frame_of(PI)
+		var texel: Vector2 = Vector2(0.3173, 0.3173)
+		var stance: float = contact.step_m * 32.0 * (contact.drawings >> 1)
+		var low: float = INF
+		var high: float = -INF
+		var at: Vector2 = Vector2.ZERO
+		while -at.x < stance * 6.0:
+			var xf: Transform2D = contact.place(at, face, texel, 32.0)
+			var ink: Vector4 = contact.registered.marks[face.x * 8 + posmod(contact.cell, 8)]
+			if -at.x > stance * 2.0:
+				low = minf(low, (xf * Vector2(ink.z, ink.w)).y)
+				high = maxf(high, (xf * Vector2(ink.z, ink.w)).y)
+			at += Vector2.LEFT * 3.2 * 32.0 * SimClock.TICK_DT
+		assert_lte(high - low, 4.0, "%s torso travel %.2f px" % [strip, high - low])

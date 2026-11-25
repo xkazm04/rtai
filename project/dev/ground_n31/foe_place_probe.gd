@@ -4,10 +4,16 @@ extends SceneTree
 ## RigCastShadows / CardContactShadow draw the disc), the placed drawing's sole and torso (anchor
 ## through the placed transform), the stance origin and the mid-point between the stance's soles.
 ## Flags: --out=<file.jsonl> [--ppm=32] [--mps=3.2] [--stances=4]
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--mps", "--stances"]
+## [--strip=<file in p70/>] (n31-10: "head" = the cell's alpha bbox top through the transform)
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--mps", "--stances", "--strip"]
 const PATROL: String = "p70/cop_patrol_planted8_armed_walk.png"
 const OCT: Dictionary[String, Vector2] = {
-	"S": Vector2.DOWN, "N": Vector2.UP, "W": Vector2.LEFT, "E": Vector2.RIGHT
+	"S": Vector2.DOWN,
+	"N": Vector2.UP,
+	"W": Vector2.LEFT,
+	"E": Vector2.RIGHT,
+	"SE": Vector2(0.7071, 0.7071),
+	"NE": Vector2(0.7071, -0.7071),
 }
 
 var _log: FileAccess
@@ -20,13 +26,17 @@ func _initialize() -> void:
 	_stances = int(_arg("--stances", "4"))
 	_log = FileAccess.open(_arg("--out", "user://foe_place.jsonl"), FileAccess.WRITE)
 	for dir: String in OCT:
-		_walk(StreetWalkerCards.DIR + PATROL, dir, ppm, mps)
+		_walk(StreetWalkerCards.DIR + "p70/" + _arg("--strip", PATROL.get_file()), dir, ppm, mps)
 	_log.close()
 	quit(0)
 
 
 func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
 	var tex: Texture2D = load(path) as Texture2D
+	var img: Image = tex.get_image()
+	if img.is_compressed():
+		var err: Error = img.decompress()
+		assert(err == OK)
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
 	contact.configure(path)
 	var cell_y: float = tex.get_height() / float(contact.drawings)
@@ -56,10 +66,20 @@ func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
 			"shift": _v(contact.registered.stance_shift),
 			"eased": _v(contact.registered.eased_landing),
 			"body": _v(contact.registered.previous_body),
+			"head": _v(placed * _head(img, face.x, contact.cell % contact.drawings, cell_y)),
 		}
 		var stored: bool = _log.store_line(JSON.stringify(row))
 		assert(stored)
 		at += OCT[dir] * mps * ppm * SimClock.TICK_DT
+
+
+## The cell's topmost opaque row (and its bbox centre column), in the anchors' local frame.
+func _head(img: Image, col: int, row: int, cell_y: float) -> Vector2:
+	var cell_w: int = img.get_width() / 5
+	var cell: Rect2i = Rect2i(col * cell_w, roundi(row * cell_y), cell_w, roundi(cell_y))
+	var used: Rect2i = img.get_region(cell).get_used_rect()
+	var x: float = used.position.x + used.size.x * 0.5 - cell_w * 0.5
+	return Vector2(x, used.position.y - cell_y * StreetCopWalk.FOOT_Y)
 
 
 func _arg(flag: String, fallback: String) -> String:
