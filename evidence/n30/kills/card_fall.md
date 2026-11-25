@@ -98,6 +98,14 @@ does not pop (cap 30 = 30). **NEED cast**: the warden fall sheet is drawn larger
 192 px still scale (a per-row fit like `StreetFallFit.FIT_K` for `p70/appliance_warden_fall.png`, or a redraw);
 it shows in his living death too.
 
+CORRECTION (c09, 2026-11-25, from cast c06b): the cast lane measured the warden at 64 px/m in delivered frames
+(`C:/Users/kazda/kiro/gtai-wt/n23-prologue/JOURNAL.md`, the 13:52 c06b line; still
+`C:/Users/kazda/kiro/gtai-masters/n30/cast/warden_switch_64.png`): cap width walk / hit0 / fall row0 is p70 36 / 28 /
+28-31 and p55 30 / 23 / 22-31. So "walk cap 22" above was a wrong reading (the mask caught only part of the
+low-saturation tan walk). No sheet draws him larger, and the **NEED cast** above (a per-row fit or a redraw for a
+too-large fall sheet) does not stand. What does change at the switch is the angle (a steeper top-down walk against a
+frontal fall) and the hat colour (grey bucket -> tan camo cap), not the size.
+
 Trooper at the switch (`probe_frames/switch_t.png`, 2x): the helmet ~30 -> ~34 px wide, the figure ~94 -> ~105 px
 tall with the rocket tips (by eye), the feet within ~2 px: a mild step (~1.1x), and the drawing turns from his
 back (walk) to his front (the fall sheet's buckle faces the fall), as every grid victim's does. Still
@@ -117,3 +125,33 @@ back (walk) to his front (the fall sheet's buckle faces the fall), as every grid
   `KillDeathCells.face_of`; the grid faces the fall vector and the stitch whirl, `KillStitchArt.facing`), as a
   generic grid victim always did.
 - The loose rifle lying right of the body in both arms is the game's weapon drop, not kill art.
+
+## Street walker identity (c09)
+
+A street walker (no `CastCardPose`) must take the old path untouched after `480268dcf`. Proof, 2026-11-25, branch n30-combat.
+
+    node tools/film/kill_reel.mjs --out=build/n30/c09/street --before=73895c4a3 --rev=HEAD --weapons=machine_pistol --ppm=64 --dirs=90 --after=60 --keep-frames -- --controls=legacy
+
+before = `73895c4a3` (the commit before the routing), after = HEAD `0bdd64d59` (snapshots `gtai-film-73895c4a35fa`, `gtai-film-0bdd64d59b4a`),
+default lab guard (a street cop, no `--foe-mix`, no `--victim`), same seed 20261109. Both films PASS, kill at tick 174.
+Whole-frame diff (1280x800, any channel difference counts):
+
+| tick | what | changed px |
+|---|---|---|
+| 172 | before the kill | 0 |
+| 174-176, 180, 186 | start of the fall | 0 |
+| 194 | mid fall | 0 |
+| 214 | lying | 0 |
+| 234 | settled | 0 |
+
+Total 0 px at every saved tick. `git log 73895c4a3..HEAD -- project` lists 480268dcf (the routing under test), 0351c7020 (a test), and
+a0f9c8bed, 42e7af756, 201763968, d4b6aabcc, 199faedc7, 5fd6c1eaa (chain hop / rocket / nuke / explosion rim art and
+palette); none changes a street cop's body, so 0 px is the expected and observed result.
+Still `C:/Users/kazda/kiro/gtai-masters/n30/combat/stills/street_fall_identity_pair_64.png` (before left, rows t174 / t194 / t234, crop
+320,200-960,600): the cop in the blue uniform lies on his side with the rifle dropped on the crosswalk, identical left and right.
+
+Re-mutate `kill_card_fall.gd` (`node tools/mutate/mutate.mjs --file=project/features/combat/kills/kill_card_fall.gd --tests=test_kill_card_fall,test_kill_card_scale --max=6`,
+224 s, baseline green): `score 83.3% = killed 5 / (killed 5 + survived 1); timeout 0, invalid 0`. Survivor: line 47
+`tex.get_width() % FRAMES != 0 or tex.get_height() % rows != 0` with `or -> and` (no test feeds a sheet that divides in one
+dimension only). Not fixed here (no product or test change in this call); a test with a 5-divisible width and a non-divisible
+height would kill it.
