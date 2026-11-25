@@ -155,3 +155,41 @@ func test_all_three_riflemen_fire_in_turn() -> void:
 	assert_eq(spaced.rifles.fired_by, [22, 22, 21] as Array[int], "blade6_spaced: one each in turn")
 	var guard: PressureTake = _run("guard6")
 	assert_eq(guard.rifles.fired_by, [26, 26, 26] as Array[int], "guard6 untouched: salvos of six")
+
+
+## The ticks on which a rifleman fires, read as the take runs.
+func _shot_ticks(id: String, until: int) -> Array[int]:
+	var take: PressureTake = PressureTake.new()
+	assert_true(take.open(id, 1), "%s opens" % id)
+	_takes.append(take)
+	var ticks: Array[int] = []
+	while take.tick < until:
+		var before: int = take.rifles.fired
+		take.advance()
+		if take.rifles.fired > before:
+			ticks.append(take.tick)
+	return ticks
+
+
+func test_salvos_start_at_tick_45_and_repeat_each_beat() -> void:
+	var guard: Array[int] = _shot_ticks("guard6", 45 + 190 + 10)
+	var first: Array[int] = [45, 54, 63, 72, 81, 90]
+	assert_eq(guard.slice(0, 6), first, "a salvo of six, 9 ticks apart")
+	assert_eq(guard[6], 45 + 180, "the next salvo starts one 180 tick beat later")
+	var sword: Array[int] = _shot_ticks("blade6", 45 + 60)
+	assert_eq(sword, [45, 63, 81, 99] as Array[int], "pairs: two rounds 18 apart, a 36 tick beat")
+
+
+func test_only_the_sword_takes_switch_to_the_blade() -> void:
+	var sword: PressureTake = PressureTake.new()
+	assert_true(sword.open("blade6", 1))
+	_takes.append(sword)
+	var guard: PressureTake = PressureTake.new()
+	assert_true(guard.open("guard6", 1))
+	_takes.append(guard)
+	for _i: int in 10:
+		sword.advance()
+		guard.advance()
+	assert_eq(sword.session.pilot.carry.weapon(), &"plasma_sword", "the sword take holds the blade")
+	assert_ne(guard.session.pilot.carry.weapon(), &"plasma_sword", "the guard take never does")
+	assert_eq(guard.session.pilot.carry.switches, 0, "and presses no switch")
