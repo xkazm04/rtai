@@ -391,3 +391,17 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
 - 06:09 No NEED cast in the other lanes' journals. 03e call 2 is in (`839ce02d8`, ring on the ground point); soles open.
 - 06:12 BUILDER RUNNING cast-03f-thug-soles (sonnet) since 06:12: `evidence/briefs/n29-cast-03f-thug-soles.md`, hard stop 06:50.
 - 06:12 BUILDER RUNNING cast-07b-war8 steps 2-3 (opus) since 06:12: brief "Added 06:11", hard stop 07:10, commit 2 by 06:50.
+- 06:24 BUILDER cast-03f-thug-soles 12 accepted: `1115a7e30`, `b15cd2909`. `_hold_stop` shifts the held drawing by
+  `sole_gap(h)` (registered sole from `CastThugAnchors` to `h.pos.y * PX_PER_M`, no px constant); read the diff. Soles vs
+  ground row after: 70/64 1 px (was 4), 70/32 0.5, 55/64 2 (at the bar), 55/32 1. Test fails without (2.82 px vs 1.0),
+  three facings at 70. Walk feet hold: sole 0.00, jump <= 9.60. Ring rows centre on the row. run_unit --changed 5/0,
+  then test_cast_thug 7/0. Looked at `thug_stop_after_64.png`: the shoe sits on the red ground line; the claw hangs in
+  front, below it (drawn so). Thug stop point PASS.
+- 06:26 BUILDER RUNNING cast-03d-A (sonnet) since 06:26: ink + live rim, measure only, brief "Added 06:20", hard stop 07:14.
+- 06:27 FINDING (07b, `bd0638f78`): the pad placement `5d8e4b6f8` made the SHIPPED four worse: body jump (32 px/m unit)
+  70 R 16.82 -> 23.80, 70 DR 12.87 -> 28.77, 55 R 11.78 -> 32.50, 55 DR 12.87 -> 27.19 (it pins a registered point that is
+  not one physical pad through the contact). Eight on the pad view worse still (30.8-41.5). Eight on the OLD held-foot
+  view: jump PASSES every facing (10.73 / 10.37 / 10.74 / 9.93) but sole slides 18-27 (four held: 12.5-21.9).
+- 06:28 DECISION revert the war view to the held-foot placement (`20be6ffaa` behaviour): a regression in the shipped look
+  never ships; WALK stays FOUR (the eight held is not no-worse: sole worse in 3 of 4); the eight held vs four held goes to
+  the owner as a call (one value). Sent to the running 07b builder: revert by 06:45, then the before/after still.
