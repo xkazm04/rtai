@@ -217,3 +217,9 @@ NEXT (if a session 7 starts before 18:45): nothing new. Only polish REPORT wordi
 - 18:45 read JOURNAL + git log (be1cccb3c top), tree clean, no builder, no lane lock. `git diff f3364498e HEAD -- project tools native steam` empty: HEAD ships the gated code (final gate PASS with reels, `build/gate/f3364498e04c/gate.json`). `cites.mjs REPORT.md`: 10 paths, 8 ok, 2 pattern, no MISSING. No fix needed; no builder started (past freeze). IMAGES 16/60.
 
 NEXT: nothing. Lane done; Director merges `n30-cast` (keep our JOURNAL.md / REPORT.md on the add/add conflict). Never `rm -rf` `build/film/c22-*` (junctions into the tree).
+
+## Session 8 (18:46, STABILIZE, past freeze)
+
+- 18:46 read JOURNAL + git log (9cd571cd1 top), tree clean, no builder, no lane lock. `git diff f3364498e HEAD -- project tools native steam` empty: HEAD ships the gated code (final gate PASS with reels, `build/gate/f3364498e04c/gate.json`). Other lanes' `NEED cast`: only combat's warden line, withdrawn 13:47. `cites.mjs REPORT.md`: 10 paths, 8 ok, 2 pattern, no MISSING. Nothing to fix; no builder started. IMAGES 16/60.
+
+NEXT: nothing. Lane done; Director merges `n30-cast` (keep our JOURNAL.md / REPORT.md on the add/add conflict). Never `rm -rf` `build/film/c22-*` (junctions into the tree).
