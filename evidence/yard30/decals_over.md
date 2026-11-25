@@ -1,4 +1,4 @@
-# n30 decals over the i55 impression: evidence (partial: contrast + pilots; bars and film not finished)
+# n30 decals over the i55 impression: evidence (finished: tyre depth, contrast, bars, film)
 
 Change under test: `5950ceb34` + `ed6b97278` (stain layer, non-ochre torn_line stamps and ochre bay lines print above the i55 impression). Before = `6c32defe4`, after = `aacc0c87e` (same code as `ed6b97278`), i20 = `c649a15d6` (n30 shade05's own i20 stills `build/shade/d05/i20_{mid,gate}_32.png`, not re-rendered).
 Renders came from two overlay projects (junctions to this worktree's project, the listed code/table files taken from git at each rev), because `git worktree add` and `git archive` stalled for 20+ min on the 23 000-file repo; both through `runGodot` with cwd = the overlay.
@@ -6,28 +6,39 @@ Renders came from two overlay projects (junctions to this worktree's project, th
 ## Pilots
 Seeds 7, 3, 11, 21, 42 in one Godot process (`yard_pilot_rows`): ticks, deaths, min_hp, stuck and sha256 IDENTICAL to `evidence/yard30/prologue-yard-pilots-shade05.json` -> `evidence/yard30/prologue-yard-pilots-decals.json`.
 
-## Decal contrast (method: `evidence/yard30/decal_contrast.py`)
-Mean |decal - floor ring| luminance, Rec.709 linear, 32 px/m, tick 300, seed 7. Boxes picked by hand (screen px), away from actors; decal pixels = darkest 30 % (tyre marks, stains) or most ochre 30 % by R - B (bay lines); ring = 14 px outside the box minus a 3 px gap.
+## Tyre depth (`decal_over_alpha`, commit `7236d6218`)
+Optional `arched_line` row value `"decal_over_alpha": 1.4`: multiplies the tint alpha (clamped to 1) of the tyre-mark stamps (`tyre_turn`, `tyre_sweep`) that print over the impression; absent = 1.0. Scoped to the tyre arts so the stains stay where they were (a multiplier on the stain layer was tried at 1.5: stain 2 went to 152 % / 140 % of before and both bay-line runs fell to 76-86 %, so it was dropped). Pilots seeds 7, 3, 11, 21, 42 in one process: IDENTICAL (`evidence/yard30/prologue-yard-pilots-decals-alpha.json`, vs `prologue-yard-pilots-decals.json`).
 
-Mid camera (boxes: tyre A (335,600,525,715), tyre B (1330,5,1560,100), bay 1 (1105,190,1615,215), bay 2 (1300,200,1325,355), stain 1 (205,395,335,440), stain 2 (225,640,325,690)):
+Finding: tyre B (the faint wide arcs, box (1330,5,1560,100)) is NOT a decal stamp. Those arcs are drawn in `raised_line/floor_stains.png` (the stain ground layer, tint `ffffff58`, `over_impression`), so the stamp value cannot move it: 76 % at mid, 77 % at gate, unchanged by 1.4. Reaching 100 % there needs the stain layer's alpha at about 1.75x, which pushes stain 2 well over 140 % and costs the bay lines (see above). The bar "every class after >= before" is therefore NOT met for tyre B (and gate bay run 2 at 95 %).
 
-| decal box | method | i20 | before | after | after / before | after / i20 |
-|---|---|---|---|---|---|---|
-| tyre sweep A (left, 2 arcs) | darkest 30 % | 0.1395 | 0.0792 | 0.0802 | 101 % | 57 % |
-| tyre sweep B (right arc, faint) | darkest 30 % | 0.1324 | 0.0680 | 0.0518 | 76 % | 39 % |
-| bay line run 1 (horizontal) | most ochre 30 % | 0.1210 | 0.0645 | 0.0663 | 103 % | 55 % |
-| bay line run 2 (vertical) | most ochre 30 % | 0.1210 | 0.0650 | 0.0652 | 100 % | 54 % |
-| stain 1 (oil) | darkest 30 % | 0.1854 | 0.1199 | 0.1493 | 125 % | 81 % |
-| stain 2 (dark patch) | darkest 30 % | 0.0734 | 0.0419 | 0.0517 | 123 % | 70 % |
-| mean, dark classes | | 0.1327 | 0.0772 | 0.0832 | 108 % | 63 % |
-| mean, ochre classes | | 0.1210 | 0.0648 | 0.0657 | 101 % | 54 % |
+## Decal contrast (method: `evidence/yard30/decal_contrast.py`; tables `decals_over_mid_table.txt`, `decals_over_gate_table.txt`)
+Mean |decal - floor ring| luminance, Rec.709 linear, 32 px/m, tick 300, seed 7, after = 1.4 build. Mid camera, after / before:
 
-Gate camera: full table `evidence/yard30/decals_over_gate_table.txt`; summary: tyre A 108 %, tyre B 77 %, bay lines 99 % and 95 %, stains 99 % and 119 % (after / before).
+| decal box | i20 | before | after | after / before | after / i20 |
+|---|---|---|---|---|---|
+| tyre sweep A | 0.1395 | 0.0792 | 0.0890 | 112 % | 64 % |
+| tyre sweep B (stain-layer arcs) | 0.1324 | 0.0680 | 0.0518 | 76 % | 39 % |
+| bay line run 1 | 0.1210 | 0.0645 | 0.0663 | 103 % | 55 % |
+| bay line run 2 | 0.1210 | 0.0650 | 0.0652 | 100 % | 54 % |
+| stain 1 (oil) | 0.1854 | 0.1199 | 0.1493 | 125 % | 81 % |
+| stain 2 | 0.0734 | 0.0419 | 0.0497 | 119 % | 68 % |
 
-Bar "every decal class after >= before": NOT met for one box. The faint wide tyre arc B (the lighter arcs near the skip) is 76 to 77 % at both cameras, and the gate bay run 2 is 95 %. Tyre sweep A (the dark, ink tyre marks), both mid bay runs and both stains are at or above before (stains +23 to +25 %). Every class stays far below i20 (39 to 81 % of it): the browner after floor plus the shade 0.5 lift the floor luminance, so decal-to-floor contrast is still short of i20's.
+Gate camera: tyre A 117 %, tyre B 77 %, bay 99 % / 95 %, stain 1 99 %, stain 2 117 % (all stains under 140 %). Floor L* between pools 50.8 (after) vs 51.6 (before).
 
-## Readability bars: NOT measured
-The n29 sweep (`evidence/yard29/sweep_measure.py`) ran on the after overlay and gave floor between pools L* 50.8 / C* 21.6 and Rivet luminance delta 0.1340 (0.147 at i55; a drop of 0.013 = more than 0.01, reported as a FAIL against the bar, but this was one run and the before arm was not measured to compare). Its patrol-blue/rifle/pellet part returned `dusk 1.000 retained 20 %`, no rifle or pellet lines: the dusk frames of this overlay run did not give usable cop pixels, so I do not trust those numbers and publish none. The before arm hung in a `--import` (class cache stale: `PrologueSpanShadow`) and was killed.
+## Readability bars, both arms (n29 method: `evidence/yard29/sweep_measure.py` on day + dusk captures; before = `6c32defe4` overlay, after = `7236d6218` overlay; the day arm is an `arched_day` row added to each overlay's own table copy, which the first attempt lacked, so its dusk-vs-day pairing was wrong and gave no cops)
+| measure | before | after | bar | verdict |
+|---|---|---|---|---|
+| patrol blue outside (retained %) | 80.4 | 80.3 | >= 65 | pass |
+| patrol blue inside | 87.5 | 87.7 | >= 65 | pass |
+| rifle | 104.4 | 104.5 | >= 95 | pass |
+| pellet (shotgun) | 98.4 | 99.0 | >= 90 | pass |
+| Rivet luminance delta (mean of 10 exposures) | 0.1479 | 0.1340 | after >= before - 0.01 | FAIL (-0.0139) |
+| floor between pools L* | 51.6 | 50.8 | info | |
+
+Cops are in view in every dusk frame used (cops 5 / 5 / 9). The Rivet delta drop (0.005 to 0.019 per exposure) is not from the tyre value: the stamps draw below the actors, and the arms (6c32defe4 vs 7236d6218) differ by the whole n30 floor work (shade 0.5, decals over the impression), not by this commit alone. Not tuned; the owner decides.
+
+## Film and stills
+`C:/Users/kazda/kiro/gtai-masters/n30/yard/decals_over_before_after_mid_32ppm.mp4` (before 6c32defe4 | after, 32 px/m, 1080p60, 23 s, ticks 1757..3136) and `decals_over_64ppm.png`; both in `frames.json`. `decals_over_before_after_mid_32ppm.png` left half now labelled `before: 6c32defe4`. Seen: after, the dark tyre sweep and the oil stains read crisper and the bay lines keep their ochre; the faint wide arcs at the right are fainter than before.
 
 ## Not done
-Film (before | after mp4, masters copy, frames.json), the relabel of `decals_over_before_after_mid_32ppm.png`, the decisions line and the mutate run.
+Tyre B and gate bay run 2 below before; a before | after crop of tyre B at 64 px/m (only the 32 px/m crop was looked at).
