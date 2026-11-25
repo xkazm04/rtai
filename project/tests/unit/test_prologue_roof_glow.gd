@@ -47,3 +47,75 @@ func test_no_spec_attaches_nothing() -> void:
 	var before: int = stage.get_child_count()
 	PrologueRoofGlow.attach(stage, {}, null)
 	assert_eq(stage.get_child_count(), before)
+
+
+func _spec() -> Dictionary:
+	return {
+		"rect_m": Rect2(Vector2(2, -9), Vector2(30, 6)),
+		"color": Color(1.0, 0.5, 0.1),
+		"hot_color": Color(1.0, 0.9, 0.2),
+		"strength": 0.7,
+		"flicker": 0.4,
+		"step_ticks": 4,
+	}
+
+
+func _swing(k: float) -> float:
+	return 0.5 + 0.5 * sin(k * 1.7) * sin(k * 0.63 + 1.0)
+
+
+func test_build_hands_the_row_colours_size_and_strength_to_the_shader() -> void:
+	var glow: PrologueRoofGlow = autofree(PrologueRoofGlow.build(_spec()))
+	var band: ColorRect = glow.get_node(PrologueRoofGlow.BAND_NAME)
+	var material: ShaderMaterial = band.material
+	assert_eq(material.shader, PrologueRoofGlow.SHADER)
+	var color: Color = material.get_shader_parameter(&"color")
+	var hot: Color = material.get_shader_parameter(&"hot_color")
+	var size: Vector2 = material.get_shader_parameter(&"size_m")
+	var strength: float = material.get_shader_parameter(&"strength")
+	assert_eq(color, Color(1.0, 0.5, 0.1))
+	assert_eq(hot, Color(1.0, 0.9, 0.2))
+	assert_eq(size, Vector2(30, 6))
+	assert_eq(strength, 0.7)
+	assert_eq(glow.layer, RenderLayers.canvas(&"actors"))
+	assert_true(glow.follow_viewport_enabled)
+
+
+func test_build_starts_on_step_zero_and_each_step_follows_the_fixed_function() -> void:
+	var glow: PrologueRoofGlow = autofree(PrologueRoofGlow.build(_spec()))
+	var band: ColorRect = glow.get_node(PrologueRoofGlow.BAND_NAME)
+	var material: ShaderMaterial = band.material
+	var first: float = material.get_shader_parameter(&"flicker")
+	var phase0: float = material.get_shader_parameter(&"phase")
+	assert_almost_eq(first, 1.0 - 0.4 * 0.5, 0.0001)
+	assert_eq(phase0, 0.0)
+	for k: int in [1, 3, 7]:
+		glow.step(k * 4 + 3)
+		var level: float = material.get_shader_parameter(&"flicker")
+		assert_almost_eq(level, 1.0 - 0.4 * _swing(float(k)), 0.0001, "step %d" % k)
+		var phase: float = material.get_shader_parameter(&"phase")
+		assert_almost_eq(phase, float(k) * 0.37, 0.0001, "phase %d" % k)
+
+
+func test_read_takes_the_row_and_floors_step_ticks_at_one() -> void:
+	var table: DataTable = _table()
+	var dressings: Dictionary = table.object(table.raw, "dressings")
+	var arched: Dictionary = dressings["arched_line"]
+	var row: Dictionary = table.object(arched, "roof_glow").duplicate(true)
+	var spec: Dictionary = PrologueRoofGlow.read(table, row)
+	var want_color: Color = Color(table.text(row, "color"))
+	var want_hot: Color = Color(table.text(row, "hot_color"))
+	var got_color: Color = spec["color"]
+	var got_hot: Color = spec["hot_color"]
+	assert_eq(got_color, want_color)
+	assert_eq(got_hot, want_hot)
+	var strength: float = spec["strength"]
+	var flicker: float = spec["flicker"]
+	var ticks: int = spec["step_ticks"]
+	assert_eq(strength, table.num(row, "strength"))
+	assert_eq(flicker, table.num(row, "flicker"))
+	assert_eq(ticks, table.integer(row, "step_ticks"))
+	row["step_ticks"] = 0
+	var floored: Dictionary = PrologueRoofGlow.read(table, row)
+	var floor_ticks: int = floored["step_ticks"]
+	assert_eq(floor_ticks, 1)
