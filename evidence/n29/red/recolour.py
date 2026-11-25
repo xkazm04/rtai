@@ -23,6 +23,7 @@ FIRE_LOOP = "project/features/fx/art/fx_fire.png"
 ATLAS = "project/features/fx/art/fx_atlas.png"
 ATLAS_CELLS = [9, 10, 11, 12]  # the explosion kind; 8 columns of 256 px
 CELL = 256
+MUZZLE_CELLS = [0, 1, 2, 8, 13, 14]  # muzzle kind (0-2), small burst, ricochet stars
 
 
 def reddish(a):
@@ -72,6 +73,29 @@ def one(path, dry):
         Image.fromarray(b, "RGBA").save(path, optimize=True)
 
 
+def muzzle(dry):
+    """n29 combat 02b: the muzzle flash cells (flash_* + colour/ variants) and fx_atlas cells 0-2, 8, 13, 14 only."""
+    files = [FX + "flash_%s_%d.png" % (g, i) for g in ("nuke", "tube", "pistol", "smg") for i in range(3)]
+    files += [FX + "colour/flash_%s_%d.png" % (g, i) for g in ("nuke", "tube", "pistol", "smg") for i in range(3)]
+    for p in files:
+        one(p, dry)
+    a = load(ATLAS)
+    b = a.copy()
+    cells = MUZZLE_CELLS
+    for i in cells:
+        r, c = divmod(i, 8)
+        sl = (slice(r * CELL, (r + 1) * CELL), slice(c * CELL, (c + 1) * CELL))
+        b[sl], n = remap(a[sl])
+        print("%s#cell%d reddish %d -> %d, changed %d px" % (ATLAS, i, int(reddish(a[sl]).sum()),
+              int(reddish(b[sl]).sum()), n))
+    for i in range(32):
+        if i not in cells and cell_hash(a, i) != cell_hash(b, i):
+            raise SystemExit("atlas cell %d moved" % i)
+    print("atlas cells other than %s: pixel sha256 identical" % cells)
+    if not dry:
+        Image.fromarray(b, "RGBA").save(ATLAS, optimize=True)
+
+
 def main(dry):
     for p in FILES:
         a = load(p)
@@ -96,7 +120,9 @@ def main(dry):
 
 
 if __name__ == "__main__":
-    if "--fire-loop" in sys.argv:  # python -I evidence/n29/red/recolour.py --fire-loop
+    if "--muzzle" in sys.argv:  # python -I evidence/n29/red/recolour.py --muzzle [--dry]
+        muzzle("--dry" in sys.argv)
+    elif "--fire-loop" in sys.argv:  # python -I evidence/n29/red/recolour.py --fire-loop
         one(FIRE_LOOP, "--dry" in sys.argv)
     else:
         main("--dry" in sys.argv)
