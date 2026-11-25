@@ -55,3 +55,22 @@ Env: `APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/combat GODOT_BIN=.../gtai-spi
 `node tools/mutate/mutate.mjs --file=features/combat/weapons/art/weapon_fx_electro.gd --lines=26-32,61-72,84,89,131-146 --max=12 --tests=test_weapon_fx_electro,test_weapon_fx_electro_hash`:
 score 83.3% = killed 10 / (killed 10 + survived 2); timeout 0, invalid 0; 690 s. Survivors: `:65` `phase * 2` -> `phase / 2` in the hop star's
 tick (the star's jag cell only; no test pins which cell the hop star uses) and `:89` `k * FORK_K` -> `k / FORK_K` (equivalent, FORK_K is 1.0).
+
+## 3 px vs 4 px (c14)
+No code change. 3 px = the existing `build/p5-takes/n30-hop-after` frames (take at the shipped `a0f9c8bed` code, line 30 unchanged since;
+frames are named by tick). 4 px = `THIN_BODY_PX: float = 4.0` on line 30 only (core stays 1.5), then
+`node tools/film/owner_takes.mjs build/p5-takes/_c14out 64 electro_gun_hop` -> `build/p5-takes/electro_gun_hop-64-6xPY7k`; line 30 restored
+with `git checkout -- ...weapon_fx_electro.gd`, `git status --short` shows no `project/` path.
+Same boxes and colour rules as above, ticks 121 (hop box) and 150 (stun box):
+
+| box | arm | amber | red | teal |
+|---|---|---|---|---|
+| hop t121 | 3 px | 10 | 0 | 0 |
+| hop t121 | 4 px | 10 | 0 | 0 |
+| stun t150 | 3 px | 0 | 0 | 0 |
+| stun t150 | 4 px | 0 | 0 | 0 |
+
+The counter cannot tell them apart (the frames do differ: hop box bbox 1583,463-1793,561, stun 1711,479-1809,529). Still:
+`C:/Users/kazda/kiro/gtai-masters/n30/combat/stills/thin_3_vs_4_pair_64.png` (hop 3x, stun 5x, labelled).
+- Hop t121: 3 px is a cream/tan hairline; 4 px is a visibly thicker line with golden-tan edges, a little more amber, still thin.
+- Stun t150: 3 px stars are cream with faint tan edge; 4 px stars are fatter with a clearer amber/gold rim, so 4 px reads more amber current.
