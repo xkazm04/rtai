@@ -435,3 +435,7 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
 - 06:48 MILESTONE final gate started detached on `42ac8613b` (code final; later commits are docs, journal, report and
   cast-14's tools/art py): `node tools/gate/run.mjs --rev=HEAD --timeout=60`, PowerShell Start-Process pid 12516, out
   `build/gate-final.out`, `.err`. No `--reels` yet (after the freeze, next session if time).
+- 06:52 MILESTONE masters `frames.json` curated to 15 best first (size, flash live, thug x4 incl. new `thug_stop_after_64.png`,
+  war8, door8, then 32 px/m and harness extras); size film note now quotes the measured heights; three dropped stills moved to
+  `gtai-masters/n29/cast/extra/` (not deleted). ffprobe: all five clips 1920x1080 60/1, 20.0-33.75 s. Looked at
+  `war8_walk_32.mp4` at 12 s: the feet harness on the grey plate (contact boxes per step), the machine beside Rivet; not a street take.
