@@ -96,7 +96,7 @@ const EIGHT70: Array[Vector4] = [
 	Vector4(-1.5, 15.5, 0, -101.5),
 	Vector4(16.5, 20.5, 0, -101.5),
 ]
-## p55 SHA-256 982dfd0eade4b1ba6834cfddffb80fae94f271e1e5a99b349a790b9bad04146d
+## p55 SHA-256 307eabbb5bf42a6269ea0cb97039e25259f062c0c39cb6210b1a192d8b2dce05
 const EIGHT55: Array[Vector4] = [
 	Vector4(24, 20.5, -0.5, -87.5),
 	Vector4(25, 20.5, 0, -87.5),
@@ -110,7 +110,7 @@ const EIGHT55: Array[Vector4] = [
 	Vector4(30.5, 17.5, 0.5, -79.5),
 	Vector4(30.5, 17.5, 0, -79.5),
 	Vector4(-18.5, 0.5, 0.5, -79.5),
-	Vector4(4, 23.5, 0.5, -80.5),
+	Vector4(13, 23.5, 0.5, -79.5),
 	Vector4(22.5, 21.5, 0.5, -79.5),
 	Vector4(16.5, 21.5, 0.5, -79.5),
 	Vector4(-32, -0.5, -0.5, -79.5),
@@ -120,7 +120,7 @@ const EIGHT55: Array[Vector4] = [
 	Vector4(-43.5, 19.5, -0.5, -71.5),
 	Vector4(15, 20.5, -0.5, -71.5),
 	Vector4(11, 20.5, 0, -71.5),
-	Vector4(11.5, 20.5, 0, -71.5),
+	Vector4(8, 20.5, 0, -71.5),
 	Vector4(-42, 20.5, 0, -71.5),
 	Vector4(24, 21.5, 0, -81.5),
 	Vector4(20, 21.5, 0, -81.5),
