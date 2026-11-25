@@ -45,3 +45,31 @@ func test_every_number_plate_lies_inside_the_strip_and_off_the_screen_edge() -> 
 			var rect: Rect2 = GhostChipNumber.plate(font, at, label, l.number_size)
 			assert_gte(rect.position.x, 8.0, "slot %d: 8 px off the screen edge" % slot)
 			assert_true(strip.encloses(rect), "slot %d: %s inside %s" % [slot, rect, strip])
+
+
+func _layouts() -> Array[GhostFormLayout]:
+	var full: GhostFormLayout = GhostFormLayout.new()
+	full.gap = 72.0
+	return [full, GhostFormLayout.compact()]
+
+
+func test_unclamped_plate_sits_at_the_chip_centre_plus_the_rim_offset() -> void:
+	for l: GhostFormLayout in _layouts():
+		for slot: int in [1, 2, 3]:
+			var c: Vector2 = l.chip_center(1080.0, slot)
+			var at: Vector2 = GhostChipNumber.anchor(l, 1080.0, slot, str(slot + 1))
+			var want: Vector2 = c + Vector2(-1.2, 1.15) * l.chip_r
+			assert_almost_eq(at.x, want.x, 0.01, "slot %d x" % slot)
+			assert_almost_eq(at.y, want.y, 0.01, "slot %d y" % slot)
+			assert_gt(at.y, c.y, "slot %d: plate below the chip centre" % slot)
+			assert_lt(at.x, c.x, "slot %d: plate left of the chip centre" % slot)
+
+
+func test_first_slot_plate_is_pushed_right_to_the_minimum_x_only() -> void:
+	var font: Font = ThemeDB.fallback_font
+	for l: GhostFormLayout in _layouts():
+		var c: Vector2 = l.chip_center(1080.0, 0)
+		var at: Vector2 = GhostChipNumber.anchor(l, 1080.0, 0, "1")
+		var rect: Rect2 = GhostChipNumber.plate(font, at, "1", l.number_size)
+		assert_almost_eq(rect.position.x, l.number_min_x(), 0.5, "left edge on the minimum")
+		assert_almost_eq(at.y, c.y + 1.15 * l.chip_r, 0.01, "y is not clamped")
