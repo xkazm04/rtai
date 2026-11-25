@@ -1097,7 +1097,8 @@ Next: register the door sole at the drawn boot bottom (this regenerates every do
 **Verdict.** On the drawn boot the eight does not pass the 2 px bar in every facing: its in-hold slide reaches 2.03 at
 p55 down-right (2.00 in x alone). It beats the four only at p70 right (1.71 against 2.10). At p70 down-right, p55 right
 and p55 down-right it is worse than the four. The contact slide (plant to lift across all drawings of one contact) is
-**not measured**: the tracker below could not hold one boot through a drawing change. `CastDoorAnchors.WALK` is unchanged.
+**not measured** by c22: the tracker below could not hold one boot through a drawing change. c25 measured it from the
+same frames (the lines under the table). `CastDoorAnchors.WALK` is unchanged.
 
 **Method (c22, measure only; scratch `build/look/n30-c22/`).** `c22_clip.mjs` renders the door carrier through
 `runGodot` (one launch per take, 8 launches, each `exit 0` in 19-22 s, 325 frames 1920x1080 by ffprobe) at 64 px/m, 1.6
@@ -1119,21 +1120,36 @@ copies, so the tree is untouched:
 These band rows are the drawn sole. c21b's 527-533 band sits about 10 px higher, nearer the pivot (y ~524), which is
 why its four p70 right read 0.86 / 1.65 and this one reads 2.13 / 4.20. Every slide is backward (negative x).
 
-| take (64 px/m, 300 ticks) | holds | in-hold mean / max, 64 px/m | in-hold mean / max, 32 px/m | feet reader sole (32 px/m) | contact slide |
+| take (64 px/m, 300 ticks) | holds | in-hold mean / max, 64 px/m | in-hold mean / max, 32 px/m | feet reader sole (32 px/m) | contact slide mean / max, 32 px/m (c25) |
 |---|---:|---|---|---:|---|
-| four p70 right | 50 | 2.14 / 4.20 | 1.07 / **2.10** | 2.42 | not measured |
-| four p70 down-right | 50 | 1.44 / 2.99 | 0.72 / 1.50 | U | not measured |
-| four p55 right | 50 | 1.82 / 3.06 | 0.91 / 1.53 | 2.03 | not measured |
-| four p55 down-right | 50 | 2.01 / 3.87 | 1.01 / 1.94 | U | not measured |
-| eight p70 right | 45 | 2.46 / 3.42 | 1.23 / 1.71 | 1.96 | not measured |
-| eight p70 down-right | 45 | 1.74 / 3.78 | 0.87 / 1.89 | 1.39 | not measured |
-| eight p55 right | 45 | 1.94 / 3.43 | 0.97 / 1.72 | 2.05 | not measured |
-| eight p55 down-right | 45 | 1.46 / 4.06 | 0.73 / **2.03** | 2.08 | not measured |
+| four p70 right | 50 | 2.14 / 4.20 | 1.07 / **2.10** | 2.42 | 6.36 / **8.38** (23 contacts; drawing 0 -> 1 hops 13.1-13.3 px at 64 px/m) |
+| four p70 down-right | 50 | 1.44 / 2.99 | 0.72 / 1.50 | U | not measured: tracker lost 10 of 18 clear contacts, no strip check (5 Rivet) |
+| four p55 right | 50 | 1.82 / 3.06 | 0.91 / 1.53 | 2.03 | 3.34 / 3.74, drawings 2-3 only (10); the 0-1 contacts not measured: drawing 1 has no sole within 5 px of the ground (9 lost, 4 Rivet) |
+| four p55 down-right | 50 | 2.01 / 3.87 | 1.01 / 1.94 | U | not measured: tracker lost 18 of 18 clear contacts (5 Rivet) |
+| eight p70 right | 45 | 2.46 / 3.42 | 1.23 / 1.71 | 1.96 | 8.93 / **9.31** (10 contacts; worst single change 4.5 px at 64 px/m) |
+| eight p70 down-right | 45 | 1.74 / 3.78 | 0.87 / 1.89 | 1.39 | not measured: tracker lost 8 of 8 clear contacts (2 Rivet) |
+| eight p55 right | 45 | 1.94 / 3.43 | 0.97 / 1.72 | 2.05 | 5.24 / 6.08 (9 contacts, 1 Rivet) |
+| eight p55 down-right | 45 | 1.46 / 4.06 | 0.73 / **2.03** | 2.08 | not measured: tracker lost 9 of 9 clear contacts (1 Rivet) |
 
 (magnitude of the (x, y) shift; the x shift alone is within 0.06 px of it (eight p55 down-right 4.00 / 2.00). Rivet
 stands in the walk path in 4-9 holds per take, reported apart by the tool, and none of those sets a maximum. The worst
 hold of each take: four p70 right ticks 108-114 (drawing 2); eight p55 down-right ticks 48-53 (drawing 7), where the
 boot's toe goes from x 869 to about 865 at the 4x zoom while the body runs on.)
+
+**Contact slide (c25, measure only, no Godot; scratch `build/look/n30-c25/`).** World-fixed camera, so screen px = world
+px. `c25_card.py` keeps, per drawing, the ink columns within 5 px of the ground row in at least half its frames (door bar
+dropped by colour), placed by the logged `xf`. The planted sole is the front-most one at the plant, passed at each change
+to the sole it overlaps most. Each change counts the smaller of its heel and toe shifts (a merged neighbour boot moves
+one edge). `c25_table.py` adds c22's in-hold `|dx|` and halves for 32 px/m. Checked on `strip2_four_p70_right_c{0,1}.png`,
+`strip2_eight_p70_right_c0.png` and `strip2_{four,eight}_p55_right_c0.png`, where the lines stay on the grounded boot.
+The brief's SSD blob tracker (`c25_slide.py`) failed that check: in `strip_four_p70_right_c7.png` frame 126 its heel line
+is on bare ground. Down-right is not measured, because the boots stand at different depths there.
+
+**Verdict (contact slide).** At p70 right the eight's boot travels further over a contact than the four's (9.31 against 8.38 max),
+because each of its four holds drifts back (10.1 px of in-hold drift against 4.4 at 64 px/m). What it removes is the four's
+hop at drawing 0 -> 1: 13.3 px at 64 px/m, against 4.5 for the eight's worst change. The eight's grounded toe holds at 5 -> 6
+only by a leg swap (the blue-pad boot lifts and a dark boot takes the spot). So the contact slide narrows "the eight beats
+the four only at p70 right" to that one change. At p55 right the eight is longer as well. `CastDoorAnchors.WALK` is unchanged.
 
 **Contact slide: why it is not measured.** Three trackers were tried on the planted boot (`c22_measure.py` keeps the
 last one):
