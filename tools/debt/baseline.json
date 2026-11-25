@@ -188,7 +188,8 @@
         "2026-11-25: cast_impact_edge pitch for n29 cast (dev_loc 38409 -> 38414)",
         "2026-11-25: card scale for n29 cast (dev_loc 38414 -> 38419)",
         "2026-11-25: robot_thug card for n29 cast (dev_loc 38419 -> 38534)",
-        "2026-11-25: films for n29 cast (dev_loc 38534 -> 38816)"
+        "2026-11-25: films for n29 cast (dev_loc 38534 -> 38816)",
+        "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -197,7 +198,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3460,
+        "project/dev/cast": 3736,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -230,7 +231,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 38816
+      "total": 39092
     },
     "direct_cmdline_reads": {
       "accepted": [
