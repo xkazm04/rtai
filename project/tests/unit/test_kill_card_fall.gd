@@ -187,3 +187,10 @@ func test_every_card_row_has_a_usable_fall_sheet() -> void:
 			var paths: Dictionary = row.get(pitch, {})
 			var full: String = RigHeadCard.ART_DIR + pitch + "/" + str(paths.get("fall", ""))
 			assert_ne(KillCardFall.usable(full), "", "%s %s" % [id, pitch])
+
+
+## No --kill-card-fall on the test run's command line: the toggle reads it as on.
+func test_the_toggle_reads_on_without_the_flag() -> void:
+	KillCardFall.set_on(-1)
+	assert_eq(LaunchArgs.value(KillCardFall.FLAG), "")
+	assert_true(KillCardFall.on())
