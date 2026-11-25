@@ -25,4 +25,8 @@ as `electro_hop_pair_64_thin.png`). Re-rendered in call 3b: each film 1920x1080 
 labelled cells | live current).
 
 ## Mutate
-Not run (next call): `node tools/mutate/mutate.mjs --file=project/features/combat/weapons/art/weapon_fx_electro.gd --max=20 --tests=test_weapon_fx_electro,test_electric_arc` and the same on `weapon_fx_bolt.gd`.
+`weapon_fx_bolt.gd` (--max=20, test_weapon_fx_electro): killed 2 / (2 + 12) = 14.3 % (2 invalid); the survivors are the
+`draw()` path and `spawn_id` arithmetic, which need a CanvasItem or only feed the kink hash (not unit-reachable cheaply).
+`weapon_fx_electro.gd` (--lines=28-33,134-146, --max=12): killed 6 / (6 + 5) = 54.5 % (1 invalid); the survivors were the two
+translucent halo passes and the ink width at k != 1; a test (`test_chain_keeps_both_halos_and_scales_the_ink_with_k`) now
+pins them (not re-mutated).

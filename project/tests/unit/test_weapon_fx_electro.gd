@@ -64,6 +64,18 @@ func _check_layers(plan: Array[WeaponFxElectro.Line], k: float) -> void:
 	assert_gt(core_n, 0)
 
 
+func test_chain_keeps_both_halos_and_scales_the_ink_with_k() -> void:
+	WeaponFxElectro.cells = false
+	var k: float = 0.5
+	var plan: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 5, k)
+	assert_eq(plan[0].width, ElectricArc.HALO_PX * k, "outer halo first")
+	assert_almost_eq(plan[0].color.a, 0.18, 0.001)
+	assert_eq(plan[1].width, ElectricArc.MID_PX * k, "mid halo second")
+	assert_almost_eq(plan[1].color.a, 0.5, 0.001)
+	assert_eq(plan[2].color, Color(Ink.INK, 1.0))
+	assert_eq(plan[2].width, (WeaponFxElectro.BODY_PX + WeaponFxElectro.INK_EXTRA_PX) * k)
+
+
 func test_chain_and_bolt_share_the_opaque_amber_body() -> void:
 	WeaponFxElectro.cells = false
 	_check_layers(WeaponFxElectro.chain_plan(A, B, 5), 1.0)
