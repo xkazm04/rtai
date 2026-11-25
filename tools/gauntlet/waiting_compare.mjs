@@ -27,7 +27,7 @@ export function headline(p) {
     ['token share', share(t.token_share)],
     ...DAMAGE_WAVES.map((n) => [`damage taken w${n} mean`, f(p.waves[n]?.damage_taken_mean, 1)]),
     ['damage taken w1-4 sum', f(damageSum(p), 1)],
-    ['deaths (runs) / waves 6-7 reached', `${deaths} (${p.runs}) / ${p.waves[6]?.reached ?? 0}, ${p.waves[7]?.reached ?? 0}`],
+    ['deaths, all waves incl. 5 (runs) / waves 6, 7 reached', `${deaths} (${p.runs}) / ${p.waves[6]?.reached ?? 0}, ${p.waves[7]?.reached ?? 0}`],
   ];
 }
 
