@@ -1261,11 +1261,19 @@
         "tint": "201a165c"
       },
       "span_shadow": {
-        "alpha": 0.45,
+        "alpha": 0.75,
+        "body_m": [
+          0.9,
+          1.9
+        ],
         "fade_ticks": 6,
+        "offset_m": [
+          0.55,
+          -0.6
+        ],
         "size_m": [
-          1.1,
-          0.45
+          1.9,
+          2.3
         ]
       }
     },
@@ -3438,14 +3446,6 @@
           0.78
         ],
         "tint": "201a165c"
-      },
-      "span_shadow": {
-        "alpha": 0.45,
-        "fade_ticks": 6,
-        "size_m": [
-          1.1,
-          0.45
-        ]
       }
     },
     "torn_line": {

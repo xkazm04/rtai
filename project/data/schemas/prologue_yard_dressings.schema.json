@@ -532,9 +532,26 @@
               "minimum": 0,
               "type": "number"
             },
+            "body_m": {
+              "items": {
+                "minimum": 0.01,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
             "fade_ticks": {
               "minimum": 1,
               "type": "integer"
+            },
+            "offset_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
             },
             "size_m": {
               "items": {
@@ -548,7 +565,9 @@
           },
           "required": [
             "alpha",
+            "body_m",
             "fade_ticks",
+            "offset_m",
             "size_m"
           ],
           "type": "object"
