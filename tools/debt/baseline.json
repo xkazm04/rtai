@@ -201,7 +201,8 @@
         "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
         "2026-11-25: n31 ghost measure dev tool (dev_loc 39760 -> 40320)",
         "2026-11-25: n31 ghost measure: drop-mode support (dev_loc 40320 -> 40331)",
-        "2026-11-25: n31 ghost measure dev tool (dev_loc 40331 -> 40552)"
+        "2026-11-25: n31 ghost measure dev tool (dev_loc 40331 -> 40552)",
+        "2026-11-25: n31 ghost take scene (dev_loc 40552 -> 40704)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -217,7 +218,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ghost_n31": 792,
+        "project/dev/ghost_n31": 944,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -244,7 +245,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40552
+      "total": 40704
     },
     "direct_cmdline_reads": {
       "accepted": [

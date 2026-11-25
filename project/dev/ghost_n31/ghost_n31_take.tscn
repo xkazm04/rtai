@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://dev/test_player/gauntlet_bot_film.tscn" id="1"]
+[ext_resource type="Script" path="res://dev/ghost_n31/ghost_n31_take.gd" id="2"]
+
+[node name="GhostN31Take" instance=ExtResource("1")]
+script = ExtResource("2")
