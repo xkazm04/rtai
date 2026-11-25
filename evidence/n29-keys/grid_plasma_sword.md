@@ -116,3 +116,23 @@ Legs film `rows2`, turn_090 lane, row 0, 32 px/m, in cm. Files: `gtai-masters/n2
 - `C:/Users/kazda/kiro/gtai-masters/n29/keys/sword/grid_plasma_sword_64.png` and `_32.png`: 8 run facings x (stop-gap | new | katana) at in-game size. Built by `scripts/composite.py`, no Godot.
 - `C:/Users/kazda/kiro/gtai-masters/n29/keys/sword/grid_plasma_sword_arena/rows2/`: legs film, 4 turns, 32 px/m.
 - `C:/Users/kazda/kiro/gtai-masters/n29/keys/sword/grid_plasma_sword_arena/candidate_{32,64}/`: the in-game arena on the boulevard with the plasma_sword loadout. Each has 1000 frames plus `sample_*.png` (for example `candidate_32/sample_0250.png`).
+
+## run_row_k octant 0 (n29-11)
+
+Result: none passed. Nothing was added to `rivet_motion.json` or the test pin.
+
+Method: the legs film (`capture28.py plasma_sword rows_*`, turn_090 lane, sheet row 0, 32 px/m), `foot_slide.py`, one Godot process per candidate, table edited per candidate and restored (HEAD json unchanged).
+
+Correction to the brief: the film lane's sheet row 0 is **octant 2**, not octant 0 (`RivetFrames.BASE_OCT = [2, 1, 0, 5, 6, 7, 4, 3]`: octant o plays sheet row BASE_OCT[o]; `RivetWalk.row_k` keys by octant). The first sweep on key `p70/plasma_sword/0` (k 1.0, 0.94, 0.97, 1.03, 1.06) gave frames byte-identical to HEAD (that key moves sheet row 2, a row the lane never shows). The valid sweep is on `p70/plasma_sword/2`:
+
+| k (key `/2`) | run step mean / max (cm) | run hold mean / max (cm) | cycle rate vs HEAD |
+|---|---|---|---|
+| 1.00 (HEAD) | 8.29 / 9.38 | 0.22 / 1.56 | 0 % |
+| 0.94 | 8.27 / 9.38 | 0.20 / 1.56 | -6 % |
+| 0.97 | 8.23 / 9.38 | 0.20 / 1.56 | -3 % |
+| 1.03 | 8.31 / 9.38 | 0.22 / 1.56 | +3 % |
+| 1.06 | 8.28 / 9.38 | 0.26 / 1.56 | +6 % |
+
+Reading: HEAD reproduces 8.29 / 9.38. The best k (0.97) improves the mean by 0.06 cm, against the bar (mean <= 7.0, or an improvement of >= 0.6 cm). The step is set by the run8 drawing (two planted steps per lane), not by the cycle rate, so one scalar cannot reach 7 cm. Fix route: re-cut that row's legs, not a k.
+
+Files: `C:/Users/kazda/kiro/gtai-masters/n29/keys/sword/sword_run_k_1.0.json`, `sword_run_o2k_{0.94,0.97,1.03,1.06}.json`; films in `grid_plasma_sword_arena/rows_k10`, `rows_k094..rows_k106` (key `/0`, no effect) and `rows_o2k094..rows_o2k106`. No clip was made (time).
