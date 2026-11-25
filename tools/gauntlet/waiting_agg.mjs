@@ -117,17 +117,17 @@ export function aggregate(docs) {
 const f = (x, d = 2) => (x == null ? '-' : String(round(x, d)));
 const pair = (a, b) => f(a) + ' / ' + f(b);
 const share = (x) => (x == null ? '-' : Math.round(x * 100) + ' %');
-const HEAD = '| wave | archetype | n | react in range p50 / p90 s | react any dist p50 / p90 s | never fired (clear line, in range) | idle share (in range) | shot dist p10 / p50 / p90 m | firing / s mean (max) | ranged alive | dmg taken mean | deaths |';
-const RULE = '|' + ' --- |'.repeat(12);
+const HEAD = '| wave | archetype | n | react in range p50 / p90 s | react any dist p50 / p90 s | never fired (clear line, in range) | idle share (in range) | token share | shot dist p10 / p50 / p90 m | firing / s mean (max) | ranged alive | dmg taken mean | deaths |';
+const RULE = '|' + ' --- |'.repeat(13);
 
 function kindRow(label, id, k) {
   return `| ${label} | ${id} | ${k.n} | ${pair(k.react_p50, k.react_p90)} | ${pair(k.react_any_p50, k.react_any_p90)} | `
-    + `${k.never_fired} (${k.never_fired_clear}, ${k.never_fired_clear_in}) | ${share(k.idle_share)} (${share(k.idle_share_in_range)}) | `
+    + `${k.never_fired} (${k.never_fired_clear}, ${k.never_fired_clear_in}) | ${share(k.idle_share)} (${share(k.idle_share_in_range)}) | ${share(k.token_share)} | `
     + `${f(k.dist_p10, 1)} / ${f(k.dist_p50, 1)} / ${f(k.dist_p90, 1)} |`;
 }
 
 function waveRows(label, w) {
-  if (!w.reached) return [`| ${label} | not reached (0/${w.runs} seeds) |` + ' |'.repeat(10)];
+  if (!w.reached) return [`| ${label} | not reached (0/${w.runs} seeds) |` + ' |'.repeat(11)];
   const reach = w.reached < w.runs ? ` (reached ${w.reached}/${w.runs})` : '';
   const rows = Object.entries(w.kinds).map(([id, k]) => kindRow(label + reach, id, k) + ' | | | |');
   rows.push(kindRow(`**${label}**${reach}`, '**all ranged**', w.all_ranged)
@@ -140,7 +140,8 @@ export function markdown(summary, { title = 'Foes waiting (n31)', note = '' } = 
   const out = ['# ' + title, ''];
   if (note) out.push(note, '');
   out.push('react = seconds from a first clear line to Rivet (inside the weapon range, or at any distance) to the first round; '
-    + 'idle share = enemy-seconds with a clear line and no round, wind-up or burst / enemy-seconds with a clear line. '
+    + 'idle share = enemy-seconds with a clear line and no round, wind-up or burst / enemy-seconds with a clear line; '
+    + 'token share = enemy-seconds holding a squad shooting token / enemy-seconds alive. '
     + `Wave ${STOMP_WAVE} (the stomp) is measured in waiting.json but left out of this table and the totals.`, '');
   for (const [name, p] of Object.entries(summary.profiles)) {
     out.push(`## ${name} (${p.runs} seeds: ${p.seeds.join(', ')})`, '', HEAD, RULE);

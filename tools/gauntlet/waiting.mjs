@@ -74,8 +74,9 @@ function devRun(tree, argv, tag) {
     const t0 = Date.now();
     const r = spawnSync(process.execPath, [join(tree, 'tools/dev/run.mjs'), '--timeout=900', ...argv],
       { cwd: tree, encoding: 'utf8', windowsHide: true, maxBuffer: 64 << 20 });
-    const lines = (r.stdout + r.stderr).trim().split('\n');
-    return { status: r.status, seconds: Math.round((Date.now() - t0) / 1000), last: lines.at(-1), lines };
+    const verdict = r.stdout.trim().split('\n').at(-1);
+    const waited = /mem-budget: waiting/.test(r.stdout + r.stderr) ? ' (mem-budget waited)' : '';
+    return { status: r.status, seconds: Math.round((Date.now() - t0) / 1000), last: verdict + waited };
   });
 }
 
@@ -137,7 +138,9 @@ export function main(argv, { log = console.log } = {}) {
     times = a.rev ? inRevTree(a.rev, (tree, sha) => { rev = sha; return runAll(a, tree, log); }) : runAll(a, ROOT, log);
   }
   const summary = aggregate(readRuns(join(a.from ?? a.out, 'runs')));
-  const meta = { rev, waves: a.waves, controls: 'wheel', pick: 'greedy', ...(times ? { wall_s: times } : {}) };
+  const previous = a.from && existsSync(join(a.from, 'waiting.json')) ? JSON.parse(readFileSync(join(a.from, 'waiting.json'), 'utf8')).meta : null;
+  const meta = previous ?? { rev, waves: a.waves, controls: 'wheel', pick: 'greedy', ...(times ? { wall_s: times } : {}) };
+  rev = meta.rev;
   const out = a.out ?? a.from;
   writeFileSync(join(out, 'waiting.json'), JSON.stringify({ ...summary, meta }, null, 2) + '\n');
   writeFileSync(join(out, 'waiting.md'), markdown(summary, { note: `Measured at ${rev}, gauntlet --controls=wheel --pick=greedy --waves=${a.waves}.` }));

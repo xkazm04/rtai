@@ -89,7 +89,8 @@ func _sample(foe: Foe, h: Fighter, arena: CombatArena, mind: SquadMind) -> void:
 	var dist: float = h.pos.distance_to(arena.rivet.pos)
 	var clear: bool = arena.guard_map == null or arena.guard_map.clear_line(h.pos, arena.rivet.pos)
 	var in_range: bool = clear and dist <= k.attack_m
-	var fired: bool = mind != null and mind.agent.shot_tick == tick
+	var shot_at: int = mind.agent.shot_tick if mind != null else -1
+	var fired: bool = (h.swing_tick if foe.melee else shot_at) == tick
 	var state: EnemyAgent.State = mind.agent.state if mind != null else EnemyAgent.State.PATROL
 	var busy: bool = (
 		fired

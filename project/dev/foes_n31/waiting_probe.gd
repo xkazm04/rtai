@@ -43,9 +43,8 @@ func _run_headless() -> void:
 		if pilot != null and (session.stage.arena as GauntletCombat).report_bot_freeze():
 			_result_path = ""
 			_write_waiting()
-			@warning_ignore("return_value_discarded")
-			_finish()
-			get_tree().quit(1)
+			var written: bool = _finish()
+			get_tree().quit(0 if waves.done and written else 1)
 			return
 	_write_waiting()
 	super._run_headless()
