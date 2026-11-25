@@ -423,3 +423,9 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
   07:15. Owner call in REPORT: every other point passes (size 0.92-0.98 of Rivet, feet, stop, palette, shadow, fall,
   rim 0); the switch is one value (`cast_cards.json` `robot_thug.enabled`).
 - 06:46 mutate (director, background) `foe_thug_card_view.gd --lines=72-100 --max=10 --tests=test_cast_thug` -> `build/dir5/mutate_thug.out`.
+- 06:47 BUILDER cast-13 10 accepted: `a04e542c9` (two decision lines: war placement revert, war eight one value),
+  `ff06ff086` (heights in `size_beside_32.mp4`, median of 50 frames, `tools/art/cast_film_heights.py`, background = per-pixel
+  median of the static camera): warden 51 (still 51), contractor 50 (49), gunner 55 (55), Mulroney 54 (53), lancer 48 (51,
+  walk vs aim cell), cops unjittered 50.0 / 48.2 / 48.6 (50.3), Rivet 80 (77), DOOR CARRIER 63 (56: +7, cause unknown),
+  turret not separable (label), war machine by eye 64-68 (65). The film's nominal labels are now backed by measured numbers.
+- 06:48 BUILDER RUNNING cast-14 (sonnet) since 06:48: door height film vs stills, measure only, hard stop 07:12.
