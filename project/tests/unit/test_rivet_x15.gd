@@ -76,10 +76,12 @@ func test_four_frame_cells_preserve_the_original_extent_and_bob() -> void:
 		var cell: Vector2 = card.texture.get_size() / Vector2(4, RivetWalk.ROWS)
 		assert_almost_eq(cell, old * 1.5, Vector2.ONE * 0.51)
 		assert_almost_eq(cell / RivetWalk.res_of(card), old, Vector2.ONE * 0.34)
-		# Toward, first passing pose: 8 px / 3 px of helmet travel, damped by 0.7.
+		# Toward, first passing pose: the bob reads the 110-space cell and stretches, never lifts.
 		card.frame = 1
-		var stretch: float = 5.6 / (128.0 - 20.0) if art == "p70" else 2.1 / (123.0 - 9.0)
-		assert_almost_eq(RivetBob.stretch(card), 1.0 + stretch, 0.00001)
+		var key: String = art + "/" + RivetWalk.STRIP4
+		var fit: Vector2 = RivetBob.fit(key, 1, 4, false, cell.y / RivetWalk.RES)
+		assert_ne(fit.x, 1.0, "the walk is damped")
+		assert_almost_eq(RivetBob.stretch(card), fit.x, 0.00001)
 		assert_eq(RivetBob.up(card, 1.0), Vector2.ZERO)
 
 

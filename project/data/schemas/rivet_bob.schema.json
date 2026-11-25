@@ -29,12 +29,22 @@
       },
       "type": "object"
     },
+    "lift_max_cell": {
+      "minimum": 0,
+      "type": "number"
+    },
     "schema": {
       "const": "gtai.rivet-bob/1",
       "type": "string"
     },
-    "stretch_cell": {
-      "minimum": 0,
+    "stretch_max": {
+      "maximum": 1.5,
+      "minimum": 1,
+      "type": "number"
+    },
+    "stretch_min": {
+      "maximum": 1,
+      "minimum": 0.5,
       "type": "number"
     }
   },
@@ -43,8 +53,10 @@
     "damp_walk",
     "doc",
     "grids",
+    "lift_max_cell",
     "schema",
-    "stretch_cell"
+    "stretch_max",
+    "stretch_min"
   ],
   "type": "object"
 }
