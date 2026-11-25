@@ -1,7 +1,7 @@
 # Builder n31-melee-04a (sonnet, ~20 min, Godot-FREE): the impact audit table from code and data
 
 Read `evidence/briefs/n31-common.md` (binding). Tag `04a`. Do NOT launch Godot in this call (other builders hold
-the lane's Godot). Commit by 25 min into the call, report and END by 30 min (session dies at 00:57 local).
+the lane's Godot). Launched 23:55: commit by 00:20, report and END by 00:25 local.
 Write ONLY `evidence/n31-melee/04-impacts/audit.md` and `audit.json`. Commit with `git commit -- <paths>`.
 
 ## The owner

@@ -46,3 +46,21 @@ read `git log --oneline -8` and those files first; use 01e's mask rule for part 
 (item 4 audit, Godot-free, should not). Keep the reach choice explainable in ONE table row per weapon.
 Chainsaw: prefer the lever "the sweep window ends at its first bite" (the saw grinds what it caught) - DECISION it
 in `docs/decisions.md` (one line, `- [2026-11-25] DECISION melee n31 ...`) only if the guard passes with it.
+
+## 01e result (commit 0fc3c2029, read `evidence/n31-melee/02-sweep/volumes/after.md` + `before_after.png`)
+Body cut by geometry (0.6 m radius + head column + floor match); drawn-no-hit BEHIND him (120-300 deg, 0.8-1.4 m)
+is an upper bound (strike arm / shoulder leak) - do not chase it. The REAL defects the director accepts:
+- hit cone reaches sideways where nothing is drawn: katana and plasma at 60-120 deg, 1.4-2 m (hit-not-drawn 8, 9)
+  -> narrow their sweep arc to the drawn angle range (`sweep_arc_deg`).
+- tips drawn PAST the hit reach ahead: baton 0-30 deg 2-2.6 m, katana 0 deg 3.2 m, plasma 0-30 deg 2.6 m
+  -> lengthen their `sweep_reach_m` to the drawn tip (katana's provisional 1.8 m is too short: guard -25.7 %).
+Bars for this call, re-stated so they are measurable: in front of him (-90..+90 deg of the aim) drawn-no-hit inside
+the cut ticks 0; hit-not-drawn <= 3 of 60; mover <= 1 of 14. Behind him: report, not a bar.
+Re-judge with `--no-render` where only the mask changed; re-render the after only where the hit rules changed (the
+drawn side does not change with reach/arc: re-use 01d's after renders and only re-run the hit model if the tool
+allows it - check `blade_volume.mjs --hits=`).
+
+## Window, corrected (launched 23:41, overrides the 00:08 window above)
+Commit parts 1+2 by 00:10, part 3 by 00:25. Part 4 (flip ON + scenarios + re-pin) ONLY if parts 1-3 meet the bars
+and it is not past 00:25 when you start it; commit it by 00:48 or leave the flag off and report. END by 00:50.
+Builder `03p2` shares the lane Godot lock until ~00:30.
