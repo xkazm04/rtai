@@ -24,8 +24,8 @@ writeFileSync(resolve(dst, 'project.godot'), readFileSync(resolve(source, 'proje
 mkdirSync(dirname(resolve(out)), { recursive: true });
 const avi = resolve(work, 'take.avi').split(String.fromCharCode(92)).join('/');
 const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--resolution', '1920x1080',
-  '--fixed-fps', '60', '--audio-driver', 'Dummy', '--write-movie', avi, '--quit-after', '1500', 'res://dev/arena/arena.tscn', '--', '--rigs',
-  '--bot=reel', '--reel=director', '--loadout=pistol', '--chapter=rocket_launcher,flamethrower,molotov', '--ppm=32',
+  '--fixed-fps', '60', '--audio-driver', 'Dummy', '--write-movie', avi, '--quit-after', process.env.QUIT ?? '1500', 'res://dev/arena/arena.tscn', '--', '--rigs',
+  '--bot=reel', '--reel=director', '--loadout=' + (process.env.LOADOUT ?? 'pistol'), '--chapter=' + (process.env.CHAPTERS ?? 'rocket_launcher,flamethrower,molotov'), '--ppm=32',
   '--clean', '--silent', ...extra];
 const r = await runGodot(args, { cwd: stage, ensure: false, headless: false, timeoutMs: 600000, name: 'red-fire-film' });
 writeFileSync(resolve(work, 'film.log'), r.out);

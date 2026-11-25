@@ -23,3 +23,11 @@ The red ring on the grip is gone. In the look print the steel grey does not land
 (about 100,93,89) or the cream of the blade's own paper (about 244,220,189), so the rings now read as an ink ring with cream flecks, not
 grey and not red. They are less defined than the red ring was (the grip reads as dark ink there), which fits "to steel" at this size.
 Two or three tiny red dots stay on the hilt (the emitter prongs' lights), left as the mask spares them.
+
+## Film
+`CHAPTERS=plasma_sword,plasma_sword_left,plasma_sword_cam,plasma_sword_deflect QUIT=1440 node evidence/n29/red/film.mjs C:/Users/kazda/kiro/gtai-masters/n29/combat/films/red_sword_after_32.mp4`
+(film.mjs gained `CHAPTERS`, `QUIT`, `LOADOUT` env overrides; defaults unchanged). ffprobe: 1920x1080, 60/1, 24.000 s, 24.2 MB; 32 px/m (the arena's tilt).
+Four sword chapters: combo on a cop ahead, left, below, then the deflect against a shooter. I looked at frames at 2, 4, 9, 15 s: the sword fights read.
+In the wind-up swing (2 s, `stills/red_sword_film_crop_4x.png`) the sword is Rivet's own `rivet_eq_plasma_sword*` sheet art, whose copper-red rings
+are still there (NEED keys); the repainted `held_long` is what draws at the rest and in the deflect (the 64 px/m pair above).
+At 32 px/m the held part is `held_55`/small variants under 56 px/m, whose rings the repaint also covers (held_55/plasma_sword.png 224 -> 13).
