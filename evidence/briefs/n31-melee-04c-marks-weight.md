@@ -1,6 +1,6 @@
 # Builder n31-melee-04c (sonnet, ~25 min): the blade marks must read at 32 px/m
 
-Read `evidence/briefs/n31-common.md` (binding). Tag `04c`. Commit by 20 min, END by 25 min. Files:
+Read `evidence/briefs/n31-common.md` (binding). Tag `04c`. Launched 00:36: commit by 00:52 (session dies 00:57), END 00:54. If the stills are not done by 00:50, commit the data change with the stills you have and say so. Files:
 `project/data/tables/melee_marks.json` (katana, plasma_sword, chainsaw rows), `project/features/combat/react/
 blade_marks.gd`/`claw_marks.gd` (only if a torso lift is needed), `project/dev/melee_n31/marks_still*`, tests.
 State (04b, commits ca7009066 adb92f40b c75b4b3bc): marks draw at `f.pos + ShotLift.up_m()` (gun height); widths

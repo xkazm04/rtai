@@ -89,3 +89,4 @@ NEXT (session 4):
 4. Then 03p3 (evidence/briefs/n31-melee-03p3-feed-on.md): frame cost under the bench lock, --kill-feed ON + re-pin, fatality takes chainsaw first.
 5. Item 4 continued: robot hit sparks (blood_fx thug_hit row unwired; arena_rigs.gd owner check), light-gun flash/kick, shotgun kill row; audit sheet before|after.
 Final gate slot: ground first, melee +20 min; last commit 06:00, gate by 06:15.
+- 00:36 (clock correction: the 00:41/00:42 lines above were written at 00:35) BUILDER RUNNING 04c (sonnet, marks weight, commit by 00:52) since 00:36 - next session: check git log for its commit; uncommitted edits in melee_marks.json / blade_marks.gd are 04c's.
