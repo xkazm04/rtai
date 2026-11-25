@@ -1,0 +1,33 @@
+# Brief n29-10 `impression-evidence`: evidence for the impression-props fix (pilots, before/after, contrast table, film, decisions line) (lane yard, run n29)
+
+HARD STOP: 05:58 local (report and END; you die with the director's session at 06:20). First commit (pilots + contrast table) by 05:30. LAST COMMIT started by 05:45. Check `date` often. Never let the call end before its commit: commit each finished part as soon as its checks pass.
+
+## Setup
+Repo worktree `C:/Users/kazda/kiro/gtai-wt/n25-yard` (branch `n29-yard`). Bash with absolute paths. Every shell that runs Godot:
+```
+export APPDATA=C:/Users/kazda/kiro/gtai-n29/appdata/yard
+export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe
+```
+`--rendering-driver d3d12` for renders; windowed runs `--position 0,1440`. Launch Godot only through repo tools (`tools/art/prologue_yard_film.mjs` for stills AND movies, it goes through runGodot: do NOT use `evidence/yard29/film.sh`'s raw `$GODOT_BIN` movie line; `tools/dev/run.mjs`; `tools/tests/run_unit.mjs`) except a plain `--import`. **One Godot per lane, shared with builder `span-order`**: before EVERY Godot launch take the slot: `set -o noclobber; echo "impression-evidence $$ $(date +%H:%M)" > /c/Users/kazda/kiro/gtai-wt/n25-yard/build/yard-godot.lock` (if it fails, poll every 30 s; a lock older than 25 min is stale, delete it then); delete it the moment your Godot process exits; run batches (all five pilots) in one launch where the tool allows. **Never delete a lock whose first word is not `impression-evidence`** unless it is stale. The pre-commit hook runs Godot too: hold the lock across `git commit`. 16 GB machine cap: `mem-budget: waiting` = machine full, wait. Kill only PIDs you started.
+
+## Where it stands (read first)
+`git show --stat 1d5f5767f` and `evidence/yard29/impression_props.md`: floor i55 (`a880ea994`) hazed the wrecks printed under the impression; `1d5f5767f` moved `burnt_pickup`, `press_carcass`, `fallen_fridges`, `scrap_skip` into `arched_line.over_print` (they draw over the impression in their own colours) and ended the impression rect at y 33.3, north of the south fence. Only one after still exists (`evidence/yard29/impression_props_after_mid_32ppm.png`, tick 300). Builder `span-order` runs beside you: it fixes in `prologue_yard_overprint.gd` that the fridges now draw over a belt span (spans will draw last); watch `git log --oneline -5` for its commit `Yard n29: span order ...`.
+
+## Work, in order
+1. **Pilots** seeds 7, 3, 11, 21, 42 at HEAD (`project/dev/prologue_yard/yard_pilot_rows.gd`, one Godot process for all five; how the last call ran it: `git show --stat 5479f91df` and the JSON's fields) to `evidence/yard29/prologue-yard-pilots-props.json`; expected identical to `evidence/yard29/prologue-yard-pilots-hall2.json` (end ticks, deaths, lowest health, sha256; over-print is visual). Commit.
+2. **Contrast table** for three props (forklift `burnt_pickup` or whichever is the forklift, `scrap_skip`, `fallen_fridges`) and the south fence/gate: mean |prop - floor ring around it| luminance at 32 px/m, mid camera tick 300 (gate camera for the fence), for three looks: i20 = `c649a15d6`'s `arched_line`, i55 before = `8b2ada27e`'s `arched_line`, after = HEAD. Render the two "before" looks with TEMPORARY rows (`arched_i20`, `arched_pre_props`) in `project/data/tables/prologue_yard_dressings.json` holding those commits' `arched_line` rows verbatim (`git show <rev>:project/data/tables/prologue_yard_dressings.json`), `--dressing=<temp id>`, then REMOVE them (`git diff` of the table must be empty afterwards: you commit no table change). Prop boxes from the row/stage data at the camera's px/m (say how you placed them). Bar: each prop within 10 % of its i20 contrast, else say where it lands. Write `evidence/yard29/impression_props.md` (append a section, keep the existing text), with the python you used kept as `evidence/yard29/prop_contrast.py`. Commit.
+3. **Stills** (after the span-order commit if it has landed; else at HEAD and say so), LOOK at each and describe what you see: `evidence/yard29/impression_props_before_after_mid_32ppm.png` (8b2ada27e look | HEAD, same tick 300, side by side) and `..._gate_32ppm.png` (gate camera, its usual tick `6400` in `film.sh`, or the one that frames the fence and gate); a 64 px/m crop of the skip or forklift `..._64ppm.png`. Commit.
+4. **Film** 20 s before | after mid yard: two `prologue_yard_film.mjs --movie=<avi> --place=mid --tick=1757 --frames=1200 --ppm=32` takes (before = the temp row `arched_pre_props`, after = `arched_line`), each scaled to 960x1080 and hstacked to 1920x1080, 60 fps, h264 yuv420p, to `C:/Users/kazda/kiro/gtai-masters/n29/yard/impression_props_before_after_32ppm.mp4`; `ffprobe` it (duration 15 to 40 s). Delete the .avi scratch. Append one entry to `C:/Users/kazda/kiro/gtai-masters/n29/yard/frames.json` (fields `file`, `title`, `ppm`, `before`, `note`; keep best first, do not reorder the others) plus the 64 px/m still copied there. Temp rows removed afterwards.
+5. **ONE line** appended to `docs/decisions.md`: `- [2026-11-25] DECISION yard n29 impression props: ...` (the four ids moved to `arched_line.over_print`, the rect end y 33.3 north of the fence, the overhead spans drawn last by span-order's commit if landed (its sha), the contrast numbers; rejected: lowering the i55 tint the owner picked). Commit.
+
+## Owned files (allowlist). Any other path: stop and report a NEED.
+`project/data/tables/prologue_yard_dressings.json` (temp rows only, never committed), `evidence/yard29/prologue-yard-pilots-props.json`, `evidence/yard29/impression_props*`, `evidence/yard29/prop_contrast.py`, `build/**`, `docs/decisions.md` (one appended line), `C:/Users/kazda/kiro/gtai-masters/n29/yard/**` (your film, your still, one frames.json entry).
+
+## Forbidden
+`project/boot/**` and `project/tests/**` (builder span-order's), `project/features/**`, `core/**`, `project/dev/**` (read only), every other table, other worktrees, `JOURNAL.md`, `REPORT.md`, `evidence/briefs/**`, `hs_err_pid*.log`, `C:/Users/kazda/kiro/gtai-art/**`. No image generation. Never run `builder.mjs`, `astra.mjs`, or `codex`.
+
+## Repo law
+Stage per path; `git commit -- <paths>`; no `git add -A/./-u`, no `git commit -a`, no stash, no amend, no rebase, no reset --hard, never push, never `--no-verify`. The pre-commit hook can take up to 12 minutes. A hook failure in `tools/film/kill_reel_*.break.test.mjs` = stale class cache: `--import`, commit again. Fix lint and format findings in your own edit and go on.
+
+## Report (final message, then END)
+Commit shas; pilots vs expected (five rows); the contrast table and verdict; what you saw in each still; ffprobe line; what was not done.
