@@ -238,3 +238,11 @@ NEXT (final session, report 18:55):
    If code lands after all: `node tools/gate/run.mjs --rev=HEAD` (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys).
 2. At 18:55: drop the NEAR-FINAL line (header time), re-run `node tools/evidence/cites.mjs REPORT.md`, frames.json check (15),
    commit JOURNAL/REPORT with a pathspec. If merge-tree is re-run, update the Merge notes line with the new tips.
+
+## Session 10 (16:45 - 18:15)
+- 16:45 git log: 61b79bd2d top, as session 9 left it. No builder running, lane lock free, images 60/60. No new `NEED keys` lines.
+- 16:48 DECISION one image-free quality call before the 17:15 commit deadline (BUILD phase: raise the weakest item): the two p70 aim-left
+  c0 cells still rope (mini-nuke c0 edit rejected, gatling c0 never edited) by transplant of Gloria `_left` c0's rigid ring (body alpha
+  IoU 0.993, same figure drawing), the n29-10 route; 0 images. Row 8 touch-ups not retried (two failed routes = stop).
+- 16:50 BUILDER n30-24 left-c0-transplant launched (opus, bg): brief `evidence/briefs/n30-24-left-c0-transplant.md`; last commit 17:12,
+  END 17:15. If it commits art, I gate at ~17:15 (`node tools/gate/run.mjs --rev=HEAD`, APPDATA keys).
