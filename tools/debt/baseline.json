@@ -192,7 +192,8 @@
         "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)",
         "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)",
         "2026-11-25: war eight for n29 cast (dev_loc 39127 -> 39128)",
-        "2026-11-25: war placement revert for n29 cast; dev/cast +123 is the thug builder's untracked cast_thug_edge.gd on disk (dev_loc 39128 -> 39251)"
+        "2026-11-25: war placement revert for n29 cast; dev/cast +123 is the thug builder's untracked cast_thug_edge.gd on disk (dev_loc 39128 -> 39251)",
+        "2026-11-25: cast_thug_edge dev scene for n29 cast thug rim (dev_loc 39251 -> 39253)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -201,7 +202,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3895,
+        "project/dev/cast": 3897,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -234,7 +235,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39251
+      "total": 39253
     },
     "direct_cmdline_reads": {
       "accepted": [
