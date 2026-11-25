@@ -74,7 +74,8 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - Session 1: c07 (nuke specks) lost its take to a 240 s timeout under machine contention (10 min).
 
 ## Calls for the owner
-- Thin hop/stun: the thin stars read cream/tan at 3 px (`THIN_BODY_PX` 4 = more amber, one value). `stills/stun_thin_pair_64.png`.
+- Thin hop/stun: at 3 px (shipped) the hop line and stun stars read cream/tan; at 4 px (`THIN_BODY_PX`, one value) they keep
+  thin but gain a clear amber/gold edge, most on the stun stars. `stills/thin_3_vs_4_pair_64.png` (`2d661435b`); pick 3 or 4.
 - Card fall: a card foe no longer takes a kill style's street-row cells (they were another kind's drawing: the patrol/SWAT
   cop's stitch wounds), only `*` cells or his own sheet. `stills/card_fall_sergeant_mulroney_pair_64.png`.
 - The `fire` light kind prints vermilion (its main token, strobing with paper at 2.5 Hz). With the new `amber` token,
