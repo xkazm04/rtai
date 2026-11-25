@@ -2,7 +2,8 @@ extends SceneTree
 ## n31 ground lift probe: Rivet walks and/or sprints through the 8 octants in the real arena and
 ## every captured tick is saved three times (full, no drop shadow, no Rivet) so a reader
 ## (tools/ground/lift/lift.py) can separate body and shadow pixels from delivered frames.
-const KNOWN_FLAGS: PackedStringArray = ["--weapon", "--pitch", "--gaits", "--out"]
+## --ppm (32|64) is read by ArenaGame itself (the arena camera scale).
+const KNOWN_FLAGS: PackedStringArray = ["--weapon", "--pitch", "--gaits", "--out", "--ppm"]
 const VIEWS: Dictionary = {"p55": "tilt", "p70": "tilt70"}
 
 
@@ -37,6 +38,8 @@ static func _check(args: ArenaArgs) -> String:
 	for gait: String in args.text("--gaits", "move,sprint").split(","):
 		if gait not in ["move", "sprint"]:
 			return "expected --gaits=move,sprint"
+	if args.text("--ppm", "32") not in ["32", "64"]:
+		return "expected --ppm=32|64"
 	var dest: String = args.text("--out")
 	if dest.is_empty() or DirAccess.make_dir_recursive_absolute(dest) != OK:
 		return "expected --out=<writable directory>"
