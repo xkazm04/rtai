@@ -92,3 +92,51 @@ func test_only_a_grinding_hit_stops_sweeping_once_it_has_bitten() -> void:
 	sweep.hit_any = true
 	assert_true(sweep.bitten(saw), "bitten")
 	assert_false(sweep.bitten(blade), "a blade keeps sweeping")
+
+
+## 02p2 mutate survivors: the cut window's first tick (CUT_TICKS before the windup ends, never
+## before half of it) and its last (12 % into the recovery), pinned on two hits.
+func test_the_cut_window_starts_cut_ticks_before_the_windup_ends() -> void:
+	var h: MeleeHit = MeleeHit.new()
+	h.windup = 7
+	h.active = 4
+	h.recovery = 16
+	assert_eq(MeleeSweep.window(h), Vector2i(5, 12))
+	h.windup = 2
+	h.active = 3
+	h.recovery = 0
+	assert_eq(MeleeSweep.window(h), Vector2i(1, 4))
+
+
+## Each of the three flags reaches the replay state: eight flag sets, eight different states.
+func test_the_state_byte_carries_each_flag() -> void:
+	var seen: Dictionary[String, bool] = {}
+	for bits: int in 8:
+		var s: MeleeSweep = MeleeSweep.new()
+		s.hit_any = bits & 1 != 0
+		s.tested = bits & 2 != 0
+		s.closed = bits & 4 != 0
+		var out: StreamPeerBuffer = StreamPeerBuffer.new()
+		s.write(out)
+		seen[out.data_array.hex_encode()] = true
+	assert_eq(seen.size(), 8)
+
+
+## The combo's hits alternate the side: odd hits +1, even hits -1.
+func test_the_side_alternates_with_the_hit() -> void:
+	_arm(&"katana")
+	hands.combo.last_index = 1
+	assert_eq(MeleeSweep.side(hands.combo), 1.0)
+	hands.combo.last_index = 2
+	assert_eq(MeleeSweep.side(hands.combo), -1.0)
+
+
+## A sweep cut short before its last cutting tick, having struck nothing, owes its whiff once.
+func test_a_sweep_cut_short_owes_its_whiff() -> void:
+	_arm(&"katana")
+	var h: MeleeHit = hands.combo.table.hits[0]
+	var s: MeleeSweep = MeleeSweep.new()
+	s.swing = 3
+	assert_eq(s.close(h, MeleeSweep.window(h).x, false), 0, "mid-window: no whiff yet")
+	assert_true(s.track(hands.combo), "cut short: the whiff is owed")
+	assert_false(s.track(hands.combo), "once")
