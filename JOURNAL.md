@@ -169,3 +169,6 @@ NEXT (session 6, from ~17:09):
   foot_slide at HEAD 0.43 / 1.56 walk hold, 5.77 / 6.85 run step (bars 2 / 7) = n30-09. I read the diff and looked at
   `build/n30-22/new_cols4_7_2x.png`: bottle in the left claw, amber flame, flat striped collar ring, soles under the body, cols 5, 6 no
   seam. frames.json entry -> `molotov/grid_molotov_head_64.png` (15 entries). REPORT What works points at it.
+- 15:48 BUILDER n30-23 molotov-clip-head launched (sonnet, bg): re-film the n30 tile of `molotov/molotov_32.mp4` (stop-gap | n30 | plasma
+  rifle, filmed before 0e399a732) at HEAD as `molotov_head_32.mp4`, reusing the stop-gap and donor captures; frame diff old vs new
+  middle tile. Commit by 16:25, END 16:35. Sole lane Godot user.
