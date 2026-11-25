@@ -85,6 +85,30 @@ func test_turn_pad_presses_the_weapon_slot_key_only_while_a_slot_is_set() -> voi
 		assert_eq(pad.sample(0).buttons & key, 0)
 
 
+func test_equip_presses_the_slot_key_on_the_first_step_only() -> void:
+	assert_eq(Recorder.EQUIP_STEPS, 6)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		assert_eq(Recorder.slot_on_step(0, slot), slot)
+		for step: int in range(1, Recorder.EQUIP_STEPS):
+			assert_eq(Recorder.slot_on_step(step, slot), -1)
+
+
+func test_turn_pad_fire_bit_is_set_by_fire_and_never_by_a_slot() -> void:
+	var pad: Recorder.TurnPad = Recorder.TurnPad.new()
+	pad.actions = PlayerActions.shipped(true)
+	var fire: int = 1 << pad.actions.bit(&"fire")
+	pad.fire = true
+	assert_eq(pad.sample(0).buttons & fire, fire)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		var key: int = 1 << pad.actions.bit(RivetCarry.SLOT_ACTIONS[slot])
+		assert_eq(pad.sample(0).buttons & key, 0, "fire sets no slot key")
+	pad.fire = false
+	assert_eq(pad.sample(0).buttons & fire, 0)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		pad.slot = slot
+		assert_eq(pad.sample(0).buttons & fire, 0, "a slot does not set fire")
+
+
 class DeferredTurn:
 	extends Turn
 

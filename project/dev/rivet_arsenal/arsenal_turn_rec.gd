@@ -1,5 +1,7 @@
 extends Node
 ## Run the arena's normal pilot, carry, trigger and view. Only the input source is scripted.
+const EQUIP_STEPS: int = 6
+
 var boss: StringName
 var weapon: StringName
 var out_dir: String
@@ -49,10 +51,15 @@ func _ready() -> void:
 	await _record()
 
 
+## The slot key is pressed on the first equip step only.
+static func slot_on_step(step: int, slot: int) -> int:
+	return slot if step == 0 else -1
+
+
 ## `take` selects nothing under wheel_inventory and the first wheel step stows the gun.
 func _equip(slot: int) -> void:
-	for i: int in 6:
-		_pad.slot = slot if i == 0 else -1
+	for i: int in EQUIP_STEPS:
+		_pad.slot = slot_on_step(i, slot)
 		await _step()
 
 
