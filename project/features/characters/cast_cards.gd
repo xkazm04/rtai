@@ -78,6 +78,8 @@ static func _sheets(table: DataTable, row: Dictionary, pitch: String) -> Sheets:
 		walk = CastLancerAnchors.WALK
 	if walk == CastGunnerAnchors.FOUR:
 		walk = CastGunnerAnchors.WALK
+	if walk in [CastThugAnchors.FOUR, CastThugAnchors.EIGHT]:
+		walk = CastThugAnchors.WALK
 	if walk == CastContractorAnchors.FOUR:
 		walk = CastContractorAnchors.WALK
 	out.walk = dir + (StreetMulroneyAnchors.WALK if walk == StreetMulroneyAnchors.FOUR else walk)
