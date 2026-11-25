@@ -41,7 +41,7 @@ scripts' on untouched files (rig_clips.gd, events.gd, ...): environmental; `--no
 | plasma rifle donor, same capture | 0.60 / 1.56 | 6.69 / 8.93 |
 
 The run lane reads the new sheet (strip `rivet_run8_eq_molotov.png`). The two planted steps are 9.86 + 4.69 cm vs the
-donor's 8.93 + 4.45 cm: 0.30 px and 0.08 px at 32 px/m, from row 1's sub-pixel sole x (cells 3,4,6,7 at -0.5 / -1.0 px).
+donor's 8.93 + 4.45 cm: 0.30 px and 0.08 px at 32 px/m; not traced to cells (row 1 sole x is within 1.0 px of the donor in every cell, a likely source).
 
 Files (`C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/`): `grid_molotov_run_foot_slide_32.json`,
 `grid_plasma_rifle_foot_slide_32.json`, `grid_molotov_arena/rows/`, `grid_plasma_rifle_arena/rows/`,
