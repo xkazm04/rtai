@@ -237,3 +237,17 @@ NEXT (session 4, from ~05:05), in order:
      `cast_door_eight.py`, so they are free). Mind the owner's size rule (war machine 0.84 of Rivet now).
   5. NEED combat (`kill_fall_cells.gd` card scale) stays open in combat's lane.
   Last commit 07:15, final gate `node tools/gate/run.mjs --rev=HEAD` by 07:30. IMAGES 20/60.
+- 04:51 BUILDER cast-08-films 44 accepted-partial: `bdad87c60` (scenes `cast_size_beside_walk`, `cast_flash_fight`, tool
+  `tools/film/cast_n29_films.mjs`, debt accepted). `size_beside_32.mp4` 1920x1080 60 fps 33.75 s: 8 card foes, 3 cops
+  (x0.92/0.85/1.10), Rivet walking; BUT its labels are nominal (50 px x actor scale), not measured in the frames: the
+  measured numbers stay the stills' table (`51de13fb6`). `flash_street_32.mp4` 1920x1080 60 fps 25.0 s, door (FOUR) and
+  gunner, 20 flashes each. Looked at `flash_door_3hits_x3frames_32.png`: the door turns a black silhouette with cream
+  speckle for ~3 frames per hit, no red, no teal; readable at 32 px/m. Mutate cast_far_card not run (time). frames.json 14.
+- 04:51 FINDING (films builder, important for item 2): in a street fight `ArenaRobotRigs._react`
+  (`project/features/arena/arena_robot_rigs.gd:101`) only shoves the rig on a hit (`rig.hit(away, HIT_SHOVE)`); no hit clip
+  tints a robot rig there, so the card flash of `7ca036a93` (card tints while the rig is tinted) never fires on the street:
+  the clip drives `RigClips.hit` from the dev scene. Next: check whether the gauntlet/arena path tints robot rigs (grep
+  `RigClips.hit` callers); if no live path does, a cast call adds the tint to `_react` (cast owns that file, smallest edit,
+  rendering only) and re-films the flash without the scene driving it. Until then item 2 is NOT live for robots in the street.
+NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash live-path check + fix above (sonnet, small),
+  and measure heights in `size_beside_32.mp4` frames (not nominal labels) in the same call if cheap.
