@@ -118,8 +118,13 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
 2. The chain hop and daze stun now share the bolt's bold current: `stills/electro_hop_pair_64_thin.png` (before) beside
    `stills/electro_hop_pair_64.png`.
 3. Row 11: Rivet's rocket and nuke shell keep their red nose band (it is his own round; amber would read as a pickup).
+   `stills/call_rocket_band_pair_8x.png`: the shipped sprites beside an amber mock (not shipped; reddish 336 -> 0, 1029 -> 0).
 4. The explosion light (`lights.json`) keeps its vermilion rim: amber needs a new palette token (not this lane's file).
+   Seen in `stills/red_fire_explosion_pair2_64.png`.
 5. Mertz's vermilion gloves and the arena robot's red-striped coil are cast art: NEED cast if they should change.
+   `stills/call_mertz_gloves_64.png` (both gloves boxed, 705 + 661 px; the coil: `stills/red_elec_burst_pair2_64.png`).
+6. A killed card foe falls as the generic cop fall grid, not his own fall sheet (Next step 7): `stills/card_kill_pair_64.png`
+   (the standing figure is Mulroney's card art, the fallen body is not).
 
 ## Merge notes
 - After `n29-cast` merges, `KillFallCells.victim_scale`'s last line becomes
@@ -149,8 +154,8 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
    (owner call: it changes a kill's look).
 
 ## Builder ledger
-18 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 531 minutes in all.
-17 accepted, 1 bounced (c2c: its code was right, but amber did not reach the screen; c2e finished it).
+19 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 532 minutes in all.
+18 accepted, 1 bounced (c2c: its code was right, but amber did not reach the screen; c2e finished it).
 
 | call | min | result | note |
 |---|---:|---|---|
@@ -172,6 +177,7 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
 | c4 mutate | 51 | accepted | 3 files, dev crash fix |
 | c8 frames curate | 1 | accepted | frames.json to 15 best first, full list kept |
 | c9 electro pins | 36 | accepted | tests only; both mutate runs at 100 % |
+| c10 call stills | 1 | accepted | rocket band amber mock, Mertz gloves boxed (no Godot) |
 
 What I would brief differently: (1) every art/colour brief asks for an in-game still at 64 px/m before commit A ("does
 the change reach the screen through the print?"): the item print snapping amber to vermilion cost two calls; (2) "prove
