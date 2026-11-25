@@ -113,7 +113,12 @@ func _tonnage(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		for foe: Fighter in TonnageDump.victims(arena.hostiles, ghost.spot, row.radius_m):
 			_crack(stage, foe)
 			var dir: Vector2 = TonnageDump.push_dir(ghost.spot, foe.pos, ghost.facing)
-			_hit(arena, foe, dir, row.dump_damage, &"deploy_tonnage")
+			# Same deaths as the press slam (hauler_stage.gd): flattened inside crush_m of the
+			# drop centre, thrown by the wave beyond. Armour kind stays `shot`.
+			var crushed: bool = (
+				foe.pos.distance_to(ghost.spot) <= attacks.num(ghost.form, &"crush_m")
+			)
+			_hit(arena, foe, dir, row.dump_damage, &"stomp" if crushed else &"stomp_wave")
 		return
 	var head: Vector2 = ghost.spot + ghost.facing * attacks.num(ghost.form, &"press_ahead_m")
 	for foe: Fighter in arena.hostiles:
