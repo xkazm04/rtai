@@ -76,11 +76,35 @@ def recolour(img: Image.Image) -> tuple[Image.Image, int, int]:
     return out, n, changed
 
 
+def stripe_edge(img: Image.Image, out: Image.Image) -> int:
+    """--stripe-edge: recoloured band px touching the black stripe ink (v < 0.2, not recoloured) are amber/ink blends;
+    the print snaps them to vermilion, so they get a dark amber-brown (value <= 0.30, alpha kept) that snaps to ink."""
+    src, px = img.load(), out.load()
+    ah, as_, _ = colorsys.rgb_to_hsv(0xED / 255, 0xAB / 255, 0x42 / 255)
+    n = 0
+    for y in range(out.height):
+        for x in range(out.width):
+            if px[x, y] == src[x, y] or px[x, y][3] == 0:
+                continue
+            ink = any(0 <= x + dx < out.width and 0 <= y + dy < out.height and src[x + dx, y + dy][3] > 0
+                      and px[x + dx, y + dy] == src[x + dx, y + dy]
+                      and max(src[x + dx, y + dy][:3]) / 255 < 0.2
+                      for dx in (-1, 0, 1) for dy in (-1, 0, 1))
+            v = max(px[x, y][:3]) / 255
+            if ink and 0.2 <= v <= 0.75:
+                nr, ng, nb = colorsys.hsv_to_rgb(ah, as_, min(v, 0.30))
+                px[x, y] = (round(nr * 255), round(ng * 255), round(nb * 255), px[x, y][3])
+                n += 1
+    return n
+
+
 def main() -> None:
     dry = "--dry" in sys.argv
     for name in NAMES:
         img = head_png(name)
         out, masked, changed = recolour(img)
+        if "--stripe-edge" in sys.argv and name == "nuke_shell":
+            print(name, "stripe-edge px", stripe_edge(img, out))
         outside = 0
         a, b = img.load(), out.load()
         for y in range(img.height):
