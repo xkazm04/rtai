@@ -102,6 +102,7 @@ func _react(h: Fighter, rig: CutRig) -> void:
 	var away: Vector2 = (h.pos - arena.rivet.pos).normalized()
 	if h.hurt_tick > _hurt_seen.get(h.id, h.hurt_tick) and h.alive():
 		rig.hit(away, HIT_SHOVE)
+		rig.clips.flash()
 	_hurt_seen[h.id] = h.hurt_tick
 	if not h.alive() and not _dead.has(h.id):
 		_dead[h.id] = true

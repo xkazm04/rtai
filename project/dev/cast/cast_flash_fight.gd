@@ -2,7 +2,8 @@ extends "res://dev/cast/cast_lineup.gd"
 ## Rivet's pistol against a door carrier (shield_robot) and a robot gunner that pace in the street,
 ## 32 px/m tilt 70, cards on. Each foe takes a pistol round every FIRE_EVERY ticks (they have
 ## plenty of hp); the scene logs every tick a foe's hit flash (rig.is_tinted()) turns on, so the
-## film can be cut at those ticks. The hit clip is played by _flinch (see there).
+## film can be cut at those ticks. The flash is the live path's own (ArenaRobotRigs._react),
+## no scene drives it.
 ## GTAI_CAST_TICKS sets the length; GTAI_CAST_FLASH_OUT, when set,
 ## gets one png per logged flash tick (foe_<archetype>_<hit>_<k>.png, k = 0..2).
 
@@ -103,16 +104,6 @@ func _step(tick: int) -> void:
 			_arena.rivet_fire(foe.pos)
 	_arena._step_shots()
 	_arena.gun.settle()
-	_flinch(tick)
-
-
-## The robot rig host shoves a hit foe but never sends the HIT clip that tints a rig, so this
-## scene plays that clip itself (RigClips.hit, what a feed HIT row calls) on the tick of the hit.
-func _flinch(tick: int) -> void:
-	for foe: Fighter in _foes:
-		var rig: CutRig = _rig_of(foe)
-		if rig != null and foe.hurt_tick == tick:
-			rig.clips.hit(rig, (foe.pos - _arena.rivet.pos).normalized())
 
 
 func _rig_of(foe: Fighter) -> CutRig:
