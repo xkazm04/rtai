@@ -1,0 +1,90 @@
+# n30 keys films: molotov beside the stop-gap
+
+Brief `evidence/briefs/n30-05-molotov-film.md`. No product file changed. Scripts: `evidence/n30-keys/films/capture_film.py` and `compose.py` (the n29 copies, masters root changed to n30, job name `n30-keys-film`). Masters root `C:/Users/kazda/kiro/gtai-masters/n30/keys/`.
+
+## Molotov clip (done)
+- Before = temp worktree `C:/Users/kazda/kiro/gtai-n30/tmp/keys-before` at `19259b098` (the commit before the molotov sheet `4513bda2a`); native DLLs, baked city and `.godot` copied, the imported `rivet_run8_eq_molotov.png-*` deleted so the new texture could not leak (n29 pitfall). Verified: the before tile shows the stop-gap's thin held sliver, not the bottle. Worktree removed at the end.
+- Captures (1010 frames each, 1080p, 60 fps fixed, King's Boulevard, tilt 70): `molotov/grid_molotov_arena/basef_32` (before), `n30f_32` and `n30f_64` (HEAD), `b64_64` (before, 64 px/m samples), `molotov/grid_plasma_rifle_arena/n30f_32` (donor).
+- Clip `molotov/molotov_32.mp4`: three 640x540 1:1 crops (stop-gap | n30 | plasma rifle), frames 70-990, over the n30 64 px/m full-width 1:1 tile (1 s per sample).
+- ffprobe: codec_name=h264, width=1920, height=1080, pix_fmt=yuv420p, r_frame_rate=60/1, duration=15.350000, nb_frames=921.
+- Looked at: 3 s (walk): the stop-gap shows a thin pale line on the hand, n30 carries the bottle with a lit rag in the leading hand, the donor holds the rifle in the same pose; the 64 px/m tile shows the bottle and flame by the right ear. 12 s (sprint): stop-gap still a sliver at the back hand, n30 bottle forward with flame, donor rifle forward; Rivet size and position match across the tiles, labels readable.
+
+## Still `molotov/molotov_before_after_64.png`
+Stop-gap (left) | n30 (right), 1:1 270x240 crops at 64 px/m, ticks 610 and 850 (two sprint facings). Seen: before a thin held sliver (and a different leg phase), after the bottle with the flame, collar and body unchanged in style.
+
+## frames.json
+`gtai-masters/n30/keys/frames.json`: 10 entries (molotov clip, molotov 64 still, grid_molotov_64, the collar stills).
+
+## Collar rows 3, 6, 7 clip (compare)
+Brief `evidence/briefs/n30-13-collar-film-compare.md`. Route 1 (n30-11, the bare-hands `run_hands.py` harness) failed: it copies `hands_arena.*` from `gtai-masters/n24` and `n26`, deleted at ~12:56. Route 2 is the shipped compare kit; no product file changed.
+- Shot `arena` with `-- --bot=rivet` (ArenaGame reads the LAST `--bot`, so it overrides the shot's `--bot=reel`): the walk, strafe, sprint (left and right), roll, claw combo script. Sides `--a=5114a4441` (before the collar edits) and `--b=834607753` (HEAD at the time), tilt view (p55 art), pinned snapshots in `%TEMP%/gtai-film-<sha>`.
+- Commands: `node tools/film/compare.mjs arena --a=5114a4441 --b=834607753 --view=tilt --ppm=32 --res=1920x1080 --clip=60-1260 --at=600 --out=build/n30-13/c32 -- --bot=rivet` and the same with `--ppm=64 --at=300 --out=build/n30-13/c64` (no clip). Both exit 3 UNVERIFIABLE only because the window is clamped to 1422x800 (movie 1280x800, stills 1920x1080); the pictures are real and differ (tick 300 stills differ).
+- compare wrote no clip for an unverifiable side, so `collar_p55_rows367_32.mp4` was cut with ffmpeg from the two `arena.mp4` (frames 60-1260, each side scaled 1280x800 -> 960x600, hstack, padded to 1920x1080, labels "before 5114a44" / "after n30"). Rivet is small in it (about 60 px); the 64 px/m still is the readable proof.
+- ffprobe clip: width 1920, height 1080, r_frame_rate 60/1, duration 20.000000, nb_frames 1200.
+- Still `collar/collar_p55_64_compare.png`: tick 300, 320x320 crop at 3x nearest, before left, after right (1920x960). Seen: Rivet sprinting LEFT (row 7): before the collar is a twisted orange rope; after a flat black and orange striped ring. Head, body, legs identical.
+- Frames looked at: 4 s (tick 300, the left sprint: before twisted, after striped ring, visible even at 32), 6 s (tick 420, claw combat: both collars are small orange bands, no clear difference at this size). Not shown: the bot never faces row 6 (front-left) or a right sprint through 3 clearly in the frames I viewed; rows 3 and 6 are unverified in this clip (a right sprint runs at ticks about 285+ before the left one is not confirmed). Row 7 is verified.
+
+## n30-16 sprint tour
+Brief `evidence/briefs/n30-16-sprint-tour.md`. Recorder commit `22d3c0fb1`: `--sprint-tour=on` in `project/dev/rivet_arsenal/arsenal_turn.gd` picks `arsenal_sprint_rec.gd`; with `--weapon=hands` (bare claw, so the bare `p55/rivet_run8.png` is the sheet drawn) the pad holds `sprint` and a full stick (`tour_input(octant)`, 127 scale), 90 ticks per octant E, SE, S, SW, W, NW, N, NE, a full-window frame every 2 ticks at 32 px/m and a still per octant at its tick 60. All 16 octant logs say `rivet_run8.png` at full sprint (9.3 m/s; the log line reads 18.6 at --ppm=32 because it divides by the 32 px/m constant).
+- Runs: scratch `build/n30-16/film.mjs <before|after> <32|64>` (runGodot, `--rendering-driver d3d12 --position 0,1440 --resolution 1920x1080 --fixed-fps 60 -s <entry> -- --weapon=hands --pitch=p55 --ppm=<n> --out=build/n30-16/<side>-<n> --sprint-tour=on`). After = this worktree, `res://dev/rivet_arsenal/arsenal_turn.gd`. Before = snapshot `build/turn-snapshots/gtai-film-5114a4441cef` (`resolveSide` + `ensureSnapshot`, as `sideAt()`), the four recorder scripts copied to `<snapshot>/project/dev/film_turn_probe/`, entry `res://dev/film_turn_probe/arsenal_turn.gd`. All four runs exit 0.
+- PITFALL: the snapshot's sheet file was the old one (md5 `1d0d812a...` vs HEAD `014781b3...`) but its `.godot/imported/rivet_run8.png-d76ff...md5` carried HEAD's source md5 (cache copied from the donor), so the first before run drew the AFTER sheet: all 8 octant stills were pixel-identical (ffmpeg psnr inf). Fixed by one `runGodot(['--import'], {cwd: <snapshot>})` (source_md5 then `1d0d812a...`), before runs redone. Any snapshot film of an edited sheet needs that import.
+- Per-octant still psnr before vs after (64 px/m, tick 60): E 33.2, SW 33.5, W 33.1; SE, S, NW, N, NE inf (identical).
+- Octant -> sheet row: `RivetWalk.frame_of` (`project/features/characters/rivet_walk.gd:103`) takes `RivetFrames.BASE_OCT[o]` (`project/features/characters/rivet_frames.gd:13`, `[2, 1, 0, 5, 6, 7, 4, 3]`), the row index chosen by `RivetStride.row` (`project/features/characters/rivet_stride.gd:67`, no twist in a straight sprint). 0-based rows: E 2, SE 1, S 0, SW 5, W 6, NW 7, N 4, NE 3 (logged in every run). The art commits count rows from 1, so the edited rows 3, 6, 7 are 0-based 2, 5, 6 = E, SW, W. That matches the psnr: only E, SW, W changed. (The n30-13 note "sprinting LEFT (row 7)" is the same 1-based count.)
+- Looked at (64 px/m, 3x zoom `collar/collar_p55_sprint_tour_64_zoom.png`): E, SW, W before = a twisted rope band with diagonal orange stripes; after = a flat ring with black and orange stripes square to the band. Head, visor, arms, legs identical.
+- Clip `C:/Users/kazda/kiro/gtai-masters/n30/keys/collar/collar_p55_sprint_tour_32.mp4`: each 1920x1080 run cropped to the centre 960x1080 (the camera keeps Rivet near the centre), hstack, labels "5114a4441 before" / "HEAD after", `-framerate 15` then `-r 60` (half speed: 360 frames every 2 ticks would be 12 s at 30, under the 15-40 s ask), 24 s, 3 s per octant (E 0-3 s, SE 3-6, S 6-9, SW 9-12, W 12-15, NW 15-18, N 18-21, NE 21-24). ffprobe `width,height,r_frame_rate,nb_frames`: `1920,1080,60/1,1440`.
+- Byte-identical 32 px/m clip frames before vs after, per octant (45 each): E 41 differ, SE 7, S 0, SW 38, W 45, NW 7, N 0, NE 0 (the SE and NW ones are the turn-in frames still on the E / W row). At 32 px/m the collar is a few pixels: at 13.5 s (W) the before band is a plain orange smear, the after shows dark stripes; the 64 px/m still is the readable proof.
+- Still `collar/collar_p55_sprint_tour_64.png` (8 octants, before row above after row, labels with the 1-based sheet row) and zoom `collar/collar_p55_sprint_tour_64_zoom.png` (E, SW, W at 3x, before above after). `frames.json`: both new entries at the front, `collar/row3_4x.png` and `collar/r3c1_4x.png` dropped (13 entries).
+
+## Molotov p70 sprint tour (n30-17)
+Brief `evidence/briefs/n30-17-molotov-tour.md`. Same recorder as n30-16 (`--sprint-tour=on`), `--weapon=molotov --pitch=p70`.
+- Runs: scratch `build/n30-17/film.mjs <before|after> <32|64>` (copy of the n30-16 driver; `--weapon=molotov --pitch=p70 --out=build/n30-17/<side>-<ppm>`). Before = snapshot `build/turn-snapshots/gtai-film-5114a4441cef` with the four recorder scripts in `project/dev/film_turn_probe/`, and one `runGodot(['--headless','--import'])` in the snapshot first (import status 0; the before stills show the stop-gap, not the molotov art, so the cache did not leak). All four capture runs exit 0.
+- Clip `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/molotov_p70_sprint_tour_32.mp4`: centre 960x1080 crop of each 1920x1080 run, hstack, labels `5114a4441 stop-gap` / `HEAD molotov run`, `-framerate 30` (clip every 2 ticks = real speed), tour played twice, `-r 60`. ffprobe `width,height,r_frame_rate,nb_frames`: `1920,1080,60/1,1440`, duration 24.000000 s (12 s per pass, 1.5 s per octant... 90 ticks each, E, SE, S, SW, W, NW, N, NE).
+- Still `molotov/molotov_p70_sprint_tour_64.png` (before row over after row) and `molotov_p70_sprint_tour_64_zoom.png` (E, S, W at 3x nearest). Changed px = pixels differing between the 404x294 before and after stills.
+
+| octant | before sheet/row (1-based) | after sheet/row | changed px | what I see (after vs before) |
+|---|---|---|---|---|
+| 0 E | rivet_run8.png / 3 | rivet_run8_eq_molotov.png / 3 | 22891 | after: bottle held in the claw in front of the chest, flame by the visor, collar flat; before: small glass bottle with rag at the claw, no flame, other claw as a spike |
+| 1 SE | rivet_run8.png / 2 | eq_molotov / 2 | 27840 | bottle + flame at the left hand, other arm a wrench claw; before: loose bottle |
+| 2 S | rivet_run8.png / 1 | eq_molotov / 1 | 26526 | bottle upright in the left fist with a flame; forward foot lifted, rear sole planted; before: bottle dangling |
+| 3 SW | rivet_run8.png / 6 | eq_molotov / 6 | 27458 | bottle at the right hand with flame; before: bottle at hip |
+| 4 W | rivet_run8.png / 7 | eq_molotov / 7 | 23907 | bottle + flame at the near hand, rear leg trailing; before: bottle at the back hand, spike arm forward |
+| 5 NW | rivet_run8.png / 8 | eq_molotov / 8 | 24748 | bottle + flame on the left, seen from behind |
+| 6 N | rivet_run8.png / 5 | eq_molotov / 5 | 27417 | back view, bottle + flame at right |
+| 7 NE | rivet_run8.png / 4 | eq_molotov / 4 | 25130 | bottle + flame at right, trailing leg |
+
+Log lines are identical row for row on both sides (9.3 m/s at 64 px/m; 18.6 at 32 because it divides by 32); only the sheet differs. The after body is a different drawing (bulkier, collar flat), not only a bottle overlay. I judged feet/collar from the 3x zoom of E, S, W only; the other five octants from the 8-wide sheet.
+
+## p70 aim-left collar clip (n30-18)
+
+Clip of the `_left` aim cells with the rigid collar (`8776d8711`, `f371eddb6`, `f3aefd0a2`), before = `5114a4441` snapshot
+(`build/turn-snapshots/gtai-film-5114a4441cef`, one `--import` run in the tree first, HEAD recorder files copied to
+`res://dev/film_turn_probe/`), after = worktree HEAD. Driver `build/n30-18/film.mjs <before|after> 32 <weapon>`
+(`arsenal_turn.gd --weapon=<w> --pitch=p70 --ppm=32`, d3d12, windowed `--position 0,1440 --resolution 1920x1080 --fixed-fps 60`),
+6 captures, one Godot at a time. Compose `build/n30-18/comp.py` (clip frames are 640x360 crops: scaled x1.5 nearest to 960x540,
+centred in each 960x1080 half, label above; x2 does not fit), then
+`ffmpeg -framerate 15 -i comp/f_%05d.png -r 60 -c:v libx264 -pix_fmt yuv420p -crf 16 eq_collar_left_turn32.mp4`.
+
+ffprobe: `width=1920 height=1080 r_frame_rate=60/1 nb_frames=1920 duration=32.000000` (rocket launcher, mini-nuke, gatling in turn, 160 frames each at 15 fps).
+
+| Weapon | Clip frames | before != after | Max changed px in one frame | Frame |
+|---|---|---|---|---|
+| rocket_launcher | 160 | 55 | 283 | clip_0089 |
+| mini_nuke | 160 | 37 | 422 | clip_0081 |
+| gatling | 160 | 36 | 320 | clip_0093 |
+
+The import did not leak: differing frames are a minority (the W/SW octants) and the changed pixels sit in a 40x20 px box at the neck
+(x 300-347, y 152-175 of the crop). Seen at 3x nearest (worst frame per weapon, `eq_collar_left_32_zoom.png`, before | after, three weapons stacked):
+before is a wavy, rope-like scarf with ragged stripes; after is a flatter outlined ring with straighter parallel stripes. Weapon, visor, claws,
+backpack and hose look identical on both sides. Not checked frame by frame outside the worst frame per weapon.
+
+Paths (`C:\Users\kazda\kiro\gtai-masters\n30\keys\eq_collar\`): `eq_collar_left_turn32.mp4`, `eq_collar_left_32_zoom.png`; added to `..\frames.json`
+(15 entries; dropped `collar/row7_4x.png` from the list, file kept).
+
+## Molotov clip at HEAD (n30-23)
+Brief `evidence/briefs/n30-23-molotov-clip-head.md`. `molotov_32.mp4` was filmed before the run-step fix `0e399a732`; the middle (n30) and bottom 64 px/m tiles are re-filmed at HEAD (this worktree). No product file changed.
+- Capture: `python build/n30-22/capture28_head.py molotov n30f` (APPDATA/GODOT_BIN as the lane rules, lane lock held) -> `molotov/grid_molotov_head_arena/n30f_32` and `n30f_64`, both exit 0. The stop-gap side `grid_molotov_arena/basef_32` and the donor `grid_plasma_rifle_arena/n30f_32` are reused as they were.
+- Compose: `python evidence/n30-keys/films/compose.py molotov/molotov_head_32.mp4 70 990 basef_32 head/n30f_32 plasma/n30f_32 head/n30f_64 "stop-gap (before)" "n30 molotov (HEAD)" "plasma rifle" "n30 molotov 64 px/m (HEAD)" "32 px/m | molotov after the run-step fix"`.
+- ffprobe: codec_name=h264, width=1920, height=1080, r_frame_rate=60/1, nb_frames=921, duration=15.350000.
+- Diff, old `grid_molotov_arena/n30f_32` vs new, 991 frames each (any channel differing by more than 24 on the jpg): 17 frames differ, max 1021 px, in two windows only: frames 167-179 (13 frames) and 643-646 (4 frames). The other 974 frames are identical, so the walk part and the other facings did not change; the two windows are the front-facing run steps (cells 5, 6 of row 1).
+- Looked at: 3 s (walk): bottle with lit rag in the leading hand, flame by the ear, donor rifle, stop-gap thin sliver; tiles aligned, labels readable. 12 s (sprint, facing right/down): bottle forward with flame, soles visible, 64 px/m tile shows the bottle and flame cleanly. 1.7 s (clip time of frame 170, a differing frame): Rivet runs toward the camera, bottle with flame in the left hand, claw on the right, feet mid-step; the stop-gap tile shows a thin sliver and the donor the rifle; Rivet size and position match across the tiles.
+- frames.json: the `molotov/molotov_32.mp4` entry now points at `molotov/molotov_head_32.mp4` with an updated note (15 entries, unchanged count).

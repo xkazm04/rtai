@@ -26,6 +26,10 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p55/gatling": 81.0,
 }
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/molotov/0": 0.98,
+	"p70/molotov/1": 0.98,
+	"p70/molotov/3": 0.96,
+	"p70/molotov/4": 0.99,
 	"p70/gloria/5": 0.64,
 	"p70/plasma_sword/1": 0.98,
 	"p70/electro_gun/5": 0.96,
@@ -114,11 +118,10 @@ func _bare_rig(file: String, face: float = 0.0, speed: float = 0.0) -> CutRig:
 
 
 func test_live_bare_profile_uses_the_two_stances_at_game_speed() -> void:
-	var rig: CutRig = _bare_rig("p70/rivet_run8.png")
+	var rig: CutRig = _bare_rig("p70/rivet_run8.png", 0.0, 9.3 * CharacterRigs.PX_PER_M)
 	var grid: RivetGridStride = RivetGridStride.shared()
 	var profile: Vector2 = grid.bare_run["p70"][2]
 	var scale: float = 0.72
-	rig.speed_now = 9.3 * CharacterRigs.PX_PER_M
 	var distance: float = rig.speed_now * SimClock.TICK_DT
 	var cycles: Vector2 = (profile * scale).max(
 		Vector2.ONE * rig.speed_now / grid.bare_max_cycles_s

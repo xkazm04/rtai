@@ -1,7 +1,7 @@
 extends SceneTree
 ## Film the arena rig at each ground-plane octant.
 const KNOWN_FLAGS: PackedStringArray = [
-	"--weapon", "--pitch", "--ppm", "--out", "--boss", "--reload-turn"
+	"--weapon", "--pitch", "--ppm", "--out", "--boss", "--reload-turn", "--sprint-tour"
 ]
 const VIEWS: Dictionary = {"top": "top", "p55": "tilt", "p70": "tilt70"}
 
@@ -17,6 +17,8 @@ func _start() -> void:
 	var entry: String = (
 		"arsenal_reload_turn.gd" if args.text("--reload-turn") == "on" else "arsenal_turn_rec.gd"
 	)
+	if args.text("--sprint-tour") == "on":
+		entry = "arsenal_sprint_rec.gd"
 	var recorder: Node = (load(script_dir.path_join(entry)) as GDScript).new()
 	start_recorder(args, recorder, root, quit)
 
@@ -44,6 +46,8 @@ static func configure(args: ArenaArgs, recorder: Node) -> String:
 		return "expected --pitch=p55|p70|top --ppm=32|64 --out=<directory>"
 	if args.text("--reload-turn", "off") not in ["off", "on"]:
 		return "expected --reload-turn=on|off"
+	if args.text("--sprint-tour", "off") not in ["off", "on"]:
+		return "expected --sprint-tour=on|off"
 	if args.text("--weapon").is_empty():
 		return "expected --weapon=<arsenal id>"
 	if DirAccess.make_dir_recursive_absolute(dest) != OK:

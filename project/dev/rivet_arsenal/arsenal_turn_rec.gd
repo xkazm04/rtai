@@ -1,5 +1,7 @@
 extends Node
 ## Run the arena's normal pilot, carry, trigger and view. Only the input source is scripted.
+const EQUIP_STEPS: int = 6
+
 var boss: StringName
 var weapon: StringName
 var out_dir: String
@@ -18,7 +20,7 @@ func has_boss(id: StringName) -> bool:
 
 func _ready() -> void:
 	var table: ArsenalTable = ArsenalTable.shipped()
-	if table.grip_of(weapon) == null:
+	if weapon != RivetWheel.HANDS and table.grip_of(weapon) == null:
 		Log.error("turn", "unknown arsenal id " + String(weapon))
 		get_tree().quit(2)
 		return
@@ -39,13 +41,30 @@ func _ready() -> void:
 			WeaponTable.shipped(), table, session.world.context().rng.stream(&"turn")
 		)
 		session.pilot.carry = carry
-	if carry.carries(weapon):
+	if weapon == RivetWheel.HANDS:
+		carry.current = -1
+		_arena.rivet.weapon = &""
+		_arena.gun = null
+	elif carry.carries(weapon):
 		carry.take(weapon, _arena)
+		await _equip(carry.slots.find(weapon))
 	else:
 		_arena.rivet.weapon = weapon
 		_arena.gun = null
 		_arena.rifle_ammo = _arena.tuning.weapon(weapon).magazine
 	await _record()
+
+
+## The slot key is pressed on the first equip step only.
+static func slot_on_step(step: int, slot: int) -> int:
+	return slot if step == 0 else -1
+
+
+## `take` selects nothing under wheel_inventory and the first wheel step stows the gun.
+func _equip(slot: int) -> void:
+	for i: int in EQUIP_STEPS:
+		_pad.slot = slot_on_step(i, slot)
+		await _step()
 
 
 func _record() -> void:
@@ -138,8 +157,8 @@ func _save(stem: String, still: bool) -> void:
 	var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
 	var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size
 	var foot: Vector2 = rig.get_global_transform_with_canvas().origin * scale_px
-	var size: Vector2i = Vector2i(204, 194) if still else Vector2i(640, 360)
-	var base: int = (94 if view_id == "top" else 164) if still else 212
+	var size: Vector2i = Vector2i(404, 294) if still else Vector2i(640, 360)
+	var base: int = (94 if view_id == "top" else 214) if still else 212
 	image = image.get_region(Rect2i(Vector2i(foot) - Vector2i(size.x >> 1, base), size))
 	if image.save_png(out_dir.path_join(stem + ".png")) != OK:
 		Log.error("turn", "cannot write " + stem)
@@ -152,9 +171,16 @@ class TurnPad:
 	var actions: PlayerActions
 	var aim: Vector2 = Vector2.RIGHT
 	var fire: bool = false
+	var slot: int = -1
+	var move: Vector2i = Vector2i.ZERO
+	var sprint: bool = false
 
 	func sample(_tick: int) -> TickInput:
 		var bits: int = PlayerCommand.pack_aim(aim, actions)
 		if fire:
 			bits |= 1 << actions.bit(&"fire")
-		return TickInput.new(bits, 0, 0)
+		if slot >= 0:
+			bits |= 1 << actions.bit(RivetCarry.SLOT_ACTIONS[slot])
+		if sprint:
+			bits |= 1 << actions.bit(&"sprint")
+		return TickInput.new(bits, move.x, move.y)

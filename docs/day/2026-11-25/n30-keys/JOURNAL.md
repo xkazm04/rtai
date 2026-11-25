@@ -1,0 +1,312 @@
+# JOURNAL lane keys, run n30 (2026-11-25 day, branch n30-keys from 5114a4441)
+
+IMAGES 0/60
+
+## Session 1 (11:02 - 12:32)
+- 11:02 read n29-keys REPORT/JOURNAL, collar_p55_transplant.md, collar_p55.md, held_red/table.md, rivet-n29/collar_p55_rows/STATE.md, films.md (run_hands.py harness). No NEED keys lines yet checked: see below.
+- 11:04 DECISION row numbering: the owner's "rows 3, 6, 7" are 1-based as in the n29 notes (rows 1, 2, 5 rigid since n28, row 4 n29 edit, row 8 n29 transplant); sheet `p55/rivet_run8.png` 8x8 cells of 209x199.
+- 11:04 DECISION art round dir `C:/Users/kazda/kiro/gtai-art/rivet-n30/collar_cells/` (STATE.md resumable), lane Godot mutex `build/n30-godot.lock`, APPDATA `C:/Users/kazda/kiro/gtai-n30/appdata/keys`.
+- 11:04 BUILDER n30-01 collar-cell-r3c1 launched (opus, bg): per-cell 2x route + row 3 cell 1, END 12:00. BUILDER n30-02 vermilion-list launched (sonnet, bg): analysis only, END 11:55.
+- 11:07 BUILDER n30-02 vermilion-list 3 accepted (fb93bfd25, 17 weapons; contact_4x looked at: ray gun coils/cables amber overlay, warning triangle vermilion; rocket nose stripes danger). Gap: held_55 files (mini-nuke 6227, rocket 4527 vermilion px) not classed part by part: follow-up call n30-02b.
+- 11:07 BUILDER n30-03 molotov-run-rows launched (opus, bg): one row per job, plasma rifle donor, wire only if 8/8 pass, images cap 12, END 12:22.
+- 11:11 BUILDER n30-01 collar-cell-r3c1 7 accepted: bf7b78fd6 (sheet), 19259b098 (evidence/n30-keys/collar_cells.md). Proof: 520 px changed, 0 outside mask, alpha identical, 63 cells bit-identical, teal 0. I looked at gtai-masters/n30/keys/collar/r3c1_4x.png and r3c1_64_ingame.png (tick 88, 64 px/m): soft rope -> flat ring, straight vermilion/black diagonal stripes, dark outlined edges, reads as row 4's collar; visor/helmet/arm untouched. ACCEPTED: the per-cell 2x route works (1 image, 61 s). IMAGES 1/60 (molotov call may add up to 12).
+- MILESTONE collar row 3 cell 1 rigid in game.
+- 11:12 BUILDER n30-04 collar-cells launched (opus, bg): row 3 c2-8, row 7, row 6, row 8 c4/c8, images cap 30, commit per row, END 12:24. n30-02b vermilion-held brief written, waits for a free slot (two builders running).
+- 11:31 BUILDER n30-03 molotov-run-rows 24 accepted: 4513bda2a (run8 sheet + run_row_k rows 0,1,3,4 + pins + fallback test via file-cache trick), 3d9029eff/7d5114c92 evidence (evidence/n30-keys/grid_molotov.md). 8/8 rows pass the art bars (rows 4, 8: 1 retry each, cols 2,6 donor legs under a seam). IMAGES +10 = 11/60. foot_slide turn_090 row 0 at 32: walk hold 0.43/1.56 (bar 2) PASS; run step 7.28/9.86 cm vs bar 7: MISS by 0.28 (donor plasma rifle 6.69/8.93). I looked at grid_molotov_64.png rows 1, 2, 4, 8: one bottle in the leading claw, amber flame, other claw open, flat striped collar, donor-leg cells 4c2/4c6/8c2/8c6 seamless at 64. ACCEPTED.
+- 11:31 DECISION molotov run sheet stays shipped at 7.28 cm (0.28 over the bar): its art passes 8/8 and it replaces the stop-gap's thin held sliver; the plasma sword shipped at 8.29 and the owner accepted that "for now". Alternative = delete rivet_run8_eq_molotov.png (one file) to go back to the stop-gap. Trace of the 0.28 cm (ticks 53-93 -> run cells, row 1) is the next item if time remains. Owner call in REPORT.
+- MILESTONE molotov sprints on its own run sheet (item 2 built; clip beside the stop-gap at 32 px/m still owed).
+- 11:36 BUILDER n30-02b vermilion-held 5 accepted: 391d529fa, in-play section (held_55 from weapon_held_pitch.json + p70 rivet_eq_*_left cell 0): rocket/mini-nuke warhead noses = danger (4008/6082 px), heat arcs/coils on mini-nuke, ray gun, electro gun, machine pistol, chainsaw, plasma rifle, electro baton; homing shard hoses design. Unclassed: 4 rust-only cells, walk/run strips. To check the contact still myself.
+- 11:36 BUILDER n30-04 collar-cells 24 accepted: 0b1a1cd27 (row 3: c2-c8 all), 47aed0529 (row 7: 6/8, c3 c4 kept rope), 6ba1b9d68 (row 6: 6/8, c2 c6 kept rope), 76f131df0 evidence. IMAGES +30 = 41/60. Proof per cell: 0 outside mask, alpha identical, IoU 0.976-0.991. Builder caught a visor repaint by eye (numbers passed) and rebuilt every cell with a visor guard. Drift p55 64 sprint 3.83 cm (bar 3.83 +- 0.1) PASS, identical to n27. I looked at row7_4x.png (rope -> flat striped ring in 6 cells; c3, c4 still rope) and row67_64_ingame.png (3 ticks before|after: stripes straight, black/vermilion, ring flat). ACCEPTED. Remaining: r7c3 r7c4 r6c2 r6c6 (front end breaks) + r8c4/r8c8 touch-ups.
+- MILESTONE collar rows 3 (8/8), 6 (6/8), 7 (6/8) rigid; drift unchanged.
+- 11:37 BUILDER n30-05 molotov-film launched 11:37 (sonnet, bg): stop-gap | n30 | plasma rifle 32 px/m clip, 64 still, frames.json, the two decision lines; END 12:25. BUILDER n30-06 collar-leftovers launched (opus, bg): r7c3 r7c4 r6c2 r6c6 + r8c4 r8c8, images cap 12, END 12:24.
+- 11:38 I looked at vermilion/mini_nuke_held_4x.png and rocket_launcher_held_4x.png: the warhead noses are the striped danger (white outline right), the mini-nuke's body arc filled amber as heat, rust patches unclassed. Agreed. REPORT draft written with the vermilion table under Calls 1.
+- 11:38 NOTE (for Next, not this run's item): in Rivet's p70 rivet_eq_rocket_launcher_left / mini_nuke_left cell 0 (the in-play contact), the striped neck band reads as a twisted rope, not the rigid collar. p70 eq strips may carry the same rope as p55 run rows did: audit later.
+- 11:38 DECISION item 4a (stop-gap back-swing) dropped: since 4513bda2a no weapon at p55 or p70 sprints on the stop-gap (builder n30-03: the fallback test keeps the molotov as example by a file-cache trick), so the back-swing has no visible case. Item 4b brief written: evidence/briefs/n30-07-arsenal-turn-fire.md.
+- 11:43 BUILDER n30-05 molotov-film 8 accepted: cb361f4f8 (evidence/n30-keys/films.md + both decision lines). molotov/molotov_32.mp4 1920x1080 60/1 921 fr 15.35 s (ffprobe by me). I looked at 12 s: stop-gap = thin sliver at the back hand | n30 = bottle with amber flame in the leading claw | plasma rifle forward; 64 tile crisp, flat striped collar. frames.json 10 entries. MILESTONE item 2 filmed.
+- 11:43 BUILDER n30-07 arsenal-turn-fire launched (sonnet, bg): dev recorder equips the gun before firing + test + mutate, END 12:24.
+- 12:08 BUILDER n30-06 collar-leftovers 30 bounced (no commit, not its fault): r7c3, r7c4, r6c2, r6c6 ACCEPTED in the round (IoU 0.983-0.989, 0 outside mask, alpha identical; rows 6, 7 now 8/8), r8c4 and r8c8 kept shipped (both images each still paint the notch/streak, which lie outside the collar hull). IMAGES +11 = 52/60. It waited 11:46-12:07 on the lane Godot lock held by n30-07 (mutate) and never got it. Sheet ready: rivet-n30/collar_cells/comp/install_n3006.png (sha e94deb4e) + comp/n3006_prov.jsonl + comp/n3006_table.md; worktree sheet still HEAD.
+- FRICTION lane Godot lock 21 min: one builder's mutate starved the other's install. Next time: no mutate while another builder needs the lock, or give mutate a 10-min slot.
+- FINDING (n30-06): the visor guard protected only yellow; row 6's visor glow is orange, so shipped cells r6c3 (31 px), r6c7 (55), r6c5 (6), r6c8 (2) have visor/frame px recoloured. Fix by re-compositing those 4 with CELL_PROTECT boxes (no new images).
+- 12:10 IMAGES 52/60 (n30-01 1, n30-03 10, n30-04 30, n30-06 11).
+- 12:22 BUILDER n30-07 arsenal-turn-fire 38 accepted: 020878888 (arsenal_turn_rec.gd TurnPad.slot presses the slot key for the first of 6 steps; crop 404x294 base 214; unit test test_turn_pad_presses_the_weapon_slot_key_only_while_a_slot_is_set; debt baseline dev_loc 39253 -> 39264 accepted via the debt tool), 47fb6df5c evidence/n30-keys/arsenal_turn.md. Runs p55 64: HEAD pistol exit 1; fixed pistol 0, gloria 0, 17 stills each. Mutate NOT scored (two runs timed out in baseline): owed. Possible leftover Temp dir gtai-mutate-dc83624c (builder's own).
+- MILESTONE item 4b done (recorder fires at HEAD); item 4a dropped (see 11:38).
+
+NEXT (session 2, from 12:32):
+1. Launch `evidence/briefs/n30-08-collar-install.md` (opus or sonnet, 0 images, sole Godot holder): install comp/install_n3006.png (r7c3 r7c4 r6c2 r6c6), fix the 4 shipped row 6 visors (r6c3/5/7/8, protect boxes), in-game after-run + diff, stills, frames.json. Rows 3, 6, 7 then 8/8.
+2. Row 8 c4 notch / c8 streak: lie outside the collar hull, two image routes failed: list as kept (REPORT What does not); a hand fix is not ours (art rule: no script-drawn art) -> owner call or leave.
+3. Mutate owed: `node tools/mutate/mutate.mjs --file=project/dev/rivet_arsenal/arsenal_turn_rec.gd --max=6 --lines=<changed> --tests=test_arsenal_turn` when no other Godot runs (budget 15 min); remove Temp gtai-mutate-dc83624c if the builder's leftover exists and no mutate runs.
+4. Molotov run step 0.28 cm over bar: trace ticks 53-93 -> run cells (grid_molotov foot_slide json) and fix by sole registration of those cells (0 images); re-film if it changes.
+5. Collar 32 px/m clip (before 5114a4441 | after) for rows 3/6/7 like n29 collar_p55_32.mp4, 1080p60 15-40 s; add to frames.json (8-15 entries).
+6. Audit idea: p70 rivet_eq_* strips' collar reads as rope in the vermilion in-play cells (rocket/mini-nuke left cell 0): measure how many p70 strip cells carry the rope; candidate next item with the 8 images left (IMAGES 52/60).
+7. Gate early: `node tools/gate/run.mjs --rev=HEAD` by 17:30 at the latest (better ~15:00 once items 1-5 land); REPORT final 18:55; cites.mjs REPORT.md.
+No builder running at 12:22.
+
+## Session 2 (12:24 - 13:54)
+- 12:25 git log: 47fb6df5c top, as session 1 left it. No `NEED keys` in the combat/cast/yard journals.
+- 12:28 FOUND: n30-06's waiting godot_row.sh was not stopped after all: it took the lane lock at 12:21 (n30-07 released it), installed comp/install_n3006.png into the worktree (p55/rivet_run8.png = e94deb4e, uncommitted) and at 12:27 started the harness run runs/n3006_after_64 (Godot 39296). Left running; n30-08 brief updated to wait for it and go on from NEXT 2.
+- 12:31 BUILDER n30-08 collar-install launched (opus, bg): install + visor protect re-composite of r6c3/5/7/8 + finals, commit by 13:05, END 13:25. BUILDER n30-09 molotov-step launched (sonnet, bg): trace the 0.28 cm, run_row_k sweep or sole registration, commit by 13:05, END 13:25. Shared lock per Godot run, n30-08 priority.
+- 12:46 BUILDER n30-08 collar-install 15 accepted: 2641a10fe (r7c3 r7c4 r6c2 r6c6), 68d873f9e (row 6 visors: 40/6/55/39 -> 0 px, by restoring pre-n30 px inside the protect boxes, not a re-composite: the re-composite moved two bands 1 px), 56b962ab8 evidence. It caught that n30-06's leftover run was INVALID (stale import: rendered the old sheet) and re-ran with an import-sha check. In game 64: install only tick 448 differs (586 px, neck), visor fix only tick 1408 (65 px, visor). I looked at row67_64_ingame_final.png (4 ticks before|after): before = twisted rope, after = flat band, straight black/vermilion stripes; visor glow as before. ACCEPTED. Rows 3, 6, 7 now 8/8 rigid. Open: r6c6 1 px at (100,100) by the visor end (unchecked), r8c4/r8c8 two image fails each. quick gate ran --no-godot (n30-09 held the lock).
+- MILESTONE item 1 collar rows 3, 6, 7 8/8 rigid in game; row 8 touch-ups kept shipped (two fails each).
+- 12:46 BUILDER n30-10 eq-collar-audit launched (sonnet, bg, analysis only): I saw at 2x that p70 rivet_eq_rocket_launcher_left / mini_nuke_left cells 2-3 wear the band as a knit rope; the audit ranks where the last 8 images go. END ~13:23.
+- 12:49 BUILDER n30-09 molotov-step 19 accepted: 0e399a732. Trace: the 9.86 cm step = ticks 53-93 = row 1 run cells 4-6; cols 5, 6 sole x 0.5 px left of the donor. Route A (run_row_k 0.98 -> 1.0) bit-identical numbers (the cycle floor speed/MAX_RUN_CYCLES_S binds at 3.2 m/s), reverted. Route B: row 1 cols 5, 6 moved 1 px right (registration, alpha moved, no repaint). Run step 5.77 / 6.85 cm (bar 7) PASS, walk hold 0.43 / 1.56 unchanged. I looked at molotov_run_row1_before_after.png: identical drawings, bottle + flame in the same claw. ACCEPTED. The session-1 decision line (ship at 7.28) is now moot: a later builder appends a decisions.md line "molotov run step 5.77 cm after a 1 px registration".
+- MILESTONE item 2 passes every bar (8/8 rows, walk hold 0.43, run step 5.77).
+- 12:49 BUILDER n30-11 collar-film launched (sonnet, bg): before 5114a4441 sheet | after HEAD at 32 px/m, like n29's collar_p55_32_r8.mp4; temp sheet swap under the lock, restore verified. END ~13:37.
+- 12:53 BUILDER n30-10 eq-collar-audit 6 accepted: 57c72c41a (evidence/n30-keys/eq_collar_audit.md). p70 is the in-play default; ROPE: rocket_launcher_left 0-2, mini_nuke_left 0-2, gatling_left 0-2, gatling_left_fire, mini_nuke_left_fire, gatling_diag 0/2; UNSURE gatling/mini_nuke eq cells, reload_gatling; grids sampled mostly RIGID. I looked at p70_left_suspects.png: rocket/mini-nuke/gatling = broken jagged knit stripes; gloria/chainsaw/assault = clean flat banded ring. Agreed.
+- 12:53 DECISION the last 8 images go to the p70 _left aim cells (rocket launcher, mini-nuke, gatling cells 1, 2, then rocket/mini-nuke 0): the rigid-collar law, p70 in play; per-cell 2x route with Gloria's _left same cell as the reference. Not an owner pick: "raise the weakest" (collar law). Alternative = keep the shipped cells (git revert of the strip commit).
+- 12:53 BUILDER n30-12 eq-collar-cells launched (opus, bg): 8 images cap, commit per strip, last commit 13:42, END 13:48.
+- 13:07 BUILDER n30-11 collar-film 18 bounced (not its fault): route 1 (run_hands.py harness) dead: C:/Users/kazda/kiro/gtai-masters/n24 and n26 (the hands_arena and grid_arena capture sources) were deleted at ~12:56 (masters dir mtime 12:56; not this lane: my builders then were n30-11, n30-12). Its first runs drew "rivet_run8.png loaded empty" (an --import wrote .import valid=false); it restored the sheet and the .import to HEAD (git status clean for both). Nothing committed. Before sheet kept at build/n30-11/before_sheet.png.
+- FRICTION masters pruned mid-run: the n29/n30 dev capture harnesses (run_hands.py, capture_film.py) depended on uncommitted sources in gtai-masters/n24, n26. Both are gone; the in-game 64 px/m collar diffs and the molotov arena capture cannot be re-run with them.
+- NEED Director: gtai-masters/n24/motion/grid_gloria_arena/capture-source and n26/keys/capture-source were deleted ~12:56 (by whom?); if a backup exists, restore; else the keys lane moves its films to tools/film (compare.mjs).
+- 13:10 BUILDER n30-13 collar-film-compare launched (sonnet, bg): route 2, compare.mjs --a=5114a4441 --b=HEAD --view=tilt (p55 art) at 32 px/m + 64 still; END 13:47.
+- 13:13 BUILDER n30-12 eq-collar-cells 20 accepted: 8776d8711 (gatling _left c1 c2), f371eddb6 (rocket launcher c0 c1 c2), f3aefd0a2 (mini-nuke c1 c2), 834607753 table. IMAGES +8 = 60/60 (cap reached). mini-nuke c0 rejected on sight (kept shipped). Every cell: alpha identical, 0 px outside a declared band box, weapon box 0 px changed, other cells bit-identical, teal 0. In game p70 64 px/m (arsenal turn, HEAD before | after): only neck px change, 258-924 per cell. .import unchanged, imported texture verified.
+- 13:13 FOUND: n30-11 had come back (its background shell) and at 13:12 restarted build/n30-11/chain.sh with a harness copy it found in build/hands/used_capture_source; the chain installs build/n30-11/before_sheet.png, which is a 132-byte git-LFS POINTER (git show of an LFS file), the reason its runs drew "rivet_run8.png loaded empty" / .import valid=false. Stopped the agent (TaskStop) and its process tree by PID (16424, 50140, 33688, 25580, 41132, 27596, 23716), deleted its lock, restored p55/rivet_run8.png + .import with git checkout HEAD (sha e39ae6e1 = HEAD smudged; the builder's temp swap, no content edit by me), one --import (status 0, md5 sidecar matches, git status project/ clean).
+- 13:14 FRICTION 4 min n30-11 cleanup.
+- LESSON: a before sheet from an older commit must come from `node tools/film/blob.mjs <rev>:<path>` (LFS smudged), never `git show` (writes the LFS pointer).
+- 13:15 BUILDER n30-14 decision-lines 2 accepted: c40b1f3df (4 lines: molotov step supersedes the 7.28 line, collar leftovers + visors, p70 aim-left collar, LFS before sheets via blob.mjs).
+- 13:15 I looked at eq_collar/mini_nuke_left_64_ingame.png and rocket_launcher_left_64_ingame.png: oct4/oct5 before = broken knit stripes, after = flat ring, straight black/vermilion stripes; weapon, visor, claws identical. Confirmed.
+- IMAGES 60/60 (n30-01 1, n30-03 10, n30-04 30, n30-06 11, n30-12 8). No more image work this run.
+- 13:31 BUILDER n30-13 collar-film-compare 19 accepted: b129dbee9 (films.md section). Route 2: `compare.mjs arena -- --bot=rivet --a=5114a4441 --b=834607753 --view=tilt --ppm=32` (p55 art); compare said UNVERIFIABLE (window clamped to 1422x800), the pictures are real; clip cut by ffmpeg from both arena.mp4: collar/collar_p55_rows367_32.mp4, ffprobe (mine) 1920x1080 60/1 1200 frames 20.0 s; Rivet only ~60 px tall in it. Still collar/collar_p55_64_compare.png (tick 300, row 7 sprint left): I looked: before = soft orange rope band, after = flat ring with straight black/vermilion stripes; body, cop identical. Rows 3 and 6 not shown by the bot (owed: a bare 8-octant tour shot, needs a tools/film SHOTS entry = NEED, not our file). frames.json 13 entries, clip first.
+- 13:32 mutate owed for arsenal_turn_rec.gd started by me (lane lock tag director, --max=6, lines 44,54-56,167-170, --tests=test_arsenal_turn, 15 min cap) -> build/n30-dir/mutate.out.
+- 13:35 MUTATE arsenal_turn_rec.gd: 16.7 % = killed 1 / (1 + 5) (6 of 10 sampled, lines 54-55 _equip, 168 fire bit, 169 slot bit; baseline 50 s, 229 s total; Temp gtai-mutate-dc83624c reused). Survivors: _equip loop count and its `slot if i == 0` rule, the fire bit. Weak: the unit test pins only the slot bit. Lock released.
+
+NEXT (session 3, from ~13:55):
+1. BUILDER (sonnet, 20 min): pin `_equip`'s rule and the fire bit in `project/tests/unit/test_arsenal_turn.gd` (if `_equip` needs the arena, extract a pure static helper `slot_on_step(i, slot) -> int` in `arsenal_turn_rec.gd` and test that; fire bit: `TurnPad.sample` with fire=true sets `actions.bit(&"fire")`), then `node tools/mutate/mutate.mjs --file=project/dev/rivet_arsenal/arsenal_turn_rec.gd --max=8 --lines=<changed> --tests=test_arsenal_turn --timeout=120`; quote the score (bar: the 5 survivors killed). Allowlist: those two files + evidence/n30-keys/arsenal_turn.md + tools/debt/baseline.json via the debt tool.
+2. GATE early (after item 1 commits, ~14:30, by 17:30 at the latest): `node tools/gate/run.mjs --rev=HEAD` (one Godot for the lane: no builder runs Godot meanwhile); quote its line + gate.json path in REPORT; `--reels` once after the freeze.
+3. Optional (no images left, 60/60): a molotov 64 px/m in-game still after 0e399a732 through `node tools/film/film.mjs weapon:molotov --view=combo --ppm=64 --stills=...` (the n24 arena capture source is gone); collar rows 3, 6 in a film need an 8-octant bare tour shot in tools/film SHOTS (not our file: NEED Director) - the 64 px/m harness stills already show them (row67_64_ingame_final.png, row3_64_ingame.png).
+4. REPORT final at 18:55 (draft is current to 13:35: What works, What does not, Blocked, Calls 1-2, Merge notes, ledger; Next steps still empty); `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL/REPORT.
+5. Temp: gtai-mutate-dc83624c (lane's, mutate worktree) and gtai-film-<sha> snapshots from n30-13 compare: leave for the Director's post-merge cleanup.
+No builder running at 13:36. Lock free. Worktree clean except untracked evidence/briefs outputs.
+
+## Session 3 (13:36 - 15:06)
+- 13:37 git log: 5b81997a6 top, as session 2 left it. No `NEED keys` in the combat/cast/yard journals. Root strays (frames.json 05:35, hs_err_pid*.log Nov 24) predate this run: left.
+- 13:40 BUILDER n30-15 arsenal-turn-pins launched (sonnet, bg): EQUIP_STEPS + slot_on_step helper, fire-bit test, mutate --max=10 (bar >= 80 %), commit by 14:00, END 14:08. Sole lane Godot user.
+- 13:50 masters/n30/keys was 12.9k files / 9.5 GB: deleted `collar/run_rows367_32_failed_empty_texture/` (2.6 GB, n30-11's invalid LFS-pointer renders, cited nowhere). The grid_*_arena and collar/runs dumps are cited by grid_molotov.md, films.md, collar_cells.md as sources: kept for the Director.
+- 13:55 CHECKED r6c6's open 1 px (collar_cells.md:179) with blob.mjs 5114a4441 vs HEAD: (100,100) dark outline (19,14,10) -> dim orange (111,36,7) at the ring's upper end where it meets the ear disc, part of the band edge, not the visor (visor glow px identical). 4x `build/n30-dir/r6c6_4x.png` looked at: flat striped band, visor as before. Closed, no change.
+- 13:54 BUILDER n30-15 arsenal-turn-pins 14 accepted: 4ee6f7b27 (EQUIP_STEPS + static slot_on_step, _equip uses both, behaviour identical; 2 tests: step rule per slot, fire bit set/clear and no cross-talk with slot keys; debt dev_loc 39264 -> 39271 accepted via the tool), 74fc5e382 evidence. Unit 8/8. I read the diff. MUTATE targeted (lines 3,57-62,172-176): 100 % = 4/(4+0); wide (1-70,170-180): 35 % = 7/(7+13), survivors arena-bound (_ready, _record) + TickInput literal 178. The earlier 5 survivors are now killed or pinned (EQUIP_STEPS const not mutated by the tool: pinned by an assert).
+- 13:55 GATE started by me: `node tools/gate/run.mjs --rev=HEAD` (74fc5e382) -> build/n30-dir/gate.out; lane lock tag director-gate. No builder runs Godot meanwhile.
+- 14:05 CHECKED flicker risk from n30-12: `_left` c1 (now rigid) vs `_left_fire` / `_left_fire_noflash` of gatling, mini-nuke, rocket launcher at 2x (`build/n30-dir/left_vs_fire_2x.png`): the fire cells are another drawing (crouched three-quarter), the band only shows as small torn bits under the visor, so a shot does not swap a clear ring for a clear rope. Listed in Next steps 1, no images left (60/60).
+- 14:16 GATE PASS on 74fc5e382 (21 min, 13:55-14:16): `gate: PASS; build/gate/74fc5e382e63/gate.json` (lint 19/19 over 2291 files, unit 4314 passed 0 failed 2 skipped, scenarios 68, parity bit-exact + mutation caught at step 629, selftest, export-audit 1003 loaded 0 failed). MILESTONE lane green at 74fc5e382. `--reels` owed once after the freeze.
+- 14:22 BUILDER n30-16 sprint-tour launched (opus, bg): `--sprint-tour` in the arsenal recorder (dev, ours), 8 octants at p55, before 5114a4441 | after HEAD via a snapshot like arsenal_turn.mjs sideAt(), 32 px/m 1080p clip + 64 still; commit recorder by 14:45, film by 14:57, END 15:00.
+- 14:40 n30-16 committed 22d3c0fb1 (14:22): `--sprint-tour=on` + `--weapon=hands` -> new `arsenal_sprint_rec.gd` (57 lines, extends the turn recorder; 90 ticks per octant, clip every 2 ticks, still at tick 60, logs speed/sheet/row), TurnPad gains move + sprint, test for tour_input. I read the diff: dev only, flag in the entry's own KNOWN_FLAGS. Film running (before-32 at 14:39).
+- 14:42 BUILDER n30-16 sprint-tour 20 accepted: 22d3c0fb1 (recorder), 84fbcc2a2 (films.md section). It caught that a snapshot copies the worktree's import cache (the before runs first drew HEAD's sheet, 8 stills identical) and re-imported the snapshot. Octant -> row via RivetFrames.BASE_OCT [2,1,0,5,6,7,4,3]: E, SW, W = sheet rows 3, 6, 7 (1-based). 64 px/m: E, SW, W differ (psnr ~33), other 5 identical; 32 px/m frames differing E 41/45, SW 38, W 45. I looked at collar_p55_sprint_tour_64_zoom.png: before twisted rope, after flat ring with straight black/vermilion stripes, rest identical. ACCEPTED. Deviation: clip encoded at half speed (15 fps input) to reach 15 s.
+- 14:43 I re-cut it at real speed, the tour played twice: masters `collar/collar_p55_sprint_tour_32_realtime.mp4` (ffprobe 1920,1080,60/1,1442; 24.03 s); frame at 9.5 s looked at (labels, Rivet centred both halves). frames.json 14 entries, realtime clip first. MILESTONE collar rows 3, 6, 7 filmed in the real arena, before | after, same ticks.
+- 14:45 MUTATE started by me on arsenal_sprint_rec.gd lines 4-15 (--max=8, test_arsenal_turn, 15 min cap) -> build/n30-dir/mutate_sprint.out.
+- 14:46 MUTATE arsenal_sprint_rec.gd lines 4-15: 100 % = 4/(4+0) (all on tour_input :13; baseline 46 s, 140 s; Temp gtai-mutate-dc83624c reused). Lock released. NEXT 0 is done.
+- 14:48 NEED Director: `tools/film/arsenal_turn.mjs` (not a keys file) should pass `--sprint-tour` through and run `--import` in each snapshot it makes (a snapshot copies the worktree's `.godot` import cache, so an edited sheet renders as HEAD's: n30-16 caught it). Until then the tour film runs from `build/n30-16/film.mjs` (scratch).
+- 14:48 Session 3 ends here: no builder running, lock free, last commit is journal-only. The gate re-run is left to session 4: it takes about 21 min and would be cut off at 15:06.
+
+NEXT (session 4, from ~15:06):
+0. If `build/n30-dir/mutate_sprint.out` ends without its score line in this journal: read its tail, quote killed/(killed+survived) in JOURNAL + REPORT (arsenal line); if `build/n30-godot.lock` says director-mutate and no node mutate.mjs process runs, delete it.
+1. Gate PASS stands for 74fc5e382; HEAD has since added dev code (22d3c0fb1) + evidence: re-run `node tools/gate/run.mjs --rev=HEAD` once the last code commit lands (~21 min), and `--reels` once after the freeze 18:45 (~15 min more).
+2. Items 1-4 of the brief are all done and filmed. Images 60/60: no art left. Raising quality without images, pick one 20-25 min call:
+   a) films.md / frames.json tidy: the half-speed tour clip can drop from frames.json once the owner has the real-speed one (14 entries now).
+   b) molotov 64 px/m in-game still after 0e399a732 (run step fix): the sprint tour supports `--weapon=molotov` at `--pitch=p70`? (the tour forces p55 only by flag; p70 = tilt70 view): a p70 molotov tour, before 5114a4441 | HEAD, would show the new run sheet in all 8 octants in the real arena (same scratch route as build/n30-16/film.mjs, with the snapshot --import).
+   c) NEED Director (not ours): tools/film/arsenal_turn.mjs pass-through for --sprint-tour + snapshot --import.
+3. REPORT final at 18:55 (current to 14:45: What works incl. tour film, Gate, What does not, Blocked, Calls 1-2, Merge notes, Next steps 1-4, ledger to n30-16); `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL/REPORT with a pathspec.
+No builder running at 14:47.
+
+## Session 4 (14:46 - 16:16)
+- 14:47 git log: 096c3c84d top, as session 3 left it. No `NEED keys` in the combat/cast/yard journals. Lock free. mutate_sprint.out ends `score 100.0% = killed 4 / (killed 4 + survived 0)` (already in JOURNAL at 14:46).
+- 14:50 BUILDER n30-17 molotov-tour launched (sonnet, bg): p70 molotov sprint tour, before 5114a4441 (stop-gap) | HEAD, snapshot re-imported, 32 px/m real-speed clip + 64 still, films.md section, frames.json; commit by 15:15, END 15:25. Sole lane Godot user; gate after it.
+- 14:59 BUILDER n30-17 molotov-tour 9 accepted: 88a0b7ff6 (films.md section). Snapshot 5114a4441 re-imported; before = p70 `rivet_run8.png` (stop-gap), after = `rivet_run8_eq_molotov.png`, rows per octant E..NE 3,2,1,6,7,8,5,4; changed px per octant 22.9k-27.8k (no import leak). Clip masters `molotov/molotov_p70_sprint_tour_32.mp4` (its ffprobe 1920x1080 60/1, 1440 frames, 24.0 s, real speed, tour x2). frames.json 15 (dropped the half-speed collar tour cut from the list, file kept). I looked at molotov_p70_sprint_tour_64_zoom.png (E, S, W): before = loose glass bottle dangling from the spike arm, no flame; after = bottle in the claw, lit flame, flat diagonal-striped collar band (the donor's), soles under the body. ACCEPTED.
+- 15:00 BUILDER n30-18 eq-collar-film launched (sonnet, bg): p70 aim-left collar 32 px/m clip (rocket launcher, mini-nuke, gatling arsenal turn, 5114a4441 | HEAD), commit by 15:35, END 15:42. Gate after it (sole lane Godot user until then).
+- 15:11 BUILDER n30-18 eq-collar-film 11 accepted: a09f9be52 (films.md section). Clip masters `eq_collar/eq_collar_left_turn32.mp4` (1920x1080 60/1, 1920 frames, 32.0 s; 640x360 clip crops x1.5 nearest per half: deviation, x2 did not fit); differing frames rocket 55/160 (max 283 px), mini-nuke 37 (422), gatling 36 (320), neck box only. frames.json 15 (dropped collar/row7_4x.png from the list, file kept). I looked at eq_collar_left_32_zoom.png: rocket launcher before = wavy rope band, after = flat band with straight stripes; gatling the same; mini-nuke after still a thick band but straight diagonal stripes; weapon/visor/claws identical. ACCEPTED.
+- 15:11 GATE started by me: `node tools/gate/run.mjs --rev=HEAD` (a09f9be52) -> build/n30-dir/gate2.out; lane lock tag director-gate. No builder runs Godot meanwhile.
+- 15:12 masters frames.json reordered by me (15 entries, best first: p55 collar tour clip + 64, molotov p70 tour clip + 64, aim-left collar clip + rocket 64 in game, vermilion contact_held_4x for Calls 1, then the older stills); dropped from the list r3c1_64_ingame.png and row67_64_ingame.png (superseded by row67_64_ingame_final.png), files kept; old list at build/n30-dir/frames.before_s4.json.
+- 15:13 BUILDER n30-19 vermilion-preview launched (sonnet, bg, no Godot): per weapon current | heat->amber (#ffbf56) masked preview at 4x for Calls 1, preview only; commit by 15:45, END 15:52.
+- 15:14 BUILDER n30-19 vermilion-preview 2 accepted: d8aabf6ae (preview.py + vermilion_list.md section). Formula hsv(36.6 deg, 0.663, v_src) inside the undilated heat masks, asserts px outside + alpha identical; danger px changed 0 for 11 weapons. frames.json: preview_contact_4x.png replaced collar/row6_4x.png (15). I looked at preview_contact_4x.png: coils/cables/hoses go copper-red -> brass-amber, still the same parts; warhead/nose stripes, warning plates unchanged; reads as brass, not glow (noted in Calls 1 as a value option). ACCEPTED.
+- 15:15 BUILDER n30-20 unsure-collar launched (sonnet, bg, no Godot, no images): settle the audit's UNSURE p70 collar cells at 4x vs rigid references, next-run edit list with image count; commit by 15:40, END 15:45.
+- 15:16 BUILDER n30-20 unsure-collar 2 accepted: a744fe9ac (eq_collar_unsure.py + audit section). ROPE 9 / RIGID 41; next-run list 9 images with references. I looked at unsure_electro_gun_diag_4x.png (c0/c2 twisted torn stripes = rope, agreed) and unsure_mini_nuke_eq_4x.png (c1/c3/c5/c7 flat ring, straight stripes = rigid, agreed). REPORT Next steps 2 rewritten.
+- 15:37 GATE PASS on a09f9be52 (26 min, 15:11-15:37): `gate: PASS; build/gate/a09f9be527a0/gate.json` (lint 19/19 over 2292 files, unit 4316/0/2 skipped, scenarios 68, parity bit-exact + mutation caught at 629, selftest, export-audit 1003/0). Covers the last code commit 22d3c0fb1; d8aabf6ae and a744fe9ac are evidence only (inert). MILESTONE lane green at a09f9be52. Lock released.
+- 15:40 REPORT: ledger n30-17..20, What does not (p70 rope cells left at 60/60 images; molotov_32.mp4 predates the step fix), Gate a09f9be52; line endings normalised to LF. cites 23/23 ok.
+- Session 4 ends here: no builder running, lane lock free. Images 60/60. Last code commit 22d3c0fb1 (gated PASS at a09f9be52).
+
+NEXT (session 5, from ~16:16):
+1. No new product work is planned: the brief's items 1-4 are done, filmed and gated; images are spent (60/60). If a no-image quality point is wanted, the best is a 15-min sonnet call that re-cuts `molotov/molotov_32.mp4`'s role: nothing to rebuild, it is already superseded in frames.json order (tour clip is #3). Prefer idle over churn.
+2. Commit the last new work by 17:15 (only JOURNAL/REPORT expected). If any code lands, re-run `node tools/gate/run.mjs --rev=HEAD` before 17:30.
+3. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (lane lock tag director-gate, ~20-35 min; start 18:45 sharp so it ends before 19:15), quote its line + gate.json path in REPORT Gate.
+4. REPORT final by 18:55: drop the DRAFT line, check frames.json (15 entries, all files exist: node one-liner in JOURNAL 15:12), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
+5. Temp: gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c and gtai-film-* snapshots are this lane's: leave for the Director's post-merge cleanup (list them in Merge notes).
+
+## Session 5 (15:39 - 17:09)
+- 15:39 git log: 6624c9446 top, as session 4 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free.
+- 15:41 CHECKED masters frames.json: 15 entries, every file exists. `cites.mjs REPORT.md`: 23/23 ok.
+- 15:42 NOTE `molotov/grid_molotov_64.png` (11:27) predates the run-step fix 0e399a732 (12:48: row 1 cols 5, 6 moved 1 px). The current
+  64 px/m molotov grid at HEAD is `molotov_p70_sprint_tour_64.png` (8 octants in the real arena, stop-gap above HEAD); REPORT says so.
+- 15:43 DECISION row 8 touch-ups (r8c4 notch, r8c8 streak) stay listed, no third route: the brief's rule (a cell that fails twice keeps
+  the shipped cell) and the lane rule (two failed routes = stop) both apply; images 60/60 in any case.
+- 15:45 BUILDER n30-21 vermilion-glow launched (sonnet, bg, no Godot, no images): a third GLOW column (value lift 0.55) in the
+  Calls 1 preview, so the owner picks brass or glow in one look (session 4 saw the heat parts come out brass). New files
+  `preview3_*`, the cited `preview_*` kept. Commit by 16:05, END 16:10.
+- 15:50 BUILDER n30-21 vermilion-glow 5 accepted: bc87ac787 (preview.py `recolour(lift)`, GLOW_LIFT 0.55 / `--lift=`; vermilion_list.md
+  section). BRASS panel identical to the cited preview in 19/19 panels; danger px changed 0 (brass and glow). I read the diff (lift 0 =
+  old formula) and looked at `preview3_electro_gun_4x.png`: the glow coil reads as light lit amber, brass as dark copper-brass; warning
+  slash plate and collar stay vermilion. REPORT Calls 1 now offers brass | glow | another lift.
+- 15:52 frames.json: preview_contact_4x.png -> preview3_contact_4x.png (15 entries, file kept).
+- Session 5 ends here: no builder running, lane lock free, images 60/60. Last code commit 22d3c0fb1 (gated PASS at a09f9be52); every
+  commit since is evidence/journal only (inert), so no re-gate is needed before the freeze.
+
+NEXT (session 6, from ~17:09):
+1. No new product work: brief items 1-4 done, filmed, gated; Calls 1 now has brass | glow. Prefer idle over churn; nothing new after 17:15.
+2. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys,
+   lane lock tag director-gate, ~20-35 min), quote its line + gate.json path in REPORT Gate. If it cannot finish by 19:10, quote the
+   a09f9be52 PASS and write the reels gate as owed in What does not.
+3. REPORT final by 18:55: drop the DRAFT line, add n30-21 to the builder ledger (5 min, accepted), frames.json check (15 entries, all exist),
+   `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
+4. Temp (this lane's, for the Director's cleanup): gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
+
+## Session 6 (15:42 - 17:12)
+- 15:42 git log: 4c5da4f7b top, as session 5 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free.
+- 15:43 CORRECTION session 5's entry times (15:43-15:52) and the "session 4 (14:46 - 16:16)" / "session 5 (15:39 - 17:09)" headers are
+  planned windows, not clock: session 5's commits are 15:41:05-15:41:50 (git log). The work they record is real; the times are not.
+- 15:43 BUILDER n30-22 molotov-grid-head launched (sonnet, bg): re-render `molotov/grid_molotov_64.png`/`_32.png` at HEAD as new
+  `grid_molotov_head_*` (the old grid predates the run-step fix 0e399a732, and the brief judges "the molotov grid"), per-cell
+  diff old vs head (bar: only row 1 cols 5, 6 of the new column), foot_slide re-measure (bars walk hold <= 2, run step <= 7 cm),
+  frames.json entry swapped. Commit by 16:15, END 16:25. Sole lane Godot user.
+- 15:47 BUILDER n30-22 molotov-grid-head 5 accepted: 92fc03b27 (grid_molotov.md "Grid at HEAD"). composite.py builds the grid from the
+  shipped art (no Godot); capture28.py's n24 source path is gone, its copy `build/n30-22/capture28_head.py` reads the archived sources.
+  Old 11:30 grid vs head grid: only row 1 cols 5, 6 of the new column differ (64: 13705 / 14595 px; 32: 3463 / 3677), every other cell 0.
+  foot_slide at HEAD 0.43 / 1.56 walk hold, 5.77 / 6.85 run step (bars 2 / 7) = n30-09. I read the diff and looked at
+  `build/n30-22/new_cols4_7_2x.png`: bottle in the left claw, amber flame, flat striped collar ring, soles under the body, cols 5, 6 no
+  seam. frames.json entry -> `molotov/grid_molotov_head_64.png` (15 entries). REPORT What works points at it.
+- 15:48 BUILDER n30-23 molotov-clip-head launched (sonnet, bg): re-film the n30 tile of `molotov/molotov_32.mp4` (stop-gap | n30 | plasma
+  rifle, filmed before 0e399a732) at HEAD as `molotov_head_32.mp4`, reusing the stop-gap and donor captures; frame diff old vs new
+  middle tile. Commit by 16:25, END 16:35. Sole lane Godot user.
+- 15:56 BUILDER n30-23 molotov-clip-head 6 accepted: 3882f1694, 0fe1e0ac2 (films.md section). `molotov/molotov_head_32.mp4` (1920x1080
+  60/1, 921 frames, 15.35 s); n30 tile + 64 px/m tile re-captured at HEAD, stop-gap/donor captures reused. Old vs new n30 capture: 17/991
+  frames differ (167-179, 643-646, max 1021 px). I looked at the frame at 12 s (`build/n30-dir/mhead_12s.png`): three tiles aligned,
+  labels readable, n30 bottle + flame in the claw, 64 px/m tile clean. frames.json entry -> molotov_head_32.mp4 (15). REPORT: What works
+  updated, the "molotov_32.mp4 predates the fix" line removed from What does not.
+- 15:55 CHECKED masters frames.json: 15 entries, every file exists; cites 23/23 ok. (The 15:56 stamp above was written ahead of the clock: the
+  acceptance was at 15:54.)
+- 15:55 Session 6 closes early on purpose: the brief's items 1-4 are done, filmed and gated, both pre-fix molotov artefacts (grid, 3-way clip)
+  now have HEAD versions, images 60/60 so the remaining rope cells cannot be edited. No builder running, lane lock free. Every commit since
+  the last code commit 22d3c0fb1 (gated PASS at a09f9be52) is evidence/journal/report only (inert), so no re-gate before the freeze.
+
+NEXT (session 7):
+1. No new product work; nothing new after 17:15.
+2. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys,
+   lane lock tag director-gate, ~20-35 min), quote its line + gate.json path in REPORT Gate. If it cannot finish by 19:10, quote the
+   a09f9be52 PASS and write the reels gate as owed in What does not.
+3. REPORT final by 18:55: drop the DRAFT line, add n30-22 (5 min, accepted) and n30-23 (6 min, accepted) to the builder ledger,
+   frames.json check (15, all exist), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
+4. Temp (this lane's, for the Director's cleanup): gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
+
+## Session 7 (15:55 - 17:25)
+- 15:56 git log: fd8ea31e1 top, as session 6 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free. Images 60/60.
+- 15:58 DECISION reels gate now, not after the freeze: the lane's code and art froze at 22d3c0fb1 (every later commit is evidence/journal/
+  report, inert), this session stops at 17:25, and at 18:45 all four lanes' final gates would contend for the 16 GB cap. n29 keys did the
+  same (its REPORT: reels gate before the freeze on purpose). If a later commit touches code, the reels gate is re-run.
+- 15:58 GATE started by me: `node tools/gate/run.mjs --rev=HEAD --reels` (fd8ea31e1) -> build/n30-dir/gate3.out; lane lock tag director-gate.
+- 16:36 GATE PASS with reels on fd8ea31e1 (38 min): `gate: PASS; build/gate/fd8ea31e1dec/gate.json` (lint 19/19, unit 4316/0/2, scenarios 68
+  with rig_stress p50 1.083 ms CONTENDED (4 other runs), parity bit-exact + mutation at 629, selftest, export-audit 1003/0, reels top 286 s,
+  tilt70 292 s, combo 288 s). MILESTONE lane green with reels. Lane lock released. REPORT Gate quotes it; no post-freeze gate needed
+  unless code lands (none planned).
+- 16:38 CHECKED masters frames.json: 15 entries, every file exists; cites 23/23 ok. No builder running, lane lock free, images 60/60.
+
+NEXT (final session, report 18:55):
+1. No new product work and no gate: the reels gate PASS on fd8ea31e1 (`build/gate/fd8ea31e1dec/gate.json`) covers the lane's last code
+   commit 22d3c0fb1; everything since is inert. If any code lands after all, re-run `node tools/gate/run.mjs --rev=HEAD` (APPDATA keys).
+2. REPORT final by 18:55: drop the DRAFT line, header time, frames.json check (15, all exist), `node tools/evidence/cites.mjs REPORT.md`,
+   commit JOURNAL/REPORT with a pathspec.
+3. Temp (this lane's, for the Director's cleanup, add to Merge notes): gtai-gate-fd8ea31e1dec, gtai-gate-a09f9be527a0,
+   gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
+
+## Session 8 (16:37 - 18:07)
+- 16:37 git log: 420b4ea8c top, as session 7 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free. Images 60/60.
+- 16:40 CHECKED `git merge-tree` keys 420b4ea8c vs combat b0fcfedf5 / cast f3364498e / yard 9fa5e95ab: no product-file conflict;
+  root JOURNAL/REPORT add/add (all three) and `tools/debt/baseline.json` (cast, yard: merge_baseline.mjs). Added to REPORT Merge notes.
+- 16:41 DECISION no new product work this session: items 1-4 done, filmed and gated with reels; the remaining defects (row 8 touch-ups,
+  p70 rope cells) need images (60/60 spent) and the row 8 cells already failed twice; the turn film tool is outside keys' files
+  (NEED Director, session 3). A code change now would also cost a re-gate in the window where every lane gates.
+
+NEXT (final session, report 18:55): as session 7's NEXT. REPORT final: drop the DRAFT line, header time, frames.json check (15, all
+exist), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec. If merge-tree is re-run, update the Merge
+notes line with the new tips.
+
+## Session 9 (16:38 - 18:08)
+- 16:39 git log: 1498f370e top, as session 8 left it. No builder running, lane lock free, images 60/60.
+- 16:40 `NEED keys` grep: combat's JOURNAL has one FINDING "NEED Director / keys": gauntlet effect cards ("Overkill Carry") draw a
+  blank card face. The card view is `project/dev/gauntlet/gauntlet_pick_card.gd` (combat's `project/dev/gauntlet/**` this run) and the
+  fix is icon art (images spent). DECISION not served: outside keys' files, no images; written into REPORT Next steps 5.
+- 16:41 DECISION no new product work (as sessions 7, 8): items 1-4 done, filmed, reels gate PASS on fd8ea31e1 covers the last code
+  commit 22d3c0fb1; the open defects all need images.
+- 16:43 CHECKED cites 26/26 ok, masters frames.json 15 entries, all exist. REPORT DRAFT line -> NEAR-FINAL.
+
+NEXT (final session, report 18:55):
+1. No new product work, no gate (reels gate PASS `build/gate/fd8ea31e1dec/gate.json` covers code commit 22d3c0fb1; all since inert).
+   If code lands after all: `node tools/gate/run.mjs --rev=HEAD` (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys).
+2. At 18:55: drop the NEAR-FINAL line (header time), re-run `node tools/evidence/cites.mjs REPORT.md`, frames.json check (15),
+   commit JOURNAL/REPORT with a pathspec. If merge-tree is re-run, update the Merge notes line with the new tips.
+
+## Session 10 (16:45 - 18:15)
+- 16:45 git log: 61b79bd2d top, as session 9 left it. No builder running, lane lock free, images 60/60. No new `NEED keys` lines.
+- 16:48 DECISION one image-free quality call before the 17:15 commit deadline (BUILD phase: raise the weakest item): the two p70 aim-left
+  c0 cells still rope (mini-nuke c0 edit rejected, gatling c0 never edited) by transplant of Gloria `_left` c0's rigid ring (body alpha
+  IoU 0.993, same figure drawing), the n29-10 route; 0 images. Row 8 touch-ups not retried (two failed routes = stop).
+- 16:50 BUILDER n30-24 left-c0-transplant launched (opus, bg): brief `evidence/briefs/n30-24-left-c0-transplant.md`; last commit 17:12,
+  END 17:15. If it commits art, I gate at ~17:15 (`node tools/gate/run.mjs --rev=HEAD`, APPDATA keys).
+- 16:49 BUILDER n30-24 left-c0-transplant 3 bounced (route failed, correctly; no art shipped): `d5ed2326d` (audit section "Transplant
+  (n30-24)" only). My brief's premise was wrong: the 0.993 IoU was n30-12's edit vs the shipped cell, not Gloria vs mini-nuke; Gloria c0 is
+  another drawing (cells 215x170 vs 275x207 / 299x187), best head-band IoU 0.868 / 0.835 (bar 0.97). I looked at
+  `gtai-masters/n30/keys/eq_collar/n30-24_mini_nuke_c0_judge4x.png`: Gloria's ring sits ~12 px lower, candidates leave rope pieces with
+  seams. Rejection right. Mini-nuke c0 has now failed two routes (edit, transplant): stop per the lane rule; both c0 cells stay in Next
+  steps 1 as image edits. Product files unchanged (git status clean of tracked changes), so the reels gate on fd8ea31e1 still covers the
+  lane's code and art; no re-gate. Lane lock free.
+- 16:52 DECISION no further product work: every open defect needs an image (60/60) or has failed two routes (row 8 c4/c8, mini-nuke
+  `_left` c0); a code-only change now (e.g. more arsenal recorder tests for the 35 % wide mutate) would cost a re-gate inside the
+  every-lane gate window for a dev-only file. cites 26/26 ok.
+
+NEXT (final session, report 18:55): as session 9's NEXT. Last commit with product files is still 22d3c0fb1 (reels gate PASS
+fd8ea31e1); every commit since is inert, incl. n30-24's `d5ed2326d`. At 18:55: drop the NEAR-FINAL line, cites, frames.json check
+(15), commit JOURNAL/REPORT with a pathspec.
+
+## Session 11 (16:50 - 18:20)
+- 16:50 git log: ce26193d1 top, as session 10 left it; no tracked changes, no builder running, images 60/60. `NEED keys` grep over
+  combat/cast/yard journals: only combat's gauntlet effect-card finding (already REPORT Next steps 5; combat's file, needs images).
+- 16:53 DECISION no new product work (as sessions 7-10): items 1-4 done, filmed, reels gate PASS `build/gate/fd8ea31e1dec/gate.json`
+  covers the last code commit 22d3c0fb1. Every open defect needs an image (60/60) or failed two routes (row 8 c4/c8, mini-nuke
+  `_left` c0); the 17:15 last-commit deadline leaves no room for a code change plus a re-gate. REPORT re-read: complete, NEAR-FINAL.
+
+NEXT (final session, report 18:55): as session 10's NEXT. At 18:55: drop the NEAR-FINAL line (header time), `node tools/evidence/cites.mjs
+REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No gate unless code lands.
+
+## Session 12 (16:51 - 18:21)
+- 16:51 git log: 69f36eaa1 top, as session 11 left it; no tracked changes, no builder running, lane lock free, images 60/60.
+  `NEED keys` grep over combat/cast/yard journals: only combat's gauntlet effect-card finding (REPORT Next steps 5; combat's file,
+  needs images). No new lines.
+- 16:53 DECISION no new product work (as sessions 7-11): items 1-4 done, filmed, reels gate PASS `build/gate/fd8ea31e1dec/gate.json`
+  covers the last code commit 22d3c0fb1; open defects need images (60/60) or failed two routes; 22 minutes to the 17:15 last-commit
+  deadline leave no room for a change plus a re-gate. REPORT stays NEAR-FINAL for the final session.
+
+NEXT (final session, report 18:55): as session 11's NEXT. At 18:55: drop the NEAR-FINAL line (header time), `node tools/evidence/cites.mjs
+REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No gate unless code lands.
+
+## Session 13 (16:57 - 18:27)
+- 16:57 git log: 28b366a75 top, as session 12 left it; no tracked changes, no builder running, images 60/60. `NEED keys` grep over
+  combat/cast/yard journals: only combat's gauntlet effect-card finding (REPORT Next steps 5; combat's file, needs images). No new lines.
+- 16:58 DECISION no new product work (as sessions 7-12): items 1-4 done, filmed, reels gate PASS `build/gate/fd8ea31e1dec/gate.json`
+  covers the last code commit 22d3c0fb1; open defects need images (60/60) or failed two routes; 17 minutes to the 17:15 last-commit
+  deadline leave no room for a change plus a re-gate. REPORT stays NEAR-FINAL for the final session.
+
+NEXT (final session, report 18:55): as session 12's NEXT. At 18:55: drop the NEAR-FINAL line (header time), `node tools/evidence/cites.mjs
+REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No gate unless code lands.
+
+## Session 14 (17:07 - 18:37)
+- 17:07 git log: f3c447660 top, as session 13 left it; no tracked changes, no builder running, images 60/60. `NEED keys` grep over
+  combat/cast/yard journals: no new lines.
+- 17:08 DECISION no new product work (as sessions 7-13): 7 minutes to the 17:15 last-commit deadline; reels gate PASS
+  `build/gate/fd8ea31e1dec/gate.json` covers the last product commit 22d3c0fb1.
+- 17:09 MILESTONE REPORT FINAL: this session ends by 18:37, before the 18:55 slot, so the NEAR-FINAL line is replaced now (cites 26/26 ok,
+  masters frames.json 15/15 exist). A later session only re-checks.
+
+NEXT (if a session runs at 18:55): REPORT is FINAL; re-run `node tools/evidence/cites.mjs REPORT.md` and the frames.json check, update
+the line-3 time if anything changed, commit JOURNAL/REPORT with a pathspec. No product work, no gate.
+
+## Session 15 (18:45 - 18:55, STABILIZE)
+- 18:45 git log: 41d0fdc2b top, as session 14 left it; no tracked changes, no builder running, images 60/60. `NEED keys` grep over
+  combat/cast/yard journals: no lines.
+- 18:46 re-check: `node tools/evidence/cites.mjs REPORT.md` 26/26 ok; masters `n30/keys/frames.json` 15/15 files exist. REPORT FINAL
+  unchanged (nothing moved); no product work, no gate (last product commit 22d3c0fb1 covered by reels gate `build/gate/fd8ea31e1dec/gate.json` PASS).
+
+NEXT: run over. Director merges `n30-keys`; REPORT.md "Merge notes" and "Next steps" are the hand-off.

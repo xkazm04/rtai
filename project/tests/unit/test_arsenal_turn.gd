@@ -2,6 +2,7 @@ extends GutTest
 
 const Turn = preload("res://dev/rivet_arsenal/arsenal_turn.gd")
 const Recorder = preload("res://dev/rivet_arsenal/arsenal_turn_rec.gd")
+const Sprint = preload("res://dev/rivet_arsenal/arsenal_sprint_rec.gd")
 
 
 func test_revision_probe_configures_the_requested_view_and_cadence() -> void:
@@ -72,6 +73,76 @@ func test_valid_recorder_is_attached_without_exiting() -> void:
 	Turn.start_recorder(args, rec, host, func(code: int) -> void: status.append(code))
 	assert_eq(rec.get_parent(), host)
 	assert_true(status.is_empty())
+
+
+func test_turn_pad_presses_the_weapon_slot_key_only_while_a_slot_is_set() -> void:
+	var pad: Recorder.TurnPad = Recorder.TurnPad.new()
+	pad.actions = PlayerActions.shipped(true)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		var key: int = 1 << pad.actions.bit(RivetCarry.SLOT_ACTIONS[slot])
+		pad.slot = slot
+		assert_eq(pad.sample(0).buttons & key, key)
+		pad.slot = -1
+		assert_eq(pad.sample(0).buttons & key, 0)
+
+
+func test_equip_presses_the_slot_key_on_the_first_step_only() -> void:
+	assert_eq(Recorder.EQUIP_STEPS, 6)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		assert_eq(Recorder.slot_on_step(0, slot), slot)
+		for step: int in range(1, Recorder.EQUIP_STEPS):
+			assert_eq(Recorder.slot_on_step(step, slot), -1)
+
+
+func test_turn_pad_fire_bit_is_set_by_fire_and_never_by_a_slot() -> void:
+	var pad: Recorder.TurnPad = Recorder.TurnPad.new()
+	pad.actions = PlayerActions.shipped(true)
+	var fire: int = 1 << pad.actions.bit(&"fire")
+	pad.fire = true
+	assert_eq(pad.sample(0).buttons & fire, fire)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		var key: int = 1 << pad.actions.bit(RivetCarry.SLOT_ACTIONS[slot])
+		assert_eq(pad.sample(0).buttons & key, 0, "fire sets no slot key")
+	pad.fire = false
+	assert_eq(pad.sample(0).buttons & fire, 0)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		pad.slot = slot
+		assert_eq(pad.sample(0).buttons & fire, 0, "a slot does not set fire")
+
+
+func test_sprint_tour_pad_presses_sprint_and_each_octant_stick() -> void:
+	var pad: Recorder.TurnPad = Recorder.TurnPad.new()
+	pad.actions = PlayerActions.shipped(true)
+	pad.aim = Vector2.ZERO
+	pad.sprint = true
+	var sprint: int = 1 << pad.actions.bit(&"sprint")
+	var sticks: Array[Vector2i] = [
+		Vector2i(127, 0),
+		Vector2i(90, 90),
+		Vector2i(0, 127),
+		Vector2i(-90, 90),
+		Vector2i(-127, 0),
+		Vector2i(-90, -90),
+		Vector2i(0, -127),
+		Vector2i(90, -90)
+	]
+	for octant: int in 8:
+		assert_eq(Sprint.tour_input(octant), sticks[octant], "octant %d" % octant)
+		pad.move = Sprint.tour_input(octant)
+		var input: TickInput = pad.sample(0)
+		assert_eq(input.buttons & sprint, sprint, "sprint held at octant %d" % octant)
+		assert_eq(Vector2i(input.move_x, input.move_y), sticks[octant])
+	pad.sprint = false
+	assert_eq(pad.sample(0).buttons & sprint, 0)
+
+
+func test_sprint_tour_flag_is_known_and_checked() -> void:
+	var dest: String = TestTmp.dir("turn")
+	var rec: Recorder = autofree(Recorder.new())
+	var on: ArenaArgs = ArenaArgs.parse(["--out=" + dest, "--weapon=hands", "--sprint-tour=on"])
+	assert_eq(Turn.configure(on, rec), "")
+	var bad: ArenaArgs = ArenaArgs.parse(["--out=" + dest, "--weapon=hands", "--sprint-tour=x"])
+	assert_ne(Turn.configure(bad, rec), "")
 
 
 class DeferredTurn:
