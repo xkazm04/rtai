@@ -186,7 +186,7 @@ func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberG
 		h.burst_left = mind.paused_rounds
 		mind.paused_rounds = 0
 	var left: int = h.burst_left
-	var shot: Shot = GuardBrain.trigger(h, arena.tuning, rng)
+	var shot: Shot = FoeOwnGun.trigger(h, mind, arena, pit, rng)
 	if shot != null:
 		e.shot_tick = pit.tick
 	if shot != null or left > 0:

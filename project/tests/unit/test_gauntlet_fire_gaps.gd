@@ -8,6 +8,7 @@ func _trial(id: StringName, motion: String, rifle_lead: float = -1.0) -> FireGap
 		CombatTuning.shipped(), bus, registry.stream(&"combat")
 	)
 	arena.prepare(id, motion, 9.3)
+	arena.squad_ai.pit.roster.own_weapons = false  # n31 foes lever 5: pins the shared street rifle
 	if rifle_lead >= 0.0:
 		(arena.squad_ai as GauntletStreet.StreetSquad).rifle_lead = rifle_lead
 	assert_true(arena.measure())

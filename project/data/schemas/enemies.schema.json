@@ -319,6 +319,19 @@
           "minimum": 0,
           "type": "number"
         },
+        "own_weapon_damage": {
+          "additionalProperties": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": "With own_weapons: Rivet hp per round of each weapon a production squad member fires (the dev pit keeps the weapon's damage).",
+          "type": "object"
+        },
+        "own_weapons": {
+          "description": "true: patrol cop, SWAT, contractor and robot gunner fire their own weapon row instead of the shared production rifle.",
+          "type": "boolean"
+        },
         "panic_s": {
           "maximum": 30,
           "minimum": 0,

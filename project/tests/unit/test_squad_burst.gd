@@ -11,6 +11,7 @@ func before_each() -> void:
 	arena = CombatArena.new(CombatTuning.shipped(), Events, rng)
 	arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), [], null, 0.45)
 	arena.squad_ai = ArenaSquad.new(arena.guard_map)
+	arena.squad_ai.pit.roster.own_weapons = false  # n31 foes lever 5: pins the shared rifle
 	guard = arena.squad_ai.spawn_member(arena, Vector2.RIGHT)
 	@warning_ignore("return_value_discarded")
 	arena.squad_ai.assign(arena)

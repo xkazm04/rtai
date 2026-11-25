@@ -47,8 +47,10 @@ func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
 func available(h: Fighter, arena: CombatArena) -> bool:
 	if agent.arch.explicit_spawn and not agent.melee():
 		return h.cooldown <= 1
-	var w: CombatTuning.Weapon = arena.tuning.weapon(agent.arch.production_weapon)
-	return arena.tick >= _return_until and h.cooldown <= w.cooldown_ticks and agent.cooldown == 0
+	var cap: int = arena.tuning.weapon(agent.arch.production_weapon).cooldown_ticks
+	if arena.squad_ai != null and FoeOwnGun.carries(h, agent, arena.squad_ai.pit.roster):
+		cap = agent.arch.weapon.cooldown_ticks  # n31 lever 5: its own gun's cooldown
+	return arena.tick >= _return_until and h.cooldown <= cap and agent.cooldown == 0
 
 
 func destination() -> Vector2:

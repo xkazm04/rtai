@@ -8,6 +8,7 @@ func _arena(boxes: Array[Rect2] = []) -> CombatArena:
 	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), Events, rng)
 	arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), boxes, null, 0.45)
 	arena.squad_ai = ArenaSquad.new(arena.guard_map)
+	arena.squad_ai.pit.roster.own_weapons = false  # n31 foes lever 5: pins the shared rifle
 	arena.rivet.hp = 10000
 	arena.rivet.max_hp = 10000
 	return arena

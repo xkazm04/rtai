@@ -64,10 +64,12 @@ class Archetype:
 
 var archetypes: Dictionary[StringName, Archetype] = {}
 var weapons: Dictionary[StringName, Weapon] = {}
+## A stage that writes its own cap (prologue, pit rules) keeps the fixed cap and the shared rifle.
 var max_shooters: int = 2:
 	set(value):
 		max_shooters = value
 		max_shooters_share = 0.0
+		own_weapons = false
 var max_shooters_share: float = 0.0
 var max_shooters_min: int = 0
 var max_melee: int = 2
@@ -82,6 +84,9 @@ var hearing_m: float = 22.0
 var gait_split: bool = true
 var gait_min_ticks: int = 36
 var gait_settle_ticks: int = 15
+## n31 lever 5: production squad members fire their own weapon (FoeOwnGun) at own_damage.
+var own_weapons: bool = false
+var own_damage: Dictionary[StringName, float] = {}
 var _explicit: Dictionary[StringName, Archetype] = {}
 var _errors: Array[String] = []
 
@@ -138,6 +143,10 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 	gait_settle_ticks = CombatTuning.ticks(t.num(s, "gait_settle_s"))
 	max_shooters_share = t.num(s, "max_shooters_share") if s.has("max_shooters_share") else 0.0
 	max_shooters_min = t.integer(s, "max_shooters_min") if s.has("max_shooters_min") else 0
+	own_weapons = s.get("own_weapons", false) == true
+	var dmg: Dictionary = t.object(s, "own_weapon_damage") if s.has("own_weapon_damage") else {}
+	for wid: String in dmg:
+		own_damage[StringName(wid)] = t.num(dmg, wid)
 
 
 func _archetype(t: DataTable, row: Dictionary) -> Archetype:

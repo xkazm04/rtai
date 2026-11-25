@@ -129,6 +129,7 @@ func _run(split: bool) -> Trace:
 	# n31 foes lever 1: legacy also keeps the pre-n31 fixed token cap.
 	if not split:
 		arena.squad_ai.pit.roster.max_shooters_share = 0.0
+		arena.squad_ai.pit.roster.own_weapons = false  # n31 foes lever 5: and the shared rifle
 	arena.rivet.hp = 100000
 	arena.rivet.max_hp = 100000
 	var row: int = 0
