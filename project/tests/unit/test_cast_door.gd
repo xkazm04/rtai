@@ -80,3 +80,39 @@ func test_door_and_gunner_cards_flash_with_their_rig() -> void:
 		rig.set_tint(false)
 		card.sync_tint(rig.is_tinted())
 		assert_null(card.material)
+
+
+func test_walk_switch_swaps_only_the_four_drawing_door_walk() -> void:
+	var dir: String = RigHeadCard.ART_DIR + "p70"
+	var four: String = dir.path_join(CastDoorAnchors.FOUR)
+	assert_eq(FoeShieldCardView.walk_sheet(four), dir.path_join(CastDoorAnchors.WALK))
+	var eight: String = dir.path_join(CastDoorAnchors.EIGHT)
+	assert_eq(FoeShieldCardView.walk_sheet(eight), eight)
+	var attack: String = dir.path_join("shield_robot_attack.png")
+	assert_eq(FoeShieldCardView.walk_sheet(attack), attack)
+	assert_eq(CastDoorAnchors.SHEET, CastDoorAnchors.WALK)
+	assert_eq(CastDoorAnchors.EIGHT70.size(), 40)
+	assert_eq(CastDoorAnchors.EIGHT55.size(), 40)
+	assert_eq(CastDoorAnchors.FOUR70.size(), 20)
+	var low: bool = CastDoorAnchors.WALK == CastDoorAnchors.FOUR
+	assert_eq(CastDoorAnchors.WALK70, CastDoorAnchors.FOUR70 if low else CastDoorAnchors.EIGHT70)
+
+
+func test_door_card_draws_the_selected_walk() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	var host: ArenaRobotRigs = add_child_autofree(ArenaRobotRigs.new())
+	host.arena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(5).stream(&"combat")
+	)
+	var rig: CutRig = CutRig.new()
+	host.add_child(rig)
+	var h: Fighter = Fighter.new()
+	h.archetype = &"shield_robot"
+	h.machine = true
+	h.hp = 10.0
+	@warning_ignore("return_value_discarded")
+	FoeShieldCardView.show_rig(host, h, rig, true)
+	var card: FoeShieldCardView = rig.get_meta(FoeShieldCardView.CARD)
+	assert_eq(card.pose.sheets.walk.get_file(), CastDoorAnchors.WALK)
+	ViewMode._shared = previous

@@ -35,11 +35,19 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 		rig.set_meta(CARD, card)
 		@warning_ignore("return_value_discarded")
 		rig.tree_exiting.connect(card.queue_free, CONNECT_ONE_SHOT)
+	sheets.walk = walk_sheet(sheets.walk)
 	card.pose.sheets = sheets
 	card.update_fighter(h, host.arena)
 	card.sync_tint(rig.is_tinted())
 	card.visible = shown
 	return false
+
+
+## The shipped four-drawing walk gives way to the one CastDoorAnchors.WALK selects (n29: the eight).
+static func walk_sheet(path: String) -> String:
+	if path.get_file() != CastDoorAnchors.FOUR:
+		return path
+	return path.get_base_dir().path_join(CastDoorAnchors.WALK)
 
 
 func update_fighter(h: Fighter, arena: CombatArena) -> void:

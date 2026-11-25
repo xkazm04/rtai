@@ -603,3 +603,48 @@ Unjittered = measured / `StreetCrowdCards.body_scale(actor_id)` for the whole-fi
 | war_machine | (1.0), not read | 0.84 | 130 | 65 | 1.292, 1.292 | 1.30 | PASS (0.84 of Rivet's 154 px) |
 
 Jitter proof: contractor ids 3 / 10 / 11 (old jitter 1.032 / 0.853 / 1.102) measure 100 / 100 / 100 px at 64 and 49 / 49 / 49 at 32; gunner ids 4 / 12 / 13 measure 110 / 110 / 110 and 55 / 55 / 55 (the gunner's pose never carries an actor id, so it was one size before too; it now draws at its body_scale instead of `body_scale(0)` 0.926). Eye check of the 64 crops (`build/look/n29-size/crop_<id>_64_<id>.png`): every figure whole, nothing clipped, soles on the ground row (lowest px 539-543, the warden's noose loop at 543), no float; the turret plate still ends 50 px below its ground point and the shield door 14 px below (both as in part A). The cop in these stills has no cast row, so it keeps the crowd's own jitter (actor id 1, 0.855, 86 px): in the game, patrol cops still vary 0.84-1.16 while card foes do not. Fall and corpse: `street_walker_cards.gd` `place` passes the card's `scale_of` into `StreetWalkerFall.draw`, and the far card and both robot views size their fall cells with the same scale, so a scaled card falls at its own size. `street_crowd_corpse.gd` bakes crowd looks only (no card foe). Open: `features/combat/kills/kill_fall_cells.gd` `_scale` and `height_px` size a kill victim with `1 + SCALE_VAR x vary(actor_id)` and no `body_scale` or `build_jitter`, so a killed card foe in a kill style is drawn at the crowd jitter (Mulroney 1.23 would drop to 0.84-1.16); outside this lane's allowlist. Stills `gtai-masters/n29/cast/size_after_{64,32}.png`.
+
+## Door carrier on eight drawings, n29
+
+**Verdict: WALK stays FOUR.** The eight-drawing walk is cut, packed, anchored and switchable, but it is worse than the
+shipped four in the right facing at both pitches, so the rule "ship only if every facing is no worse" keeps the four.
+Sheets `shield_robot_planted8_armed_walk.png` (p70 151x192 cells, p55 144x192, 5 facings x 8 drawings), cut by
+`tools/art/cast_door_eight.py` from `gtai-art/foes-n29/door8/out/door8_{70,55}_{facing}.png`: each facing scaled to the
+shipped four's mean body height (p70 161.5 / 146.2 / 139.5 / 149.0 / 175.2 px four, 161.5 / 146.0 / 139.5 / 148.8 / 175.5
+eight; p55 155.5 / 144.2 / 133.0 / 146.8 / 178.2 four, 155.5 / 144.4 / 132.8 / 146.9 / 178.4 eight, down to up), torso
+registered, the tallest up drawings (p70 up 1 and 5, 4 px; p55 up 1 and 5, 2 px; p55 dr 5, 1 px) rested on the cell
+floor. Key-clean 0 opaque px with a 50-level green or magenta lead at both pitches; strict red (green under 0.45 red)
+four 17 / 5 px, eight 0 / 0 after 129 / 148 burnt-orange stripe-shadow px from the source were lifted to amber.
+Anchors: `cast_door_anchors.gd` now carries FOUR70/55 (unchanged values) and EIGHT70/55 (`tools/art/cast_door_soles.py`,
+the foe-eight sole windows with the profile slab bar dropped), `WALK`, `SHEET = WALK`, and WALK70/55/WALK_STEP_M = the
+selected walk's. EIGHT_STEP_M 0.1842 (the drawn advance; 8.65 drawings/s observed at 1.6 m/s).
+
+Feet, measured in the delivered frames (`cast_feet.tscn` at 64 px/m, 1.6 m/s, analysed by `cast_feet.py` through
+`tools/art/cast_door_feet.py`; px in the tool's 32 px/m unit as in n28, double them for raw 64 px/m pixels). Before =
+the shipped anchored four, after = the eight in a staged copy with the switch applied (`tools/film/cast_door_films.mjs
+feet`). Bars: sole <= 2, jump <= 12.
+
+| Pitch | Facing | Four (sole / jump) | Eight (sole / jump) | Eight vs four |
+|---:|---|---:|---:|---|
+| 70 | right | 5.08 / 6.04 FAIL | 8.88 / 8.90 FAIL | worse (+3.80 sole) |
+| 70 | down-right | U / 11.01 FAIL | 5.22 / 13.71 FAIL | sole now measurable; jump +2.70, over the bar |
+| 55 | right | 3.29 / 6.29 FAIL | 6.16 / 10.90 FAIL | worse (+2.87 sole) |
+| 55 | down-right | U / 10.31 FAIL | 4.62 / 13.02 FAIL | jump +2.71, over the bar |
+
+Cause found on the way (a probe, not shipped): `FoeShieldCardView.update_fighter` sets `scale` (HEIGHT_M 2.0 x body_scale
+/ BODY_PX 160 = 0.824 px/texel at 64 px/m) after `CastFarCard` placed the anchored drawing at its own `_base_scale`
+(1.7 x body_scale / 192 = 0.584 at p70), so every sole lands 1.41x (p55 1.2x) farther from the pivot than the
+placement planted it and slides as the drawings change. Re-planting the sole after the rescale (`cast_door_films.mjs
+keep`, the view patch applied to the staged copy only): four 2.42 / 4.34 (70 right), 2.03 / 5.09 (55 right), down-right
+U / 10.50, U / 10.43; eight 2.83 / 6.47, 2.16 / 9.61, down-right 1.39 / 12.21, 3.45 / 13.28. With it the four is still
+the better right-facing walk and neither passes every bar. The eight's second contact (drawings 5-8) is drawn unplanted
+in the p70 profile (support sole at +18, +8, +12, -34 px from the torso: drawing 7 steps forward), its first contact is
+even (+19, -4, -18, -37).
+
+Held drawings: the director's flagged facings `70_ur`, `55_right`, `55_dr` are not repeated poses (leg-mask change
+0.08 to 0.29 between neighbours) except `55_dr` 4 -> 5 (0.04); `55_down` holds near-identical legs in pairs (0.02, the
+slab hides them). Film `gtai-masters/n29/cast/door8_walk_32.mp4` (the eight, right then down-right, 32 px/m, tilt 70,
+1920x1080, 60 fps, 25.85 s); still `door8_feet_before_after_64.png` (tick 150, four left, eight right, sole brackets).
+Switching to EIGHT also needs two lines in `cast_card_kinds.gd` (not this lane's file this session): `rows()` must return
+4 for `CastDoorAnchors.FOUR` (not `SHEET`), and `cell_ratio()` must return 1.0 for both `FOUR` and `EIGHT`; the sheet swap
+itself is `FoeShieldCardView.walk_sheet`.

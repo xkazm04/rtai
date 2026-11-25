@@ -1,80 +1,155 @@
 #!/usr/bin/env node
-// The door carrier at a true 1920 x 1080: before/after stills at 64 px/m (sole dots, contact bracketed) and one
-// 32 px/m clip (right, then down-right). "Before" renames CastDoorAnchors.SHEET in the working tree for the run
-// (the anchored placement then never matches the sheet: the shipped four-drawing walk) and restores the file.
-// usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|all]
+// The door carrier at a true 1920 x 1080 on its two walks. "four" = the committed tree (the shipped four-drawing
+// anchored walk while CastDoorAnchors.WALK is FOUR); "eight" = a staged copy whose features/characters files select
+// the n29 eight-drawing walk (CastDoorAnchors.WALK = EIGHT plus the two CastCardKinds lines the switch needs: rows
+// and cell ratio keyed on FOUR; FoeShieldCardView.walk_sheet does the sheet swap; the real tree is never touched).
+//   stills: 64 px/m, right facing, the same tick, four left | eight right -> door8_feet_before_after_64.png
+//   clip:   the eight at 32 px/m, right then down-right -> door8_walk_32.mp4
+//   feet:   cast_feet.tscn at 64 px/m on shield_robot, both pitches, both walks, analysed by cast_door_feet.py
+//   keep:   feet on both walks with SOLE_PATCH too (a probe: FoeShieldCardView's HEIGHT_M/BODY_PX rescale after the
+//           anchored placement moves the sole; the patch re-plants it), outputs feet_four_keep / feet_eight_keep
+// usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|feet|keep|all]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
   writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { ROOT } from '../lib/repo.mjs';
-import { describe, runGodot } from '../lib/godot.mjs';
+import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 
 const [out, what = 'all'] = process.argv.slice(2);
-if (!out) { console.error('usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|all]'); process.exit(2); }
+if (!out || !['stills', 'clip', 'feet', 'keep', 'all'].includes(what)) {
+  console.error('usage: node tools/film/cast_door_films.mjs <output-dir> [stills|clip|feet|keep|all]'); process.exit(2);
+}
 const SPEED = 1.6;
-const anchors = join(ROOT, 'project/features/characters/cast_door_anchors.gd');
+const CHARS = 'features/characters';
+// [file, from, to]: the eight-drawing switch, applied to the staged copies only.
+const EIGHT_PATCH = [
+  ['cast_door_anchors.gd', 'const WALK: String = FOUR', 'const WALK: String = EIGHT'],
+  ['cast_door_anchors.gd', '= FOUR70\n', '= EIGHT70\n'],
+  ['cast_door_anchors.gd', '= FOUR55\n', '= EIGHT55\n'],
+  ['cast_door_anchors.gd', '= FOUR_STEP_M\n', '= EIGHT_STEP_M\n'],
+  ['cast_card_kinds.gd', 'if path.get_file() == CastDoorAnchors.SHEET:\n\t\treturn 4',
+    'if path.get_file() == CastDoorAnchors.FOUR:\n\t\treturn 4'],
+  ['cast_card_kinds.gd', 'return 1.0 if path.get_file() == CastDoorAnchors.SHEET else ratio',
+    'return 1.0 if path.get_file() in [CastDoorAnchors.FOUR, CastDoorAnchors.EIGHT] else ratio'],
+];
 
-function stageProject(dir) {
-  const source = join(ROOT, 'project'), dst = join(dir, 'project');
+const VIEW = '../combat/squad/foe_shield_card_view.gd';
+const SCALE = '\tscale = Vector2.ONE * HEIGHT_M * pose.sheets.body_scale * SimConst.PX_PER_M / BODY_PX\n';
+const DRAW = '\tdraw_pose(pose, h, moved, arena.tick)\n';
+const SOLE_LINES = [
+  DRAW.slice(0, -1),
+  '\tvar sole: Vector2 = _sole_local()',
+  '\tvar planted: Vector2 = transform * sole',
+  SCALE.slice(0, -1),
+  '\tif moved:',
+  '\t\tposition += planted - transform * sole',
+];
+const SOLE_FUNC = [
+  'func _sole_local() -> Vector2:',
+  '\tif _contact == null or _contact.registered == null:',
+  '\t\treturn Vector2.ZERO',
+  '\tvar p: StreetPatrolPose = _contact.registered',
+  '\tvar ink: Vector4 = p.marks[p.face * p.count + p.row]',
+  '\treturn Vector2(-ink.x if flip_h else ink.x, ink.y)',
+];
+// Re-plant right after the placement, before the hold (a held cell then keeps the re-planted ground point).
+const SOLE_PATCH = [[VIEW, DRAW, SOLE_LINES.join('\n') + '\n'],
+  [VIEW, '\n\n\nstatic func attack_row', '\n\n\n' + SOLE_FUNC.join('\n') + '\n\n\nstatic func attack_row']];
+
+function link(a, b) { symlinkSync(a, b, process.platform === 'win32' ? 'junction' : 'dir'); }
+
+function mirror(source, dst, deep) {
   mkdirSync(dst);
   for (const f of readdirSync(source, { withFileTypes: true })) {
     const a = join(source, f.name), b = join(dst, f.name);
-    if (f.isDirectory()) symlinkSync(a, b, process.platform === 'win32' ? 'junction' : 'dir');
+    if (f.isDirectory() && deep[f.name]) mirror(a, b, deep[f.name]);
+    else if (f.isDirectory()) link(a, b);
     else if (f.name !== 'project.godot') copyFileSync(a, b);
   }
+}
+
+function stageProject(dir, eight, keep) {
+  const source = join(ROOT, 'project'), dst = join(dir, 'project');
+  mirror(source, dst, { features: { characters: {}, combat: { squad: {} } } });
   const config = readFileSync(join(source, 'project.godot'), 'utf8');
   writeFileSync(join(dst, 'project.godot'), config.replace(/viewport_width=\d+/, 'viewport_width=1920')
     .replace(/viewport_height=\d+/, 'viewport_height=1080') + '\n[threading]\nworker_pool/max_threads=4\n');
+  for (const [file, from, to] of [...(eight ? EIGHT_PATCH : []), ...(keep ? SOLE_PATCH : [])]) {
+    const path = join(dst, CHARS, file), text = readFileSync(path, 'utf8');
+    if (!text.includes(from)) throw Error(`eight switch: ${file} has no "${from}"`);
+    writeFileSync(path, text.replace(from, to));
+  }
 }
 
 const work = join(ROOT, 'build', 'film');
 mkdirSync(work, { recursive: true });
-const dir = mkdtempSync(join(work, 'door-'));
-stageProject(dir);
+const dirs = {};
+const walks = what === 'keep' ? ['four_keep', 'eight_keep'] : ['four', 'eight'];
+for (const walk of walks) {
+  dirs[walk] = mkdtempSync(join(work, `door8-${walk}-`));
+  stageProject(dirs[walk], walk.startsWith('eight'), walk.endsWith('_keep'));
+}
 const outDir = resolve(out);
 mkdirSync(outDir, { recursive: true });
 const soles = join(ROOT, 'build', 'cast', 'door_film_soles.json');
+mkdirSync(join(ROOT, 'build', 'cast'), { recursive: true });
+execFileSync('python', [join(ROOT, 'tools/art/cast_door_film_soles.py'), soles], { cwd: join(ROOT, 'tools/art'), stdio: 'inherit' });
 
-async function take(mode, ppm, dirName, ticks, still, avi) {
-  const original = readFileSync(anchors, 'utf8');
-  if (mode === 'before') writeFileSync(anchors, original.replace('"shield_robot_armed_walk.png"', '"shield_robot_armed_walk_off.png"'));
-  try {
-    const extra = avi ? ['--write-movie', avi, '--quit-after', String(ticks + 40)] : [];
-    const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--resolution', '1920x1080',
-      '--fixed-fps', '60', '--audio-driver', 'Dummy', ...extra, 'res://dev/cast/cast_foot_film.tscn'];
-    const r = await runGodot(args, { cwd: dir, name: 'cast-door-film', ensure: false, headless: false,
-      timeoutMs: 900000, stopOn: /SCRIPT ERROR|SHADER ERROR/i,
-      env: { ...process.env, GTAI_CAST_PPM: String(ppm), GTAI_CAST_SUBJECT: 'shield_robot', GTAI_CAST_SPEED: String(SPEED),
-        GTAI_CAST_TICKS: String(ticks), GTAI_CAST_SOLES: soles, GTAI_CAST_STILL: still ?? '', GTAI_CAST_DIR: dirName } });
-    if (r.status !== 0 || (still && !existsSync(still)) || (avi && !existsSync(avi))) {
-      writeFileSync(join(dir, 'fail.log'), r.out);
-      throw Error(`${mode} ${ppm} ${dirName} failed (${describe(r)}), see ${join(dir, 'fail.log')}`);
-    }
-    console.log(mode, ppm, dirName, describe(r));
-  } finally { writeFileSync(anchors, original); }
-}
-
-if (what !== 'clip') {
-  for (const mode of ['before', 'after']) await take(mode, 64, 'right', 150, join(outDir, `door_${mode}_64.png`), null);
-}
-if (what !== 'stills') {
-  const parts = [];
-  for (const [name, ticks] of [['right', 900], ['downright', 600]]) {
-    const avi = join(dir, `door_${name}.avi`);
-    await take('after', 32, name, ticks, null, avi);
-    parts.push(avi);
+async function godot(walk, args, env, label, expect) {
+  const r = await runGodot(['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--fixed-fps', '60',
+    '--audio-driver', 'Dummy', ...args], { cwd: dirs[walk], name: 'cast-door8', ensure: false, headless: false,
+    timeoutMs: 900000, stopOn: SCRIPT_ERROR, env: { ...process.env, ...env } });
+  if (r.status !== 0 || SCRIPT_ERROR.test(r.out) || (expect && !existsSync(expect))) {
+    writeFileSync(join(dirs[walk], 'fail.log'), r.out);
+    throw Error(`${label} failed (${describe(r)}), see ${join(dirs[walk], 'fail.log')}`);
   }
-  const list = join(dir, 'list.txt');
+  console.log(label, describe(r));
+}
+
+function take(walk, ppm, dirName, ticks, still, avi) {
+  const extra = avi ? ['--write-movie', avi, '--quit-after', String(ticks + 40)] : [];
+  return godot(walk, ['--resolution', '1920x1080', ...extra, 'res://dev/cast/cast_foot_film.tscn'],
+    { GTAI_CAST_PPM: String(ppm), GTAI_CAST_SUBJECT: 'shield_robot', GTAI_CAST_SPEED: String(SPEED),
+      GTAI_CAST_TICKS: String(ticks), GTAI_CAST_SOLES: soles, GTAI_CAST_STILL: still ?? '', GTAI_CAST_DIR: dirName },
+    `${walk} ${ppm} ${dirName}`, still ?? avi);
+}
+
+if (what === 'stills' || what === 'all') {
+  const stills = [];
+  for (const walk of ['four', 'eight']) {
+    stills.push(join(dirs[walk], `door_${walk}_64.png`));
+    await take(walk, 64, 'right', 150, stills.at(-1), null);
+  }
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', stills[0], '-i', stills[1], '-filter_complex',
+    '[0]crop=960:1080:480:0[a];[1]crop=960:1080:480:0[b];[a][b]hstack', join(outDir, 'door8_feet_before_after_64.png')],
+  { windowsHide: true, stdio: 'inherit' });
+}
+if (what === 'clip' || what === 'all') {
   const mp4s = [];
-  for (const avi of parts) {
-    const mp4 = avi.replace('.avi', '.mp4');
+  for (const [name, ticks] of [['right', 900], ['downright', 600]]) {
+    const avi = join(dirs.eight, `door8_${name}.avi`);
+    await take('eight', 32, name, ticks, null, avi);
+    mp4s.push(avi.replace('.avi', '.mp4'));
     execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi, '-c:v', 'libx264', '-crf', '18',
-      '-pix_fmt', 'yuv420p', '-r', '60', mp4], { windowsHide: true, stdio: 'inherit' });
-    mp4s.push(mp4);
+      '-pix_fmt', 'yuv420p', '-r', '60', mp4s.at(-1)], { windowsHide: true, stdio: 'inherit' });
   }
+  const list = join(dirs.eight, 'list.txt');
   writeFileSync(list, mp4s.map((m) => `file '${m.split('\\').join('/')}'`).join('\n'));
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list,
-    '-c', 'copy', join(outDir, 'feet_door_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+    '-c', 'copy', join(outDir, 'door8_walk_32.mp4')], { windowsHide: true, stdio: 'inherit' });
 }
-console.log('work dir', dir);
+if (what === 'feet' || what === 'keep' || what === 'all') {
+  for (const walk of walks) {
+    const dest = join(outDir, `feet_${walk}`);
+    mkdirSync(dest, { recursive: true });
+    for (const pitch of ['70', '55']) {
+      await godot(walk, ['--resolution', '1280x720', 'res://dev/cast/cast_feet.tscn'], { GTAI_CAST_OUT: dest,
+        GTAI_CAST_PPM: '64', GTAI_CAST_PITCH: pitch, GTAI_CAST_SUBJECT: 'shield_robot' }, `feet ${walk} ${pitch}`,
+      join(dest, `tracks_${pitch}_64.json`));
+    }
+    execFileSync('python', [join(ROOT, 'tools/art/cast_door_feet.py'), dest, '64'], { cwd: join(ROOT, 'tools/art'),
+      stdio: 'inherit' });
+  }
+}
+console.log('work dirs', ...Object.values(dirs));
