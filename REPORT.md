@@ -48,6 +48,17 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   beside `films/round_band_32.mp4` (same chapters): the films differ only at 8.17-8.3 s (the light's life on screen); at 8.2 s
   the blast centre prints warmer amber (`stills/explosion_rim_32_pair.png`, ~8k px at 1080p).
 
+### 7. Raised after the list: the blast floor's vermilion outline and specks are gone (`8809bb21d`)
+- Cause: the FX item print (`look_d4_item`, nearest ink) snaps every amber->ink blend of the blast cell `blast_1.png` (frame 1,
+  every rocket and the nuke) to vermilion: the rim's fringe printed a vermilion outline, the darker grain vermilion specks.
+  This is also why the nuke band's sprite tries made things worse.
+- Fix in our cell art (`evidence/n30/floor/fix.py`, reproducible): grain -> the cell amber, fringe -> soot grey at alpha 128.
+  64 px/m floor vermilion (not blood): rocket t72 1069 -> 0; nuke t486 9196 -> 112 (105 of them the dropped rifle's camo
+  and a flame sprite, 7 new); red 0 added, teal 0, amber -2 to -4 %, 0 px changed outside the blast box. The edge is now a
+  ragged 2-4 px soot seam. Units 334/0 (the 54 tests that reach the PNG), lint 19/19.
+  Still `stills/nuke_floor_specks_pair_64.png`. `evidence/n30/floor/specks.md`.
+- (c20: blast_0.png, pending)
+
 ### 6a. `current_look.gd` draw() survivors pinned (`5fd6c1eaa`, `2566b97d0`)
 - `CurrentLook.k_of(ci)` and `const ANTIALIAS` carry draw()'s scale and AA flag (pixels identical by construction); 4 tests,
   units 12/0; mutate on those lines 4/5 = 80 % (survivor: deleting the `draw_polyline` call, only a GPU readback sees it).
@@ -99,9 +110,13 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - A short-flight rocket's blast gets no light: its launch muzzle flash spent the 1/s photosensitivity budget
   (`FlashBudget.spend_light`). Letting a blast win changes the photosensitivity behaviour: owner call.
 - Explosion rim (patch, not merged): over the nuke's own amber floor the amber rim reads weakly (low contrast;
-  `stills/explosion_rim_patched_pair_64.png`). A deeper ink for the rim is one value (the alt token's colour); apply as is, or deeper.
-- The nuke's amber blast floor prints vermilion specks on its ink edges (`stills/explosion_light_seen_64.png`), the same
-  print snap as the band's last 39 px.
+  `stills/explosion_rim_patched_pair_64.png`). Measured: a deeper ink does not help (#D9922C, #C27A1F: the ring-floor
+  luminance gap shrinks 34.8 -> 32.3 -> 30.2; `stills/explosion_rim_ink_abc_64.png`, `a35e40f45`), and a wider rim
+  (bands <= 2, `evidence/n30/lights/rim_wide.patch`) leaves the ring unchanged, washes the core and adds 89 vermilion px
+  (`stills/explosion_rim_wide_64.png`, `6ae3ed33a`). The shader adds the rim as low-level light over an amber floor; a
+  stronger read needs a different mix (e.g. the rim band at a higher level). Apply `rim.patch` as is, or ask for that mix.
+- The blast floor's edge is now a soot seam instead of a vermilion outline (`stills/nuke_floor_specks_pair_64.png`):
+  keep, or ask for a cleaner ink edge (needs a dark-amber ink in the print, `look_d4_item`, not ours).
 - Warden at the switch to his fall sheet: NOT a size fault (cast c06b measured delivered frames at 64 px/m: cap walk / hit /
   fall p70 36 / 28 / 28-31, p55 30 / 23 / 22-31; our "1.4-1.5x" was a wrong reading of the walk). What changes is the angle
   (steeper top-down walk, frontal fall) and the hat (grey bucket -> tan camo cap): a one-row hat recolour of his walk, or keep.
@@ -119,8 +134,9 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   blast at t486 64 px/m.
 - Director, after merging n30-cast: `kill_fall_cells.gd:95` -> `StreetCrowdCards.body_scale_of(rig)` (Merge notes).
 - Overkill Carry card icon (keys / weapon icons): NEED Director.
-- The print's vermilion snap on amber-and-ink edges (nuke band edge, blast floor edges) is in `grade_ink.gdshader`
-  (core/render): a print fix, not sprite tweaks.
+- The FX item print (`look_d4_item`, core/render) has no dark-amber ink, so every amber->ink blend snaps to vermilion (the
+  nuke band's last 39 px; any future amber cell). A print rule (vermilion only when nearer it than the amber->ink segment)
+  would cover every amber cell at once: NEED Director. Our blast cells are fixed in the art meanwhile.
 - Owner calls above: thin 3 or 4 px; fire light token amber; flash budget for a close-range rocket blast.
 - Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
