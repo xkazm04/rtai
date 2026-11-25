@@ -57,6 +57,7 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 	pose.opens_on_hit = false
 	pose.attack = attack_row(h, arena)
 	var last_ground: Vector2 = position
+	var last_sole: Vector2 = transform * _sole_local()
 	draw_pose(pose, h, moved, arena.tick)
 	_rescale(moved)
 	if texture.resource_path == pose.sheets.walk:
@@ -66,7 +67,8 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 			and cell == _walk_cell
 			and position.distance_squared_to(last_ground) <= STEP_PX * STEP_PX
 		):
-			position = last_ground
+			# A held drawing leans about its planted sole (n30): pin the sole, not the pivot.
+			position += last_sole - transform * _sole_local()
 		_walk_cell = cell
 	else:
 		_walk_cell = -1
