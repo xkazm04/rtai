@@ -30,3 +30,9 @@ Every other repo path (`JOURNAL.md`, `REPORT.md`, `evidence/briefs/**`, `project
 
 ## Report (final message, then END)
 Commit shas; slab depth and placements; plumes per bay; roof_glow decision; frame cost line (p50 mean and CI95, CONTENDED or not, load); pilots identical yes/no; ffprobe line; what you saw (does the front read as a roofed hall? seams? weakest bay?); what was not done.
+
+## Session 4 state (director, 14:26): steps 1 and 2 are DONE, start from here
+- `98cd845b2`: sources, cuts, `.import`, plan `evidence/yard30/roof_plan.json`. `507f75178`: 5 slabs + 7 plumes placed (slabs first; every slab at y -9.95, straight north edge at y -12.70). `02deb375d`: pilots identical (`evidence/yard30/prologue-yard-pilots-roof.json`). Look: `evidence/yard30/roof_front_32ppm_try1.png`.
+- Director's look: reads as a roofed hall (skylights, plumes, straight edge, sky band), BUT the slab's vertical corrugation and its tone close to the facade's let it read a little like a second wall; shutter_w has an inner step line like a ledge. Try ONE data value first: a slab tint a step darker and cooler than the facade (e.g. `tint` on the five slab rows, like `d8d0c8ff`, tune by look) so the roof reads as a plane seen from above, lit only through its holes. Judge at 32 and 64 px/m; if pilots move (they should not: visual only), stop.
+- The `front` place's camera centre is fixed at (26, 3) (`project/dev/prologue_yard/yard_camera.gd:13`): at 64 px/m the roof is above the frame. Add a place `roof` (centre about (14, -8)) or an `--at=x,y` flag there for the 64 px/m still and the 64 px/m plate beside game; `project/dev/prologue_yard/**` is in your allowlist for this only (declare any new flag where the tool's KNOWN_FLAGS lives).
+- Remaining: steps 3 (test pinning one slab per bay at the shared depth and no shared plume set; pilots again only if the table changes), 4, 5 (frame cost, bench lock), 6, 7.
