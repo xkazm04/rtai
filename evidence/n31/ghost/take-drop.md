@@ -22,7 +22,11 @@ deploy 2 dump and runs 1662 frames (27.7 s); frames run a little ahead of ticks 
 
 Files (`C:\Users\kazda\kiro\gtai-masters\n31\ghost\`, ffprobe lengths): `take-drop-main-vs-head-32ppm.mp4` 3840x1080
 27.70 s (labelled "main ba8e470b0" | "n31 ghost 5d0f98ccd"), `take-drop-main-32ppm.mp4` 27.70 s,
-`take-drop-head-32ppm.mp4` 27.70 s. No audio track. Raw logs and deploy JSON: `build/n31/g04/` (git-ignored).
+`take-drop-head-32ppm.mp4` 27.70 s. No audio track. At 64 px/m (`ghost_n31_take_closeup.tscn`, same seed, same deploy ticks): the still pair at
+deploy 3 `take-drop-main-vs-head-64ppm-dump.png` (main release t1415 movie frame 1625 | HEAD dump t1364 frame 1548,
+plus each alone) and `take-drop-head-64ppm-halfspeed.mp4` 15.22 s, HEAD deploy 3 whole at half speed (`setpts=2.0*PTS`,
+movie frames 1321-1778: lead-in, press, charge, dump, crater; the camera follows Rivet, so the crater's fade drifts to the
+frame edge). Raw logs and deploy JSON: `build/n31/g04/` (git-ignored).
 
 What a player would say: on HEAD the robot hangs over the pack with cracks running out for a beat while Rivet keeps
 rolling, then the whole crowd goes down in one dust ring (8 and 9 of the 10 to 12 cops near it), where on main the
