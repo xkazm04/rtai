@@ -75,3 +75,11 @@ func test_the_dead_are_never_victims() -> void:
 	foe.hp = 0.0
 	var hostiles: Array[Fighter] = [foe]
 	assert_eq(TonnageDump.victims(hostiles, Vector2.ZERO, 6.5).size(), 0)
+
+
+func test_a_one_tick_charge_is_pending_and_lands_on_the_next_count() -> void:
+	var dump: TonnageDump = TonnageDump.new()
+	assert_false(dump.arm(1))
+	assert_true(dump.pending())
+	assert_true(dump.count())
+	assert_false(dump.pending())
