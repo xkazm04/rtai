@@ -40,7 +40,7 @@ func test_robot_host_swaps_rig_and_restores_main_with_row_off() -> void:
 	assert_true(card.visible)
 	assert_true(card.flip_h)
 	assert_eq(card.position, _h.pos * SimConst.PX_PER_M)
-	assert_eq(card.frame_coords, Vector2i(2, StreetWalkerCards.STAND_FRAME))
+	assert_eq(card.frame_coords, Vector2i(2, _stand_row()))
 	_host.consumed[_h.id] = true
 	_host._process(0.0)
 	assert_false(card.visible)
@@ -106,17 +106,17 @@ func test_stomp_without_art_keeps_the_locomotion_pose() -> void:
 	sheets.stomp = ""
 	_mind.walker.attack = _mind.agent.arch.alt_weapon
 	_mind.agent.enter(EnemyAgent.State.WINDUP, 1)
-	_expect(sheets.walk, StreetWalkerCards.STAND_FRAME)
+	_expect(_walk(), _stand_row())
 	_mind.agent.enter(EnemyAgent.State.RECOVER)
 	_h.cooldown = 1
-	_expect(sheets.walk, StreetWalkerCards.STAND_FRAME)
+	_expect(_walk(), _stand_row())
 
 
 func test_walker_card_projects_the_boot_line_and_two_point_six_metre_body() -> void:
 	for deg: int in [55, 70]:
 		ViewMode.shared().pitch_deg = deg
 		ViewMode.shared().art = "p%d" % deg
-		_expect(CastCards.current(WALKER).walk, StreetWalkerCards.STAND_FRAME)
+		_expect(_walk(), _stand_row())
 		var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
 		assert_false(card.centered)
 		assert_eq(card.offset, Vector2(-144, -264))
@@ -226,3 +226,12 @@ func _pad(card: FoeWarCardView) -> Vector2:
 	return FoeWarCardView.pad_local(
 		card.texture.resource_path, card.frame_coords, card.flip_h, card.vframes
 	)
+
+
+## The walk WALK selects and its standing drawing (the four's STAND_FRAME at the walk's rows).
+func _walk() -> String:
+	return FoeWarCardView.walk_sheet(CastCards.current(WALKER).walk)
+
+
+func _stand_row() -> int:
+	return StreetWalkerCards.STAND_FRAME * (FoeWarCardView.walk_rows(_walk()) >> 2)

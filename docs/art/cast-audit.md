@@ -721,3 +721,52 @@ the film tool's staged switch is that one line. `test_cast_door_walk.gd` pins th
 `CastCardKinds.foe_marks` / `foe_step`) follows `WALK`, its four-only counts now follow `WALK`, and a height test pins
 `FoeShieldCardView._rescale`'s formula: 2 m over the 160-texel body, 0.4 px per texel at 32 px/m at body_scale 1
 (0.412 at the table's 1.03, i.e. 0.824 at 64 px/m: the size scene's 111 px door), linear in body_scale.
+
+## Pile-driver on eight drawings, n29
+
+**Verdict: `WALK` stays `FOUR`. The n29 pad placement (`5d8e4b6f8`) made the four WORSE than `20be6ffaa` in every
+measured facing (body jump +7 to +21 px); reported to the director, not reverted. The eight is worse than the four
+(HEAD) in 3 of 4 facings.** Measured by `node tools/film/cast_war_films.mjs build/look/n29-war8/feet feet` (+ `feet
+eight_held`): `cast_feet.tscn` at 64 px/m, the roster's 1.8 m/s, both pitches, right and down-right, analysed by
+`tools/art/cast_war_feet.py`, px in the tool's 32 px/m unit; bars sole <= 2, jump <= 12. Four staged copies, the tree
+untouched: **before** = `FoeWarCardView` from `20be6ffaa` (held foot; `5d8e4b6f8` changed only the view and its test,
+so this is the `20be6ffaa` render without a second worktree), **four** = HEAD (`WALK = FOUR`, pad placement),
+**eight** = HEAD with `WALK = EIGHT`, **eight held** = the eight on the `20be6ffaa` view. Two sole readers: *pad* = the
+`CastWarAnchors` registered pad (four: lowest band of the cell, contact = drawings 1-2 / 3-4; eight: the foe-eight
+windows, contact = drawings 1-4 / 5-8), *n28* = `cast_feet.pile_points`, the n28 audit's reader (four only; U = it
+refuses the p70 profile: the rear pad never lifts). Under the pad placement the pad reader reads 0.00 by construction
+(the pinned point IS the measured point), so the jump is the number that tells.
+
+| Pitch | Facing | Before (pad / n28 sole, jump) | Four, HEAD | Eight, HEAD | Eight held | Eight vs four (HEAD) |
+|---:|---|---:|---:|---:|---:|---|
+| 70 | right | 12.50 / U, 16.82 | 0.00 / U, 23.80 | 0.00, 41.54 | 18.16, 10.73 | jump worse (+17.74) |
+| 70 | down-right | 18.86 / 24.36, 12.87 | 0.00 / 28.59, 28.77 | 0.00, 37.69 | 27.45, 10.37 | jump worse (+8.92) |
+| 55 | right | 21.94 / 28.11, 11.78 | 0.00 / 35.36, 32.50 | 0.00, 30.80 | 20.91, 10.74 | jump better (-1.70) |
+| 55 | down-right | 18.64 / 20.94, 12.87 | 0.00 / 43.07, 27.19 | 0.00, 31.60 | 23.86, 9.93 | jump worse (+4.41) |
+
+(n28's main numbers were 24.75 / 22.97 sole, 13.22 / 13.35 jump down-right: the "before" n28 column reproduces them
+within 2.1 px on today's tree.) Every cell FAILS a bar. **Why the placement hurts** (frame-by-frame body jumps over the
+takes): it pins one registered point per contact, but that point is not one physical pad through the contact. The
+four's lowest band flips from the front pad to the rear pad inside a contact (p70 right sole x 191.5 -> 125.5 sheet px
+in drawings 3 -> 4: the 21.7 px jump on 3 -> 4; 23.8 on 2 -> 3, the contact boundary, where the body snaps back to the
+fighter's ground). The eight's windows register the trailing pad in drawings 4 and 8 of dr / right / ur and the lead
+pad in 1-3 / 5-7, so its jumps sit inside a contact where the registered pad changes (p55 right 30.5 / 30.8 on
+3 -> 4 / 7 -> 8; down-right 29.3 / 31.6 on 7 -> 8; p70 right 23.8 on 2 -> 3, 26.2 on 7 -> 8) and on the snap to the
+fighter's ground at the contact boundary (4 -> 5: p70 right 41.5, down-right 37.7 / 30.7; 8 -> 1: down-right 23.7 /
+23.8). On the held-foot view the eight's jump PASSES in every facing (9.93 to 10.74, the four's
+before: 11.78 to 16.82) while its sole slides 18-27 px: the art carries the body evenly, the placement does not.
+What would fix it (not done, a director call): register per contact the pad that is planted through all of that
+contact's drawings (one window per contact, not per drawing), and carry the body across the contact boundary instead
+of snapping to the fighter's ground.
+
+**Planted pad per drawing** (read from the packed sheets, `gtai-art/foes-n29/war8/STATE.md`; L / R = screen-left /
+screen-right pad, "blob" = both pads overlap in silhouette) for the measured facings, and what the eight's anchor
+registers: p70 right R R L L R R R L (the support moves front -> rear twice a cycle, not a 4 / 4 exchange; registered:
+front front rear rear front front front rear); p70 down-right L L L R R R R R; p55 right R R R L R R R L (row 2
+repeats row 1); p55 down-right L L L R R R R R. The four (`war_machine_armed_walk.png`): the rear pad flat in all four
+p70 profile drawings (n28).
+
+Files: `tools/film/cast_war_films.mjs` (the `cast_door_films.mjs` twin: stills / clip / feet; feet walks `before`,
+`four`, `eight`, `eight_held`), `tools/art/cast_war_feet.py` (pad / n28 readers, `--film-soles`), a `war_machine` step
+entry in `project/dev/cast/cast_feet.gd` (`CastWarAnchors.WALK_STEP_M`). `test_cast_war_machine.gd`: the stand-row pins
+now follow `WALK` (`_walk()` / `_stand_row()`), so a later `WALK = EIGHT` is the one generator line.

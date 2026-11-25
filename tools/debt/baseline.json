@@ -190,7 +190,8 @@
         "2026-11-25: robot_thug card for n29 cast (dev_loc 38419 -> 38534)",
         "2026-11-25: films for n29 cast (dev_loc 38534 -> 38816)",
         "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)",
-        "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)"
+        "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)",
+        "2026-11-25: war eight for n29 cast (dev_loc 39127 -> 39128)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -199,7 +200,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3771,
+        "project/dev/cast": 3772,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -232,7 +233,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39127
+      "total": 39128
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -514,7 +515,8 @@
         "2026-11-24: prologue_command_view.gd 255 lines and its test file 221 lines: chevron and plate-edge helpers (n27-04) (files_past_soft_cap 66 -> 67)",
         "2026-11-24: --electro-cells for n28 combat (files_past_soft_cap 67 -> 67)",
         "2026-11-25: card scale for n29 cast (files_past_soft_cap 67 -> 68)",
-        "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)"
+        "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)",
+        "2026-11-25: war eight for n29 cast (files_past_soft_cap 70 -> 70)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -581,7 +583,7 @@
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
-        "project/tests/unit/test_cast_war_machine.gd": 228,
+        "project/tests/unit/test_cast_war_machine.gd": 237,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
         "project/tests/unit/test_gun_fx.gd": 213,

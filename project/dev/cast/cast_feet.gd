@@ -111,6 +111,7 @@ func _prepare(host: ArenaRigs, take: Dictionary) -> void:
 		"robot_thug": CastThugAnchors.WALK_STEP_M,
 		"contractor": CastContractorAnchors.WALK_STEP_M,
 		"shield_robot": CastDoorAnchors.WALK_STEP_M,
+		"war_machine": CastWarAnchors.WALK_STEP_M,
 		"swat": CastSwatAnchors.WALK_STEP_M
 	}
 	if steps.has(take.archetype):
