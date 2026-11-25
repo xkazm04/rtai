@@ -150,3 +150,4 @@
 - 16:50 MILESTONE shadow-still64 cd51569c8 (evidence only): evidence/yard30/span_shadow_play_64ppm.png, seed 42 ticks 7300/7450 before|after, masters frames.json 15 entries.
 - 16:50 LOOKED at it: before and after look the same to my eye at both ticks (builder: 7300 max diff 12/255; 7450 ~390 px faint smudge). DECISION: no change after the green gate; REPORT says the shadow does not read in play and recommends a larger SE offset + alpha ~0.9 (data values in arched_line.span_shadow) as the owner call, the in-play still as the bar.
 - 16:50 BUILDER shadow-still64 2 accepted. BUILDER RUNNING none.
+- 16:51 BUILDER RUNNING shadow-reads since 16:51 (Sonnet, brief evidence/briefs/n30-03e-shadow-reads.md: span_shadow values only, offset SE + alpha 0.9, in-play 64 px/m still as bar; commit by 17:08 else restore; hard stop 17:12). If it commits, the gate must re-run on its sha (detached, before 17:17 / by 17:30).
