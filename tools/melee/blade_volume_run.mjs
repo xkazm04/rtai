@@ -3,9 +3,10 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { cutBody } from './blade_volume_body.mjs';
 import { cleanMask, same } from './blade_volume_clean.mjs';
 import { runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
-import { BODY_DILATE, THRESHOLD, diffMask, dilate, groundToScreen, maskPoints, polar, swingMask } from './blade_volume_pixels.mjs';
+import { BODY_DILATE, MIN_PIXELS, THRESHOLD, diffMask, dilate, groundToScreen, maskPoints, polar, swingMask } from './blade_volume_pixels.mjs';
 
 const SCENE = 'res://dev/melee_n31/blade_pixels.tscn';
 // --cam-lock holds the camera on Rivet's start (blade_pixels FROM, plan base 0,0): every frame's floor is
@@ -29,11 +30,16 @@ export async function render(weapon, tree, scratch, extra = []) {
 
 const raw = (dir, facing, name) => readFileSync(join(dir, `${facing}_${name}.rgb`));
 
-/** Tick k's mask: 01d's clean one (blade + swipe + smear) when the probe drew the `_nw` twin, else 01c's. */
+/** Tick k's mask: 01d's clean one (blade + swipe + smear) when the probe drew the `_nw` twin, else 01c's;
+ * with ctx.radiusM, 01e's body cut on top (radius + head column at that tick; cut = px each removed). */
 function tickMask(scratch, facing, k, ctx) {
   const frame = raw(scratch, facing, `k${k}`);
   if (!existsSync(join(scratch, `${facing}_k${k}_nw.rgb`))) return { mask: swingMask(frame, ctx.idle, ctx.body, ctx.n), body: ctx.body };
-  return cleanMask(frame, raw(scratch, facing, `k${k}_nw`), ctx.idle, ctx.idleBody, ctx.meta, k);
+  const c = cleanMask(frame, raw(scratch, facing, `k${k}_nw`), ctx.idle, ctx.idleBody, ctx.meta, k);
+  if (!ctx.radiusM) return c;
+  const b = cutBody(c.mask, ctx.idleBody, ctx.meta, k, ctx.radiusM, { frame, bg: ctx.bg });
+  const left = b.mask.reduce((a, v) => a + v, 0);
+  return { ...c, mask: left < MIN_PIXELS ? new Uint8Array(ctx.n) : b.mask, cut: { radius: b.radius, head: b.head, floor: b.floor, left } };
 }
 
 /** The ticks whose full frame repeats the previous one byte for byte, with strike_t of both (01c's open item 3). */
@@ -46,10 +52,11 @@ function repeats(scratch, facing, meta) {
   return out;
 }
 
-/** Per facing: {meta, ticks: {k: ground points}, polar: {k: {deg, reach_m}}} from the saved crops. */
-export function read(scratch) {
+/** Per facing: {meta, ticks: {k: ground points}, polar: {k: {deg, reach_m}}} from the saved crops.
+ * radiusM (01e): cut Rivet's body (blade_volume_body.mjs) at that radius; 0 = 01d's mask as it was. */
+export function read(scratch, radiusM = 0) {
   const frames = JSON.parse(readFileSync(join(scratch, 'frames.json'), 'utf8'));
-  const out = { weapon: frames.weapon, threshold: THRESHOLD, body_dilate_px: BODY_DILATE, facings: {} };
+  const out = { weapon: frames.weapon, threshold: THRESHOLD, body_dilate_px: BODY_DILATE, body_cut_m: radiusM, facings: {} };
   for (const [facing, m] of Object.entries(frames.facings)) {
     const meta = { ...m, px_per_m: frames.px_per_m };
     const [, , w, h] = meta.crop;
@@ -58,12 +65,13 @@ export function read(scratch) {
     const idle = raw(scratch, facing, 'idle');
     const idleBody = diffMask(idle, bg, n);
     const body = dilate(idleBody, w, h, BODY_DILATE);
-    const ctx = { idle, idleBody, body, meta, n };
-    const ticks = {}, pol = {}, masks = {}, bodies = {};
+    const ctx = { idle, idleBody, body, meta, n, radiusM, bg };
+    const ticks = {}, pol = {}, masks = {}, bodies = {}, cuts = {};
     for (let k = 0; k <= m.k_end; k++) {
       const t = tickMask(scratch, facing, k, ctx);
       const mask = t.mask;
       bodies[k] = t.body;
+      if (t.cut) cuts[k] = t.cut;
       const pts = maskPoints(mask, meta);
       if (pts.length === 0) continue;
       ticks[k] = pts;
@@ -71,7 +79,7 @@ export function read(scratch) {
       const p = polar(pts, Number(facing));
       if (p) pol[k] = p;
     }
-    out.facings[facing] = { meta, ticks, polar: pol, masks, body, bodies, repeats: repeats(scratch, facing, m) };
+    out.facings[facing] = { meta, ticks, polar: pol, masks, body, bodies, cuts, repeats: repeats(scratch, facing, m) };
   }
   return out;
 }

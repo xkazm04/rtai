@@ -36,3 +36,9 @@ draws NOTHING (its drawn baton is in the p55 strip cell, not the held sprite) an
   between them that differs. `<weapon>.json` `repeats` lists them.
 
 Not done: (b) a per-tick body silhouette render (the body-only cell of that tick's pose); without it the body stays in.
+
+## 01e (2026-11-25 23:40): body cut
+`before/` now holds the same 01d renders re-judged with Rivet's body cut out (`tools/melee/blade_volume_body.mjs`:
+0.6 m radius at that tick, head column above the shoulder line, floor uncovered by his lunge; `--no-render`).
+Overlays `before/overlay_body_<weapon>_k<k>.png`; 01d's `overlay_clean_*` kept. Table and caveats:
+`evidence/n31-melee/02-sweep/volumes/after.md`.

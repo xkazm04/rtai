@@ -1,6 +1,7 @@
 // n31 melee: "the blade passes through and nothing happens", measured.
 // Usage: node tools/melee/blade_volume.mjs [--label=before] [--weapons=hands,katana,...] [--tree=<checkout>]
 //          [--hits=<dir of 01a hit results>] [--no-render] [--out=<dir>] [--game-flags=--melee-sweep,...]
+//          [--raw=<label of build/n31/01d/raw>] [--body-cut=off]   (01e: Rivet's body cut by radius + head column)
 //        node tools/melee/blade_volume.mjs --model [--label=x]   (01a's node-read drawn side, headless)
 //        node tools/melee/blade_volume.mjs --overlay=<weapon>    (01a's model overlay, one GPU frame)
 // Default (01c): the DRAWN side from rendered pixels. One windowed d3d12 Godot run per weapon in
@@ -13,6 +14,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { hurtRadius } from './blade_volume_body.mjs';
 import { judge } from './blade_volume_pixels.mjs';
 import { plot } from './blade_volume_plot.mjs';
 import { overlay, read, render } from './blade_volume_run.mjs';
@@ -53,6 +55,7 @@ function clip(px, win) {
       delete d.ticks[k];
       delete d.polar[k];
       delete d.masks[k];
+      if (d.cuts) delete d.cuts[k];
     }
     d.window = win;
   }
@@ -80,25 +83,26 @@ async function main() {
   const extra = arg('game-flags', '') ? arg('game-flags', '').split(',') : [];
   mkdirSync(out, { recursive: true });
   const head = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: tree, encoding: 'utf8' }).trim();
+  const radiusM = arg('body-cut', 'on') === 'off' ? 0 : hurtRadius(tree);
   const rows = [], ticks = {};
   for (const w of weapons) {
-    const scratch = join(ROOT, 'build/n31/01d/raw', label, w);
+    const scratch = join(ROOT, 'build/n31/01d/raw', arg('raw', label), w);
     if (!process.argv.includes('--no-render')) await locked(() => render(w, tree, scratch, extra));
     const hit = JSON.parse(readFileSync(join(hitsDir, `${w}.json`), 'utf8'));
-    const px = clip(read(scratch), span([...hit.shown_ks, ...hit.pixel_ks]));
+    const px = clip(read(scratch, radiusM), span([...hit.shown_ks, ...hit.pixel_ks]));
     const f0 = px.facings['0'];
     const judged = judge(hit, f0.ticks);
     const drawnKs = Object.keys(f0.ticks).map(Number);
     const atK = hit.land_k + 1 in f0.ticks ? hit.land_k + 1 : drawnKs[Math.floor(drawnKs.length / 2)] ?? 0;
     const lastCut = Math.max(...f0.meta.cut_ks.filter((k) => k in f0.ticks), atK);
-    for (const k of new Set([atK, lastCut])) overlay(scratch, px, '0', k, join(out, `overlay_clean_${w}_k${k}.png`));
+    for (const k of new Set([atK, lastCut])) overlay(scratch, px, '0', k, join(out, `overlay_${radiusM ? 'body' : 'clean'}_${w}_k${k}.png`));
     const cutTicks = Object.fromEntries(Object.entries(f0.ticks).filter(([k]) => hit.cut_ks.includes(Number(k))));
     const inCut = judge(hit, cutTicks).ring;
     plot(hit, judged, Object.values(f0.ticks).flat(), join(out, `${w}.png`));
     const lateDrawn = judged.cells.filter((c) => c.drawn && !c.hit && c.drawn_ks.some((k) => k > hit.land_k)).length;
     const mv = judged.movers;
     rows.push({ weapon: w, weapon_id: hit.weapon_id, ...judged.ring, drawn_no_hit_after_test: lateDrawn,
-      drawn_no_hit_in_cut: inCut.drawn_no_hit, repeats: f0.repeats, overlays: [...new Set([atK, lastCut])],
+      drawn_no_hit_in_cut: inCut.drawn_no_hit, repeats: f0.repeats, body_cut_m: radiusM, body_cut_px: f0.cuts, overlays: [...new Set([atK, lastCut])],
       hit_test_ks: hit.land_ks.length ? hit.land_ks : [hit.land_k], cut_window: span(hit.cut_ks),
       drawn_window: span(drawnKs), overlay_k: atK, overlap_window: span([...new Set(judged.cells.flatMap((c) => c.drawn_ks))]),
       mover: { trials: mv.length, hit: mv.filter((m) => m.hit).length, drawn: mv.filter((m) => m.drawn).length,

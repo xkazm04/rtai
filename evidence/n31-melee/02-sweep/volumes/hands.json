@@ -2,12 +2,12 @@
 	"schema": "gtai.blade-pixels-judged/1",
 	"weapon": "hands",
 	"weapon_id": "claw",
-	"drawn_no_hit": 11,
+	"drawn_no_hit": 9,
 	"hit_not_drawn": 5,
 	"both": 9,
-	"neither": 35,
-	"drawn_no_hit_after_test": 10,
-	"drawn_no_hit_in_cut": 11,
+	"neither": 37,
+	"drawn_no_hit_after_test": 8,
+	"drawn_no_hit_in_cut": 9,
 	"repeats": [
 		{
 			"k": 1,
@@ -70,6 +70,219 @@
 			"prev_strike_t": -1
 		}
 	],
+	"body_cut_m": 0.6,
+	"body_cut_px": {
+		"0": {
+			"radius": 75,
+			"head": 26,
+			"floor": 32,
+			"left": 1298
+		},
+		"1": {
+			"radius": 75,
+			"head": 26,
+			"floor": 32,
+			"left": 1298
+		},
+		"2": {
+			"radius": 75,
+			"head": 26,
+			"floor": 32,
+			"left": 1298
+		},
+		"3": {
+			"radius": 127,
+			"head": 90,
+			"floor": 65,
+			"left": 2889
+		},
+		"4": {
+			"radius": 127,
+			"head": 90,
+			"floor": 33,
+			"left": 2977
+		},
+		"5": {
+			"radius": 127,
+			"head": 90,
+			"floor": 33,
+			"left": 2416
+		},
+		"6": {
+			"radius": 173,
+			"head": 47,
+			"floor": 33,
+			"left": 2300
+		},
+		"25": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"26": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"27": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"28": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"29": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"31": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"32": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"33": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"34": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"35": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"36": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"38": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"39": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"40": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"41": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"42": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"43": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"46": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"47": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"48": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"49": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"50": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"51": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"52": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"53": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"54": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"55": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"56": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		}
+	},
 	"overlays": [
 		4,
 		6
@@ -187,8 +400,7 @@
 				2,
 				3,
 				4,
-				5,
-				6
+				5
 			],
 			"hit": false,
 			"kind": "ring",
@@ -578,16 +790,8 @@
 		{
 			"angle_deg": 270,
 			"dist_m": 2,
-			"drawn": true,
-			"drawn_ks": [
-				0,
-				1,
-				2,
-				3,
-				4,
-				5,
-				6
-			],
+			"drawn": false,
+			"drawn_ks": [],
 			"hit": false,
 			"kind": "ring",
 			"land_k": 9,
@@ -726,16 +930,8 @@
 		{
 			"angle_deg": 270,
 			"dist_m": 2.6,
-			"drawn": true,
-			"drawn_ks": [
-				0,
-				1,
-				2,
-				3,
-				4,
-				5,
-				6
-			],
+			"drawn": false,
+			"drawn_ks": [],
 			"hit": false,
 			"kind": "ring",
 			"land_k": 9,
@@ -1139,91 +1335,91 @@
 						-177.8,
 						179.5
 					],
-					"reach_m": 2.19,
-					"points": 335,
+					"reach_m": 1.78,
+					"points": 306,
 					"deg_p5_p95": [
-						-161.8,
-						171.1
+						-161.4,
+						170.5
 					],
-					"reach_p95": 1.77
+					"reach_p95": 1.68
 				},
 				"1": {
 					"deg": [
 						-177.8,
 						179.5
 					],
-					"reach_m": 2.19,
-					"points": 335,
+					"reach_m": 1.78,
+					"points": 306,
 					"deg_p5_p95": [
-						-161.8,
-						171.1
+						-161.4,
+						170.5
 					],
-					"reach_p95": 1.77
+					"reach_p95": 1.68
 				},
 				"2": {
 					"deg": [
 						-177.8,
 						179.5
 					],
-					"reach_m": 2.19,
-					"points": 335,
+					"reach_m": 1.78,
+					"points": 306,
 					"deg_p5_p95": [
-						-161.8,
-						171.1
+						-161.4,
+						170.5
 					],
-					"reach_p95": 1.77
+					"reach_p95": 1.68
 				},
 				"3": {
 					"deg": [
-						-177.4,
+						-137,
 						179.4
 					],
-					"reach_m": 2.19,
-					"points": 782,
+					"reach_m": 1.88,
+					"points": 709,
 					"deg_p5_p95": [
-						-68.4,
-						31.1
+						-61.7,
+						26
 					],
-					"reach_p95": 1.77
+					"reach_p95": 1.67
 				},
 				"4": {
 					"deg": [
-						-177.4,
+						-137,
 						179.4
 					],
-					"reach_m": 2.19,
-					"points": 801,
+					"reach_m": 1.88,
+					"points": 736,
 					"deg_p5_p95": [
-						-68,
-						35.7
+						-61.6,
+						33.7
 					],
-					"reach_p95": 1.76
+					"reach_p95": 1.67
 				},
 				"5": {
 					"deg": [
-						-177.4,
+						-137,
 						179.4
 					],
-					"reach_m": 2.19,
-					"points": 660,
+					"reach_m": 1.88,
+					"points": 595,
 					"deg_p5_p95": [
-						-71.2,
-						36.5
+						-62.6,
+						30.1
 					],
-					"reach_p95": 1.8
+					"reach_p95": 1.7
 				},
 				"6": {
 					"deg": [
-						-177.4,
-						179.4
+						-174.1,
+						29.1
 					],
-					"reach_m": 2.19,
-					"points": 646,
+					"reach_m": 1.89,
+					"points": 578,
 					"deg_p5_p95": [
-						-127.8,
-						25.5
+						-126.8,
+						22.6
 					],
-					"reach_p95": 1.77
+					"reach_p95": 1.73
 				}
 			}
 		},
@@ -1247,94 +1443,94 @@
 			"ticks": {
 				"0": {
 					"deg": [
-						-179.8,
-						179.3
+						-135.2,
+						151.1
 					],
-					"reach_m": 2.03,
-					"points": 215,
+					"reach_m": 1.86,
+					"points": 133,
 					"deg_p5_p95": [
-						-176.1,
-						175.8
+						-127.5,
+						143.7
 					],
-					"reach_p95": 2
+					"reach_p95": 1.76
 				},
 				"1": {
 					"deg": [
-						-179.8,
-						179.3
+						-135.2,
+						151.1
 					],
-					"reach_m": 2.03,
-					"points": 215,
+					"reach_m": 1.86,
+					"points": 133,
 					"deg_p5_p95": [
-						-176.1,
-						175.8
+						-127.5,
+						143.7
 					],
-					"reach_p95": 2
+					"reach_p95": 1.76
 				},
 				"2": {
 					"deg": [
-						-179.8,
-						179.3
+						-135.2,
+						151.1
 					],
-					"reach_m": 2.03,
-					"points": 322,
+					"reach_m": 1.86,
+					"points": 240,
 					"deg_p5_p95": [
-						-168.9,
-						173.8
+						-122.9,
+						141.4
 					],
-					"reach_p95": 1.99
+					"reach_p95": 1.72
 				},
 				"3": {
 					"deg": [
-						-179.8,
-						179.3
+						-141.2,
+						144.7
 					],
-					"reach_m": 1.96,
-					"points": 371,
+					"reach_m": 1.6,
+					"points": 309,
 					"deg_p5_p95": [
-						-134.2,
-						165.3
+						-133.1,
+						135.8
 					],
-					"reach_p95": 1.85
+					"reach_p95": 1.57
 				},
 				"4": {
 					"deg": [
-						-179.8,
-						179.3
+						-141.2,
+						144.7
 					],
-					"reach_m": 1.96,
-					"points": 325,
+					"reach_m": 1.6,
+					"points": 263,
 					"deg_p5_p95": [
-						-135.2,
-						166.3
+						-134.1,
+						139.8
 					],
-					"reach_p95": 1.87
+					"reach_p95": 1.57
 				},
 				"5": {
 					"deg": [
-						-179.8,
-						179.3
+						-141.2,
+						144.7
 					],
-					"reach_m": 1.96,
-					"points": 258,
+					"reach_m": 1.59,
+					"points": 196,
 					"deg_p5_p95": [
-						-137.3,
-						168.6
+						-135.3,
+						141.4
 					],
-					"reach_p95": 1.91
+					"reach_p95": 1.56
 				},
 				"6": {
 					"deg": [
-						-179.8,
-						179.3
+						-142,
+						144.7
 					],
-					"reach_m": 1.96,
-					"points": 84,
+					"reach_m": 1.52,
+					"points": 58,
 					"deg_p5_p95": [
-						-175.2,
-						174.8
+						-140.3,
+						143.7
 					],
-					"reach_p95": 1.96
+					"reach_p95": 1.49
 				}
 			}
 		},
@@ -1359,93 +1555,93 @@
 				"0": {
 					"deg": [
 						-172.9,
-						-19
+						-75.9
 					],
-					"reach_m": 2.07,
-					"points": 237,
+					"reach_m": 1.64,
+					"points": 166,
 					"deg_p5_p95": [
-						-162.6,
-						-27
+						-165.6,
+						-79.8
 					],
-					"reach_p95": 2.03
+					"reach_p95": 1.58
 				},
 				"1": {
 					"deg": [
 						-172.9,
-						-19
+						-75.9
 					],
-					"reach_m": 2.07,
-					"points": 237,
+					"reach_m": 1.64,
+					"points": 166,
 					"deg_p5_p95": [
-						-162.6,
-						-27
+						-165.6,
+						-79.8
 					],
-					"reach_p95": 2.03
+					"reach_p95": 1.58
 				},
 				"2": {
 					"deg": [
 						-172.9,
 						1.6
 					],
-					"reach_m": 2.07,
-					"points": 288,
+					"reach_m": 1.64,
+					"points": 217,
 					"deg_p5_p95": [
-						-161.4,
-						-4.3
+						-163.7,
+						-3.4
 					],
-					"reach_p95": 2.02
+					"reach_p95": 1.58
 				},
 				"3": {
 					"deg": [
 						-168.3,
 						26.3
 					],
-					"reach_m": 2.06,
-					"points": 602,
+					"reach_m": 2.01,
+					"points": 491,
 					"deg_p5_p95": [
-						-112.4,
-						13.6
+						-113.4,
+						14
 					],
-					"reach_p95": 1.99
+					"reach_p95": 1.9
 				},
 				"4": {
 					"deg": [
 						-168.3,
 						37.2
 					],
-					"reach_m": 2.06,
-					"points": 669,
+					"reach_m": 2.01,
+					"points": 558,
 					"deg_p5_p95": [
-						-110.8,
-						27.9
+						-112.1,
+						29.2
 					],
-					"reach_p95": 1.98
+					"reach_p95": 1.89
 				},
 				"5": {
 					"deg": [
 						-168.3,
 						43.9
 					],
-					"reach_m": 2.06,
-					"points": 645,
+					"reach_m": 2.01,
+					"points": 535,
 					"deg_p5_p95": [
-						-111.8,
-						34.1
+						-112.4,
+						35.3
 					],
-					"reach_p95": 1.98
+					"reach_p95": 1.89
 				},
 				"6": {
 					"deg": [
 						-170.4,
 						66.5
 					],
-					"reach_m": 1.99,
-					"points": 476,
+					"reach_m": 1.96,
+					"points": 391,
 					"deg_p5_p95": [
-						-89.1,
-						59
+						-88.2,
+						60.1
 					],
-					"reach_p95": 1.96
+					"reach_p95": 1.78
 				}
 			}
 		}
