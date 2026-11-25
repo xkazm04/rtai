@@ -155,3 +155,5 @@ Re-mutate `kill_card_fall.gd` (`node tools/mutate/mutate.mjs --file=project/feat
 `tex.get_width() % FRAMES != 0 or tex.get_height() % rows != 0` with `or -> and` (no test feeds a sheet that divides in one
 dimension only). Not fixed here (no product or test change in this call); a test with a 5-divisible width and a non-divisible
 height would kill it.
+
+c13: `KillCardFall.splits(size, rows)` extracted from `usable()` and tested on both axes (`test_a_sheet_must_split_on_both_axes`, commit 1444843f3). Re-mutate (`--lines=54 --tests=test_kill_card_fall --max=4`, 182 s): `score 100.0% = killed 4 / (killed 4 + survived 0); timeout 0, invalid 0`. The or->and survivor is gone (it now lives as `and -> or` on line 54, killed).
