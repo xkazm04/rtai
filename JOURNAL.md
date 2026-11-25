@@ -177,3 +177,17 @@ NEXT (session 6, from ~17:09):
   frames differ (167-179, 643-646, max 1021 px). I looked at the frame at 12 s (`build/n30-dir/mhead_12s.png`): three tiles aligned,
   labels readable, n30 bottle + flame in the claw, 64 px/m tile clean. frames.json entry -> molotov_head_32.mp4 (15). REPORT: What works
   updated, the "molotov_32.mp4 predates the fix" line removed from What does not.
+- 15:55 CHECKED masters frames.json: 15 entries, every file exists; cites 23/23 ok. (The 15:56 stamp above was written ahead of the clock: the
+  acceptance was at 15:54.)
+- 15:55 Session 6 closes early on purpose: the brief's items 1-4 are done, filmed and gated, both pre-fix molotov artefacts (grid, 3-way clip)
+  now have HEAD versions, images 60/60 so the remaining rope cells cannot be edited. No builder running, lane lock free. Every commit since
+  the last code commit 22d3c0fb1 (gated PASS at a09f9be52) is evidence/journal/report only (inert), so no re-gate before the freeze.
+
+NEXT (session 7):
+1. No new product work; nothing new after 17:15.
+2. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys,
+   lane lock tag director-gate, ~20-35 min), quote its line + gate.json path in REPORT Gate. If it cannot finish by 19:10, quote the
+   a09f9be52 PASS and write the reels gate as owed in What does not.
+3. REPORT final by 18:55: drop the DRAFT line, add n30-22 (5 min, accepted) and n30-23 (6 min, accepted) to the builder ledger,
+   frames.json check (15, all exist), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
+4. Temp (this lane's, for the Director's cleanup): gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
