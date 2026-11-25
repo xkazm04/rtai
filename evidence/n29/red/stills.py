@@ -1,5 +1,5 @@
 """Copies the take frames to the masters as red_fire_<effect>_<side>_64.png (+ _crop) and prints the
-reddish px per crop. python -I evidence/n29/red/stills.py <before|after|pair>  (run from the repo root)"""
+reddish px per crop. python -I evidence/n29/red/stills.py <before|after|after_colour|pair>  (run from the repo root)"""
 import sys, os, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image
@@ -18,6 +18,8 @@ def main(side):
     os.makedirs(OUT, exist_ok=True)
     for name, (frame, box) in SHOTS.items():
         src = frame.format(side=side)
+        if not os.path.exists(src):  # after_colour: the reel only (--fx-colour=on)
+            continue
         full = "%s/red_fire_%s_%s_64.png" % (OUT, name, side)
         shutil.copyfile(src, full)
         Image.open(src).crop(box).save(full.replace("_64.png", "_64_crop.png"))
@@ -37,6 +39,14 @@ def pairs():
         d.text((8, 7), "BEFORE %s (red)" % name, fill=(242, 232, 213))
         d.text((a.width + 20, 7), "AFTER %s (amber remap)" % name, fill=(242, 232, 213))
         s.save("%s/red_fire_%s_pair_64.png" % (OUT, name))
+        c = "%s/red_fire_%s_after_colour_64_crop.png" % (OUT, name)
+        if os.path.exists(c):  # before | after (default ink FX) | after under --fx-colour=on
+            c = Image.open(c).convert("RGB")
+            t = Image.new("RGB", (s.width + c.width + 12, s.height), (23, 19, 27))
+            t.paste(s, (0, 0))
+            t.paste(c, (s.width + 12, 28))
+            ImageDraw.Draw(t).text((s.width + 20, 7), "AFTER %s, --fx-colour=on" % name, fill=(242, 232, 213))
+            t.save("%s/red_fire_%s_triple_64.png" % (OUT, name))
 
 
 if __name__ == "__main__":

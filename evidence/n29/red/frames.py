@@ -10,7 +10,7 @@ EFFECTS = {"blast": "rocket blast fireball (blast_1), reel t70", "flame": "flame
 def entries():
     out = []
     for name, what in EFFECTS.items():
-        for side in ("before", "after"):
+        for side in ("before", "after", "after_colour"):
             for tail in ("_64.png", "_64_crop.png"):
                 f = "stills/red_fire_%s_%s%s" % (name, side, tail)
                 if os.path.exists(os.path.join(ROOT, f)):
@@ -20,6 +20,10 @@ def entries():
         if os.path.exists(os.path.join(ROOT, f)):
             out.append({"file": f, "title": "Red fire %s before | after" % name, "ppm": 64, "before": False,
                         "note": what + "; left red, right the amber hue remap"})
+        f = "stills/red_fire_%s_triple_64.png" % name
+        if os.path.exists(os.path.join(ROOT, f)):
+            out.append({"file": f, "title": "Red fire %s before | after | after --fx-colour=on" % name, "ppm": 64,
+                        "before": False, "note": what + "; the default look's item print snaps amber back to vermilion"})
     f = "films/red_fire_after_32.mp4"
     if os.path.exists(os.path.join(ROOT, f)):
         out.append({"file": f, "title": "Rocket, flame and molotov fire in amber", "ppm": 32, "before": False,
