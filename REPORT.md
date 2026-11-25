@@ -1,4 +1,4 @@
-# REPORT lane combat, run n30 (2026-11-25, day run) — DRAFT (session 2, 12:40; final at 18:55)
+# REPORT lane combat, run n30 (2026-11-25, day run) — DRAFT (session 4, 15:05; final at 18:55)
 
 Branch `n30-combat`, worktree `gtai-wt/n23-street`, cut from `main` `5114a4441`. Director Opus 5.5; builders Claude
 sub-agents (Agent tool; Sonnet 5.5, Opus 5.5 for the card fall). Films and stills: `C:/Users/kazda/kiro/gtai-masters/n30/combat/`
@@ -71,10 +71,23 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   Film `films/bond_natural_32.mp4` 1920x1080 60/1 29.87 s. `evidence/n30/bond/natural.md`.
 
 ## What does not
-- (pending)
+- Item 4 is not on screen on this branch: the rim needs `evidence/n30/lights/rim.patch` (shader + `core/render/light_pool.gd`,
+  on no lane's file list) applied by the Director after the merge. Even patched, the rim reads modestly over the nuke's own
+  amber floor at 64 px/m and is barely visible at 32 px/m (8.17-8.3 s of the film).
+- The nuke round keeps 39 vermilion px of its band edge at 64 px/m (sprite fixes made it worse; the print blends the band
+  with the stripe ink).
+- A rocket fired at close range gets no explosion light at all (the photosensitivity budget, see Calls).
+- `current_look.gd`: one mutate survivor (deleting the `draw_polyline` call) needs a GPU pixel readback; not built.
+- The "Overkill Carry" weapon-effect card in the bond film draws no icon (blank card face); icon art is keys' (weapon icons).
 
 ## What blocked or slowed you
 - Session 1: c07 (nuke specks) lost its take to a 240 s timeout under machine contention (10 min).
+- Session 2: c04 measured 16 ticks on which no explosion light was drawn (refused by the flash budget or expired), so its
+  before | after read 0 px and needed an Opus probe to explain (30 + 6 min).
+- Session 3: c16 compared the wrong second of the rim film (a re-check found the 0.13 s window; 5 min).
+- Ownership: the rim's shader and `light_pool.gd` are on no lane's list, so item 4 became a proven patch, not a commit (about
+  40 min of patch-proving instead of a direct change).
+- A windowed take does not reimport a changed PNG (needs an `--import` first): one wasted take in c07b.
 
 ## Calls for the owner
 - Thin hop/stun: at 3 px (shipped) the hop line and stun stars read cream/tan; at 4 px (`THIN_BODY_PX`, one value) they keep
@@ -101,9 +114,19 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - `--kill-card-fall` was added to `KNOWN_FLAGS` (debt accepted, launch_args 226 -> 227).
 
 ## Next steps
-- (pending)
+- Director, after merging: `git apply evidence/n30/lights/rim.patch`, then
+  `node tools/tests/run_unit.mjs --select=test_light_pool_rim,test_light_explosion_amber,test_light_layer`; film the nuke
+  blast at t486 64 px/m.
+- Director, after merging n30-cast: `kill_fall_cells.gd:95` -> `StreetCrowdCards.body_scale_of(rig)` (Merge notes).
+- Overkill Carry card icon (keys / weapon icons): NEED Director.
+- The print's vermilion snap on amber-and-ink edges (nuke band edge, blast floor edges) is in `grade_ink.gdshader`
+  (core/render): a print fix, not sprite tweaks.
+- Owner calls above: thin 3 or 4 px; fire light token amber; flash budget for a close-range rocket blast.
+- Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
 ## Builder ledger
+- Session 3: c09 street-identity 14 accepted; c10 bond-natural 11 accepted; c13 split-test 15 accepted; c12 rim-proof 29
+  accepted; c14 thin 3|4 still 2 accepted; c15 decisions 1 accepted; c16 rim film 3 accepted (compared the wrong second; re-checked).
 - Session 2: c04 explosion-rim 30 accepted-partial (data in, its takes missed the light: brief should have named the tick
   the light is live and a lights-off control at that tick); c07b nuke-specks 24 accepted (negative result); c04b light-probe
   (Opus) 6 accepted; c08 current-pin 24 accepted; c11 decisions 1 accepted.
