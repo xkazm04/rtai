@@ -135,3 +135,7 @@
 ## Session 8 (08:45, STABILIZE, iteration 8)
 - 08:46 Re-checked: `git diff --stat f5898d1b2 HEAD -- project tools native` empty, tracked tree clean, `build/gate/29749d82c140/gate.json` present (reels gate PASS covers the build), `node tools/evidence/cites.mjs REPORT.md` 61 paths, 59 ok, 2 pattern. Nothing to fix. BUILDER RUNNING none. IMAGES 7/25.
 - 08:47 NEXT: none for the lane. Director merges `n29-yard` (keep each lane's own JOURNAL.md / REPORT.md on the add/add conflict); owner's call in REPORT `## Calls for the owner`.
+
+## Session 9 (08:55, REPORT phase, iteration 9)
+- 08:56 Re-checked REPORT.md: every required section present (What works / What does not / What blocked / Calls for the owner / Merge notes / Next steps / Builder ledger), no DRAFT, `node tools/evidence/cites.mjs REPORT.md` 61 paths, 59 ok, 2 pattern. `git diff --stat f5898d1b2 HEAD -- project tools native` empty; `build/gate/29749d82c140/gate.json` (reels gate PASS) present. REPORT unchanged. BUILDER RUNNING none. IMAGES 7/25.
+- 08:57 NEXT: none for the lane. Director merges `n29-yard` (keep each lane's own JOURNAL.md / REPORT.md on the add/add conflict); owner's call in REPORT `## Calls for the owner`.
