@@ -44,9 +44,14 @@ static func usable(full: String) -> String:
 		return ""
 	var path: String = full.trim_prefix(dir)
 	var rows: int = StreetFallBetween.rows_of(path)
-	if tex.get_width() % RigHeadCard.FRAMES != 0 or tex.get_height() % rows != 0:
+	if not splits(Vector2i(tex.get_size()), rows):
 		return ""
 	return path
+
+
+## True when a sheet of `size` splits into RigHeadCard.FRAMES columns and `rows` rows.
+static func splits(size: Vector2i, rows: int) -> bool:
+	return size.x % RigHeadCard.FRAMES == 0 and size.y % rows == 0
 
 
 ## The card row a death's own cells are looked up by (KillDeathCells.path_of): a card foe's

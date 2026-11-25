@@ -1,9 +1,6 @@
 extends GutTest
-## n30 combat (owner, decisions 1598): a killed card foe falls on his own fall sheet when the kill
-## style has none (KillFallCells.attach -> KillCardFall); a style with own cells keeps them; a
-## street walker keeps the generic grid; `--kill-card-fall=grid` (KillCardFall.set_on(0)) is the
-## before; a card row whose sheet is missing or does not split keeps the generic grid.
-
+## n30 combat: a card foe falls on his own fall sheet when the kill style has none;
+## own cells and the street grid stay; `--kill-card-fall=grid` is the before.
 const SERGEANT: StringName = &"sergeant_mulroney"
 ## The card rows on, and the one the cast lane may turn on.
 const ROWS: Array[StringName] = [
@@ -194,3 +191,10 @@ func test_the_toggle_reads_on_without_the_flag() -> void:
 	KillCardFall.set_on(-1)
 	assert_eq(LaunchArgs.value(KillCardFall.FLAG), "")
 	assert_true(KillCardFall.on())
+
+
+func test_a_sheet_must_split_on_both_axes() -> void:
+	var size: Vector2i = Vector2i(RigHeadCard.FRAMES * 96, 3 * 192)
+	assert_true(KillCardFall.splits(size, 3))
+	for off: Vector2i in [Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)]:
+		assert_false(KillCardFall.splits(size + off, 3))
