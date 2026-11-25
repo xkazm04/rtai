@@ -118,3 +118,12 @@ No builder running at 14:47.
 - 15:15 BUILDER n30-20 unsure-collar launched (sonnet, bg, no Godot, no images): settle the audit's UNSURE p70 collar cells at 4x vs rigid references, next-run edit list with image count; commit by 15:40, END 15:45.
 - 15:16 BUILDER n30-20 unsure-collar 2 accepted: a744fe9ac (eq_collar_unsure.py + audit section). ROPE 9 / RIGID 41; next-run list 9 images with references. I looked at unsure_electro_gun_diag_4x.png (c0/c2 twisted torn stripes = rope, agreed) and unsure_mini_nuke_eq_4x.png (c1/c3/c5/c7 flat ring, straight stripes = rigid, agreed). REPORT Next steps 2 rewritten.
 - 15:37 GATE PASS on a09f9be52 (26 min, 15:11-15:37): `gate: PASS; build/gate/a09f9be527a0/gate.json` (lint 19/19 over 2292 files, unit 4316/0/2 skipped, scenarios 68, parity bit-exact + mutation caught at 629, selftest, export-audit 1003/0). Covers the last code commit 22d3c0fb1; d8aabf6ae and a744fe9ac are evidence only (inert). MILESTONE lane green at a09f9be52. Lock released.
+- 15:40 REPORT: ledger n30-17..20, What does not (p70 rope cells left at 60/60 images; molotov_32.mp4 predates the step fix), Gate a09f9be52; line endings normalised to LF. cites 23/23 ok.
+- Session 4 ends here: no builder running, lane lock free. Images 60/60. Last code commit 22d3c0fb1 (gated PASS at a09f9be52).
+
+NEXT (session 5, from ~16:16):
+1. No new product work is planned: the brief's items 1-4 are done, filmed and gated; images are spent (60/60). If a no-image quality point is wanted, the best is a 15-min sonnet call that re-cuts `molotov/molotov_32.mp4`'s role: nothing to rebuild, it is already superseded in frames.json order (tour clip is #3). Prefer idle over churn.
+2. Commit the last new work by 17:15 (only JOURNAL/REPORT expected). If any code lands, re-run `node tools/gate/run.mjs --rev=HEAD` before 17:30.
+3. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (lane lock tag director-gate, ~20-35 min; start 18:45 sharp so it ends before 19:15), quote its line + gate.json path in REPORT Gate.
+4. REPORT final by 18:55: drop the DRAFT line, check frames.json (15 entries, all files exist: node one-liner in JOURNAL 15:12), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
+5. Temp: gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c and gtai-film-* snapshots are this lane's: leave for the Director's post-merge cleanup (list them in Merge notes).

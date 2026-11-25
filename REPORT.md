@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-DRAFT (session 4, 15:05): sections are filled as items land; the final version is written at 18:55.
+DRAFT (session 4, 15:40): sections are filled as items land; the final version is written at 18:55.
 
 ## What works
 
@@ -63,6 +63,10 @@ DRAFT (session 4, 15:05): sections are filled as items land; the final version i
 
 - Row 8's touch-ups (cell 4: a notch where the helmet meets the ring's left end; cell 8: a light streak on the helmet right of
   the ring) kept shipped: two image edits each did not touch the defect (both lie just outside the collar hull).
+- Rivet's collar still reads as rope in some p70 cells, and the run's 60 images are spent: mini-nuke `_left` c0 (its edit was
+  rejected on sight), gatling `_left` c0, `gatling_diag` c0/c2, the two `_left_fire` strips, and the 9 cells listed in Next steps 2.
+  The `_left_fire` cells are another drawing, so a shot swaps the new ring for a few torn bits under the visor, not for a clear rope.
+- `molotov/molotov_32.mp4` (n30-05) was filmed before the run-step fix `0e399a732`; the p70 sprint tour clip is the current one.
 
 ## What blocked or slowed you (minutes each)
 
@@ -116,6 +120,8 @@ DRAFT (session 4, 15:05): sections are filled as items land; the final version i
   (+ `.import`), `project/data/tables/rivet_motion.json` (molotov `run_row_k` rows), `project/tests/unit/test_rivet_grid_stride.gd`,
   `project/tests/unit/test_rivet_walk_sprint_fallback.gd`, `steam/ai-provenance/2026-11.jsonl` (append), `docs/decisions.md` (append).
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on the add/add conflict.
+- Temp left for the post-merge cleanup (this lane's): `gtai-gate-a09f9be527a0`, `gtai-gate-74fc5e382e63`, `gtai-mutate-dc83624c`, and the
+  `build/turn-snapshots` / `gtai-film-*` snapshots of 5114a4441 used for the before films.
 
 ## Next steps
 
@@ -153,6 +159,8 @@ DRAFT (session 4, 15:05): sections are filled as items land; the final version i
 | n30-16 sprint-tour | opus | 20 | accepted | caught a stale import in the before snapshot; clip encoded at half speed (I re-cut it at real speed) |
 | n30-17 molotov-tour | sonnet | 9 | accepted | p70 molotov sprint tour, snapshot re-imported up front |
 | n30-18 eq-collar-film | sonnet | 11 | accepted | 32 px/m turn clip of the aim-left collar |
+| n30-19 vermilion-preview | sonnet | 2 | accepted | heat -> amber preview per weapon, no Godot, beside the gate |
+| n30-20 unsure-collar | sonnet | 2 | accepted | UNSURE cells settled at 4x, next-run list of 9 images |
 
 Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
 before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were
