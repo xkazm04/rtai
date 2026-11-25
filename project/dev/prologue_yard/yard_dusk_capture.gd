@@ -10,6 +10,7 @@ const EXTRA_TICKS: Array[int] = [
 ]
 const BUDGET: int = 300 * SimClock.TICK_RATE
 
+var place: String = "front" if ArenaArgs.parse().text("--dusk") == "front" else "mid"
 var _game: PrologueGame
 var _view: PrologueView
 var _out: String
@@ -61,7 +62,7 @@ func _measure_round(shot: Shot) -> bool:
 
 func _expose(label: String) -> void:
 	var plan: PrologueYard = _game.stage.plan as PrologueYard
-	await _still(label, YardCamera.center(plan, "mid", _game.stage.tick), 32)
+	await _still(label, YardCamera.center(plan, place, _game.stage.tick), 32)
 	var points: Array[Dictionary] = []
 	for h: Fighter in _game.stage.arena.hostiles:
 		if h.archetype == &"patrol_cop" and h.alive() and plan.yard.has_point(h.pos):
