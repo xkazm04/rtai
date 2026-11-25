@@ -35,7 +35,7 @@
       "p70/electro_baton": 68.7,
       "p70/electro_gun": 82.3,
       "p70/gatling": 68,
-      "p70/gloria": 86.7,
+      "p70/gloria": 74.7,
       "p70/hand_cannon": 69.7,
       "p70/homing_shard": 78.7,
       "p70/katana": 66,
@@ -44,6 +44,7 @@
       "p70/molotov": 81,
       "p70/pistol": 76,
       "p70/plasma_rifle": 76,
+      "p70/plasma_sword": 66.7,
       "p70/ray_gun": 79,
       "p70/rocket_launcher": 84
     },
@@ -233,9 +234,7 @@
       "p70/flamethrower/3": 0.91,
       "p70/flamethrower/4": 0.92,
       "p70/gatling/4": 0.94,
-      "p70/gloria/0": 0.98,
-      "p70/gloria/3": 0.97,
-      "p70/gloria/4": 0.92,
+      "p70/gloria/5": 0.64,
       "p70/hand_cannon/0": 0.91,
       "p70/hand_cannon/3": 0.91,
       "p70/hand_cannon/4": 0.84,
@@ -243,6 +242,7 @@
       "p70/machine_pistol/0": 0.86,
       "p70/machine_pistol/1": 0.95,
       "p70/machine_pistol/4": 0.91,
+      "p70/plasma_sword/1": 0.98,
       "p70/rocket_launcher/0": 0.91,
       "p70/rocket_launcher/3": 0.94,
       "p70/rocket_launcher/4": 0.93
@@ -265,8 +265,8 @@
         33.5
       ],
       "p70/rivet_walk_eq_gloria.png": [
-        26,
-        32.5
+        22,
+        32
       ],
       "p70/rivet_walk_eq_hand_cannon.png": [
         25,
@@ -287,6 +287,10 @@
       "p70/rivet_walk_eq_molotov.png": [
         27.5,
         34.5
+      ],
+      "p70/rivet_walk_eq_plasma_sword.png": [
+        15.5,
+        30
       ],
       "p70/rivet_walk_eq_ray_gun.png": [
         25.5,
@@ -365,10 +369,9 @@
       "two_hand_long": "plasma_rifle"
     },
     "by_weapon": {
-      "gloria": "bare_claw_p70",
       "katana": "katana"
     },
-    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon; the value bare_claw (every pitch) or bare_claw_<art> (one pitch) withholds the weapon's own drawn grid files (they stay in the repo) so it walks on the bare stride with the held part on the palm (n27: gloria at p70 until her compact-gun grids exist; set her row to gloria, or delete it, to bring the long-gun grids back). For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
+    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon; the value bare_claw (every pitch) or bare_claw_<art> (one pitch) withholds the weapon's own drawn grid files (they stay in the repo) so it walks on the bare stride with the held part on the palm (n27: gloria at p70 was withheld this way until n29 drew her compact-gun grids; her row is gone). For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
     "palm_percent": {
       "p55": {
         "run": [

@@ -1,0 +1,8 @@
+{
+ "project/features/combat/weapons/art/showcase/crate/p70.png": {
+  "mask_px": 4371,
+  "changed_outside_mask": 0,
+  "mode": "RGBA"
+ },
+ "note": "electro_baton/held and showcase/icon/electro_gun were tried and reverted: hue shift left olive speckles on the coil / left the vermilion wire (director)"
+}

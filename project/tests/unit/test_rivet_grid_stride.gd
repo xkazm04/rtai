@@ -3,6 +3,8 @@ extends GutTest
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/gloria": 74.7,
+	"p70/plasma_sword": 66.7,
 	"p70/molotov": 81.0,
 	"p70/ray_gun": 79.0,
 	"p70/homing_shard": 78.7,
@@ -14,7 +16,6 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p70/electro_baton": 68.7,
 	"p70/chainsaw": 64.3,
 	"p70/rocket_launcher": 84.0,
-	"p70/gloria": 86.7,
 	"p70/pistol": 76.0,
 	"p70/plasma_rifle": 76.0,
 	"p70/katana": 66.0,
@@ -25,6 +26,8 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p55/gatling": 81.0,
 }
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/gloria/5": 0.64,
+	"p70/plasma_sword/1": 0.98,
 	"p70/electro_gun/5": 0.96,
 	"p70/electro_gun/4": 0.86,
 	"p70/electro_gun/3": 0.93,
@@ -55,9 +58,6 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p70/rocket_launcher/0": 0.91,
 	"p70/rocket_launcher/3": 0.94,
 	"p70/rocket_launcher/4": 0.93,
-	"p70/gloria/0": 0.98,
-	"p70/gloria/3": 0.97,
-	"p70/gloria/4": 0.92,
 	"p70/gatling/4": 0.94,
 	"p55/sprint/2": 0.98,
 	"p55/sprint/6": 0.98,
@@ -75,6 +75,8 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(22.0, 32.0),
+	StrideMatch.ROOT + "p70/rivet_walk_eq_plasma_sword.png": Vector2(15.5, 30.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_molotov.png": Vector2(27.5, 34.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_ray_gun.png": Vector2(25.5, 34.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_homing_shard.png": Vector2(25.0, 34.0),
@@ -86,7 +88,6 @@ const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
 	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_baton.png": Vector2(15.0, 28.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_chainsaw.png": Vector2(18.5, 28.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_rocket_launcher.png": Vector2(23.0, 36.5),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),
 }
 
 
@@ -97,8 +98,10 @@ func test_all_five_calibrations_match_the_measured_grids() -> void:
 	assert_eq(grid.walk_profile_travel, WALK_PROFILE_TRAVEL)
 
 
-func _bare_rig(file: String) -> CutRig:
+func _bare_rig(file: String, face: float = 0.0, speed: float = 0.0) -> CutRig:
 	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.face_to = face
+	rig.speed_now = speed
 	var card: Sprite2D = Sprite2D.new()
 	rig.add_child(card)
 	rig.head_card = card
@@ -152,17 +155,13 @@ func test_only_the_boot_with_enough_travel_uses_its_measured_cycle() -> void:
 	rig.face_to = -PI / 4.0  # back right, [0, 13.30]
 	cycles = RivetWalk._bare_cycles(rig.head_card, "p55", rig, 0.72)
 	assert_almost_eq(cycles, Vector2.ONE * 212.0 * 0.72, Vector2.ONE * 0.0001)
-	rig = _bare_rig("p70/rivet_walk8.png")
-	rig.face_to = PI / 4.0  # front right, [30.17, 0]
-	rig.speed_now = 32.0
+	rig = _bare_rig("p70/rivet_walk8.png", PI / 4.0, 32.0)  # front right, [30.17, 0]
 	cycles = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 0.72)
 	assert_almost_eq(cycles, Vector2(30.17, 60.0) * 0.72, Vector2.ONE * 0.0001)
 
 
 func test_short_measured_stance_keeps_two_sprint_ticks_per_drawing() -> void:
-	var rig: CutRig = _bare_rig("p70/rivet_run8.png")
-	rig.face_to = PI / 4.0
-	rig.speed_now = 9.3 * CharacterRigs.PX_PER_M
+	var rig: CutRig = _bare_rig("p70/rivet_run8.png", PI / 4.0, 9.3 * CharacterRigs.PX_PER_M)
 	var cycles: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 0.5)
 	var two_ticks: float = rig.speed_now * SimClock.TICK_DT * 2.0
 	assert_almost_eq(cycles / 8.0, Vector2.ONE * two_ticks, Vector2.ONE * 0.0001)
@@ -171,9 +170,7 @@ func test_short_measured_stance_keeps_two_sprint_ticks_per_drawing() -> void:
 func test_each_boot_accepts_a_measurement_exactly_at_the_cutoff() -> void:
 	var grid: RivetGridStride = RivetGridStride.shared()
 	assert_eq(grid.bare_min_travel, 0.4)
-	var rig: CutRig = _bare_rig("p70/rivet_walk8.png")
-	rig.face_to = PI / 2.0
-	rig.speed_now = 32.0
+	var rig: CutRig = _bare_rig("p70/rivet_walk8.png", PI / 2.0, 32.0)
 	var original: PackedVector2Array = grid.bare_walk["p70"]
 	var rows: PackedVector2Array = original.duplicate()
 	rows[0] = Vector2(24.0, 23.9)  # 40% of the 60 px walk cycle is 24 px.
