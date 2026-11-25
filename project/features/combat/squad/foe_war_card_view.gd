@@ -13,6 +13,7 @@ var _vent: Sprite2D
 var _shadow: Node2D = Node2D.new()
 var _step: int = -1
 var _k: float = 1.0
+var _pad_world: Vector2 = Vector2.INF
 
 
 static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool) -> bool:
@@ -65,13 +66,12 @@ func sample(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:
 			row = _attack_row(e, stomp, arena.tick)
 			if e.state == EnemyAgent.State.RECOVER:
 				heat = float(h.cooldown) / mind.walker.attack.cooldown_ticks
-	var stride: int = floori(_pose.walked * rows / cycle_m)
-	var hold_foot: bool = moving and path == walk and stride == _step
-	var last_ground: Vector2 = position
+	# One contact is half the cycle: the four's drawings 1-2, the eight's 1-4 (n29).
+	var contact: int = floori(_pose.walked * 2.0 / cycle_m)
 	_cell(path, rows, row, h)
-	if hold_foot:
-		position = last_ground
-	_step = stride if path == walk else -1
+	var key: int = (contact * 8 + frame_coords.x) * 2 + int(flip_h)
+	_plant(moving and path == walk and key == _step)
+	_step = key if path == walk else -1
 	_shadow.visible = ViewMode.shared().cast_k > 0.0
 	_louvres(heat, path == sheets.stomp)
 
@@ -155,6 +155,29 @@ func _cell(path: String, rows: int, row: int, h: Fighter) -> void:
 		/ BODY_PX
 	)
 	position = h.pos * SimConst.PX_PER_M
+
+
+## Pins the registered pad where its contact set it down: the rest of the contact's drawings
+## are placed from that world point, re-derived every frame after the scale (n29).
+func _plant(held: bool) -> void:
+	var pad: Vector2 = pad_local(texture.resource_path, frame_coords, flip_h, vframes)
+	if held and _pad_world.is_finite():
+		position = _pad_world - pad * scale
+	_pad_world = position + pad * scale
+
+
+## The drawing's registered pad (CastWarAnchors) in the sprite's own space; zero off the walks.
+static func pad_local(path: String, cell: Vector2i, mirrored: bool, rows: int) -> Vector2:
+	var p55: bool = ViewMode.shared().art == "p55"
+	var table: Array[Vector4] = []
+	if path.get_file() == CastWarAnchors.EIGHT:
+		table = CastWarAnchors.EIGHT55 if p55 else CastWarAnchors.EIGHT70
+	elif path.get_file() == CastWarAnchors.FOUR:
+		table = CastWarAnchors.FOUR55 if p55 else CastWarAnchors.FOUR70
+	if table.size() != RigHeadCard.FRAMES * rows:
+		return Vector2.ZERO
+	var ink: Vector4 = table[cell.x * rows + cell.y]
+	return Vector2(-ink.x if mirrored else ink.x, ink.y)
 
 
 func _louvres(heat: float, stomp: bool) -> void:

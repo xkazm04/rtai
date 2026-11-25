@@ -513,7 +513,8 @@
         "2026-11-24: prologue_command_view.gd 244 lines: its draw geometry, cues and switches are pure static helpers so tests can kill planted faults (n27-04); split later if it grows (files_past_soft_cap 65 -> 66)",
         "2026-11-24: prologue_command_view.gd 255 lines and its test file 221 lines: chevron and plate-edge helpers (n27-04) (files_past_soft_cap 66 -> 67)",
         "2026-11-24: --electro-cells for n28 combat (files_past_soft_cap 67 -> 67)",
-        "2026-11-25: card scale for n29 cast (files_past_soft_cap 67 -> 68)"
+        "2026-11-25: card scale for n29 cast (files_past_soft_cap 67 -> 68)",
+        "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -563,6 +564,7 @@
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/crowd_react.gd": 235,
         "project/features/combat/react/react_link.gd": 288,
+        "project/features/combat/squad/foe_war_card_view.gd": 214,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
         "project/features/combat/weapons/fight_areas.gd": 227,
@@ -579,13 +581,14 @@
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
+        "project/tests/unit/test_cast_war_machine.gd": 228,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 68
+      "total": 70
     },
     "lane_named_dev_dirs": {
       "accepted": [
@@ -637,11 +640,10 @@
         "project/dev/weapon_art/swat_lineup_run.gd": 1,
         "project/dev/weapon_art/weapon_lineup_run.gd": 1,
         "project/features/bosses/servo/servo_body_view.gd": 1,
-        "project/features/characters/cast_war_anchors.gd": 1,
         "project/features/combat/weapons/art/arena_weapon_rack.gd": 1,
         "project/features/souls/tonnage_hook.gd": 1
       },
-      "total": 30
+      "total": 29
     }
   },
   "schema": "gtai.debt-baseline/1"
