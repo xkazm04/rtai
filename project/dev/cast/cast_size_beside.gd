@@ -13,6 +13,10 @@ const SLOT_COP: Vector2 = Vector2(0.0, 0.0)
 const SLOT_RIVET: Vector2 = Vector2(3.0, 0.0)
 const LOOK: Vector2 = Vector2(1, 1)
 const PPMS: Array[int] = [64, 32]
+## n29 part B: two more spawns (new actor ids) of one human and the gunner, the jitter proof.
+const EXTRA: Array[StringName] = [
+	&"contractor_x2", &"contractor_x3", &"robot_gunner_x2", &"robot_gunner_x3"
+]
 
 var _host: ArenaRigs
 var _cop: Fighter
@@ -43,10 +47,11 @@ func _ready() -> void:
 	var ids: Array[StringName] = _card_foes()
 	Log.info("cast", "size beside: card foes %s" % [ids])
 	var foes: Dictionary[StringName, Fighter] = {}
-	for id: StringName in ids:
-		foes[id] = _arena.squad_ai.spawn_member(_arena, CENTRE, id)
+	for key: StringName in ids + EXTRA:
+		var id: StringName = StringName(String(key).get_slice("_x", 0))
+		foes[key] = _arena.squad_ai.spawn_member(_arena, CENTRE, id)
 		@warning_ignore("return_value_discarded")
-		_arena.squad_ai.mind_for(foes[id])
+		_arena.squad_ai.mind_for(foes[key])
 	for ppm: int in PPMS:
 		if not await _pass(ppm, foes):
 			_fail("pass %d px/m failed" % ppm)
