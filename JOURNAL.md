@@ -263,3 +263,19 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
   `door8/out/door8_70_right.png`: only drawing 7 redrawn (support boot back ~30 px of drawing 6, other boot lifts and passes),
   1-6 and 8 kept. Looked at `door8b/out/door8_70_right_f7.png`: drawing 7 now reads as the mirror of drawing 3, same robot,
   shield fixed, key green. Not cut yet (next: brief 11, re-pack p70 right + one-value EIGHT switch + door height test).
+- 05:00 MILESTONE `c0a1b816e` (cast-10 commit 1): `ArenaRobotRigs._react` calls new `RigClips.flash()` (hit_t = HIT_S, no
+  shove) beside the robot's own 40 px shove; test `test_arena_robot_flash.gd`; `cast_flash_fight` `_flinch` removed. Read the
+  diff: 1 + 5 lines, rendering only. Film pending.
+- 05:07 MILESTONE `588c7b706` (cast-03c commit 1): thug cutter `replant` moves CUT cells by whole texels onto the shoe sole
+  (gap up to 26 -> <= 1 texel); resting fall cells' body bottom on the ground row; p70 four-walk kept (support shoe hidden
+  behind the claw, row walks the planted8). Looked at `build/look/n29-thug/foot/fall70_after.png`: every fall cell on the
+  line; BUT the up-facing column (5th) never falls: all three drawings stand (art, not cutter). Checklist item for 03d.
+- 05:12 MILESTONE `8d665f61e` (cast-10 commit 2): `flash_street_32.mp4` re-shot on the live path, ffprobe 1920x1080 60/1
+  25.02 s. Looked at `gtai-masters/n29/cast/flash_live_64.png`: left panel door carrier flashed (black/cream ink silhouette,
+  shield and pack readable), gunner unflashed; right panel the reverse; Rivet and the street unchanged, no red, no teal.
+- 05:19 BUILDER cast-10-flash-live 23 accepted: `c0a1b816e`, `8d665f61e`. Only robot host is `ArenaRobotRigs` (street,
+  arena, gauntlet); door, gunner, thug views `sync_tint` -> all three flash live now; turret and war views have no
+  `sync_tint` (do not flash; outside the owner's item). No extra flinch pose (robot feed ignores `active()`). Flashes 20
+  door / 20 gunner in 25 s. run_unit --changed full 4231/0/2 (FLAKY test_audio_driving). Mutate 5/6 = 83.3 % (survivor:
+  the shove direction sign). Item 2 (hit flash door + gunner) DONE on the live path.
+- 05:19 BUILDER RUNNING cast-11-door8-f7 (opus) since 05:19: `evidence/briefs/n29-cast-11-door8-f7.md`, hard stop 06:12.

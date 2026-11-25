@@ -1,7 +1,7 @@
 # Brief n29-cast-11: the door carrier's eight with the redrawn 70 right drawing 7, a one-value switch, a height test
 
 Lane `cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd), branch `n29-cast`. You are a builder sub-agent.
-**Hard stop HARDSTOP local** (check `date +%H:%M` often). **Commit 1 by COMMIT1, your last commit by LASTCOMMIT** (hook ~12 min).
+**Hard stop 06:12 local** (check `date +%H:%M` often). **Commit 1 by 05:45, your last commit by 06:00** (hook ~12 min).
 Never end with finished work uncommitted. Then report and END.
 
 ## Read first
@@ -69,3 +69,10 @@ Forbidden: every `robot_thug_*`, `war_machine_*`, `cast_thug_*`, `cast_war_*` fi
 Commits, the per-drawing pixel diff of the source, heights, key-clean / red, the feet table before/after, WALK shipped and
 why, the one-value switch diff in two lines, tests added, `run_unit --changed` line, film + ffprobe if made, mutate score,
 NEEDs, what you could not do.
+
+## Added 05:19 (director)
+- The opus thug builder works beside you until 06:05 (`robot_thug_*`, `cast_thug_*`, `project/dev/cast/cast_thug_*`,
+  `tools/film/cast_thug_*`, provenance appends): never stage or revert its files; the provenance file is append-only, so
+  stage it only for your own lines (`git add -p` is interactive and banned: if its lines are in the file uncommitted, report
+  a NEED instead of committing the provenance, the director commits it).
+- Order of value if time runs short: commit 1 (cut + EIGHT70) > the feet table + WALK decision > one-value switch > film.
