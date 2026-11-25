@@ -3,6 +3,7 @@ extends GutTest
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/plasma_sword": 66.7,
 	"p70/molotov": 81.0,
 	"p70/ray_gun": 79.0,
 	"p70/homing_shard": 78.7,
@@ -75,6 +76,7 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_plasma_sword.png": Vector2(15.5, 30.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_molotov.png": Vector2(27.5, 34.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_ray_gun.png": Vector2(25.5, 34.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_homing_shard.png": Vector2(25.0, 34.0),
@@ -97,8 +99,10 @@ func test_all_five_calibrations_match_the_measured_grids() -> void:
 	assert_eq(grid.walk_profile_travel, WALK_PROFILE_TRAVEL)
 
 
-func _bare_rig(file: String) -> CutRig:
+func _bare_rig(file: String, face: float = 0.0, speed: float = 0.0) -> CutRig:
 	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.face_to = face
+	rig.speed_now = speed
 	var card: Sprite2D = Sprite2D.new()
 	rig.add_child(card)
 	rig.head_card = card
@@ -160,9 +164,7 @@ func test_only_the_boot_with_enough_travel_uses_its_measured_cycle() -> void:
 
 
 func test_short_measured_stance_keeps_two_sprint_ticks_per_drawing() -> void:
-	var rig: CutRig = _bare_rig("p70/rivet_run8.png")
-	rig.face_to = PI / 4.0
-	rig.speed_now = 9.3 * CharacterRigs.PX_PER_M
+	var rig: CutRig = _bare_rig("p70/rivet_run8.png", PI / 4.0, 9.3 * CharacterRigs.PX_PER_M)
 	var cycles: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 0.5)
 	var two_ticks: float = rig.speed_now * SimClock.TICK_DT * 2.0
 	assert_almost_eq(cycles / 8.0, Vector2.ONE * two_ticks, Vector2.ONE * 0.0001)
@@ -171,9 +173,7 @@ func test_short_measured_stance_keeps_two_sprint_ticks_per_drawing() -> void:
 func test_each_boot_accepts_a_measurement_exactly_at_the_cutoff() -> void:
 	var grid: RivetGridStride = RivetGridStride.shared()
 	assert_eq(grid.bare_min_travel, 0.4)
-	var rig: CutRig = _bare_rig("p70/rivet_walk8.png")
-	rig.face_to = PI / 2.0
-	rig.speed_now = 32.0
+	var rig: CutRig = _bare_rig("p70/rivet_walk8.png", PI / 2.0, 32.0)
 	var original: PackedVector2Array = grid.bare_walk["p70"]
 	var rows: PackedVector2Array = original.duplicate()
 	rows[0] = Vector2(24.0, 23.9)  # 40% of the 60 px walk cycle is 24 px.
