@@ -87,22 +87,31 @@ func _boss(stage: CollectCallStage, foe: Fighter) -> bool:
 
 func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
-	var radius: float = attacks.deploy[ghost.form].radius_m
+	var row: GhostAttacks.DeployRow = attacks.deploy[ghost.form]
 	# Discard expired references even outside a measured wave.
 	@warning_ignore("return_value_discarded")
 	stunned_count(arena, stage.tick)
 	var applied: bool = false
-	for foe: Fighter in arena.hostiles:
-		if not foe.alive() or ghost.spot.distance_to(foe.pos) > radius:
+	# n31 drop: the discharge is a full circle that counts each body's radius (TonnageDump's).
+	var foes: Array[Fighter] = arena.hostiles
+	if row.drops():
+		foes = TonnageDump.victims(arena.hostiles, ghost.spot, row.radius_m)
+	for foe: Fighter in foes:
+		if not foe.alive() or not _in_ohm(row, ghost.spot, foe):
 			continue
 		if OhmShortCircuit.short_machine(arena, foe, stage.tick):
 			release_stuns += 1
 			_shorts[foe] = arena.squad_ai.mind_for(foe).stun_until
 			applied = true
-		var dir: Vector2 = ghost.spot.direction_to(foe.pos)
+		var dir: Vector2 = TonnageDump.push_dir(ghost.spot, foe.pos, ghost.facing)
 		_hit(arena, foe, dir, attacks.num(ghost.form, &"bolt_damage"), &"deploy_ohm")
 	if applied:
 		arena.move_tally.record(MoveTable.SHORT_CIRCUIT)
+
+
+## A hold-mode bolt reaches the foe's centre; a drop's victims are already in the circle.
+static func _in_ohm(row: GhostAttacks.DeployRow, spot: Vector2, foe: Fighter) -> bool:
+	return row.drops() or spot.distance_to(foe.pos) <= row.radius_m
 
 
 func _tonnage(stage: CollectCallStage, ghost: GhostDeploy) -> void:

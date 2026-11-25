@@ -199,9 +199,21 @@
         "ohm": {
           "additionalProperties": false,
           "properties": {
+            "charge_s": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
             "cooldown_ticks": {
               "minimum": 1,
               "type": "integer"
+            },
+            "drop_at": {
+              "enum": [
+                "aim",
+                "rivet"
+              ],
+              "type": "string"
             },
             "enabled": {
               "type": "boolean"
@@ -210,8 +222,16 @@
               "minimum": 1,
               "type": "integer"
             },
+            "press_mode": {
+              "enum": [
+                "drop",
+                "hold"
+              ],
+              "type": "string"
+            },
             "radius_m": {
               "exclusiveMinimum": 0,
+              "maximum": 20,
               "type": "number"
             },
             "range_m": {
@@ -220,9 +240,12 @@
             }
           },
           "required": [
+            "charge_s",
             "cooldown_ticks",
+            "drop_at",
             "enabled",
             "life_ticks",
+            "press_mode",
             "radius_m",
             "range_m"
           ],

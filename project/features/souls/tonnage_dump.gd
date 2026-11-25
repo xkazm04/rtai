@@ -3,6 +3,7 @@ extends RefCounted
 ## n31 ghost 2 (the owner: no placement marker, a short charge, then a dump on a full circle).
 ## Tonnage's drop-mode deploy lands on the key's press edge, stands charging for the row's
 ## charge ticks and hits on the dump tick. This holds the countdown and the circle's geometry.
+## Ohm's drop row (n31 ghost 10) shares it: the same press, charge and circle, his discharge.
 
 ## Ticks until the dump; 0 or less = nothing pending.
 var ticks_left: int = -1
