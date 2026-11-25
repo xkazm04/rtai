@@ -139,7 +139,7 @@ func test_bolt_has_no_ink_and_a_thin_cream_core() -> void:
 		assert_false(
 			l.color.is_equal_approx(Color(Ink.INK, l.color.a)), "no ink stroke on the bolt"
 		)
-	var core: WeaponFxElectro.Line = plan[2]
+	var core: WeaponFxElectro.Line = plan[3]
 	assert_eq(core.color, ElectricArc.CORE, "the first path's last pass is the core")
 	assert_eq(core.color.a, 1.0)
 	assert_lte(core.width, 2.5)
