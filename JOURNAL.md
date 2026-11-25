@@ -80,3 +80,5 @@
 ## Session 4 (14:25 to 15:55 at the latest)
 - 14:27 Read JOURNAL, git log (HEAD a58d69c6b). No `NEED yard` in n23-controls / n23-street / n23-prologue journals. No lane lock held. Tracked tree clean.
 - 14:28 DECISION: 04b remainder and 05b run side by side this session (time: last new work by 17:15 leaves no room for them in sequence plus item 6). Guards: TABLE LOCK build/yard-table.lock for dressings.json, Godot slot build/yard-godot.lock shared, 05b does its Godot-free steps first (cut, layout write, lanes, test), 04b holds the slot for the frame cost batch in one go.
+- 14:29 BUILDER RUNNING roof-place since 14:29 (Opus, brief evidence/briefs/n30-04b-roof-place.md remainder: slab tint, roof camera place, test, pilots, plate beside game, frame cost under bench lock, film, decisions; commit 1 by 15:00, last commit by 15:25, hard stop 15:40).
+- 14:29 BUILDER RUNNING mouth-span-place since 14:29 (Sonnet, brief evidence/briefs/n30-05b-mouth-span-place.md; Godot-free steps first; commit 1 by 15:05, last by 15:25, hard stop 15:40).
