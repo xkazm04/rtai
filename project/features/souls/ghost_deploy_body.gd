@@ -80,10 +80,13 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	scale = Vector2(1.0 / RES, 1.0 / (RES * pitch))
 	var yaw: float = ghost.facing.angle()
 	var drawn: GhostDrawn = _body.get(&"drawn")
-	# Keep the authored follow-through cell while the apparition lingers.
-	drawn.deploy_age = mini(age, GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS - 1)
+	# Keep the authored follow-through cell while the apparition lingers. A charging drop
+	# (n31 Tonnage) holds its wind-up until the dump tick, the strike's own age 0.
+	var struck: int = ghost.dump.strike_age(ghost, stage.tick)
+	drawn.deploy_age = clampi(struck, -1, GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS - 1)
 	drawn.jab = ghost.form == DentStage.GHOST
-	drawn.feed(1, -1, stage.tick, false, stage.tick - drawn.deploy_age)
+	var landed: int = stage.tick - drawn.deploy_age if struck >= 0 else -1
+	drawn.feed(1, -1, stage.tick, struck < 0, landed)
 	position = ghost.spot * SimConst.PX_PER_M
 	if ghost.form == OhmStage.GHOST:
 		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m

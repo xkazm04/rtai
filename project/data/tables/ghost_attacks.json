@@ -29,7 +29,7 @@
       "ram_half_m": 0.9,
       "range_m": 8
     },
-    "doc": "range_m limits cursor reach from Rivet. cooldown_ticks counts 60 Hz ticks from release until this ghost can deploy again. enabled permits deployment. life_ticks is the number of ticks the ghost remains at the end of its single strike. Kerf prefers a hostile within snap_m of the cursor. Ohm strikes within radius_m of the spot. Dent strikes within ram_half_m of the segment from Rivet's side to the spot. Kerf's boss_damage_cap limits the HP lost per deployed cut to this fraction of the boss's maximum HP, after armour and damage bonuses.",
+    "doc": "range_m limits cursor reach from Rivet. cooldown_ticks counts 60 Hz ticks from release until this ghost can deploy again. enabled permits deployment. life_ticks is the number of ticks the ghost remains at the end of its single strike. Kerf prefers a hostile within snap_m of the cursor. Ohm strikes within radius_m of the spot. Dent strikes within ram_half_m of the segment from Rivet's side to the spot. Kerf's boss_damage_cap limits the HP lost per deployed cut to this fraction of the boss's maximum HP, after armour and damage bonuses. Tonnage (n31, the owner: no placement marker, a short charge, then a dump on a full circle): press_mode drop deploys on the key's press edge with no aiming phase (hold = the old hold-aim-release half-disc stomp ahead of the spot at powers.json hauler stomp_radius_m); drop_at aim puts him at the aim point within range_m (wall-clipped), rivet on Rivet's own spot; he stands charging for charge_s (nothing is hit), then every live hostile with its body inside radius_m of the spot takes dump_damage (kind shot) on the dump tick. life_ticks counts from the press and covers the charge.",
     "kerf": {
       "boss_damage_cap": 0.1,
       "cooldown_ticks": 600,
@@ -46,9 +46,14 @@
       "range_m": 9
     },
     "tonnage": {
+      "charge_s": 0.45,
       "cooldown_ticks": 480,
+      "drop_at": "aim",
+      "dump_damage": 3,
       "enabled": true,
-      "life_ticks": 54,
+      "life_ticks": 81,
+      "press_mode": "drop",
+      "radius_m": 5.5,
       "range_m": 6
     }
   },

@@ -48,9 +48,7 @@ func _draw() -> void:
 	var age: int = stage.tick - release
 	var sec: float = age * SimClock.TICK_DT
 	if ghost.form == HaulerStage.GHOST:
-		var head: float = ghost.strike.attacks.num(ghost.form, &"press_ahead_m")
-		var at: Vector2 = (ghost.spot + head * ghost.facing) * PPM
-		HaulerMarks.draw(self, at, sec, ghost.strike.press.num(&"stomp_radius_m"), PPM, release)
+		_slam(ghost, sec, release)
 		return
 	if _hit_tick != release:
 		return
@@ -64,6 +62,20 @@ func _draw() -> void:
 				_bolt(ghost, _hits[i], i, age)
 			DentStage.GHOST:
 				RamMarks.draw(self, _hits[i], ghost.facing, sec, PPM)
+
+
+## A drop-mode dump draws its full circle on the spot from the dump tick, at the deploy's own
+## radius (the drawn ring is the damage ring); a hold-mode stomp keeps the half-disc ahead.
+func _slam(ghost: GhostDeploy, sec: float, release: int) -> void:
+	if ghost.dump.pending():
+		return
+	var row: GhostAttacks.DeployRow = ghost.strike.attacks.deploy[ghost.form]
+	if row.drops():
+		HaulerMarks.draw(self, ghost.spot * PPM, sec, row.radius_m, PPM, release)
+		return
+	var head: float = ghost.strike.attacks.num(ghost.form, &"press_ahead_m")
+	var at: Vector2 = (ghost.spot + head * ghost.facing) * PPM
+	HaulerMarks.draw(self, at, sec, ghost.strike.press.num(&"stomp_radius_m"), PPM, release)
 
 
 func _bolt(ghost: GhostDeploy, target: Vector2, index: int, age: int) -> void:

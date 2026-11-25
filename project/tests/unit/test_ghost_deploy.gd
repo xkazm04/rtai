@@ -17,6 +17,9 @@ func before_each() -> void:
 	pilot = StagePilot.new(actions)
 	stage.pilot = pilot
 	ghost = pilot.ghosts.deploy
+	# This file pins the hold-aim-release flow (main before n31). Tonnage ships press_mode drop
+	# (test_tonnage_drop.gd); the selected Tonnage here is switched back to hold on purpose.
+	ghost.strike.attacks.deploy[&"tonnage"].press_mode = &"hold"
 	q = 1 << actions.bit(&"ghost_deploy")
 
 

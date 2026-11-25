@@ -26,6 +26,12 @@ func _tick(held: bool = false) -> void:
 	wave.sample(stage)
 
 
+## n31: Tonnage's drop lands charge_ticks after the press, not on a release.
+func _dump() -> void:
+	for i: int in pilot.ghosts.deploy.strike.attacks.deploy[&"tonnage"].charge_ticks:
+		_tick()
+
+
 func _finish(stats: GauntletWaveStats) -> Dictionary:
 	var row: Dictionary = {}
 	stats.finish(stage, row)
@@ -38,7 +44,7 @@ func test_unobserved_effects_are_absent_and_a_measured_miss_has_zero_kills() -> 
 	for key: String in ["deploys", "deploy_kills", "deploy_stun_s"]:
 		assert_false(empty.has(key))
 	_tick(true)
-	_tick()
+	_dump()
 	var miss: Dictionary = _finish(wave)
 	var deploys: Dictionary = miss["deploys"]
 	assert_eq(deploys, {&"tonnage": 1})
@@ -134,7 +140,7 @@ func test_tonnage_credits_a_stomp_in_an_arena_without_squad_ai() -> void:
 	guard.hp = 1.0
 	pilot.ghosts.forms.selected = HaulerStage.GHOST
 	_tick(true)
-	_tick()
+	_dump()
 	assert_false(guard.alive())
 	var kills: Dictionary = _finish(wave)["deploy_kills"]
 	assert_eq(kills, {&"tonnage": 1})

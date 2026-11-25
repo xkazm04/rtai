@@ -107,17 +107,29 @@ func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 
 func _tonnage(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
+	var row: GhostAttacks.DeployRow = attacks.deploy[ghost.form]
+	if row.drops():
+		# The dump: a full circle on the spot, no facing test, each body's radius counts.
+		for foe: Fighter in TonnageDump.victims(arena.hostiles, ghost.spot, row.radius_m):
+			_crack(stage, foe)
+			var dir: Vector2 = TonnageDump.push_dir(ghost.spot, foe.pos, ghost.facing)
+			_hit(arena, foe, dir, row.dump_damage, &"deploy_tonnage")
+		return
 	var head: Vector2 = ghost.spot + ghost.facing * attacks.num(ghost.form, &"press_ahead_m")
-	var squad: ArenaSquad = arena.squad_ai
 	for foe: Fighter in arena.hostiles:
 		var offset: Vector2 = foe.pos - ghost.spot
 		if not foe.alive() or offset.dot(ghost.facing) < 0.0:
 			continue
 		if head.distance_to(foe.pos) > press.num(&"stomp_radius_m"):
 			continue
-		if foe.archetype == &"war_machine" and squad != null and squad.owns(foe):
-			TonnageCrack.open(arena, squad.mind_for(foe), stage.tick)
+		_crack(stage, foe)
 		_hit(arena, foe, offset.normalized(), press.num(&"stomp_damage"), &"deploy_tonnage")
+
+
+func _crack(stage: CollectCallStage, foe: Fighter) -> void:
+	var squad: ArenaSquad = stage.arena.squad_ai
+	if foe.archetype == &"war_machine" and squad != null and squad.owns(foe):
+		TonnageCrack.open(stage.arena, squad.mind_for(foe), stage.tick)
 
 
 func _dent(stage: CollectCallStage, ghost: GhostDeploy) -> void:

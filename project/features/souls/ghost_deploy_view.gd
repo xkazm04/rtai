@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 		_body.dismiss()
 		_fx.hide()
 		return
-	var age: int = stage.tick - ghost.strike.release_tick
+	var age: int = stage.tick - ghost.start_tick
 	_body.calm = reduced_motion
 	_fx.calm = reduced_motion
 	_body.z_index = RenderLayers.z(&"actors") + GhostFormView.Z_OVER_RIGS

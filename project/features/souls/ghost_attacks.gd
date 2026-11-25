@@ -18,6 +18,16 @@ class DeployRow:
 	var boss_damage_cap: float
 	var radius_m: float
 	var ram_half_m: float
+	## Tonnage only (n31): &"drop" deploys on the key's press edge, &"hold" is the aim-and-release.
+	var press_mode: StringName = &"hold"
+	## &"aim" = the aim point within range_m, &"rivet" = Rivet's own position.
+	var drop_at: StringName = &"aim"
+	## Ticks from the press to the dump (round(charge_s x TICK_RATE)).
+	var charge_ticks: int = 0
+	var dump_damage: float
+
+	func drops() -> bool:
+		return press_mode == &"drop"
 
 
 var blocks: Dictionary[StringName, Dictionary] = {}
@@ -47,9 +57,19 @@ static func from_table(t: DataTable) -> GhostAttacks:
 			def.radius_m = t.num(row, "radius_m")
 		elif id == &"dent":
 			def.ram_half_m = t.num(row, "ram_half_m")
+		elif id == &"tonnage":
+			_tonnage(t, row, def)
 		g.deploy[id] = def
 	g._errors = t.errors()
 	return g
+
+
+static func _tonnage(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	def.press_mode = StringName(t.text(row, "press_mode"))
+	def.drop_at = StringName(t.text(row, "drop_at"))
+	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
+	def.radius_m = t.num(row, "radius_m")
+	def.dump_damage = t.num(row, "dump_damage")
 
 
 func ok() -> bool:

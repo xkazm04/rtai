@@ -95,6 +95,7 @@ func test_kerf_still_cuts_when_a_wall_shortens_the_rear_landing() -> void:
 
 
 func test_centring_the_stick_at_release_rechecks_reach_from_moving_rivet() -> void:
+	ghost.strike.attacks.deploy[&"tonnage"].press_mode = &"hold"  # n31: pin the hold flow
 	var aim: int = PlayerCommand.pack_aim(Vector2.RIGHT, pilot.actions, 6.0)
 	pilot.drive(stage, TickInput.new(aim | (1 << pilot.actions.bit(&"ghost_deploy"))))
 	arena.rivet.pos = Vector2(-0.1, 0)
@@ -133,6 +134,7 @@ func test_tonnage_stomps_only_in_front_and_opens_a_walker_outside_recovery() -> 
 	var walker: Fighter = _spawn(Vector2(8, 0), &"war_machine")
 	walker.facing = Vector2.LEFT
 	assert_false(TonnageCrack.post_stomp(squad.mind_for(walker)))
+	ghost.strike.attacks.deploy[&"tonnage"].press_mode = &"hold"  # n31: pin the hold flow
 	_release(&"tonnage")
 	assert_false(front.alive())
 	assert_eq(last_weapon, &"deploy_tonnage")
