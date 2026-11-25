@@ -89,3 +89,9 @@ lane's GPU films. The test is the evidence.
 The survivor is `kill_fall_cells.gd:74` `path.get_slice("/", 0)` -> `1` (an older line inside the range):
 equivalent under p70, where the default height and the p70 height are both 1.7 m; only a p55 case
 (HEIGHT_BY_ART 2.0) would kill it.
+
+## Units reached
+
+`node tools/tests/test_map.mjs project/features/combat/kills/kill_fall_cells.gd` names 13 test files; all 13
+`--select`ed at d924402d2: **65 passed, 0 failed** (junit: 13 suites). `--changed` in this shared worktree
+maps the other builder's uncommitted weapon files, not this change (it ran 93 weapon tests, green).
