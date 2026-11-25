@@ -41,7 +41,7 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
   Mutate (`--max=6`, changed lines, `test_arsenal_turn`) first scored 16.7 % = 1 / (1 + 5); the equip rule moved into
   `EQUIP_STEPS` + a static `slot_on_step` and two tests pin it and the fire bit (`4ee6f7b27`, `74fc5e382`): targeted lines
   **100 % = 4 / (4 + 0)**; a wide run over the arena-bound code 35 % = 7 / (7 + 13) (survivors `_ready`/`_record`, which only
-  the real runs exercise).
+  the real runs exercise). The sprint tour's `tour_input` (`arsenal_sprint_rec.gd:13`, lines 4-15): **100 % = 4 / (4 + 0)**.
 
 ## Gate
 
