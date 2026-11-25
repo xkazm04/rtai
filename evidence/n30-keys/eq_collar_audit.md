@@ -64,3 +64,30 @@ Next wave if edits remain: `mini_nuke_left` c0, `gatling_diag` c2, `gatling_left
 (8-cell strip, notched edges: judge at 2x before spending an edit), `electro_gun_diag` c0/c2.
 Note: the edits do not need `noflash` twins redone separately unless a twin copies the band (`gatling_*_noflash`, `electro_gun_*_noflash`
 share the figure; check with a pixel diff outside the muzzle).
+
+## Edits (n30-12)
+Round `C:/Users/kazda/kiro/gtai-art/rivet-n30/eq_collar/` (`STATE.md`; scripts copied from `collar_cells` and adapted to a 3-cell strip:
+`strip_job.py`, `cell_comp.py` with a required per-cell `CELL_BAND` box (the only px that may change; the collar hull is taken inside it,
+because the mini-nuke and gatling carry orange/yellow hazard paint), `strip_proof.py`). 8 images (the cap), one per cell, reference =
+`rivet_eq_gloria_left.png` same cell at 2x + its collar crop at 4x. Per cell: alpha identical, 0 px changed outside the band box,
+other cells bit-identical, teal 0; "weapon px" = px changed inside the declared weapon boxes (cell coords, `WEAPON_BOX` in the proof json).
+Judge stills (shipped | candidate | reference, 4x): `C:/Users/kazda/kiro/gtai-masters/n30/keys/eq_collar/n30-12_<weapon>_c<i>_judge4x.png`.
+
+| Cell | Ref | IoU | Band box | Mask px | Changed | Weapon px changed | Verdict |
+|---|---|---|---|---|---|---|---|
+| `rocket_launcher_left` c1 | gloria c1 | 0.988 | 101,70,170,96 | 578 | 578 | 0 | RIGID: flat ring, straight parallel stripes, outlined |
+| `mini_nuke_left` c1 | gloria c1 | 0.993 | 112,108,180,150 | 845 | 845 | 0 | RIGID: chevrons gone, flat outlined ring |
+| `gatling_left` c1 | gloria c1 | 0.993 | 117,86,179,117 | 652 | 652 | 0 | RIGID |
+| `rocket_launcher_left` c2 | gloria c2 | 0.992 | 100,68,166,99 | 529 | 529 | 0 | RIGID |
+| `mini_nuke_left` c2 | gloria c2 | 0.988 | 108,106,180,150 | 589 | 589 | 0 | RIGID (right end keeps the shipped side face) |
+| `gatling_left` c2 | gloria c2 | 0.992 | 118,90,176,118 | 494 | 494 | 0 | RIGID |
+| `rocket_launcher_left` c0 | gloria c0 | 0.986 | 92,74,162,98 | 258 | 258 | 0 | RIGID below the visor (left end by the sight keeps shipped px) |
+| `mini_nuke_left` c0 | gloria c0 | 0.993 | 98,114,172,142 | 285 | 285 (not shipped) | 0 | REJECTED by eye: band stays torn under the visor and at the right end; KEPT SHIPPED |
+
+Commits: `8776d8711` gatling, `f371eddb6` rocket launcher, `f3aefd0a2` mini-nuke (one provenance line each).
+Strips vs HEAD `57c72c41a`: `gatling_left` 1146 px (c0 0), sha256 `76faf66c...`; `rocket_launcher_left` 1365 px, `445964a4...`;
+`mini_nuke_left` 1434 px (c0 0), `a8a196bb...`; all alpha identical, 0 px outside the band boxes, 0 weapon-box px.
+In game (arsenal turn, p70, 64 px/m, before = HEAD run `build/n30-12/before/`): stills `<weapon>_left_64_ingame.png` in the masters dir
+(octants 3/4/5 = cells 0/1/2, before | after).
+Owed: `mini_nuke_left` c0 (retry with a weapon-arch sentence, or the chainsaw c0 as image two), the next-wave cells above
+(`gatling_diag` c0/c2, `gatling_left_fire`, `mini_nuke_left_fire`, `gatling_left` c0 not in this call's list).
