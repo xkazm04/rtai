@@ -184,3 +184,13 @@ No builder running; lane lock free; tree clean except this journal. Session 4 le
 - 16:33 BUILDER c23 (sonnet) 1 accepted: masters frames.json: `door_sole_pin_32.mp4` entry -> `door8_edits_64.png` (owner call 2's still back in), deleted the unreferenced `door_sole_pin_32.mp4` (halves look identical at 32) and `war8_four_eight_32.mp4` (the live pair shows the same). 15 entries, every file exists, none unreferenced.
 - 16:35 REPORT: What does not (sole pin revert), Next step 5 rewritten, ledger c21p/c21s/c21b/c21w, brief-differently line.
 - 16:59 MILESTONE final gate PASS on `f3364498e` with reels (16:28-16:58): lint 19/19 over 2295 files, unit 4318/0/2, scenarios 68, parity bit for bit (mutation caught at 629), selftest, export-audit 1003/0, reels exit 0. `gate: PASS; build/gate/f3364498e04c/gate.json`. The quick-gate parse failure c21b saw was the environment (the snapshot gate compiles clean). Removed our Temp snapshot gtai-gate-f3364498e04c.
+- 17:10 BUILDER c22 44 accepted-partial: `b1c536104` audit "Door four and eight on the drawn boot, n30". In-hold slide on the drawn sole (lowest 7 ink rows), 64 px/m frames, max in the 32 px/m unit, p70 R / p70 DR / p55 R / p55 DR: four 2.10 / 1.50 / 1.53 / 1.94, eight 1.71 / 1.89 / 1.72 / 2.03. Contact slide across drawing changes NOT measured (three trackers lost the boot; near vs far boot ambiguous at a change). LOOKED at `build/look/n30-c22/eight_p55_contact_2x.png`: Rivet covers the boots in f51/f60; f72-f77 the front toe moves back a few px against the red line while the body goes on. WALK stays FOUR (the eight is better only at p70 right). Note: `build/film/c22-*` staged copies contain junctions into the tree: do NOT rm -rf them (left in place).
+- 17:12 REPORT call 2 gets the drawn-sole table; ledger c22, c23. No code after 5e32a5e72's; final gate stands (f3364498e).
+
+## Session 5 end (written 17:12)
+No builder running; lane lock free. Session 5 ledger: c21b 11 acc (fix reverted on its own delivered-frame check), c21w 2 acc (finding), c23 1 acc, c22 44 acc-partial. IMAGES 16/60. Final gate PASS on f3364498e with reels.
+
+NEXT (session 6, if any, before the 18:45 freeze; no new code after 17:15):
+1. REPORT is final apart from polish: drop "DRAFT" from line 3 at 18:55, re-run `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL + REPORT (inert).
+2. Optional, docs/evidence only: copy `build/look/n30-c22/eight_p55_contact_2x.png` to masters only if a frames.json entry can go (cap 15).
+3. Never delete `build/film/c22-*` with rm -rf (junctions into the tree).
