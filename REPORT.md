@@ -3,7 +3,10 @@
 Branch `n30-combat`, worktree `gtai-wt/n23-street`, cut from `main` `5114a4441`. Director Opus 5.5; builders Claude
 sub-agents (Agent tool; Sonnet 5.5, Opus 5.5 for the card fall). Films and stills: `C:/Users/kazda/kiro/gtai-masters/n30/combat/`
 (`frames.json`). IMAGES 0/25: every change is code, data or a masked recolour of shipped pixels.
-Final gate: (pending).
+Gate on the last code commit `2566b97d0` (13:24-13:45): `gate: PASS` (lint 19/19 over 2294 GDScript files; unit 4329
+passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629;
+selftest; export-audit 1004 loaded, 0 failed), `build/gate/2566b97d0829/gate.json`. Later commits: docs, JOURNAL, REPORT, evidence.
+`--reels` once after the freeze: (pending).
 
 ## What works
 
@@ -35,6 +38,11 @@ Final gate: (pending).
   light starts t478 and draws t480-513 (~421k px on/off at t480-496); a rocket blast right after launch is refused by the
   photosensitivity budget. Ready patch for the Director: `evidence/n30/lights/rim_patch.md` (rim flag, alt ink packed into
   the instance custom data, the shader prints the outer band in it). Still `stills/explosion_light_seen_64.png` (t486 off | on).
+
+### 6a. `current_look.gd` draw() survivors pinned (`5fd6c1eaa`, `2566b97d0`)
+- `CurrentLook.k_of(ci)` and `const ANTIALIAS` carry draw()'s scale and AA flag (pixels identical by construction); 4 tests,
+  units 12/0; mutate on those lines 4/5 = 80 % (survivor: deleting the `draw_polyline` call, only a GPU readback sees it).
+  `evidence/n30/mutate/current_look.md`.
 
 ### 5. A killed card foe falls on his own fall sheet (`480268dcf`, `0351c7020`, evidence `1c14f5010`, `7d221357f`)
 - `KillCardFall.path_of(rig)` routes `sheets.fall` into `KillFallCells.attach` at `scale_of`, faced as the grid.
@@ -72,5 +80,8 @@ Final gate: (pending).
 - (pending)
 
 ## Builder ledger
+- Session 2: c04 explosion-rim 30 accepted-partial (data in, its takes missed the light: brief should have named the tick
+  the light is live and a lights-off control at that tick); c07b nuke-specks 24 accepted (negative result); c04b light-probe
+  (Opus) 6 accepted; c08 current-pin 24 accepted; c11 decisions 1 accepted.
 - c01 reel-legacy 5 min accepted; c02 thin-hop 29 accepted; c05 card-fall (Opus) 68 accepted; c03 round-band 39 accepted
   (one send-back: edge fringe); c06 decisions 1 accepted; c07 nuke-specks 10 abandoned (clock + contention).
