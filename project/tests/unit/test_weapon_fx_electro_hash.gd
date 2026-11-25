@@ -108,3 +108,30 @@ func test_add_path_without_outline_drops_only_the_ink() -> void:
 	var plan: Array[WeaponFxElectro.Line] = _path_plan(1.0, false)
 	assert_eq(_widths(plan), [9.0, 4.5, 10.0, 4.0] as Array[float])
 	assert_eq(plan[2].color, ElectricArc.HALO)
+
+
+func _counts(serials: Array[int]) -> Array[int]:
+	var out: Array[int] = []
+	for s: int in serials:
+		out.append(WeaponFxElectro.star_plan(Vector2.ZERO, 0.24, s, 0).size() / 5)
+	return out
+
+
+func test_fork_counts_per_serial_are_pinned() -> void:
+	# n = 3 + int(hash01(serial, 0, 3) * 1.99), values observed from the hash (no hand sin)
+	var serials: Array[int] = [0, 1, 2, 3, 4, 5, 6, 7]
+	assert_eq(_counts(serials), [3, 4, 4, 4, 3, 3, 4, 3] as Array[int])
+
+
+func test_fork_tip_is_pinned_by_the_bend_hash() -> void:
+	var plan: Array[WeaponFxElectro.Line] = WeaponFxElectro.star_plan(Vector2.ZERO, 0.24, 3, 0)
+	var pts: PackedVector2Array = plan[4].points
+	assert_eq(pts.size(), 3)
+	assert_almost_eq(pts[1], Vector2(-1.488972, -5.564221), Vector2(0.001, 0.001))
+	assert_almost_eq(pts[2], Vector2(-1.119848, -11.31238), Vector2(0.001, 0.001))
+
+
+func test_stun_under_halo_width_scales_with_k() -> void:
+	var stun: Array[WeaponFxElectro.Line] = WeaponFxElectro.stun_plan(Vector2.ZERO, 0, 0, 0.5)
+	# the ink under-halo (9 px * k), then add_path without outline: 4.5, 2.25, 5, 2
+	assert_eq(_widths(stun).slice(0, 5), [4.5, 4.5, 2.25, 5.0, 2.0] as Array[float])
