@@ -17,3 +17,8 @@
 NEXT: (1) `git log --oneline -10` + `git status --short`: did b3 commit? which films exist in C:\Users\kazda\kiro\gtai-masters\n31\foes\ (ffprobe them, look at frames). (2) Launch b2b (sonnet, evidence/briefs/b2b-gait-checks.md) and b4a (opus, evidence/briefs/b4-open-fire.md Part A) in parallel. (3) When b3's tool works: item 2 play take (wave 1 main|HEAD) + 64 px/m backpedal clip -> one-sentence feel line. (4) b4b levers after b2b. Final gate slot: foes +10 min after ground (ground starts by 06:15 -> foes ~06:25).
 - 22:26 BUILDER b3-takes 39 accepted (partial): 91f93eb0a play_take + play_takes.mjs + rev_tree.mjs; wave1_side {left,right,side}.mp4 seed 3, 30 s 1080p60 ffprobe ok, both sides spawn at tick 238. Files 108-196 MB (crf too low: fix to ~15 MB). wave3/wave6 not shot, frames not looked at. Debt baseline accepted dev_loc 40114 -> 40311 for play_take (b3, outside its list; ok by director).
 NEXT (session 2, first): commit evidence/n31/foes/takes/wave1_side.json; look at wave1_side_side.mp4 frames myself (gait: do cops slow-walk while firing, run without firing?); launch b2b + b4a in parallel; then wave3/wave6 takes (commands in b3 report: play_takes.mjs --seed=3 --wave=3|6 --seconds=30), raise side crf.
+
+## Session 2 (22:26)
+- 22:28 read journal, git log (HEAD 19cb2decd), status: only evidence/n31/foes/takes/ untracked.
+- 22:30 BUILDER b2b-gait (sonnet) launched: item 2 checks (full unit, scenarios, LEGACY_TRACE pin). Brief evidence/briefs/b2b-gait-checks.md, hard stop 23:05.
+- 22:30 BUILDER b4a-idle (opus) launched: item 3 Part A (engaged/idle definition, pressing share, --compare, main re-aggregate, HEAD gait measurement, item3-compare.md). Brief evidence/briefs/b4-open-fire.md Part A, hard stop 23:30.
