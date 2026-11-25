@@ -211,3 +211,15 @@ NEXT (final session, report 18:55):
    commit JOURNAL/REPORT with a pathspec.
 3. Temp (this lane's, for the Director's cleanup, add to Merge notes): gtai-gate-fd8ea31e1dec, gtai-gate-a09f9be527a0,
    gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
+
+## Session 8 (16:37 - 18:07)
+- 16:37 git log: 420b4ea8c top, as session 7 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free. Images 60/60.
+- 16:40 CHECKED `git merge-tree` keys 420b4ea8c vs combat b0fcfedf5 / cast f3364498e / yard 9fa5e95ab: no product-file conflict;
+  root JOURNAL/REPORT add/add (all three) and `tools/debt/baseline.json` (cast, yard: merge_baseline.mjs). Added to REPORT Merge notes.
+- 16:41 DECISION no new product work this session: items 1-4 done, filmed and gated with reels; the remaining defects (row 8 touch-ups,
+  p70 rope cells) need images (60/60 spent) and the row 8 cells already failed twice; the turn film tool is outside keys' files
+  (NEED Director, session 3). A code change now would also cost a re-gate in the window where every lane gates.
+
+NEXT (final session, report 18:55): as session 7's NEXT. REPORT final: drop the DRAFT line, header time, frames.json check (15, all
+exist), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec. If merge-tree is re-run, update the Merge
+notes line with the new tips.

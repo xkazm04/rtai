@@ -133,6 +133,10 @@ DRAFT (session 7, 16:00): sections are filled as items land; the final version i
   (+ `.import`), `project/data/tables/rivet_motion.json` (molotov `run_row_k` rows), `project/tests/unit/test_rivet_grid_stride.gd`,
   `project/tests/unit/test_rivet_walk_sprint_fallback.gd`, `steam/ai-provenance/2026-11.jsonl` (append), `docs/decisions.md` (append).
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on the add/add conflict.
+- `git merge-tree` at 16:40 (keys 420b4ea8c against combat b0fcfedf5, cast f3364498e, yard 9fa5e95ab): no product file
+  conflicts. Conflicts only on root `JOURNAL.md`/`REPORT.md` (all three) and `tools/debt/baseline.json` (cast, yard): run
+  `node tools/debt/merge_baseline.mjs`, commit, then `node tools/debt/debt.mjs --update`. `docs/decisions.md` and
+  `steam/ai-provenance/2026-11.jsonl` auto-merge.
 - Temp left for the post-merge cleanup (this lane's): `gtai-gate-fd8ea31e1dec`, `gtai-gate-a09f9be527a0`, `gtai-gate-74fc5e382e63`, `gtai-mutate-dc83624c`, and the
   `build/turn-snapshots` / `gtai-film-*` snapshots of 5114a4441 used for the before films.
 
