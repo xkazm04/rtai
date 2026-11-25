@@ -111,6 +111,8 @@ def read_frame(frame, take):
         sole, _ = marks(cell(path, rect), gait, take['pitch'], card['col'], card['row'])
         points = {str(card['row']//4): project(card, sole)}
     elif foe_sheet(path):
+        if foe_sheet(path) == 'thug':
+            import cast_thug_soles  # noqa: F401 registers the thug's sheet and his claw cut
         from cast_foe_soles import sole as foe_sole
         if foe_sheet(path) == 'swat_run' and card['row'] % 4 == 3:
             return {}
@@ -137,7 +139,8 @@ def foe_sheet(path):
     names = {'cop_riot_planted8_armed_walk.png': 'riot', 'swat_planted8_armed_walk.png': 'swat',
              'swat_planted8_run.png': 'swat_run', 'rocket_trooper_planted8_armed_walk.png': 'lancer',
              'robot_gunner_planted8_armed_walk.png': 'gunner',
-             'contractor_planted8_armed_walk.png': 'contractor'}
+             'contractor_planted8_armed_walk.png': 'contractor',
+             'robot_thug_planted8_armed_walk.png': 'thug'}
     return names.get(path.rsplit('/', 1)[-1], '')
 
 

@@ -186,7 +186,8 @@
         "2026-11-24: contractor fight dev scene (film take) for n28 cast (dev_loc 38037 -> 38209)",
         "2026-11-25: cast_size_beside dev scene for n29 cast (brief n29-cast-01) (dev_loc 38208 -> 38409)",
         "2026-11-25: cast_impact_edge pitch for n29 cast (dev_loc 38409 -> 38414)",
-        "2026-11-25: card scale for n29 cast (dev_loc 38414 -> 38419)"
+        "2026-11-25: card scale for n29 cast (dev_loc 38414 -> 38419)",
+        "2026-11-25: robot_thug card for n29 cast (dev_loc 38419 -> 38534)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -195,7 +196,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3063,
+        "project/dev/cast": 3178,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -228,7 +229,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 38419
+      "total": 38534
     },
     "direct_cmdline_reads": {
       "accepted": [

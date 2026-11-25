@@ -5,6 +5,8 @@ sheet is registered in its SHEETS table at run time. `--review` writes the overl
 gtai-art/foes-n29/thug/pack/soles_{70,55}.png.
 """
 import argparse
+import json
+import re
 from pathlib import Path
 
 import cast_foe_soles as soles
@@ -44,6 +46,15 @@ def main():
     soles.generate([NAME], CLASS, FILE)
     path = soles.ROOT / 'project/features/characters' / FILE
     text = path.read_text(encoding='utf-8').replace('tools/art/cast_foe_soles.py', 'tools/art/cast_thug_soles.py')
+    # The measured step is in a 1.7 m figure's metres; his card is drawn body_scale times that, so
+    # one drawing spans body_scale times the ground (0.1959 m x 1.45 = 0.2841: 8.4 drawings/s at
+    # 2.4 m/s instead of 12.3, over the 5 to 10 bar).
+    table = json.loads((soles.ROOT / 'project/data/tables/cast_cards.json').read_text(encoding='utf-8'))
+    scale = table['archetypes']['robot_thug']['body_scale']
+    step = float(re.search(r'const WALK_STEP_M: float = ([0-9.]+)', text).group(1))
+    text = re.sub(r'const WALK_STEP_M: float = [0-9.]+',
+                  f'## Measured {step:.4f} m per drawing at 1.7 m, times his body_scale {scale:g}.\n'
+                  f'const WALK_STEP_M: float = {step * scale:.4f}', text)
     path.write_text(text, encoding='utf-8', newline='\n')
 
 

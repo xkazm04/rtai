@@ -91,4 +91,5 @@ const WALK55: Array[Vector4] = [
 	Vector4(21.5, -0.5, 0.5, -138.5),
 	Vector4(20, 0.5, 0.5, -138.5),
 ]
-const WALK_STEP_M: float = 0.1959
+## Measured 0.1959 m per drawing at 1.7 m, times his body_scale 1.45.
+const WALK_STEP_M: float = 0.2841
