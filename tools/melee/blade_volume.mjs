@@ -105,7 +105,7 @@ async function main() {
   const summary = { schema: 'gtai.blade-volumes/2', source: 'pixels', label, head, tree, hits: hitsDir, ppm: 64, pitch_deg: 70, weapons: rows };
   writeFileSync(join(out, 'volumes.json'), JSON.stringify(summary, null, '\t'));
   writeFileSync(join(out, 'drawn_ticks.json'), JSON.stringify({ schema: 'gtai.drawn-ticks/1', label, head,
-    doc: 'per weapon, per facing (deg), per tick k from the press: the drawn swing mask about Rivet start: deg = [min, max] signed off the aim (+ = clockwise on screen, y down), reach_m = max ground distance (m), at gun height', weapons: ticks }, null, '\t'));
+    doc: 'per weapon, per facing (deg), per tick k from the press: the drawn swing mask about Rivet start: deg = [min, max] signed off the aim (+ = clockwise on screen, y down), reach_m = max ground distance (m), at gun height; deg_p5_p95 / reach_p95 = the same over the bulk of the mask (use these: stray arena motion widens min/max)', weapons: ticks }, null, '\t'));
   writeFileSync(join(out, 'table.md'), pixelTable(summary));
   if (weapons.length > 1) sheet(weapons, out);
   console.log(pixelTable(summary));

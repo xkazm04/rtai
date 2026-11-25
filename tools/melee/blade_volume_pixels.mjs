@@ -99,7 +99,12 @@ export function polar(points, facingDeg, minReach = 0.3) {
     reach = Math.max(reach, Math.hypot(p[0], p[1]));
   }
   const r1 = (v) => Math.round(v * 10) / 10;
-  return { deg: [r1(lo), r1(hi)], reach_m: Math.round(reach * 100) / 100, points: far.length };
+  const angs = far.map((p) => offAim(p, facingDeg)).sort((a, b) => a - b);
+  const dists = far.map((p) => Math.hypot(p[0], p[1])).sort((a, b) => a - b);
+  const q = (xs, f) => xs[Math.min(xs.length - 1, Math.floor(f * xs.length))];
+  // deg_p5_p95 / reach_p95: the bulk of the mask (stray specks of arena motion do not widen it)
+  return { deg: [r1(lo), r1(hi)], reach_m: Math.round(reach * 100) / 100, points: far.length,
+    deg_p5_p95: [r1(q(angs, 0.05)), r1(q(angs, 0.95))], reach_p95: Math.round(q(dists, 0.95) * 100) / 100 };
 }
 
 /** True when any ground point lies within r of the centre c (a body circle the drawn swing touches). */
