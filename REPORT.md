@@ -80,8 +80,11 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
   `node tools/film/kill_reel.mjs --weapons=machine_pistol --ppm=64 --dirs=90 -- --controls=legacy --foe-mix=sergeant_mulroney`,
   the stitch style on the fall grid, kill on tick 174. Before = `kill_fall_cells.gd` of `49befa075`. Measured in the frames:
   the living figure is 54x78 px in both; the fallen body grows from 61x47 to 69x53 (x1.13; about 1/0.90 was expected). Pair
-  `stills/card_kill_pair_64.png` (before left; ticks 172, 180, 194). Doubt: the figure reads as a capped patrol cop, and
-  it was not checked that this is Mulroney's card art.
+  `stills/card_kill_pair_64.png` (before left; ticks 172, 180, 194). Checked by eye (session 5) against
+  `view/p70/sergeant_mulroney_{armed_walk,fall}.png`: the standing figure matches his armed_walk back view (cross strap,
+  shotgun stock out to the left), but the fallen body is not his fall art (no shotgun or cap flying, no chevrons): the kill
+  draws a generic cop fall grid (in the headless probe the style had no own cells and resolved to `cop/head_swat`). The still proves
+  that grid now falls at his card scale (x1.13); the numbers are in the headless table in `card_scale.md`.
 
 ### 5. Mutate and a dev crash
 - `pressure_rifles.gd` (lines 36-41, 69-85, `test_pressure_takes`): 13/19 = 68.4 % -> 14/17 = 82.4 % (the re-run was cut
@@ -133,6 +136,9 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
    `weapon_fx_art.gd` (`Kind.BOLT when WeaponFxBolt.draw(...)`) with a plain branch.
 5. `kill_reel.mjs`: pass `--controls=legacy` by default (or arm the lab gun under the new controls).
 6. Measure the gauntlet once with a natural (no prefill) bond film now that `--bond-prefill=0` runs.
+7. A killed card foe falls as the generic cop fall grid, not his own `sergeant_mulroney_fall.png` (shotgun and cap
+   flying): route the card row's own fall sheet into `KillFallCells.attach` when the kill style has no own cells
+   (owner call: it changes a kill's look).
 
 ## Builder ledger
 16 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 494 minutes in all.
