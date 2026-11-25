@@ -131,3 +131,7 @@
 ## Session 7 (08:45, STABILIZE, report window)
 - 08:45 Read: journal, git log (HEAD 8a096464a), tree clean for project/tools/docs. `git diff --stat f5898d1b2 HEAD -- project tools native` empty: the reels gate PASS on 29749d82c (`build/gate/29749d82c140/gate.json`) covers the current build's code. Masters n29/yard/frames.json 15 entries, every file present. `node tools/evidence/cites.mjs REPORT.md`: 61 paths, 59 ok, 2 pattern. REPORT final as written; no change. BUILDER RUNNING none. IMAGES 7/25. Untracked hs_err_pid*.log (2026-11-24) and bash.exe.stackdump are not this run's; left.
 - 08:46 NEXT: nothing left for the lane. Director merges `n29-yard`; on the JOURNAL.md / REPORT.md add/add conflict keep each lane's own. The owner's calls are in REPORT `## Calls for the owner` (over_print_shade 0.5 with film).
+
+## Session 8 (08:45, STABILIZE, iteration 8)
+- 08:46 Re-checked: `git diff --stat f5898d1b2 HEAD -- project tools native` empty, tracked tree clean, `build/gate/29749d82c140/gate.json` present (reels gate PASS covers the build), `node tools/evidence/cites.mjs REPORT.md` 61 paths, 59 ok, 2 pattern. Nothing to fix. BUILDER RUNNING none. IMAGES 7/25.
+- 08:47 NEXT: none for the lane. Director merges `n29-yard` (keep each lane's own JOURNAL.md / REPORT.md on the add/add conflict); owner's call in REPORT `## Calls for the owner`.
