@@ -45,3 +45,5 @@ NEXT (session 2, in order):
 4. After 2: g04-take per `evidence/briefs/n31-ghost-04-drop-take.md` (play take main | HEAD). Best filmed after g03 so the HEAD side shows the beats; if g03 slips, film the mechanics take first anyway.
 5. Kill reaction (`signature_kills` keyed by weapon: try weapon `stomp` for dump kills inside crush_m, else patch + NEED melee), then item 4 Ohm.
 Gate slot: ghost = ground + 30 min; final gate by 06:15.
+- 22:16 Director look at the round (green key, before packing): b1 land squash (fists splayed wide, body low), b2 gather (fists at chest), b2 peak (fists overhead, taller than shipped RAISE), b3 slam (fists planted wide, body sunk), b4 lift-away (vapour feet) read as one sequence and match the shipped row-0 style and teal; ACCEPT all five pending a 64 px/m in-game still. fx-crack-radial: ~20 spokes from a crushed centre, tips on one round rim, ink + tan rim on green: ACCEPT (reveal outward by radius in code; its rim maps to radius_m). fx-crater / fx-dust-ring still running at 22:16.
+- 22:17 Session 1 ends: no builder running (g01, g02, g03a all ended and reported). Detached image round pid 26412 may still be running (gen.log).
