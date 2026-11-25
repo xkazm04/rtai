@@ -54,3 +54,16 @@ drawing, WALK shipped and why, `run_unit --changed` line, film + ffprobe, mutate
 Then update STATE.md (what is done, the four's numbers if you measured them) and END. Step 2-3 is a later call.
 The sonnet thug builder works beside you until 06:16 (`foe_thug_card_view.gd`, `project/dev/cast/cast_thug_*`,
 `evidence/n29/thug/**`, `test_cast_thug*`): never stage or revert them.
+
+## Added 06:11 (director): THIS CALL = steps 2 and 3. Hard stop 07:10, commit 2 by 06:50, last commit by 07:05
+Step 1 is in `5d8e4b6f8` (pad placement). The times at the top of this brief are void; these bind.
+- First quote the four's feet BEFORE the placement (`20be6ffaa`, render from a temp worktree `git worktree add` under
+  `build/` or `%TEMP%\gtai-war-before-*`, remove it afterwards) and AFTER (HEAD, WALK = FOUR), then the eight (staged copy,
+  WALK = EIGHT), both pitches, right and down-right: sole / jump at the tool's 32 px/m unit. Planted pad per drawing.
+- If the pad placement made the four WORSE than `20be6ffaa` in any facing: report it at once in the audit section and STATE.md;
+  the director decides (do not revert).
+- WALK = EIGHT ships only if the eight is no worse than the four (HEAD) in every measured facing. Commit 2 by 06:50.
+- Step 3 (film + still) only after commit 2. The film is of what ships.
+- The sonnet thug builder works beside you until 06:50 (`foe_thug_card_view.gd`, `cast_thug_*`, `test_cast_thug*`,
+  `evidence/n29/thug/**`): never stage or revert its files; commit with `git commit -- <your paths>` only. Share the lane
+  Godot lock `build/lane-godot.lock` with it (one Godot at a time in the lane).

@@ -386,3 +386,8 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
   = `20be6ffaa`, after = HEAD, and the eight).
 - 06:10 MILESTONE session 4 end. No builder running. Builders this session: 10 calls (10, 03c, 11, 07p1, 03d-B, 07p2a,
   03e x2, 12, 07b-1), all accepted (03e call 2 partial). IMAGES 21/60. BUILDER RUNNING: none.
+
+## Session 5 (06:08)
+- 06:09 No NEED cast in the other lanes' journals. 03e call 2 is in (`839ce02d8`, ring on the ground point); soles open.
+- 06:12 BUILDER RUNNING cast-03f-thug-soles (sonnet) since 06:12: `evidence/briefs/n29-cast-03f-thug-soles.md`, hard stop 06:50.
+- 06:12 BUILDER RUNNING cast-07b-war8 steps 2-3 (opus) since 06:12: brief "Added 06:11", hard stop 07:10, commit 2 by 06:50.
