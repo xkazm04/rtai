@@ -38,10 +38,12 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 func sample(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:
 	var moving: bool = _pose.previous.is_finite() and h.pos != _pose.previous
 	_pose.travel(h.pos)
-	var path: String = sheets.walk
+	var walk: String = walk_sheet(sheets.walk)
+	var path: String = walk
 	_k = sheets.body_scale
-	var row: int = StreetWalkerCards.stride_frame(_pose.walked / StreetQuestCards.STRIDE_M, moving)
-	var rows: int = StreetWalkerCards.STRIDE_FRAMES
+	var rows: int = walk_rows(walk)
+	var cycle_m: float = walk_step_m(walk) * rows
+	var row: int = _walk_row(rows, cycle_m, moving)
 	var since: int = arena.tick - h.hurt_tick
 	var heat: float = 0.0
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id) if arena.squad_ai != null else null
@@ -59,18 +61,50 @@ func sample(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:
 		var action: String = sheets.stomp if stomp else sheets.attack
 		if not action.is_empty() and e.state in [EnemyAgent.State.WINDUP, EnemyAgent.State.RECOVER]:
 			path = action
+			rows = StreetWalkerCards.STRIDE_FRAMES
 			row = _attack_row(e, stomp, arena.tick)
 			if e.state == EnemyAgent.State.RECOVER:
 				heat = float(h.cooldown) / mind.walker.attack.cooldown_ticks
-	var stride: int = floori(_pose.walked * rows / StreetQuestCards.STRIDE_M)
-	var hold_foot: bool = moving and path == sheets.walk and stride == _step
+	var stride: int = floori(_pose.walked * rows / cycle_m)
+	var hold_foot: bool = moving and path == walk and stride == _step
 	var last_ground: Vector2 = position
 	_cell(path, rows, row, h)
 	if hold_foot:
 		position = last_ground
-	_step = stride if path == sheets.walk else -1
+	_step = stride if path == walk else -1
 	_shadow.visible = ViewMode.shared().cast_k > 0.0
 	_louvres(heat, path == sheets.stomp)
+
+
+## The drawing for the distance walked; standing takes the four's STAND_FRAME at the walk's rows.
+func _walk_row(rows: int, cycle_m: float, moving: bool) -> int:
+	if not moving:
+		return floori(float(StreetWalkerCards.STAND_FRAME * rows) / StreetWalkerCards.STRIDE_FRAMES)
+	return posmod(floori(_pose.walked / cycle_m * rows), rows)
+
+
+## The shipped four-drawing walk gives way to the one CastWarAnchors.WALK selects (n29: the eight).
+static func walk_sheet(path: String) -> String:
+	if path.get_file() != CastWarAnchors.FOUR:
+		return path
+	return path.get_base_dir().path_join(CastWarAnchors.WALK)
+
+
+static func walk_rows(path: String) -> int:
+	return (
+		CastWarAnchors.EIGHT_ROWS
+		if path.get_file() == CastWarAnchors.EIGHT
+		else CastWarAnchors.FOUR_ROWS
+	)
+
+
+## Metres walked per drawing: the four keeps the shipped stride, the eight its drawn advance.
+static func walk_step_m(path: String) -> float:
+	return (
+		CastWarAnchors.EIGHT_STEP_M
+		if path.get_file() == CastWarAnchors.EIGHT
+		else CastWarAnchors.FOUR_STEP_M
+	)
 
 
 static func _attack_row(e: EnemyAgent, stomp: bool, tick: int) -> int:
@@ -112,7 +146,7 @@ func _cell(path: String, rows: int, row: int, h: Fighter) -> void:
 		offset = Vector2(-texture.get_width() / float(hframes) * 0.5, -BASE_PX)
 	frame_coords = Vector2i(face.x, row)
 	flip_h = face.y != 0
-	position = h.pos * SimConst.PX_PER_M
+	# Scale first, then place: an anchored sole placed before a rescale would slide (n29 door).
 	scale = (
 		Vector2(1.0, 1.0 / ViewMode.shared().ground_k())
 		* HEIGHT_M
@@ -120,6 +154,7 @@ func _cell(path: String, rows: int, row: int, h: Fighter) -> void:
 		* SimConst.PX_PER_M
 		/ BODY_PX
 	)
+	position = h.pos * SimConst.PX_PER_M
 
 
 func _louvres(heat: float, stomp: bool) -> void:

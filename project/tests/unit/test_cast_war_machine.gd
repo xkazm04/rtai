@@ -86,6 +86,18 @@ func test_held_walk_cell_plants_its_foot_and_next_contact_advances() -> void:
 	assert_eq(card._shadow.get_child_count(), RigCastShadows.CONTACT_RINGS.size())
 
 
+func test_walk_sheet_is_the_one_value_cast_war_anchors_walk_selects() -> void:
+	var eight: bool = CastWarAnchors.WALK == CastWarAnchors.EIGHT
+	assert_eq(CastWarAnchors.WALK70, CastWarAnchors.EIGHT70 if eight else CastWarAnchors.FOUR70)
+	assert_eq(CastWarAnchors.WALK55, CastWarAnchors.EIGHT55 if eight else CastWarAnchors.FOUR55)
+	assert_eq(CastWarAnchors.FOUR_STEP_M * 4, StreetQuestCards.STRIDE_M)
+	var walk: String = FoeWarCardView.walk_sheet(CastCards.current(WALKER).walk)
+	assert_eq(walk.get_file(), CastWarAnchors.WALK)
+	assert_eq(FoeWarCardView.walk_rows(walk), 8 if eight else 4)
+	var tex: Texture2D = StreetStrips.get_tex(walk.get_base_dir() + "/" + CastWarAnchors.EIGHT)
+	assert_eq(tex.get_size() / 288.0, Vector2(RigHeadCard.FRAMES, 8))
+
+
 func test_stomp_without_art_keeps_the_locomotion_pose() -> void:
 	var sheets: CastCards.Sheets = CastCards.current(WALKER)
 	sheets.stomp = ""
