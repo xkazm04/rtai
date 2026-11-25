@@ -25,8 +25,7 @@ var city_lean_m: Vector2 = Vector2.ZERO
 ## box (StoryForms writes it on quest 1). Zero = bit-identical.
 var forms_lift_m: float = 0.0
 ## Draw through the visual engine (core/render/print_stage.gd: camera, print pass, layers, world
-## lock). Set false before adding the view to keep the raw placeholder ink under a plain camera
-## (a caller with its own print pass, e.g. dev/noir/quest_fight.gd).
+## lock); false keeps the raw ink under a plain camera (own print pass, dev/noir/quest_fight.gd).
 var printed: bool = true
 var print_stage: PrintStage = null
 ## The combat blood (features/fx/combat_blood.gd, noir's blood in D4/D5) on the printed path:
@@ -165,6 +164,7 @@ func _process(_delta: float) -> void:
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos
 	if print_stage != null:
 		print_stage.place(at)
+		PartMaterials.set_world_px(print_stage.world_px)
 		_step_blood(print_stage.world_px)
 	else:
 		_camera.position = Ink.px(at)
