@@ -140,6 +140,7 @@ const EIGHT55: Array[Vector4] = [
 	Vector4(23, 19.5, 0.5, -103.5),
 ]
 const EIGHT_STEP_M: float = 0.1842
-const WALK70: Array[Vector4] = FOUR70
-const WALK55: Array[Vector4] = FOUR55
-const WALK_STEP_M: float = FOUR_STEP_M
+## Derived from WALK alone: switching the walk is the one WALK value (n29-11).
+const WALK70: Array[Vector4] = EIGHT70 if WALK == EIGHT else FOUR70
+const WALK55: Array[Vector4] = EIGHT55 if WALK == EIGHT else FOUR55
+const WALK_STEP_M: float = EIGHT_STEP_M if WALK == EIGHT else FOUR_STEP_M

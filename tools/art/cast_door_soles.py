@@ -4,7 +4,8 @@ The shipped four-drawing strip takes its windows from cast_soles.OTHERS (shield_
 the down-right contact hides the supporting boot behind the slab, so there (and in the unmeasured
 facings) the lowest opaque pixels stand in: a body anchor, not a verified sole. The n29 eight-drawing
 strip (tools/art/cast_door_eight.py) takes the foe eights' windows (cast_foe_soles.sole). WALK selects
-which walk ships: SHEET, WALK70/WALK55 and WALK_STEP_M are the selected walk's.
+which walk ships: SHEET, WALK70/WALK55 and WALK_STEP_M are derived from WALK in GDScript, so the
+switch is the one WALK line (--walk writes it).
 
 usage: python tools/art/cast_door_soles.py [--walk FOUR|EIGHT] [--review]
 """
@@ -105,8 +106,10 @@ def main(walk):
         print(const, 'metres per drawing', [round(x, 4) for x in steps], 'mean', round(mean(steps), 4))
         step = STEP_M[name] or f'{mean(steps):.4f}'
         lines.append(f'const {const}_STEP_M: float = {step}')
-    lines += [f'const WALK70: Array[Vector4] = {walk}70', f'const WALK55: Array[Vector4] = {walk}55',
-              f'const WALK_STEP_M: float = {walk}_STEP_M']
+    lines += ['## Derived from WALK alone: switching the walk is the one WALK value (n29-11).',
+              'const WALK70: Array[Vector4] = EIGHT70 if WALK == EIGHT else FOUR70',
+              'const WALK55: Array[Vector4] = EIGHT55 if WALK == EIGHT else FOUR55',
+              'const WALK_STEP_M: float = EIGHT_STEP_M if WALK == EIGHT else FOUR_STEP_M']
     (ROOT / 'project/features/characters/cast_door_anchors.gd').write_text(
         '\n'.join(lines) + '\n', encoding='utf-8', newline='\n')
 

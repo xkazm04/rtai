@@ -21,13 +21,9 @@ if (!out || !['stills', 'clip', 'feet', 'all'].includes(what)) {
 }
 const SPEED = 1.6;
 const CHARS = 'features/characters';
-// [file, from, to]: the eight-drawing switch, applied to the staged copies only.
-const EIGHT_PATCH = [
-  ['cast_door_anchors.gd', 'const WALK: String = FOUR', 'const WALK: String = EIGHT'],
-  ['cast_door_anchors.gd', '= FOUR70\n', '= EIGHT70\n'],
-  ['cast_door_anchors.gd', '= FOUR55\n', '= EIGHT55\n'],
-  ['cast_door_anchors.gd', '= FOUR_STEP_M\n', '= EIGHT_STEP_M\n'],
-];
+// [file, from, to]: the eight-drawing switch (one value since n29-11: WALK70/55 and WALK_STEP_M follow WALK),
+// applied to the staged copies only.
+const EIGHT_PATCH = [['cast_door_anchors.gd', 'const WALK: String = FOUR', 'const WALK: String = EIGHT']];
 
 function link(a, b) { symlinkSync(a, b, process.platform === 'win32' ? 'junction' : 'dir'); }
 
