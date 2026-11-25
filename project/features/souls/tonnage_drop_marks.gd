@@ -24,6 +24,8 @@ const ARRIVE_DUST_TICKS: int = 24
 const SHOCK_REACH_TICKS: int = 8
 const SHOCK_TICKS: int = 24
 const DUMP_DUST_TICKS: int = 36
+## Peak opacity of the dump dust ring (was 0.9, with a k^2 fade).
+const DUMP_DUST_PEAK: float = 0.5
 const HOLD_TICKS: int = 120
 const FADE_TICKS: int = 60
 const VERTS: int = 64
@@ -65,9 +67,21 @@ func draw(ci: CanvasItem, tick: int, ppm: float) -> void:
 	var fade: float = ground_alpha(tick)
 	ci.draw_set_transform(spot)
 	_shadow(ci, tick - press_tick, ppm)
+	_dust(ci, tick, ppm)
 	_crack(ci, reach_m(tick) * ppm, radius_m * ppm / CRACK_RIM_PX, fade)
 	if tick >= dump_tick:
 		_decal(ci, CRATER, CRATER_M * ppm / CRATER.get_width(), fade, 0.0)
+	var age: int = tick - dump_tick
+	if age >= 0 and age < SHOCK_TICKS:
+		_shock(ci, age, ppm)
+	ci.draw_set_transform(Vector2.ZERO)
+	if age >= 0:
+		SlamDebris.draw(ci, spot, age * SimClock.TICK_DT, ppm, dump_tick)
+
+
+## The dust sits UNDER the crack (drawn first) and the dump's ring is light and fades fast, so the
+## crack's rim reads all round from D+2 (n31 ghost 09: it was alpha 0.9 over the crack).
+func _dust(ci: CanvasItem, tick: int, ppm: float) -> void:
 	var arrive: int = tick - press_tick - LAND_TICKS
 	if arrive >= 0 and arrive < ARRIVE_DUST_TICKS:
 		var k: float = float(arrive) / ARRIVE_DUST_TICKS
@@ -77,12 +91,7 @@ func draw(ci: CanvasItem, tick: int, ppm: float) -> void:
 	if age >= 0 and age < DUMP_DUST_TICKS:
 		var k2: float = float(age) / DUMP_DUST_TICKS
 		var outer2: float = lerpf(0.8, 1.0, 1.0 - pow(1.0 - k2, 3.0)) * radius_m * ppm
-		_decal(ci, DUST, outer2 / DUST_OUTER_PX, 0.9 * (1.0 - k2 * k2), -_turn)
-	if age >= 0 and age < SHOCK_TICKS:
-		_shock(ci, age, ppm)
-	ci.draw_set_transform(Vector2.ZERO)
-	if age >= 0:
-		SlamDebris.draw(ci, spot, age * SimClock.TICK_DT, ppm, dump_tick)
+		_decal(ci, DUST, outer2 / DUST_OUTER_PX, DUMP_DUST_PEAK * pow(1.0 - k2, 2.0), -_turn)
 
 
 func _shadow(ci: CanvasItem, since: int, ppm: float) -> void:
