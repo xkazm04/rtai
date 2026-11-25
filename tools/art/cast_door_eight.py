@@ -24,6 +24,23 @@ EIGHT = 'shield_robot_planted8_armed_walk.png'
 CELL_H = 192
 FOOT = 189  # round(192 * street_hit.FOOT_Y): the shipped door's foot line
 LOOK = ROOT / 'build/look/n29-door8'
+# n29-11: drawing 7 of the p70 right facing redrawn (door8b image edit). The edit re-encoded every pixel
+# (silhouettes of 1-6 and 8 unchanged), so only drawing 7's grid cell is spliced into the old source,
+# and only its sheet cell is taken from the new pack (the tone pass is global: the rest keeps its pixels).
+REDRAWN = {(70, 'right'): Path('C:/Users/kazda/kiro/gtai-art/foes-n29/door8b/out/door8_70_right_f7_splice.png')}
+REDRAWN_CELLS = {70: [(2, 6)]}  # (facing column, drawing row) of the redrawn drawings, 0-based
+
+
+def keep_others(dest, before, cells):
+    """Every cell but the redrawn ones keeps the previous sheet's bytes."""
+    new = np.asarray(Image.open(dest).convert('RGBA')).copy()
+    if before is None or before.shape != new.shape:
+        raise ValueError(f'{dest}: no same-size previous sheet to keep the other drawings from')
+    out, width = before.copy(), new.shape[1] // 5
+    for col, row in cells:
+        box = np.s_[row * CELL_H:(row + 1) * CELL_H, col * width:(col + 1) * width]
+        out[box] = new[box]
+    Image.fromarray(out).save(dest)
 
 
 def key_lead(path):
@@ -49,7 +66,8 @@ def amber(path):
 
 
 def facing_tiles(pitch, col, height):
-    strip = grid_strip(ART / 'out' / f'door8_{pitch}_{FACES[col]}.png')
+    source = REDRAWN.get((pitch, FACES[col]), ART / 'out' / f'door8_{pitch}_{FACES[col]}.png')
+    strip = grid_strip(source)
     factor = height / np.mean([im.height for im in strip])
     tiles = [im.resize(tuple(round(v * factor) for v in im.size), Image.Resampling.LANCZOS)
              for im in strip]
@@ -78,9 +96,12 @@ def pack(pitch):
     raw = work / f'door8_{pitch}_cut.png'
     grid.save(raw)
     dest = VIEW / f'p{pitch}' / EIGHT
+    before = np.asarray(Image.open(dest).convert('RGBA')).copy() if dest.exists() else None
     subprocess.run([sys.executable, str(Path(__file__).with_name('street_tone.py')),
                     str(raw), str(reference), str(dest)], check=True)
     amber(dest)
+    if pitch in REDRAWN_CELLS:
+        keep_others(dest, before, REDRAWN_CELLS[pitch])
     if key_lead(dest):
         raise ValueError(f'{dest}: {key_lead(dest)} opaque key pixels')
     report(pitch, reference, raw, dest, heights)

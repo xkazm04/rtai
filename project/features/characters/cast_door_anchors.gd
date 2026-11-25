@@ -53,7 +53,7 @@ const FOUR55: Array[Vector4] = [
 	Vector4(-13, 20.5, -0.5, -99.5),
 ]
 const FOUR_STEP_M: float = 0.16
-## p70 SHA-256 94496fa8924fd961a325d4c19e47a486a97c4cc15df22b880fc014a76e8faac9
+## p70 SHA-256 bf29e82daf7086fd3bade955fb86d3026649683b0e18d9aa54e95e1affad36ee
 const EIGHT70: Array[Vector4] = [
 	Vector4(23, 21.5, 0, -91.5),
 	Vector4(21, 20.5, 0, -91.5),
@@ -77,7 +77,7 @@ const EIGHT70: Array[Vector4] = [
 	Vector4(-37.5, 20.5, -0.5, -76.5),
 	Vector4(18.5, 20.5, 0, -76.5),
 	Vector4(8, 20.5, 0, -76.5),
-	Vector4(12, 20.5, 0, -76.5),
+	Vector4(-6, 20.5, 0, -76.5),
 	Vector4(-34.5, 19.5, -0.5, -76.5),
 	Vector4(-41, 20.5, -0.5, -83.5),
 	Vector4(15, 20.5, 0, -83.5),
