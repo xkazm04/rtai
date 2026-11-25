@@ -1,0 +1,28 @@
+{
+  "alive": true,
+  "damage_taken": 32.48,
+  "death": "",
+  "finished": true,
+  "hits": 22,
+  "kills_all": 50,
+  "kills_by_weapon": {
+    "assault-rifle": 12,
+    "claw": 24,
+    "deploy_tonnage": 14
+  },
+  "kills_own_weapon": 24,
+  "melee_all": {
+    "claw": {
+      "landed": 22,
+      "swings": 22,
+      "whiffs": 0
+    }
+  },
+  "schema": "gtai.play-baseline-run/1",
+  "seed": 1,
+  "swings": 22,
+  "ticks": 3581,
+  "wave_reached": 4,
+  "weapon": "claw",
+  "whiffs": 0
+}

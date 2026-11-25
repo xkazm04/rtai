@@ -4,7 +4,7 @@ extends Node
 ## --weapon=claw|chainsaw|electro_baton|katana|plasma_sword --seed=N --waves=N --result=<abs json>
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--weapon", "--seed", "--waves", "--result", "--bot", "--pick"
+	"--weapon", "--seed", "--waves", "--result", "--bot", "--pick", "--melee-sweep"  # n31 02: MeleeHit
 ]
 const RUN_TICKS: int = 216000
 const WEAPONS: PackedStringArray = ["claw", "chainsaw", "electro_baton", "katana", "plasma_sword"]

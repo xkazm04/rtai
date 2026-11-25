@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseArgs, summarize, table } from './play_baseline.mjs';
+import { parseArgs, runArgs, summarize, table } from './play_baseline.mjs';
 
 const row = (o) => ({ seed: 1, swings: 10, hits: 8, whiffs: 2, kills_own_weapon: 12, kills_all: 20, damage_taken: 30,
   alive: true, finished: true, wave_reached: 4, ...o });
@@ -28,4 +28,11 @@ test('parseArgs defaults and refusals', () => {
 
 test('table has one line per weapon', () => {
   assert.equal(table({ claw: summarize([row({})]) }).trim().split('\n').length, 3);
+});
+
+test('--sweep passes --melee-sweep to every run, off by default', () => {
+  assert.equal(parseArgs([]).sweep, false);
+  assert.equal(parseArgs(['--sweep']).sweep, true);
+  assert.ok(runArgs('katana', 1, 4, 'f.json', true).includes('--melee-sweep'));
+  assert.ok(!runArgs('katana', 1, 4, 'f.json', false).includes('--melee-sweep'));
 });

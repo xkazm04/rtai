@@ -4,6 +4,7 @@
 // then per-weapon totals: swings, hits, kills, kills per swing, damage taken, deaths, wave reached.
 //   node tools/melee/play_baseline.mjs [--label=before] [--seeds=5] [--waves=4] [--weapons=a,b]
 //     [--out=evidence/n31-melee/01-baseline] [--from=<dir of run jsons>]   (--from only aggregates)
+//     [--sweep]   (n31 melee 02: every run with --melee-sweep, the hit follows the drawn blade)
 // Takes the lane Godot lock (build/n31/godot.lock) around every run.
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -16,8 +17,9 @@ const sum = (rows, key) => rows.reduce((t, r) => t + (r[key] ?? 0), 0);
 const ratio = (a, b) => (b > 0 ? Number((a / b).toFixed(3)) : null);
 
 export function parseArgs(argv) {
-  const o = { label: 'before', seeds: 5, waves: 4, weapons: WEAPONS, out: 'evidence/n31-melee/01-baseline', from: null };
+  const o = { label: 'before', seeds: 5, waves: 4, weapons: WEAPONS, out: 'evidence/n31-melee/01-baseline', from: null, sweep: false };
   for (const a of argv) {
+    if (a === '--sweep') { o.sweep = true; continue; }
     const m = /^--([\w-]+)=(.*)$/.exec(a);
     if (!m) throw new Error('bad argument ' + a);
     const [, k, v] = m;
@@ -81,11 +83,15 @@ function takeLock(tag) {
   }
 }
 
-function runOne(weapon, seed, waves, file) {
-  takeLock('01b');
+export function runArgs(weapon, seed, waves, file, sweep = false) {
+  return ['tools/dev/run.mjs', 'play_baseline', `--weapon=${weapon}`, `--seed=${seed}`, `--waves=${waves}`,
+    `--result=${file}`, ...(sweep ? ['--melee-sweep'] : [])];
+}
+
+function runOne(weapon, seed, waves, file, sweep) {
+  takeLock(sweep ? '02p2' : '01b');
   try {
-    const r = spawnSync('node', ['tools/dev/run.mjs', 'play_baseline', `--weapon=${weapon}`, `--seed=${seed}`,
-      `--waves=${waves}`, `--result=${file}`], { cwd: ROOT, encoding: 'utf8' });
+    const r = spawnSync('node', runArgs(weapon, seed, waves, file, sweep), { cwd: ROOT, encoding: 'utf8' });
     return r.stdout.trim().split('\n').at(-1);
   } finally { rmSync(LOCK, { force: true }); }
 }
@@ -100,7 +106,7 @@ export function main(argv) {
     for (const w of o.weapons) for (let s = 1; s <= o.seeds; s++) {
       const file = join(runs, `${w}-${s}.json`);
       rmSync(file, { force: true });
-      log.push(`${w} seed ${s}: ${runOne(w, s, o.waves, file)}`);
+      log.push(`${w} seed ${s}: ${runOne(w, s, o.waves, file, o.sweep)}`);
       console.log(log.at(-1));
     }
   }
@@ -113,11 +119,11 @@ export function main(argv) {
     all.push(row);
   }
   const summary = Object.fromEntries(o.weapons.filter((w) => byWeapon[w]).map((w) => [w, summarize(byWeapon[w])]));
-  const out = { schema: 'gtai.play-baseline/1', label: o.label, waves: o.waves, bot: 'average', pick: 'greedy',
+  const out = { schema: 'gtai.play-baseline/1', label: o.label, waves: o.waves, bot: 'average', pick: 'greedy', sweep: o.sweep,
     seeds: o.seeds, weapons: summary, runs: all.map(({ melee_all, ...r }) => r), log };
   writeFileSync(join(dir, 'baseline.json'), JSON.stringify(out, null, 2) + '\n');
   writeFileSync(join(dir, `${o.label}.md`), `# gauntlet melee baseline: ${o.label}\n\n`
-    + `Average bot, greedy picks, waves 1..${o.waves}, seeds 1..${o.seeds}, one melee weapon held (blades swing through the `
+    + `Average bot, greedy picks, waves 1..${o.waves}, seeds 1..${o.seeds}${o.sweep ? ', --melee-sweep' : ''}, one melee weapon held (blades swing through the `
     + `primary button; claw through the melee key). kills (own) = kills credited to the held weapon.\n\n${table(summary)}`);
   console.log(table(summary));
 }

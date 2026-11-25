@@ -1,0 +1,277 @@
+{
+  "schema": "gtai.play-baseline/1",
+  "label": "after-sweep-payback",
+  "waves": 4,
+  "bot": "average",
+  "pick": "greedy",
+  "sweep": true,
+  "seeds": 5,
+  "weapons": {
+    "claw": {
+      "runs": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "swings": 198,
+      "hits": 182,
+      "whiffs": 13,
+      "kills_own_weapon": 173,
+      "kills_all": 254,
+      "kills_per_swing": 0.874,
+      "kills_all_per_swing": 1.283,
+      "mean_kills_per_swing": 0.888,
+      "hit_rate": 0.919,
+      "damage_taken_mean": 61.91,
+      "deaths": 0,
+      "unfinished": 0,
+      "wave_reached_mean": 4,
+      "wave_reached_min": 4
+    },
+    "chainsaw": {
+      "runs": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "swings": 153,
+      "hits": 361,
+      "whiffs": 66,
+      "kills_own_weapon": 154,
+      "kills_all": 254,
+      "kills_per_swing": 1.007,
+      "kills_all_per_swing": 1.66,
+      "mean_kills_per_swing": 1.058,
+      "hit_rate": 2.359,
+      "damage_taken_mean": 73.217,
+      "deaths": 0,
+      "unfinished": 0,
+      "wave_reached_mean": 4,
+      "wave_reached_min": 4
+    }
+  },
+  "runs": [
+    {
+      "alive": true,
+      "damage_taken": 43.485,
+      "death": "",
+      "finished": true,
+      "hits": 46,
+      "kills_all": 50,
+      "kills_by_weapon": {
+        "assault-rifle": 12,
+        "chainsaw": 25,
+        "deploy_tonnage": 13
+      },
+      "kills_own_weapon": 25,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 1,
+      "swings": 19,
+      "ticks": 4076,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "whiffs": 5
+    },
+    {
+      "alive": true,
+      "damage_taken": 56.547,
+      "death": "",
+      "finished": true,
+      "hits": 46,
+      "kills_all": 50,
+      "kills_by_weapon": {
+        "assault-rifle": 13,
+        "chainsaw": 20,
+        "deploy_tonnage": 17
+      },
+      "kills_own_weapon": 20,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 2,
+      "swings": 18,
+      "ticks": 3978,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "whiffs": 6
+    },
+    {
+      "alive": true,
+      "damage_taken": 130.794,
+      "death": "",
+      "finished": true,
+      "hits": 103,
+      "kills_all": 51,
+      "kills_by_weapon": {
+        "assault-rifle": 8,
+        "chainsaw": 43
+      },
+      "kills_own_weapon": 43,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 3,
+      "swings": 47,
+      "ticks": 8086,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "whiffs": 30
+    },
+    {
+      "alive": true,
+      "damage_taken": 63.6,
+      "death": "",
+      "finished": true,
+      "hits": 85,
+      "kills_all": 51,
+      "kills_by_weapon": {
+        "assault-rifle": 18,
+        "chainsaw": 33
+      },
+      "kills_own_weapon": 33,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 4,
+      "swings": 30,
+      "ticks": 5875,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "whiffs": 5
+    },
+    {
+      "alive": true,
+      "damage_taken": 71.661,
+      "death": "",
+      "finished": true,
+      "hits": 81,
+      "kills_all": 52,
+      "kills_by_weapon": {
+        "assault-rifle": 19,
+        "chainsaw": 33
+      },
+      "kills_own_weapon": 33,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 5,
+      "swings": 39,
+      "ticks": 6997,
+      "wave_reached": 4,
+      "weapon": "chainsaw",
+      "whiffs": 20
+    },
+    {
+      "alive": true,
+      "damage_taken": 73.199,
+      "death": "",
+      "finished": true,
+      "hits": 30,
+      "kills_all": 50,
+      "kills_by_weapon": {
+        "assault-rifle": 9,
+        "claw": 30,
+        "deploy_tonnage": 11
+      },
+      "kills_own_weapon": 30,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 1,
+      "swings": 31,
+      "ticks": 4690,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "whiffs": 1
+    },
+    {
+      "alive": true,
+      "damage_taken": 60,
+      "death": "",
+      "finished": true,
+      "hits": 27,
+      "kills_all": 50,
+      "kills_by_weapon": {
+        "assault-rifle": 14,
+        "claw": 26,
+        "deploy_tonnage": 10
+      },
+      "kills_own_weapon": 26,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 2,
+      "swings": 27,
+      "ticks": 3743,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "whiffs": 0
+    },
+    {
+      "alive": true,
+      "damage_taken": 62.352,
+      "death": "",
+      "finished": true,
+      "hits": 47,
+      "kills_all": 51,
+      "kills_by_weapon": {
+        "assault-rifle": 10,
+        "claw": 41
+      },
+      "kills_own_weapon": 41,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 3,
+      "swings": 50,
+      "ticks": 5174,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "whiffs": 3
+    },
+    {
+      "alive": true,
+      "damage_taken": 63.6,
+      "death": "",
+      "finished": true,
+      "hits": 35,
+      "kills_all": 51,
+      "kills_by_weapon": {
+        "assault-rifle": 15,
+        "claw": 36
+      },
+      "kills_own_weapon": 36,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 4,
+      "swings": 44,
+      "ticks": 4289,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "whiffs": 6
+    },
+    {
+      "alive": true,
+      "damage_taken": 50.4,
+      "death": "",
+      "finished": true,
+      "hits": 43,
+      "kills_all": 52,
+      "kills_by_weapon": {
+        "assault-rifle": 12,
+        "claw": 40
+      },
+      "kills_own_weapon": 40,
+      "schema": "gtai.play-baseline-run/1",
+      "seed": 5,
+      "swings": 46,
+      "ticks": 5252,
+      "wave_reached": 4,
+      "weapon": "claw",
+      "whiffs": 3
+    }
+  ],
+  "log": [
+    "claw seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "claw seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "claw seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "claw seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "claw seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "chainsaw seed 1: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "chainsaw seed 2: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "chainsaw seed 3: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "chainsaw seed 4: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)",
+    "chainsaw seed 5: ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/melee_n31/play_baseline.gd)"
+  ]
+}
