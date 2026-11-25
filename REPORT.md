@@ -76,6 +76,11 @@ DRAFT (session 4, 15:05): sections are filled as items land; the final version i
 1. **Vermilion per weapon, danger or heat (no recolour made).** Showcase (item art) and in play (`held_55` + Rivet's p70 strip
    cell); stills `C:/Users/kazda/kiro/gtai-masters/n30/keys/vermilion/<weapon>_4x.png` (showcase) and `<weapon>_held_4x.png`
    (in play), contact sheets `contact_4x.png`, `contact_held_4x.png`. Proposal = what goes amber on your yes; danger stays vermilion.
+   **What your yes would look like** (`d8aabf6ae`, preview only, no shipped art changed): `vermilion/preview_contact_4x.png`, current |
+   proposed per weapon (showcase, then in play), heat parts only, recoloured to the game's amber `#ffbf56` hue and saturation with each
+   pixel's own value kept; danger px changed 0, alpha identical (`evidence/n30-keys/vermilion/preview.py`). The copper parts come out
+   as warm brass rather than glowing amber, because the source px are dark; if you want them to glow, the recolour can also lift the
+   value (one number in the script).
 
    | weapon | danger (stays vermilion) | heat (to amber on your yes) | design / wear (keep) |
    |---|---|---|---|
