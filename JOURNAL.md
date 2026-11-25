@@ -368,3 +368,15 @@ NEXT (session 5), in order. Use `date`: my journal times this session ran ~3 min
   written for session 5 step 1a (fill HARDSTOP/COMMIT1/LASTCOMMIT).
 - 06:01 BUILDER RUNNING cast-07b-war8 step 1 (opus) since 06:01: pad placement + test, hard stop 06:16 (the brief's
   times are this call's; the next call re-fills them and does steps 2-3).
+- 06:07 MILESTONE `5d8e4b6f8` (07b step 1): `FoeWarCardView._plant` pins the registered pad (`pad_local` from CastWarAnchors)
+  for a whole contact (key = contact half-cycle x facing x flip), re-derived after the scale every frame; replaces the
+  old hold-within-one-drawing. Read the diff. NOTE: the shipped FOUR now gets this placement too (look change for the
+  four: the next call must quote the four's feet before/after it, from `20be6ffaa` vs `5d8e4b6f8`).
+- 06:09 BUILDER cast-03e-thug-fixes call 2 15 accepted-partial: `839ce02d8`. Ring now on the ground point
+  (`FoeThugCardView.ground_local`, `_shadow.position` after draw_pose/_hold_stop): ring centroid 542.0 vs row ~540 (64),
+  540.7 (32); was 25 / 12 px below. Test fails without the fix. run_unit FULL 4236/0/2. OPEN: soles still ~4 px above the
+  row at 64 (bar 2): shift `_planted.origin.y` in `_hold_stop` by the stand cell's sole gap from `CastThugAnchors`;
+  55 not re-measured; walk feet not re-run (body transform untouched, so they stand).
+NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md` plan, `foe_thug_card_view.gd`, re-measure
+  70 + 55, walk feet re-run); it shares `foe_thug_card_view.gd` with nobody, so it can run beside 07b steps 2-3 (opus,
+  re-fill the brief's times; step 1 is in `5d8e4b6f8`). 03d PART A (ink + rim) after whichever finishes first.
