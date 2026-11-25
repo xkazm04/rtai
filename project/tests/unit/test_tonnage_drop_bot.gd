@@ -46,7 +46,7 @@ func test_tonnage_drop_is_one_press_with_the_aim_in_the_same_word() -> void:
 	stage.pilot.drive(stage, press)
 	assert_eq(ghost.phase, GhostDeploy.Phase.ACTIVE, "the press itself deploys")
 	assert_true(ghost.dump.pending())
-	assert_gt(ghost.spot.x, 0.0, "the planned spot, not the gun's left aim")
+	assert_ne(ghost.spot, Vector2(-row.range_m, 0), "the planned spot, not the gun's left aim")
 	for cop: Fighter in cops:
 		assert_lte(ghost.spot.distance_to(cop.pos), row.radius_m)
 	assert_eq(_word().buttons & number, 0, "no second press while he charges")

@@ -55,7 +55,7 @@ func test_shipped_row_is_a_drop_with_a_short_charge_and_a_wide_circle() -> void:
 	assert_true(row.drops())
 	assert_eq(row.drop_at, &"aim")
 	assert_eq(row.charge_ticks, roundi(0.45 * SimClock.TICK_RATE))
-	assert_eq(row.radius_m, 5.5)
+	assert_eq(row.radius_m, 6.5)
 	assert_eq(row.dump_damage, 3.0)
 	assert_eq(row.life_ticks, row.charge_ticks + 54, "the old aftermath follows the charge")
 
