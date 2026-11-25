@@ -70,3 +70,9 @@ func test_plan_stroke_widths_follow_the_screen_scale() -> void:
 	assert_eq(near.size(), far.size())
 	for i: int in near.size():
 		assert_almost_eq(far[i].width, near[i].width * 2.0, 0.001, "k doubles every width")
+
+
+func test_amber_body_is_drawn_under_the_core() -> void:
+	var plan: Array[CurrentLook.Pass] = CurrentLook.plan(Vector2.ZERO, Vector2(1.0, 0.5), 4)
+	assert_eq(plan[plan.size() - 1].color, ElectricArc.CORE, "the core is drawn last, on top")
+	assert_eq(plan[plan.size() - 2].color, Ink.AMBER, "the amber body sits just under it")
