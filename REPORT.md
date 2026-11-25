@@ -104,7 +104,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 1. The p55 collar rows 3, 6, 7 by the owner's pick (hand repaint from row 4, or 2x per-cell edits); row 8's 4x touch-ups.
 2. The molotov's own run set (one row per job, the donor's soles fixed by registration); the stop-gap back-swing.
 3. Combat's red audit row 16 after the owner's call: the per-weapon danger-or-heat list from `evidence/n29-keys/held_red/table.md`.
-4. The compact (handheld) HUD: chip 1's plate crowds plate 2 (3 px); move the compact strip's first slot right or shrink the plate, then re-render the 1280x800 pair (brief `evidence/briefs/n29-01e-hud-handheld-snapshot.md`).
+4. The compact (handheld) HUD: chip 1's plate crowds plate 2 (3.5 px by the code's arithmetic: compact gap 42 against a 24 px number; the margin cannot help, the clamp moves with it). Ready brief: `evidence/briefs/n30-keys-01-hud-compact-gap.md` (compact gap 42 -> 50, gap about 11.5 px, a test that fails on n29; re-render the 1280x800 pair as `evidence/briefs/n29-01e-hud-handheld-snapshot.md` did).
 5. Gloria's p55 diagonal flash in game (needs a dev scene that fires Gloria at p55; `arsenal_turn` has none).
 
 ## Builder ledger

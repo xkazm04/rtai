@@ -166,3 +166,10 @@ NEXT (session 6, if any): nothing owed. The lane is frozen and gated with reels 
 - 07:05 REPORT updated (item 1 handheld, What does not, Next steps, ledger 24 calls / 508 min); cites ok.
 - 07:05 Session 6: no builder running; Godot lock free.
 NEXT (session 7, if any): nothing owed. The lane is frozen and gated with reels (cbca1a8c9 PASS). Re-run `node tools/evidence/cites.mjs REPORT.md` only if REPORT changes. Owner calls in REPORT; first fix for the next run: the compact HUD plate 1 crowding plate 2.
+
+## Session 7 (07:03 to 08:33)
+- 07:03 READ journal; NEED keys grep: combat rows 12, 15, 16 served; cast, yard none. Lane frozen at e553b6b9e, gate with reels PASS on cbca1a8c9; images 58/60.
+- 07:04 DECISION no product work: the one open fault (compact HUD plate 1 crowds plate 2) needs a code change, a test, a 12 min hook and a re-gate, which cannot meet the 07:15 commit bar or the 07:30 gate start. Instead a ready brief for the next run.
+- 07:04 Measured from the code (no Godot): compact gap 42, chip_r 19, number 24 -> plate 1 clamped +12 px to 9..35.5, plate 2 from 39.0: 3.5 px apart (the 01e still showed 3 px). Desktop gap is 72 (`GhostFormHud._ready` swaps GAP 58 -> 72), about 40 px apart: fine. Margin cannot help (`number_min_x` moves with it). Fix: compact gap 42 -> 50 (never 58). Brief `evidence/briefs/n30-keys-01-hud-compact-gap.md`; REPORT next step 4 points at it; cites ok.
+- 07:05 No builder running; Godot lock free.
+NEXT (any later session): nothing owed. The lane is frozen and gated with reels (cbca1a8c9 PASS); REPORT complete. Next run starts with `evidence/briefs/n30-keys-01-hud-compact-gap.md`.
