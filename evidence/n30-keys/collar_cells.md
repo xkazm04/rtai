@@ -135,3 +135,53 @@ profile 3.09 / 4.56, **mean 3.83 cm** (bar 3.83 +- 0.1), 32 px/m 2.31 / 3.00. Ex
 Row 8 touch-ups (r8c4 notch, r8c8 streak: `python -I scripts/run_comp.sh` after `node ../../gen.mjs . r8c4,r8c8`; note the
 mask is the collar hull, so the r8c8 streak right of the ring may fall outside it). Retry the kept cells r7c3, r7c4, r6c2,
 r6c6 with a different reference (row 2 mirrored for row 6) or a front-end-only mask.
+
+## n30-06 / n30-08: leftover cells and row 6 visor
+
+Round `C:/Users/kazda/kiro/gtai-art/rivet-n30/collar_cells/` (`STATE.md`, n30-06 and n30-08 lines). n30-06 made the four leftover
+cells (11 images); n30-08 installed them and fixed the visor (0 images).
+
+### Leftover cells (commit `2641a10fe`, sheet e94deb4e)
+
+| cell | raw | alpha IoU | mask px | changed (outside mask) | protect boxes | orange / dark median | verdict |
+|---|---|---|---|---|---|---|---|
+| 7.3 | `out/r7c3c.png` | 0.984 | 395 | 395 (0) | - | [248, 76, 3] / [18, 4, 2] | accepted (1st image; image two = accepted r7c2) |
+| 7.4 | `out/r7c4d.png` | 0.986 | 360 | 360 (0) | 76,95,82,100 | [247, 79, 3] / [17, 3, 2] | accepted (2nd image; image two = accepted r7c3; r7c4c rejected: pale blob at the front end) |
+| 6.2 | `out/r6c2d.png` | 0.983 | 432 | 432 (0) | 70,80,106,97;86,98,102,100 | [249, 77, 5] / [21, 10, 10] | accepted (2nd image; mirrored r2c2 + accepted r6c1; r6c2c rejected: brown rope left half, blob) |
+| 6.6 | `out/r6c6d.png` | 0.989 | 437 | 437 (0) | 70,80,95,104 | [249, 86, 2] / [28, 7, 4] | accepted (2nd image; mirrored r2c6 + accepted r6c5; r6c6c rejected: M-shaped notch mid-ring) |
+| 8.4 | `out/r8c4.png`, `out/r8c4b.png` | 0.985 / 0.981 | 522 / 505 | 520 / 504 (0) | - | - | KEPT SHIPPED: both raws keep the pink wedge / purple gap above the ring's left end (cell x ~100-107, y ~102-108, above the hull; an extra-mask trial there did not fix it) |
+| 8.8 | `out/r8c8.png`, `out/r8c8b.png` | 0.983 / 0.974 | 514 / 533 (incl. extra 12) | 514 / 533 (0) | extra mask 123,89,124,94 | - | KEPT SHIPPED: the streak (cell x 123-124, y 89-94, 12 px) is outside the collar hull; with the declared extra mask both raws still paint it light (lum 145 / 139 vs 155-158) |
+
+In game 64 px/m: `runs/n3008_after_64` vs `runs/r67_after_64`: only tick 448 (r6c6) differs, 586 px in x 941-997 y 442-470
+(neck window); r6c2, r7c3, r7c4 are never shown by the harness. Still `.../collar/row67b_64_ingame.png`. n30-06's own run
+`runs/n3006_after_64` is NOT valid: its `--import` did not re-import the sheet (`.godot/imported` ctex and `.md5` stayed at
+11:33 with the old source md5), so it shows the old sheet (0 px diff everywhere). Re-run with a guard that aborts when the
+imported `.md5` does not name the installed source (`build/n30-08/chain.sh`). `.import` unchanged, 0 SCRIPT ERROR.
+
+### Row 6 visor (commit `68d873f9e`, sheet e39ae6e1)
+
+Row 6's visor glow is orange, so n30-04's yellow-only visor guard missed it: the shipped r6c3, r6c5, r6c7, r6c8 had recoloured
+visor glow / frame px. Re-compositing from the raws with `CELL_PROTECT` moved r6c3's and r6c8's seam-shift pick (0,0 -> 0,-1),
+which redraws the whole band, so instead each cell keeps its accepted composite and takes the pre-n30 pixels inside the
+declared boxes (`scripts/protect_restore.py`, proof `comp/n3008_proof.json`). Before = visor px differing from the pre-n30
+sheet in the shipped cell, after = in the fixed cell.
+
+| cell | protect boxes (cell x0,y0,x1,y1) | visor px before | after | collar px (unchanged) | band px in boxes |
+|---|---|---|---|---|---|
+| 6.3 | 76,83,97,103; 100,91,103,96 | 40 | 0 | 336 | 0 |
+| 6.5 | 84,88,92,94 | 6 | 0 | 419 | 0 |
+| 6.7 | 75,78,97,100 | 55 | 0 | 312 | 0 |
+| 6.8 | 75,95,97,117; 98,104,102,111 | 39 | 0 | 379 | 0 |
+
+140 px changed vs the shipped sheet, 0 outside the boxes, alpha identical, other cells bit-identical. 6x judge (shipped |
+fixed | diff) `comp/n3008_judge_a.png`, `comp/n3008_judge_b.png`: the visor glow and frame are the original ones again, the
+rings are untouched. In game: `runs/n3008b_after_64` vs `runs/n3008_after_64`: only tick 1408 (r6c8) differs, 65 px in
+x 929-957 y 440-459 (visor window). Not checked: r6c6 (n30-06, protect 70,80,95,104) still differs from pre-n30 by 1 px at
+x 100 y 100 next to the visor's right end.
+
+Stills: `C:/Users/kazda/kiro/gtai-masters/n30/keys/collar/row6_4x.png`, `row7_4x.png` (pre-n30 above, final below; rows 6 and 7
+are 8/8 rigid), `row67_64_ingame_final.png` (before `runs/n3004_before_64` | after `runs/n3008b_after_64`, ticks 448, 568,
+1408, 1528), listed in `frames.json`.
+
+Next: row 8 touch-ups r8c4 (notch) and r8c8 (streak) failed twice each by image edit; they need a hand fix of a few px or
+another route.
