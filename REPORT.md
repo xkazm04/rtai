@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-DRAFT (session 5, 15:47): sections are filled as items land; the final version is written at 18:55.
+DRAFT (session 6, 15:50): sections are filled as items land; the final version is written at 18:55.
 
 ## What works
 
@@ -165,6 +165,7 @@ DRAFT (session 5, 15:47): sections are filled as items land; the final version i
 | n30-18 eq-collar-film | sonnet | 11 | accepted | 32 px/m turn clip of the aim-left collar |
 | n30-19 vermilion-preview | sonnet | 2 | accepted | heat -> amber preview per weapon, no Godot, beside the gate |
 | n30-20 unsure-collar | sonnet | 2 | accepted | UNSURE cells settled at 4x, next-run list of 9 images |
+| n30-21 vermilion-glow | sonnet | 5 | accepted | glow column (value lift 0.55) beside brass for Calls 1 |
 
 Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
 before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were
