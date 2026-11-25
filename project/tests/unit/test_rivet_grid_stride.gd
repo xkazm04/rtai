@@ -26,6 +26,7 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p55/gatling": 81.0,
 }
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/gloria/5": 0.64,
 	"p70/plasma_sword/1": 0.98,
 	"p70/electro_gun/5": 0.96,
 	"p70/electro_gun/4": 0.86,

@@ -1,7 +1,7 @@
 extends GutTest
 ## n27 withheld gloria's old long-gun grids at p70 (walk_grid.by_weapon gloria: bare_claw_p70).
-## n29 drew her own compact-gun p70 walk on the pistol's legs and deleted that row: she walks on
-## her own grid, and a sprint borrows the bare run with the held part until her run8 ships.
+## n29 drew her own compact-gun p70 walk and run8 on the pistol's legs and deleted that row: she
+## walks and sprints on her own grids, never the old long-gun ones.
 
 var rig: CutRig
 
@@ -29,8 +29,8 @@ func test_gloria_sprints_on_a_run_grid_never_the_old_long_gun() -> void:
 	var dir: String = RivetStrips.DIR + "p70/"
 	rig.speed_now = 3.2 * CharacterRigs.PX_PER_M
 	var own_run: String = dir + RivetWalk.ARMED_RUN + "gloria.png"
-	var want: String = own_run if RivetStrips.has_file(own_run) else dir + RivetWalk.RUN
-	assert_eq(RivetWalk.motion_path(rig, "p70", &"gloria"), want)
+	assert_true(RivetStrips.has_file(own_run), "n29: her compact-gun run8")
+	assert_eq(RivetWalk.motion_path(rig, "p70", &"gloria"), own_run)
 
 
 func test_a_weapon_with_its_own_grid_still_uses_it() -> void:
