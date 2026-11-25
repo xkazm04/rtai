@@ -6,8 +6,8 @@
 // Each side: a headless scout of res://dev/foes_n31/play_take.tscn finds the tick wave n first spawns,
 // then a windowed take fast-forwards to `lead` s before it and writes the frames. Revs run in a temp
 // worktree (rev_tree.mjs); flags: sides run at the HEAD sha taken at launch. Every Godot run goes through
-// runGodot under the lane lock, one at a time. Writes <name>_left/_right.mp4 (crf 20) and <name>_side.mp4
-// (centre 960 px of each, hstacked, labelled, crf 23) to --out, upserts its frames.json row, and the
+// runGodot under the lane lock, one at a time. Writes <name>_left/_right.mp4 and <name>_side.mp4
+// (centre 960 px of each, hstacked, labelled; all crf 28) to --out, upserts its frames.json row, and the
 // take summaries to evidence/n31/foes/takes/<name>.json. Scratch: build/n31/takes/<name>/.
 import { execFileSync, spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
@@ -83,19 +83,21 @@ export function takeArgs(a, side, spawnTick, framesDir) {
     ...(a.follow ? ['--follow=' + a.follow] : [])];
 }
 
-/** ffmpeg argv for one side's frames -> mp4 (crf 20) and for the labelled side-by-side (crf 23). */
+const CRF = '28';
+
+/** ffmpeg argv for one side's frames -> mp4 and for the labelled side-by-side (all crf 28, preset slow, maxrate 6M: <= 25 MB per 30 s). */
 export function encodeArgs(a, dirs) {
   const frames = String(a.seconds * 60);
-  const tail = (crf, file) => ['-frames:v', frames, '-c:v', 'libx264', '-crf', crf, '-preset', 'medium',
+  const tail = (crf, file) => ['-frames:v', frames, '-c:v', 'libx264', '-crf', crf, '-preset', 'slow', '-maxrate', '6M', '-bufsize', '12M',
     '-pix_fmt', 'yuv420p', '-r', '60', '-movflags', '+faststart', file];
   const input = (dir) => ['-framerate', '60', '-start_number', '1', '-i', join(dir, '%04d.jpg')];
   const label = (k) => `crop=960:1080:480:0,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':textfile=label_${k}.txt`
     + ':x=18:y=14:fontsize=34:fontcolor=white:box=1:boxcolor=black@0.55:boxborderw=8';
   return {
-    left: [...input(dirs.left), ...tail('20', a.name + '_left.mp4')],
-    right: [...input(dirs.right), ...tail('20', a.name + '_right.mp4')],
+    left: [...input(dirs.left), ...tail(CRF, a.name + '_left.mp4')],
+    right: [...input(dirs.right), ...tail(CRF, a.name + '_right.mp4')],
     side: [...input(dirs.left), ...input(dirs.right), '-filter_complex',
-      `[0:v]${label('left')}[l];[1:v]${label('right')}[r];[l][r]hstack=inputs=2`, ...tail('23', a.name + '_side.mp4')],
+      `[0:v]${label('left')}[l];[1:v]${label('right')}[r];[l][r]hstack=inputs=2`, ...tail(CRF, a.name + '_side.mp4')],
   };
 }
 

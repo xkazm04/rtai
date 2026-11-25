@@ -59,11 +59,14 @@ test('plan: the scout and the take share the run flags; the take opens lead s be
   assert.ok(takeArgs(a, right, 10, 'C:/x').includes('--take-tick=0'));
 });
 
-test('encode: crf 20 takes, crf 23 labelled side by side of the centre 960 px', () => {
+test('encode: crf 28 slow for all, labelled side by side of the centre 960 px', () => {
   const e = encodeArgs(parse(BASE), { left: 'L', right: 'R' });
   assert.equal(e.left.at(-1), 'wave6_side_left.mp4');
-  assert.equal(e.left[e.left.indexOf('-crf') + 1], '20');
-  assert.equal(e.side[e.side.indexOf('-crf') + 1], '23');
+  assert.equal(e.left[e.left.indexOf('-crf') + 1], '28');
+  assert.equal(e.side[e.side.indexOf('-crf') + 1], '28');
+  assert.equal(e.side[e.side.indexOf('-preset') + 1], 'slow');
+  assert.equal(e.side[e.side.indexOf('-maxrate') + 1], '6M');
+  assert.equal(e.side[e.side.indexOf('-bufsize') + 1], '12M');
   assert.equal(e.side[e.side.indexOf('-frames:v') + 1], '1800');
   const graph = e.side[e.side.indexOf('-filter_complex') + 1];
   assert.match(graph, /crop=960:1080:480:0,drawtext=.*textfile=label_left\.txt/);
