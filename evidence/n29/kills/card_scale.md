@@ -105,3 +105,5 @@ equivalent under p70, where the default height and the p70 height are both 1.7 m
 `node tools/tests/test_map.mjs project/features/combat/kills/kill_fall_cells.gd` names 13 test files; all 13
 `--select`ed at d924402d2: **65 passed, 0 failed** (junit: 13 suites). `--changed` in this shared worktree
 maps the other builder's uncommitted weapon files, not this change (it ran 93 weapon tests, green).
+
+Call 11 clips (n29 combat): `node tools/film/kill_reel.mjs --out=build/n29/cardkill32/<before|after> --weapons=machine_pistol --ppm=32 --dirs=90 --clips -- --controls=legacy --foe-mix=sergeant_mulroney` (before = `kill_fall_cells.gd` of 49befa075 copied in for one reel, restored; both exit 0, kill at tick 174). Clips 384x288 60 fps 2.52 s each (the tool does not make 1080p); `gtai-masters/n29/combat/films/card_kill_{before,after,pair}_32.mp4`, pair 1920x720 hstack, before left. Fallen body visibly larger on the right.
