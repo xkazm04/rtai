@@ -61,7 +61,7 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 	pose.opens_on_hit = false
 	pose.attack = FoeCastView.attack_row(h, arena)
 	draw_pose(pose, h, moved, arena.tick)
-	_hold_stop(moved)
+	_hold_stop(moved, h)
 	_shadow.visible = ViewMode.shared().cast_k > 0.0
 	_shadow.scale = Vector2.ONE / transform.get_scale()
 	_shadow.position = ground_local(h)
@@ -75,12 +75,25 @@ func ground_local(h: Fighter) -> Vector2:
 
 ## A halt keeps the last planted drawing and placement, so the body does not jump to the plain
 ## standing cell (18 px at 32 px/m): a stop adds nothing to the walk's own drawing steps.
-func _hold_stop(moved: bool) -> void:
+func _hold_stop(moved: bool, h: Fighter) -> void:
 	if texture.resource_path != pose.sheets.walk:
 		_planted_row = -1
 	elif moved:
 		_planted = transform
 		_planted_row = frame_coords.y
 	elif _planted_row >= 0:
-		transform = _planted
 		frame_coords.y = _planted_row
+		transform = _planted
+		transform.origin.y += sole_gap(h)
+
+
+## Pixels from the held drawing's registered sole (the generated CastThugAnchors point) down to
+## the ground row: the walk placement solves the torso, so a halt leaves the soles above it.
+func sole_gap(h: Fighter) -> float:
+	var path: String = texture.resource_path
+	var marks: Array[Vector4] = CastCardKinds.foe_marks(
+		path.get_file(), path.get_base_dir().get_file() == "p55"
+	)
+	var ink: Vector4 = marks[frame_coords.x * vframes + frame_coords.y]
+	var sole: Vector2 = _planted * Vector2(-ink.x if flip_h else ink.x, ink.y)
+	return h.pos.y * SimConst.PX_PER_M - sole.y

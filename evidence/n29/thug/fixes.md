@@ -75,3 +75,12 @@ outline about row 535 vs ring centre 540); bar is within 2. Fix plan unchanged (
 `_hold_stop` by the stand cell's sole gap from `CastThugAnchors`), not attempted for time. (b) 55 deg numbers
 after the change not re-measured (the fix is pitch-independent; 55 passed before because origin ~ ground).
 (c) walk feet (`cast_feet.mjs`) not re-run; the ring change does not touch the body transform.
+
+## Soles at the stop (06:21)
+
+Measured by the unit test (registered sole mark `CastThugAnchors` x,y through the held card transform, facing down,
+70 deg, after a 6-step walk and a halt, world px at 64 px/m): sole row **2.82 px above** `h.pos.y * PX_PER_M` without the fix
+(the crop outline read about 4 px, anti-aliased edge). Fix in `FoeThugCardView._hold_stop`: on a halt the held `_planted`
+origin.y shifts by `sole_gap(h)`, the distance from that registered sole to the ground row (read from the anchors, no
+px constant). Test `test_thug_soles_sit_on_the_ground_row_after_a_walk_and_a_stop` fails without it (2.816 >= 1.0), passes with.
+Visual re-measure (both pitches, 64 and 32) follows in the next section.

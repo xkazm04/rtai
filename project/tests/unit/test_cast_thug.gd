@@ -117,3 +117,33 @@ func test_thug_rings_sit_on_the_ground_point_after_a_walk_and_a_stop() -> void:
 		var ring: Vector2 = card.to_global(card._shadow.position)
 		assert_lt(ring.distance_to(h.pos * SimConst.PX_PER_M), 1.0)
 	ViewMode._shared = previous
+
+
+func test_thug_soles_sit_on_the_ground_row_after_a_walk_and_a_stop() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	CastMulroneyPreview.enable(FoeThugCardView.ID)
+	ViewMode.select("combo")
+	var host: ArenaRobotRigs = add_child_autofree(ArenaRobotRigs.new())
+	host.arena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(5).stream(&"combat")
+	)
+	var rig: CutRig = CutRig.new()
+	host.add_child(rig)
+	var h: Fighter = Fighter.new()
+	h.archetype = FoeThugCardView.ID
+	h.hp = 10.0
+	h.facing = Vector2.DOWN
+	for step: int in 6:
+		h.pos = Vector2(3.0 + 0.1 * step, 4.0)
+		assert_false(FoeThugCardView.show_rig(host, h, rig, true))
+	var card: FoeThugCardView = rig.get_meta(FoeThugCardView.CARD)
+	for _stand: int in 2:
+		assert_false(FoeThugCardView.show_rig(host, h, rig, true))
+		var path: String = card.texture.resource_path
+		var marks: Array[Vector4] = CastCardKinds.foe_marks(
+			path.get_file(), path.get_base_dir().get_file() == "p55"
+		)
+		var ink: Vector4 = marks[card.frame_coords.x * card.vframes + card.frame_coords.y]
+		var sole: Vector2 = card.transform * Vector2(-ink.x if card.flip_h else ink.x, ink.y)
+		assert_lt(absf(sole.y - h.pos.y * SimConst.PX_PER_M), 1.0)
+	ViewMode._shared = previous
