@@ -29,3 +29,9 @@ C. Commit (`evidence/n29/red/**` only). `node tools/evidence/cites.mjs evidence/
 
 ## Report and END (short)
 Commit; the totals; rows by status; anything not fixed and why.
+
+## Notes from the director (session 2, 03:24)
+State at launch: fire 3a7fcfed0/12b7c141b/ddd15787f (+ fire.md); muzzle 2a1069f77 (muzzle.md: in-game gun flashes print cream before and after, the d4 muzzle star moved; row 11 kept: owner call); electric 330ad6592/3bf74f0c7 (electric.md; row 19 TUCK-IN glyph = dead code `StageView._bolt_robot`, the on-screen crate is the tuckin_crate PNG); sword 85c6b0c53 (row 15 four files; the showcase / held_55 small sword is another design with no rings; in-game stills still owed: mark `FIXED (source) <sha>, in-game still owed`); molotov rag row 12 = keys (NEED keys); rivet_eq_plasma_sword sheets in view/p55 + p70 carry rings = NEED keys. A third builder (electro bolt) commits in the same worktree: commit with `git commit -- evidence/n29/red/audit.md <your script>` only.
+
+## Wall clock (binding)
+Started 03:24. Commit the table (even with some rows marked `TODO <why>`) by **03:42**. HARD STOP **03:47**: report and END, committed.
