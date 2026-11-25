@@ -81,3 +81,14 @@ Commits, the rows of your table (point, number, bar, verdict), crops/stills you 
 - Also look at the eight-drawing walk's STOP: the 03c builder saw thug 3 standing after its walk-in, facing down
   (`thug_fight_32.mp4` frame 640), with its shoes ~8-10 px above the shadow centre. Measure it in that frame (or a re-take)
   and table it as a point (stop placement, bar: soles within 2 px of the ground row at 64 px/m); do not fix the anchors.
+
+## Added 06:20 (director): PART A call, session 5. Hard stop 07:14, commit by 07:08 (no later: the lane freezes at 07:15)
+The times at the top are void. Measure ink and live rim (PART A above), both pitches, against the bars; models:
+`tools/art/cast_gunner_ink.py` / `cast_contractor_ink.py` (ink) and `cast_foe_edge.py` / `cast_impact_edge.py` (live rim; the
+gunner's n28 row "live 64 px/m rim 0 on walk, attack, hit, fall"). A new `tools/art/cast_thug_ink.py` / `cast_thug_edge.py` is
+fine (copy, do not edit the others). Write the table to `evidence/n29/thug/checklist.md` (point, number, bar, verdict, crop
+path) and commit it with the tools by 07:08 whatever the verdict. NO cut fix this call (no time): a FAIL is reported with
+its crop. Since `839ce02d8`/`03f` the thug view changed (ring, stop): do not edit `foe_thug_card_view.gd`. The opus war builder
+works beside you until 07:10 (`foe_war_card_view.gd`, `cast_war_*`, `cast_feet.gd`, `docs/art/cast-audit.md`): never stage or
+revert its files; commit with `git commit -- <your paths>` only; share the lane Godot lock. Commit message trailer:
+`Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
