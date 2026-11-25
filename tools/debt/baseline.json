@@ -193,7 +193,8 @@
         "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)",
         "2026-11-25: war eight for n29 cast (dev_loc 39127 -> 39128)",
         "2026-11-25: war placement revert for n29 cast; dev/cast +123 is the thug builder's untracked cast_thug_edge.gd on disk (dev_loc 39128 -> 39251)",
-        "2026-11-25: cast_thug_edge dev scene for n29 cast thug rim (dev_loc 39251 -> 39253)"
+        "2026-11-25: cast_thug_edge dev scene for n29 cast thug rim (dev_loc 39251 -> 39253)",
+        "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -218,7 +219,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 490,
-        "project/dev/prologue_yard": 705,
+        "project/dev/prologue_yard": 827,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -235,7 +236,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39253
+      "total": 39375
     },
     "direct_cmdline_reads": {
       "accepted": [
