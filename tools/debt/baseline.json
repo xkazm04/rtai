@@ -189,7 +189,8 @@
         "2026-11-25: card scale for n29 cast (dev_loc 38414 -> 38419)",
         "2026-11-25: robot_thug card for n29 cast (dev_loc 38419 -> 38534)",
         "2026-11-25: films for n29 cast (dev_loc 38534 -> 38816)",
-        "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)"
+        "2026-11-25: robot_thug for n29 cast (dev_loc 38816 -> 39092)",
+        "2026-11-25: robot_thug for n29 cast (dev_loc 39092 -> 39127)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -198,7 +199,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3736,
+        "project/dev/cast": 3771,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -231,7 +232,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39092
+      "total": 39127
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -605,6 +606,9 @@
       "total": 7
     },
     "unused_class_names": {
+      "accepted": [
+        "2026-11-25: robot_thug for n29 cast (unused_class_names 29 -> 30)"
+      ],
       "files": {
         "project/dev/bench/rig_bench_run.gd": 1,
         "project/dev/bench/rig_footprint_run.gd": 1,
@@ -633,10 +637,11 @@
         "project/dev/weapon_art/swat_lineup_run.gd": 1,
         "project/dev/weapon_art/weapon_lineup_run.gd": 1,
         "project/features/bosses/servo/servo_body_view.gd": 1,
+        "project/features/characters/cast_war_anchors.gd": 1,
         "project/features/combat/weapons/art/arena_weapon_rack.gd": 1,
         "project/features/souls/tonnage_hook.gd": 1
       },
-      "total": 29
+      "total": 30
     }
   },
   "schema": "gtai.debt-baseline/1"
