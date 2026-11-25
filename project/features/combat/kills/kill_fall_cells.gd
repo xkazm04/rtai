@@ -13,6 +13,8 @@ const META: StringName = &"kill_fall_cells"
 ## Adds the hidden fall grid to `body` (the BODY group, still at its centroid `body.position`,
 ## in the rig parent's px relative to the rig) facing `toward` (world, unit). Returns it or null.
 ## `extra` with drawn cells for his kind (KillDeathCells) carries the death's own grid instead.
+## A card foe (n30) takes only cells drawn for any victim ("*") and else his own fall sheet
+## (KillCardFall): a style's cells for his rig's street row draw another kind.
 static func attach(
 	rig: CutRig, body: Node2D, toward: Vector2, extra: KillTrackRows.Extra = null
 ) -> Sprite2D:
@@ -20,8 +22,10 @@ static func attach(
 		return null
 	var art: String = ViewMode.shared().art
 	var row: String = StreetWalkerCards.row_of(rig)
-	var own: String = KillDeathCells.path_of(extra, art, row) if extra != null else ""
-	var path: String = own if not own.is_empty() else StreetWalkerFall.path_of(art, row)
+	var card: String = KillCardFall.path_of(rig)
+	var cells_row: String = KillCardFall.cells_row(card, row)
+	var own: String = KillDeathCells.path_of(extra, art, cells_row) if extra != null else ""
+	var path: String = own if not own.is_empty() else KillCardFall.grid(card, art, row)
 	if path.is_empty():
 		return null
 	var tex: Texture2D = StreetStrips.get_tex(StreetWalkerCards.DIR + path)

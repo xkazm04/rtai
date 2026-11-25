@@ -138,6 +138,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--cast-mulroney-trace",
 	"--cast-warden-trace",
 	"--electro-cells",  # n28 combat: the electro gun draws its arc/spark PNG cells (before)
+	"--kill-card-fall",  # n30 combat: =grid, a killed card foe falls on the generic grid (before)
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []
