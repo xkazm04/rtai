@@ -33,6 +33,7 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 		@warning_ignore("return_value_discarded")
 		rig.tree_exiting.connect(card.queue_free, CONNECT_ONE_SHOT)
 	card.update_fighter(h, host.arena, sheets)
+	card.sync_tint(rig.is_tinted())
 	card.visible = shown
 	return false
 
@@ -45,6 +46,13 @@ static func attack_row(h: Fighter, mind: SquadMind, tick: int) -> int:
 	if h.tell_left > 0:
 		return 1
 	return 3 if mind.turret.phase == FoeTurret.Phase.COOL else 0
+
+
+## The hit flash of the rig this card stands in for (the rule is CastFarCard.tint_of).
+func sync_tint(on: bool) -> void:
+	var want: Material = CastFarCard.tint_of(on)
+	if material != want:
+		material = want
 
 
 func update_fighter(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:

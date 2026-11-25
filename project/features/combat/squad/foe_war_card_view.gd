@@ -31,8 +31,17 @@ static func show_rig(host: ArenaRobotRigs, h: Fighter, rig: CutRig, shown: bool)
 		@warning_ignore("return_value_discarded")
 		rig.tree_exiting.connect(card.queue_free, CONNECT_ONE_SHOT)
 	card.sample(h, host.arena, sheets)
+	card.sync_tint(rig.is_tinted())
 	card.visible = shown
 	return false
+
+
+## The hit flash of the rig this card stands in for (rule: CastFarCard.tint_of).
+## The vent keeps its own glow material.
+func sync_tint(on: bool) -> void:
+	var want: Material = CastFarCard.tint_of(on)
+	if material != want:
+		material = want
 
 
 func sample(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:
