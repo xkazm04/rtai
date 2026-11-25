@@ -24,8 +24,10 @@ DRAFT (session 6, 15:50): sections are filled as items land; the final version i
   (10 images), soles registered to the donor; rows 4 and 8 cols 2, 6 on the donor's legs under a seam. Walk hold 0.43 / 1.56 cm
   (bar 2); run step 5.77 / 6.85 cm (bar 7; donor 6.69 / 8.93) after row 1 cols 5, 6 were registered 1 px to the donor's planted
   sole x (`0e399a732`; it was 7.28 / 9.86; `run_row_k` cannot move it: the cycle floor binds). Evidence `evidence/n30-keys/grid_molotov.md`, grid
-  `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/grid_molotov_64.png` (rendered before the 1 px fix; the 64 px/m grid at HEAD is
-  the tour still `molotov/molotov_p70_sprint_tour_64.png`, 8 octants, stop-gap above HEAD).
+  `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/grid_molotov_head_64.png` (8 run facings: stop-gap | new | plasma rifle, at HEAD
+  after the 1 px fix; `92fc03b27`: against the 11:30 grid `grid_molotov_64.png` only row 1 cols 5, 6 of the new column differ,
+  13705 / 14595 px, every other cell 0; foot_slide re-measured at HEAD 0.43 / 1.56 walk hold, 5.77 / 6.85 run step, identical to the
+  fix's own capture). In the real arena: the tour still `molotov/molotov_p70_sprint_tour_64.png`, 8 octants, stop-gap above HEAD.
 - **p70 aim-left collar rigid** (not an owner pick; the rigid-collar law): audit `57c72c41a` (`evidence/n30-keys/eq_collar_audit.md`)
   found the band drawn as a knit rope in the p70 `_left` aim strips of the rocket launcher, mini-nuke and gatling (p70 is the
   in-play default). The lane's last 8 images: 7 cells rigid by per-cell 2x edits with Gloria's `_left` cell as the reference

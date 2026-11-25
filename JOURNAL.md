@@ -163,3 +163,9 @@ NEXT (session 6, from ~17:09):
   `grid_molotov_head_*` (the old grid predates the run-step fix 0e399a732, and the brief judges "the molotov grid"), per-cell
   diff old vs head (bar: only row 1 cols 5, 6 of the new column), foot_slide re-measure (bars walk hold <= 2, run step <= 7 cm),
   frames.json entry swapped. Commit by 16:15, END 16:25. Sole lane Godot user.
+- 15:47 BUILDER n30-22 molotov-grid-head 5 accepted: 92fc03b27 (grid_molotov.md "Grid at HEAD"). composite.py builds the grid from the
+  shipped art (no Godot); capture28.py's n24 source path is gone, its copy `build/n30-22/capture28_head.py` reads the archived sources.
+  Old 11:30 grid vs head grid: only row 1 cols 5, 6 of the new column differ (64: 13705 / 14595 px; 32: 3463 / 3677), every other cell 0.
+  foot_slide at HEAD 0.43 / 1.56 walk hold, 5.77 / 6.85 run step (bars 2 / 7) = n30-09. I read the diff and looked at
+  `build/n30-22/new_cols4_7_2x.png`: bottle in the left claw, amber flame, flat striped collar ring, soles under the body, cols 5, 6 no
+  seam. frames.json entry -> `molotov/grid_molotov_head_64.png` (15 entries). REPORT What works points at it.
