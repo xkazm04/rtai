@@ -133,7 +133,7 @@ DRAFT (session 7, 16:00): sections are filled as items land; the final version i
   (+ `.import`), `project/data/tables/rivet_motion.json` (molotov `run_row_k` rows), `project/tests/unit/test_rivet_grid_stride.gd`,
   `project/tests/unit/test_rivet_walk_sprint_fallback.gd`, `steam/ai-provenance/2026-11.jsonl` (append), `docs/decisions.md` (append).
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on the add/add conflict.
-- Temp left for the post-merge cleanup (this lane's): `gtai-gate-a09f9be527a0`, `gtai-gate-74fc5e382e63`, `gtai-mutate-dc83624c`, and the
+- Temp left for the post-merge cleanup (this lane's): `gtai-gate-fd8ea31e1dec`, `gtai-gate-a09f9be527a0`, `gtai-gate-74fc5e382e63`, `gtai-mutate-dc83624c`, and the
   `build/turn-snapshots` / `gtai-film-*` snapshots of 5114a4441 used for the before films.
 
 ## Next steps
