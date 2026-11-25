@@ -211,3 +211,9 @@ NEXT (session 6, if any, before the 18:45 freeze; no new code after 17:15):
 No builder running; lane lock free; tree clean after this commit. Session 6 ledger: c25 8 acc-partial; director film `door8_n29_n30_32.mp4`. IMAGES 16/60. REPORT final (no DRAFT line), cites clean.
 
 NEXT (if a session 7 starts before 18:45): nothing new. Only polish REPORT wording; never `rm -rf` `build/film/c22-*`.
+
+## Session 7 (18:45, STABILIZE, past freeze)
+
+- 18:45 read JOURNAL + git log (be1cccb3c top), tree clean, no builder, no lane lock. `git diff f3364498e HEAD -- project tools native steam` empty: HEAD ships the gated code (final gate PASS with reels, `build/gate/f3364498e04c/gate.json`). `cites.mjs REPORT.md`: 10 paths, 8 ok, 2 pattern, no MISSING. No fix needed; no builder started (past freeze). IMAGES 16/60.
+
+NEXT: nothing. Lane done; Director merges `n30-cast` (keep our JOURNAL.md / REPORT.md on the add/add conflict). Never `rm -rf` `build/film/c22-*` (junctions into the tree).
