@@ -202,3 +202,12 @@ NEXT (session 7):
   with rig_stress p50 1.083 ms CONTENDED (4 other runs), parity bit-exact + mutation at 629, selftest, export-audit 1003/0, reels top 286 s,
   tilt70 292 s, combo 288 s). MILESTONE lane green with reels. Lane lock released. REPORT Gate quotes it; no post-freeze gate needed
   unless code lands (none planned).
+- 16:38 CHECKED masters frames.json: 15 entries, every file exists; cites 23/23 ok. No builder running, lane lock free, images 60/60.
+
+NEXT (final session, report 18:55):
+1. No new product work and no gate: the reels gate PASS on fd8ea31e1 (`build/gate/fd8ea31e1dec/gate.json`) covers the lane's last code
+   commit 22d3c0fb1; everything since is inert. If any code lands after all, re-run `node tools/gate/run.mjs --rev=HEAD` (APPDATA keys).
+2. REPORT final by 18:55: drop the DRAFT line, header time, frames.json check (15, all exist), `node tools/evidence/cites.mjs REPORT.md`,
+   commit JOURNAL/REPORT with a pathspec.
+3. Temp (this lane's, for the Director's cleanup, add to Merge notes): gtai-gate-fd8ea31e1dec, gtai-gate-a09f9be527a0,
+   gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
