@@ -15,10 +15,13 @@ DIRECTOR DECISION (16:08): ship it for the four (every shipped number better, so
 ## Do
 1. `git apply build/look/n30-c21/fix.patch`; `node tools/tests/run_unit.mjs --select=test_cast_door_walk,test_cast_foe_walks`
    green (if a test pins the old pivot pin, update it to the sole pin and say so); `node tools/gate/quick.mjs`.
-2. 64 px/m still: the four before | after (`node tools/film/cast_door_films.mjs <dir> stills`, or what the tool offers; the
-   before from a temp worktree at HEAD~ or by staging the old line). Masters `door_sole_pin_64.png`; LOOK at it. Replace
-   `door8_edits_64.png`'s entry in masters `frames.json` with it (cap 15), title "Door carrier four: a held drawing pins
-   its planted sole (n30)", ppm 64, before "left half".
+2. Evidence (a slide is motion: c21s found one 64 px/m frame before | after looks identical, `build/look/n30-c21s/`):
+   (a) a 32 px/m before | after CLIP of the door four walking, same ticks, 15-25 s, 1920x1080 (each half a 960 crop),
+   masters `door_sole_pin_32.mp4` (ffprobe); (b) a 64 px/m strip `door_sole_pin_64.png`: 4 consecutive frames of ONE held
+   drawing, 2x crops around the planted boot, before row over after row, so the drift is visible. LOOK at both. Replace
+   `door8_edits_64.png`'s entry in masters `frames.json` with the strip and add the clip only if an entry can go (cap 15:
+   drop `war8_four_eight_32.mp4`, the harness pair, since `war8_live_four_eight_32.mp4` shows the same in the game).
+   Unit tests already ran green on the patch (c21p, 16:10: 12/0): re-run them only if anything else landed since.
 3. Commit (pathspec): `cast: door card pins the planted sole on a held walk drawing (not the pivot)`.
 4. Mutate: `node tools/mutate/mutate.mjs --file=project/features/combat/squad/foe_shield_card_view.gd --max=6
    --lines=<the 2 changed lines> --tests=test_cast_door_walk,test_cast_foe_walks`; quote killed/(killed+survived).
