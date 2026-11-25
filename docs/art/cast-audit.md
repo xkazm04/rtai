@@ -890,3 +890,42 @@ Measured (re-run of `cast_size_beside.gd`, 64 px/m, tilt 70, `tools/art/cast_siz
 | id 1 (measured) | 0.855 | 86 | 0.927 | 93 | 0.927 | 0.60 |
 
 Same run, card foes beside the cop (64 px/m, px): contractor 100, appliance_warden 101, rocket_trooper 100, robot_gunner 110, robot_thug 141 (the other n30 lanes' changes are in this tree; not this part's). Known gap: `kill_fall_cells.gd` `victim_scale` sizes a killed pose-less cop by `body_scale(actor_id)` (0.16), so a killed street cop would jump to the crowd build at death (NEED combat). Card cops with a cast row are unaffected (they use `scale_of`).
+
+## Door eight with three more edits, n30
+
+**Verdict: WALK stays FOUR.** The eight now passes both bars at p70 (right and down-right), but p55 still blocks it:
+p55 right sole 2.15 (four 2.03, bar 2) and jump 7.69 (four 5.09), p55 down-right sole 3.06 (bar 2) and jump 11.93 (four
+10.43). Three one-row image edits (`gtai-art/foes-n30/door8c`, 3 images, no retries): p55 drawing 8 right (rear support
+boot set forward to drawing 4's place) and down-right (rear boot set down onto the floor plane; the x part of the ask,
+~36 source px forward, was NOT drawn), p70 down-right drawing 1 (front boot set forward, level with drawing 5's). Each
+edit re-encoded its whole row, so only the redrawn grid cell was spliced into the accepted source
+(`door8c/out/<job>_splice.png`, other cells' silhouettes xor 0). `tools/art/cast_door_eight.py` `REDRAWN` cuts from the
+three splices and replaces only those sheet cells; the n29 p70 right row 7 keeps its bytes (re-toning moves it a level,
+so it left `REDRAWN_CELLS`). Byte compare against the previous sheets: p70 39 of 40 cells identical (dr 1 changed,
+silhouette xor 490 px), p55 38 of 40 (right 8: 577, dr 8: 436). Key-lead 0, strict red 0 at both pitches; body heights
+unchanged but p70 dr 146.0 -> 146.4. Registered soles (`cast_door_soles.py`, sheet px from the cell centre): p55 right 8
+-47 -> -42 (drawing 4: -43.5), p55 dr 8 (-33, -9.5) -> (-32, -0.5) (depth fixed, x not), p70 dr 1 11 -> 16.5.
+`EIGHT_STEP_M` 0.1842 -> 0.1799 (the measured mean, so every eight number below moved, the unedited p70 right too).
+Commit `da11ce846`.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n30-c05/feet feet`, `cast_feet.tscn` at 64 px/m, 1.6 m/s,
+`cast_door_feet.py`, px in the tool's 32 px/m unit; the four re-measured to the hundredth of n29). Bars: sole <= 2,
+jump <= 12. Culprit = the scratch probe (`build/look/n30-c05/probe.py`, the n29-11 probe) over the takes: worst jump
+(from -> to drawing), worst sliding contact (drawings).
+
+| Pitch | Facing | Four (sole / jump) | Eight n29 (with f7) | Eight with the n30 edits | Eight vs four | Culprit (eight n30; four where over a bar) |
+|---:|---|---:|---:|---:|---|---|
+| 70 | right | 2.42 / 4.34 FAIL | 2.04 / 6.47 FAIL | 1.96 / 6.61 PASS | within both bars | four: sole 2.42 on 3-4; eight: jump 4 -> 5, sole 1-4 |
+| 70 | down-right | U / 10.50 | 1.39 / 12.21 FAIL | 1.39 / 12.00 PASS | within both bars (jump at the bar) | eight: jump 12.00 on 8 -> 1 (was 12.21), next 11.29 on 4 -> 5 |
+| 55 | right | 2.03 / 5.09 FAIL | 2.16 / 9.61 FAIL | 2.15 / 7.69 FAIL | sole +0.12, jump +2.60: BLOCKS | four: sole 2.03 on 3-4; eight: jump 7.69 on 7 -> 8 (was 9.61), sole 2.15 on 5-8 |
+| 55 | down-right | U / 10.43 | 3.45 / 13.28 FAIL | 3.06 / 11.93 FAIL | sole over the bar, jump +1.50: BLOCKS | eight: jump 11.93 on 4 -> 5 (7 -> 8 now 9.14, was 13.28), sole 3.06 on 5-8 |
+
+The edits did what they targeted: p55 right 7 -> 8 jump 9.61 -> 7.69, p55 down-right 7 -> 8 13.28 -> 9.14, p70
+down-right 8 -> 1 12.21 -> 12.00 (just inside). What still blocks: p55 down-right's second contact (drawings 5-8) slides
+3.06 px, because drawing 8's rear boot stayed 13.5 sheet px behind drawing 4's in x (the edit fixed only its depth),
+and its worst jump is now 4 -> 5 (11.93, the first-to-second contact boundary); p55 right is within 0.15 px of the four's
+sole but its jump stays 2.6 px over the four's (7 -> 8 still the largest). Next edit, if the director wants one: p55
+down-right drawing 8 again with the x ask alone (rear boot ~1/2 foot forward, same depth), then re-measure 4 -> 5.
+Still `gtai-masters/n30/cast/door8_edits_64.png` (`cast_door_films.mjs stills`: p70 right, tick 150, four left, eight
+right, sole brackets; no edited drawing is in that frame); old | new cell crops of the three edits (with the preceding
+drawing) `build/look/n30-c05/edited_cells_2x.png`.
