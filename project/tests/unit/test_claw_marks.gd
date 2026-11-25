@@ -1,6 +1,6 @@
 extends GutTest
 ## n7-melee: the claw's hit (a wound or a kill) prints one rake mark at the victim, along Rivet ->
-## victim, on the hit tick; other weapons print none; the shipped row is on.
+## victim, on the hit tick; a weapon with no row prints none; the shipped row is on.
 
 
 func _arena() -> CombatArena:
@@ -38,8 +38,8 @@ func test_a_claw_kill_prints_one_too() -> void:
 	assert_eq(m.marks.size(), 1)
 
 
-func test_another_weapon_prints_none() -> void:
+func test_a_weapon_with_no_row_prints_none() -> void:
 	var arena: CombatArena = _arena()
 	var m: ClawMarks = ClawMarks.attach(arena)
-	arena.damage(_guard(arena, Vector2(1.0, 0.0), 2.0), 1.0, arena.rivet.id, &"katana")
+	arena.damage(_guard(arena, Vector2(1.0, 0.0), 2.0), 1.0, arena.rivet.id, &"pistol")
 	assert_eq(m.marks.size(), 0)

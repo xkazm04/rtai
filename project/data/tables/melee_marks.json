@@ -13,6 +13,28 @@
     "streak_ticks": 10
   },
   "doc": "Lane n7-melee: view-only marks of Rivet's melee that are not a camera effect (those are hit_feel.json rows). Metres and 60 Hz ticks.",
+  "katana": {
+    "blood_m": 0.5,
+    "burst_m": 0,
+    "core_px": 2,
+    "cut_m": 0.75,
+    "doc": "n31-melee 04b: the katana's hit mark (view only; ClawMarks/BladeMarks via CombatArena.wounded and kill_landed, weapon katana; FxView). style cut: ONE clean straight line across the victim along the swing's tangent (square to Rivet -> victim, turned tilt_deg), cut_m long, an ink edge edge_px wide under a cream highlight core_px wide, full length on the hit frame, thinning and fading over flash_ticks and following the victim; on a human (not a machine) BEADS red drops blood_m along it welling up over the first third (red = blood). burst_m unused (0). flash_ticks 0 = none; --feel=off hides it too.",
+    "edge_px": 5,
+    "flash_ticks": 21,
+    "style": "cut",
+    "tilt_deg": 14
+  },
+  "plasma_sword": {
+    "blood_m": 0,
+    "burst_m": 0,
+    "core_px": 3.5,
+    "cut_m": 0.75,
+    "doc": "n31-melee 04b: the plasma sword's hit mark (view only; as katana, weapon plasma_sword). style sear: the same cut burnt in the plasma rifle scorch's palette (PlasmaScorchView / KillHoleFx: HOT core with a heat bloom 2.2x edge_px, cooling to EMBER by half life then to the dark CHAR), core_px a little wider than the katana's, edge_px of ink; no blood (the plasma cauterises; never teal, never red). flash_ticks 0 = none; --feel=off hides it too.",
+    "edge_px": 6,
+    "flash_ticks": 30,
+    "style": "sear",
+    "tilt_deg": 14
+  },
   "saw": {
     "clear_m": 0.45,
     "doc": "The chainsaw kill made to read at 32 px/m (the audit rank 5: the held cop was a red blob under the saw). KillSplitFx, view only. clear_m: the grind's blood drops are hidden until they have flown this far from the bite, so the held body stays readable and the spray reads as leaving it (0 = the drops print over the body, the before). shake_m: the held body's judder (0.035 = the before, about 1 px at 32 px/m). release_m: on the frame the halves part, a cream starburst edged in ink this wide (the kill frame; a slash along the cut hid on the saw bar), shrinking over 12 ticks (0 = none). --feel=off = the before values.",
