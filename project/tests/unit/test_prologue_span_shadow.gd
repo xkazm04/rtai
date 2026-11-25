@@ -45,7 +45,7 @@ func test_arched_line_reads_the_row() -> void:
 	var body_m: Vector2 = spec["body_m"]
 	assert_eq(offset_m, Vector2(0.55, -0.6))
 	assert_eq(body_m, Vector2(0.9, 1.9))
-	assert_eq(PrologueSpanShadow.spans(_plan()).size(), 5)
+	assert_eq(PrologueSpanShadow.spans(_plan()).size(), 6)
 
 
 func test_a_dressing_without_spans_gets_no_node() -> void:

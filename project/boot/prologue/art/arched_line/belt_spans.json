@@ -32,6 +32,17 @@
    2.202
   ]
  },
+ "mouth_door": {
+  "art": "belt_span_mouth_door",
+  "size_px": [
+   793,
+   353
+  ],
+  "top_left_m": [
+   11.69,
+   -2.292
+  ]
+ },
  "return_bend": {
   "art": "belt_span_return_bend",
   "size_px": [

@@ -193,5 +193,5 @@ func test_arched_line_joins_its_sections_with_five_overhead_spans_and_no_new_cov
 			spans.append(id)
 			assert_true(over.has(id), id + " draws over the print")
 			assert_true(ResourceLoader.exists(str(piece["art"])), id)
-	assert_eq(spans.size(), 5)
+	assert_eq(spans.size(), 6)
 	assert_eq(spans[0] + spans[4], "span_door_feedspan_bend_tail")

@@ -62,7 +62,7 @@ func test_order_puts_every_span_after_every_wreck() -> void:
 			spans += 1
 		else:
 			last_other = i
-	assert_eq(spans, 5)
+	assert_eq(spans, 6)
 	assert_gt(first_span, last_other)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
 		if plan.dressing.over_print.has(wreck.id):
