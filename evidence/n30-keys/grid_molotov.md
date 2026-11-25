@@ -69,3 +69,39 @@ sole x 89.0/103.0, 0.5 px the other side of the donor). Re-measured after `--imp
 
 Files: `molotov_run_k100_foot_slide_32.json`, `molotov_run_shift56_foot_slide_32.json` beside the old json in
 `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/`.
+
+## Grid at HEAD (n30-22)
+
+The 11:30 grids were rendered before `0e399a732` moved row 1 cols 5, 6 of `p70/rivet_run8_eq_molotov.png` by 1 px. Re-rendered at
+HEAD (4c5da4f7b) as new files; the old `grid_molotov_64.png` / `_32.png` and `grid_molotov_arena/` are untouched.
+
+Commands (cwd = worktree, `GODOT_BIN` + n30 keys `APPDATA`, lane lock held around Godot):
+- `python -I .../rivet-n30/molotov/scripts/composite.py build/n30-22` (no Godot; reads the shipped art; the grid is a composite, not a capture), copied to
+  `grid_molotov_head_64.png` / `_32.png`.
+- `build/n30-22/capture28_head.py molotov rows` and `... candidate` = `capture28.py` with only the output dir changed to `grid_molotov_head_arena`
+  (and its sources read from the archived `rows_source` / `candidate_source`, the n24 path it named is gone). All three captures exit 0.
+- `python -I tools/film/foot_slide.py grid_molotov_head_arena/rows/turn_090/molotov_32 --out grid_molotov_head_foot_slide_32.json`.
+
+Per-cell diff, old grid vs head grid (8 facings x 3 bands x 8 columns, changed px = any RGB channel differs):
+
+| ppm | cell | changed px |
+|---|---|---|
+| 64 | facing 1, new, col 5 | 13705 |
+| 64 | facing 1, new, col 6 | 14595 |
+| 64 | total | 28300 (every other cell 0, stop-gap and plasma rifle columns 0) |
+| 32 | facing 1, new, col 5 | 3463 |
+| 32 | facing 1, new, col 6 | 3677 |
+| 32 | total | 7140 (every other cell 0) |
+
+The bar holds: only the two cells that show row 1 cols 5, 6 differ. The counts are not a thin outline: a 1 px sheet shift moves the
+whole figure under nearest scaling, so rim, shading and panel edges all change (the sheet itself differs on 31183 px, all in row 1 cols 5, 6).
+
+foot_slide, turn_090 lane row 0, 32 px/m (`grid_molotov_head_foot_slide_32.json`): walk hold 0.43 / 1.56 cm (bar <= 2) PASS;
+run hold 0.45 / 1.56; run step mean / max 5.77 / 6.85 cm (bar <= 7) PASS, planted steps 6.85 + 4.69 cm. Identical to n30-09 (`molotov_run_shift56_foot_slide_32.json`).
+
+Seen at 2x on `grid_molotov_head_64.png`, front facing (r1 new, cols 4 to 7 cropped): the bottle sits in the left claw with an amber flame
+above it, the other claw is open and empty, the soles are under the body in each cell, the collar is a flat striped hazard band, no rifle remnant.
+Cols 5 and 6 (the moved cells) read like their neighbours with no seam or clipped edge.
+
+Files: `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/grid_molotov_head_64.png`, `grid_molotov_head_32.png`, `grid_molotov_head_arena/`
+(`rows`, `candidate_32`, `candidate_64`), `grid_molotov_head_foot_slide_32.json`; `frames.json` entry now `molotov/grid_molotov_head_64.png`.
