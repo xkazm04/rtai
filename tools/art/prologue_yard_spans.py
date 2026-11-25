@@ -25,7 +25,7 @@ from prologue_yard_spans_layout import (BEAM_M, CLIP_HALF_M, MOUTH_LEAD_M, SCALE
                                         draw_band, end_gap, end_region, guide_points, spans)
 
 HERE = Path(__file__).resolve().parent
-SOURCES = {0: "n29/belt-spans", 1: "n29/belt-spans-b", 2: "n29/belt-spans-c", 3: "n30/belt-span-mouth"}
+SOURCES = {0: "n29/belt-spans", 1: "n29/belt-spans-b", 2: "n29/belt-spans-c", 3: "n30/belt-span-mouth-deep"}
 REACH_PX = 40
 RIDGE = 0.3
 # The mouth span's art runs MOUTH_LEAD_M past its start (no end plate there): its first end clears that

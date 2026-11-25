@@ -65,7 +65,8 @@ def test_the_mouth_span_rises_out_of_the_opening_not_the_wall():
     inside = (north[:, 0] > MOUTH_OPENING_X[0] + BEAM_M / 2) & (north[:, 0] < MOUTH_OPENING_X[1] - BEAM_M / 2)
     crossing = north[: np.argmin(inside) or len(north)]
     assert len(crossing) >= 3 and crossing[-1][1] > FACADE_Y, "the band leaves the hall through the opening"
-    assert p0[1] < FACADE_Y - 0.9
+    assert FACADE_Y - 2.5 <= p0[1] <= FACADE_Y - 2.0, "the span starts 2.0 to 2.5 m inside the opening"
+    assert MOUTH_OPENING_X[0] + 1.9 <= p0[0] <= MOUTH_OPENING_X[1] - 2.2, "in the opening's middle"
 
 
 @pytest.mark.skipif(not MOUTH_SOURCE.exists(), reason="no n30 mouth source yet")

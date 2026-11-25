@@ -37,14 +37,18 @@ SHEET_AT = {"door_feed": (0, 90, 70), "feed_turn": (0, 1150, 110), "bend_tail": 
             "turn_return": (1, 140, 140), "return_bend": (1, 1000, 110), "mouth_door": (3, 500, 260)}
 SHEETS = 4
 # n30: the burst bay (factory_front at x 11.8, 15.15 m wide, ground line y -0.26) has its fire opening at
-# floor level from about x 9.6 to 14.7 (art px 485..940 of 1355). The span starts in its middle 1.0 m
-# north of the ground line, leaving south (out of the hall), and its guide band runs MOUTH_LEAD_M further
-# north so the art has no end plate there (the cut clips it at MOUTH_AT).
-MOUTH_AT = (12.2, -1.26)
+# floor level from about x 9.6 to 14.7 (art px 485..940 of 1355). The span starts in its middle 2.24 m
+# north of the ground line (05c: inside the opening's fire, not at its threshold), leaving south (out of
+# the hall), and its guide band runs MOUTH_LEAD_M further north so the art has no end plate there (the cut
+# clips it at MOUTH_AT).
+MOUTH_AT = (12.2, -2.5)
 MOUTH_DIR = (0.0, 1.0)
 MOUTH_OPENING_X = (9.6, 14.7)
 FACADE_Y = -0.26
 MOUTH_LEAD_M = 0.6
+# The deeper start needs a longer leaving handle so the beam drops out of the opening past the ground line
+# (dip about 0.5 m south of it, as n30's first start) before it turns east, instead of crossing the brick.
+MOUTH_HANDLE_M = 6.5
 # The bend's east end to the tail's west end is too tight for a tangent U (sheet 0's piece curled into a
 # hook): that span leaves the bend at a 45 degree elbow, drawn again alone on sheet 2.
 LEAVE_TURN_DEG = {"bend_tail": 45.0}
@@ -88,11 +92,12 @@ def turned(end: tuple, deg: float) -> tuple:
     return (end[0], np.array([c * d[0] - s * d[1], s * d[0] + c * d[1]]))
 
 
-def span_path(a: tuple, b: tuple, n: int = 80) -> np.ndarray:
-    """A cubic Bezier from end a to end b, leaving a and entering b along their outward directions."""
+def span_path(a: tuple, b: tuple, n: int = 80, leave_m: float = 0.0) -> np.ndarray:
+    """A cubic Bezier from end a to end b, leaving a and entering b along their outward directions
+    (leave_m > 0 sets a's handle length, else both handles are 0.55 of the chord, at least 2.5 m)."""
     (p0, d0), (p3, d3) = a, b
     k = max(2.5, 0.55 * float(np.linalg.norm(p3 - p0)))
-    p1, p2 = p0 + d0 * k, p3 + d3 * k
+    p1, p2 = p0 + d0 * (leave_m or k), p3 + d3 * k
     t = np.linspace(0, 1, n)[:, None]
     return (1 - t) ** 3 * p0 + 3 * (1 - t) ** 2 * t * p1 + 3 * (1 - t) * t**2 * p2 + t**3 * p3
 
@@ -107,7 +112,7 @@ def spans() -> list:
         start = turned(ends[a][sa], LEAVE_TURN_DEG.get(name, 0.0))
         out.append((name, start, ends[b][sb], span_path(start, ends[b][sb])))
     mouth = (np.array(MOUTH_AT), np.array(MOUTH_DIR))
-    out.append(("mouth_door", mouth, ends["door"]["w"], span_path(mouth, ends["door"]["w"])))
+    out.append(("mouth_door", mouth, ends["door"]["w"], span_path(mouth, ends["door"]["w"], leave_m=MOUTH_HANDLE_M)))
     return out
 
 

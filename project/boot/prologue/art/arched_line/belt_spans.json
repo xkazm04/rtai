@@ -35,12 +35,12 @@
  "mouth_door": {
   "art": "belt_span_mouth_door",
   "size_px": [
-   793,
-   353
+   799,
+   472
   ],
   "top_left_m": [
-   11.69,
-   -2.292
+   11.653,
+   -3.559
   ]
  },
  "return_bend": {

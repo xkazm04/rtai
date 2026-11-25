@@ -1153,14 +1153,14 @@
           {
             "art": "res://boot/prologue/art/arched_line/belt_span_mouth_door.png",
             "at": [
-              16.051,
-              -0.351
+              16.047,
+              -0.963
             ],
             "id": "span_mouth_door",
             "rotation_deg": 0,
             "size_m": [
-              8.723,
-              3.883
+              8.789,
+              5.192
             ],
             "tint": "ffffffff"
           }
