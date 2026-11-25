@@ -1,0 +1,6 @@
+build/n29/lamp0 in px 11028 L 58.59 ring px 120757 L 55.21 gain 3.38
+build/n29/lamp0.06 in px 11028 L 59.31 ring px 120757 L 55.21 gain 4.11
+build/n29/lamp0.10 in px 11028 L 59.8 ring px 120757 L 55.21 gain 4.59
+build/n29/lamp0.15 in px 11028 L 60.41 ring px 120757 L 55.21 gain 5.2
+build/n29/lamp0.30 in px 11028 L 62.24 ring px 120757 L 55.21 gain 7.03
+build/n29/lamp0.50 in px 11028 L 64.7 ring px 120757 L 55.21 gain 9.49

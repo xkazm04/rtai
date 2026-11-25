@@ -283,7 +283,8 @@
                       "yard_fire_mid",
                       "yard_lamp",
                       "yard_lamp_gate",
-                      "yard_hall_mouth"
+                      "yard_hall_mouth",
+                      "yard_hall_mouth_wall"
                     ]
                   },
                   "intensity": {
@@ -344,7 +345,8 @@
                       "yard_fire_mid",
                       "yard_lamp",
                       "yard_lamp_gate",
-                      "yard_hall_mouth"
+                      "yard_hall_mouth",
+                      "yard_hall_mouth_wall"
                     ]
                   }
                 },
@@ -384,6 +386,12 @@
           },
           "type": "array"
         },
+        "over_print_shade": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "paint_from": {
           "enum": [
             "torn_line"
@@ -409,6 +417,69 @@
           "required": [
             "art",
             "size_m"
+          ],
+          "type": "object"
+        },
+        "roof_glow": {
+          "additionalProperties": false,
+          "properties": {
+            "color": {
+              "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+              "type": "string"
+            },
+            "flicker": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "hot_color": {
+              "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+              "type": "string"
+            },
+            "rect_m": {
+              "additionalProperties": false,
+              "properties": {
+                "origin": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 2,
+                  "minItems": 2,
+                  "type": "array"
+                },
+                "size": {
+                  "items": {
+                    "minimum": 0.001,
+                    "type": "number"
+                  },
+                  "maxItems": 2,
+                  "minItems": 2,
+                  "type": "array"
+                }
+              },
+              "required": [
+                "origin",
+                "size"
+              ],
+              "type": "object"
+            },
+            "step_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "strength": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "color",
+            "flicker",
+            "hot_color",
+            "rect_m",
+            "step_ticks",
+            "strength"
           ],
           "type": "object"
         },

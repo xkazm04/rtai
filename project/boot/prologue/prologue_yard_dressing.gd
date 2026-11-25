@@ -56,6 +56,10 @@ var ochre_strength: float
 var over_print: PackedStringArray = PackedStringArray()
 ## A ground layer laid on the over-print layer, under the over-print pieces: a second impression.
 var impression: Ground
+## Multiplies the own-colour wrecks on the over-print layer (1 = the art as drawn).
+var over_print_shade: float = 1.0
+## Fire light over the void north of the hall roof (PrologueRoofGlow.read), empty = none.
+var roof_glow: Dictionary = {}
 
 
 static func resolve(
@@ -75,6 +79,8 @@ static func resolve(
 		result.ground_shade = table.num(row, "ground_shade")
 	if row.has("lights"):
 		result.lights = PrologueYardLights.new(table, table.object(row, "lights"))
+	if row.has("roof_glow"):
+		result.roof_glow = PrologueRoofGlow.read(table, table.object(row, "roof_glow"))
 	result.paint_id = row.get("paint_from", wanted)
 	if row.has("layout"):
 		result.layout = table.object(row, "layout")
@@ -108,6 +114,8 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
 	if row.has("over_print"):
 		over_print = PackedStringArray(table.array(row, "over_print"))
+	if row.has("over_print_shade"):
+		over_print_shade = table.num(row, "over_print_shade")
 	if row.has("ground_impression"):
 		impression = _layer(table, table.object(row, "ground_impression"))
 	outside = _pieces(table, row, "outside")

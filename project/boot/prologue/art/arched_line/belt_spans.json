@@ -1,0 +1,57 @@
+{
+ "bend_tail": {
+  "art": "belt_span_bend_tail",
+  "size_px": [
+   397,
+   517
+  ],
+  "top_left_m": [
+   26.511,
+   14.551
+  ]
+ },
+ "door_feed": {
+  "art": "belt_span_door_feed",
+  "size_px": [
+   774,
+   448
+  ],
+  "top_left_m": [
+   27.418,
+   -2.167
+  ]
+ },
+ "feed_turn": {
+  "art": "belt_span_feed_turn",
+  "size_px": [
+   549,
+   479
+  ],
+  "top_left_m": [
+   24.587,
+   2.202
+  ]
+ },
+ "return_bend": {
+  "art": "belt_span_return_bend",
+  "size_px": [
+   633,
+   681
+  ],
+  "top_left_m": [
+   19.225,
+   8.836
+  ]
+ },
+ "turn_return": {
+  "art": "belt_span_turn_return",
+  "size_px": [
+   651,
+   564
+  ],
+  "top_left_m": [
+   32.777,
+   5.875
+  ]
+ }
+}

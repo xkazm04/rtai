@@ -3,68 +3,70 @@
     "arched_line": {
       "factory_front": [
         {
-          "art": "res://boot/prologue/art/line_fire/shutter_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_shutter_bay.png",
           "at": [
             -3,
-            -2.9250000000000003
+            -4.94
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            6.95
+            9.37
           ]
         },
         {
-          "art": "res://boot/prologue/art/arched_line/hall_burst_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_burst_bay.png",
           "at": [
             11.8,
-            -2.7250000000000005
+            -4.765
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            7.35
+            9.02
           ]
         },
         {
-          "art": "res://boot/prologue/art/line_fire/feed_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_feed_bay.png",
           "at": [
             26.6,
-            -2.4750000000000005
+            -4.86
           ],
+          "flip": true,
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            7.85
+            9.21
           ]
         },
         {
-          "art": "res://boot/prologue/art/line_fire/shutter_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_shutter_bay.png",
           "at": [
             41.4,
-            -2.9250000000000003
+            -4.94
           ],
+          "flip": true,
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            6.95
+            9.37
           ]
         },
         {
-          "art": "res://boot/prologue/art/arched_line/hall_collapsed_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_collapsed_bay.png",
           "at": [
             56.2,
-            -2.7250000000000005
+            -4.7
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            7.35
+            8.89
           ]
         },
         {
@@ -173,11 +175,11 @@
         "rect_m": {
           "origin": [
             -1,
-            -6
+            -1.1
           ],
           "size": [
             62,
-            40
+            34.4
           ]
         },
         "texture": "res://boot/prologue/art/arched_line/floor_tile.png",
@@ -186,7 +188,7 @@
           8
         ],
         "tiled": true,
-        "tint": "ffffff33"
+        "tint": "ffffff8c"
       },
       "ground_shade": 0.81,
       "layout": {
@@ -895,6 +897,76 @@
               3.674
             ],
             "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_door_feed.png",
+            "at": [
+              31.675,
+              0.297
+            ],
+            "id": "span_door_feed",
+            "rotation_deg": 0,
+            "size_m": [
+              8.514,
+              4.928
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_feed_turn.png",
+            "at": [
+              27.607,
+              4.837
+            ],
+            "id": "span_feed_turn",
+            "rotation_deg": 0,
+            "size_m": [
+              6.039,
+              5.269
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_turn_return.png",
+            "at": [
+              36.358,
+              8.977
+            ],
+            "id": "span_turn_return",
+            "rotation_deg": 0,
+            "size_m": [
+              7.161,
+              6.204
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_return_bend.png",
+            "at": [
+              22.707,
+              12.582
+            ],
+            "id": "span_return_bend",
+            "rotation_deg": 0,
+            "size_m": [
+              6.963,
+              7.491
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_span_bend_tail.png",
+            "at": [
+              28.694,
+              17.395
+            ],
+            "id": "span_bend_tail",
+            "rotation_deg": 0,
+            "size_m": [
+              4.367,
+              5.687
+            ],
+            "tint": "ffffffff"
           }
         ]
       },
@@ -961,8 +1033,8 @@
             "flicker_hz": 0,
             "floor_glow": {
               "color": "ffa030",
-              "radius_m": 8,
-              "strength": 0
+              "radius_m": 5,
+              "strength": 0.3
             },
             "id": "yard_lamp_gate",
             "intensity": 0.1,
@@ -985,13 +1057,29 @@
             "life_ticks": 0,
             "radius_m": 4.5,
             "steps": 6
+          },
+          {
+            "alt_color": "ffb23a",
+            "color": "ff9a1f",
+            "cone_deg": 0,
+            "flicker_hz": 1.5,
+            "floor_glow": {
+              "color": "ff8c14",
+              "radius_m": 1,
+              "strength": 0
+            },
+            "id": "yard_hall_mouth_wall",
+            "intensity": 0.6,
+            "life_ticks": 0,
+            "radius_m": 4.5,
+            "steps": 6
           }
         ],
         "pools": [
           {
             "at": [
               11.8,
-              -0.8
+              -2.9
             ],
             "id": "burst_door",
             "kind": "yard_hall_mouth"
@@ -1007,7 +1095,7 @@
           {
             "at": [
               56.2,
-              -0.8
+              -2.9
             ],
             "id": "collapsed_wall",
             "kind": "yard_hall_mouth"
@@ -1075,6 +1163,22 @@
             ],
             "id": "conveyor_tail",
             "kind": "yard_fire_mid"
+          },
+          {
+            "at": [
+              11.8,
+              -3.2
+            ],
+            "id": "burst_mouth_wall",
+            "kind": "yard_hall_mouth_wall"
+          },
+          {
+            "at": [
+              56.2,
+              -3.2
+            ],
+            "id": "collapsed_mouth_wall",
+            "kind": "yard_hall_mouth_wall"
           }
         ]
       },
@@ -1082,13 +1186,22 @@
         "pallet_west",
         "fuel_vessel",
         "stack_broken_sw",
+        "burnt_pickup",
+        "press_carcass",
+        "fallen_fridges",
+        "scrap_skip",
         "stack_double_west",
         "arch_door",
         "arch_feed",
         "arch_turn",
         "arch_return",
         "arch_bend",
-        "arch_tail"
+        "arch_tail",
+        "span_door_feed",
+        "span_feed_turn",
+        "span_turn_return",
+        "span_return_bend",
+        "span_bend_tail"
       ],
       "paint_from": "torn_line",
       "phone": {
@@ -1097,6 +1210,23 @@
           0.82,
           1.19
         ]
+      },
+      "roof_glow": {
+        "color": "ff8c14",
+        "flicker": 0.25,
+        "hot_color": "ffb23a",
+        "rect_m": {
+          "origin": [
+            -10.6,
+            -13.5
+          ],
+          "size": [
+            74.4,
+            6.5
+          ]
+        },
+        "step_ticks": 9,
+        "strength": 0.85
       },
       "shadows": {
         "fixture_reach_m": [

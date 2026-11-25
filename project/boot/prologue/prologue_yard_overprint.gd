@@ -5,6 +5,8 @@ extends RefCounted
 ## row names the pieces (`over_print`) that stand on the printed floor in their own colours,
 ## on a static layer under the actors, like the ochre second impression.
 
+const OVERHEAD_PREFIX: String = "span_"
+
 
 static func attach(floor_view: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
@@ -23,14 +25,35 @@ static func attach(floor_view: Node2D, plan: PrologueYard, paint: PrologueYardPa
 	layer.add_child(node)
 
 
+## Ground debris first, then the wrecks, then the overhead spans: a beam stays above every
+## ground piece it crosses.
+static func order(plan: PrologueYard) -> Array[PrologueYard.Wreck]:
+	var ids: PackedStringArray = plan.dressing.over_print
+	var out: Array[PrologueYard.Wreck] = []
+	var spans: Array[PrologueYard.Wreck] = []
+	for piece: PrologueYard.Wreck in plan.debris:
+		if ids.has(piece.id):
+			if piece.id.begins_with(OVERHEAD_PREFIX):
+				spans.append(piece)
+			else:
+				out.append(piece)
+	for piece: PrologueYard.Wreck in plan.wrecks:
+		if ids.has(piece.id):
+			out.append(piece)
+	out.append_array(spans)
+	return out
+
+
 static func _draw_pieces(node: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
 	if plan.dressing.impression != null:
 		paint.ground(node, plan.dressing.impression)
-	var ids: PackedStringArray = plan.dressing.over_print
-	for piece: PrologueYard.Wreck in plan.debris:
-		if ids.has(piece.id):
-			paint.wreck(node, piece, piece.tint, null)
-	for piece: PrologueYard.Wreck in plan.wrecks:
-		if ids.has(piece.id):
+	var shade: float = plan.dressing.over_print_shade
+	var shaded: Color = Color(shade, shade, shade)
+	for piece: PrologueYard.Wreck in order(plan):
+		if plan.wrecks.has(piece):
 			var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
-			paint.wreck(node, piece, Color.WHITE, skin)
+			paint.skin_tint = shaded
+			paint.wreck(node, piece, shaded, skin)
+			paint.skin_tint = Color.WHITE
+		else:
+			paint.wreck(node, piece, piece.tint, null)

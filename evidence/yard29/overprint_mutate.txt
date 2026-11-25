@@ -1,0 +1,37 @@
+mutate: [12/13] boot/prologue/prologue_yard_overprint.gd:53 delete  paint.wreck(node, piece, Color.WHITE, skin) -> pass  invalid  (24.0 s)
+mutate: [13/13] boot/prologue/prologue_yard_overprint.gd:55 delete  paint.wreck(node, piece, piece.tint, null) -> pass  killed  (27.2 s)
+mutate boot/prologue/prologue_yard_overprint.gd: 13 mutant(s), tests: test_prologue_yard_overprint, test_prologue_raised_line
+  boot/prologue/prologue_yard_overprint.gd:17 literal  1 -> 0  survived
+  boot/prologue/prologue_yard_overprint.gd:24 delete  node.draw.connect(_draw_pieces.bind(node, plan, paint)) -> pass  invalid
+  boot/prologue/prologue_yard_overprint.gd:53 delete  paint.wreck(node, piece, Color.WHITE, skin) -> pass  invalid
+  boot/prologue/prologue_yard_overprint.gd:14 boolean  true -> false  killed
+  boot/prologue/prologue_yard_overprint.gd:15 delete  floor_view.add_child(layer) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:25 delete  layer.add_child(node) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:37 delete  spans.append(piece) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:39 delete  out.append(piece) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:42 delete  out.append(piece) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:43 delete  out.append_array(spans) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:48 cmp_flip  != -> ==  killed
+  boot/prologue/prologue_yard_overprint.gd:49 delete  paint.ground(node, plan.dressing.impression) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:55 delete  paint.wreck(node, piece, piece.tint, null) -> pass  killed
+score 90.9% = killed 10 / (killed 10 + survived 1); timeout 0, invalid 2; 398 s
+
+## n29-13b over_print_shade, at 785d96bc9 (13 mutants, tail)
+mutate: [12/13] boot/prologue/prologue_yard_overprint.gd:56 delete  paint.wreck(node, piece, shaded, skin) -> pass  invalid  (20.9 s)
+mutate: [13/13] boot/prologue/prologue_yard_overprint.gd:59 delete  paint.wreck(node, piece, piece.tint, null) -> pass  killed  (22.8 s)
+mutate boot/prologue/prologue_yard_overprint.gd: 13 mutant(s), tests: test_prologue_yard_overprint, test_prologue_raised_line
+  boot/prologue/prologue_yard_overprint.gd:17 literal  1 -> 0  survived
+  boot/prologue/prologue_yard_overprint.gd:24 delete  node.draw.connect(_draw_pieces.bind(node, plan, paint)) -> pass  invalid
+  boot/prologue/prologue_yard_overprint.gd:56 delete  paint.wreck(node, piece, shaded, skin) -> pass  invalid
+  boot/prologue/prologue_yard_overprint.gd:14 boolean  true -> false  killed
+  boot/prologue/prologue_yard_overprint.gd:15 delete  floor_view.add_child(layer) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:25 delete  layer.add_child(node) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:37 delete  spans.append(piece) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:39 delete  out.append(piece) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:42 delete  out.append(piece) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:43 delete  out.append_array(spans) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:48 cmp_flip  != -> ==  killed
+  boot/prologue/prologue_yard_overprint.gd:49 delete  paint.ground(node, plan.dressing.impression) -> pass  killed
+  boot/prologue/prologue_yard_overprint.gd:59 delete  paint.wreck(node, piece, piece.tint, null) -> pass  killed
+score 90.9% = killed 10 / (killed 10 + survived 1); timeout 0, invalid 2; 406 s
+The one survivor (line 17, viewport_set_canvas_stacking sub-order 1 -> 0) is the stacking order of the layer, not the shade; not pinned by a unit test.

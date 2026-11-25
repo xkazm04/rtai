@@ -136,6 +136,7 @@ func _open_view(plan: PrologueYard) -> void:
 	if plan.dressing.lights != null:
 		plan.dressing.lights.install(view.print_stage.lights)
 		PrologueFloorGlow.attach(view.print_stage, plan.dressing.lights, plan.yard)
+	PrologueRoofGlow.attach(view.print_stage, plan.dressing.roof_glow, stage)
 	var rigs: ArenaRigs = ArenaRigs.new()
 	add_child(rigs)
 	@warning_ignore("return_value_discarded")

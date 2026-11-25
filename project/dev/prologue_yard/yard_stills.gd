@@ -51,8 +51,7 @@ func _dusk() -> void:
 	for child: Node in _game.get_children():
 		if child is PrologueView:
 			var probe: YardDuskCapture = YardDuskCapture.new(_game, child as PrologueView, _out)
-			var ok: bool = await probe.run()
-			get_tree().quit(0 if ok else 2)
+			get_tree().quit(0 if await probe.run() else 2)
 			return
 	_fail("missing prologue view")
 

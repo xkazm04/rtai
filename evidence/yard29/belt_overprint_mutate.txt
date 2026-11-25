@@ -1,0 +1,23 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-7c7d36ab at b74df5c6 (created)
+mutate: 9/9 mutant(s); baseline run of test_prologue_raised_line
+mutate: baseline green in 228.0 s; per-mutant timeout 300 s
+mutate: [1/9] boot/prologue/prologue_yard_overprint.gd:12 boolean  true -> false  survived  (32.2 s)
+mutate: [2/9] boot/prologue/prologue_yard_overprint.gd:13 delete  floor_view.add_child(layer) -> pass  survived  (35.1 s)
+mutate: [3/9] boot/prologue/prologue_yard_overprint.gd:15 literal  1 -> 0  survived  (29.9 s)
+mutate: [4/9] boot/prologue/prologue_yard_overprint.gd:22 delete  node.draw.connect(_draw_pieces.bind(node, plan, paint)) -> pass  invalid  (36.6 s)
+mutate: [5/9] boot/prologue/prologue_yard_overprint.gd:23 delete  layer.add_child(node) -> pass  survived  (26.7 s)
+mutate: [6/9] boot/prologue/prologue_yard_overprint.gd:27 cmp_flip  != -> ==  survived  (28.7 s)
+mutate: [7/9] boot/prologue/prologue_yard_overprint.gd:28 delete  paint.ground(node, plan.dressing.impression) -> pass  survived  (47.5 s)
+mutate: [8/9] boot/prologue/prologue_yard_overprint.gd:32 delete  paint.wreck(node, piece, piece.tint, null) -> pass  survived  (75.3 s)
+mutate: [9/9] boot/prologue/prologue_yard_overprint.gd:36 delete  paint.wreck(node, piece, Color.WHITE, skin) -> pass  invalid  (23.4 s)
+mutate boot/prologue/prologue_yard_overprint.gd: 9 mutant(s), tests: test_prologue_raised_line
+  boot/prologue/prologue_yard_overprint.gd:12 boolean  true -> false  survived
+  boot/prologue/prologue_yard_overprint.gd:13 delete  floor_view.add_child(layer) -> pass  survived
+  boot/prologue/prologue_yard_overprint.gd:15 literal  1 -> 0  survived
+  boot/prologue/prologue_yard_overprint.gd:23 delete  layer.add_child(node) -> pass  survived
+  boot/prologue/prologue_yard_overprint.gd:27 cmp_flip  != -> ==  survived
+  boot/prologue/prologue_yard_overprint.gd:28 delete  paint.ground(node, plan.dressing.impression) -> pass  survived
+  boot/prologue/prologue_yard_overprint.gd:32 delete  paint.wreck(node, piece, piece.tint, null) -> pass  survived
+  boot/prologue/prologue_yard_overprint.gd:22 delete  node.draw.connect(_draw_pieces.bind(node, plan, paint)) -> pass  invalid
+  boot/prologue/prologue_yard_overprint.gd:36 delete  paint.wreck(node, piece, Color.WHITE, skin) -> pass  invalid
+score 0.0% = killed 0 / (killed 0 + survived 7); timeout 0, invalid 2; 586 s
