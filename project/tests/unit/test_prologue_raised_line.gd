@@ -114,7 +114,7 @@ func test_arched_line_lays_the_brown_tile_as_a_second_impression_and_raised_line
 	assert_true(look.impression.tiled)
 	assert_eq(look.impression.tile_size, Vector2(8, 8))
 	assert_eq(look.impression.rect, look.ground[0].rect)
-	assert_eq(look.impression.tint, Color("ffffff33"))
+	assert_eq(look.impression.tint, Color("ffffff8c"))
 	assert_null(PrologueYardDressing.resolve("raised_line").impression)
 	assert_false(_row("raised_line").has("ground_impression"))
 
