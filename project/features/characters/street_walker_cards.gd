@@ -165,7 +165,7 @@ static func _fill(card: Sprite2D, tex: String, on: String) -> float:
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var pose: CastCardPose = CastCardPose.of(rig)
-	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
+	var k: float = StreetCrowdCards.body_scale_of(rig)
 	if pose != null:
 		k = pose.sheets.scale_of(rig.actor_id)
 	if StreetFallBetween.is_fall_card(card):

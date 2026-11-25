@@ -75,7 +75,7 @@ class Card:
 		)
 		offset = -cell * Vector2(0.5, foot_y)
 		var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-		var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(id, 3)
+		var k: float = StreetCrowdCards.body_scale(id, StreetCrowdCards.COP_SCALE_VAR)
 		scale = Vector2.ONE * (h * SimConst.PX_PER_M * k * StreetCopWalk.fill_of(path) / cell.y)
 		base_scale = scale
 

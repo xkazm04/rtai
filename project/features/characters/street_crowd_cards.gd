@@ -20,6 +20,8 @@ const POOLS: Dictionary[String, PackedStringArray] = {
 ## The card's width over the base row's (1.0 = the base card, no swap) times the person's scale.
 const K: StringName = &"street_card_k"
 const SCALE_VAR: float = 0.16  # owner 2026-11-07: strong variety (was 0.08)
+## A police officer's build varies less (owner n30 pick): +-8 %, the crowd keeps +-16 %.
+const COP_SCALE_VAR: float = 0.08
 const VALUE_VAR: float = 0.14  # owner 2026-11-07: strong variety (was 0.07)
 ## Dev capture (GunplayHook.victim, `--lone --victim=<row>`): every cop rig draws as this row.
 static var victim: String = ""
@@ -65,8 +67,14 @@ static func vary(actor_id: int, salt: int) -> float:
 	return h / 32767.5 - 1.0
 
 
-static func body_scale(actor_id: int) -> float:
-	return 1.0 + SCALE_VAR * vary(actor_id, 3)
+static func body_scale(actor_id: int, spread: float = SCALE_VAR) -> float:
+	return 1.0 + spread * vary(actor_id, 3)
+
+
+## The build of a rig's actor: a cop (art_dir "cop") within +-COP_SCALE_VAR, else the crowd's.
+static func body_scale_of(rig: CutRig) -> float:
+	var cop: bool = rig.plan != null and rig.plan.art_dir == "cop"
+	return body_scale(rig.actor_id, COP_SCALE_VAR if cop else SCALE_VAR)
 
 
 static func _swap(rig: CutRig, card: Sprite2D) -> float:

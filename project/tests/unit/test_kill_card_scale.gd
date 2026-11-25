@@ -67,7 +67,7 @@ func _live_scale(rig: CutRig) -> float:
 	var bare: float = card.global_scale.x
 	card.set_meta(CastCardPose.META, pose)
 	StreetWalkerCards.place(rig, card)
-	return StreetCrowdCards.body_scale(rig.actor_id) * with_pose / bare
+	return StreetCrowdCards.body_scale_of(rig) * with_pose / bare
 
 
 func _base_h() -> float:
