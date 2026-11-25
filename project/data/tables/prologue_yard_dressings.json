@@ -179,7 +179,7 @@
           ],
           "size": [
             62,
-            35.1
+            34.4
           ]
         },
         "texture": "res://boot/prologue/art/arched_line/floor_tile.png",
@@ -1186,6 +1186,10 @@
         "pallet_west",
         "fuel_vessel",
         "stack_broken_sw",
+        "burnt_pickup",
+        "press_carcass",
+        "fallen_fridges",
+        "scrap_skip",
         "stack_double_west",
         "arch_door",
         "arch_feed",
