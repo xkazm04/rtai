@@ -1,6 +1,6 @@
 # REPORT lane keys, run n30 (2026-11-25 day), branch `n30-keys` from `5114a4441`
 
-DRAFT (session 3, 13:58): sections are filled as items land; the final version is written at 18:55.
+DRAFT (session 4, 15:05): sections are filled as items land; the final version is written at 18:55.
 
 ## What works
 
@@ -31,10 +31,18 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
   (`8776d8711` gatling c1 c2, `f371eddb6` rocket launcher c0 c1 c2, `f3aefd0a2` mini-nuke c1 c2); mini-nuke c0 rejected on sight.
   Per cell alpha identical, 0 px outside a declared band box, 0 px changed in the weapon box. In game (arsenal turn, p70,
   64 px/m) only neck px change: `C:/Users/kazda/kiro/gtai-masters/n30/keys/eq_collar/{rocket_launcher,mini_nuke,gatling}_left_64_ingame.png`.
+  At 32 px/m (`a09f9be52`): `eq_collar/eq_collar_left_turn32.mp4`, the arsenal turn of the three weapons, 5114a4441 | HEAD at the
+  same ticks (1920x1080 60/1, 1920 frames, 32.0 s); 55 / 37 / 36 of 160 frames differ per weapon, at most 283 / 422 / 320 px, all
+  in a ~40x20 px neck box; 3x pair `eq_collar_left_32_zoom.png`.
 - **The vermilion list** (`fb93bfd25`, `391d529fa`, `evidence/n30-keys/vermilion_list.md`): see Calls 1.
 - **Molotov film** (`cb361f4f8`, `evidence/n30-keys/films.md`): `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/molotov_32.mp4`
   (stop-gap | n30 | plasma rifle at 32 px/m over a 64 px/m tile; 1920x1080 60/1, 921 frames, 15.35 s by ffprobe) and
   `molotov_before_after_64.png`.
+  **Molotov sprint tour at p70** (`88a0b7ff6`, after the run-step fix): the arsenal recorder's `--sprint-tour=on --weapon=molotov
+  --pitch=p70` in the real arena, 5114a4441 (stop-gap, `rivet_run8.png`) | HEAD (`rivet_run8_eq_molotov.png`), same ticks:
+  `molotov/molotov_p70_sprint_tour_32.mp4` (1920x1080 60/1, 1440 frames, 24.0 s, real speed, the tour played twice),
+  `molotov_p70_sprint_tour_64.png` (8 octants, before above after) and `_64_zoom.png`. All 8 octants change (22.9k-27.8k px):
+  before a loose bottle dangles from the spike arm with no flame; after the bottle sits in the claw, lit, in every octant.
 - **The arsenal turn recorder fires at HEAD again** (`020878888`, `47fb6df5c`, `evidence/n30-keys/arsenal_turn.md`): the
   recorder presses the weapon's slot key on its first step (the wheel had stowed the gun); pistol and Gloria runs exit 0 with
   8 rest + 8 fire stills each (HEAD before: exit 1); unit test `test_arsenal_turn.gd`, the guard's hand mutation caught.
@@ -90,7 +98,7 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
 
 2. **p70 aim-left collar (made without your pick).** Seven `_left` aim cells of the rocket launcher, mini-nuke and gatling now
    wear the rigid striped ring like Gloria's, chainsaw's and the assault rifle's: `eq_collar/<weapon>_left_64_ingame.png` (before |
-   after, 64 px/m). Keep, or revert the three art commits. Still rope: mini-nuke `_left` c0, gatling `_left` c0, `gatling_diag`
+   after, 64 px/m; at 32 px/m `eq_collar/eq_collar_left_turn32.mp4`). Keep, or revert the three art commits. Still rope: mini-nuke `_left` c0, gatling `_left` c0, `gatling_diag`
    c0/c2, the two `_left_fire` strips (no images left this run).
 
 ## Merge notes
@@ -132,6 +140,8 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
 | n30-14 decision-lines | sonnet | 2 | accepted | |
 | n30-15 arsenal-turn-pins | sonnet | 14 | accepted | mutate 16.7 % -> 100 % on the target lines |
 | n30-16 sprint-tour | opus | 20 | accepted | caught a stale import in the before snapshot; clip encoded at half speed (I re-cut it at real speed) |
+| n30-17 molotov-tour | sonnet | 9 | accepted | p70 molotov sprint tour, snapshot re-imported up front |
+| n30-18 eq-collar-film | sonnet | 11 | accepted | 32 px/m turn clip of the aim-left collar |
 
 Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
 before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were
