@@ -1,0 +1,26 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-7c7d36ab at 22f22e7a (reused)
+mutate: 10/104 mutant(s); baseline run of test_prologue_span_shadow
+mutate: baseline green in 28.3 s; per-mutant timeout 90 s
+mutate: [1/10] boot/prologue/prologue_span_shadow.gd:47 literal  1 -> 0  survived  (23.8 s)
+mutate: [2/10] boot/prologue/prologue_span_shadow.gd:87 delete  node._masks.append(_mask(piece, paint.texture(piece.art))) -> pass  killed  (24.0 s)
+mutate: [3/10] boot/prologue/prologue_span_shadow.gd:116 literal  0.45 -> 1.45  survived  (23.3 s)
+mutate: [4/10] boot/prologue/prologue_span_shadow.gd:117 literal  1 -> 0  survived  (21.5 s)
+mutate: [5/10] boot/prologue/prologue_span_shadow.gd:133 arith  += -> -=  killed  (22.7 s)
+mutate: [6/10] boot/prologue/prologue_span_shadow.gd:149 arith  / -> *  killed  (25.2 s)
+mutate: [7/10] boot/prologue/prologue_span_shadow.gd:149 arith  - -> +  survived  (22.5 s)
+mutate: [8/10] boot/prologue/prologue_span_shadow.gd:162 cmp_flip  != -> ==  survived  (25.8 s)
+mutate: [9/10] boot/prologue/prologue_span_shadow.gd:178 arith  + -> -  killed  (24.9 s)
+mutate: [10/10] boot/prologue/prologue_span_shadow.gd:178 arith  - -> +  killed  (38.4 s)
+mutate boot/prologue/prologue_span_shadow.gd: 10 mutant(s) (sampled from 104), tests: test_prologue_span_shadow
+  boot/prologue/prologue_span_shadow.gd:47 literal  1 -> 0  survived
+  boot/prologue/prologue_span_shadow.gd:116 literal  0.45 -> 1.45  survived
+  boot/prologue/prologue_span_shadow.gd:117 literal  1 -> 0  survived
+  boot/prologue/prologue_span_shadow.gd:149 arith  - -> +  survived
+  boot/prologue/prologue_span_shadow.gd:162 cmp_flip  != -> ==  survived
+  boot/prologue/prologue_span_shadow.gd:87 delete  node._masks.append(_mask(piece, paint.texture(piece.art))) -> pass  killed
+  boot/prologue/prologue_span_shadow.gd:133 arith  += -> -=  killed
+  boot/prologue/prologue_span_shadow.gd:149 arith  / -> *  killed
+  boot/prologue/prologue_span_shadow.gd:178 arith  + -> -  killed
+  boot/prologue/prologue_span_shadow.gd:178 arith  - -> +  killed
+score 50.0% = killed 5 / (killed 5 + survived 5); timeout 0, invalid 0; 283 s
+exit 0 14:14:46
