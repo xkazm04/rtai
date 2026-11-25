@@ -20,7 +20,7 @@ func has_boss(id: StringName) -> bool:
 
 func _ready() -> void:
 	var table: ArsenalTable = ArsenalTable.shipped()
-	if table.grip_of(weapon) == null:
+	if weapon != RivetWheel.HANDS and table.grip_of(weapon) == null:
 		Log.error("turn", "unknown arsenal id " + String(weapon))
 		get_tree().quit(2)
 		return
@@ -41,7 +41,11 @@ func _ready() -> void:
 			WeaponTable.shipped(), table, session.world.context().rng.stream(&"turn")
 		)
 		session.pilot.carry = carry
-	if carry.carries(weapon):
+	if weapon == RivetWheel.HANDS:
+		carry.current = -1
+		_arena.rivet.weapon = &""
+		_arena.gun = null
+	elif carry.carries(weapon):
 		carry.take(weapon, _arena)
 		await _equip(carry.slots.find(weapon))
 	else:
@@ -168,6 +172,8 @@ class TurnPad:
 	var aim: Vector2 = Vector2.RIGHT
 	var fire: bool = false
 	var slot: int = -1
+	var move: Vector2i = Vector2i.ZERO
+	var sprint: bool = false
 
 	func sample(_tick: int) -> TickInput:
 		var bits: int = PlayerCommand.pack_aim(aim, actions)
@@ -175,4 +181,6 @@ class TurnPad:
 			bits |= 1 << actions.bit(&"fire")
 		if slot >= 0:
 			bits |= 1 << actions.bit(RivetCarry.SLOT_ACTIONS[slot])
-		return TickInput.new(bits, 0, 0)
+		if sprint:
+			bits |= 1 << actions.bit(&"sprint")
+		return TickInput.new(bits, move.x, move.y)
