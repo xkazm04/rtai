@@ -46,3 +46,20 @@ NEED (dev file, not in this lane's allowlist): `bond_film_capture.gd` should acc
 
 - Stills (read): `gtai-masters/n29/keys/hud/hud_handheld_before.png` (full 1280x800: before, chip 1 cut at the left edge, its digit "1" hard against the screen edge), `hud_handheld_after.png` (full frame: Wave 0 panel top left, Rivet mid, strip bottom left; chip 1 plate whole with a small gap to plate 2, about 3 px), `hud_handheld_pair_crop_3x.png` (0,680 320x120 before | after, 3x nearest, 1932x360). Plate 1 and plate 2 are now 3 px apart (border to border): tight but not overlapping.
 - `frames.json` entry added (replacing `rag/strips_4x_p55.png`), 15 entries.
+
+## n29-14 compact gap patch (snapshot)
+- Snapshot `C:\Users\kazda\AppData\Local\Temp\gtai-hudgap-a4608d65595e` (kind `hudgap`, HEAD `a4608d65595e`). Product diff only: `evidence/n29-keys/hud_compact_gap.patch` (`GhostFormLayout.compact()` `gap` 42.0 -> 50.0, plus one new test in `project/tests/unit/test_ghost_chip_number.gd`); `git apply --check` from this worktree: applies. No test pinned 42, nothing else changed.
+- Test `test_adjacent_number_plates_keep_a_gap_and_the_first_clears_the_minimum` (both layouts, labels "1".."4", every adjacent pair plate(n+1).left - plate(n).right >= 8, plate 1 left >= `number_min_x()`). On n29 code it FAILS: `test_ghost_chip_number.gd:91 ... gap 0: plates 1 and 2 are 2.6 px apart` (1 failing, 5 passed). Patched: `--select=test_ghost_chip_number,test_ghost_form_layout,test_ghost_form_hud` 20 passed, 0 failed (also after gdformat).
+- Lint: `gdformat` reformatted the new test once (wrapped args), then `gdformat --check` clean on both files; `gdlint` no problems. The full `tools/lint/lint.mjs` was not run (snapshot only).
+- Render: the 01e handheld run in the snapshot (two dev-only edits: `bond_film_capture.gd` size check, `"--device",` in gauntlet KNOWN_FLAGS; not in the patch), `--device=deck`, seed 1, `--bond-prefill=16`, d3d12, `--position 0,1440`, GTAI_FILM 600/640, 41 frames, frame 20, 1280x800.
+
+| measure | n29 (01e after) | patched | bar |
+|---|---|---|---|
+| plate 1 left border x | 9 | 9 | >= 8 met |
+| plate borders (left..right) 1 / 2 / 3 / 4 | 9..35 / 39..64 / 81..106 / 123..148 | 9..35 / 51..76 / 101..126 / 151..176 | |
+| plate 1-2 gap (border to border) | 3 px | 15 px | >= 8 met |
+| strip box (dark panel) right edge | about x 198 | about x 230 (+32 for 4 chips, as predicted) | |
+| every plate inside the strip box (x 6..) | yes | yes | yes |
+
+- Still (read): `gtai-masters/n29/keys/hud/hud_handheld_gap_patch_crop_3x.png` (0,680 420x120, n29 | patched, 3x nearest). Left: "1" and "2" touch as "12". Right: "1" and "2" are two separate plates, each at the lower-left rim of its own avatar's lock icon; the strip is wider and the Madness bar follows. The desktop strip does not change: only `compact()` is edited, the desktop uses `GhostFormLayout.new()` with `GhostFormHud.GAP` 72, so no 1080p render.
+- Apply with `git apply evidence/n29-keys/hud_compact_gap.patch`, then a `docs/decisions.md` line (compact gap 42 -> 50, option B `number_dx` rejected: strip unchanged but needs anchor tests rewritten). Not done: mutate run, `tools/gate/quick.mjs`.
