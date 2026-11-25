@@ -18,4 +18,12 @@ that differs from `body_scale(id)`, so the test fails on the old line.
 - `gdformat --check --line-length 100` on both files: unchanged; `gdlint`: no problems (one over-long comment line was wrapped).
 
 ## Unit proof
-Part B: not run yet (the lane's Godot was held by the reels gate during Part A).
+Patch applied on a throwaway merge of n30-cast (detached worktree, native DLLs copied from our `project/native/bin`),
+APPDATA=gtai-n30/appdata/combat, Godot 4.7.2. The test builds its cop with `RigVariant.crowd(5)` (patrol, `head_cap`);
+`crowd(0)` was a first draft that needed a missing `head_hat.png`, and the patch carries the fixed version.
+- `node tools/tests/run_unit.mjs --select=test_kill_card_scale,test_street_crowd_cards,test_kill_card_fall` ->
+  `unit-tests: 25 passed, 0 failed, 0 skipped (GUT, headless)`.
+- Line 95 reverted to `body_scale(rig.actor_id)`, `--select=test_kill_card_scale` ->
+  `unit-tests: gut exit 1; gut rerun exit 1; 1 failing (4 passed, 1 failed, 0 skipped)`;
+  `FAIL test_kill_card_scale.gd:130 test_a_street_cop_dies_at_his_cop_build - [1.06693705653467610000] expected to equal [1.03346852826734] +/- [0.000000001]:  7`.
+- Final patch re-checked: `git apply --check` OK on the merged tree and on our HEAD; gdformat/gdlint clean on the test.

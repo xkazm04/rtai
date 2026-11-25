@@ -16,7 +16,7 @@ index 92cb87e92..57ba1f55a 100644
  	return k if pose == null else pose.sheets.scale_of(rig.actor_id)
  
 diff --git a/project/tests/unit/test_kill_card_scale.gd b/project/tests/unit/test_kill_card_scale.gd
-index a92d90170..7af8a4923 100644
+index a92d90170..2d314b613 100644
 --- a/project/tests/unit/test_kill_card_scale.gd
 +++ b/project/tests/unit/test_kill_card_scale.gd
 @@ -113,3 +113,21 @@ func test_the_same_id_draws_the_same_size() -> void:
@@ -30,7 +30,7 @@ index a92d90170..7af8a4923 100644
 +	add_child_autoqfree(pool)
 +	@warning_ignore("return_value_discarded")
 +	pool.prewarm(BodyPlan.Kind.COP, 1)
-+	var rig: CutRig = pool.acquire(BodyPlan.Kind.COP, RigVariant.crowd(0), Vector2.ZERO, 0.0)
++	var rig: CutRig = pool.acquire(BodyPlan.Kind.COP, RigVariant.crowd(5), Vector2.ZERO, 0.0)
 +	assert_eq(rig.plan.art_dir, "cop")
 +	assert_null(CastCardPose.of(rig))
 +	var differs: int = 0
