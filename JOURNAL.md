@@ -38,3 +38,7 @@ NEXT (session 2, first): commit evidence/n31/foes/takes/wave1_side.json; look at
 - FRICTION builders-share-live-tree 10: a measuring builder reading the live tree while another edits it. Brief differently: every measurement of HEAD uses `--rev=<commit>`, never the live tree, when two builders run.
 - 23:40 no new builder: b4c needs 60 min and the session stops at 23:56 (a sub-agent dies with it).
 NEXT (session 3, first): (1) launch b4c (opus, evidence/briefs/b4c-weapons.md, incl. the 23:26 UPDATE: own weapons first, then levers, gait column re-run from --rev=f1dfc7492, flank check); tell it to measure with --rev=<its commit> if another builder runs. (2) In parallel only a non-Godot or lock-sharing call: b3b takes (evidence/briefs/b3b-takes.md, skip step 1: done in e49d93b91) AFTER b4c's final setting is committed, not before. (3) Item 4: waiting table main | final, both profiles; wave 1/3/6 takes main|HEAD; 64 px/m backpedal clip -> REPORT paragraph. Gate slot ~06:25 (ground +10). State of item 3: lever 1 on HEAD, damage w1-4 77.4 (rail 53.5..72.3 broken high), react p50 0.75 ok, p90 4.13 no, idle 60 % no.
+
+## Session 3 (23:39)
+- 23:39 read journal, git log (HEAD 03465f009), tree clean, other lanes: no new NEED foes (melee's 21:52 informational one only).
+- 23:41 BUILDER b4c-weapons (opus) launched: item 3 lever 5 own weapons first, then levers 2/4/share/cover as the rail allows, gait column re-run from rev, flank check. Brief evidence/briefs/b4c-weapons.md (+ UPDATE 23:26), hard stop 00:41. Only builder in the lane (owns build/n31/godot.lock).
