@@ -74,6 +74,17 @@ func test_valid_recorder_is_attached_without_exiting() -> void:
 	assert_true(status.is_empty())
 
 
+func test_turn_pad_presses_the_weapon_slot_key_only_while_a_slot_is_set() -> void:
+	var pad: Recorder.TurnPad = Recorder.TurnPad.new()
+	pad.actions = PlayerActions.shipped(true)
+	for slot: int in RivetCarry.SLOT_ACTIONS.size():
+		var key: int = 1 << pad.actions.bit(RivetCarry.SLOT_ACTIONS[slot])
+		pad.slot = slot
+		assert_eq(pad.sample(0).buttons & key, key)
+		pad.slot = -1
+		assert_eq(pad.sample(0).buttons & key, 0)
+
+
 class DeferredTurn:
 	extends Turn
 

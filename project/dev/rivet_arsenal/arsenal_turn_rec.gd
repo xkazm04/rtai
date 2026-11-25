@@ -41,11 +41,19 @@ func _ready() -> void:
 		session.pilot.carry = carry
 	if carry.carries(weapon):
 		carry.take(weapon, _arena)
+		await _equip(carry.slots.find(weapon))
 	else:
 		_arena.rivet.weapon = weapon
 		_arena.gun = null
 		_arena.rifle_ammo = _arena.tuning.weapon(weapon).magazine
 	await _record()
+
+
+## `take` selects nothing under wheel_inventory and the first wheel step stows the gun.
+func _equip(slot: int) -> void:
+	for i: int in 6:
+		_pad.slot = slot if i == 0 else -1
+		await _step()
 
 
 func _record() -> void:
@@ -138,8 +146,8 @@ func _save(stem: String, still: bool) -> void:
 	var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
 	var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size
 	var foot: Vector2 = rig.get_global_transform_with_canvas().origin * scale_px
-	var size: Vector2i = Vector2i(204, 194) if still else Vector2i(640, 360)
-	var base: int = (94 if view_id == "top" else 164) if still else 212
+	var size: Vector2i = Vector2i(404, 294) if still else Vector2i(640, 360)
+	var base: int = (94 if view_id == "top" else 214) if still else 212
 	image = image.get_region(Rect2i(Vector2i(foot) - Vector2i(size.x >> 1, base), size))
 	if image.save_png(out_dir.path_join(stem + ".png")) != OK:
 		Log.error("turn", "cannot write " + stem)
@@ -152,9 +160,12 @@ class TurnPad:
 	var actions: PlayerActions
 	var aim: Vector2 = Vector2.RIGHT
 	var fire: bool = false
+	var slot: int = -1
 
 	func sample(_tick: int) -> TickInput:
 		var bits: int = PlayerCommand.pack_aim(aim, actions)
 		if fire:
 			bits |= 1 << actions.bit(&"fire")
+		if slot >= 0:
+			bits |= 1 << actions.bit(RivetCarry.SLOT_ACTIONS[slot])
 		return TickInput.new(bits, 0, 0)
