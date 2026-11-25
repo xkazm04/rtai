@@ -1,0 +1,32 @@
+{
+  "alive": true,
+  "damage_taken": 70.094,
+  "death": "",
+  "finished": true,
+  "hits": 87,
+  "kills_all": 52,
+  "kills_by_weapon": {
+    "assault-rifle": 18,
+    "chainsaw": 34
+  },
+  "kills_own_weapon": 34,
+  "melee_all": {
+    "chainsaw": {
+      "landed": 87,
+      "swings": 44,
+      "whiffs": 23
+    },
+    "claw": {
+      "landed": 0,
+      "swings": 0,
+      "whiffs": 0
+    }
+  },
+  "schema": "gtai.play-baseline-run/1",
+  "seed": 5,
+  "swings": 44,
+  "ticks": 6398,
+  "wave_reached": 4,
+  "weapon": "chainsaw",
+  "whiffs": 23
+}

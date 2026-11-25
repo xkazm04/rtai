@@ -48,18 +48,27 @@ static func held(combo: MeleeCombo) -> bool:
 	return h != null and combo.ground > 0 and combo.tick_in == h.windup + h.active - 1
 
 
+## The swing's side (+1 / -1): the combo's hits alternate it.
+static func side(combo: MeleeCombo) -> float:
+	return 1.0 if combo.last_index % 2 == 1 else -1.0
+
+
 ## The drawn blade's angle off the aim (rad) at tick_in `tick` of the combo's current hit `h`.
 static func drawn(combo: MeleeCombo, h: MeleeHit, tick: int) -> float:
 	var dt: float = SimClock.TICK_DT
 	var ph: Vector3 = Vector3(float(h.windup), float(h.active), float(h.recovery)) * dt
-	var side: float = 1.0 if combo.last_index % 2 == 1 else -1.0
 	var arc: float = maxf(RivetHeldView.SWEEP_MIN, acos(clampf(h.cone_dot, -1.0, 1.0)))
-	return MeleeSwing.angle(float(tick) * dt, ph, side, arc)
+	return MeleeSwing.angle(float(tick) * dt, ph, side(combo), arc)
 
 
-## The drawn angles from the last tick to this one (the sector the blade crossed).
+## The drawn angles from the last tick to this one (the sector the blade crossed), clamped in
+## the side frame to the hit's drawn angle range (02p3: the pixels' sector, `sweep_arc_deg`).
 static func span(combo: MeleeCombo, h: MeleeHit) -> Vector2:
-	return Vector2(drawn(combo, h, combo.tick_in - 1), drawn(combo, h, combo.tick_in))
+	var s: float = side(combo)
+	var a: Vector2 = Vector2(drawn(combo, h, combo.tick_in - 1), drawn(combo, h, combo.tick_in)) * s
+	var lo: float = h.sweep_arc.x
+	var hi: float = h.sweep_arc.y
+	return Vector2(clampf(a.x, lo, hi), clampf(a.y, lo, hi)) * s
 
 
 ## True when the blade sweeping from angle `arc.x` to `arc.y` off `facing` (about `at`, out to
@@ -75,6 +84,12 @@ static func crosses(f: Fighter, at: Vector2, facing: Vector2, arc: Vector2, reac
 	var mid: float = (arc.x + arc.y) * 0.5
 	var half: float = absf(arc.y - arc.x) * 0.5 + pad
 	return half >= PI or absf(wrapf(facing.angle_to(to) - mid, -PI, PI)) <= half
+
+
+## True once a grinding hit (the chainsaw) has bitten: its sweep ends at the first bite and the
+## grind re-test (MeleeCombo.lands) takes what it caught (02p3, the saw does not keep sweeping).
+func bitten(h: MeleeHit) -> bool:
+	return h.grind_ticks > 0 and hit_any
 
 
 ## Follows the combo: a new hit (or idle) clears the struck set. Returns true when the hit it

@@ -6,7 +6,7 @@ extends GutTest
 ## n31 melee 02 part 2: the swept geometry (sweep_reach_m, sweep_lunge_ticks) is read only with
 ## the flag on; off, every swing keeps its table reach and lunge.
 const DRAWN: Dictionary[StringName, float] = {
-	&"claw": 1.4, &"chainsaw": 1.65, &"electro_baton": 1.5, &"katana": 1.8, &"plasma_sword": 1.9
+	&"claw": 1.4, &"chainsaw": 1.65, &"electro_baton": 2.2, &"katana": 2.25, &"plasma_sword": 2.2
 }
 const TABLE: Dictionary[StringName, float] = {
 	&"claw": 1.4, &"chainsaw": 1.65, &"electro_baton": 1.55, &"katana": 2.1, &"plasma_sword": 2.2
@@ -66,9 +66,14 @@ func _late_mover_hit(id: StringName) -> bool:
 		guard += 1
 	var a0: float = MeleeSweep.drawn(hands.combo, h, last - 1)
 	var a1: float = MeleeSweep.drawn(hands.combo, h, last)
-	f.pos = arena.rivet.pos + Vector2.RIGHT.rotated((a0 + a1) * 0.5) * h.reach_m * 0.6
+	var s: float = MeleeSweep.side(hands.combo)
+	var mid: float = clampf((a0 + a1) * 0.5 * s, h.sweep_arc.x, h.sweep_arc.y) * s
+	f.pos = arena.rivet.pos + Vector2.RIGHT.rotated(mid) * h.reach_m * 0.6
 	_tick(false)
-	return f.hp < f.max_hp or not f.alive()
+	var hit: bool = f.hp < f.max_hp or not f.alive()
+	f.hp = 0.0  # retired: the next weapon's sweep (the saw stops at its first bite) meets only its own
+	f.exposed = false
+	return hit
 
 
 func test_late_mover_in_the_last_cutting_tick_is_hit_with_the_sweep() -> void:
@@ -157,22 +162,6 @@ func test_katana_lunge_has_arrived_at_contact_with_the_flag() -> void:
 			assert_almost_eq(before_contact, h.lunge_m, 0.0001, "the whole lunge before contact")
 		else:
 			assert_lt(before_contact, h.lunge_m * 0.7, "before: spread over windup + active")
-
-
-## A body past the katana's drawn blade but inside its table reach: missed with the sweep (the art
-## cannot show that reach), hit by the one-tick test without it.
-func test_a_body_past_the_drawn_katana_is_missed_with_the_sweep() -> void:
-	for on: bool in [false, true]:
-		MeleeSweep.on = on
-		_arm(&"katana")
-		var h: MeleeHit = hands.combo.table.hits[0]
-		var f: Fighter = _dummy(arena.rivet.pos + Vector2.RIGHT * (1.8 + 0.45 + 0.15))
-		_tick(true)
-		for t: int in h.length() + 2:
-			_tick(false)
-		assert_eq(f.hp < f.max_hp, not on, "on=%s" % on)
-		f.hp = 0.0
-		f.exposed = false
 
 
 func test_the_crescent_reaches_the_claw_reach_only_with_the_flag() -> void:

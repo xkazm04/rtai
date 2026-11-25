@@ -78,6 +78,16 @@
           "minimum": 0,
           "type": "integer"
         },
+        "sweep_arc_deg": {
+          "items": {
+            "maximum": 180,
+            "minimum": -180,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
         "sweep_lunge_ticks": {
           "maximum": 30,
           "minimum": 0,

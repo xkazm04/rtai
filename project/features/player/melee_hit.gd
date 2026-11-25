@@ -27,6 +27,9 @@ var lunge_ticks: int = 0
 var grind_ticks: int = 0
 ## The bite always holds this long, held or not (a tap of the chainsaw still grinds).
 var grind_min_ticks: int = 0
+## n31 melee 02p3 (flag on): the drawn blade's angle range off the aim (rad, in the swing's side
+## frame) the sweep's sector is clamped to (`sweep_arc_deg`); the default clamps nothing.
+var sweep_arc: Vector2 = Vector2(-TAU, TAU)
 
 
 func length() -> int:
@@ -42,5 +45,7 @@ func adopt_sweep(t: DataTable, row: Dictionary) -> void:
 		reach_m = t.num(row, "sweep_reach_m")
 	if row.has("sweep_lunge_ticks"):
 		lunge_ticks = mini(t.integer(row, "sweep_lunge_ticks"), maxi(windup - 1, 0))
+	if row.has("sweep_arc_deg"):
+		sweep_arc = t.vec(row, "sweep_arc_deg") * (PI / 180.0)
 	if row.has("sweep_recovery_ticks"):
 		recovery = t.integer(row, "sweep_recovery_ticks")

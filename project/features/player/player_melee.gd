@@ -118,7 +118,7 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 ## whole sweep struck nothing (its last cutting tick, or MeleeSweep.track when cut short).
 func _sweep_tick(arena: CombatArena, facing: Vector2) -> void:
 	var h: MeleeHit = combo.current()
-	if h == null or not MeleeSweep.cuts(h, combo.tick_in):
+	if h == null or not MeleeSweep.cuts(h, combo.tick_in) or _sweep.bitten(h):
 		return
 	var at: Vector2 = arena.rivet.pos
 	var span: Vector2 = MeleeSweep.span(combo, h)
