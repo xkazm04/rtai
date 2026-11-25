@@ -5,8 +5,8 @@ extends RefCounted
 ## centre on the foot line (FoeWarCardView.BASE_PX), before the view's mirror.
 const EIGHT: String = "war_machine_planted8_armed_walk.png"
 const FOUR: String = "war_machine_armed_walk.png"
-## The shipped walk; EIGHT selects the n29 eight-drawing walk (regenerate with --walk).
-const WALK: String = FOUR
+## The shipped walk (n30: the eight); FOUR = the n28 four (regenerate with --walk).
+const WALK: String = EIGHT
 const SHEET: String = WALK
 ## p70 SHA-256 cb469ff594124f30c940d3c688eafc1abe7adc76db923b6522f74bcbd5381eaf
 const FOUR70: Array[Vector4] = [

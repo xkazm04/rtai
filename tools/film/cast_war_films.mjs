@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 // The pile-driver (war_machine card) at a true 1920 x 1080 on its walks, the cast_door_films.mjs twin. Staged copies,
-// the real tree is never touched: "four" = the committed tree (CastWarAnchors.WALK as committed; the held-foot view
-// again since the n29 pad placement was reverted); "eight" = a copy whose cast_war_anchors.gd selects WALK = EIGHT;
-// "before" = the four with FoeWarCardView from 20be6ffaa (the held
-// foot before the n29 pad placement 5d8e4b6f8: that commit changed only the view and its test); "eight_held" = the
-// eight on that held-foot view (what the eight art does without the pad placement).
+// the real tree is never touched. Since n30 the committed tree IS the eight (CastWarAnchors.WALK = EIGHT, held-foot
+// view): "eight" = the committed tree; "four" = a copy whose cast_war_anchors.gd selects WALK = FOUR; "before" = the
+// four with FoeWarCardView from 20be6ffaa (the held foot before the n29 pad placement 5d8e4b6f8); "eight_held" = the
+// eight on that 20be6ffaa view (n29's column; equal to "eight" while the view keeps the held foot).
 //   stills: 64 px/m, right facing, the same tick, four left | eight right -> war8_feet_before_after_64.png
-//   clip:   the eight (staged preview, WALK = EIGHT) at 32 px/m, right then down-right -> war8_walk_32.mp4
+//   clip:   the eight (the committed tree) at 32 px/m, right then down-right -> war8_walk_32.mp4
 //   feet:   cast_feet.tscn at 64 px/m on war_machine, both pitches, cast_war_feet.py (pad, + n28 on the four)
 // usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|feet|all] [feet walks, default before,four,eight]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
@@ -23,8 +22,8 @@ if (!out || !['stills', 'clip', 'feet', 'all'].includes(what)) {
 const SPEED = 1.8;
 const CHARS = 'features/characters';
 const VIEW = 'features/combat/squad/foe_war_card_view.gd';
-// The eight-drawing switch (WALK70/55, WALK_STEP_M and WALK_ROWS follow WALK), applied to the staged copy only.
-const EIGHT_PATCH = [['cast_war_anchors.gd', 'const WALK: String = FOUR', 'const WALK: String = EIGHT']];
+// The four-drawing switch (WALK70/55, WALK_STEP_M and WALK_ROWS follow WALK), applied to the staged copy only.
+const FOUR_PATCH = [['cast_war_anchors.gd', 'const WALK: String = EIGHT', 'const WALK: String = FOUR']];
 const BEFORE = '20be6ffaa';
 
 function link(a, b) { symlinkSync(a, b, process.platform === 'win32' ? 'junction' : 'dir'); }
@@ -45,9 +44,9 @@ function stageProject(dir, walk) {
   const config = readFileSync(join(source, 'project.godot'), 'utf8');
   writeFileSync(join(dst, 'project.godot'), config.replace(/viewport_width=\d+/, 'viewport_width=1920')
     .replace(/viewport_height=\d+/, 'viewport_height=1080') + '\n[threading]\nworker_pool/max_threads=4\n');
-  for (const [file, from, to] of walk.startsWith('eight') ? EIGHT_PATCH : []) {
+  for (const [file, from, to] of walk.startsWith('eight') ? [] : FOUR_PATCH) {
     const path = join(dst, CHARS, file), text = readFileSync(path, 'utf8');
-    if (!text.includes(from)) throw Error(`eight switch: ${file} has no "${from}"`);
+    if (!text.includes(from)) throw Error(`four switch: ${file} has no "${from}"`);
     writeFileSync(path, text.replace(from, to));
   }
   if (walk === 'before' || walk === 'eight_held') {
