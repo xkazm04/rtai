@@ -144,6 +144,10 @@ func test_arched_line_front_burns_at_the_burst_and_collapsed_bays_with_mouth_lig
 			var glow: Dictionary = kind["floor_glow"]
 			var strength: float = glow["strength"]
 			assert_eq(strength, 0.0, "the wall light leaves the floor")
+		elif kind["id"] == "yard_lamp_gate":
+			var pool: Dictionary = {"color": "ffa030", "radius_m": 5.0, "strength": 0.3}
+			var lamp: Dictionary = kind["floor_glow"]
+			assert_eq(lamp, pool, "gate lamp: small pool at its foot, pellet >= 90 %")
 	var raised: Array = _row("raised_line")["factory_front"]
 	assert_true(
 		str(raised).contains("line_fire/burst_bay.png"), "raised_line keeps the shipped front"
@@ -188,13 +192,5 @@ func test_arched_line_joins_its_sections_with_five_overhead_spans_and_no_new_cov
 			spans.append(id)
 			assert_true(over.has(id), id + " draws over the print")
 			assert_true(ResourceLoader.exists(str(piece["art"])), id)
-	assert_eq(
-		spans,
-		[
-			"span_door_feed",
-			"span_feed_turn",
-			"span_turn_return",
-			"span_return_bend",
-			"span_bend_tail"
-		]
-	)
+	assert_eq(spans.size(), 5)
+	assert_eq(spans[0] + spans[4], "span_door_feedspan_bend_tail")

@@ -1033,8 +1033,8 @@
             "flicker_hz": 0,
             "floor_glow": {
               "color": "ffa030",
-              "radius_m": 8,
-              "strength": 0
+              "radius_m": 5,
+              "strength": 0.3
             },
             "id": "yard_lamp_gate",
             "intensity": 0.1,
