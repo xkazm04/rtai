@@ -25,3 +25,14 @@ Native parity must still pass unchanged.
    unchanged; native parity unmoved.` Commit (tests + patch files + decisions) in one commit.
 Merge note to report: the prologue pilot digests also belong to the ground lane's scenarios; the Director re-pins
 on merge if ground moved them too. Then report and END.
+
+## Director addendum (session 4, 00:47)
+Builder 02p4 runs in parallel (films, a new dev scene under `project/dev/melee_n31/sweep_clip*`, `tools/melee/play_take.mjs`,
+masters folder): do not touch those. You own every test pin, `docs/decisions.md` this session, and the patch files.
+Lane lock `build/n31/godot.lock`: take it per Godot run, remove only a lock whose first word is `02p3b`
+(`grep -q "^02p3b " build/n31/godot.lock && rm build/n31/godot.lock`); 02p4 will queue behind you, so release it
+between runs. Your full unit run also covers `test_blade_marks` / `test_claw_marks` (04c changed them after its last
+run): name their result in the report. Windows: commit by 01:20, report and END by 01:30. If the full scenario run
+is still going at 01:15, commit what is green with the scenario result named as pending in the commit body, then
+finish the run and commit any re-pin as a second commit before 01:30. Before killing any PID print its CommandLine
+and kill only if it names this worktree or your own tool.

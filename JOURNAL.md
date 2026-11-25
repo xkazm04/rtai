@@ -94,3 +94,10 @@ Final gate slot: ground first, melee +20 min; last commit 06:00, gate by 06:15.
 - 00:46 Session 3 end. No builder running. IMAGES 0/60.
 
 NEXT (session 4), unchanged order: 02p3b flip -> 02p4 takes -> 03p3 feed on -> item 4 (plasma hot core, robot sparks, light-gun flash/kick, shotgun kill row, audit sheet before|after, play takes). Beside 02p3b: re-run the blade-marks tests (5 min, sonnet or in 02p3b's full unit run).
+
+## Session 4 (00:46 - 02:15 at the latest)
+- 00:46 START. Tree clean at 87d34f5ff (only old n26-n28 brief .err files untracked). NEED melee from ghost (00:00 g07): attach BrutalityHook in the gauntlet street so signature kills play there - served by da9abe4fc behind `--kill-feed`; it plays once 03p3 flips the feed on. Ghost also notes `deploy_ohm` kills fall generic (shock death keys on `ohm_bolt`): ghost's patch + NEED, informational. Foes FINDING b4c (enemy rounds read like the AR): informational, REPORT call, not tonight's item.
+- 00:47 BUILDER RUNNING 02p3b (opus, flip --melee-sweep ON + deliberate re-pins incl. quest1_input; commit by 01:20, END 01:30) since 00:47
+- 00:47 BUILDER RUNNING 02p4 (opus, item 2 films: after takes with explicit `--melee-sweep` (identical rule to the flipped default), beside films, labelled polar sheet, 64 px/m slow clips with the live hit sector; END 02:05) since 00:47
+- 00:47 DECISION melee n31: 02p4's after takes render with the explicit `--melee-sweep` flag instead of waiting for the flip; the flip only changes the default, so the filmed rule is the shipped one. Reason: the takes are the owner's first look at item 2 and the flip is Godot-bound for ~30 min.
+- 00:47 IMAGES 0/60

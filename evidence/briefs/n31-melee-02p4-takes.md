@@ -32,3 +32,19 @@ Re-plot `evidence/n31-melee/02-sweep/volumes/before_after.png` with weapon names
 to the masters folder as `volumes_before_after.png`. Write/extend `C:/Users/kazda/kiro/gtai-masters/n31/melee/
 frames.json` (best first: `file`, `title`, `ppm`, `before`, `note`): the three beside films first, then the slow
 clips, then the sheet. Masters hold films and stills only (no scripts). Delete scratch renders not referenced.
+
+## Director addendum (session 4, 00:50) - supersedes the precondition above
+Builder 02p3b runs IN PARALLEL and flips the default (tests, digests, decisions.md). Do NOT wait for it and do NOT
+touch its files (any test under `project/tests/**`, `docs/decisions.md`, `player_melee*.gd`, `melee_hit*.gd`,
+`launch_args.gd`, `tools/melee/play_baseline.mjs` default flags). The rule with the explicit flag `--melee-sweep`
+on today's HEAD is byte-for-byte the rule the flip makes default, so render every "after" WITH `--melee-sweep`
+passed explicitly and every "before" with nothing (today's default = off = main) - and after 02p3b lands, with
+`--melee-sweep=off`. Your `play_take.mjs --game-flags` must therefore accept both. Put the flags used into each
+film's frames.json `note`.
+Order: Part 1 (takes, owner sees them first) -> Part 3 (Godot-free, do it while the lane lock is held by 02p3b) ->
+Part 2. The lane lock `build/n31/godot.lock` will often be held by 02p3b (full unit + scenarios ~25 min): wait
+for it, do Godot-free work meanwhile; remove only a lock whose first word is `02p4`
+(`grep -q "^02p4 " build/n31/godot.lock && rm build/n31/godot.lock`).
+Windows: commit Part 1 by 01:25, Part 3 by 01:35, Part 2 by 01:55; report and END by 02:05 whatever state
+(uncommitted part: write `build/n31/02p4/state.md` with what remains). Before killing any PID print its CommandLine
+and kill only if it names `build/n31/02p4` or a process you started.
