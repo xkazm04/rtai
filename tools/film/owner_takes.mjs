@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { runGodot } from '../lib/godot.mjs';
 
 const [out, resolution, ...items] = process.argv.slice(2);
-const weapons = ['hands', 'chainsaw', 'electro_baton', 'katana', 'plasma_sword', 'electric_robots', 'electro_gun_wrecks', 'claw_shock'];
+const weapons = ['hands', 'chainsaw', 'electro_baton', 'katana', 'plasma_sword', 'electric_robots', 'electro_gun_wrecks', 'electro_gun_hop', 'claw_shock'];
 if (!out || !['32', '64'].includes(resolution) || !items.length || items.some(w => !weapons.includes(w))) {
   throw Error('usage: owner_takes.mjs <master-dir> <32|64> <weapon...>');
 }
@@ -48,7 +48,7 @@ function subtitles(dir, take, tail = null) {
 
 function filmName(id) {
   if (id === 'claw_shock') return 'claw_shock_robots';
-  return ['electric_robots', 'electro_gun_wrecks'].includes(id) ? id : id + '_kills';
+  return ['electric_robots', 'electro_gun_wrecks', 'electro_gun_hop'].includes(id) ? id : id + '_kills';
 }
 
 function film(dir, id, take) {
@@ -96,13 +96,13 @@ function closeup(dir, id, take) {
 
 for (const id of items) {
   const dir = mkdtempSync(join(scratch, id + '-' + ppm + '-'));
-  const loadout = id === 'electric_robots' ? 'katana,electro_baton' : id === 'electro_gun_wrecks' ? 'electro_gun,electro_gun' : id;
-  const expectedFrames = ppm === 64 ? 180 : ({ electric_robots: 1080, electro_gun_wrecks: 1080, claw_shock: 1232 }[id] ?? 960);
+  const loadout = id === 'electric_robots' ? 'katana,electro_baton' : ['electro_gun_wrecks', 'electro_gun_hop'].includes(id) ? 'electro_gun,electro_gun' : id;
+  const expectedFrames = ppm === 64 ? 180 : ({ electric_robots: 1080, electro_gun_wrecks: 1080, electro_gun_hop: 1080, claw_shock: 1232 }[id] ?? 960);
   const args = ['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080',
     '--fixed-fps', '60', '--quit-after', String(expectedFrames + 30), fileURLToPath(new URL('./owner_take.tscn', import.meta.url)), '--',
     '--loadout=' + loadout, '--enemy-brain=squad', '--seed=20261109', '--view=tilt70', '--ppm=' + ppm,
-    '--rigs', '--clean', '--silent', '--feel=off'];
-  const env = { ...process.env, GTAI_MELEE_TAKE: dir, GTAI_MELEE_NATIVE: '1', GTAI_MELEE_CLOSE: ppm === 64 ? '1' : '0' };
+    '--rigs', '--clean', '--silent', '--feel=off', ...(process.env.TAKE_FLAGS ?? '').split(' ').filter(Boolean)];
+  const env = { ...process.env, GTAI_MELEE_TAKE: dir, GTAI_MELEE_NATIVE: '1', GTAI_TAKE_HOP: id === 'electro_gun_hop' ? '1' : '0', GTAI_MELEE_CLOSE: ppm === 64 ? '1' : '0' };
   const r = await runGodot(args, { headless: false, timeoutMs: 300000, name: 'owner-take', env });
   writeFileSync(join(dir, 'film.log'), r.out);
   if (r.status !== 0 || r.timedOut || /SCRIPT ERROR:|\[ERROR\] owner_take/.test(r.out)) throw Error('see ' + dir);
