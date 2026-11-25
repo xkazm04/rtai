@@ -34,3 +34,22 @@ Brief `evidence/briefs/n30-16-sprint-tour.md`. Recorder commit `22d3c0fb1`: `--s
 - Clip `C:/Users/kazda/kiro/gtai-masters/n30/keys/collar/collar_p55_sprint_tour_32.mp4`: each 1920x1080 run cropped to the centre 960x1080 (the camera keeps Rivet near the centre), hstack, labels "5114a4441 before" / "HEAD after", `-framerate 15` then `-r 60` (half speed: 360 frames every 2 ticks would be 12 s at 30, under the 15-40 s ask), 24 s, 3 s per octant (E 0-3 s, SE 3-6, S 6-9, SW 9-12, W 12-15, NW 15-18, N 18-21, NE 21-24). ffprobe `width,height,r_frame_rate,nb_frames`: `1920,1080,60/1,1440`.
 - Byte-identical 32 px/m clip frames before vs after, per octant (45 each): E 41 differ, SE 7, S 0, SW 38, W 45, NW 7, N 0, NE 0 (the SE and NW ones are the turn-in frames still on the E / W row). At 32 px/m the collar is a few pixels: at 13.5 s (W) the before band is a plain orange smear, the after shows dark stripes; the 64 px/m still is the readable proof.
 - Still `collar/collar_p55_sprint_tour_64.png` (8 octants, before row above after row, labels with the 1-based sheet row) and zoom `collar/collar_p55_sprint_tour_64_zoom.png` (E, SW, W at 3x, before above after). `frames.json`: both new entries at the front, `collar/row3_4x.png` and `collar/r3c1_4x.png` dropped (13 entries).
+
+## Molotov p70 sprint tour (n30-17)
+Brief `evidence/briefs/n30-17-molotov-tour.md`. Same recorder as n30-16 (`--sprint-tour=on`), `--weapon=molotov --pitch=p70`.
+- Runs: scratch `build/n30-17/film.mjs <before|after> <32|64>` (copy of the n30-16 driver; `--weapon=molotov --pitch=p70 --out=build/n30-17/<side>-<ppm>`). Before = snapshot `build/turn-snapshots/gtai-film-5114a4441cef` with the four recorder scripts in `project/dev/film_turn_probe/`, and one `runGodot(['--headless','--import'])` in the snapshot first (import status 0; the before stills show the stop-gap, not the molotov art, so the cache did not leak). All four capture runs exit 0.
+- Clip `C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/molotov_p70_sprint_tour_32.mp4`: centre 960x1080 crop of each 1920x1080 run, hstack, labels `5114a4441 stop-gap` / `HEAD molotov run`, `-framerate 30` (clip every 2 ticks = real speed), tour played twice, `-r 60`. ffprobe `width,height,r_frame_rate,nb_frames`: `1920,1080,60/1,1440`, duration 24.000000 s (12 s per pass, 1.5 s per octant... 90 ticks each, E, SE, S, SW, W, NW, N, NE).
+- Still `molotov/molotov_p70_sprint_tour_64.png` (before row over after row) and `molotov_p70_sprint_tour_64_zoom.png` (E, S, W at 3x nearest). Changed px = pixels differing between the 404x294 before and after stills.
+
+| octant | before sheet/row (1-based) | after sheet/row | changed px | what I see (after vs before) |
+|---|---|---|---|---|
+| 0 E | rivet_run8.png / 3 | rivet_run8_eq_molotov.png / 3 | 22891 | after: bottle held in the claw in front of the chest, flame by the visor, collar flat; before: small glass bottle with rag at the claw, no flame, other claw as a spike |
+| 1 SE | rivet_run8.png / 2 | eq_molotov / 2 | 27840 | bottle + flame at the left hand, other arm a wrench claw; before: loose bottle |
+| 2 S | rivet_run8.png / 1 | eq_molotov / 1 | 26526 | bottle upright in the left fist with a flame; forward foot lifted, rear sole planted; before: bottle dangling |
+| 3 SW | rivet_run8.png / 6 | eq_molotov / 6 | 27458 | bottle at the right hand with flame; before: bottle at hip |
+| 4 W | rivet_run8.png / 7 | eq_molotov / 7 | 23907 | bottle + flame at the near hand, rear leg trailing; before: bottle at the back hand, spike arm forward |
+| 5 NW | rivet_run8.png / 8 | eq_molotov / 8 | 24748 | bottle + flame on the left, seen from behind |
+| 6 N | rivet_run8.png / 5 | eq_molotov / 5 | 27417 | back view, bottle + flame at right |
+| 7 NE | rivet_run8.png / 4 | eq_molotov / 4 | 25130 | bottle + flame at right, trailing leg |
+
+Log lines are identical row for row on both sides (9.3 m/s at 64 px/m; 18.6 at 32 because it divides by 32); only the sheet differs. The after body is a different drawing (bulkier, collar flat), not only a bottle overlay. I judged feet/collar from the 3x zoom of E, S, W only; the other five octants from the 8-wide sheet.
