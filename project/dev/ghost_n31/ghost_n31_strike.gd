@@ -4,20 +4,26 @@ extends GhostDeployStrike
 ## from the press). With a what-if `geometry` Tonnage's footprint is GhostN31Geometry instead;
 ## charge_ticks > 0 holds the hits until that many ticks after the press (foes where they are then).
 
+const NEAR_M: float = 9.0
+
 var geometry: GhostN31Geometry
+## The ghost form this strike measures (Tonnage unless --form says otherwise).
+var form: StringName = HaulerStage.GHOST
 var charge_ticks: int = 0
 ## Set by the caller on the tick the deploy key goes down (the ghost enters AIMING).
 var press_tick: int = -1
 var press_rivet: Vector2 = Vector2.ZERO
 var deploys: Array[Dictionary] = []
 var _contacts: int = 0
+var _near: int = 0
 var _pending: Dictionary = {}
 
 
 func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	_contacts = 0
+	_near = _count_near(stage, ghost) if ghost.form == form else 0
 	super.land(stage, ghost)
-	if ghost.form == HaulerStage.GHOST and _pending.is_empty():
+	if ghost.form == form and _pending.is_empty():
 		_record(stage.tick)
 
 
@@ -66,8 +72,22 @@ func _hit(
 	super._hit(arena, foe, dir, damage, weapon)
 
 
+## Live foes within NEAR_M of the spot at the release tick: the group the deploy could have hit.
+func _count_near(stage: CollectCallStage, ghost: GhostDeploy) -> int:
+	var n: int = 0
+	for foe: Fighter in stage.arena.hostiles:
+		n += int(foe.alive() and ghost.spot.distance_to(foe.pos) <= NEAR_M)
+	return n
+
+
 func _record(tick: int) -> void:
 	var held: int = tick - press_tick if press_tick >= 0 else -1
 	deploys.append(
-		{"tick": tick, "press_to_damage_ticks": held, "hits": _contacts, "kills": release_kills}
+		{
+			"tick": tick,
+			"press_to_damage_ticks": held,
+			"hits": _contacts,
+			"kills": release_kills,
+			"near": _near
+		}
 	)

@@ -4,6 +4,7 @@ extends Node
 ## res://dev/ghost_n31/ghost_measure.tscn -- --mode=lab|play --out=<abs.json>
 ## [--radius=4,5,...] [--full=only|both] [--at=spot|rivet|both] [--charge=<ticks>] [--seeds=10]
 ## [--waves=4] [--profile=average] [--per-size=15] [--shapes-out=<abs>]
+## [--form=tonnage|ohm|dent|kerf] (default tonnage; ohm lab + play, dent and kerf play only)
 ## No --radius = main as shipped (the real GhostDeployStrike footprint).
 
 const KNOWN_FLAGS: PackedStringArray = [
@@ -17,7 +18,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--waves",
 	"--profile",
 	"--per-size",
-	"--shapes-out"
+	"--shapes-out",
+	"--form"
 ]
 const SHAPES: String = "res://dev/ghost_n31/shapes.json"
 
@@ -38,15 +40,21 @@ func _ready() -> void:
 		"rows": [],
 	}
 	var started: int = Time.get_ticks_msec()
-	var ok: bool = _lab(args, report) if mode == "lab" else _play(args, report)
+	var form: StringName = _form(args.text("--form", "tonnage"))
+	if form == &"" or (mode == "lab" and form not in [HaulerStage.GHOST, OhmStage.GHOST]):
+		printerr("ghost_measure --form=tonnage|ohm|dent|kerf (lab: tonnage|ohm)")
+		get_tree().quit(2)
+		return
+	report.form = form
+	var ok: bool = _lab(args, report, form) if mode == "lab" else _play(args, report, form)
 	report.wall_s = (Time.get_ticks_msec() - started) / 1000.0
 	ok = ok and _write(path, JSON.stringify(report, "  ") + "\n")
 	get_tree().quit(0 if ok else 1)
 
 
-func _variants(args: ArenaArgs) -> Array[GhostN31Geometry]:
+func _variants(args: ArenaArgs, form: StringName) -> Array[GhostN31Geometry]:
 	var out: Array[GhostN31Geometry] = []
-	var main: GhostN31Geometry = GhostN31Lab.new().shipped_geometry()
+	var main: GhostN31Geometry = _lab_for(form).shipped_geometry()
 	var ahead: float = main.ahead_m
 	if not args.has("--radius"):
 		out.append(main)
@@ -65,17 +73,18 @@ func _variants(args: ArenaArgs) -> Array[GhostN31Geometry]:
 	return out
 
 
-func _lab(args: ArenaArgs, report: Dictionary) -> bool:
+func _lab(args: ArenaArgs, report: Dictionary, form: StringName) -> bool:
 	var file: FileAccess = FileAccess.open(SHAPES, FileAccess.READ)
 	var shapes: Dictionary = GhostN31Shapes.parse(file.get_as_text() if file != null else "")
 	if shapes.is_empty():
 		Log.error("ghost-measure", "no shapes in %s (run play with --shapes-out first)" % SHAPES)
 		return false
 	var lab: GhostN31Lab = GhostN31Lab.new()
+	lab.form = form
 	var per: int = int(args.number("--per-size", 15))
 	var shipped: bool = not args.has("--radius")
 	var rows: Array = report.rows
-	for geometry: GhostN31Geometry in _variants(args):
+	for geometry: GhostN31Geometry in _variants(args, form):
 		for size: int in GhostN31Shapes.SIZES:
 			var pool: Array = shapes.get(size, [])
 			var picked: Array = GhostN31Shapes.spread(pool, per)
@@ -90,14 +99,15 @@ func _lab(args: ArenaArgs, report: Dictionary) -> bool:
 	return true
 
 
-func _play(args: ArenaArgs, report: Dictionary) -> bool:
+func _play(args: ArenaArgs, report: Dictionary, form: StringName) -> bool:
 	var shipped: bool = not args.has("--radius")
 	var charge: int = int(args.number("--charge", 0))
 	var profile: StringName = StringName(args.text("--profile", "average"))
 	report.profile = profile
 	var play: GhostN31Play = GhostN31Play.new()
+	play.form = form
 	var rows: Array = report.rows
-	for geometry: GhostN31Geometry in _variants(args):
+	for geometry: GhostN31Geometry in _variants(args, form):
 		for seed_id: int in range(1, int(args.number("--seeds", 10)) + 1):
 			var cut: GhostN31Geometry = null if shipped and charge == 0 else geometry
 			var row: Dictionary = play.run_seed(
@@ -133,3 +143,19 @@ func _write(path: String, text: String) -> bool:
 		return false
 	var out: FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	return out != null and out.store_string(text)
+
+
+func _lab_for(form: StringName) -> GhostN31Lab:
+	var lab: GhostN31Lab = GhostN31Lab.new()
+	lab.form = form
+	return lab
+
+
+func _form(text: String) -> StringName:
+	var forms: Dictionary = {
+		"tonnage": HaulerStage.GHOST,
+		"ohm": OhmStage.GHOST,
+		"dent": DentStage.GHOST,
+		"kerf": KerfStage.GHOST
+	}
+	return forms.get(text, &"")

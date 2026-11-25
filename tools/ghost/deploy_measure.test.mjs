@@ -51,3 +51,13 @@ test('formatTable prints a markdown header and one line per row', () => {
   assert.equal(lines.length, 3);
   assert.match(lines[2], /\| lab \| v \| 8 cops \| 2 \| 2\.50 \| 2\.50 \| 2 \| 31% \| 0 \| 1 \|/);
 });
+
+test('--form is passed through and a non-Tonnage play summary shares hits over near foes', () => {
+  assert.deepEqual(parseArgs(['--mode=play', '--form=ohm']).pass, ['--form=ohm']);
+  const d = (hits, near) => ({ hits, kills: 0, near, press_to_damage_ticks: 1 });
+  const report = { mode: 'play', form: 'ohm', rows: [{ seed: 1, radius_m: 3.5, deploys: [d(2, 4), d(0, 4)] }] };
+  const rows = summarize(report);
+  assert.equal(rows[1].variant, 'ohm half r3.5 at spot');
+  assert.equal(rows[1].share_hit, 0.25);
+  assert.equal(rows[1].mean_near, 4);
+});

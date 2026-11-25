@@ -9,6 +9,9 @@ extends RefCounted
 const FOE: StringName = &"patrol_cop"
 const DROP_WAIT: int = 120
 
+## The ghost form the lab deploys (HaulerStage.GHOST = Tonnage; Ohm gets a full circle).
+var form: StringName = HaulerStage.GHOST
+
 
 func trial(shape: Dictionary, geometry: GhostN31Geometry, shipped: bool) -> Dictionary:
 	var bus: EventBus = EventBus.new()
@@ -17,6 +20,7 @@ func trial(shape: Dictionary, geometry: GhostN31Geometry, shipped: bool) -> Dict
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	var strike: GhostN31Strike = GhostN31Strike.new(ghost.strike.attacks, ghost.strike.press)
 	strike.geometry = null if shipped else geometry
+	strike.form = form
 	ghost.strike = strike
 	var row: Dictionary = {}
 	for tick: int in range(1, 121):
@@ -39,7 +43,10 @@ func shipped_geometry() -> GhostN31Geometry:
 	var out: GhostN31Geometry = GhostN31Geometry.shipped(ahead, strike.press.num(&"stomp_radius_m"))
 	# A drop-mode row (n31 g02, optional fields): a full circle of the row's radius_m.
 	var row: GhostAttacks.DeployRow = strike.attacks.deploy[HaulerStage.GHOST]
-	if row.has_method(&"drops") and row.call(&"drops"):
+	if form != HaulerStage.GHOST:
+		# Ohm: a full circle of its row's radius_m on the spot (centre distance; no body radius).
+		out = GhostN31Geometry.new(strike.attacks.deploy[form].radius_m, true, false, ahead)
+	elif row.has_method(&"drops") and row.call(&"drops"):
 		var at_rivet: bool = row.get(&"drop_at") == &"rivet"
 		out = GhostN31Geometry.new(row.radius_m, true, at_rivet, ahead)
 	data.free()
@@ -60,7 +67,7 @@ func _stage(ctx: WorldContext) -> ArenaStage:
 	stage.arena.rivet.weapon = &"pistol"
 	stage.guns = StageGuns.make(ctx.rng.stream(&"gunplay"))
 	stage.pilot.ghosts.transform_unlocked = false
-	stage.pilot.ghosts.forms.selected = HaulerStage.GHOST
+	stage.pilot.ghosts.forms.selected = form
 	return stage
 
 
@@ -77,7 +84,7 @@ func _deploy(
 		foe.pos = mid + offset
 		foe.facing = foe.pos.direction_to(rivet.pos)
 	var actions: PlayerActions = stage.pilot.actions
-	var row: GhostAttacks.DeployRow = strike.attacks.deploy[HaulerStage.GHOST]
+	var row: GhostAttacks.DeployRow = strike.attacks.deploy[form]
 	var cursor: Vector2 = best(stage, geometry, mid - rivet.pos, row.range_m)
 	if cursor == Vector2.ZERO:
 		cursor = (mid - rivet.pos).limit_length(row.range_m)

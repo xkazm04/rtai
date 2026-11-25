@@ -10,6 +10,8 @@ const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
 const SAMPLE_EVERY: int = 60
 const NEAR_M: float = 14.0
 
+## The ghost form granted and deployed (HaulerStage.GHOST = Tonnage); other forms keep no shapes.
+var form: StringName = HaulerStage.GHOST
 var shapes: Dictionary = {4: [], 8: [], 12: []}
 
 
@@ -29,6 +31,7 @@ func run_seed(
 	var ghost: GhostDeploy = session.stage.pilot.ghosts.deploy
 	var strike: GhostN31Strike = GhostN31Strike.new(ghost.strike.attacks, ghost.strike.press)
 	strike.geometry = geometry
+	strike.form = form
 	strike.charge_ticks = charge
 	ghost.strike = strike
 	var cap: int = waves_cap * 7200
@@ -41,7 +44,7 @@ func run_seed(
 			strike.press_tick = session.stage.tick
 			strike.press_rivet = session.stage.arena.rivet.pos
 		strike.resolve_due(session.stage)
-		if session.tick() % SAMPLE_EVERY == 0:
+		if form == HaulerStage.GHOST and session.tick() % SAMPLE_EVERY == 0:
 			_sample(session.stage, seed_id)
 		if (session.stage.arena as GauntletCombat).report_bot_freeze():
 			break
@@ -58,10 +61,10 @@ func run_seed(
 
 
 func _grant(forms: GhostForms) -> void:
-	if forms.locks.done.size() != 1 or forms.locks.done[0] != HaulerStage.GHOST:
+	if forms.locks.done.size() != 1 or forms.locks.done[0] != form:
 		forms.locks.done.clear()
-		forms.locks.done.append(HaulerStage.GHOST)
-	forms.selected = HaulerStage.GHOST
+		forms.locks.done.append(form)
+	forms.selected = form
 
 
 ## Keep the densest 4/8/12 live foes near Rivet when the bot's own spot search would deploy.
