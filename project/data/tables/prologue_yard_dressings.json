@@ -55,16 +55,16 @@
           ]
         },
         {
-          "art": "res://boot/prologue/art/arched_line/hall_collapsed_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_tall_collapsed_bay.png",
           "at": [
             56.2,
-            -2.7250000000000005
+            -4.7
           ],
           "ochre": true,
           "rotation_deg": 0,
           "size_m": [
             15.15,
-            7.35
+            8.89
           ]
         },
         {

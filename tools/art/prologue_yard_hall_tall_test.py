@@ -14,7 +14,7 @@ def _cuts():
 
 
 def test_every_source_has_a_cut():
-    assert "hall_tall_burst_bay" in NAMES
+    assert "hall_tall_burst_bay" in NAMES and "hall_tall_collapsed_bay" in NAMES
     for name in NAMES:
         image = Image.open(OUT / f"{name}.png")
         assert image.mode == "RGBA" and min(image.size) > 300

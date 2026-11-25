@@ -125,7 +125,7 @@ func test_arched_line_front_burns_at_the_burst_and_collapsed_bays_with_mouth_lig
 	var arts: Array[String] = []
 	for piece: PrologueYardDressing.Piece in look.factory_front:
 		arts.append(piece.art.get_file())
-	assert_true(arts.has("hall_tall_burst_bay.png") and arts.has("hall_collapsed_bay.png"))
+	assert_true(arts.has("hall_tall_burst_bay.png") and arts.has("hall_tall_collapsed_bay.png"))
 	assert_false(arts.has("burst_bay.png") or arts.has("collapsed_bay.png"))
 	var lights: Dictionary = _row("arched_line")["lights"]
 	var mouths: Array[String] = []

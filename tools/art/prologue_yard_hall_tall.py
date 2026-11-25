@@ -30,6 +30,7 @@ CROP = {
     "tall-burst-bay": (190, 1545, 733),
     "tall-shutter-bay": (190, 1545, 764),
     "tall-feed-bay": (298, 1462, 648),
+    "tall-collapsed-bay": (196, 1571, 733),
 }
 RUBBLE_M = 0.8
 
