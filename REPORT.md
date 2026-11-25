@@ -76,6 +76,8 @@ NEAR-FINAL (session 9, 16:43): items 1-4 done, filmed and gated with reels; the 
   the ring) kept shipped: two image edits each did not touch the defect (both lie just outside the collar hull).
 - Rivet's collar still reads as rope in some p70 cells, and the run's 60 images are spent: mini-nuke `_left` c0 (its edit was
   rejected on sight), gatling `_left` c0, `gatling_diag` c0/c2, the two `_left_fire` strips, and the 9 cells listed in Next steps 2.
+  A transplant of Gloria `_left` c0's ring into mini-nuke and gatling `_left` c0 (0 images, `d5ed2326d`) failed: another drawing
+  (head-band IoU 0.868 / 0.835, bar 0.97), rope pieces left beside the ring (`eq_collar/n30-24_<weapon>_c0_judge4x.png`); kept shipped.
   The `_left_fire` cells are another drawing, so a shot swaps the new ring for a few torn bits under the visor, not for a clear rope.
 
 ## What blocked or slowed you (minutes each)
@@ -184,6 +186,7 @@ NEAR-FINAL (session 9, 16:43): items 1-4 done, filmed and gated with reels; the 
 | n30-21 vermilion-glow | sonnet | 5 | accepted | glow column (value lift 0.55) beside brass for Calls 1 |
 | n30-22 molotov-grid-head | sonnet | 5 | accepted | grid at HEAD after the run-step fix; only row 1 cols 5, 6 differ |
 | n30-23 molotov-clip-head | sonnet | 6 | accepted | 3-way clip at HEAD, n30 tile re-captured |
+| n30-24 left-c0-transplant | opus | 3 | bounced | my premise was wrong: Gloria c0 is another drawing (head-band IoU 0.87 / 0.84 < 0.97); both cells kept shipped, `d5ed2326d` |
 
 Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
 before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were

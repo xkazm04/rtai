@@ -246,3 +246,10 @@ NEXT (final session, report 18:55):
   IoU 0.993, same figure drawing), the n29-10 route; 0 images. Row 8 touch-ups not retried (two failed routes = stop).
 - 16:50 BUILDER n30-24 left-c0-transplant launched (opus, bg): brief `evidence/briefs/n30-24-left-c0-transplant.md`; last commit 17:12,
   END 17:15. If it commits art, I gate at ~17:15 (`node tools/gate/run.mjs --rev=HEAD`, APPDATA keys).
+- 16:49 BUILDER n30-24 left-c0-transplant 3 bounced (route failed, correctly; no art shipped): `d5ed2326d` (audit section "Transplant
+  (n30-24)" only). My brief's premise was wrong: the 0.993 IoU was n30-12's edit vs the shipped cell, not Gloria vs mini-nuke; Gloria c0 is
+  another drawing (cells 215x170 vs 275x207 / 299x187), best head-band IoU 0.868 / 0.835 (bar 0.97). I looked at
+  `gtai-masters/n30/keys/eq_collar/n30-24_mini_nuke_c0_judge4x.png`: Gloria's ring sits ~12 px lower, candidates leave rope pieces with
+  seams. Rejection right. Mini-nuke c0 has now failed two routes (edit, transplant): stop per the lane rule; both c0 cells stay in Next
+  steps 1 as image edits. Product files unchanged (git status clean of tracked changes), so the reels gate on fd8ea31e1 still covers the
+  lane's code and art; no re-gate. Lane lock free.
