@@ -90,3 +90,7 @@ NEXT (session 4):
 5. Item 4 continued: robot hit sparks (blood_fx thug_hit row unwired; arena_rigs.gd owner check), light-gun flash/kick, shotgun kill row; audit sheet before|after.
 Final gate slot: ground first, melee +20 min; last commit 06:00, gate by 06:15.
 - 00:36 (clock correction: the 00:41/00:42 lines above were written at 00:35) BUILDER RUNNING 04c (sonnet, marks weight, commit by 00:52) since 00:36 - next session: check git log for its commit; uncommitted edits in melee_marks.json / blade_marks.gd are 04c's.
+- 00:45 BUILDER 04c 9 accepted-partial: d3b9ed945 (katana/plasma edge/core 9/4, 10/5, cut_m 1.0; saw 9/4 burst 0.42; TORSO_K 3.0 lift). Director looked: plasma c64 = a cream bar across the chest, reads now but not HOT (no ember core visible); katana c32 = a thin white line on the cop, visible if you look for it. Unit tests not re-run after its CRLF->LF fix: re-run `--select=test_blade_marks,test_claw_marks` next session. Item 4 still owes a play take and the plasma heat.
+- 00:46 Session 3 end. No builder running. IMAGES 0/60.
+
+NEXT (session 4), unchanged order: 02p3b flip -> 02p4 takes -> 03p3 feed on -> item 4 (plasma hot core, robot sparks, light-gun flash/kick, shotgun kill row, audit sheet before|after, play takes). Beside 02p3b: re-run the blade-marks tests (5 min, sonnet or in 02p3b's full unit run).
