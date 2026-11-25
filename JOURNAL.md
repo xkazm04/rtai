@@ -2,7 +2,7 @@
 
 Branch `n31-ghost`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, base `main` `ba8e470b0`.
 Gate slot: ground first, ghost = ground + 30 min (final gate by 06:15 at the latest).
-IMAGES 8/60 requested (round tonnage-beats)
+IMAGES 8/60 (round tonnage-beats: 8 ok, gen.log)
 
 ## Session 1 (20:58 - 22:28)
 
@@ -48,3 +48,4 @@ Gate slot: ghost = ground + 30 min; final gate by 06:15.
 - 22:16 Director look at the round (green key, before packing): b1 land squash (fists splayed wide, body low), b2 gather (fists at chest), b2 peak (fists overhead, taller than shipped RAISE), b3 slam (fists planted wide, body sunk), b4 lift-away (vapour feet) read as one sequence and match the shipped row-0 style and teal; ACCEPT all five pending a 64 px/m in-game still. fx-crack-radial: ~20 spokes from a crushed centre, tips on one round rim, ink + tan rim on green: ACCEPT (reveal outward by radius in code; its rim maps to radius_m). fx-crater / fx-dust-ring still running at 22:16.
 - 22:17 Session 1 ends: no builder running (g01, g02, g03a all ended and reported). Detached image round pid 26412 may still be running (gen.log).
 - 22:15 BUILDER g05-keys-test 1 accepted: commit 4f9697f85 (test_ghost_number_keys pins Tonnage hold explicitly), 17 passed 0 failed with test_tonnage_drop, hook 18/18. NEXT item 2 in the list above is done; start session 2 at its scenario re-run + 6.5 m re-measure.
+- 22:17 MILESTONE director re-measure at radius 6.5 + charge 27 (HEAD 8bdc58399, `node tools/ghost/deploy_measure.mjs`, JSON in evidence/n31/ghost/measure-8bdc58399-*-head65*.json): lab share hit 4/8/12 cops 83/85/87 % (8-cop 6.80 of 8: bar 75 % MET; main 54 %); play 8 waves 109 deploys mean 3.94 hits, median 3, kills 3.39, zero-hit 0 (main 2.80 / 3 / 2.33 / 2); play 3 waves 45 deploys mean 4.22 median 4 (main 3.21 / 3). Play median bar (4) met at 3 waves, not at 8 waves. Reading: the bot drops whenever its spot search finds >= 3 bodies, so its median sits near its own trigger (3) in later, thinner waves; more radius only buys tail. DECISION keep 6.5 (7 is the screen limit); list "6.5 m, 8-wave median 3" under Calls for the owner. Scenarios at 6.5 still to re-run.
