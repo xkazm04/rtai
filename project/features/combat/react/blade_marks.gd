@@ -74,13 +74,13 @@ func _beads(ci: CanvasItem, at: Vector2, blow: float, across: Vector2, t: float)
 		ci.draw_circle(p, r, Color(KillMarkArt.BLOOD, a))
 
 
-## The plasma cut: a heat bloom and a white-hot core that cools to ember then to a dark sear.
+## The plasma cut: an ember heat bloom and a white-hot core that cools to ember then to a dark sear.
 func _sear(ci: CanvasItem, p0: Vector2, p1: Vector2, t: float) -> void:
 	var hot: float = clampf(t * 2.0, 0.0, 1.0)
 	var cool: float = clampf(t * 2.0 - 1.0, 0.0, 1.0)
 	var core: Color = KillHoleFx.HOT.lerp(KillHoleFx.EMBER, hot).lerp(PlasmaScorchView.CHAR, cool)
 	var a: float = 1.0 - t * t * t
-	ci.draw_line(p0, p1, Color(KillHoleFx.HOT, 0.45 * (1.0 - hot)), edge_px * 2.2, true)
+	ci.draw_line(p0, p1, Color(KillHoleFx.EMBER, 0.55 * (1.0 - hot)), edge_px * 2.2, true)
 	ci.draw_line(p0, p1, Color(Ink.INK, a), edge_px, true)
 	ci.draw_line(p0, p1, Color(core, a), core_px * (1.0 - 0.3 * cool), true)
 

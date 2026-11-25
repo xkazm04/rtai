@@ -8,7 +8,8 @@ extends RefCounted
 ## (melee_marks.json `claw`); flash_ticks 0 or --feel=off = none (the before). Render only:
 ## never read by the sim. n31-melee 04b: every other row of the table with a `style` is a
 ## weapon's own mark keyed by its id (BladeMarks: katana, plasma_sword, chainsaw), drawn on the
-## victim as it moves; a repeat hit of one weapon on one victim refreshes its mark.
+## victim at gun height (ShotLift) as it moves; a repeat hit of one weapon on one victim
+## refreshes its mark.
 
 const TABLE: String = "res://data/tables/melee_marks.json"
 const SCHEMA: String = "gtai.melee_marks/1"
@@ -110,7 +111,7 @@ func draw(ci: CanvasItem, tick: int) -> void:
 			_rakes(ci, Vector2(m.x, m.y), m.z, float(age) / float(life))
 		else:
 			var f: Fighter = _who[i]
-			(blades[w] as BladeMarks).draw(ci, f.pos, m.z, age, not f.machine)
+			(blades[w] as BladeMarks).draw(ci, f.pos + ShotLift.up_m(), m.z, age, not f.machine)
 
 
 ## Three rakes square to the blow, the middle one longest, full on the hit frame.

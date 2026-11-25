@@ -45,3 +45,12 @@ func test_a_repeat_hit_on_one_victim_refreshes_its_mark() -> void:
 	arena.damage(g, 1.0, arena.rivet.id, &"plasma_sword")
 	assert_eq(m.marks.size(), 1)
 	assert_eq(int(m.marks[0].w), 5)
+
+
+func test_a_chainsaw_bite_holds_a_kerf_through_the_grind() -> void:
+	var arena: CombatArena = _arena()
+	var m: ClawMarks = ClawMarks.attach(arena)
+	assert_eq(m.blades[&"chainsaw"].style, &"bite")
+	assert_gt(m.ticks_of(&"chainsaw"), 16, "outlasts grind_min_ticks")
+	arena.wounded.emit(_guard(arena, Vector2(1.0, 0.0), 5.0), &"chainsaw")
+	assert_eq(m.marks.size(), 1, "the GRIND contact's wound prints the bite")
