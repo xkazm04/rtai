@@ -26,4 +26,5 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("Paper")
+horizontal_alignment = 1
 vertical_alignment = 1
