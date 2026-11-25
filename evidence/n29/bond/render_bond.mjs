@@ -14,7 +14,7 @@ rmSync(dir, { recursive: true, force: true });
 mkdirSync(dir, { recursive: true });
 const scene = ppm === '64' ? 'res://dev/ghost-forms/bond_film_64.tscn' : 'res://dev/ghost-forms/bond_film.tscn';
 const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--resolution', '1920x1080',
-  '--fixed-fps', '60', '--path', resolve('project'), scene, '--', '--bot=expert', '--pick=greedy', '--controls=wheel',
+  '--fixed-fps', '60', '--path', resolve('project'), scene, '--', '--bot=' + (process.env.BOT ?? 'expert'), '--pick=greedy', '--controls=wheel',
   `--seed=${seed}`, waves, `--bond-prefill=${prefill}`, '--result=' + resolve(dir, 'result.json')];
 const env = { ...process.env, GTAI_FILM_DIR: dir, GTAI_FILM_FROM: from, GTAI_FILM_TO: to };
 const r = await runGodot(args, { headless: false, timeoutMs: 900000, name: 'bond-film', env });
