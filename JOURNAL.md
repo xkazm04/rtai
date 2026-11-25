@@ -405,3 +405,11 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
 - 06:28 DECISION revert the war view to the held-foot placement (`20be6ffaa` behaviour): a regression in the shipped look
   never ships; WALK stays FOUR (the eight held is not no-worse: sole worse in 3 of 4); the eight held vs four held goes to
   the owner as a call (one value). Sent to the running 07b builder: revert by 06:45, then the before/after still.
+- 06:36 BUILDER cast-07b-war8 steps 2-3 24 accepted: `bd0638f78` (feet table, `cast_war_films.mjs`, `cast_war_feet.py`,
+  `cast_feet.gd` war entry, audit section), `480975cdd` (revert: `foe_war_card_view.gd` diff vs `20be6ffaa` is EMPTY; four
+  re-measured = before column, 0.00 px). run_unit FULL 4236/0/2 (FLAKY test_audio_driving). WALK stays FOUR. Film
+  `war8_walk_32.mp4` (eight held, staged preview, 25.85 s 1920x1080 60) + `war8_feet_before_after_64.png`: looked, four
+  left / eight right, contact boxes spread on both. Mutate 8/10 on lines now reverted (does not apply). Planted pad per
+  drawing p70 R: R R L L R R R L (not a 4/4 exchange). Fix idea (not tried): one registered pad window per contact.
+- 06:38 BUILDER RUNNING cast-13 (sonnet) since 06:38: decision lines (revert, war eight call) + heights measured in
+  `size_beside_32.mp4` frames, hard stop 07:14.
