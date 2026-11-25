@@ -37,3 +37,25 @@ The weak read is the rim weight in the patch (how much ink the shader mixes), no
 ## Pick
 None beats A by eye: #EDAB42 kept, palette.json and the test untouched. Finding: contrast over the amber floor needs a stronger
 rim mix in the shader (or an ink further from the floor hue), not a darker amber. Patch restored (`git apply -R`), `git apply --check` exit 0.
+
+## Wide variant (c19)
+Variant: the rim covers bands <= 2 (`step(band, 1.0)` -> `step(band, 2.0)` in `light_ink.gdshader`), saved as
+`evidence/n30/lights/rim_wide.patch` (the rim.patch set with that one value and its comment changed). Takes (back to back, 64 px/m,
+blast_1.png as in the tree at the time, `git status --short project/features` showed it modified by c18 for before and A; W ran after):
+`node evidence/n29/red/take.mjs build/n30rim3/{before,A,W} 482,486 --rigs --bot=reel --reel=director --loadout=pistol --chapter=rocket_launcher,mini_nuke --ppm=64 --clean --silent`
+(before = patch not applied; A = rim.patch; W = A plus the edit). Measure: `build/n30rim3/m.py` (c17's method), disc boxes as in c17.
+
+| tick | take | changed px vs before | mean RGB of changed | ring lum / sat | floor lum / sat | vermilion / red / teal added |
+|---|---|---|---|---|---|---|
+| 482 | A | 296777 | 230,223,171 | 173.2 / 0.271 | 84.0 / 0.225 | 0 / 0 / 0 |
+| 482 | W | 417273 | 237,229,155 | 173.2 / 0.271 | 84.0 / 0.225 | 89 / 0 / 0 |
+| 486 | A | 296921 | 255,235,161 | 206.8 / 0.559 | 171.7 / 0.719 | 0 / 0 / 0 |
+| 486 | W | 417362 | 255,241,177 | 206.8 / 0.559 | 171.7 / 0.719 | 0 / 0 / 0 |
+
+Seen (`gtai-masters/n30/combat/stills/explosion_rim_wide_64.png`, before | A | W at t486): the outer ring is pixel-identical between A and W
+(ring lum/sat equal), so W gives the owner nothing more at the rim. W instead tints the whole mid disc cream-yellow and shrinks the
+white core to a small spot; the flash reads washed and flatter, less like a blast core. t482 W adds 89 vermilion px (bar is 0), so W
+also fails the colour bar. Recommendation: keep A (bands <= 1); a stronger read needs a different mix, not a wider one.
+
+Checks after restore: `git apply --check evidence/n30/lights/rim_wide.patch` exit 0; `git apply --check evidence/n30/lights/rim.patch` exit 0;
+`git status --short project` empty.
