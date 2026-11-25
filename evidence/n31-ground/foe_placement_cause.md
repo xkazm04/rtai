@@ -103,3 +103,44 @@ travel nothing carries into the next stance. N after: within 1.2 px on stances 2
 stance 2 = 0.1 px; S/E/W unchanged (their shift was 0). Unit: `test_mid_stance_sole_sits_on_the_ground_point_down_and_sideways`
 now walks S, N, W, E over 10 stances (3 px, and stance 10 minus stance 2 <= 1 px); with the old constant
 it fails facing N at 4.2 / 7.7 / 11.2 / 15.1 / 14.7 ... px. The 12 px reversal tests stay green.
+
+## Glide on the no-step columns (n31-13): probe before | glide
+
+Probe `project/dev/ground_n31/foe_place_probe.gd` now walks every facing twice (`glide` false = the
+foot lock of HEAD `80b0ae0d2`, true = `StreetPatrolPose.GLIDE_NO_STEP`), adds SW/NW and logs `foot` =
+the registered ground point of the planted boot (mark x, `foot_y(mark.y)`) through the placed transform.
+`node tools/dev/run.mjs res://dev/ground_n31/foe_place_probe.gd --keep-going --out=<abs>/<kind>.jsonl
+--stances=6 [--strip=swat_planted8_armed_walk.png | cop_riot_planted8_armed_walk.png]`, p70, 3.2 m/s,
+32 px/m, stances 2-6 (the dev verdict lines say `SCRIPT ERROR 162 (first react_table.gd:49)`: the
+headless probe without the autoloads; the jsonl is complete). Stats by `build/n31/n31-13/stats.py`.
+Columns: **head** = range of (head top y - sim point y), px; **sway** = range of head x - sim x;
+**foot-disc** = max distance planted boot ground point to the sim point (where the disc draws), every
+frame; **slide** = max spread of that ground point inside one stance.
+
+| kind / facing | head lock -> glide | foot-disc lock -> glide | slide lock -> glide |
+|---|---|---|---|
+| patrol S | 12.4 -> **2.0** | 12.2 -> 5.2 | 9.4 -> 22.1 |
+| patrol N | 19.2 -> **2.8** | 11.6 -> 2.9 | 9.4 -> 22.1 |
+| patrol SE | 10.1 -> **1.5** | 13.9 -> 6.7 | 9.3 -> 24.4 |
+| patrol SW | 10.1 -> **1.5** | (x unflipped) | (x unflipped) |
+| patrol NE | 13.3 -> **2.1** | 19.6 -> 6.5 | 9.3 -> 23.7 |
+| patrol NW | 13.3 -> **2.1** | (x unflipped) | (x unflipped) |
+| patrol E (side, unchanged) | 0.6 -> 0.6 | 19.0 -> 19.0 | 9.8 -> 9.8 |
+| SWAT S | 35.9 -> **2.0** | 15.7 -> 4.7 | 13.7 -> 30.7 |
+| SWAT SE | 12.2 -> **1.5** | 15.6 -> 3.0 | 13.6 -> 32.6 |
+| SWAT N / NE | 35.1 / 17.6 -> **2.3 / 2.8** | 15.9 / 15.6 -> 4.2 / 2.4 | 13.7 -> 30.7 |
+| riot S | 30.9 -> **2.0** | 14.9 -> 4.5 | 12.0 -> 27.4 |
+| riot SE | 11.4 -> **1.4** | 14.1 -> 2.5 | 12.1 -> 29.0 |
+| riot N / NE | 28.5 / 15.4 -> **2.9 / 2.4** | 14.2 / 14.1 -> 3.8 / 2.1 | 12.1 -> 27.4 |
+
+SW/NW/W foot columns: the probe's mark x is the unflipped anchor (the old probe bug), not read; their
+head column is valid (y only). Side columns E/W are bit-identical lock vs glide (HOLD_TOE_OFF holds).
+
+Reading against the bars (32 px/m, walk): head travel <= 4 px **MET** on every glide column
+(1.4-2.9 px, from 10-36 px). Disc: the probe has the planted boot only, not the boot midpoint; the
+planted boot sits 2.1-6.7 px from the disc under glide (its own drawn column x), from 11.6-19.6 px
+locked: the midpoint bar is unmeasured here. Sole slide <= 3 px per stance **NOT MET**: gliding, the
+planted boot travels with the sim point, the whole stance (22-33 px per stance at 32 px/m; the
+drawings make no forward step to cancel it), against 9-14 px locked (where the slide is the toe-off
+heel registration dropping the figure). The glide trades the hold-then-jump for a skate of the
+walking speed on these columns.
