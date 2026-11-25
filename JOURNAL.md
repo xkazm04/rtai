@@ -148,3 +148,4 @@ NEXT-FINAL (session 5, from 16:25; commit last new work by 17:15, final gate by 
 4. A decisions.md line (one builder) for whatever ships from c21.
 5. Final gate `node tools/gate/run.mjs --rev=HEAD --reels` after the last code commit (detached, lane lock `gate`), by 17:30.
 6. REPORT: gate line, door row + What does not + Next steps 5 (replace the sole-y hypothesis with the card-view pin finding), ledger rows c20, c21a, session 5 calls; cites; commit.
+- 16:05 MILESTONE gate PASS on `5e32a5e72` (15:49-16:05): unit 4318/0/2, scenarios 68, parity bit for bit (mutation caught at 629), selftest, export-audit 1003/0; `gate: PASS; build/gate/5e32a5e72764/gate.json`. Removed our Temp snapshot gtai-gate-5e32a5e72764.

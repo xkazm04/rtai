@@ -9,7 +9,7 @@ pile-driver on eight, then pads by registration, (3) hit flash on the turret and
 jitter +-8 %, (5) door carrier eight with three one-row edits (keep four unless the eight beats it everywhere).
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` there, best first). IMAGES 16/60.
 
-**Gate (early, session 3): PASS** on `084e11b56` (the last code commit at 14:22): `node tools/gate/run.mjs --rev=084e11b56` -> `gate: PASS; build/gate/084e11b56074/gate.json`: lint 19/19 over 2295 files, unit 4318 passed / 0 failed / 2 skipped, scenarios 68, parity bit for bit over 1200 steps (planted mutation caught at step 629), selftest, export-audit 1003 loaded / 0 failed. The `--reels` gate runs on the final commit.
+**Gate (session 4): PASS** on `5e32a5e72` (the last code commit at 15:45; later commits are docs and journal only): `node tools/gate/run.mjs --rev=5e32a5e72` -> `gate: PASS; build/gate/5e32a5e72764/gate.json`: lint 19/19 over 2295 files, unit 4318 passed / 0 failed / 2 skipped, scenarios 68, parity bit for bit over 1200 steps (planted mutation caught at step 629), selftest, export-audit 1003 loaded / 0 failed. Earlier gate PASS on `084e11b56` (session 3). The `--reels` gate runs on the final commit.
 
 ## What works
 
