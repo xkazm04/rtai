@@ -73,3 +73,31 @@ from the seam.
 - Root cause in the print (not ours): `look_d4_item` has no dark-amber ink, so every amber->ink blend crosses the VERM cell.
   A print-side fix (e.g. snap a pixel to VERM only when it is nearer VERM than the AMBER->INK segment) would cover every amber
   cell at once.
+
+## blast_0 (c20)
+Frame 0 of the blast sheet (ages 0-3, rocket and nuke) had the same snap: `snap.py` 30 texels VERM, 78 blends; `sim.py`
+`{0.5: 0, 1.0: 30, 3.8: 70}`. `python -I evidence/n30/floor/fix.py <HEAD png> <out> half` (fix.py unchanged; its amber fits
+this cell): 413 grain texels -> amber (232,159,42), 0 fringe texels (frame 0 is a cream burst with an amber star and an ink
+rim, no amber->ink contact, so no soot seam is needed). Model after: 0 VERM texels, 0 blends, `{0.5: 0, 1.0: 0, 3.8: 0}`.
+
+Takes (`node evidence/n29/red/take.mjs build/n30floor0/{before,after} 65,66,67,68 --rigs --bot=reel --reel=director
+--loadout=pistol --chapter=rocket_launcher,mini_nuke --ppm=64 --clean --silent`; the take timed out after the stills at 240 s,
+as c18's did). `import` run before the after take. Box (860,340)-(1340,760), `count.py` counts:
+
+| tick | before verm / red / amber / teal | after verm / red / amber / teal | px changed in box / outside |
+|---|---|---|---|
+| t65 | 904 / 6 / 9373 / 0 | 898 / 0 / 9379 / 0 | 6 / 0 |
+| t66 | 404 / 8 / 9741 / 0 | 396 / 0 / 9749 / 0 | 8 / 0 |
+| t67 | 185 / 5 / 10157 / 0 | 180 / 0 / 10161 / 0 | 6 / 0 |
+| t68 | 76 / 8 / 10554 / 0 | 68 / 0 / 10560 / 0 | 10 / 0 |
+
+t68 is frame 0 here too (c18 saw it unchanged by the blast_1 fix). Every changed px is a vermilion speck (227,78,41) inside the
+amber star that is now amber (232,168,65); one at t67 was amber->cream. Vermilion that is not blood: 6 / 8 / 6 / 10 -> **0**
+(the remaining verm-gate px, 898 / 396 / 180 / 68, are the dead hostile's blood drops: mean (159,5,9), x >= 1251, R <= 170).
+Bars: floor vermilion 0, red 0 added, teal 0, amber +0.06..0.10 %, outside the box 0.
+
+What I saw (`C:/Users/kazda/kiro/gtai-masters/n30/combat/stills/rocket_blast0_specks_pair_64.png`): before, 5-6 isolated
+orange-red 1 px dots in the flat amber star; after, a clean amber star. Nothing else on the burst moved. The effect is small
+(frame 0 has no fringe problem); the 70 px at 3.8x were the grain, and at 64 px/m they are 6-10 px.
+Unit: `unit-tests: 334 passed, 0 failed, 0 skipped (GUT, headless)` (the 54 tests `test_map.mjs` reaches from blast_0.png).
+Lint: `lint: all 19 checks pass over 2294 GDScript files`.
