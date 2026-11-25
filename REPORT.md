@@ -90,6 +90,10 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
   shotgun stock out to the left), but the fallen body is not his fall art (no shotgun or cap flying, no chevrons): the kill
   draws a generic cop fall grid (in the headless probe the style had no own cells and resolved to `cop/head_swat`). The still proves
   that grid now falls at his card scale (x1.13); the numbers are in the headless table in `card_scale.md`.
+- Clips at 32 px/m (`d6fa9ba69`): `films/card_kill_pair_32.mp4` (1920x720, 60 fps, 2.52 s, before left) and
+  `films/card_kill_{before,after}_32.mp4` (the reel tool's 384x288 clips). I looked at t 2.3 s: the fallen body is larger on
+  the right, everything else identical. Short of the 15 s film bar: the kill lab's shot is 420 ticks and a reel clip ends
+  at most 230 ticks after the kill, so this kill cannot be filmed longer with the shipped tool.
 
 ### 5. Mutate and a dev crash
 - `pressure_rifles.gd` (lines 36-41, 69-85, `test_pressure_takes`): 13/19 = 68.4 % -> 14/17 = 82.4 % (the re-run was cut
@@ -158,8 +162,8 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
    (owner call: it changes a kill's look).
 
 ## Builder ledger
-19 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 532 minutes in all.
-18 accepted, 1 bounced (c2c: its code was right, but amber did not reach the screen; c2e finished it).
+20 calls, all Claude sub-agents (Sonnet 5.5, except c2a fire and c6 kill card scale on Opus 5.5), 535 minutes in all.
+19 accepted, 1 bounced (c2c: its code was right, but amber did not reach the screen; c2e finished it).
 
 | call | min | result | note |
 |---|---:|---|---|
@@ -182,6 +186,7 @@ edge px of the `colour/` flash cells). Status: FIXED 15, KEPT 8 (blood, danger c
 | c8 frames curate | 1 | accepted | frames.json to 15 best first, full list kept |
 | c9 electro pins | 36 | accepted | tests only; both mutate runs at 100 % |
 | c10 call stills | 1 | accepted | rocket band amber mock, Mertz gloves boxed (no Godot) |
+| c11 card kill clips | 3 | accepted | 32 px/m before/after pair, 2.5 s (tool limit) |
 
 What I would brief differently: (1) every art/colour brief asks for an in-game still at 64 px/m before commit A ("does
 the change reach the screen through the print?"): the item print snapping amber to vermilion cost two calls; (2) "prove
