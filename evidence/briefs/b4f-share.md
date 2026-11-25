@@ -7,8 +7,11 @@ start the last commit 15 min before the stop. Measure every setting with `--rev=
 
 ## State
 HEAD = lever 1 (shooter slots max(3, ceil(0.35 x ranged))) + lever 5 (own guns, pistol 3 / rifle 2 / cannon 8 hp).
-b4e made the probe judge own-gun foes on their own gun's window (evidence/n31/foes/waiting-l5-ownwin/): read
-its numbers first. Bars: react in range p50 <= 1.0 s, p90 <= 2.5 s, idle (engaged rule) < 35 %, guard rail damage
+b4e (d6bacc8ab) made the probe judge own-gun foes on their own gun's window but did NOT re-measure. STEP 0 (first):
+re-measure HEAD with the new probe (average, seeds 1-10, --waves=7, `--rev=d6bacc8ab` or later) into
+`evidence/n31/foes/waiting-l5-ownwin/`, commit, quote idle / react p50 p90 / firing/s / damage w1-4. Also confirm the
+probe still compiles at `--rev=ba8e470b0` (b4e changed foe_window's signature duck-typed; its --check run was
+stopped unfinished under machine load): one seed is enough; if it does not compile, fix it first. Bars: react in range p50 <= 1.0 s, p90 <= 2.5 s, idle (engaged rule) < 35 %, guard rail damage
 w1-4 (average) 53.5..72.3. Lever 2 (attack_m) was measured and rejected (react p50 0.72 -> 1.02).
 
 ## Do, in order, each one commit + one docs/decisions.md line (before -> after numbers)
