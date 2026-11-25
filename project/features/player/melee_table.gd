@@ -158,6 +158,8 @@ static func _read_hit(t: DataTable, row: Dictionary) -> MeleeHit:
 		h.grind_ticks = t.integer(row, "grind_ticks")
 	if row.has("grind_min_ticks"):
 		h.grind_min_ticks = t.integer(row, "grind_min_ticks")
+	if MeleeHit.sweep:  # n31 melee 02: the drawn geometry, read only with --melee-sweep
+		h.adopt_sweep(t, row)
 	return h
 
 

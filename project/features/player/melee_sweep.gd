@@ -9,7 +9,13 @@ extends RefCounted
 ## once per hit (`struck`, cleared when a new hit starts or the combo goes idle). Pure and RNG-free:
 ## the sim derives the drawn angles from the same static functions the view uses. Off = the before.
 
-static var on: bool = OS.get_cmdline_user_args().has("--melee-sweep")
+## The flag lives on MeleeHit (a leaf class: MeleeTable reads it while it loads, inside the
+## MeleeTable -> MeleeSweep -> MeleeCombo cycle where this script's statics are not up yet).
+static var on: bool:
+	get:
+		return MeleeHit.sweep
+	set(value):
+		MeleeHit.sweep = value
 
 ## Fighter ids struck by the current hit.
 var struck: Dictionary[int, bool] = {}

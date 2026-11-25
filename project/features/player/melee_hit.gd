@@ -5,6 +5,9 @@ extends RefCounted
 ## weapon's chain_radius_m), lunge_m (Rivet travels this far over windup + active) and grind_ticks
 ## (the chainsaw: while the attack is held the last active tick holds and lands every grind_ticks).
 
+## n31 melee 02: `--melee-sweep` (MeleeSweep.on reads and sets it): the hit follows the drawn blade.
+static var sweep: bool = OS.get_cmdline_user_args().has("--melee-sweep")
+
 var id: StringName = &""
 var windup: int = 1
 var active: int = 1
@@ -28,3 +31,16 @@ var grind_min_ticks: int = 0
 
 func length() -> int:
 	return windup + active + recovery
+
+
+## n31 melee 02 part 2: a swing row's drawn geometry, adopted only with the flag on (off = the
+## table's reach_m / lunge_ticks / recovery_ticks): `sweep_reach_m` where the drawn blade (grip
+## offset + length_m) is shorter than reach_m, `sweep_lunge_ticks` so a lunge has arrived at
+## contact, `sweep_recovery_ticks` to pay back a sweep that made the weapon stronger.
+func adopt_sweep(t: DataTable, row: Dictionary) -> void:
+	if row.has("sweep_reach_m"):
+		reach_m = t.num(row, "sweep_reach_m")
+	if row.has("sweep_lunge_ticks"):
+		lunge_ticks = mini(t.integer(row, "sweep_lunge_ticks"), maxi(windup - 1, 0))
+	if row.has("sweep_recovery_ticks"):
+		recovery = t.integer(row, "sweep_recovery_ticks")

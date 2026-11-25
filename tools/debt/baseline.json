@@ -266,7 +266,8 @@
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)",
         "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)",
         "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)",
-        "2026-11-25: --melee-sweep for n31 melee (direct_cmdline_reads 168 -> 169)"
+        "2026-11-25: --melee-sweep for n31 melee (direct_cmdline_reads 168 -> 169)",
+        "2026-11-25: --melee-sweep for n31 melee: the flag read moves to MeleeHit (leaf class, MeleeTable load cycle) (direct_cmdline_reads 169 -> 169)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -406,7 +407,7 @@
         "project/features/combat/weapons/art/weapon_fx_trail.gd": 1,
         "project/features/combat/weapons/gunplay_hook.gd": 3,
         "project/features/player/arena_arsenal.gd": 1,
-        "project/features/player/melee_sweep.gd": 1,
+        "project/features/player/melee_hit.gd": 1,
         "project/features/player/melee_swing.gd": 1,
         "project/features/player/pickups_view.gd": 1,
         "project/features/player/player_melee.gd": 1,

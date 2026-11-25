@@ -46,6 +46,21 @@
           "minimum": 0,
           "type": "integer"
         },
+        "sweep_lunge_ticks": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "sweep_reach_m": {
+          "maximum": 6,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "sweep_recovery_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
         "windup_ticks": {
           "maximum": 120,
           "minimum": 1,

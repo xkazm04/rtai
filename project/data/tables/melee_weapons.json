@@ -149,6 +149,7 @@
         "reach_m": 1.55,
         "recovery_ticks": 14,
         "stun_ticks": 90,
+        "sweep_reach_m": 1.5,
         "windup_ticks": 4
       },
       "swing_lean_deg": [
@@ -228,6 +229,8 @@
         "reach_m": 2.1,
         "recovery_ticks": 16,
         "stun_ticks": 0,
+        "sweep_lunge_ticks": 4,
+        "sweep_reach_m": 1.8,
         "windup_ticks": 7
       },
       "swing_lean_deg": [
@@ -307,6 +310,7 @@
         "reach_m": 2.2,
         "recovery_ticks": 19,
         "stun_ticks": 0,
+        "sweep_reach_m": 1.9,
         "windup_ticks": 8
       },
       "swing_lean_deg": [
