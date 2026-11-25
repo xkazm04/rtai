@@ -3,6 +3,7 @@ extends GutTest
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/gloria": 74.7,
 	"p70/plasma_sword": 66.7,
 	"p70/molotov": 81.0,
 	"p70/ray_gun": 79.0,
@@ -15,7 +16,6 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p70/electro_baton": 68.7,
 	"p70/chainsaw": 64.3,
 	"p70/rocket_launcher": 84.0,
-	"p70/gloria": 86.7,
 	"p70/pistol": 76.0,
 	"p70/plasma_rifle": 76.0,
 	"p70/katana": 66.0,
@@ -57,9 +57,6 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p70/rocket_launcher/0": 0.91,
 	"p70/rocket_launcher/3": 0.94,
 	"p70/rocket_launcher/4": 0.93,
-	"p70/gloria/0": 0.98,
-	"p70/gloria/3": 0.97,
-	"p70/gloria/4": 0.92,
 	"p70/gatling/4": 0.94,
 	"p55/sprint/2": 0.98,
 	"p55/sprint/6": 0.98,
@@ -77,6 +74,7 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(22.0, 32.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_plasma_sword.png": Vector2(15.5, 30.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_molotov.png": Vector2(27.5, 34.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_ray_gun.png": Vector2(25.5, 34.5),
@@ -89,7 +87,6 @@ const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
 	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_baton.png": Vector2(15.0, 28.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_chainsaw.png": Vector2(18.5, 28.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_rocket_launcher.png": Vector2(23.0, 36.5),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),
 }
 
 
