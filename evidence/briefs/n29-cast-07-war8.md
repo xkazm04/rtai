@@ -77,3 +77,13 @@ duration, mutate score, what you could not do.
   but key by distance from the green, not one value.
 - A sonnet builder runs beside you until 06:12 on thug files (`project/dev/cast/cast_thug_*`, `cast_flash_fight.gd`,
   `evidence/n29/thug/**`): never stage or revert them; commit only with `git commit -- <your paths>`; the lane Godot lock is shared.
+
+## Added 05:48 (director): THIS CALL = PART 2a, hard stop 06:14, commit by 06:05
+Part 1 is in (`996160bb4`; read `gtai-art/foes-n29/war8/STATE.md` for its planted-pad table). This call, in order, and
+commit whatever is green by 06:05 (a later call continues from STATE.md, so update it before you end):
+1. `project/features/characters/cast_war_anchors.gd` (generated: FOUR/EIGHT tables, `WALK = FOUR`, every derived table
+   follows `WALK` as one value, like `cast_door_anchors.gd` after `62aa13f5a`), the view's sheet switch in
+   `foe_war_card_view.gd` (scale first, then the anchored placement), re-pin `test_cast_war_machine.gd`; one `--import`,
+   `run_unit --changed` (quote). Commit with WALK = FOUR (no behaviour change).
+2. If time remains: the feet table (four vs eight, both pitches, right + down-right) with the switch staged in a copy, into
+   STATE.md (not yet the audit). No film in this call.

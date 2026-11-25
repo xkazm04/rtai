@@ -309,3 +309,11 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
   run_unit full 4231/0/2. Film `door8_walk_32.mp4` re-shot as eight+f7 from a staged copy (25.85 s), still updated.
   Hook: `step_guard.break.test.mjs` flake once (passed alone).
 - 05:45 BUILDER RUNNING cast-07-war8 PART 1 (opus) since 05:45: `evidence/briefs/n29-cast-07-war8.md` (+ Added 05:44), hard stop 06:15.
+- 05:45 MILESTONE `996160bb4` (cast-07 part 1): `war_machine_planted8_armed_walk.png` p70 + p55, new `tools/art/cast_war_eight.py`,
+  provenance 2 lines. Looked at `build/look/n29-war8/war8_70_1x.png` (rows 1-4 the shipped four, 5-12 the eight, 5 facings):
+  same machine and size as the four, striped pads lift in turn in down/dr/right, amber louvres, no red/teal. Not on yet
+  (view, anchors, feet table = part 2).
+- 05:48 BUILDER cast-07-war8-p1 4 accepted: `996160bb4`. Heights within 0.4 px of the four at both pitches, key-lead 0,
+  strict red 0 (the four ships 149/189 burnt-orange px; the cutter lifted them to amber). First-pass planted-pad table in
+  `foes-n29/war8/STATE.md`: 70 dr and 55 dr exchange cleanly (L x3, R x5), 70 ur weak (R alone in 1 of 8), 70 up shifted by 2.
+- 05:49 BUILDER RUNNING cast-07-war8-p2a (opus) since 05:49: anchors + view switch at WALK = FOUR + feet into STATE.md, hard stop 06:14.
