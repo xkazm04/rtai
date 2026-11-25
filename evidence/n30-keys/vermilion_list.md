@@ -221,3 +221,11 @@ Preview only: no shipped art changed, nothing in `project/` was touched; the pre
 | mini_nuke_empty | - | 935 held_55 | 0 | arc amber |
 
 Note: the proposed amber is paler and less saturated than the old copper because the copper source px are darker and redder; the part reads, but it is a brass tone, not a glowing amber.
+
+## Glow variant (n30-21)
+
+- Formula: same hue and saturation as the brass preview, value lifted: `v' = lift + (1 - lift) * v_src`, `GLOW_LIFT = 0.55` (override with `--lift=<f>`; lift 0 is the brass output, bit-identical). Alpha untouched; px outside the mask unchanged (both asserted).
+- Files: `gtai-masters/n30/keys/vermilion/preview3_<weapon>_4x.png` and `preview3_contact_4x.png`, panels CURRENT | BRASS (value kept) | GLOW (value lifted 0.55). The `preview_*` files are untouched.
+- Identity check: the BRASS panel equals the right panel of the existing `preview_<weapon>_4x.png` in 19/19 panels (pixel compare in the script).
+- Danger px changed: 0 (brass), 0 (glow).
+- Rebuild: `python -I evidence/n30-keys/vermilion/preview.py`

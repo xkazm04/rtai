@@ -18,13 +18,19 @@ def prefix(name):
 
 B, HB = prefix("build.py"), prefix("held_build.py")
 OUT = "C:/Users/kazda/kiro/gtai-masters/n30/keys/vermilion/"
+GLOW_LIFT = 0.55
+for _arg in sys.argv[1:]:
+    if _arg.startswith("--lift="):
+        GLOW_LIFT = float(_arg.split("=", 1)[1])
 AH, AS, _ = colorsys.rgb_to_hsv(*(c / 255 for c in (0xFF, 0xBF, 0x56)))
 
 
-def recolour(a, hm):
-    """a RGBA uint8, hm bool mask. Returns copy; rgb = hsv(AH, AS, v_src) inside hm, nothing else changes."""
+def recolour(a, hm, lift=0.0):
+    """a RGBA uint8, hm bool mask. Returns copy; rgb = hsv(AH, AS, v') inside hm, v' = lift + (1-lift)*v_src
+    (lift 0 = value kept), nothing else changes."""
     out = a.copy()
     v = a[..., :3].max(axis=2).astype(float) / 255
+    v = lift + (1 - lift) * v
     h6 = AH * 6
     i, f = int(h6), h6 - int(h6)
     p, q, t = v * (1 - AS), v * (1 - AS * f), v * (1 - AS * (1 - f))
@@ -41,20 +47,21 @@ def heat_mask(lab, cls_of):
 
 
 def pair(a, hm, k, label):
-    b = recolour(a, hm)
+    b, g = recolour(a, hm), recolour(a, hm, GLOW_LIFT)
     ys, xs = np.nonzero(a[..., 3] > 0)
     x0, x1, y0, y1 = max(xs.min() - 4, 0), min(xs.max() + 5, a.shape[1]), max(ys.min() - 4, 0), min(ys.max() + 5, a.shape[0])
     ims = []
-    for arr in (a, b):
+    for arr in (a, b, g):
         bg = Image.new("RGBA", (a.shape[1], a.shape[0]), (40, 40, 48, 255))
         bg.alpha_composite(Image.fromarray(arr))
         ims.append(bg.crop((x0, y0, x1, y1)).resize(((x1 - x0) * k, (y1 - y0) * k), Image.NEAREST).convert("RGB"))
-    s = Image.new("RGB", (ims[0].width * 2 + 8, ims[0].height + 20), (20, 20, 24))
+    s = Image.new("RGB", (ims[0].width * 3 + 16, ims[0].height + 20), (20, 20, 24))
     s.paste(ims[0], (0, 0))
     s.paste(ims[1], (ims[0].width + 8, 0))
+    s.paste(ims[2], (ims[0].width * 2 + 16, 0))
     d = ImageDraw.Draw(s)
-    d.text((4, s.height - 16), f"CURRENT | PROPOSED (heat -> amber)  {label}  {k}x", fill=(230, 230, 230))
-    return s, int(hm.sum())
+    d.text((4, s.height - 16), f"CURRENT | BRASS (value kept) | GLOW (value lifted {GLOW_LIFT})  {label}  {k}x", fill=(230, 230, 230))
+    return s, int(hm.sum()), ims[1], ims[0].width
 
 
 def stack(imgs):
@@ -96,22 +103,30 @@ for w in HELD_ORDER:
 
 weapons = [w for w in B["ORDER"] + HELD_ORDER if w in showcase or w in inplay]
 weapons = list(dict.fromkeys(weapons))
-rows, stills, danger_changed = [], [], 0
+rows, stills, danger_changed, danger_glow, ident = [], [], 0, 0, []
 for w in weapons:
-    imgs, npx_s, npx_p = [], 0, []
+    imgs, npx_s, npx_p, brass = [], 0, [], []
     if w in showcase:
         a, hm, rel, lab, cls_of = showcase[w]
-        s, n = pair(a, hm, 4, f"{w} {rel}")
+        s, n, br, pw = pair(a, hm, 4, f"{w} {rel}")
         imgs.append(s)
+        brass.append((br, pw))
         npx_s = n
         dm = np.isin(lab, [i for i, c in cls_of.items() if c == "danger"])
         danger_changed += int((recolour(a, hm)[dm] != a[dm]).any())
+        danger_glow += int((recolour(a, hm, GLOW_LIFT)[dm] != a[dm]).any())
     for a, hm, rel, k in inplay.get(w, []):
-        s, n = pair(a, hm, k, f"{w} {rel}")
+        s, n, br, pw = pair(a, hm, k, f"{w} {rel}")
         imgs.append(s)
+        brass.append((br, pw))
         npx_p.append(f"{n} ({rel.split(' ')[0].replace('held_55/', 'held_55 ')}{' cell' if 'cell' in rel else ''})")
     st = stack(imgs)
-    st.save(OUT + f"preview_{w}_4x.png")
+    old, y = Image.open(OUT + f"preview_{w}_4x.png").convert("RGB"), 0
+    for (br, pw), im in zip(brass, imgs):
+        crop = old.crop((pw + 8, y, pw + 8 + br.width, y + br.height))
+        ident.append(bool((np.asarray(crop) == np.asarray(br)).all()))
+        y += im.height + 4
+    st.save(OUT + f"preview3_{w}_4x.png")
     stills.append(st)
     rows.append(f"| {w} | {npx_s if w in showcase else '-'} | {', '.join(npx_p) or '-'} |")
 CW = 1600
@@ -121,6 +136,7 @@ y = 0
 for r in rs:
     sheet.paste(r, (0, y))
     y += r.height
-sheet.save(OUT + "preview_contact_4x.png")
-print(f"danger parts changed: {danger_changed}")
+sheet.save(OUT + "preview3_contact_4x.png")
+print(f"danger parts changed (brass): {danger_changed}, (glow, lift {GLOW_LIFT}): {danger_glow}")
+print(f"brass panel identical to preview_*_4x right panel: {sum(ident)}/{len(ident)} panels, all={all(ident)}")
 print("\n".join(rows))
