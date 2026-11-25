@@ -136,6 +136,10 @@
           "required": [],
           "type": "object"
         },
+        "decal_over_alpha": {
+          "minimum": 1,
+          "type": "number"
+        },
         "decals": {
           "items": {
             "$ref": "#/$defs/piece"

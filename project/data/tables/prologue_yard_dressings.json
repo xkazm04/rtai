@@ -1,6 +1,7 @@
 {
   "dressings": {
     "arched_line": {
+      "decal_over_alpha": 1.4,
       "decals_over_impression": true,
       "factory_front": [
         {

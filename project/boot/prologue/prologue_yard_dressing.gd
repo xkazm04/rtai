@@ -66,6 +66,8 @@ var over_print_shade: float = 1.0
 ## the over-print layer, after the ground layers there. The split-off decals wait in `decals_over`.
 var decals_over_impression: bool = false
 var decals_over: Array[Piece] = []
+## Row value: multiplies the tint alpha of the tyre-mark stamps over the impression (clamped to 1).
+var decal_over_alpha: float = 1.0
 ## Fire light over the void north of the hall roof (PrologueRoofGlow.read), empty = none.
 var roof_glow: Dictionary = {}
 ## Drop shadow under Rivet on an overhead span (PrologueSpanShadow.read), empty = none.
@@ -112,12 +114,7 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		ground.append(_layer(table, layer))
 	use_stage_decals = not row.has("decals")
 	decals = _pieces(table, row, "decals")
-	decals_over_impression = row.get("decals_over_impression", false)
-	if decals_over_impression:
-		for piece: Piece in decals.duplicate():
-			if not piece.ochre:
-				decals.erase(piece)
-				decals_over.append(piece)
+	_split_decals_over(table, row)
 	factory_front = _pieces(table, row, "factory_front")
 	fixtures = _pieces(table, row, "fixtures")
 	if row.has("phone"):
@@ -146,6 +143,22 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 				outside.remove_at(i)
 	if row.get("include_plain_outside", false):
 		outside.append_array(_pieces(table, plain, "outside"))
+
+
+## With `decals_over_impression` the decals without `ochre` move to `decals_over`; the tyre marks
+## among them get their tint alpha times `decal_over_alpha`.
+func _split_decals_over(table: DataTable, row: Dictionary) -> void:
+	decals_over_impression = row.get("decals_over_impression", false)
+	if not decals_over_impression:
+		return
+	decal_over_alpha = table.num(row, "decal_over_alpha") if row.has("decal_over_alpha") else 1.0
+	for piece: Piece in decals.duplicate():
+		if piece.ochre:
+			continue
+		decals.erase(piece)
+		decals_over.append(piece)
+		if piece.art.contains("/tyre_"):
+			piece.tint.a = minf(piece.tint.a * decal_over_alpha, 1.0)
 
 
 static func _layer(table: DataTable, row: Dictionary) -> Ground:

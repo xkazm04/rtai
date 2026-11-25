@@ -169,3 +169,29 @@ func test_key_absent_keeps_ochre_then_one_overprint_node() -> void:
 	assert_eq(layers.size(), 2)
 	assert_not_null(_node_of(layers[0]).material)
 	assert_null(_node_of(layers[1]).material)
+
+
+func test_decal_over_alpha_scales_only_the_tyre_stamps() -> void:
+	var look: PrologueYardDressing = _plan().dressing
+	assert_eq(look.decal_over_alpha, 1.4)
+	var plain: PrologueYardDressing = PrologueYardDressing.resolve("torn_line")
+	assert_eq(plain.decal_over_alpha, 1.0)
+	var tyres: int = 0
+	for piece: PrologueYardDressing.Piece in look.decals_over:
+		if not piece.art.contains("/tyre_"):
+			assert_lte(piece.tint.a, 1.0)
+			continue
+		tyres += 1
+		var base: PrologueYardDressing.Piece = _same_piece(plain, piece)
+		assert_almost_eq(piece.tint.a, minf(base.tint.a * 1.4, 1.0), 0.001)
+	assert_eq(tyres, 2)
+
+
+func _same_piece(
+	plain: PrologueYardDressing, piece: PrologueYardDressing.Piece
+) -> PrologueYardDressing.Piece:
+	for base: PrologueYardDressing.Piece in plain.decals:
+		if base.art == piece.art and base.at == piece.at:
+			return base
+	fail_test("no torn_line piece at %s" % piece.at)
+	return piece

@@ -94,6 +94,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	assert_true(arched.erase("over_print_shade"), "arched_line alone shades the wrecks")
 	assert_true(arched.erase("decals_over_impression"), "arched_line alone prints decals over")
 	assert_true(arched.erase("ochre_over_impression"), "arched_line alone puts bay lines over")
+	assert_true(arched.erase("decal_over_alpha"), "arched_line alone deepens the tyre marks")
 	for key: String in ["ground", "layout", "over_print", "factory_front", "lights"]:
 		assert_true(arched.erase(key))
 		assert_true(raised.erase(key))
