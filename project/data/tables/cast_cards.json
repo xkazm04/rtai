@@ -52,7 +52,7 @@
       }
     },
     "robot_thug": {
-      "body_scale": 1.45,
+      "body_scale": 1.42,
       "enabled": false,
       "id": "robot_thug",
       "p55": {
