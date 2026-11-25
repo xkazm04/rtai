@@ -92,6 +92,8 @@ No builder running at 13:36. Lock free. Worktree clean except untracked evidence
 - 14:43 I re-cut it at real speed, the tour played twice: masters `collar/collar_p55_sprint_tour_32_realtime.mp4` (ffprobe 1920,1080,60/1,1442; 24.03 s); frame at 9.5 s looked at (labels, Rivet centred both halves). frames.json 14 entries, realtime clip first. MILESTONE collar rows 3, 6, 7 filmed in the real arena, before | after, same ticks.
 - 14:45 MUTATE started by me on arsenal_sprint_rec.gd lines 4-15 (--max=8, test_arsenal_turn, 15 min cap) -> build/n30-dir/mutate_sprint.out.
 - 14:46 MUTATE arsenal_sprint_rec.gd lines 4-15: 100 % = 4/(4+0) (all on tour_input :13; baseline 46 s, 140 s; Temp gtai-mutate-dc83624c reused). Lock released. NEXT 0 is done.
+- 14:48 NEED Director: `tools/film/arsenal_turn.mjs` (not a keys file) should pass `--sprint-tour` through and run `--import` in each snapshot it makes (a snapshot copies the worktree's `.godot` import cache, so an edited sheet renders as HEAD's: n30-16 caught it). Until then the tour film runs from `build/n30-16/film.mjs` (scratch).
+- 14:48 Session 3 ends here: no builder running, lock free, last commit is journal-only. The gate re-run is left to session 4: it takes about 21 min and would be cut off at 15:06.
 
 NEXT (session 4, from ~15:06):
 0. If `build/n30-dir/mutate_sprint.out` ends without its score line in this journal: read its tail, quote killed/(killed+survived) in JOURNAL + REPORT (arsenal line); if `build/n30-godot.lock` says director-mutate and no node mutate.mjs process runs, delete it.
