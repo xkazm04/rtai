@@ -380,3 +380,9 @@ NEXT (session 5), in order. Use `date`: my journal times this session ran ~3 min
 NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md` plan, `foe_thug_card_view.gd`, re-measure
   70 + 55, walk feet re-run); it shares `foe_thug_card_view.gd` with nobody, so it can run beside 07b steps 2-3 (opus,
   re-fill the brief's times; step 1 is in `5d8e4b6f8`). 03d PART A (ink + rim) after whichever finishes first.
+- 06:09 BUILDER cast-07b-war8 step 1 9 accepted: `5d8e4b6f8` (pad placement, test: pad world point holds within 0.01 px
+  over a contact; held-walk test re-pinned to the pad; run_unit FULL 4236/0/2; debt accepted, view 214 lines / test 228).
+  The four now follows the pinned pad inside a contact: its after-numbers are owed (next call step 2 measures four before
+  = `20be6ffaa`, after = HEAD, and the eight).
+- 06:10 MILESTONE session 4 end. No builder running. Builders this session: 10 calls (10, 03c, 11, 07p1, 03d-B, 07p2a,
+  03e x2, 12, 07b-1), all accepted (03e call 2 partial). IMAGES 21/60. BUILDER RUNNING: none.
