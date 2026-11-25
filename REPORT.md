@@ -15,6 +15,11 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
   game (arena, bot Rivet, view tilt = p55 art, `tools/film/compare.mjs` 5114a4441 | HEAD): `collar/collar_p55_64_compare.png`
   (tick 300, row 7 sprint: soft rope -> flat striped ring) and `collar/collar_p55_rows367_32.mp4` (1920x1080 60/1, 1200 frames,
   20.0 s; Rivet is small in it, the still is the proof; `b129dbee9`, `evidence/n30-keys/films.md`).
+  **Sprint tour** (`22d3c0fb1`, `84fbcc2a2`): the arsenal recorder's `--sprint-tour=on --weapon=hands` sprints Rivet once through
+  the 8 octants in the real arena at p55, 5114a4441 (snapshot, re-imported) | HEAD, same ticks: `collar/collar_p55_sprint_tour_32_realtime.mp4`
+  (1920x1080 60/1, 1442 frames, 24.0 s, the tour played twice at real speed), `collar_p55_sprint_tour_64.png` (8 octants, before above
+  after) and `_64_zoom.png`. Octants E, SW, W are sheet rows 3, 6, 7 (`RivetFrames.BASE_OCT`): rope before, flat striped ring after;
+  the other five octants pixel-identical.
 - **The molotov runs on its own p70 run sheet** (`4513bda2a`): rows edited from the plasma rifle's run rows one row per job
   (10 images), soles registered to the donor; rows 4 and 8 cols 2, 6 on the donor's legs under a seam. Walk hold 0.43 / 1.56 cm
   (bar 2); run step 5.77 / 6.85 cm (bar 7; donor 6.69 / 8.93) after row 1 cols 5, 6 were registered 1 px to the donor's planted
@@ -102,8 +107,8 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
    `mini_nuke_left_fire` (`evidence/n30-keys/eq_collar_audit.md`), and the p55 run row 8 cell 4 notch / cell 8 streak. Same per-cell
    2x route; for row 8 the mask must reach past the collar hull (the defects sit on the helmet edge), about 8 images in all.
 2. Audit the remaining p70 strips flagged UNSURE (gatling / mini-nuke eq cells, `reload_gatling`) at 4x.
-3. A tools/film shot that sprints Rivet once through all 8 octants (the arena bot shows only row 7 in the 20 s clip), so the
-   collar rows 3 and 6 can be filmed in the real game rather than in the dev harness stills.
+3. `tools/film/arsenal_turn.mjs` could pass `--sprint-tour` and re-import its snapshots (a snapshot copies the worktree's import
+   cache, so an edited sheet renders as HEAD's until `--import`); today the tour film uses a scratch script under `build/n30-16/`.
 4. The vermilion recolour, once you answer Calls 1: masked recolours (like the n29 sword rings) per weapon in the heat column.
 
 ## Builder ledger
@@ -126,6 +131,7 @@ DRAFT (session 3, 13:58): sections are filled as items land; the final version i
 | n30-13 collar-film-compare | sonnet | 19 | accepted | row 7 only in frame |
 | n30-14 decision-lines | sonnet | 2 | accepted | |
 | n30-15 arsenal-turn-pins | sonnet | 14 | accepted | mutate 16.7 % -> 100 % on the target lines |
+| n30-16 sprint-tour | opus | 20 | accepted | caught a stale import in the before snapshot; clip encoded at half speed (I re-cut it at real speed) |
 
 Brief differently: give one builder the whole Godot lock window (no mutate beside an install); name `tools/film/blob.mjs` for any
 before asset; never rely on dev harnesses that live outside the repo (masters can be pruned); the 15-25 min one-point calls were
