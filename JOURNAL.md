@@ -358,10 +358,11 @@ NEXT (session 5), in order. Use `date`: my journal times this session ran ~3 min
         If both pass and the stop is fixed, the director orders the switch call (row on, `docs/decisions.md` line,
         re-film `thug_fight_32.mp4` with the row on in the live game, no forced preview) only if it can commit by 07:15;
         else REPORT "Calls for the owner": thug ready, switch is one value.
-  2. A builder appends to `docs/decisions.md` (the director may not): `DECISION n29 cast` lines for thug body_scale 1.42,
-     door WALK = FOUR (eight measured worse, one value away), robot flash on the live path (`RigClips.flash`).
+  2. DONE 06:00: decision lines `f404e09cb` (cast-12, sonnet, 1 min).
   3. 07:15 last commit. 07:30 final gate `node tools/gate/run.mjs --rev=HEAD` (director, alone in the lane lock).
   4. After the gate: frames.json in `gtai-masters/n29/cast/` 8-15 entries best first (17 now: drop scratch-ish ones such as
      `flash_door_gunner_32ppm_tilt70.png`, the 3-hits sheets), REPORT.md, `node tools/evidence/cites.mjs REPORT.md`.
   IMAGES 21/60. Open owner calls: the thug's fall now lies up-screen of where he stood (feet at the point), unlike the
   gunner's centred fall; turret and war views have no hit flash (`sync_tint`); door eight one value away.
+- 06:00 BUILDER cast-12-decisions 1 accepted: `f404e09cb` (three DECISION n29 cast lines). Brief `n29-cast-07b-war8.md`
+  written for session 5 step 1a (fill HARDSTOP/COMMIT1/LASTCOMMIT).
