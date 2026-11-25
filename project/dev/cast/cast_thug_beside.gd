@@ -1,12 +1,11 @@
 extends "res://dev/cast/cast_size_beside.gd"
-## Robot thug A's card (row forced on in this dev process only) spawned beside a spawned patrol cop
+## Robot thug A's card (the shipped row, no preview enable) spawned beside a spawned patrol cop
 ## and Rivet on the fight street, all standing, front three-quarter, at 64 and 32 px/m, 70 deg
 ## (GTAI_CAST_PITCH=55 for 55 deg, writing size55/ instead).
 ## Writes build/look/n29-thug/size/ for tools/art/cast_size_measure.py (same shots as size beside).
 
 
 func _ready() -> void:
-	CastMulroneyPreview.enable(FoeThugCardView.ID)
 	get_window().size = Vector2i(1920, 1080)
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	var root: String = ProjectSettings.globalize_path("res://")
@@ -14,7 +13,7 @@ func _ready() -> void:
 	var sub: String = "size" if pitch == 70 else "size55"
 	if _shadow_mode():
 		sub = "shadow%d" % pitch
-	_dir = root.path_join("../build/look/n29-thug/" + sub).simplify_path()
+	_dir = root.path_join("../build/look/n30-c01/thug/" + sub).simplify_path()
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(_dir)
 	ViewMode.select("combo")

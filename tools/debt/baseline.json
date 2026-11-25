@@ -196,7 +196,8 @@
         "2026-11-25: cast_thug_edge dev scene for n29 cast thug rim (dev_loc 39251 -> 39253)",
         "2026-11-25: n30-07: arsenal turn recorder equips the weapon slot before firing, wider still crop (dev_loc 39253 -> 39264) (dev_loc 39253 -> 39264)",
         "2026-11-25: arsenal turn pins for n30 keys (dev_loc 39264 -> 39271)",
-        "2026-11-25: sprint tour for n30 keys (dev_loc 39271 -> 39340)"
+        "2026-11-25: sprint tour for n30 keys (dev_loc 39271 -> 39340)",
+        "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -205,7 +206,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 3897,
+        "project/dev/cast": 4195,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -238,7 +239,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39340
+      "total": 39638
     },
     "direct_cmdline_reads": {
       "accepted": [

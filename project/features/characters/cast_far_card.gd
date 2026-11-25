@@ -8,11 +8,16 @@ var _base_scale: Vector2
 
 ## The hit flash of the rig it stands in for (rig.is_tinted()): tint material while lit, raw after.
 func sync_tint(on: bool) -> void:
-	var want: Material = null
-	if on:
-		want = PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0)
+	var want: Material = tint_of(on)
 	if material != want:
 		material = want
+
+
+## The one hit-flash rule every card view shares: the tint material while lit, null (raw) after.
+static func tint_of(on: bool) -> Material:
+	if on:
+		return PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0)
+	return null
 
 
 func draw_pose(pose: CastCardPose, h: Fighter, moving: bool, tick: int) -> void:

@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 // The pile-driver (war_machine card) at a true 1920 x 1080 on its walks, the cast_door_films.mjs twin. Staged copies,
-// the real tree is never touched: "four" = the committed tree (CastWarAnchors.WALK as committed; the held-foot view
-// again since the n29 pad placement was reverted); "eight" = a copy whose cast_war_anchors.gd selects WALK = EIGHT;
-// "before" = the four with FoeWarCardView from 20be6ffaa (the held
-// foot before the n29 pad placement 5d8e4b6f8: that commit changed only the view and its test); "eight_held" = the
-// eight on that held-foot view (what the eight art does without the pad placement).
+// the real tree is never touched. Since n30 the committed tree IS the eight (CastWarAnchors.WALK = EIGHT, held-foot
+// view): "eight" = the committed tree; "four" = a copy whose cast_war_anchors.gd selects WALK = FOUR; "before" = the
+// four with FoeWarCardView from 20be6ffaa (the held foot before the n29 pad placement 5d8e4b6f8); "eight_held" = the
+// eight on that 20be6ffaa view (n29's column; equal to "eight" while the view keeps the held foot).
 //   stills: 64 px/m, right facing, the same tick, four left | eight right -> war8_feet_before_after_64.png
-//   clip:   the eight (staged preview, WALK = EIGHT) at 32 px/m, right then down-right -> war8_walk_32.mp4
+//   clip:   the eight (the committed tree) at 32 px/m, right then down-right -> war8_walk_32.mp4
+//   pair:   the four (staged) and the eight, 32 px/m, the clip's ticks, each cropped to 960x1080, hstack four | eight
+//           -> war8_four_eight_32.mp4
+//   live:   cast_flash_fight.tscn (GTAI_CAST_FLASH_FOES=turret_war, the live sentry + war machine fight), the four and the
+//           eight on the same 1500 ticks, each cropped to 960 wide, hstack four | eight -> war8_live_four_eight_32.mp4,
+//           plus movie frame 471 of the eight's 64 px/m run -> war8_live_64.png
 //   feet:   cast_feet.tscn at 64 px/m on war_machine, both pitches, cast_war_feet.py (pad, + n28 on the four)
-// usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|feet|all] [feet walks, default before,four,eight]
+// usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|all] [feet walks, default before,four,eight]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
   writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -17,14 +21,14 @@ import { ROOT } from '../lib/repo.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 
 const [out, what = 'all', feetArg = 'before,four,eight'] = process.argv.slice(2);
-if (!out || !['stills', 'clip', 'feet', 'all'].includes(what)) {
-  console.error('usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|feet|all]'); process.exit(2);
+if (!out || !['stills', 'clip', 'pair', 'feet', 'live', 'all'].includes(what)) {
+  console.error('usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|live|all]'); process.exit(2);
 }
 const SPEED = 1.8;
 const CHARS = 'features/characters';
 const VIEW = 'features/combat/squad/foe_war_card_view.gd';
-// The eight-drawing switch (WALK70/55, WALK_STEP_M and WALK_ROWS follow WALK), applied to the staged copy only.
-const EIGHT_PATCH = [['cast_war_anchors.gd', 'const WALK: String = FOUR', 'const WALK: String = EIGHT']];
+// The four-drawing switch (WALK70/55, WALK_STEP_M and WALK_ROWS follow WALK), applied to the staged copy only.
+const FOUR_PATCH = [['cast_war_anchors.gd', 'const WALK: String = EIGHT', 'const WALK: String = FOUR']];
 const BEFORE = '20be6ffaa';
 
 function link(a, b) { symlinkSync(a, b, process.platform === 'win32' ? 'junction' : 'dir'); }
@@ -45,9 +49,9 @@ function stageProject(dir, walk) {
   const config = readFileSync(join(source, 'project.godot'), 'utf8');
   writeFileSync(join(dst, 'project.godot'), config.replace(/viewport_width=\d+/, 'viewport_width=1920')
     .replace(/viewport_height=\d+/, 'viewport_height=1080') + '\n[threading]\nworker_pool/max_threads=4\n');
-  for (const [file, from, to] of walk.startsWith('eight') ? EIGHT_PATCH : []) {
+  for (const [file, from, to] of walk.startsWith('eight') ? [] : FOUR_PATCH) {
     const path = join(dst, CHARS, file), text = readFileSync(path, 'utf8');
-    if (!text.includes(from)) throw Error(`eight switch: ${file} has no "${from}"`);
+    if (!text.includes(from)) throw Error(`four switch: ${file} has no "${from}"`);
     writeFileSync(path, text.replace(from, to));
   }
   if (walk === 'before' || walk === 'eight_held') {
@@ -59,7 +63,7 @@ const work = join(ROOT, 'build', 'film');
 mkdirSync(work, { recursive: true });
 const feetWalks = feetArg.split(',');
 if (feetWalks.some((w) => !['before', 'four', 'eight', 'eight_held'].includes(w))) throw Error(`feet walks: ${feetArg}`);
-const walks = { stills: ['four', 'eight'], clip: ['eight'], feet: feetWalks,
+const walks = { stills: ['four', 'eight'], clip: ['eight'], pair: ['four', 'eight'], live: ['four', 'eight'], feet: feetWalks,
   all: [...new Set(['four', 'eight', ...feetWalks])] }[what];
 const dirs = {};
 for (const walk of walks) {
@@ -102,19 +106,52 @@ if (what === 'stills' || what === 'all') {
     '[0]crop=960:1080:480:0[a];[1]crop=960:1080:480:0[b];[a][b]hstack', join(outDir, 'war8_feet_before_after_64.png')],
   { windowsHide: true, stdio: 'inherit' });
 }
-if (what === 'clip' || what === 'all') {
+async function walkClips(walk, prefix) {
   const mp4s = [];
   for (const [name, ticks] of [['right', 900], ['downright', 600]]) {
-    const avi = join(dirs.eight, `war8_${name}.avi`);
-    await take('eight', 32, name, ticks, null, avi);
+    const avi = join(dirs[walk], `${prefix}_${name}.avi`);
+    await take(walk, 32, name, ticks, null, avi);
     mp4s.push(avi.replace('.avi', '.mp4'));
     execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi, '-c:v', 'libx264', '-crf', '18',
       '-pix_fmt', 'yuv420p', '-r', '60', mp4s.at(-1)], { windowsHide: true, stdio: 'inherit' });
   }
-  const list = join(dirs.eight, 'list.txt');
+  const list = join(dirs[walk], `${prefix}_list.txt`), joined = join(dirs[walk], `${prefix}_joined.mp4`);
   writeFileSync(list, mp4s.map((m) => `file '${m.split('\\').join('/')}'`).join('\n'));
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list,
-    '-c', 'copy', join(outDir, 'war8_walk_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+    '-c', 'copy', joined], { windowsHide: true, stdio: 'inherit' });
+  return joined;
+}
+if (what === 'clip' || what === 'all') {
+  copyFileSync(await walkClips('eight', 'war8'), join(outDir, 'war8_walk_32.mp4'));
+}
+if (what === 'pair') {
+  const four = await walkClips('four', 'war4'), eight = await walkClips('eight', 'war8');
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', four, '-i', eight, '-filter_complex',
+    '[0]crop=960:1080:480:0[a];[1]crop=960:1080:480:0[b];[a][b]hstack,fps=60', '-c:v', 'libx264', '-crf', '18',
+    '-pix_fmt', 'yuv420p', join(outDir, 'war8_four_eight_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+}
+if (what === 'live') {
+  const LIVE = 1500, STILL_TICK = 440, avis = {};
+  for (const walk of ['four', 'eight']) {
+    avis[walk] = join(dirs[walk], 'live.avi');
+    await godot(walk, ['--resolution', '1920x1080', '--write-movie', avis[walk], '--quit-after', String(LIVE + 60),
+      'res://dev/cast/cast_flash_fight.tscn'], { GTAI_CAST_FLASH_FOES: 'turret_war', GTAI_CAST_TICKS: String(LIVE) },
+    `${walk} live 32`, avis[walk]);
+  }
+  const size = (f) => execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v', '-show_entries', 'stream=width,height',
+    '-of', 'csv=p=0', f], { encoding: 'utf8' }).trim();
+  console.log('raw capture size', size(avis.four), size(avis.eight));
+  const [w, h] = size(avis.eight).split(',').map(Number), cw = Math.min(960, w);
+  const crop = `crop=${cw}:${h}:${Math.floor((w - cw) / 2)}:0`;
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avis.four, '-i', avis.eight, '-filter_complex',
+    `[0]${crop}[a];[1]${crop}[b];[a][b]hstack,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,fps=60`, '-c:v', 'libx264', '-crf', '18',
+    '-pix_fmt', 'yuv420p', join(outDir, 'war8_live_four_eight_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+  const avi64 = join(dirs.eight, 'live64.avi');
+  await godot('eight', ['--resolution', '1920x1080', '--write-movie', avi64, '--quit-after', '560',
+    'res://dev/cast/cast_flash_fight.tscn'], { GTAI_CAST_FLASH_FOES: 'turret_war', GTAI_CAST_TICKS: '500',
+    GTAI_CAST_FLASH_PPM: '64' }, 'eight live 64', avi64);
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi64, '-vf', `select='eq(n,${STILL_TICK})'`,
+    '-frames:v', '1', join(outDir, 'war8_live_64.png')], { windowsHide: true, stdio: 'inherit' });
 }
 if (what === 'feet' || what === 'all') {
   for (const walk of feetWalks) {

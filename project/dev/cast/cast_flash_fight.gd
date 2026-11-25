@@ -2,19 +2,21 @@ extends "res://dev/cast/cast_lineup.gd"
 ## Rivet's pistol against a door carrier (shield_robot) and a robot gunner that pace in the street,
 ## 32 px/m tilt 70, cards on. Each foe takes a pistol round every FIRE_EVERY ticks (they have
 ## plenty of hp); the scene logs every tick a foe's hit flash (rig.is_tinted()) turns on, so the
-## film can be cut at those ticks. The flash is the live path's own (ArenaRobotRigs._react),
-## no scene drives it.
+## film can be cut at those ticks. The flash is the live path's own (ArenaRobotRigs._react).
 ## GTAI_CAST_TICKS sets the length, GTAI_CAST_FLASH_PPM=64 the 64 px/m still take;
-## GTAI_CAST_FLASH_OUT, when set,
-## gets one png per logged flash tick (foe_<archetype>_<hit>_<k>.png, k = 0..2).
+## GTAI_CAST_FLASH_OUT gets one png per flash. GTAI_CAST_FLASH_FOES=turret_war picks the big pair.
 
 const CENTRE: Vector2 = Vector2(13, 0)
 const FIRE_EVERY: int = 70
 const WALK_MPS: float = 0.9
 const HOMES: Array[Vector2] = [Vector2(-2.6, -2.0), Vector2(-2.6, 2.6)]
 const IDS: Array[StringName] = [&"shield_robot", &"robot_gunner"]
+const IDS_BIG: Array[StringName] = [&"sentry_turret", &"war_machine"]
 
 var _host: ArenaRigs
+var _ids: Array[StringName] = (
+	IDS_BIG if OS.get_environment("GTAI_CAST_FLASH_FOES") == "turret_war" else IDS
+)
 var _foes: Array[Fighter] = []
 var _was_lit: Dictionary[int, bool] = {}
 var _flashes: Dictionary[int, Array] = {}
@@ -31,7 +33,6 @@ func _ready() -> void:
 	ViewMode.select("combo")
 	ViewMode.shared().set_pitch(70.0)
 	ViewMode.shared().art = "p70"
-	CastMulroneyPreview.enable(FoeGunnerCardView.ID)
 	add_child(_board)
 	_host = _open_wave()
 	if _host == null:
@@ -67,8 +68,8 @@ func _studio() -> bool:
 
 
 func _equip() -> void:
-	for i: int in IDS.size():
-		var foe: Fighter = _arena.squad_ai.spawn_member(_arena, CENTRE, IDS[i])
+	for i: int in _ids.size():
+		var foe: Fighter = _arena.squad_ai.spawn_member(_arena, CENTRE, _ids[i])
 		@warning_ignore("return_value_discarded")
 		_arena.squad_ai.mind_for(foe)
 		foe.pos = CENTRE + HOMES[i]
@@ -97,7 +98,9 @@ func _step(tick: int) -> void:
 	var swing: float = sin(tick * 0.02) * 1.4
 	for i: int in _foes.size():
 		var foe: Fighter = _foes[i]
-		foe.pos = CENTRE + HOMES[i] + Vector2(0.0, swing)
+		foe.pos = (
+			CENTRE + HOMES[i] + Vector2(0.0, 0.0 if foe.archetype == &"sentry_turret" else swing)
+		)
 		foe.facing = foe.pos.direction_to(_arena.rivet.pos)
 		if tick % FIRE_EVERY == 10 + 35 * i:
 			_arena.rivet.facing = _arena.rivet.pos.direction_to(foe.pos)
@@ -119,8 +122,8 @@ func _lit(rig: CutRig) -> bool:
 	if rig == null:
 		return false
 	var flash: Material = PartMaterials.get_mat(PartMaterials.PartKind.PART, true, 0)
-	for key: StringName in [FoeShieldCardView.CARD, FoeGunnerCardView.CARD]:
-		var card: Sprite2D = rig.get_meta(key) if rig.has_meta(key) else null
+	for key: StringName in rig.get_meta_list():
+		var card: Sprite2D = rig.get_meta(key) if rig.get_meta(key) is Sprite2D else null
 		if card != null and card.is_visible_in_tree():
 			return card.material == flash
 	if rig.head_card != null and rig.head_card.is_visible_in_tree():

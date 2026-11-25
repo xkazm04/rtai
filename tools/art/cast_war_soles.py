@@ -23,8 +23,8 @@ from cast_soles import ROOT, VIEW, band, body_point
 NAME = 'war_machine_armed_walk.png'
 EIGHT = 'war_machine_planted8_armed_walk.png'
 ROWS = {NAME: 4, EIGHT: 8}
-# The shipped walk ships until every facing of the eight is no worse than the four (n29-cast-07).
-WALK = 'FOUR'
+# The eight ships since n30 (owner's n29 pick: held-foot jump 9.93-10.74 px against the four's 11.78-16.82).
+WALK = 'EIGHT'
 # Sheet px to metres: FoeWarCardView draws BODY_PX 200 as HEIGHT_M 2.6 x body_scale 0.84.
 M_PER_PX = 2.6 * 0.84 / 200
 OUT = ROOT / 'project/features/characters/cast_war_anchors.gd'
@@ -87,7 +87,7 @@ def main(walk):
              '## Vector4(sole x, sole y, body x, body y) per facing x drawing, px from the cell\'s',
              '## centre on the foot line (FoeWarCardView.BASE_PX), before the view\'s mirror.',
              f'const EIGHT: String = "{EIGHT}"', f'const FOUR: String = "{NAME}"',
-             '## The shipped walk; EIGHT selects the n29 eight-drawing walk (regenerate with --walk).',
+             '## The shipped walk (n30: the eight); FOUR = the n28 four (regenerate with --walk).',
              f'const WALK: String = {walk}', 'const SHEET: String = WALK']
     for name, const in ((NAME, 'FOUR'), (EIGHT, 'EIGHT')):
         steps = []

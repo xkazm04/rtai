@@ -53,7 +53,7 @@ const FOUR55: Array[Vector4] = [
 	Vector4(-13, 20.5, -0.5, -99.5),
 ]
 const FOUR_STEP_M: float = 0.16
-## p70 SHA-256 bf29e82daf7086fd3bade955fb86d3026649683b0e18d9aa54e95e1affad36ee
+## p70 SHA-256 3f48a9218a779c17904dbc9eadc18b2de83b8f5484bb154da0dcd009429cff18
 const EIGHT70: Array[Vector4] = [
 	Vector4(23, 21.5, 0, -91.5),
 	Vector4(21, 20.5, 0, -91.5),
@@ -63,7 +63,7 @@ const EIGHT70: Array[Vector4] = [
 	Vector4(-23.5, 21.5, 0, -91.5),
 	Vector4(-3, 19.5, 0.5, -91.5),
 	Vector4(26, 21.5, -0.5, -91.5),
-	Vector4(11, 20.5, 0, -80.5),
+	Vector4(16.5, 22.5, 0.5, -81.5),
 	Vector4(11, 21.5, 0, -80.5),
 	Vector4(10.5, 20.5, 0, -80.5),
 	Vector4(-20, 2.5, 0, -80.5),
@@ -96,7 +96,7 @@ const EIGHT70: Array[Vector4] = [
 	Vector4(-1.5, 15.5, 0, -101.5),
 	Vector4(16.5, 20.5, 0, -101.5),
 ]
-## p55 SHA-256 e84bb95dca51935b0da65fe9ac870a53533c95950515f0e747ddba3ecb9d6a45
+## p55 SHA-256 55b8b22630c6370e3d4126675ccc2579b9450e9869500975b4e9b3a252fb522a
 const EIGHT55: Array[Vector4] = [
 	Vector4(24, 20.5, -0.5, -87.5),
 	Vector4(25, 20.5, 0, -87.5),
@@ -110,18 +110,18 @@ const EIGHT55: Array[Vector4] = [
 	Vector4(30.5, 17.5, 0.5, -79.5),
 	Vector4(30.5, 17.5, 0, -79.5),
 	Vector4(-18.5, 0.5, 0.5, -79.5),
-	Vector4(4, 23.5, 0.5, -80.5),
-	Vector4(22.5, 21.5, 0.5, -79.5),
-	Vector4(16.5, 21.5, 0.5, -79.5),
-	Vector4(-33, -9.5, 0, -79.5),
+	Vector4(13, 23.5, 0.5, -79.5),
+	Vector4(13.5, 21.5, 0, -79.5),
+	Vector4(8.5, 21.5, 0.5, -79.5),
+	Vector4(-32, -0.5, -0.5, -79.5),
 	Vector4(14, 20.5, -0.5, -71.5),
 	Vector4(10.5, 20.5, -0.5, -71.5),
 	Vector4(6, 20.5, -0.5, -71.5),
 	Vector4(-43.5, 19.5, -0.5, -71.5),
 	Vector4(15, 20.5, -0.5, -71.5),
 	Vector4(11, 20.5, 0, -71.5),
-	Vector4(11.5, 20.5, 0, -71.5),
-	Vector4(-47, 20.5, 0, -71.5),
+	Vector4(8, 20.5, 0, -71.5),
+	Vector4(-42, 20.5, 0, -71.5),
 	Vector4(24, 21.5, 0, -81.5),
 	Vector4(20, 21.5, 0, -81.5),
 	Vector4(-31.5, 19.5, -0.5, -81.5),
@@ -139,7 +139,7 @@ const EIGHT55: Array[Vector4] = [
 	Vector4(22.5, 19.5, 0.5, -103.5),
 	Vector4(23, 19.5, 0.5, -103.5),
 ]
-const EIGHT_STEP_M: float = 0.1842
+const EIGHT_STEP_M: float = 0.1799
 ## Derived from WALK alone: switching the walk is the one WALK value (n29-11).
 const WALK70: Array[Vector4] = EIGHT70 if WALK == EIGHT else FOUR70
 const WALK55: Array[Vector4] = EIGHT55 if WALK == EIGHT else FOUR55

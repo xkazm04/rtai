@@ -75,3 +75,34 @@ func test_the_lone_victim_capture_draws_every_cop_as_the_asked_row() -> void:
 	)
 	GunplayHook.victim("")
 	assert_eq(StreetCrowdCards.key_for("", 7, "cop"), "", "no capture: the cop's own card")
+
+
+func test_a_cop_build_stays_within_eight_percent_and_a_ped_keeps_sixteen() -> void:
+	var cop_lo: float = 9.0
+	var cop_hi: float = 0.0
+	var ped_lo: float = 9.0
+	var ped_hi: float = 0.0
+	for id: int in 1000:
+		var cop: float = StreetCrowdCards.body_scale(id, StreetCrowdCards.COP_SCALE_VAR)
+		cop_lo = minf(cop_lo, cop)
+		cop_hi = maxf(cop_hi, cop)
+		var ped: float = StreetCrowdCards.body_scale(id)
+		assert_eq(ped, 1.0 + 0.16 * StreetCrowdCards.vary(id, 3), "ped id %d unchanged" % id)
+		ped_lo = minf(ped_lo, ped)
+		ped_hi = maxf(ped_hi, ped)
+	assert_between(cop_lo, 0.92, 0.93)
+	assert_between(cop_hi, 1.07, 1.08)
+	assert_between(ped_lo, 0.84, 0.85)
+	assert_between(ped_hi, 1.15, 1.16)
+
+
+func test_body_scale_of_picks_the_cop_spread_only_for_a_cop_plan() -> void:
+	var rig: CutRig = CutRig.new()
+	autofree(rig)
+	rig.actor_id = 230
+	assert_eq(StreetCrowdCards.body_scale_of(rig), StreetCrowdCards.body_scale(230), "no plan")
+	rig.plan = BodyPlan.new()
+	rig.plan.art_dir = "cop"
+	assert_eq(StreetCrowdCards.body_scale_of(rig), StreetCrowdCards.body_scale(230, 0.08), "cop")
+	rig.plan.art_dir = "walker"
+	assert_eq(StreetCrowdCards.body_scale_of(rig), StreetCrowdCards.body_scale(230), "not a cop")

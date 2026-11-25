@@ -819,3 +819,359 @@ Brief n29-cast-14. Same 50 frames and method as the section above; `tools/art/ca
 
 Cause: facing. The door carrier is a different drawing per facing: seen from the back (walking up) the door's hazard-striped top edge is held above the head and he reads 64-74 (crop f10, f23); walking down 62; in side view the door is a vertical pole beside him and the figure is 54-55 (crop f7, f14), which matches the 56 of the still (facing (1,1)). The film median 63 is the mix of the four facings (the rectangle walk spends most frames going down and up), so the 7 px gap to the still is the up/down door pose, not a scale error. The max values at corners (73, 75) are the up pose caught early.
 Rivet 80 vs 77: the same effect, smaller: down 77 (= still), sides 78-78.5, up 81.5 (back view, helmet and stride taller); the film median is the facing mix, +3 over the down-facing still. Not measured: whether the up-facing door pose is intended art (it needs the sheet, not this film). Godot not run, no code changed beyond the tool's json.
+
+## Pile-driver, n30
+
+Brief n30-cast-02. **`CastWarAnchors.WALK = EIGHT` ships (`bc22b9749`, the owner's n29 pick). Pads by registration
+(one planted pad per contact, carried across contacts) was built, measured and NOT committed: it lowers the body jump
+but raises the sole slide in every facing, because the art keeps the planted pad torso-fixed through a contact.**
+Measured by `node tools/film/cast_war_films.mjs build/look/n30-c02/feet{A,B} feet four,eight[,eight_reg]`:
+`cast_feet.tscn` at 64 px/m, 1.8 m/s, px in the tool's 32 px/m unit; bars sole <= 2, jump <= 12. Since `bc22b9749`
+the committed tree IS the eight; the tool's `four` stages `WALK = FOUR`. Readers: *pad* = the n29 foe-eight windows
+(contact = drawings 1-4 / 5-8, the n29 column's reader), *contact* = the planted pad per drawing (the lower pad blob by
+> 6 px, a tie keeps the previous drawing's pad), keyed by its contact (a cyclic run of drawings on one pad).
+
+| Pitch | Facing | Four (pad sole, jump) | Eight, Part A = ships (pad / contact sole, jump) | Eight registered (pad / contact sole, jump) |
+|---:|---|---:|---:|---:|
+| 70 | right | 12.50, 16.82 | 18.16 / 18.34, 10.73 | 27.76 / 27.93, 8.92 |
+| 70 | down-right | 18.86, 12.87 | 27.45 / 36.01, 10.37 | 36.75 / 45.21, 9.49 |
+| 55 | right | 21.94, 11.78 | 20.91 / 20.42, 10.74 | 30.00 / 29.50, 1.22 |
+| 55 | down-right | 18.64, 12.87 | 23.86 / 39.43, 9.93 | 31.56 / 48.14, 1.51 |
+
+The Part A eight equals n29's "eight held" column to 0.00 px in every cell (18.16 / 10.73, 27.45 / 10.37,
+20.91 / 10.74, 23.86 / 9.93). Registered vs Part A: sole +9.6 / +9.3 / +9.1 / +7.7 (pad reader), +9.6 / +9.2 /
++9.1 / +8.7 (contact reader), jump -1.81 / -0.88 / -9.52 / -8.42: worse on the failing bar in every facing, so
+not a net win.
+
+**Why registration cannot pass on this art** (planted pad x per drawing, sheet px from the torso, from the packed
+sheets; "carry" = how far the drawn body moves over the planted pad through the contact, "need" = the fighter's path
+through the contact (drawings x 0.3244 m) minus the carry, both px at 32 px/m: what the card must either slide the
+pad by or jump the body by at the boundary):
+
+| Pitch | Facing | Contacts: drawings, planted pad x, carry, need |
+|---:|---|---|
+| 70 | right | R 1-2: +40 +17, 7.9, 12.9; L 3-4: -51 -52, 0.2, 20.6; R 5-7: +42 +17 +34, 2.8, 28.3; L 8: -38, 0, 10.4 |
+| 70 | down-right | L 1-3: -28 -29 -30, 0.3, 30.8; R 4-8: +65 +38 +39 +40 +42, 8.2, 43.7 |
+| 55 | right | R 1-3: +30 +28 +28, 0.7, 30.4; L 4: -54, 0, 10.4; R 5-7: +32 +29 +29, 1.2, 29.9; L 8: -55, 0, 10.4 |
+| 55 | down-right | L 1-3: -28 -28 -29, 0.3, 30.8; R 4-8: +53 +48 +50 +50 +56, -1.0, 53.0 |
+
+The drawn body advances over the planted pad only in p70 right 1 -> 2 and 5 -> 6 (about 8 px each); everywhere else
+the planted pad sits at a fixed offset from the torso for the whole contact (it steps in place). With sole <= 2 the
+boundary jump must be the "need" (10.4 to 53 px, over the 12 bar in 6 of the 8 multi-drawing contacts); with jump
+<= 12 the pad must slide by need - 12. Both bars at once need art where the planted pad moves back about 10 px
+(at 32 px/m, about 30 sheet px) per drawing through every contact: in the right facing that is drawings 3-4 and 5-8 at
+p70 and 1-3 / 5-7 at p55, in down-right 1-3 and 4-8 at both pitches. A director call (one-row image edits; the brief's
+fallback named p70 right 3-4 and 7-8, the table says those and more).
+
+The registered view as built (kept as `build/look/n30-c02/register_pads.patch`, not in the tree): generator
+`cast_war_soles.py` emits `CONTACT70` / `CONTACT55` (Vector3 planted pad x, y, first drawing of its contact);
+`FoeWarCardView.REGISTER_PADS` holds the contact's pad at one ground point, lands a new contact's pad where the card
+already stands (no body jump) and drags the pad once the card lags the fighter by more than `CATCH_UP_M = 0.25` m;
+`cast_war_feet.py --reader=contact`; `cast_war_films.mjs` walk `eight_reg`. Not committed: it loses, and as built it
+pushes the view to 222 lines and the generated anchors to 236 (soft cap 200, debt ratchet) with `sample` at 43 lines.
+
+Ships: the Part A eight. Still `build/look/n30-c02/war8_feet_before_after_64.png` (64 px/m, right, same tick: the
+four staged left | the eight that ships right; "Part A eight | what ships" would be one picture twice). Clip
+`gtai-masters/n30/cast/war8_walk_32.mp4` (the committed eight, 32 px/m, right then down-right; ffprobe 1920x1080,
+60 fps, 25.85 s). Mutate: not run, the view has no committed changed line (Part A changed only the generated
+constant `WALK`; the registered code is not in the tree).
+
+## Patrol cop build jitter, n30
+
+Owner pick: a cop's whole-figure build varies +-8 % (`StreetCrowdCards.COP_SCALE_VAR` 0.08, `body_scale_of(rig)`: a rig whose plan `art_dir` is `cop`, plus the arena wave cop in `arena_wave_cards.gd`), the crowd keeps +-16 % (`SCALE_VAR`, byte-identical per id: unit test over ids 0..999). Commit `c2281acbb`.
+
+Measured (re-run of `cast_size_beside.gd`, 64 px/m, tilt 70, `tools/art/cast_size_measure.py`): patrol cop actor id 1 is 93 px (n29: 86 at jitter 0.855; now 1 + 0.08 x vary = 0.927 x 100.6 = 93.3 predicted). Rivet 154 px. The unjittered cop is 100.6 px (n29 measurement). The min and max rows were first COMPUTED; they are now MEASURED in `cop_jitter_64.png` (`project/dev/cast/cast_cop_jitter.gd`, not yet committed: the `dev_loc` debt ratchet refuses +85 lines, NEED director; cops spawned with Fighter.id forced to 710, 793 (vary 0.00002, the unjittered build) and 230, beside the card foes and Rivet, `tools/art/cast_size_measure.py`): 92 / 100 / 108 px. `vary(710, 3)` = -0.9966 and `vary(230, 3)` = +0.9994 are the extreme ids over 0..999.
+
+| cop | scale before (+-16 %) | px at 64 before | scale after (+-8 %) | px at 64 after | / unjittered (after) | / Rivet 154 (after) |
+|---|---|---|---|---|---|---|
+| min (id 710) | 0.841 | 84.6 | 0.920 | 92 (measured; computed 92.6) | 0.920 | 0.60 |
+| unjittered (id 793) | 1.000 | 100.6 | 1.000 | 100 (measured) | 1.000 | 0.65 |
+| max (id 230) | 1.160 | 116.7 | 1.080 | 108 (measured; computed 108.6) | 1.080 | 0.71 |
+| id 1 (measured) | 0.855 | 86 | 0.927 | 93 | 0.927 | 0.60 |
+
+Same run, card foes beside the cop (64 px/m, px): contractor 100, appliance_warden 101, rocket_trooper 100, robot_gunner 110, robot_thug 141 (the other n30 lanes' changes are in this tree; not this part's). Known gap: `kill_fall_cells.gd` `victim_scale` sizes a killed pose-less cop by `body_scale(actor_id)` (0.16), so a killed street cop would jump to the crowd build at death (NEED combat). Card cops with a cast row are unaffected (they use `scale_of`).
+
+## Door eight with three more edits, n30
+
+**Verdict: WALK stays FOUR.** The eight now passes both bars at p70 (right and down-right), but p55 still blocks it:
+p55 right sole 2.15 (four 2.03, bar 2) and jump 7.69 (four 5.09), p55 down-right sole 3.06 (bar 2) and jump 11.93 (four
+10.43). Three one-row image edits (`gtai-art/foes-n30/door8c`, 3 images, no retries): p55 drawing 8 right (rear support
+boot set forward to drawing 4's place) and down-right (rear boot set down onto the floor plane; the x part of the ask,
+~36 source px forward, was NOT drawn), p70 down-right drawing 1 (front boot set forward, level with drawing 5's). Each
+edit re-encoded its whole row, so only the redrawn grid cell was spliced into the accepted source
+(`door8c/out/<job>_splice.png`, other cells' silhouettes xor 0). `tools/art/cast_door_eight.py` `REDRAWN` cuts from the
+three splices and replaces only those sheet cells; the n29 p70 right row 7 keeps its bytes (re-toning moves it a level,
+so it left `REDRAWN_CELLS`). Byte compare against the previous sheets: p70 39 of 40 cells identical (dr 1 changed,
+silhouette xor 490 px), p55 38 of 40 (right 8: 577, dr 8: 436). Key-lead 0, strict red 0 at both pitches; body heights
+unchanged but p70 dr 146.0 -> 146.4. Registered soles (`cast_door_soles.py`, sheet px from the cell centre): p55 right 8
+-47 -> -42 (drawing 4: -43.5), p55 dr 8 (-33, -9.5) -> (-32, -0.5) (depth fixed, x not), p70 dr 1 11 -> 16.5.
+`EIGHT_STEP_M` 0.1842 -> 0.1799 (the measured mean, so every eight number below moved, the unedited p70 right too).
+Commit `da11ce846`.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n30-c05/feet feet`, `cast_feet.tscn` at 64 px/m, 1.6 m/s,
+`cast_door_feet.py`, px in the tool's 32 px/m unit; the four re-measured to the hundredth of n29). Bars: sole <= 2,
+jump <= 12. Culprit = the scratch probe (`build/look/n30-c05/probe.py`, the n29-11 probe) over the takes: worst jump
+(from -> to drawing), worst sliding contact (drawings).
+
+| Pitch | Facing | Four (sole / jump) | Eight n29 (with f7) | Eight with the n30 edits | Eight vs four | Culprit (eight n30; four where over a bar) |
+|---:|---|---:|---:|---:|---|---|
+| 70 | right | 2.42 / 4.34 FAIL | 2.04 / 6.47 FAIL | 1.96 / 6.61 PASS | within both bars | four: sole 2.42 on 3-4; eight: jump 4 -> 5, sole 1-4 |
+| 70 | down-right | U / 10.50 | 1.39 / 12.21 FAIL | 1.39 / 12.00 PASS | within both bars (jump at the bar) | eight: jump 12.00 on 8 -> 1 (was 12.21), next 11.29 on 4 -> 5 |
+| 55 | right | 2.03 / 5.09 FAIL | 2.16 / 9.61 FAIL | 2.15 / 7.69 FAIL | sole +0.12, jump +2.60: BLOCKS | four: sole 2.03 on 3-4; eight: jump 7.69 on 7 -> 8 (was 9.61), sole 2.15 on 5-8 |
+| 55 | down-right | U / 10.43 | 3.45 / 13.28 FAIL | 3.06 / 11.93 FAIL | sole over the bar, jump +1.50: BLOCKS | eight: jump 11.93 on 4 -> 5 (7 -> 8 now 9.14, was 13.28), sole 3.06 on 5-8 |
+
+The edits did what they targeted: p55 right 7 -> 8 jump 9.61 -> 7.69, p55 down-right 7 -> 8 13.28 -> 9.14, p70
+down-right 8 -> 1 12.21 -> 12.00 (just inside). What still blocks: p55 down-right's second contact (drawings 5-8) slides
+3.06 px, because drawing 8's rear boot stayed 13.5 sheet px behind drawing 4's in x (the edit fixed only its depth),
+and its worst jump is now 4 -> 5 (11.93, the first-to-second contact boundary); p55 right is within 0.15 px of the four's
+sole but its jump stays 2.6 px over the four's (7 -> 8 still the largest). Next edit, if the director wants one: p55
+down-right drawing 8 again with the x ask alone (rear boot ~1/2 foot forward, same depth), then re-measure 4 -> 5.
+Still `gtai-masters/n30/cast/door8_edits_64.png` (`cast_door_films.mjs stills`: p70 right, tick 150, four left, eight
+right, sole brackets; no edited drawing is in that frame); old | new cell crops of the three edits (with the preceding
+drawing) `build/look/n30-c05/edited_cells_2x.png`.
+
+## Door eight, p55 round, n30
+
+**Verdict: WALK stays FOUR; the art ships (`15590aa9b`).** Two one-cell edits make both blocking p55 numbers better and none
+worse (p55 right 2.15 / 7.69 -> 2.05 / 6.98, p55 down-right 3.06 / 11.93 -> 2.72 / 11.78; p70 sheet byte-identical), but
+neither p55 facing reaches the owner's rule yet: right sole 2.05 (bar 2), down-right sole 2.72 (bar 2).
+
+Plan (from `EIGHT55` at `da11ce846` and the probe, per drawing sole x in sheet px from the cell centre, D1..D4 | D5..D8):
+right 14, 10.5, 6, -43.5 | 15, 11, 11.5, -42: half B stalls on 6 -> 7 (-0.5 where half A advances 4.5) and then takes 53.5 on
+7 -> 8 (half A 49.5); the contact slide follows the largest knot gap inside the contact (2.00 at 49.5, 2.15 at 53.5).
+Down-right (x, y) (29.5, 17.5) (30.5, 17.5) (30.5, 17.5) (-18.5, 0.5) | (4, 23.5) (22.5, 21.5) (16.5, 21.5) (-32, -0.5):
+the boot landed in D5 sits 18.5 px behind where D6 plants it, so the body runs backwards inside the 5-8 contact.
+p55 right's jump under the four's 5.09 is out of reach of any one cell (3 -> 4 is 6.77 and 4 -> 5 6.98, neither touches
+D7/D8), so right takes the bars route (jump already <= 12, sole must go <= 2). Cells: right D7 support boot back ~5 sheet
+px (~12 source px, landmark: the toe-to-bar gap as wide as the bar, as in D3); down-right D5 landed boot right ~20 sheet
+px (~45 source px, landmark: centred under the slab's lower edge, as in D6). Neither cell is in `EIGHT_STEP_M` (right
+D1/D4/D5/D8 only): 0.1799 unchanged.
+
+Images (`gtai-art/foes-n30/door8d`, 6 of 8, Ref 1 = the current source row incl. the n30 drawing 8 splice): right f7
+accepted (boot 193-295 -> 185-287 source px, D3's place); down-right f5 accepted as partial (boot 189-277 -> 211-301, half
+the ask); f5b / f5c / f5d (further, toe under the slab's right corner, copy D6's leg) moved the boot 3 / 0 / 0 px: the
+model holds that boot. Right f7b ("a few px more") overshot (169-269): measured, worse, not shipped. Each splice: other
+cells' silhouettes xor 0; sheet byte compare vs the previous p55 sheet: 38 of 40 cells identical (right 7: 343 px,
+down-right 5: 601 px); p70 byte-identical. Registered soles: right D7 11.5 -> 8, down-right D5 4 -> 13.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n30-c16/feet feet`, sole / jump, tool's 32 px/m unit; culprit =
+`build/look/n30-c16/probe_all.py`, worst jump per transition and worst contact):
+
+| Pitch | Facing | Four | Eight n30 (`da11ce846`) | Eight c16 (`15590aa9b`) | Culprit (eight c16) |
+|---:|---|---:|---:|---:|---|
+| 70 | right | 2.42 / 4.34 | 1.96 / 6.61 PASS | 1.96 / 6.61 PASS (sheet unchanged) | jump 4 -> 5, sole 1-4 |
+| 70 | down-right | U / 10.50 | 1.39 / 12.00 PASS | 1.39 / 12.00 PASS (sheet unchanged) | jump 8 -> 1 |
+| 55 | right | 2.03 / 5.09 | 2.15 / 7.69 FAIL | 2.05 / 6.98 FAIL | jump 4 -> 5 (7 -> 8 now 6.88, was 7.69), sole 2.05 on 5-8 (1-4: 2.00) |
+| 55 | down-right | U / 10.43 | 3.06 / 11.93 FAIL | 2.72 / 11.78 FAIL | jump 4 -> 5, sole 2.72 on 5-8 (1-4: 1.69) |
+
+What the rejected f7b taught: right D7's sole at 11.5 / 8 / 0 gives the 5-8 slide 2.15 / 2.05 / 2.23, a minimum near 6.5 of
+about 2.04, so D7 alone cannot bring p55 right under 2; the 5-8 contact needs a second cell (D8 moves `EIGHT_STEP_M` and so
+every facing; D5 / D6 do not). Down-right needs the D5 boot ~11 sheet px further right (an image edit would not move it:
+three asks, 3 / 0 / 0 px) or D6 and D7 set back to meet it, and very likely D8 forward as well (7 -> 8 knot gap 53 vs half
+A's 52). Next round, if wanted: down-right D6 + D7 boots back (the model moves boots back readily, and overshoots: ask
+for half), then re-measure; right D5 or D6 as the second cell. Crop of the two edited sheet cells with their neighbours
+and registered soles: `build/look/n30-c16/edited_cells_sheet_2x.png`.
+
+## Door eight, p55 round 2, n30
+
+**Verdict: WALK stays FOUR; the art ships (`4c62f3b65`, `6ee306fd8`).** Three one-cell edits to p55 down-right (drawing 6,
+then drawing 7 twice; the second D7 replaces the first) take its 5-8 contact slide 2.72 -> 2.08 with the jump unchanged
+(11.78) and p70 byte-identical, but no facing newly passes: p55 down-right sole 2.08 (bar 2), p55 right 2.05 (bar 2).
+
+What the probe says (`build/look/n30-c17/probe_all.py`, round 1's probe plus the per-frame track of each slipping
+contact; every drawing restarts the planted sole at 0, so the slide is the worst drift inside one drawing's hold):
+- p55 right 5-8: holds drift D5 -0.60, D6 -0.31, D7 -1.93, D8 -2.04. D5 and D6 do not set the number; the D8 hold
+  does (half A's D4 hold: -1.93). The right drawing 6 edit (`door8e` right f6, support boot 193-299 -> 192-297 source px,
+  registered sole 11 -> 12) measured 2.05 / 6.98, identical, and 7 -> 8 jump 6.88 -> 6.92: not shipped. Neither D5 nor D6
+  can bring p55 right under 2; only D8 (`EIGHT_STEP_M`, every facing) can, and that stays out of scope.
+- p55 down-right 5-8 at `15590aa9b`: holds D5 +0.38, D6 +0.37, D7 -2.33 (diameter 2.71): the planted boot slid forward
+  across D5 -> D6 (registered x 13 -> 22.5). D6 back to D5's place (226-332 -> 215-301 source px, sole 22.5 -> 13.5) and
+  D7 a few px back (218-310 -> 216-303, 16.5 -> 15) remove the forward drift (D5 / D6 holds +0.06 / +0.08): 2.15. D7 rolled
+  back about a tenth of a boot (216-303 -> 200-286, 15 -> 8.5): 2.08, 7 -> 8 jump 8.79 -> 8.50. What is left is the late
+  D7 hold (-1.97; half A's D3: -1.67), the body running into the D8 knot: like right, a D8 matter.
+
+Images (`gtai-art/foes-n30/door8e`, 5 of 6, Ref 1 = the current source row incl. every accepted splice): dr f6
+accepted (asked "toe where drawing 7's toe ends", toe moved 31 px, landing on D5's place, as the overshoot rule predicts);
+dr f7 accepted ("a few pixels", 7 px); right f6 measured, no change, not shipped; dr f7b ("heel in line with D5 / D6",
+Ref 1 = the f6 + f7 splice) moved 0 px, not used; dr f7c ("rolled back about a tenth of a boot") 16 px, accepted. dr f6
+stalled in `gen.mjs`; copied by hand from `~/.codex/generated_images/`. Every splice: other cells' silhouettes xor 0;
+LOOKED at the 2x crops (identity, slab, body unchanged). Sheet: 38 of 40 p55 cells byte-identical to `15590aa9b` (down-
+right rows 6 and 7 changed), p70 byte-identical, `EIGHT_STEP_M` 0.1799 unchanged. Crop of the sheet's down-right
+drawings 5-8 before / after: `build/look/n30-c17/edited_cells_sheet_2x.png`.
+
+Feet (`node tools/film/cast_door_films.mjs build/look/n30-c17/feet3 feet`, sole / jump, tool's 32 px/m unit):
+
+| Pitch | Facing | Four | Eight c16 (`15590aa9b`) | Eight c17 (`6ee306fd8`) | Culprit (eight c17) |
+|---:|---|---:|---:|---:|---|
+| 70 | right | 2.42 / 4.34 | 1.96 / 6.61 PASS | 1.96 / 6.61 PASS (sheet unchanged) | jump 4 -> 5, sole 1-4 |
+| 70 | down-right | U / 10.50 | 1.39 / 12.00 PASS | 1.39 / 12.00 PASS (sheet unchanged) | jump 8 -> 1 |
+| 55 | right | 2.03 / 5.09 | 2.05 / 6.98 FAIL | 2.05 / 6.98 FAIL (cells unchanged) | jump 4 -> 5, sole 2.05 on the D8 hold of 5-8 |
+| 55 | down-right | U / 10.43 | 2.72 / 11.78 FAIL | 2.08 / 11.78 FAIL | jump 4 -> 5, sole 2.08 on the late D7 hold of 5-8 |
+
+Next, if wanted: both remaining p55 soles sit in the hold before drawing 8 (right D8 hold -2.04, down-right D7 hold
+-1.97), so the only one-cell lever left is drawing 8 itself, which moves `EIGHT_STEP_M` and so every facing at both
+pitches; it needs the director's call and a full re-measure. No further D5 / D6 / D7 edit is expected to cross 2.
+
+## Door eight, p55 drawing 8, n30
+
+**Verdict: no drawing-8 move works; no images, no art change, WALK stays FOUR.** No p55 right drawing-8 sole move brings
+p55 right's sole to 2 or under while p70 keeps passing, so the round stopped after the computation (`door8f`: 0 images).
+
+Method (no Godot; scratch `build/look/n30-c19/`, `model.py`, `predict.py`, `scan.py`, `scan_fine.log`): a port of
+`StreetCopWalk.Contact` and `StreetPatrolPose` (pose, settle, centre stance) reads `EIGHT70` / `EIGHT55` and recomputes
+`EIGHT_STEP_M` the way `cast_door_soles.py` does. On c17's tracks (`build/look/n30-c17/feet3`) it reproduces the drawing
+sequence in all four facings (225 of 225 frames) and the card shear within 0.02-0.10. The tracks show that a planted
+sole drifts inside one drawing's hold by the change in lean times the registered sole's height below the cell pivot
+(p55 right drawing 8: 0.200 x 20.5 / 2 = 2.05 tool units, measured 2.04). The roll pivots on the cell's pivot line,
+not on the sole. Prediction = the feet3 hold drift + the model's change for a drawing-8 sole moved dx sheet px (right p55
+drawing 8 moves `EIGHT_STEP_M` by 0.000868 m per px; down-right drawing 8 is not in the step).
+
+| Move (sheet px) | `EIGHT_STEP_M` | p70 right | p70 down-right | p55 right | p55 down-right |
+|---|---:|---:|---:|---:|---:|
+| none (c17, measured) | 0.1799 | 1.96 (D1) | 1.36 (D7) | 2.04 (D8), 2.00 (D3) | 1.97 (D7) |
+| right D8 -6 / -3 | 0.1851 / 0.1825 | 2.16 / 2.12 | 1.36 / 1.35 | 2.08 / 2.05 | 1.97 / 1.95 |
+| right D8 +3 / +6 / +10 | 0.1773 / 0.1747 / 0.1712 | 2.09 / 2.02 / 1.99 | 1.37 / 1.38 / 1.41 | 2.21 / 2.30 / 2.36 | 1.99 / 2.00 / 2.04 |
+| right D8 +12 / +16 / +20 | 0.1695 / 0.1660 / 0.1625 | 1.99 / 1.96 / 1.89 | 1.41 / 1.37 / 1.34 | 2.03 / 2.31 / 2.06 | 1.86 / 1.82 / 1.75 (dr +4) |
+| down-right D8 +3 / +6 / +10 | 0.1799 | 1.96 | 1.36 | 2.04 | 1.84 / 1.72 / 1.66 (D3) |
+
+(worst hold's x drift in tool units, bar 2; the rows marked "dr +4" also move down-right drawing 8 by +4.)
+
+Why: the right drawing-8 hold drifts with the lean from the drawing-7 knot to the next half's drawing-1 knot. Moving the
+drawing-8 sole shifts lean between the drawing-7 and drawing-8 holds, but their sum stays the same. The step change it
+brings moves every half-boundary hold (p70 right D1, p55 right D4 / D8). No step in the scanned range (0.1625-0.1886) puts
+p55 right under 2. p55 right's half-A drawing-3 hold (2.00) does not depend on drawing 8 at all. Down-right drawing 8 forward 3-6
+sheet px (about 7-15 source px) would take p55 down-right under 2 and move nothing else. That alone does not pass the
+owner's rule, so it was not drawn.
+
+Caveat: the model matches the mid-half holds (p55 right D3 2.03 vs 2.00 measured, D7 1.97 vs 1.93) but reads low on
+the half-boundary holds (p55 right D8 1.71 vs 2.04, p70 right D1 1.00 vs 1.96; the settle and stance shift). Its deltas
+there jitter with dx because of frame sampling. The right-facing verdict rests on those holds; a Godot re-measure of
+one candidate would settle it.
+
+Next, if wanted (director's call): down-right drawing 8 forward (fixes p55 down-right alone). p55 right needs a non-D8 change
+to both its drawing-3 hold (2.00) and its drawing-8 hold (2.04), or a pose-code change (roll the hold about the
+registered sole, not the pivot line), which would move every facing of every foe eight and is not this lane's.
+
+## Held walk cell pins the sole, n30
+
+**Fault (c20).** The gap between the registered anchor and the feet reader is 0. Inside a held walk drawing, though, the
+line that stays still is the cell pivot (y 168), not the registered sole (y 188.5), in all 8 takes:
+`FoeShieldCardView.update_fighter` sets `position = last_ground` on a held cell. That throws away the
+`StreetPatrolPose` shear about the registered sole, so the drawing leans about its pivot.
+
+**Fix tried (c21a, committed dae6d8982).** On a held cell: `position += last_sole - transform * _sole_local()`, which
+pins the registered sole. c21a's feet table (`cast_door_films.mjs ... feet`, 64 px/m, sole / jump, bars 2 / 12):
+
+| walk | p70 right | p70 down-right | p55 right | p55 down-right |
+|---|---|---|---|---|
+| four before | 2.42 / 4.34 | U / 10.50 | 2.03 / 5.09 | U / 10.43 |
+| four sole pin | 0.00 / 3.41 | U / 10.39 | 0.00 / 4.07 | U / 9.66 |
+| eight before | 1.96 / 6.61 | 1.39 / 11.999 | 2.05 / 6.98 | 2.08 / 11.78 |
+| eight sole pin | 0.00 / 7.95 | 0.00 / 12.04 | 0.00 / 5.03 | 0.00 / 11.77 |
+
+**Delivered frames (c21b).** Door four, p70 right, 64 px/m, 1920x1080 raw movie, before fe4139075 and after dae6d8982,
+same ticks. Horizontal shift of a screen row band from the first frame of each held drawing to its last (SSD with a
+sub-pixel fit, `build/look/n30-c21/c21b_holds.py`, frames `build/look/n30-c21/c21b/{sb,sa}`):
+
+| band (screen rows) | 11 holds, ticks 114-180 | before | after |
+|---|---|---|---|
+| 527-533 (boot bottom) | mean / max of the absolute slide | 0.86 / 1.65 px, backward | 1.60 / 3.15 px, forward |
+| 520-527 (boot) | mean / max of the absolute slide | 0.09 / 0.20 px | 2.56 / 5.03 px |
+
+The still line moves from the boot (y ~524) to y ~541, the marker row, about 7 px below the drawn sole. The front boot
+heel goes 934 -> 933 before and 934 -> 938 after over hold 132-138. Strip: masters `n30/cast/door_sole_pin_64.png`.
+
+**Verdict.** NOT shipped. The feet reader tracks the registered point. That point sits about 7 screen px below the drawn
+boot at 64 px/m, so the reader cannot see the drawn boot slide. Pinning the registered point moves the slide onto the
+boot that the player actually sees. Reverted in 97bb564a2, so the pivot pin ships again. Mutate on dae6d8982 lines 60 and
+71: 0 / (0 + 2) killed, 2 invalid, so the unit tests do not pin either behaviour.
+
+War card: see c21w (`build/look/n30-c21w/NOTES.md`). The war card applies no lean, so its pivot pin is already the
+sole pin.
+
+Next: register the door sole at the drawn boot bottom (this regenerates every door anchor), then measure with
+`c21b_holds.py` in the delivered frames, not with the feet reader alone.
+
+## Door four and eight on the drawn boot, n30
+
+**Verdict.** On the drawn boot the eight does not pass the 2 px bar in every facing: its in-hold slide reaches 2.03 at
+p55 down-right (2.00 in x alone). It beats the four only at p70 right (1.71 against 2.10). At p70 down-right, p55 right
+and p55 down-right it is worse than the four. The contact slide (plant to lift across all drawings of one contact) is
+**not measured** by c22: the tracker below could not hold one boot through a drawing change. c25 measured it from the
+same frames (the lines under the table). `CastDoorAnchors.WALK` is unchanged.
+
+**Method (c22, measure only; scratch `build/look/n30-c22/`).** `c22_clip.mjs` renders the door carrier through
+`runGodot` (one launch per take, 8 launches, each `exit 0` in 19-22 s, 325 frames 1920x1080 by ffprobe) at 64 px/m, 1.6
+m/s, 300 ticks. The takes cover the four and the eight, p70 and p55, right and down-right. All renders come from staged
+copies, so the tree is untouched:
+- eight = `CastDoorAnchors.WALK = EIGHT`, the same switch `cast_door_films.mjs` uses;
+- p55 = `_pitch = 55` in the staged `cast_foot_film.gd`;
+- every staged film drops the sole-dot overlay, so the frames hold only the drawn art, and logs the drawn card row and
+  `xf` and the registered sole point for each tick.
+
+`c22_measure.py` then works on the frames:
+- **Alignment.** Movie frame = tick + 24. The image-change spikes fall exactly on the logged drawing changes.
+- **Background.** A per-pixel median over the take is subtracted, so the grid and Rivet do not pin the SSD.
+- **In-hold slide.** This is c21b's method. The boot band is the lowest 7 ink rows of the carrier within 120 px of the
+  registered sole in each hold's first frame. Band rows: right 537-544 at p70 and 537-552 / 538-544 at p55. Down-right
+  rows follow the walk (368-727). The band's shift from the hold's first frame to its last uses SSD over +-10 px x and
+  +-3 px y with a parabolic sub-pixel fit.
+
+These band rows are the drawn sole. c21b's 527-533 band sits about 10 px higher, nearer the pivot (y ~524), which is
+why its four p70 right read 0.86 / 1.65 and this one reads 2.13 / 4.20. Every slide is backward (negative x).
+
+| take (64 px/m, 300 ticks) | holds | in-hold mean / max, 64 px/m | in-hold mean / max, 32 px/m | feet reader sole (32 px/m) | contact slide mean / max, 32 px/m (c25) |
+|---|---:|---|---|---:|---|
+| four p70 right | 50 | 2.14 / 4.20 | 1.07 / **2.10** | 2.42 | 6.36 / **8.38** (23 contacts; drawing 0 -> 1 hops 13.1-13.3 px at 64 px/m) |
+| four p70 down-right | 50 | 1.44 / 2.99 | 0.72 / 1.50 | U | not measured: tracker lost 10 of 18 clear contacts, no strip check (5 Rivet) |
+| four p55 right | 50 | 1.82 / 3.06 | 0.91 / 1.53 | 2.03 | 3.34 / 3.74, drawings 2-3 only (10); the 0-1 contacts not measured: drawing 1 has no sole within 5 px of the ground (9 lost, 4 Rivet) |
+| four p55 down-right | 50 | 2.01 / 3.87 | 1.01 / 1.94 | U | not measured: tracker lost 18 of 18 clear contacts (5 Rivet) |
+| eight p70 right | 45 | 2.46 / 3.42 | 1.23 / 1.71 | 1.96 | 8.93 / **9.31** (10 contacts; worst single change 4.5 px at 64 px/m) |
+| eight p70 down-right | 45 | 1.74 / 3.78 | 0.87 / 1.89 | 1.39 | not measured: tracker lost 8 of 8 clear contacts (2 Rivet) |
+| eight p55 right | 45 | 1.94 / 3.43 | 0.97 / 1.72 | 2.05 | 5.24 / 6.08 (9 contacts, 1 Rivet) |
+| eight p55 down-right | 45 | 1.46 / 4.06 | 0.73 / **2.03** | 2.08 | not measured: tracker lost 9 of 9 clear contacts (1 Rivet) |
+
+(magnitude of the (x, y) shift; the x shift alone is within 0.06 px of it (eight p55 down-right 4.00 / 2.00). Rivet
+stands in the walk path in 4-9 holds per take, reported apart by the tool, and none of those sets a maximum. The worst
+hold of each take: four p70 right ticks 108-114 (drawing 2); eight p55 down-right ticks 48-53 (drawing 7), where the
+boot's toe goes from x 869 to about 865 at the 4x zoom while the body runs on.)
+
+**Contact slide (c25, measure only, no Godot; scratch `build/look/n30-c25/`).** World-fixed camera, so screen px = world
+px. `c25_card.py` keeps, per drawing, the ink columns within 5 px of the ground row in at least half its frames (door bar
+dropped by colour), placed by the logged `xf`. The planted sole is the front-most one at the plant, passed at each change
+to the sole it overlaps most. Each change counts the smaller of its heel and toe shifts (a merged neighbour boot moves
+one edge). `c25_table.py` adds c22's in-hold `|dx|` and halves for 32 px/m. Checked on `strip2_four_p70_right_c{0,1}.png`,
+`strip2_eight_p70_right_c0.png` and `strip2_{four,eight}_p55_right_c0.png`, where the lines stay on the grounded boot.
+The brief's SSD blob tracker (`c25_slide.py`) failed that check: in `strip_four_p70_right_c7.png` frame 126 its heel line
+is on bare ground. Down-right is not measured, because the boots stand at different depths there.
+
+**Verdict (contact slide).** At p70 right the eight's boot travels further over a contact than the four's (9.31 against 8.38 max),
+because each of its four holds drifts back (10.1 px of in-hold drift against 4.4 at 64 px/m). What it removes is the four's
+hop at drawing 0 -> 1: 13.3 px at 64 px/m, against 4.5 for the eight's worst change. The eight's grounded toe holds at 5 -> 6
+only by a leg swap (the blue-pad boot lifts and a dark boot takes the spot). So the contact slide narrows "the eight beats
+the four only at p70 right" to that one change. At p55 right the eight is longer as well. `CastDoorAnchors.WALK` is unchanged.
+
+**Contact slide: why it is not measured.** Three trackers were tried on the planted boot (`c22_measure.py` keeps the
+last one):
+- a 44x14 SSD patch chained across drawing changes;
+- one plant-frame template matched in every frame within +-16 px;
+- a run of ground-touching columns.
+
+All three gave 6-24 px per contact, often at the search clamp (16.00), and none of those readings survives a look. At
+the four p70 right drawing change 0 -> 1 (frames 121 / 126, 5x zoom, `build/look/n30-c22/tmp/z5.png`), the near boot's ground run moves
+from 862-893 to 841-877, while a darker boot about 5 px higher (the far leg) holds 861-888. From the frames alone it is
+not clear which boot the drawing means to plant, so no contact number is quoted. The registered sole itself holds within
+2.5 px across the four's contact (878.8 -> 876.3 screen px).
+
+**Looked.** `build/look/n30-c22/looks_2x.png` has one 2x crop per take at the plant frame of the contact with the worst hold.
+- Right facings: carrier, door bar and boots read cleanly, with no smear or doubled edge.
+- Down-right: the crop centres on the registered sole from the profile column, so the boots sit low in the crop, and
+  Rivet's dome covers the boots early in the walk.
+
+`build/look/n30-c22/eight_p55_contact_2x.png` shows frames 51 / 60 / 72 / 77 of eight p55 down-right ticks 27-53, one fixed 2x crop:
+- the red lines mark the boot's toe (x 869) and the ground row (y 448) at the worst hold's first frame;
+- in 51 / 60 the carrier's boots are behind Rivet;
+- in 72 -> 77 the front boot's toe slides about 4 px back off the line while the shield and body move on.
+
+Next (director): whether the drawn boot is planted at all across the four's drawings 0 -> 1 needs an owner look at
+`build/look/n30-c22/tmp/z5.png` or a per-drawing boot label from the art. A contact number is meaningful only after that.
