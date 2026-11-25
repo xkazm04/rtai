@@ -31,3 +31,18 @@ Measured (pixel scan of the paper border of chip 1's plate, rows 1005-1022):
 ## n29-01d handheld
 Not rendered. Deck row: `deck` in `project/data/tables/devices.json` (hud `compact`, 1280x800 panel; `deck40`, `deck30` are the same layout). The only capture route, `BondFilmCapture._capture` (`project/dev/ghost-forms/bond_film_capture.gd` line 38), quits with exit 1 on any frame that is not 1920x1080, so a `--device=deck` run at 1280x800 cannot write a frame; the other route, `--write-movie`, was refused by the permission system in 01b and was not retried. No Godot step was run and no still exists.
 NEED (dev file, not in this lane's allowlist): `bond_film_capture.gd` should accept the window's own size (e.g. compare to `DisplayServer.window_get_size()` or take `GTAI_FILM_SIZE`), after which `node tools/dev/run.mjs bond_film_64 --windowed --position 0,1440 ... --device=deck` with `GTAI_FILM_FROM/TO` 600..640 gives the 1280x800 frame. The compact layout stays pinned by `test_every_number_plate_lies_inside_the_strip_and_off_the_screen_edge` (both layouts, plate x >= 8).
+
+## n29-01e handheld (snapshots)
+- Snapshots (`tools/lib/snapshot.mjs`, kinds `hudhhb` = `c649a15d6`, `hudhha` = `a04fc1b40`, HEAD). Each SNAPSHOT (never this worktree) carried two dev-only edits: `bond_film_capture.gd` line 38 `if image.get_size().x < 640:` (instead of the 1920x1080 check), and `"--device",` added to `KNOWN_FLAGS` in `project/dev/gauntlet/gauntlet.gd` (the gauntlet's own argument check answered `invalid argument --device`, exit 2, in the first try, so the scene refused the flag that `LaunchArgs` reads). The product HUD code is the committed one in both.
+- Command, per snapshot (via its own `tools/lib/godot.mjs` `runGodot`, `cwd` = snapshot, windowed, `GTAI_FILM_DIR` a temp dir, `GTAI_FILM_FROM/TO` 600/640): `--rendering-driver d3d12 --position 0,1440 --fixed-fps 60 res://dev/ghost-forms/bond_film_64.tscn -- --bond-prefill=16 --device=deck` (seed default 1, as 01b; `tools/dev/run.mjs` cannot pass `--rendering-driver`/`--position`). Log: `device: profile deck: window 1280x800 ... tier handheld`; 41 frames each. The frame is 1280x800 (deck row, 1:1 panel). Frame 20 (tick ~619) of each; diff bbox of the pair 0,735 to 49,769 (only the strip's left end differs).
+- Strip box (the dark rounded panel) x 6..198, y 682..794 in both. Plates y 737..762.
+
+| measure | before (c649a15d6) | after (HEAD) | bar |
+|---|---|---|---|
+| chip 1 plate left edge | about x = -4 (right border at x 22, plate 26 wide: clipped by the screen edge) | border x = 9 (first dark column 11) | >= 8 px after: met (9) |
+| plate 1 inside the strip box | no (starts left of the box edge x 6 and of the screen) | yes (9..35) | yes |
+| plates 2, 3, 4 inside the strip box | yes (39..64, 81..106, 123..148) | yes, unchanged | yes |
+| caption vs strip overlap | no caption on screen (the bot shows it only while it acts) | same | 0 px: n/a |
+
+- Stills (read): `gtai-masters/n29/keys/hud/hud_handheld_before.png` (full 1280x800: before, chip 1 cut at the left edge, its digit "1" hard against the screen edge), `hud_handheld_after.png` (full frame: Wave 0 panel top left, Rivet mid, strip bottom left; chip 1 plate whole with a small gap to plate 2, about 3 px), `hud_handheld_pair_crop_3x.png` (0,680 320x120 before | after, 3x nearest, 1932x360). Plate 1 and plate 2 are now 3 px apart (border to border): tight but not overlapping.
+- `frames.json` entry added (replacing `rag/strips_4x_p55.png`), 15 entries.
