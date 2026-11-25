@@ -60,6 +60,14 @@ static func up(card: Sprite2D, s: float, step_px: float = 0.0) -> Vector2:
 	return Vector2(0.0, step_px + _fit(card).y * s)
 
 
+## Places `card` above `rig`'s feet by `up` and publishes that lift (RigCastShadows.CAST_LIFT): the
+## contact shadow under him shrinks and fades with it (n31).
+static func lift_card(rig: CutRig, card: Sprite2D, s: float, step_px: float) -> void:
+	var lift: Vector2 = up(card, s, step_px)
+	rig.set_meta(RigCastShadows.CAST_LIFT, lift.y)
+	card.global_position = rig.global_position - lift
+
+
 ## The card's height factor this frame, about the feet (the card's origin): 1 off a grid.
 static func stretch(card: Sprite2D) -> float:
 	if not RivetWalk.is_grid(card):

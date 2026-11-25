@@ -127,7 +127,7 @@ func test_city_contact_draws_three_complete_rings_at_tick_634() -> void:
 	var probe: CityShadowProbe = autofree(CityShadowProbe.new())
 	var at: Vector2 = Vector2(16961.630859375, 16930.5390625)
 	var hip: float = 21.0392377138649
-	probe._contact(at, hip)
+	probe._contact(at, hip, Vector2.ONE)  # n31: not lifted
 	assert_eq(probe.polys.size(), 3)
 	var radii: PackedFloat32Array = [hip * 0.5, hip * 0.39, hip * 0.275]
 	for i: int in probe.polys.size():
@@ -162,3 +162,28 @@ func test_cast_figure_lands_on_its_feet_and_restores_canvas_coordinates() -> voi
 		var tip: Vector2 = (points[4] + points[5]) * 0.5
 		assert_almost_eq(tip - feet, view.cast_dir() * 42.0 * view.cast_k, Vector2.ONE * 0.001)
 	assert_eq(probe.offset, Vector2.ZERO, "the next draw uses canvas coordinates")
+
+
+func test_a_lifted_drawn_card_shrinks_and_fades_its_contact_shadow() -> void:
+	# n31: the shadow answers Rivet's lift; a rig without the drawn card's metas draws as before.
+	var rig: CutRig = autofree(CutRig.new())
+	rig.set_meta(RigCastShadows.CAST_LIFT, 3.0)
+	assert_eq(RigCastShadows.lift_answer(rig, 40.0), Vector2.ONE, "no CAST_HIP: untouched")
+	rig.set_meta(RigCastShadows.CAST_HIP, 40.0)
+	rig.set_meta(RigCastShadows.CAST_LIFT, 0.0)
+	assert_eq(RigCastShadows.lift_answer(rig, 40.0), Vector2.ONE, "planted: the same bytes")
+	rig.set_meta(RigCastShadows.CAST_LIFT, 2.0)
+	var k: Vector2 = RigCastShadows.lift_answer(rig, 40.0)
+	assert_almost_eq(k, Vector2.ONE - RigCastShadows.LIFT_ANSWER * 0.05, Vector2.ONE * 0.0001)
+	rig.set_meta(RigCastShadows.CAST_LIFT, 400.0)
+	assert_eq(RigCastShadows.lift_answer(rig, 40.0), RigCastShadows.LIFT_FLOOR, "floored")
+
+
+func test_rivet_bob_publishes_the_lift_it_places() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var card: Sprite2D = autofree(Sprite2D.new())
+	rig.global_position = Vector2(10.0, 20.0)
+	RivetBob.lift_card(rig, card, 1.0, 1.5)  # not a grid: only the step lift
+	var lift: float = rig.get_meta(RigCastShadows.CAST_LIFT)
+	assert_eq(lift, 1.5)
+	assert_eq(card.global_position, Vector2(10.0, 18.5))

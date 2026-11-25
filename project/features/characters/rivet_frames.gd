@@ -127,6 +127,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
 	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k * PlayerScale.k()
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
+	rig.set_meta(RigCastShadows.CAST_LIFT, 0.0)  # a pose or a strike places the card itself
 	if MotionRigPose.draw(rig, s) or RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
 		return
 	var drawn_walk: bool = RivetWalk.is_grid(card)
@@ -140,10 +141,9 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x) + RivetLean.rad(rig)
 	card.global_scale = Vector2(s, s * RivetBob.stretch(card)) / RivetWalk.res_of(card)
 	var k: float = ROLL_SHADOW if c.x == Cell.ROLL else RigTilt.hip_h(rig) / rig.plan.hip_z
-	rig.set_meta(
-		RigCastShadows.CAST_HIP, h * CharacterRigs.PX_PER_M * k / RigCastShadows.BODY_IN_HIPS
-	)
-	card.global_position = rig.global_position - RivetBob.up(card, s, absf(stride) * BOB_PX * walk)
+	var hip: float = h * CharacterRigs.PX_PER_M * k / RigCastShadows.BODY_IN_HIPS
+	rig.set_meta(RigCastShadows.CAST_HIP, hip)
+	RivetBob.lift_card(rig, card, s, absf(stride) * BOB_PX * walk)
 
 
 ## The roll ball turns once over the roll, toward the travel side.

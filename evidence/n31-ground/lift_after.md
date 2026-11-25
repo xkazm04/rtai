@@ -24,8 +24,14 @@ rx constant or no lift: the shadow does not answer yet, part 2). JSON: `lift_aft
 2. sole lift max <= 2 px: up to 8 -> **max 1.0** (N rows; card lift 0.89 hands, 1.49 pistol); planted
    <= 0.5: **0.0-0.11** (pass).
 3. gap planted <= 2.5: **1.5-2.5** (pass); gap all max <= 3.5: up to 9.5 -> **2.5** (pass).
-4. shadow answers: part 2.
-5. stretch within 0.92..1.12: **0.920-1.120** every row (code; the 64 px/m eye check is part 2).
+4. shadow answers (part 2, rows below): on every p70 pistol row that lifts (SW, N, NE, move and
+   sprint) the frame-measured shadow rx vs card lift correlation is **-1.0** (rx steps down on the
+   lift frames); rows without lift: not computable (no lift). The probe's `code rx` column is the
+   probe's own ellipse formula, which does not read the lift (corr 0.0 there): ignore it.
+5. stretch within 0.92..1.12: **0.920-1.120** every row (code). Eye check at 64 px/m: the N flight
+   frame (stretch 1.12, lift 3.0 px at 64) in `C:/Users/kazda/kiro/gtai-masters/n31/ground/item1/lift_N_64.png`
+   reads as the same robot, feet on his shadow; before (ba8e470b0, n31-01's 64 px/m captures)
+   lifts 17.3 px with a clear gap to the disc.
 6. p55 sprint hands: travel 5-6 -> **1-3**, lift 3 -> **max 1.0** (pass; gap columns are the long
    cast figure, ignore).
 
@@ -73,3 +79,30 @@ rx constant or no lift: the shadow does not answer yet, part 2). JSON: `lift_aft
 | p55_hands | sprint | NW | 9.3 | 80 | 80 | 80 | 1.0 | 2.0 | 6.3 | 0.0 | 0.0 | 39.5 | 39.5 | 39.5 | 0.0 | None | 19.5 | 24.5 | 0.0 | 38.14 | 1.065 | 0.932 | None | None | 23.4 |
 | p55_hands | sprint | N | 9.3 | 80 | 80 | 80 | 1.0 | 3.0 | 9.4 | 0.11 | 1.0 | 40.5 | 39.61 | 40.5 | 0.0 | None | 19.5 | 24.5 | 1.53 | 38.14 | 1.12 | 0.92 | None | 0.0 | 23.4 |
 | p55_hands | sprint | NE | 9.3 | 80 | 80 | 80 | 1.0 | 1.0 | 3.1 | 0.0 | 0.0 | 39.5 | 39.5 | 39.5 | 0.0 | None | 19.5 | 24.5 | 0.0 | 38.14 | 1.078 | 0.942 | None | None | 23.4 |
+
+## Part 2: the shadow answers the lift (p70 pistol, move + sprint, 32 px/m)
+
+`rivet_frames.gd` -> `RivetBob.lift_card` publishes the card's lift (`RigCastShadows.CAST_LIFT`, px);
+`rig_cast_shadows.gd` `lift_answer`: radius x (1 - 3.0 x lift/hip), ring alpha x (1 - 4.0 x
+lift/hip), floored at (0.5, 0.3); a rig without `CAST_HIP` (every enemy) gets exactly ONE (unit
+test). At the 1.49 px max lift on a 37 px hip: radius -12 %, alpha -16 %. Bars 1-3 hold on these
+captures too (travel 1-3, lift max 1.0, gap all max 2.5). JSON: `lift_after_shadow.json`.
+
+| run | gait | dir | m/s | frames | measured | planted | phase cover | helmet travel px | travel cm | sole lift planted px | sole lift max px | shadow-sole gap planted max | gap planted mean | gap all max | shadow y range | corr shadow/helmet | shadow rx | shadow ry | card lift max px (code) | code vs frame shadow y | stretch max (code) | stretch min (code) | corr shadow rx/card lift (frame) | corr rx/lift (code) | code rx min |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| p70_pistol | move | E | 6.7 | 80 | 80 | 80 | 1.0 | 1.0 | 3.1 | 0.0 | 0.0 | 2.0 | 1.62 | 2.0 | 0.5 | -0.173 | 19.5 | 11.4 | 0.0 | 0.31 | 1.039 | 0.947 | None | None | 19.8 |
+| p70_pistol | move | SE | 6.8 | 80 | 80 | 80 | 1.0 | 3.0 | 9.4 | -0.0 | 0.0 | 1.5 | 1.41 | 1.5 | 1.5 | 0.567 | 17.7 | 10.4 | 0.0 | 0.22 | 1.085 | 0.944 | None | None | 8.91 |
+| p70_pistol | move | S | 6.7 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | -0.0 | 0.0 | 1.5 | 1.5 | 1.5 | 1.0 | 0.638 | 19.5 | 11.5 | 0.0 | 0.18 | 1.093 | 0.928 | None | None | 19.8 |
+| p70_pistol | move | SW | 6.8 | 80 | 80 | 80 | 1.0 | 3.0 | 9.4 | -0.0 | 0.0 | 2.5 | 2.07 | 2.5 | 2.0 | 0.068 | 19.3 | 10.8 | 0.57 | 0.75 | 1.12 | 0.942 | -1.0 | 0.0 | 19.8 |
+| p70_pistol | move | W | 6.7 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | 0.0 | 0.0 | 2.0 | 1.62 | 2.0 | 0.5 | -0.072 | 19.5 | 11.4 | 0.0 | 0.3 | 1.113 | 0.965 | None | None | 19.8 |
+| p70_pistol | move | NW | 6.8 | 80 | 80 | 80 | 1.0 | 3.0 | 9.4 | -0.0 | 0.0 | 2.5 | 1.94 | 2.5 | 2.0 | -0.24 | 19.5 | 11.1 | 0.0 | 0.62 | 1.062 | 0.928 | None | None | 19.8 |
+| p70_pistol | move | N | 6.7 | 80 | 80 | 74 | 1.0 | 3.0 | 9.4 | -0.0 | 1.0 | 1.5 | 1.5 | 2.0 | 1.5 | 0.28 | 19.4 | 11.4 | 1.49 | 0.19 | 1.12 | 0.92 | -1.0 | 0.0 | 19.8 |
+| p70_pistol | move | NE | 6.8 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | -0.0 | 0.0 | 2.5 | 1.71 | 2.5 | 2.0 | 0.258 | 19.3 | 11.1 | 0.58 | 0.39 | 1.12 | 0.933 | -1.0 | 0.0 | 19.8 |
+| p70_pistol | sprint | E | 9.3 | 80 | 80 | 80 | 1.0 | 1.0 | 3.1 | 0.0 | 0.0 | 2.0 | 1.62 | 2.0 | 0.5 | 0.029 | 19.5 | 11.4 | 0.0 | 0.31 | 1.039 | 0.947 | None | None | 19.8 |
+| p70_pistol | sprint | SE | 9.3 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | 0.0 | 0.0 | 1.5 | 1.44 | 1.5 | 0.5 | 0.321 | 18.3 | 10.8 | 0.0 | 0.21 | 1.085 | 0.944 | None | None | 8.91 |
+| p70_pistol | sprint | S | 9.3 | 80 | 80 | 80 | 1.0 | 1.0 | 3.1 | 0.0 | 0.0 | 1.5 | 1.5 | 1.5 | 0.0 | None | 19.5 | 11.5 | 0.0 | 0.18 | 1.093 | 0.928 | None | None | 19.8 |
+| p70_pistol | sprint | SW | 9.3 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | 0.0 | 0.0 | 2.5 | 2.05 | 2.5 | 1.0 | -0.628 | 19.4 | 10.8 | 0.57 | 0.73 | 1.12 | 0.942 | -1.0 | -0.0 | 19.8 |
+| p70_pistol | sprint | W | 9.3 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | 0.0 | 0.0 | 2.0 | 1.62 | 2.0 | 0.5 | 0.0 | 19.5 | 11.4 | 0.0 | 0.3 | 1.113 | 0.965 | None | None | 19.8 |
+| p70_pistol | sprint | NW | 9.3 | 80 | 80 | 80 | 1.0 | 2.0 | 6.2 | 0.0 | 0.0 | 2.5 | 1.93 | 2.5 | 1.0 | -0.772 | 19.5 | 11.1 | 0.0 | 0.61 | 1.062 | 0.928 | None | None | 19.8 |
+| p70_pistol | sprint | N | 9.3 | 80 | 80 | 80 | 1.0 | 3.0 | 9.4 | 0.11 | 1.0 | 2.0 | 1.56 | 2.0 | 0.5 | -0.627 | 19.3 | 11.3 | 1.49 | 0.2 | 1.12 | 0.92 | -1.0 | -0.0 | 19.8 |
+| p70_pistol | sprint | NE | 9.3 | 80 | 80 | 80 | 1.0 | 1.0 | 3.1 | 0.0 | 0.0 | 2.5 | 1.86 | 2.5 | 1.0 | -0.491 | 19.4 | 11.0 | 0.58 | 0.55 | 1.12 | 0.933 | -1.0 | -0.0 | 19.8 |

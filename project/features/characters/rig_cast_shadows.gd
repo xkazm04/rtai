@@ -14,6 +14,10 @@ const BODY_IN_HIPS: float = 2.0
 ## A rig drawn as one card (RivetFrames) publishes its drawn hip height here (global px): the
 ## shadow and the occlusion silhouette take the drawing's height, not the hidden parts' plan.
 const CAST_HIP: StringName = &"cast_hip_px"
+## n31: and its lift (px): the contact ellipse loses LIFT_ANSWER per hip lifted, to LIFT_FLOOR.
+const CAST_LIFT: StringName = &"cast_lift_px"
+const LIFT_ANSWER: Vector2 = Vector2(3.0, 4.0)  # (radius, alpha) share
+const LIFT_FLOOR: Vector2 = Vector2(0.5, 0.3)
 ## The shadow's shoulder width in hip heights, the feet's and the head's in shoulder widths.
 const WIDTH_IN_HIPS: float = 0.55
 const FEET_K: float = 0.4
@@ -68,16 +72,22 @@ func _draw() -> void:
 			_fill(figure(Vector2.ZERO, view.cast_dir(), hip * view.cast_k), SHADOW)
 			_place(Vector2.ZERO)
 		elif not rig.dead or STANDS_DYING and stands_dying(rig):  # a body: its own (StreetDeadRest)
-			_contact(feet + view.cast_dir() * hip * CONTACT_SLIDE_HIPS, hip)
+			_contact(feet + view.cast_dir() * hip * CONTACT_SLIDE_HIPS, hip, lift_answer(rig, hip))
 
 
-## The soft ink ellipse under a standing body with hip height `hip`, centred at `at`.
-func _contact(at: Vector2, hip: float) -> void:
-	# Triangulate near zero even when the actor layer spans thousands of pixels.
-	_place(at)
+## The soft ink ellipse under a standing body (hip height `hip`) at `at`; `k`: lift_answer.
+func _contact(at: Vector2, hip: float, k: Vector2) -> void:
+	var r: float = hip * CONTACT_R_HIPS * k.x  # x 1.0 when not lifted: the same bytes as before
+	_place(at)  # triangulate near zero even when the actor layer spans thousands of pixels
 	for ring: Vector2 in CONTACT_RINGS:
-		_fill(contact_ellipse(Vector2.ZERO, hip * CONTACT_R_HIPS * ring.x), Color(SHADOW, ring.y))
+		_fill(contact_ellipse(Vector2.ZERO, r * ring.x), Color(SHADOW, ring.y * k.y))
 	_place(Vector2.ZERO)
+
+
+## The contact shadow's (radius, alpha) factors under `rig`'s drawn lift; ONE without one.
+static func lift_answer(rig: CutRig, hip: float) -> Vector2:
+	var lift: float = rig.get_meta(CAST_LIFT, 0.0) if rig.has_meta(CAST_HIP) else 0.0
+	return (Vector2.ONE - LIFT_ANSWER * (lift / maxf(hip, 1.0))).clamp(LIFT_FLOOR, Vector2.ONE)
 
 
 func _place(at: Vector2) -> void:
@@ -110,7 +120,7 @@ static func figure(feet: Vector2, dir: Vector2, hip: float) -> PackedVector2Arra
 	var side: Vector2 = dir.orthogonal() * maxf(hip, 1.0) * WIDTH_IN_HIPS * 0.5
 	var sh: Vector2 = feet + dir * length * SHOULDER_AT
 	var head: Vector2 = feet + dir * length * HEAD_AT
-	var out: PackedVector2Array = PackedVector2Array(
+	return PackedVector2Array(
 		[
 			feet - side * FEET_K,
 			feet + side * FEET_K,
@@ -122,7 +132,6 @@ static func figure(feet: Vector2, dir: Vector2, hip: float) -> PackedVector2Arra
 			sh - side,
 		]
 	)
-	return out
 
 
 ## Visible rigs up to three levels down (layer > CharacterRigs > rig; layer > KingBodyView >
@@ -171,11 +180,8 @@ static func sweep_hull(corners: PackedVector2Array, off: Vector2) -> PackedVecto
 ## thrown-back man stands on his shadow instead of floating beside it. Zero for any other rig.
 static func card_push(rig: CutRig) -> Vector2:
 	var c: Sprite2D = rig.head_card
-	if (
-		c == null
-		or not c.visible
-		or not StreetWalkerHit.is_grid(str(c.get_meta(StreetWalkerCards.ON, "")))
-	):
+	var on: String = str(c.get_meta(StreetWalkerCards.ON, "")) if c != null else ""
+	if c == null or not c.visible or not StreetWalkerHit.is_grid(on):
 		return Vector2.ZERO
 	if _push_off < 0:
 		_push_off = 1 if ArenaArgs.parse().text("--shadow-push") == "off" else 0
@@ -190,6 +196,5 @@ static func stands_dying(rig: CutRig) -> bool:
 	if c == null or not c.visible:
 		return false
 	var on: String = str(c.get_meta(StreetWalkerCards.ON, ""))
-	if StreetWalkerHit.is_grid(on):
-		return true
-	return on.ends_with("_fall.png") and c.frame_coords.y < c.vframes - 1
+	var falling: bool = on.ends_with("_fall.png") and c.frame_coords.y < c.vframes - 1
+	return falling or StreetWalkerHit.is_grid(on)
