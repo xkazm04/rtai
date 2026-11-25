@@ -79,3 +79,12 @@ backpack and hose look identical on both sides. Not checked frame by frame outsi
 
 Paths (`C:\Users\kazda\kiro\gtai-masters\n30\keys\eq_collar\`): `eq_collar_left_turn32.mp4`, `eq_collar_left_32_zoom.png`; added to `..\frames.json`
 (15 entries; dropped `collar/row7_4x.png` from the list, file kept).
+
+## Molotov clip at HEAD (n30-23)
+Brief `evidence/briefs/n30-23-molotov-clip-head.md`. `molotov_32.mp4` was filmed before the run-step fix `0e399a732`; the middle (n30) and bottom 64 px/m tiles are re-filmed at HEAD (this worktree). No product file changed.
+- Capture: `python build/n30-22/capture28_head.py molotov n30f` (APPDATA/GODOT_BIN as the lane rules, lane lock held) -> `molotov/grid_molotov_head_arena/n30f_32` and `n30f_64`, both exit 0. The stop-gap side `grid_molotov_arena/basef_32` and the donor `grid_plasma_rifle_arena/n30f_32` are reused as they were.
+- Compose: `python evidence/n30-keys/films/compose.py molotov/molotov_head_32.mp4 70 990 basef_32 head/n30f_32 plasma/n30f_32 head/n30f_64 "stop-gap (before)" "n30 molotov (HEAD)" "plasma rifle" "n30 molotov 64 px/m (HEAD)" "32 px/m | molotov after the run-step fix"`.
+- ffprobe: codec_name=h264, width=1920, height=1080, r_frame_rate=60/1, nb_frames=921, duration=15.350000.
+- Diff, old `grid_molotov_arena/n30f_32` vs new, 991 frames each (any channel differing by more than 24 on the jpg): 17 frames differ, max 1021 px, in two windows only: frames 167-179 (13 frames) and 643-646 (4 frames). The other 974 frames are identical, so the walk part and the other facings did not change; the two windows are the front-facing run steps (cells 5, 6 of row 1).
+- Looked at: 3 s (walk): bottle with lit rag in the leading hand, flame by the ear, donor rifle, stop-gap thin sliver; tiles aligned, labels readable. 12 s (sprint, facing right/down): bottle forward with flame, soles visible, 64 px/m tile shows the bottle and flame cleanly. 1.7 s (clip time of frame 170, a differing frame): Rivet runs toward the camera, bottle with flame in the left hand, claw on the right, feet mid-step; the stop-gap tile shows a thin sliver and the donor the rifle; Rivet size and position match across the tiles.
+- frames.json: the `molotov/molotov_32.mp4` entry now points at `molotov/molotov_head_32.mp4` with an updated note (still 10 entries).
