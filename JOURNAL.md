@@ -196,3 +196,7 @@ NEXT (any later session): nothing owed. Director at merge: optionally `git apply
 ## Session 10 (08:45, STABILIZE, past freeze)
 - 08:46 READ journal + git log. `git diff --name-only cbca1a8c9..HEAD` touches only evidence/, docs/, JOURNAL.md, REPORT.md: the gate with reels on cbca1a8c9 (`build/gate/cbca1a8c991f/gate.json`) still covers every code path at HEAD. cites on REPORT.md: 18 paths, 17 ok, 1 pattern. No builder, no Godot; nothing broken to fix. Images 58/60.
 NEXT (any later session): nothing owed. Director at merge: optionally `git apply evidence/n29-keys/hud_compact_gap.patch` + a decisions line (Merge notes); NEED Director: `arsenal_turn_rec.gd` fires nothing at HEAD (fix in `evidence/n29-keys/gloria_strips.md`).
+
+## Session 11 (08:55, REPORT, past freeze)
+- 08:56 READ journal + git log. REPORT.md complete (all sections: What works / What does not / What blocked / Calls for the owner / Merge notes / Next steps / Builder ledger); cites 18 paths, 17 ok, 1 pattern, 0 MISSING. `git diff --name-only cbca1a8c9..HEAD` = docs/evidence/JOURNAL/REPORT only, so the reels gate PASS on cbca1a8c9 (`build/gate/cbca1a8c991f/gate.json`) covers HEAD. `gtai-masters/n29/keys/frames.json` 15 entries, 0 missing. No builder, no Godot; REPORT unchanged. Images 58/60.
+NEXT (any later session): nothing owed. Director at merge: optionally `git apply evidence/n29-keys/hud_compact_gap.patch` + a decisions line (Merge notes); NEED Director: `arsenal_turn_rec.gd` fires nothing at HEAD (fix in `evidence/n29-keys/gloria_strips.md`).
