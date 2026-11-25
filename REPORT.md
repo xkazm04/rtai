@@ -7,7 +7,7 @@ sub-agents in the director's session (Sonnet for most calls, Opus for the art an
 `evidence/briefs/n30-cast-*.md` (common law `evidence/briefs/_common.md`). Owner's order: (1) robot thug A on, (2) the
 pile-driver on eight, then pads by registration, (3) hit flash on the turret and the war machine, (4) the patrol cop's build
 jitter +-8 %, (5) door carrier eight with three one-row edits (keep four unless the eight beats it everywhere).
-Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` there, best first). IMAGES 3/60.
+Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` there, best first). IMAGES 5/60.
 
 **Gate (early, session 3): PASS** on `084e11b56` (the last code commit at 14:22): `node tools/gate/run.mjs --rev=084e11b56` -> `gate: PASS; build/gate/084e11b56074/gate.json`: lint 19/19 over 2295 files, unit 4318 passed / 0 failed / 2 skipped, scenarios 68, parity bit for bit over 1200 steps (planted mutation caught at step 629), selftest, export-audit 1003 loaded / 0 failed. The `--reels` gate runs on the final commit.
 
@@ -33,9 +33,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` th
 
 ## Calls for the owner
 
-1. Pile-driver pads: the art steps in place (planted pad torso-fixed); planted pads need whole-column redraws (both pitches, right and down-right). Ship the eight with sliding soles as now, or order the redraw.
+1. Pile-driver pads: the art steps in place (the planted pad is torso-fixed through a contact), so registration loses on this art (sole +7.7-9.6 px in every facing). A one-cell probe (`war_pad_edit_probe_2x.png`, p70 right drawing 4, 2 images) moved the planted pad back 27.6 sheet px of the 29 asked on the second try, machine intact, but 7.2 sheet px off the floor; the first try overshot (42.4). The redraw is possible but costly: about 20 cells (both pitches, right and down-right contacts) x about 2 tries + a floor check each (about 40-50 images, 2-3 builder hours). Ship the eight with sliding soles as now (jump passes), or order the redraw.
 2. Door carrier eight: p55 blocks (right: jump 7.69 vs four 5.09; down-right sole 3.06). One more x-only edit of p55 down-right drawing 8 is possible; p55 right would still block.
-3. Appliance warden at death: no sheet draws him larger (cap walk / hit / fall row 0 at 64 px/m: p70 36 / 28 / 28-31, p55 30 / 23 / 22-31). What changes at the switch is the drawing angle and the hat: the walk wears a grey bucket hat seen from above, hit and fall a tan camo cap seen frontally. Keep, or a one-row hat recolour of the walk. Still `warden_switch_64.png`.
+3. Appliance warden at death: no sheet draws him larger (cap walk / hit / fall row 0 at 64 px/m: p70 36 / 28 / 28-31, p55 30 / 23 / 22-31). What changes at the switch is the drawing angle and the hat: the walk wears a grey bucket hat seen from above, hit and fall a tan camo cap seen frontally. Keep, or recolour the walk's hat tan: a masked recolour candidate (no new shapes, ink untouched) on four cells is in `warden_hat_candidate_2x.png` (shipped walk | recoloured | hit cap): it reads as the hit's tan camo family; the shape stays a bucket hat against the peaked cap. Shipping it = the recolour over every walk cell, both pitches, with a per-cell mask check and an in-game 64 still. Still `warden_switch_64.png`.
 
 ## Merge notes
 
