@@ -6,8 +6,10 @@
 // eight on that 20be6ffaa view (n29's column; equal to "eight" while the view keeps the held foot).
 //   stills: 64 px/m, right facing, the same tick, four left | eight right -> war8_feet_before_after_64.png
 //   clip:   the eight (the committed tree) at 32 px/m, right then down-right -> war8_walk_32.mp4
+//   pair:   the four (staged) and the eight, 32 px/m, the clip's ticks, each cropped to 960x1080, hstack four | eight
+//           -> war8_four_eight_32.mp4
 //   feet:   cast_feet.tscn at 64 px/m on war_machine, both pitches, cast_war_feet.py (pad, + n28 on the four)
-// usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|feet|all] [feet walks, default before,four,eight]
+// usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|all] [feet walks, default before,four,eight]
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync,
   writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -16,8 +18,8 @@ import { ROOT } from '../lib/repo.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 
 const [out, what = 'all', feetArg = 'before,four,eight'] = process.argv.slice(2);
-if (!out || !['stills', 'clip', 'feet', 'all'].includes(what)) {
-  console.error('usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|feet|all]'); process.exit(2);
+if (!out || !['stills', 'clip', 'pair', 'feet', 'all'].includes(what)) {
+  console.error('usage: node tools/film/cast_war_films.mjs <output-dir> [stills|clip|pair|feet|all]'); process.exit(2);
 }
 const SPEED = 1.8;
 const CHARS = 'features/characters';
@@ -58,7 +60,7 @@ const work = join(ROOT, 'build', 'film');
 mkdirSync(work, { recursive: true });
 const feetWalks = feetArg.split(',');
 if (feetWalks.some((w) => !['before', 'four', 'eight', 'eight_held'].includes(w))) throw Error(`feet walks: ${feetArg}`);
-const walks = { stills: ['four', 'eight'], clip: ['eight'], feet: feetWalks,
+const walks = { stills: ['four', 'eight'], clip: ['eight'], pair: ['four', 'eight'], feet: feetWalks,
   all: [...new Set(['four', 'eight', ...feetWalks])] }[what];
 const dirs = {};
 for (const walk of walks) {
@@ -101,19 +103,29 @@ if (what === 'stills' || what === 'all') {
     '[0]crop=960:1080:480:0[a];[1]crop=960:1080:480:0[b];[a][b]hstack', join(outDir, 'war8_feet_before_after_64.png')],
   { windowsHide: true, stdio: 'inherit' });
 }
-if (what === 'clip' || what === 'all') {
+async function walkClips(walk, prefix) {
   const mp4s = [];
   for (const [name, ticks] of [['right', 900], ['downright', 600]]) {
-    const avi = join(dirs.eight, `war8_${name}.avi`);
-    await take('eight', 32, name, ticks, null, avi);
+    const avi = join(dirs[walk], `${prefix}_${name}.avi`);
+    await take(walk, 32, name, ticks, null, avi);
     mp4s.push(avi.replace('.avi', '.mp4'));
     execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', avi, '-c:v', 'libx264', '-crf', '18',
       '-pix_fmt', 'yuv420p', '-r', '60', mp4s.at(-1)], { windowsHide: true, stdio: 'inherit' });
   }
-  const list = join(dirs.eight, 'list.txt');
+  const list = join(dirs[walk], `${prefix}_list.txt`), joined = join(dirs[walk], `${prefix}_joined.mp4`);
   writeFileSync(list, mp4s.map((m) => `file '${m.split('\\').join('/')}'`).join('\n'));
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list,
-    '-c', 'copy', join(outDir, 'war8_walk_32.mp4')], { windowsHide: true, stdio: 'inherit' });
+    '-c', 'copy', joined], { windowsHide: true, stdio: 'inherit' });
+  return joined;
+}
+if (what === 'clip' || what === 'all') {
+  copyFileSync(await walkClips('eight', 'war8'), join(outDir, 'war8_walk_32.mp4'));
+}
+if (what === 'pair') {
+  const four = await walkClips('four', 'war4'), eight = await walkClips('eight', 'war8');
+  execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', four, '-i', eight, '-filter_complex',
+    '[0]crop=960:1080:480:0[a];[1]crop=960:1080:480:0[b];[a][b]hstack,fps=60', '-c:v', 'libx264', '-crf', '18',
+    '-pix_fmt', 'yuv420p', join(outDir, 'war8_four_eight_32.mp4')], { windowsHide: true, stdio: 'inherit' });
 }
 if (what === 'feet' || what === 'all') {
   for (const walk of feetWalks) {
