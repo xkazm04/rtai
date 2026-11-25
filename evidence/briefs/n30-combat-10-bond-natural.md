@@ -38,3 +38,8 @@ Do not touch docs/decisions.md, JOURNAL.md, REPORT.md. A `mem-budget: waiting` l
 
 ## Report and END
 Attempts table, film ffprobe line, what you saw, what you could not do.
+
+## Session 3 clock (13:50)
+Launched 13:50: evidence commit by **14:35**, report and END by **14:50** (hard; your session dies at 15:15). Another builder (c09)
+runs in parallel in this worktree touching only `evidence/n30/kills/**`; share Godot through the runs ledger. If pass 1 has not
+found a mastery by 14:20, film the best natural window you have (bond full / card offered) and say so.

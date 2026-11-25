@@ -38,6 +38,11 @@ selftest; export-audit 1004 loaded, 0 failed), `build/gate/2566b97d0829/gate.jso
   light starts t478 and draws t480-513 (~421k px on/off at t480-496); a rocket blast right after launch is refused by the
   photosensitivity budget. Ready patch for the Director: `evidence/n30/lights/rim_patch.md` (rim flag, alt ink packed into
   the instance custom data, the shader prints the outer band in it). Still `stills/explosion_light_seen_64.png` (t486 off | on).
+- Proven on screen and shipped as one command for the Director (`3398da308`): `git apply evidence/n30/lights/rim.patch`
+  (8 files: shader, `LightPool.custom_data`, lights.json `rim` + schema, the comment, two tests), then
+  `node tools/tests/run_unit.mjs --select=test_light_pool_rim,test_light_explosion_amber,test_light_layer` (15/0 patched;
+  lint 19/19). At t486 64 px/m the outer bands go cream -> amber (mean RGB of changed px 255,241,187 -> 255,235,161),
+  red/teal/vermilion added 0, one light as before. Still `stills/explosion_rim_patched_pair_64.png`. `evidence/n30/lights/rim_proof.md`.
 
 ### 6a. `current_look.gd` draw() survivors pinned (`5fd6c1eaa`, `2566b97d0`)
 - `CurrentLook.k_of(ci)` and `const ANTIALIAS` carry draw()'s scale and AA flag (pixels identical by construction); 4 tests,
@@ -51,6 +56,15 @@ selftest; export-audit 1004 loaded, 0 failed), `build/gate/2566b97d0829/gate.jso
   mutate 14/16 = 87.5 % (the 2 flag-read survivors covered by `0351c7020`).
 - Stills `stills/card_fall_{sergeant_mulroney,appliance_warden,rocket_trooper}_pair_64.png` (t173/196/214); film
   `films/card_fall_32.mp4` 1920x1080 60/1 15.15 s. `evidence/n30/kills/card_fall.md`.
+- A street walker (no card) takes the old path untouched: kill_reel `--before=73895c4a3 --rev=HEAD`, machine pistol,
+  64 px/m, street cop: 0 px differ in the whole frame at 9 ticks t172-234 (`65739e6f2`, still
+  `stills/street_fall_identity_pair_64.png`). The split rule's last mutate survivor (`or`->`and`) is killed by
+  `KillCardFall.splits` + its test (`1444843f3`, mutate 4/4 on the line; whole file 5/6 before it).
+
+### 6b. A natural bond film (`a8cfd67fa`)
+- Seed 1, average bot, no prefill: Tonnage's bond 12/32/48/52/64/68/70 by release, full at t7937 (wave 7), the mastery card
+  at t8774, mastered and Tonnage entered at t8775 (146 s of play, 7 releases), matching n29's measured seed 1.
+  Film `films/bond_natural_32.mp4` 1920x1080 60/1 29.87 s. `evidence/n30/bond/natural.md`.
 
 ## What does not
 - (pending)
@@ -66,9 +80,14 @@ selftest; export-audit 1004 loaded, 0 failed), `build/gate/2566b97d0829/gate.jso
   `lights.json` fire `"token": "amber"` is a one-value change (heat by the colour law); not in the picks, not done.
 - A short-flight rocket's blast gets no light: its launch muzzle flash spent the 1/s photosensitivity budget
   (`FlashBudget.spend_light`). Letting a blast win changes the photosensitivity behaviour: owner call.
+- Explosion rim (patch, not merged): over the nuke's own amber floor the amber rim reads weakly (low contrast;
+  `stills/explosion_rim_patched_pair_64.png`). A deeper ink for the rim is one value (the alt token's colour); apply as is, or deeper.
 - The nuke's amber blast floor prints vermilion specks on its ink edges (`stills/explosion_light_seen_64.png`), the same
   print snap as the band's last 39 px.
-- Warden's fall sheet draws his head ~1.4-1.5x his walk at the switch (kill and living death alike): NEED cast.
+- Warden at the switch to his fall sheet: NOT a size fault (cast c06b measured delivered frames at 64 px/m: cap walk / hit /
+  fall p70 36 / 28 / 28-31, p55 30 / 23 / 22-31; our "1.4-1.5x" was a wrong reading of the walk). What changes is the angle
+  (steeper top-down walk, frontal fall) and the hat (grey bucket -> tan camo cap): a one-row hat recolour of his walk, or keep.
+  `gtai-masters/n30/cast/warden_switch_64.png`. The NEED cast is withdrawn.
 
 ## Merge notes
 - After merging `n30-cast` (`c2281acbb`, cop build +-8 %): `project/features/combat/kills/kill_fall_cells.gd:95`

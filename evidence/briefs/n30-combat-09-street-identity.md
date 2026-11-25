@@ -35,3 +35,13 @@ Do not touch docs/decisions.md, JOURNAL.md, REPORT.md. No product code changes i
 
 ## Report and END
 Commands with result lines, diff px per tick, mutate score, what you saw in the pair, what you could not do.
+
+## Session 3 clock and one more point (13:50)
+Launched 13:50: evidence commit by **14:20**, report and END by **14:35** (hard). Another builder (c10, bond film) runs
+in parallel in this worktree: it touches only `evidence/n30/bond/**`; share Godot through the runs ledger as above.
+4. Correct the warden note in `evidence/n30/kills/card_fall.md` ("Warden at the switch"): the cast lane measured him at 64 px/m in
+   delivered frames (`C:/Users/kazda/kiro/gtai-wt/n23-prologue/JOURNAL.md`, the 13:52 c06b line; still
+   `C:/Users/kazda/kiro/gtai-masters/n30/cast/warden_switch_64.png`): cap walk / hit0 / fall row0 p70 36 / 28 / 28-31, p55 30 / 23 / 22-31;
+   "walk cap 22" in our note was a wrong reading. No sheet draws him larger; what changes at the switch is the angle (steeper top-down
+   walk vs frontal fall) and the hat colour (grey bucket -> tan camo cap). Add a dated `CORRECTION (c09, cast c06b)` paragraph under
+   that heading (do not delete the old text), and commit it in the same commit as point 3.
