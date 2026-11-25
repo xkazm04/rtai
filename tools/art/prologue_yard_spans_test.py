@@ -83,3 +83,17 @@ def test_the_mouth_span_cuts_onto_both_ends(tmp_path):
     pts = top_left + (np.stack([xs, ys], axis=1) + 0.5) * SCALE
     lead = (np.abs(pts[:, 0] - a[0][0]) < BEAM_M) & (pts[:, 1] < a[0][1] - 0.05)
     assert not lead.any(), "nothing of the guide's lead is left north of the mouth"
+
+
+def test_the_mouth_end_ramps_its_alpha_and_the_other_end_does_not():
+    rgba = np.asarray(Image.open(OUT / "belt_span_mouth_door.png"))
+    meta = json.loads((OUT / "belt_spans.json").read_text())["mouth_door"]
+    _name, a, _b, _pts = spans()[-1]
+    ys, xs = np.where(rgba[..., 3] > 0)
+    pts = np.array(meta["top_left_m"]) + (np.stack([xs, ys], axis=1) + 0.5) * SCALE
+    along = (pts - a[0]) @ a[1]
+    alpha = rgba[ys, xs, 3]
+    ramp, full = alpha[(along > 0.02) & (along < 0.1)], alpha[(along > 0.6) & (along < 0.9)]
+    assert ramp.mean() < 0.25 * full.mean(), "the open end melts out"
+    other = np.asarray(Image.open(OUT / "belt_span_door_feed.png"))
+    assert (other[..., 3] == 255).sum() > 0.5 * (other[..., 3] > 0).sum(), "the other cuts keep full alpha"

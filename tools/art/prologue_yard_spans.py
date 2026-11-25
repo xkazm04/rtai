@@ -32,6 +32,9 @@ RIDGE = 0.3
 # whole lead, and its door end plate overshoots the tip, so a second fit measures it again once clipped.
 CLIP_REACH_M = {"mouth_door": (MOUTH_LEAD_M + BEAM_M, TIP_M)}
 FIT_PASSES = {"mouth_door": 2}
+# n30 05d: the mouth span's open end (its start, in the fire) melts out over this many metres along the
+# beam instead of ending in a hard cut; the other five spans keep their cut ends.
+FADE_FIRST_M = {"mouth_door": 0.5}
 
 
 def guide_masks(sheet: int) -> dict:
@@ -113,6 +116,17 @@ def fit(piece: np.ndarray, top_left: np.ndarray, ends: tuple, path: np.ndarray, 
     return clipped(piece, top_left, ends, path, reach), top_left
 
 
+def faded(piece: np.ndarray, top_left: np.ndarray, tip: tuple, length: float) -> np.ndarray:
+    """The piece with its alpha ramped (smoothstep) from 0 at the tip to full over length m along the beam."""
+    h, w = piece.shape[:2]
+    xs, ys = np.meshgrid(np.arange(w), np.arange(h))
+    pts = top_left + (np.stack([xs, ys], axis=-1) + 0.5) * SCALE
+    t = np.clip(((pts - tip[0]) @ tip[1]) / length, 0.0, 1.0)
+    out = piece.copy()
+    out[..., 3] = np.round(piece[..., 3] * (t * t * (3 - 2 * t))).astype(np.uint8)
+    return out
+
+
 def cut_sheet(path: Path, sheet: int, out_dir: Path = OUT) -> dict:
     image = Image.open(path).convert("RGB")
     if image.size != SHEET:
@@ -124,6 +138,8 @@ def cut_sheet(path: Path, sheet: int, out_dir: Path = OUT) -> dict:
     for name, mask in assign(rgba, masks).items():
         piece, (px, py) = trimmed(rgba, mask)
         piece, top_left = fit(piece, masks[name][1] + np.array([px, py]) * SCALE, *ends[name], name)
+        if name in FADE_FIRST_M:
+            piece = faded(piece, top_left, ends[name][0][0], FADE_FIRST_M[name])
         file = f"belt_span_{name}"
         Image.fromarray(piece).save(out_dir / f"{file}.png")
         h, w = piece.shape[:2]
