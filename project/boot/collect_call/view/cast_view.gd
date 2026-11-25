@@ -154,14 +154,14 @@ func _mertz(m: Fighter) -> void:
 	var gun_root: Vector2 = at + dir * 0.9
 	var muzzle: Vector2 = at + dir * 2.1
 	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.INK, 12.0)
-	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.VERMILION, 4.0)
+	draw_line(Ink.px(gun_root), Ink.px(muzzle), CurrentLook.STRIPE, CurrentLook.STRIPE_PX)
 	Ink.zigzag(self, at + Vector2(-0.9, 0.3), gun_root, 6, 3, Ink.INK)
 	_tazer_charge(m, muzzle, dir)
 	if m.exposed:
 		Ink.label(self, at + Vector2(0.0, 1.35), "VENTING", 18, Ink.VERMILION)
 
 
-## The capacitor tubes fill cream back to front; the prongs spark vermilion while it whines.
+## The capacitor tubes fill cream back to front; the prongs throw amber current while it whines.
 func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 	var tazer: RoboTazer = stage.arena.tazer
 	var frac: float = tazer.charge_frac()
@@ -173,7 +173,7 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 	if tazer.state == RoboTazer.State.CHARGING:
 		for k: int in 3:
 			var tip: Vector2 = muzzle + dir.rotated(-0.8 + k * 0.8) * (0.5 + frac * 0.6)
-			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
+			CurrentLook.draw(self, muzzle, tip, tazer.ticks + k)
 
 
 ## The hit flash: a cream star with an ink rim behind the victim, big on the hit, shrinking out.

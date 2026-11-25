@@ -198,7 +198,7 @@ func _bolt_robot(c: Vector2) -> void:
 		Vector2(-0.3, -0.35), Vector2(0.05, 0.0), Vector2(-0.05, 0.05), Vector2(0.3, 0.4)
 	]:
 		bolt.append(Ink.px(c + v))
-	draw_polyline(PackedVector2Array(bolt), Ink.VERMILION, 3.0, true)
+	draw_polyline(PackedVector2Array(bolt), CurrentLook.BOLT, CurrentLook.BOLT_PX, true)
 	Ink.label(self, c + Vector2(-0.95, 0.0), "TUCK-IN", 11, Ink.INK)
 
 

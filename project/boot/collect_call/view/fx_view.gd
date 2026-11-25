@@ -129,8 +129,7 @@ func _arcs(arena: CombatArena) -> void:
 	for i: int in path.size() - 1:
 		var a: Vector2 = path[i]
 		var b: Vector2 = path[i + 1]
-		Ink.zigzag(self, a, b, 7, stage.tick + i, Ink.VERMILION)
-		Ink.zigzag(self, a, b, 7, stage.tick + i + 9, Ink.CREAM)
+		CurrentLook.draw(self, a, b, stage.tick + i)
 
 
 func _whispers() -> void:
