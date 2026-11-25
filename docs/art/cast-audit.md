@@ -1091,3 +1091,71 @@ sole pin.
 
 Next: register the door sole at the drawn boot bottom (this regenerates every door anchor), then measure with
 `c21b_holds.py` in the delivered frames, not with the feet reader alone.
+
+## Door four and eight on the drawn boot, n30
+
+**Verdict.** On the drawn boot the eight does not pass the 2 px bar in every facing: its in-hold slide reaches 2.03 at
+p55 down-right (2.00 in x alone). It beats the four only at p70 right (1.71 against 2.10). At p70 down-right, p55 right
+and p55 down-right it is worse than the four. The contact slide (plant to lift across all drawings of one contact) is
+**not measured**: the tracker below could not hold one boot through a drawing change. `CastDoorAnchors.WALK` is unchanged.
+
+**Method (c22, measure only; scratch `build/look/n30-c22/`).** `c22_clip.mjs` renders the door carrier through
+`runGodot` (one launch per take, 8 launches, each `exit 0` in 19-22 s, 325 frames 1920x1080 by ffprobe) at 64 px/m, 1.6
+m/s, 300 ticks. The takes cover the four and the eight, p70 and p55, right and down-right. All renders come from staged
+copies, so the tree is untouched:
+- eight = `CastDoorAnchors.WALK = EIGHT`, the same switch `cast_door_films.mjs` uses;
+- p55 = `_pitch = 55` in the staged `cast_foot_film.gd`;
+- every staged film drops the sole-dot overlay, so the frames hold only the drawn art, and logs the drawn card row and
+  `xf` and the registered sole point for each tick.
+
+`c22_measure.py` then works on the frames:
+- **Alignment.** Movie frame = tick + 24. The image-change spikes fall exactly on the logged drawing changes.
+- **Background.** A per-pixel median over the take is subtracted, so the grid and Rivet do not pin the SSD.
+- **In-hold slide.** This is c21b's method. The boot band is the lowest 7 ink rows of the carrier within 120 px of the
+  registered sole in each hold's first frame. Band rows: right 537-544 at p70 and 537-552 / 538-544 at p55. Down-right
+  rows follow the walk (368-727). The band's shift from the hold's first frame to its last uses SSD over +-10 px x and
+  +-3 px y with a parabolic sub-pixel fit.
+
+These band rows are the drawn sole. c21b's 527-533 band sits about 10 px higher, nearer the pivot (y ~524), which is
+why its four p70 right read 0.86 / 1.65 and this one reads 2.13 / 4.20. Every slide is backward (negative x).
+
+| take (64 px/m, 300 ticks) | holds | in-hold mean / max, 64 px/m | in-hold mean / max, 32 px/m | feet reader sole (32 px/m) | contact slide |
+|---|---:|---|---|---:|---|
+| four p70 right | 50 | 2.14 / 4.20 | 1.07 / **2.10** | 2.42 | not measured |
+| four p70 down-right | 50 | 1.44 / 2.99 | 0.72 / 1.50 | U | not measured |
+| four p55 right | 50 | 1.82 / 3.06 | 0.91 / 1.53 | 2.03 | not measured |
+| four p55 down-right | 50 | 2.01 / 3.87 | 1.01 / 1.94 | U | not measured |
+| eight p70 right | 45 | 2.46 / 3.42 | 1.23 / 1.71 | 1.96 | not measured |
+| eight p70 down-right | 45 | 1.74 / 3.78 | 0.87 / 1.89 | 1.39 | not measured |
+| eight p55 right | 45 | 1.94 / 3.43 | 0.97 / 1.72 | 2.05 | not measured |
+| eight p55 down-right | 45 | 1.46 / 4.06 | 0.73 / **2.03** | 2.08 | not measured |
+
+(magnitude of the (x, y) shift; the x shift alone is within 0.06 px of it (eight p55 down-right 4.00 / 2.00). Rivet
+stands in the walk path in 4-9 holds per take, reported apart by the tool, and none of those sets a maximum. The worst
+hold of each take: four p70 right ticks 108-114 (drawing 2); eight p55 down-right ticks 48-53 (drawing 7), where the
+boot's toe goes from x 869 to about 865 at the 4x zoom while the body runs on.)
+
+**Contact slide: why it is not measured.** Three trackers were tried on the planted boot (`c22_measure.py` keeps the
+last one):
+- a 44x14 SSD patch chained across drawing changes;
+- one plant-frame template matched in every frame within +-16 px;
+- a run of ground-touching columns.
+
+All three gave 6-24 px per contact, often at the search clamp (16.00), and none of those readings survives a look. At
+the four p70 right drawing change 0 -> 1 (frames 121 / 126, 5x zoom, `build/look/n30-c22/tmp/z5.png`), the near boot's ground run moves
+from 862-893 to 841-877, while a darker boot about 5 px higher (the far leg) holds 861-888. From the frames alone it is
+not clear which boot the drawing means to plant, so no contact number is quoted. The registered sole itself holds within
+2.5 px across the four's contact (878.8 -> 876.3 screen px).
+
+**Looked.** `build/look/n30-c22/looks_2x.png` has one 2x crop per take at the plant frame of the contact with the worst hold.
+- Right facings: carrier, door bar and boots read cleanly, with no smear or doubled edge.
+- Down-right: the crop centres on the registered sole from the profile column, so the boots sit low in the crop, and
+  Rivet's dome covers the boots early in the walk.
+
+`build/look/n30-c22/eight_p55_contact_2x.png` shows frames 51 / 60 / 72 / 77 of eight p55 down-right ticks 27-53, one fixed 2x crop:
+- the red lines mark the boot's toe (x 869) and the ground row (y 448) at the worst hold's first frame;
+- in 51 / 60 the carrier's boots are behind Rivet;
+- in 72 -> 77 the front boot's toe slides about 4 px back off the line while the shield and body move on.
+
+Next (director): whether the drawn boot is planted at all across the four's drawings 0 -> 1 needs an owner look at
+`build/look/n30-c22/tmp/z5.png` or a per-drawing boot label from the art. A contact number is meaningful only after that.
