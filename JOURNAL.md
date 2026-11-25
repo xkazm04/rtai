@@ -302,3 +302,11 @@ REPORT.md`, frames.json check (15), commit JOURNAL/REPORT with a pathspec. No ga
 
 NEXT (if a session runs at 18:55): REPORT is FINAL; re-run `node tools/evidence/cites.mjs REPORT.md` and the frames.json check, update
 the line-3 time if anything changed, commit JOURNAL/REPORT with a pathspec. No product work, no gate.
+
+## Session 15 (18:45 - 18:55, STABILIZE)
+- 18:45 git log: 41d0fdc2b top, as session 14 left it; no tracked changes, no builder running, images 60/60. `NEED keys` grep over
+  combat/cast/yard journals: no lines.
+- 18:46 re-check: `node tools/evidence/cites.mjs REPORT.md` 26/26 ok; masters `n30/keys/frames.json` 15/15 files exist. REPORT FINAL
+  unchanged (nothing moved); no product work, no gate (last product commit 22d3c0fb1 covered by reels gate `build/gate/fd8ea31e1dec/gate.json` PASS).
+
+NEXT: run over. Director merges `n30-keys`; REPORT.md "Merge notes" and "Next steps" are the hand-off.
