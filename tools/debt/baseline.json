@@ -203,7 +203,8 @@
         "2026-11-25: n31 ghost measure: drop-mode support (dev_loc 40320 -> 40331)",
         "2026-11-25: n31 ghost measure dev tool (dev_loc 40331 -> 40552)",
         "2026-11-25: n31 ghost take scene (dev_loc 40552 -> 40704)",
-        "2026-11-25: n31 ghost beats probe --kill (dev_loc 40704 -> 40723)"
+        "2026-11-25: n31 ghost beats probe --kill (dev_loc 40704 -> 40723)",
+        "2026-11-25: n31 ghost measure dev tool (dev_loc 40723 -> 40762)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -219,7 +220,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ghost_n31": 963,
+        "project/dev/ghost_n31": 1002,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -246,7 +247,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40723
+      "total": 40762
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -530,7 +531,8 @@
         "2026-11-25: card scale for n29 cast (files_past_soft_cap 67 -> 68)",
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 68 -> 70)",
         "2026-11-25: war eight for n29 cast (files_past_soft_cap 70 -> 70)",
-        "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)"
+        "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)",
+        "2026-11-25: n31 ghost measure dev tool (files_past_soft_cap 69 -> 70)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -599,11 +601,12 @@
         "project/tests/unit/test_cast_war_machine.gd": 209,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
+        "project/tests/unit/test_ghost_deploy_attacks.gd": 203,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 69
+      "total": 70
     },
     "lane_named_dev_dirs": {
       "accepted": [

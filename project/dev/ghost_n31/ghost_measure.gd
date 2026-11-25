@@ -4,6 +4,7 @@ extends Node
 ## res://dev/ghost_n31/ghost_measure.tscn -- --mode=lab|play --out=<abs.json>
 ## [--radius=4,5,...] [--full=only|both] [--at=spot|rivet|both] [--charge=<ticks>] [--seeds=10]
 ## [--waves=4] [--profile=average] [--per-size=15] [--shapes-out=<abs>]
+## [--fit=shipped|relaxed] (play: relaxed = dev bot spot, Ohm at 3+ bodies, Kerf any target)
 ## [--form=tonnage|ohm|dent|kerf] (default tonnage; ohm lab + play, dent and kerf play only)
 ## No --radius = main as shipped (the real GhostDeployStrike footprint).
 
@@ -19,7 +20,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--profile",
 	"--per-size",
 	"--shapes-out",
-	"--form"
+	"--form",
+	"--fit"
 ]
 const SHAPES: String = "res://dev/ghost_n31/shapes.json"
 
@@ -106,6 +108,7 @@ func _play(args: ArenaArgs, report: Dictionary, form: StringName) -> bool:
 	report.profile = profile
 	var play: GhostN31Play = GhostN31Play.new()
 	play.form = form
+	play.fit = StringName(args.text("--fit", "shipped"))
 	var rows: Array = report.rows
 	for geometry: GhostN31Geometry in _variants(args, form):
 		for seed_id: int in range(1, int(args.number("--seeds", 10)) + 1):
@@ -116,6 +119,7 @@ func _play(args: ArenaArgs, report: Dictionary, form: StringName) -> bool:
 			row.merge(geometry.to_dict())
 			row.shipped = shipped and charge == 0
 			row.charge_ticks = charge
+			row.fit = play.fit
 			rows.append(row)
 			var deploys: Array = row.get("deploys", [])
 			Log.info(

@@ -5,7 +5,7 @@
 // (lab) or per variant and seed plus a total (play).
 //   node tools/ghost/deploy_measure.mjs --mode=lab|play [--radius=4,5] [--full=only|both]
 //     [--at=spot|rivet|both] [--charge=<ticks>] [--seeds=10] [--waves=8] [--per-size=15]
-//     [--form=tonnage|ohm|dent|kerf] [--shapes-out=<abs>] [--tag=<name>] [--root=<worktree to run Godot in>] [--timeout=<s>]
+//     [--form=tonnage|ohm|dent|kerf] [--fit=shipped|relaxed] [--shapes-out=<abs>] [--tag=<name>] [--root=<worktree to run Godot in>] [--timeout=<s>]
 // No --radius = main as shipped. --root runs another worktree's Godot project (its dev/ghost_n31 must
 // exist there); the JSON still lands in this worktree's build/.
 import { spawnSync } from 'node:child_process';
@@ -14,12 +14,14 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 
-const PASS = ['radius', 'full', 'at', 'charge', 'seeds', 'waves', 'per-size', 'shapes-out', 'profile', 'form'];
-const OWN = ['mode', 'tag', 'root', 'timeout'];
+const PASS = ['radius', 'full', 'at', 'charge', 'seeds', 'waves', 'per-size', 'shapes-out', 'profile', 'form', 'fit'];
+const OWN = ['mode', 'tag', 'root', 'timeout', 'bond'];
+const PER_KILL = 4; // ghost_forms.json bond.per_kill; Tonnage's bar is master_at_by_form 70
+const MASTER_AT = 70;
 
 /** {mode, tag, root, timeout, pass: ['--k=v'...]} or {error}. */
 export function parseArgs(argv) {
-  const out = { mode: null, tag: '', root: ROOT, timeout: 900, pass: [] };
+  const out = { mode: null, tag: '', root: ROOT, timeout: 900, bond: false, pass: [] };
   for (const a of argv) {
     const m = /^--([a-z-]+)(?:=(.*))?$/.exec(a);
     if (!m || (!PASS.includes(m[1]) && !OWN.includes(m[1]))) return { error: `unknown argument ${a}` };
@@ -27,12 +29,30 @@ export function parseArgs(argv) {
     if (key === 'mode') out.mode = value;
     else if (key === 'tag') out.tag = value;
     else if (key === 'root') out.root = resolve(value);
+    else if (key === 'bond') out.bond = true;
     else if (key === 'timeout') out.timeout = Number(value);
     else out.pass.push(value === '' ? `--${key}` : `--${key}=${value}`);
   }
   if (out.mode !== 'lab' && out.mode !== 'play') return { error: 'needs --mode=lab|play' };
   if (out.tag && !/^[a-z0-9_.-]+$/i.test(out.tag)) return { error: `bad --tag ${out.tag}` };
   return out;
+}
+
+/** Bond per play run: kills x PER_KILL (no stuns logged), per deploy and per wave, and the first wave whose deploys reach MASTER_AT. */
+export function bondRows(report) {
+  const runs = report.rows.filter((r) => r.opened !== false);
+  const gained = runs.map((r) => (r.deploys ?? []).reduce((t, d) => t + d.kills * PER_KILL, 0));
+  const deploys = runs.reduce((t, r) => t + (r.deploys ?? []).length, 0);
+  const waves = runs.reduce((t, r) => t + Math.max(1, r.wave ?? 1), 0);
+  const reached = runs.map((r) => {
+    let bond = 0;
+    for (const d of r.deploys ?? []) { bond += d.kills * PER_KILL; if (bond >= MASTER_AT) return d.wave ?? null; }
+    return null;
+  });
+  const got = reached.filter((w) => w !== null);
+  return { runs: runs.length, deploys, bond_per_deploy: deploys ? gained.reduce((a, b) => a + b, 0) / deploys : 0,
+    bond_per_wave: gained.reduce((a, b) => a + b, 0) / waves, mean_bond_per_run: stats(gained).mean,
+    mastery_reached: got.length, mastery_wave_median: got.length ? stats(got).median : null, mastery_waves: got };
 }
 
 export function stats(values) {
@@ -44,7 +64,7 @@ export function stats(values) {
 }
 
 const variantOf = (row, form = 'tonnage') => (form === 'tonnage' ? '' : `${form} `) + `${row.shape ?? 'half'} r${row.radius_m} at ${row.at ?? 'spot'}`
-  + (row.charge_ticks ? ` charge ${row.charge_ticks}` : '') + (row.shipped ? ' (main)' : '');
+  + (row.charge_ticks ? ` charge ${row.charge_ticks}` : '') + (row.shipped ? ' (main)' : '') + (row.fit === 'relaxed' ? ' fit relaxed' : '');
 
 function summaryRow(mode, variant, group, deploys, size) {
   const near = deploys.reduce((t, d) => t + (d.near ?? 0), 0);
@@ -117,6 +137,7 @@ function main(argv) {
     summary, report };
   writeFileSync(join(dir, `${name}.json`), `${JSON.stringify(out, null, 2)}\n`);
   console.log(formatTable(summary));
+  if (opts.bond) console.log(`bond (per_kill ${PER_KILL}, mastery ${MASTER_AT}): ${JSON.stringify(bondRows(report))}`);
   console.log(`deploy_measure: wrote build/n31/ghost/${name}.json (${out.run_s.toFixed(1)} s)`);
   return 0;
 }

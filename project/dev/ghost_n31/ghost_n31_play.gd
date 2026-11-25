@@ -13,6 +13,8 @@ const NEAR_M: float = 14.0
 ## The ghost form granted and deployed (HaulerStage.GHOST = Tonnage); other forms keep no shapes.
 var form: StringName = HaulerStage.GHOST
 var shapes: Dictionary = {4: [], 8: [], 12: []}
+## "relaxed" swaps the bot's spot scorer for GhostN31BotSpot (Ohm at 3+ bodies, Kerf any target).
+var fit: StringName = &"shipped"
 
 
 func run_seed(
@@ -27,6 +29,8 @@ func run_seed(
 		return {"seed": seed_id, "opened": false}
 	pilot.configure(profile, &"random", seed_id)
 	pilot.bind(run, session)
+	if fit == &"relaxed" and not GhostN31BotSpot.install(pilot):
+		return {"seed": seed_id, "opened": false}
 	var waves: GauntletWaves = GauntletWaves.attach(session, run, pilot, waves_cap)
 	var ghost: GhostDeploy = session.stage.pilot.ghosts.deploy
 	var strike: GhostN31Strike = GhostN31Strike.new(ghost.strike.attacks, ghost.strike.press)
@@ -35,6 +39,7 @@ func run_seed(
 	strike.charge_ticks = charge
 	ghost.strike = strike
 	var cap: int = waves_cap * 7200
+	var stamped: int = 0
 	while not waves.done and session.tick() < cap:
 		_grant(session.stage.pilot.ghosts.forms)
 		var before: GhostDeploy.Phase = ghost.phase
@@ -44,6 +49,9 @@ func run_seed(
 			strike.press_tick = session.stage.tick
 			strike.press_rivet = session.stage.arena.rivet.pos
 		strike.resolve_due(session.stage)
+		if strike.deploys.size() > stamped:
+			stamped = strike.deploys.size()
+			strike.deploys[stamped - 1].wave = run.wave
 		if form == HaulerStage.GHOST and session.tick() % SAMPLE_EVERY == 0:
 			_sample(session.stage, seed_id)
 		if (session.stage.arena as GauntletCombat).report_bot_freeze():

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatTable, parseArgs, stats, summarize } from './deploy_measure.mjs';
+import { bondRows, formatTable, parseArgs, stats, summarize } from './deploy_measure.mjs';
 
 test('parseArgs passes the dev flags through and refuses unknown ones', () => {
   const a = parseArgs(['--mode=lab', '--radius=4,5', '--full=both', '--tag=sweep']);
@@ -60,4 +60,21 @@ test('--form is passed through and a non-Tonnage play summary shares hits over n
   assert.equal(rows[1].variant, 'ohm half r3.5 at spot');
   assert.equal(rows[1].share_hit, 0.25);
   assert.equal(rows[1].mean_near, 4);
+});
+
+test('--fit=relaxed is passed through and named in the variant', () => {
+  assert.deepEqual(parseArgs(['--mode=play', '--fit=relaxed']).pass, ['--fit=relaxed']);
+  const rows = summarize({ mode: 'play', form: 'ohm', rows: [{ seed: 1, radius_m: 3.5, fit: 'relaxed', deploys: [] }] });
+  assert.equal(rows[0].variant, 'ohm half r3.5 at spot fit relaxed');
+  const plain = summarize({ mode: 'play', form: 'ohm', rows: [{ seed: 1, radius_m: 3.5, fit: 'shipped', deploys: [] }] });
+  assert.equal(plain[0].variant, 'ohm half r3.5 at spot');
+});
+
+test('bondRows counts 4 per kill and the wave that crosses 70', () => {
+  const k = (kills, wave) => ({ kills, wave });
+  const r = bondRows({ rows: [{ wave: 4, deploys: [k(8, 1), k(8, 2), k(2, 3)] }, { wave: 2, deploys: [k(1, 1)] }] });
+  assert.equal(r.deploys, 4);
+  assert.equal(r.bond_per_deploy, 19 * 4 / 4);
+  assert.equal(r.mastery_reached, 1);
+  assert.equal(r.mastery_wave_median, 3);
 });
