@@ -47,9 +47,10 @@ def body_rows(crop):
     c = crop.astype(int)
     r, g, b = c[..., 0], c[..., 1], c[..., 2]
     m = (r > 110) & (r - b > 45) & (g > 70) & (g < r - 20) & (g > 40)
-    m[:50] = False
-    m[:, :60] = False
-    m[:, 190:] = False
+    k = crop.shape[0] / 240
+    m[: int(50 * k)] = False
+    m[:, : int(60 * k)] = False
+    m[:, int(190 * k):] = False
     lab, n = ndimage.label(m)
     if n:
         sizes = ndimage.sum(m, lab, range(1, n + 1))
@@ -58,14 +59,14 @@ def body_rows(crop):
     if not len(rows):
         return None
     top, bot = int(rows[0]), int(rows[-1])
-    cols = np.where(m.sum(axis=0) >= 2)[0]
+    cols = np.where(m.sum(axis=0) >= 1)[0]
     x0, x1 = max(int(cols[0]) - 15, 0), int(cols[-1]) + 15
     lum = (r + g + b) / 3
-    reg = lum[50:, :]
+    reg = lum[int(50 * k):, :]
     med = float(np.median(reg))
     s = (np.abs(r - b) < 22) & (lum < med - 18) & (r < 100)
-    s[:bot - 25] = False
-    s[bot + 60:] = False
+    s[: bot - int(25 * k)] = False
+    s[bot + int(60 * k):] = False
     s[:, :x0] = False
     s[:, x1:] = False
     ys = np.where(s.sum(axis=1) >= 4)[0]
