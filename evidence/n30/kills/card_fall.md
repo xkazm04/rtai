@@ -81,7 +81,7 @@ x2.5, then t174-t211 again at quarter speed; Mulroney, warden, trooper):
 |---|---|---|---|---|---|
 | sergeant_mulroney | 80x115, feet y 490 | 155x108, feet 490 | 119x99, feet 495 | 138x76 | 170x70 |
 | appliance_warden | ~85 px tall by eye, feet 490 | 149x103, feet 490 | 106x96, feet 490 | 128x73 | 140x64 |
-| rocket_trooper | see below | 129x88, feet 490 | 145x105, feet 490 | 89x88 | 132x60 |
+| rocket_trooper | ~94 px tall by eye, feet 490 | 129x88, feet 490 | 145x105, feet 490 | 89x88 | 132x60 |
 
 Mulroney at the switch (t173 -> t174, after): the cap is 30 px wide 6 px under the top in both frames (no size
 jump on the head); the feet drop 5 px (490 -> 495, 0.08 m); the bbox grows wider and shorter because the buckle
@@ -97,6 +97,11 @@ head at the switch. It is not from this change: the warden's living death draws 
 does not pop (cap 30 = 30). **NEED cast**: the warden fall sheet is drawn larger than his walk at the shared
 192 px still scale (a per-row fit like `StreetFallFit.FIT_K` for `p70/appliance_warden_fall.png`, or a redraw);
 it shows in his living death too.
+
+Trooper at the switch (`probe_frames/switch_t.png`, 2x): the helmet ~30 -> ~34 px wide, the figure ~94 -> ~105 px
+tall with the rocket tips (by eye), the feet within ~2 px: a mild step (~1.1x), and the drawing turns from his
+back (walk) to his front (the fall sheet's buckle faces the fall), as every grid victim's does. Still
+`stills/card_fall_rocket_trooper_pair_64.png` (pre-kill film `pre_rocket_trooper`, PASS, kill 174).
 
 ### What I saw
 
