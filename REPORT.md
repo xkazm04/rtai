@@ -4,10 +4,11 @@ Branch `n29-combat`, worktree `gtai-wt/n23-street`, cut from `main` `c649a15d6`.
 sub-agents (Agent tool, Sonnet 5.5 for most calls, Opus 5.5 for the fire group and the kill card scale). Films and stills:
 `C:/Users/kazda/kiro/gtai-masters/n29/combat/` (`frames.json`). IMAGES 0/25: every repaint is a deterministic hue remap of
 the shipped pixels or a code colour, no image-tool call (the shapes are accepted art, only their hue broke the colour law).
-Final gate on the last code commit `30d4cf525` (05:46-06:05): `gate: PASS` (lint 19/19 checks over 2274 GDScript files;
-unit 4256 passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at
-step 629; selftest; export-audit 999 loaded, 0 failed), `build/gate/30d4cf52551b/gate.json`. Every later commit is
-JOURNAL/REPORT/briefs only (inert).
+Final gate on the last code commit `2aa9e6748` (06:43-07:01): `gate: PASS` (lint 19/19 checks over 2275 GDScript files;
+unit 4270 passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at
+step 629; selftest; export-audit 999 loaded, 0 failed), `build/gate/2aa9e6748681/gate.json`. The gate before it, at
+`30d4cf525`, also passed (`build/gate/30d4cf52551b/gate.json`); between the two only tests and evidence were added. Every
+later commit is JOURNAL/REPORT only (inert).
 
 ## What works
 
