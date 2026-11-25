@@ -75,3 +75,31 @@ stances 2-4 (stance 1 starts with no travel in the probe; in play `plant` seeds 
 W sole column in the probe uses the unflipped anchor x (probe bug), not read. Unit:
 `test_mid_stance_sole_sits_on_the_ground_point_down_and_sideways` (S, W, E within 3 px of the drawing's own
 first-sole offset). The gauntlet x4 crop main | HEAD was not made in this call (clock).
+
+## The N residual over 10 stances (n31-10)
+
+Probe with `--stances=11` (new flag; it now also logs `shift` = `stance_shift`, `eased` = the eased
+landing, `body` = the settle's eased torso), patrol walk p70, 3.2 m/s, 32 px/m: `node tools/dev/run.mjs
+res://dev/ground_n31/foe_place_probe.gd --keep-going --out=<abs>/place.jsonl --stances=11`. Drawn planted
+sole minus ground point (px, y; x is the drawing's own sole column, -2.0 / -2.1 facing N) at mid-stance:
+
+| N stance | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|
+| before (`fe5712271`) | 3.2 | 7.9 | 11.0 | 13.9 | 14.4 | 15.6 | 15.2 | 14.8 | 14.4 |
+| `stance_shift.y` before | 3.4 | 6.8 | 10.2 | 13.6 | 14.4 | 14.4 | 14.4 | 14.4 | 14.4 |
+| after | -0.1 | 1.1 | 0.8 | 0.3 | 0.0 | 1.2 | 0.9 | 0.4 | 0.0 |
+
+The growing term is the settle `stance_shift`, compounding across touchdowns: `touchdown` zeroes it, but
+`previous_body` (the eased torso) still carries the last stance's shift, so at the next touchdown `body -
+target` = old shift + the part of the torso jump the 0.30 ppm (9.6 px) ease cannot reach. Facing N that
+jump is ~13 px, 3.4 px over the reach, so the shift grows 3.4 px a stance until its `ppm * 0.45` (14.4 px)
+limit; the sole is the shift give or take 0.3 px. Facing S/E/W the jump is inside the reach: shift 0 on
+every stance. The landing ease is caught up from stance 2 on (eased = 11.3 px = half a stance in every
+facing); the "N second-stance registration" of term 3 above is this shift, not the drawing.
+
+Fix: `StreetPatrolPose.SHIFT_ACROSS_TRAVEL` (true; false = the old shift): under `LAND_MID_STANCE` the
+footfall shortening keeps only its component across the travel (the landing direction), so along the
+travel nothing carries into the next stance. N after: within 1.2 px on stances 2-10, stance 10 minus
+stance 2 = 0.1 px; S/E/W unchanged (their shift was 0). Unit: `test_mid_stance_sole_sits_on_the_ground_point_down_and_sideways`
+now walks S, N, W, E over 10 stances (3 px, and stance 10 minus stance 2 <= 1 px); with the old constant
+it fails facing N at 4.2 / 7.7 / 11.2 / 15.1 / 14.7 ... px. The 12 px reversal tests stay green.

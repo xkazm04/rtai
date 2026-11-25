@@ -10,6 +10,11 @@ const MAX_STRETCH: float = 0.12
 ## before the easing): the disc runs 0..21 px ahead of the planted boot each stance.
 const LAND_MID_STANCE: bool = true
 const LANDING_EASE: float = 0.06
+## n31-10: the footfall shortening keeps only its part across the travel. Along the travel
+## it compounded (the eased body carries the last stance's shift into the next): 3.4 px a
+## stance walking up, to the 14.4 px limit. false = the old shift, the planted sole up to
+## 14 px off the disc walking N.
+const SHIFT_ACROSS_TRAVEL: bool = true
 
 ## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
 ## contact on the stance interval so his moving hip shadow crosses the planted boot.
@@ -125,6 +130,9 @@ func settle(placed: Transform2D, ppm: float, continuous: bool) -> Transform2D:
 		# Shorten this particular footfall to the reachable point. Keep its sole fixed
 		# until lift, and limit the correction so the figure never drifts from its rig.
 		stance_shift = (body - target).limit_length(ppm * 0.45)
+		if SHIFT_ACROSS_TRAVEL and LAND_MID_STANCE and not landing.is_zero_approx():
+			var along: Vector2 = landing.normalized()
+			stance_shift -= along * stance_shift.dot(along)
 		new_stance = false
 	placed.origin += stance_shift
 	var roll: Vector2 = (body - placed * local) / (ink.w - ink.y)

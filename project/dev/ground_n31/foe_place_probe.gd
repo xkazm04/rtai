@@ -3,19 +3,21 @@ extends SceneTree
 ## cop (and the gunner) walks two strides per facing; per tick it logs the sim ground point (where
 ## RigCastShadows / CardContactShadow draw the disc), the placed drawing's sole and torso (anchor
 ## through the placed transform), the stance origin and the mid-point between the stance's soles.
-## Flags: --out=<file.jsonl> [--ppm=32] [--mps=3.2]
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--mps"]
+## Flags: --out=<file.jsonl> [--ppm=32] [--mps=3.2] [--stances=4]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--mps", "--stances"]
 const PATROL: String = "p70/cop_patrol_planted8_armed_walk.png"
 const OCT: Dictionary[String, Vector2] = {
 	"S": Vector2.DOWN, "N": Vector2.UP, "W": Vector2.LEFT, "E": Vector2.RIGHT
 }
 
 var _log: FileAccess
+var _stances: int = 4
 
 
 func _initialize() -> void:
 	var ppm: float = float(_arg("--ppm", "32"))
 	var mps: float = float(_arg("--mps", "3.2"))
+	_stances = int(_arg("--stances", "4"))
 	_log = FileAccess.open(_arg("--out", "user://foe_place.jsonl"), FileAccess.WRITE)
 	for dir: String in OCT:
 		_walk(StreetWalkerCards.DIR + PATROL, dir, ppm, mps)
@@ -33,7 +35,7 @@ func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
 	var texel: Vector2 = Vector2(s, s)
 	var at: Vector2 = Vector2(1000, 1000)
 	var stance: float = contact.step_m * (contact.drawings >> 1) * ppm
-	var ticks: int = ceili(2.0 * 2.0 * stance / (mps * ppm * SimClock.TICK_DT)) + 1
+	var ticks: int = ceili(_stances * stance / (mps * ppm * SimClock.TICK_DT)) + 1
 	for t: int in ticks:
 		var placed: Transform2D = contact.place(at, face, texel, ppm)
 		var mark: Vector4 = contact.registered.marks[
@@ -51,6 +53,9 @@ func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
 			"tex_origin": _v(placed.origin),
 			"off_px": _v(off * texel),
 			"texel": s,
+			"shift": _v(contact.registered.stance_shift),
+			"eased": _v(contact.registered.eased_landing),
+			"body": _v(contact.registered.previous_body),
 		}
 		var stored: bool = _log.store_line(JSON.stringify(row))
 		assert(stored)
