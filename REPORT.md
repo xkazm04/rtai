@@ -1,6 +1,6 @@
 # REPORT lane yard, run n30 (2026-11-25, day run), branch `n30-yard`, base `5114a4441`
 
-DRAFT (session 5, 16:00): the gate line and session 5's films are filled in at the end.
+Gate (final code commit `7d87cf75a`, with reels): `gate: PASS; build/gate/7d87cf75a74c/gate.json` (git-ignored; lint 19/19, unit 4335 passed 0 failed 2 skipped, scenarios 68, parity bit for bit, selftest, export-audit 1004 loaded 0 failed, reels exit 0). Everything after it is JOURNAL / REPORT / evidence (inert).
 
 Owner's picks for this lane: `over_print_shade` 0.5; floor decals drawn over the i55 impression; a soft drop
 shadow under Rivet when he stands on a span; per-bay roof art and per-bay plumes; one more span drawn into the
