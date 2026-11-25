@@ -27,3 +27,9 @@ Read `evidence/briefs/n29-01-hud.md` (the item, the allowlist, the repo law: all
 
 Godot: `{GODOT_RULE}`; exports, d3d12, `--position 0,1440` and the commit law as in n29-01. Allowlist as n29-01 plus
 `docs/decisions.md` (that one line). Report (short), then END.
+
+## Added 02:59 (director)
+7. Also append this second line to `docs/decisions.md` (one line):
+   `- [2026-11-25] DECISION n29 keys plasma sword: walks and runs on its own p70 grids edited from the katana's (3dbef1803, d72d49bd8; one image edit per row, 16 rows, bars in evidence/n29-keys/grid_plasma_sword.md), blade amber as the shipped strip; walk_grid.by_weapon.plasma_sword left unset (RivetWalk plays a weapon's own sheet first; setting it empties the p55 walk, which has no sword grid). Run step 8.29/9.38 cm misses the 7 cm bar, inherited from the katana's legs (7.76/9.15). Rejected: the stop-gap bare run with the thin grey held blade.`
+8. Run `node tools/tests/run_unit.mjs --select=test_rivet_walk_every_weapon,test_rivet_grid_stride,test_rivet_walk_sprint_fallback` once
+   on HEAD and quote it (the sword commit's full `--changed` run was with a line later removed).
