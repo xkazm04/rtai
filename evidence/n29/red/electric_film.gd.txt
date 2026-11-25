@@ -1,0 +1,33 @@
+extends Node
+const START: int = 15500
+const FRAMES: int = 1500
+var _play: CollectCallPlay
+var _view: CollectCallView
+var _n: int = 0
+func _ready() -> void:
+	RenderingServer.set_default_clear_color(Ink.CREAM)
+	_play = CollectCallPlay.begin()
+	_view = CollectCallView.new()
+	_view.bind(_play.stage, _play.port, _play.system)
+	add_child(_view)
+	if _view.blood != null:
+		_view.blood.max_steps = 900
+func _process(_delta: float) -> void:
+	var st: CollectCallStage = _play.stage
+	if _play.ticks < START:
+		for _i: int in 900:
+			if _play.ticks >= START or not _play.running():
+				break
+			_play.tick_once()
+		_view.focus = st.arena.rivet.pos
+		return
+	if _play.running():
+		_play.tick_once()
+	_view.focus = (st.arena.rivet.pos + st.arena.boss.pos) * 0.5
+	_n += 1
+	if _n == 1:
+		Log.info("film", "start frame at tick %d" % _play.ticks)
+	if _n >= FRAMES:
+		Log.info("film", "end at tick %d" % _play.ticks)
+		_play.release()
+		get_tree().quit(0)

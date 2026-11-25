@@ -1,0 +1,5 @@
+extends SceneTree
+func _initialize() -> void:
+	var script: GDScript = load("C:/Users/kazda/kiro/gtai-wt/n23-street/build/n29elec/film.gd") as GDScript
+	var g: Node = script.new()
+	root.add_child(g)
