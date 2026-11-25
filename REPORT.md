@@ -55,11 +55,11 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n30\cast\` (`frames.json` th
 2. Owner call 3 (warden hat): the masked recolour over all walk cells at both pitches, per-cell mask check, in-game 64 still.
 3. NEED combat at merge: `kill_fall_cells.gd` `victim_scale` -> `StreetCrowdCards.body_scale_of(rig)` (see Merge notes).
 4. NEED director: `compare.mjs` / windowed film size check on this machine (clamped 1422x800).
-5. Door eight: `StreetPatrolPose.pose` shears a held drawing so the point at the registered sole height (`ink.y` of
-   `CastDoorAnchors`) stays put; c19's model puts the remaining in-hold slide at the lean change times the boot's depth below
-   that height (p55 right drawing 8: 20.5 sheet px). If the registered sole y sat on the boot bottom that the feet tool reads,
-   the slide inside a hold should vanish: a `cast_door_soles.py` change (door anchors only), to measure four and eight
-   before any switch. Not measured tonight.
+5. Door eight (and the pile-driver): the card views re-pin the node position on a held walk drawing
+   (`foe_shield_card_view.gd` `update_fighter`, `foe_war_card_view.gd` `hold_foot`), which discards the pose's lean
+   correction about the registered sole, so a held drawing leans about its cell pivot and the planted sole slides (c20:
+   the still line is y 168 = the pivot in all 8 takes; the anchors' sole y and the feet reader's contact agree to 0 px).
+   Fix: pin the planted sole instead (brief `evidence/briefs/n30-cast-21-held-sole-pin.md`), measured before commit.
 
 ## Builder ledger
 
@@ -88,7 +88,8 @@ All Claude sub-agents launched from the director's session, briefs under `eviden
 | c16 | opus | door p55 round 1 (6 images) | 34 | accepted (art ships, WALK stays FOUR) |
 | c18 | sonnet | two decisions.md lines, frames.json prune | 4 | accepted |
 | c17 | opus | door p55 round 2 (5 images) | 17 | accepted (art ships, WALK stays FOUR) |
-| c19 | opus | door p55 drawing 8, computation (0 images) | 8 | accepted (no drawing-8 edit can pass; lever is the walk code) |
+| c19 | opus | door p55 drawing 8, computation (0 images) | 8 | accepted (no drawing-8 edit can pass) |
+| c20 | opus | door sole y vs feet reader, measure only | 3 | accepted (hypothesis wrong; found the card-view pin) |
 
 What I would brief differently: one checklist point per call from the start (the short calls c07-c13 were the best value);
 give every measurement call the exact sheet row the game draws at that moment (c06 measured a row the game never shows);

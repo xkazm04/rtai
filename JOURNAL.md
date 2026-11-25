@@ -131,8 +131,20 @@ NEXT (session 4, from 15:24):
 ## Session 4 end (written 15:59)
 No builder running at the session end except the detached gate (pid 26572 cmd, `build/gate-n30-s4.out`, rev 5e32a5e72, lane lock tag `gate` deleted by the cmd when it ends). Builder ledger session 4: c14 29 acc, c16 34 acc, c18 4 acc, c17 17 acc, c19 8 acc. IMAGES 16/60.
 
-NEXT (session 5, from 16:25; commit last new work by 17:15, final gate by 17:30):
+NEXT-OLD (superseded by NEXT-FINAL below) (session 5, from 16:25; commit last new work by 17:15, final gate by 17:30):
 1. `tail -5 build/gate-n30-s4.out`: quote `gate: PASS|FAIL; build/gate/5e32a5e72764/gate.json` in REPORT (replace the 084e11b56 gate line). If FAIL: fix first (builder), nothing else.
 2. One opus call (brief WRITTEN: `evidence/briefs/n30-cast-20-door-sole-y.md`, MEASURE FIRST, stop 17:10): door sole y at the boot bottom. Find what y the feet reader (`tools/art/cast_door_feet.py`) takes as the contact and what `cast_door_soles.py` writes as `ink.y`; regenerate the anchors with the sole y at the reader's contact; measure four and eight (`cast_door_films.mjs ... feet`, all four facings). Commit only if the four does not get worse anywhere (it is what ships) and say whether the eight now beats the four in every facing; WALK = EIGHT only then, in a separate commit, with a 64 still + 32 clip. If time is short, leave it as an audit section and a Next step.
 3. Final gate `node tools/gate/run.mjs --rev=HEAD --reels` after the last code commit (detached, lane lock `gate`; ~21 + 14 min), by 17:30.
 4. REPORT: replace the gate line; ledger rows for session 5; `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL + REPORT (inert, hook skips lint).
+- 15:56 BUILDER c20 (opus) launched: MEASURE ONLY part of brief n30-cast-20 (gap + table four/eight x now/contact-y), no commits, writes `build/look/n30-c20/NOTES.md` (RESUME line) and `sole_y.patch`, reverts its tracked edits, stop 16:20. If it dies: session 5 reads NOTES.md first.
+- 15:59 BUILDER c20 3 accepted (measure only): HYPOTHESIS WRONG: anchors' sole y and the feet reader's contact are the same point (gap 0.0 every drawing; reader calls the generator's `sole()`). In c17's tracks the line that stays still inside a held drawing is y 168 = the cell PIVOT in all 8 takes. Cause: `foe_shield_card_view.gd` `update_fighter` sets `position = last_ground` on a held walk cell, throwing away `StreetPatrolPose.pose()`'s `- roll * ink.y` sole correction; `foe_war_card_view.gd` `hold_foot` does the same. Both are cast's card views. Notes `build/look/n30-c20/NOTES.md`.
+- DECISION: fix it in the card views (cast-owned): a held walk cell pins the planted SOLE. Brief `n30-cast-21-held-sole-pin.md` (door first, measured before commit; then the pile-driver).
+- 16:01 BUILDER c21a (opus) launched: part 1 code + door feet table ONLY, no commit, writes `build/look/n30-c21/NOTES.md` + `fix.patch`, reverts the view, stop 16:21.
+
+NEXT-FINAL (session 5, from 16:25; commit last new work by 17:15, final gate by 17:30):
+1. Gate: `tail -5 build/gate-n30-s4.out` -> quote `gate: PASS|FAIL; build/gate/5e32a5e72764/gate.json` in REPORT.
+2. Read `build/look/n30-c21/NOTES.md` (+ `fix.patch`). If c21a's table shows the four and eight no worse anywhere and better somewhere: brief c21b (opus) = apply `fix.patch`, unit tests, quick gate, 64 still `door_sole_pin_64.png`, commit; WALK = EIGHT only per the brief's rule; the pile-driver part 2 only if committed by 16:55; audit section. Else: the audit section only (c20 + c21a findings) and a Next step.
+3. c20's audit section ("Door anchors, sole y on the boot contact, n30": hypothesis wrong, gap 0) goes into c21b's audit append.
+4. A decisions.md line (one builder) for whatever ships from c21.
+5. Final gate `node tools/gate/run.mjs --rev=HEAD --reels` after the last code commit (detached, lane lock `gate`), by 17:30.
+6. REPORT: gate line, door row + What does not + Next steps 5 (replace the sole-y hypothesis with the card-view pin finding), ledger rows c20, c21a, session 5 calls; cites; commit.
