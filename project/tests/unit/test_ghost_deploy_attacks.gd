@@ -21,6 +21,9 @@ func before_each() -> void:
 	pilot = StagePilot.new(PlayerActions.shipped(false))
 	stage.pilot = pilot
 	ghost = pilot.ghosts.deploy
+	# n31 ghost Ohm drop: the shipped row drops; these tests drive the hold flow at the old radius.
+	ghost.strike.attacks.deploy[&"ohm"].press_mode = &"hold"
+	ghost.strike.attacks.deploy[&"ohm"].radius_m = 3.5
 	watch_signals(bus)
 	@warning_ignore("return_value_discarded")
 	arena.kill_landed.connect(_killed)

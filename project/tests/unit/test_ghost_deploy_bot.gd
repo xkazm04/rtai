@@ -21,6 +21,8 @@ func before_each() -> void:
 	view = BotViewArena.new(stage, actions, true)
 	bot = GhostDeployBot.new(view, actions, RngRegistry.new(24))
 	ghost = stage.pilot.ghosts.deploy
+	# n31 ghost Ohm drop: the shipped row drops; these tests drive the hold flow.
+	ghost.strike.attacks.deploy[&"ohm"].press_mode = &"hold"
 	number = 1 << actions.bit(&"ghost_deploy_4")
 
 

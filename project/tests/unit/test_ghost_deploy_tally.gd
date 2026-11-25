@@ -13,6 +13,8 @@ func before_each() -> void:
 	pilot = StagePilot.new(PlayerActions.shipped(false))
 	stage.pilot = pilot
 	stage.arena.rivet.pos = Vector2.ZERO
+	# n31 ghost Ohm drop: the shipped row drops; these tests drive the hold flow.
+	pilot.ghosts.deploy.strike.attacks.deploy[&"ohm"].press_mode = &"hold"
 	wave = GauntletWaveStats.new()
 	wave.begin(stage)
 

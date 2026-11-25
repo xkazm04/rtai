@@ -24,9 +24,6 @@ func before_each() -> void:
 	stage.pilot = pilot
 	ghost = pilot.ghosts.deploy
 	row = ghost.strike.attacks.deploy[&"ohm"]
-	# The shipped row still holds (the hold tests elsewhere pin it); these drive the drop row.
-	row.press_mode = &"drop"
-	row.life_ticks = row.charge_ticks + 48
 	pilot.ghosts.forms.selected = &"ohm"
 	key = 1 << pilot.actions.bit(&"ghost_deploy")
 
@@ -60,11 +57,12 @@ func _bolt() -> float:
 
 func test_shipped_row_carries_a_quick_charge_at_the_aim() -> void:
 	var shipped: GhostAttacks.DeployRow = GhostAttacks.shipped().deploy[&"ohm"]
-	assert_true(shipped.press_mode in [&"drop", &"hold"])
+	assert_eq(shipped.press_mode, &"drop", "n31: one press, a charge, a full circle")
 	assert_eq(shipped.drop_at, &"aim")
 	assert_eq(shipped.charge_ticks, 18, "0.3 s: Ohm is the quick caster")
 	assert_lt(shipped.charge_ticks, ghost.strike.attacks.deploy[&"tonnage"].charge_ticks)
-	assert_gt(shipped.radius_m, 0.0)
+	assert_eq(shipped.radius_m, 5.0, "g10 lab: the smallest radius with an 8-cop share >= 75 %")
+	assert_eq(shipped.life_ticks, 66)
 
 
 func test_one_press_stands_at_once_and_hits_only_on_the_dump_tick() -> void:

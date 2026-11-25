@@ -43,9 +43,9 @@
       "cooldown_ticks": 480,
       "drop_at": "aim",
       "enabled": true,
-      "life_ticks": 48,
-      "press_mode": "hold",
-      "radius_m": 3.5,
+      "life_ticks": 66,
+      "press_mode": "drop",
+      "radius_m": 5,
       "range_m": 9
     },
     "tonnage": {
