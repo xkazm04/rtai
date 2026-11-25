@@ -22,9 +22,19 @@ Final gate: (pending).
 - Masked recolour (value and alpha kept, 0 PNG px changed > 1 px from the band core). In game at 64 px/m: rocket t836
   vermilion 91 -> 0, amber 0 -> 84; nuke t1212 1048 -> 39, amber 0 -> 957; 0 px diff outside the round boxes.
 - Stills `stills/round_band_{rocket,nuke}_pair_64.png`; film `films/round_band_32.mp4` 1920x1080 60/1 25.0 s.
-- Open: the nuke's 39 stripe-edge px (session 2 call c07b).
+- The nuke keeps 39 vermilion px (of 957 amber) on the stripe edges: darkening the sprite's edge px made it worse in game
+  (39 -> 71 / 60 / 55 at value caps 0.30 / 0.14 / 0.09; `74b56e6db`, `evidence/n30/rounds/band.md`): the print blends the
+  amber with the stripe ink one px out. Not landed.
 
-### 4. Explosion light rim amber through a new palette token — (session 2 call c04)
+### 4. Explosion light rim amber through a new palette token: token and data in, NOT on screen (`d4b6aabcc`, `199faedc7`, `aa824a4da`)
+- `palette.json` token `amber` `#EDAB42` (role accent, no accents row: r - max(g,b) 0.26 < verm_gate 0.31, the accent audit
+  does not move); `lights.json` explosion `alt_token` vermilion -> amber; `test_light_explosion_amber.gd` (3 tests).
+  Units 25/0 with the palette/light tests. Cost: one light per blast, unchanged.
+- It does not reach a pixel: `light_pool.gd:71-72` uses `alt_color` only for a strobe (`flicker_hz > 0`) and the shader prints
+  one ink per light, so the explosion never had a vermilion rim on screen (n29's call read the row's doc). Probe: the nuke's
+  light starts t478 and draws t480-513 (~421k px on/off at t480-496); a rocket blast right after launch is refused by the
+  photosensitivity budget. Ready patch for the Director: `evidence/n30/lights/rim_patch.md` (rim flag, alt ink packed into
+  the instance custom data, the shader prints the outer band in it). Still `stills/explosion_light_seen_64.png` (t486 off | on).
 
 ### 5. A killed card foe falls on his own fall sheet (`480268dcf`, `0351c7020`, evidence `1c14f5010`, `7d221357f`)
 - `KillCardFall.path_of(rig)` routes `sheets.fall` into `KillFallCells.attach` at `scale_of`, faced as the grid.
@@ -44,7 +54,12 @@ Final gate: (pending).
 - Thin hop/stun: the thin stars read cream/tan at 3 px (`THIN_BODY_PX` 4 = more amber, one value). `stills/stun_thin_pair_64.png`.
 - Card fall: a card foe no longer takes a kill style's street-row cells (they were another kind's drawing: the patrol/SWAT
   cop's stitch wounds), only `*` cells or his own sheet. `stills/card_fall_sergeant_mulroney_pair_64.png`.
-- The `fire` light kind is still vermilion (not in the picks; heat by colour law would make it amber).
+- The `fire` light kind prints vermilion (its main token, strobing with paper at 2.5 Hz). With the new `amber` token,
+  `lights.json` fire `"token": "amber"` is a one-value change (heat by the colour law); not in the picks, not done.
+- A short-flight rocket's blast gets no light: its launch muzzle flash spent the 1/s photosensitivity budget
+  (`FlashBudget.spend_light`). Letting a blast win changes the photosensitivity behaviour: owner call.
+- The nuke's amber blast floor prints vermilion specks on its ink edges (`stills/explosion_light_seen_64.png`), the same
+  print snap as the band's last 39 px.
 - Warden's fall sheet draws his head ~1.4-1.5x his walk at the switch (kill and living death alike): NEED cast.
 
 ## Merge notes
