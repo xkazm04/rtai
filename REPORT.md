@@ -1,4 +1,4 @@
-# REPORT lane combat, run n30 (2026-11-25, day run) — DRAFT (session 4, 16:05; final at 18:55)
+# REPORT lane combat, run n30 (2026-11-25, day run) — DRAFT (session 5, 16:40; final at 18:55)
 
 Branch `n30-combat`, worktree `gtai-wt/n23-street`, cut from `main` `5114a4441`. Director Opus 5.5; builders Claude
 sub-agents (Agent tool; Sonnet 5.5, Opus 5.5 for the card fall). Films and stills: `C:/Users/kazda/kiro/gtai-masters/n30/combat/`
@@ -23,13 +23,16 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   mutate 10/12 = 83.3 % (2 equivalent). `evidence/n30/electric/thin.md`.
 - Stills `stills/hop_thin_pair_64.png`, `stills/stun_thin_pair_64.png`; film `films/hop_thin_32.mp4` 1920x1080 60/1 18.0 s.
 
-### 3. Rivet's rocket and nuke nose band amber (`42e7af756`, `201763968`, evidence `b67599ee5`)
+### 3. Rivet's rocket and nuke nose band amber (`42e7af756`, `201763968`, `b0fcfedf5`, evidence `b67599ee5`)
 - Masked recolour (value and alpha kept, 0 PNG px changed > 1 px from the band core). In game at 64 px/m: rocket t836
   vermilion 91 -> 0, amber 0 -> 84; nuke t1212 1048 -> 39, amber 0 -> 957; 0 px diff outside the round boxes.
 - Stills `stills/round_band_{rocket,nuke}_pair_64.png`; film `films/round_band_32.mp4` 1920x1080 60/1 25.0 s.
-- The nuke keeps 39 vermilion px (of 957 amber) on the stripe edges: darkening the sprite's edge px made it worse in game
-  (39 -> 71 / 60 / 55 at value caps 0.30 / 0.14 / 0.09; `74b56e6db`, `evidence/n30/rounds/band.md`): the print blends the
-  amber with the stripe ink one px out. Not landed.
+- The nuke's last 39 vermilion px (amber/ink blends on the stripe edges, snapped to vermilion by the print) are gone
+  (`b0fcfedf5`): the band texels that touch ink orthogonally (stripes and band rim, 262 texels, 0 outside the band mask)
+  are an opaque soot grey (`evidence/n30/rounds/seam.py`). At 64 px/m vermilion 42 / 39 / 43 -> 0 / 0 / 0 (t1206 / 1212 / 1218),
+  amber 957 -> 869 at t1212, red 0, teal 0, 0 px changed outside the round. The stripes keep their dark bars with a 1 px grey
+  edge. Units 334/0 (the 54 tests on the PNG), lint 19/19. Still `stills/nuke_round_seam_pair_64.png`. (c07b's dark edge
+  made it worse, 39 -> 71 / 60 / 55, `74b56e6db`: a dark amber-brown sits in vermilion's cell.)
 
 ### 4. Explosion light rim amber through a new palette token: token and data in, NOT on screen (`d4b6aabcc`, `199faedc7`, `aa824a4da`)
 - `palette.json` token `amber` `#EDAB42` (role accent, no accents row: r - max(g,b) 0.26 < verm_gate 0.31, the accent audit
@@ -90,8 +93,6 @@ Later commits: docs, JOURNAL, REPORT, evidence.
 - Item 4 is not on screen on this branch: the rim needs `evidence/n30/lights/rim.patch` (shader + `core/render/light_pool.gd`,
   on no lane's file list) applied by the Director after the merge. Even patched, the rim reads modestly over the nuke's own
   amber floor at 64 px/m and is barely visible at 32 px/m (8.17-8.3 s of the film).
-- The nuke round keeps 39 vermilion px of its band edge at 64 px/m (sprite fixes made it worse; the print blends the band
-  with the stripe ink).
 - A rocket fired at close range gets no explosion light at all (the photosensitivity budget, see Calls).
 - `current_look.gd`: one mutate survivor (deleting the `draw_polyline` call) needs a GPU pixel readback; not built.
 - The "Overkill Carry" weapon-effect card in the bond film draws no icon (blank card face); icon art is keys' (weapon icons).
@@ -139,13 +140,16 @@ Later commits: docs, JOURNAL, REPORT, evidence.
   blast at t486 64 px/m.
 - Director, after merging n30-cast: `kill_fall_cells.gd:95` -> `StreetCrowdCards.body_scale_of(rig)` (Merge notes).
 - Overkill Carry card icon (keys / weapon icons): NEED Director.
-- The FX item print (`look_d4_item`, core/render) has no dark-amber ink, so every amber->ink blend snaps to vermilion (the
-  nuke band's last 39 px; any future amber cell). A print rule (vermilion only when nearer it than the amber->ink segment)
-  would cover every amber cell at once: NEED Director. Our blast cells are fixed in the art meanwhile.
+- The FX item print (`look_d4_item`, core/render) has no dark-amber ink, so every amber->ink blend snaps to vermilion (any
+  future amber cell; our nuke band and blast cells are fixed in the art with soot seams). A print rule (vermilion only when nearer it than the amber->ink segment)
+  would cover every amber cell at once: NEED Director.
 - Owner calls above: thin 3 or 4 px; fire light token amber; flash budget for a close-range rocket blast.
 - Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
 ## Builder ledger
+- Session 5: c24 specks-film 3 accepted (evidence only); c23 nuke-seam (Opus) 19 accepted (model first with c18's snap
+  model, then three ticks in game: landed on the first in-game try). What worked: a brief that hands over the cause and its
+  model tools.
 - Session 4: c17 rim-ink 18 accepted (negative: deeper ink lowers contrast); c18 blast-specks (Opus) 29 accepted (found the
   print's nearest-ink snap, fixed the cell); c19 rim-wide 14 accepted (negative); c20 blast0 14 accepted; c21 decisions 1
   accepted. What I would brief differently: ask for the cause before a fix (c07b tried sprite fixes blind; c18 explained it
