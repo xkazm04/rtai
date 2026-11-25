@@ -101,3 +101,15 @@ orange-red 1 px dots in the flat amber star; after, a clean amber star. Nothing 
 (frame 0 has no fringe problem); the 70 px at 3.8x were the grain, and at 64 px/m they are 6-10 px.
 Unit: `unit-tests: 334 passed, 0 failed, 0 skipped (GUT, headless)` (the 54 tests `test_map.mjs` reaches from blast_0.png).
 Lint: `lint: all 19 checks pass over 2294 GDScript files`.
+
+## 32 px/m film (c22)
+
+Command: `CHAPTERS=rocket_launcher,mini_nuke QUIT=1500 node evidence/n29/red/film.mjs build/n30floorfilm/after.mp4` at HEAD
+`93d37aea1`; copied to `C:/Users/kazda/kiro/gtai-masters/n30/combat/films/blast_floor_after_32.mp4`.
+ffprobe: h264, 1920x1080, 60/1, 25.000000 s. Before = `films/round_band_32.mp4` (same chapters, QUIT 1500, before c18).
+
+Whole-frame vermilion px (`r - max(g,b) >= 79` of 255): 8.3 s (nuke floor) 2149 -> 491; 1.3 s (rocket) 324 -> 252; every
+other sampled second within +-40 (blood, props).
+
+Seen at 8.3 s (`C:/Users/kazda/kiro/gtai-masters/n30/combat/stills/blast_floor_32_pair.png`): the thin orange-red outline along
+the burst's amber edge is gone; the edge reads ink/soot; subtle at 32 px/m.
