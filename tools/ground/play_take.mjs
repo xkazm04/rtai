@@ -72,7 +72,7 @@ async function take(f) {
   const out = resolve(f.out);
   mkdirSync(out, { recursive: true });
   const avi = join(out, 'take.avi');
-  const args = godotArgs({ scene, avi, ticks: f.ticks, seed: f.seed, bot: f.bot });
+  const args = godotArgs({ scene, avi, ticks: f.ticks, seed: f.seed, bot: f.bot, waveTimeout: f['wave-timeout'] });
   const label = f.label ?? labelOf(f.rev, sha);
   console.log(`play_take: ${label} in ${tree}\n  godot --path project ${args.join(' ')}`);
   if (f['dry-run']) return 0;

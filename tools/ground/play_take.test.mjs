@@ -46,3 +46,10 @@ test('label: a hash alone, a name with its hash', () => {
   assert.equal(labelOf('ba8e470b0', 'ba8e470b0aaaaaaa'), 'ba8e470b0');
   assert.equal(labelOf('HEAD', 'ba8e470b0aaaaaaa'), 'HEAD ba8e470b0');
 });
+
+test('wave-timeout is passed to the gauntlet scene only when given', () => {
+  const base = { scene: SCENES[32], avi: 'a.avi', ticks: 99, seed: 7, bot: 'average' };
+  assert.ok(!godotArgs(base).some((x) => x.startsWith('--wave-timeout')));
+  assert.ok(godotArgs({ ...base, waveTimeout: '5' }).includes('--wave-timeout=5'));
+  assert.equal(parseArgv(['--rev=HEAD', '--seed=7', '--ticks=9', '--out=o', '--wave-timeout=5']).flags['wave-timeout'], '5');
+});

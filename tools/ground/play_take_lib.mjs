@@ -6,11 +6,11 @@ export const SCENES = { 32: 'res://dev/gauntlet/gauntlet.tscn', 64: 'res://dev/g
 export const WRAPPER = 'project/dev/ground_n31/gauntlet_64.tscn';
 export const FPS = 60;
 export const BOTS = ['novice', 'average', 'expert'];
-const VALUE = new Set(['rev', 'scene', 'seed', 'ticks', 'out', 'from', 'ppm', 'bot', 'tree', 'side', 'layout', 'timeout', 'lock-wait', 'label']);
+const VALUE = new Set(['rev', 'scene', 'seed', 'ticks', 'out', 'from', 'ppm', 'bot', 'tree', 'side', 'layout', 'timeout', 'lock-wait', 'label', 'wave-timeout']);
 const SWITCH = new Set(['native-donor', 'dry-run']);
 
 const USAGE = 'usage: node tools/ground/play_take.mjs --rev=<commit|HEAD> --scene=gauntlet --seed=<n> --ticks=<n> --out=<dir> '
-  + '[--from=<tick>] [--ppm=32|64] [--bot=average] [--native-donor] [--dry-run]\n'
+  + '[--from=<tick>] [--ppm=32|64] [--bot=average] [--wave-timeout=<s>] [--native-donor] [--dry-run]\n'
   + '       node tools/ground/play_take.mjs --side=<dirA>,<dirB> --out=<file.mp4> [--layout=h|v]';
 
 /** {flags} or {error}. Defaults: scene gauntlet, ppm 32, from 0, bot average (the "human-like" profile; `human` is not a gauntlet flag value). */
@@ -32,16 +32,16 @@ export function parseArgv(argv) {
   if (flags.scene !== 'gauntlet') return { error: `play_take: --scene must be gauntlet (quest1 is a later item), got ${flags.scene}` };
   if (!SCENES[flags.ppm]) return { error: `play_take: --ppm must be 32 or 64, got ${flags.ppm}` };
   if (!BOTS.includes(flags.bot)) return { error: `play_take: --bot must be ${BOTS.join('|')}, got ${flags.bot}` };
-  for (const f of ['seed', 'ticks', 'from']) if (!/^\d+$/.test(flags[f])) return { error: `play_take: --${f} must be a whole number, got ${flags[f]}` };
+  for (const f of ['seed', 'ticks', 'from', 'wave-timeout'].filter((k) => flags[k] !== undefined)) if (!/^\d+$/.test(flags[f])) return { error: `play_take: --${f} must be a whole number, got ${flags[f]}` };
   if (Number(flags.from) >= Number(flags.ticks)) return { error: 'play_take: --from must be below --ticks' };
   return { flags };
 }
 
 /** The Godot arguments after `--path project`: windowed d3d12 on the secondary screen, 1080p, fixed 60 Hz, a movie. */
-export function godotArgs({ scene, avi, ticks, seed, bot }) {
+export function godotArgs({ scene, avi, ticks, seed, bot, waveTimeout }) {
   return ['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080', '--fixed-fps', String(FPS),
     '--disable-vsync', '--write-movie', avi, '--quit-after', String(ticks), scene,
-    '--', '--pick-view', `--bot=${bot}`, '--controls=wheel', `--seed=${seed}`];
+    '--', '--pick-view', `--bot=${bot}`, '--controls=wheel', `--seed=${seed}`, ...(waveTimeout ? [`--wave-timeout=${waveTimeout}`] : [])];
 }
 
 /** Three sample frames of the kept window: a quarter, a half and three quarters in. */
