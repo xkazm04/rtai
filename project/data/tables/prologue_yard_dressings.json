@@ -1,6 +1,7 @@
 {
   "dressings": {
     "arched_line": {
+      "decals_over_impression": true,
       "factory_front": [
         {
           "art": "res://boot/prologue/art/arched_line/hall_tall_shutter_bay.png",
@@ -155,6 +156,7 @@
           "wash": "00000000"
         },
         {
+          "over_impression": true,
           "rect_m": {
             "origin": [
               0,

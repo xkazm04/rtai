@@ -142,6 +142,9 @@
           },
           "type": "array"
         },
+        "decals_over_impression": {
+          "type": "boolean"
+        },
         "factory_front": {
           "items": {
             "$ref": "#/$defs/piece"
@@ -561,6 +564,9 @@
     "layer": {
       "additionalProperties": false,
       "properties": {
+        "over_impression": {
+          "type": "boolean"
+        },
         "rect_m": {
           "$ref": "#/$defs/rect"
         },

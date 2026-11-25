@@ -19,6 +19,12 @@ class Recorder:
 		call.layer = layer
 		calls.append(call)
 
+	func stamps(_canvas: CanvasItem, _list: Array[PrologueYardDressing.Piece]) -> void:
+		calls.append(Call.new())
+
+	func scorch(_canvas: CanvasItem, _plan: PrologueYard) -> void:
+		calls.append(Call.new())
+
 	func wreck(
 		_canvas: CanvasItem,
 		piece: PrologueYard.Wreck,
@@ -81,11 +87,11 @@ func test_draw_runs_ground_then_wrecks_in_skin_then_debris_then_spans() -> void:
 	add_child_autofree(node)
 	PrologueYardOverprint._draw_pieces(node, plan, rec)
 	var order: Array[PrologueYard.Wreck] = PrologueYardOverprint.order(plan)
-	assert_eq(rec.calls.size(), order.size() + 1)
+	assert_eq(rec.calls.size(), order.size() + 3)
 	assert_null(rec.calls[0].piece)
 	assert_eq(rec.calls[0].layer, plan.dressing.impression)
 	for i: int in order.size():
-		var call: Call = rec.calls[i + 1]
+		var call: Call = rec.calls[i + 3]
 		var piece: PrologueYard.Wreck = order[i]
 		assert_eq(call.piece, piece, piece.id)
 		if plan.wrecks.has(piece):

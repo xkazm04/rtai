@@ -2,6 +2,7 @@ class_name PrologueYardPaint
 extends RefCounted
 ## Draws into the floor canvas in stage order. No physics or navigation objects live here.
 
+const SCORCH: Texture2D = preload("res://features/city/art/decals/scorch.png")
 const OCHRE: Shader = preload("res://boot/prologue/art/yard_ochre.gdshader")
 
 ## Modulate for a skinned wreck (cover art); the over-print layer sets it around its draw.
@@ -59,6 +60,12 @@ func ground(canvas: CanvasItem, layer: PrologueYardDressing.Ground) -> void:
 		canvas.draw_texture_rect(art, pixels(rect), false, layer.tint)
 	if layer.wash.a > 0.0:
 		canvas.draw_rect(pixels(rect), layer.wash)
+
+
+## The stage's scorch marks, one stretched stamp each.
+func scorch(canvas: CanvasItem, plan: PrologueYard) -> void:
+	for stain: Rect2 in plan.scorch_marks:
+		canvas.draw_texture_rect(SCORCH, pixels(stain), false)
 
 
 func stamps(canvas: CanvasItem, pieces: Array[PrologueYardDressing.Piece]) -> void:

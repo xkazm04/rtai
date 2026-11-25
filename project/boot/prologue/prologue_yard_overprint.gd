@@ -25,8 +25,9 @@ static func attach(floor_view: Node2D, plan: PrologueYard, paint: PrologueYardPa
 	layer.add_child(node)
 
 
-## Ground debris first, then the wrecks, then the overhead spans: a beam stays above every
-## ground piece it crosses.
+## Under the pieces: the impression, the ground layers flagged `over_impression`, then the
+## decals of `decals_over_impression`. Ground debris first, then the wrecks, then the overhead
+## spans: a beam stays above every ground piece it crosses.
 static func order(plan: PrologueYard) -> Array[PrologueYard.Wreck]:
 	var ids: PackedStringArray = plan.dressing.over_print
 	var out: Array[PrologueYard.Wreck] = []
@@ -47,6 +48,12 @@ static func order(plan: PrologueYard) -> Array[PrologueYard.Wreck]:
 static func _draw_pieces(node: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
 	if plan.dressing.impression != null:
 		paint.ground(node, plan.dressing.impression)
+	for layer: PrologueYardDressing.Ground in plan.dressing.ground:
+		if layer.over_impression:
+			paint.ground(node, layer)
+	if plan.dressing.use_stage_decals and plan.dressing.decals_over_impression:
+		paint.scorch(node, plan)
+	paint.stamps(node, plan.dressing.decals_over)
 	var shade: float = plan.dressing.over_print_shade
 	var shaded: Color = Color(shade, shade, shade)
 	for piece: PrologueYard.Wreck in order(plan):

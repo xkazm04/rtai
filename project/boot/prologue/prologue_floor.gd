@@ -6,7 +6,6 @@ extends StageView
 ## and grow the surround for wider viewports or the camera's 18% vertical lean.
 const MIN_SURROUND_M: float = 40.0
 const BACKLOT: Texture2D = preload("res://features/city/art/ground/road_box_plain.png")
-const SCORCH: Texture2D = preload("res://features/city/art/decals/scorch.png")
 const ZEBRA: Texture2D = preload("res://features/city/art/decals/zebra.png")
 
 var plan: PrologueYard
@@ -44,8 +43,7 @@ func _draw() -> void:
 		return
 	var margin: float = _surround_m()
 	_backlot(margin)
-	for layer: PrologueYardDressing.Ground in plan.dressing.ground:
-		_paint.ground(self, layer)
+	_ground()
 	_street_surface(margin)
 	_crossing()
 	# The back fence passes behind the loading hall. The yard perimeter still blocks travel.
@@ -72,6 +70,12 @@ func _draw() -> void:
 		var barrier: Rect2 = _pixels(Rect2(plan.gate - size_m * 0.5, size_m))
 		draw_rect(barrier.grow(1.5), Ink.INK)
 		draw_rect(barrier, Color("57758e"))
+
+
+func _ground() -> void:
+	for layer: PrologueYardDressing.Ground in plan.dressing.ground:
+		if not layer.over_impression:
+			_paint.ground(self, layer)
 
 
 func _yard_phone(at: Vector2) -> void:
@@ -139,8 +143,8 @@ func _fence(box: Rect2) -> void:
 
 func _stage_decals() -> void:
 	if plan.dressing.use_stage_decals:
-		for stain: Rect2 in plan.scorch_marks:
-			draw_texture_rect(SCORCH, _pixels(stain), false)
+		if not plan.dressing.decals_over_impression:
+			_paint.scorch(self, plan)
 	elif plan.dressing.layout.is_empty():
 		return
 	for piece: PrologueYard.Wreck in plan.debris:

@@ -14,6 +14,8 @@ class Ground:
 	var tile_size: Vector2
 	var tint: Color
 	var wash: Color
+	## Drawn on the over-print layer, after the impression, not in the world pass.
+	var over_impression: bool
 
 
 class Piece:
@@ -58,6 +60,10 @@ var over_print: PackedStringArray = PackedStringArray()
 var impression: Ground
 ## Multiplies the own-colour wrecks on the over-print layer (1 = the art as drawn).
 var over_print_shade: float = 1.0
+## Row flag: the stage scorch marks and the decals without `ochre` (stains, tyre marks) print on
+## the over-print layer, after the ground layers there. The split-off decals wait in `decals_over`.
+var decals_over_impression: bool = false
+var decals_over: Array[Piece] = []
 ## Fire light over the void north of the hall roof (PrologueRoofGlow.read), empty = none.
 var roof_glow: Dictionary = {}
 
@@ -100,6 +106,12 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		ground.append(_layer(table, layer))
 	use_stage_decals = not row.has("decals")
 	decals = _pieces(table, row, "decals")
+	decals_over_impression = row.get("decals_over_impression", false)
+	if decals_over_impression:
+		for piece: Piece in decals.duplicate():
+			if not piece.ochre:
+				decals.erase(piece)
+				decals_over.append(piece)
 	factory_front = _pieces(table, row, "factory_front")
 	fixtures = _pieces(table, row, "fixtures")
 	if row.has("phone"):
@@ -138,6 +150,7 @@ static func _layer(table: DataTable, row: Dictionary) -> Ground:
 	layer.tile_size = table.vec(row, "tile_size_m") if row.has("tile_size_m") else layer.rect.size
 	layer.tint = Color(str(row.get("tint", "ffffff")))
 	layer.wash = Color(str(row.get("wash", "00000000")))
+	layer.over_impression = row.get("over_impression", false)
 	return layer
 
 
