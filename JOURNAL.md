@@ -143,3 +143,14 @@ NEXT (session 5, from ~16:16):
   old formula) and looked at `preview3_electro_gun_4x.png`: the glow coil reads as light lit amber, brass as dark copper-brass; warning
   slash plate and collar stay vermilion. REPORT Calls 1 now offers brass | glow | another lift.
 - 15:52 frames.json: preview_contact_4x.png -> preview3_contact_4x.png (15 entries, file kept).
+- Session 5 ends here: no builder running, lane lock free, images 60/60. Last code commit 22d3c0fb1 (gated PASS at a09f9be52); every
+  commit since is evidence/journal only (inert), so no re-gate is needed before the freeze.
+
+NEXT (session 6, from ~17:09):
+1. No new product work: brief items 1-4 done, filmed, gated; Calls 1 now has brass | glow. Prefer idle over churn; nothing new after 17:15.
+2. After the freeze 18:45: `node tools/gate/run.mjs --rev=HEAD --reels` once (export APPDATA=C:/Users/kazda/kiro/gtai-n30/appdata/keys,
+   lane lock tag director-gate, ~20-35 min), quote its line + gate.json path in REPORT Gate. If it cannot finish by 19:10, quote the
+   a09f9be52 PASS and write the reels gate as owed in What does not.
+3. REPORT final by 18:55: drop the DRAFT line, add n30-21 to the builder ledger (5 min, accepted), frames.json check (15 entries, all exist),
+   `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
+4. Temp (this lane's, for the Director's cleanup): gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
