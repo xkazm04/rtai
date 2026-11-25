@@ -205,3 +205,9 @@ NEXT (session 6, if any, before the 18:45 freeze; no new code after 17:15):
 - 17:18 DECISION: the last open cell of call 2 (door contact slide, c22 "not measured") goes to one measure-only call on c22's existing frames (no Godot, docs append only); it cannot switch WALK (the eight already fails p55 down-right in-hold), it completes the owner's table.
 - 17:18 BUILDER c25 (opus) launched: brief `n30-cast-25-door-contact-slide.md`, commit by 18:10 (only `docs/art/cast-audit.md`), hard stop 18:20. BUILDER RUNNING c25 since 17:18.
 - 17:26 BUILDER c25 8 accepted-partial: `c54ef8539` audit (contact slide, 32 px/m mean/max): four p70 R 6.36/8.38 (drawing 0 -> 1 hop 13.3 px at 64), eight p70 R 8.93/9.31, four p55 R 3.34/3.74 (drawings 2-3 only), eight p55 R 5.24/6.08; all down-right "not measured" (tracker lost the boot, no strip check). LOOKED at `build/look/n30-c25/strip2_four_p70_right_c1.png`: lines on the planted boot in drawing 0 (f48, f53), then on the bunched boots of drawing 1 well behind (f54, f59): the hop is real. WALK stays FOUR. REPORT call 2 + ledger updated.
+- 17:28 `git diff f3364498e HEAD -- project tools native steam` empty: HEAD ships the gated code (PASS with reels on f3364498e).
+
+## Session 6 end (written 17:28)
+No builder running; lane lock free; tree clean after this commit. Session 6 ledger: c25 8 acc-partial; director film `door8_n29_n30_32.mp4`. IMAGES 16/60. REPORT final (no DRAFT line), cites clean.
+
+NEXT (if a session 7 starts before 18:45): nothing new. Only polish REPORT wording; never `rm -rf` `build/film/c22-*`.
