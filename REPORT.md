@@ -1,6 +1,6 @@
 # REPORT lane yard, run n29 (2026-11-25), branch `n29-yard` (DRAFT, in progress, session 4)
 
-**Gate:** `node tools/gate/run.mjs --rev=HEAD` started 05:58 on `f090247dd` (snapshot), result pending.
+**Gate:** `node tools/gate/run.mjs --rev=HEAD` on `f090247dd` (last code commit; later commits are inert docs): `gate: PASS; build/gate/f090247ddeab/gate.json` (parity, selftest, export-audit, unit, scenarios 68/68). `--reels` not run yet.
 
 ## What works
 | item | evidence | number |
