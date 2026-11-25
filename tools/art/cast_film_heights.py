@@ -68,7 +68,7 @@ def main(fr: str, out: str) -> None:
             for _, _, _, (x, y, w, h) in figs:
                 cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 0, 255), 1)
             cv2.imwrite(os.path.join(out, f"boxes_{i}.png"), vis[380:700])
-    json.dump({k: [(a, b) for a, b, _ in v] for k, v in res.items()}, open(os.path.join(out, "h.json"), "w"))
+    json.dump({k: [(a, b, list(map(int, c))) for a, b, c in v] for k, v in res.items()}, open(os.path.join(out, "h.json"), "w"))
     riv = np.median([h for _, h, _ in res["rivet"]]) if res["rivet"] else 0
     for nm in NAMES:
         h = [x[1] for x in res[nm]]

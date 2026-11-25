@@ -801,3 +801,21 @@ Stills column = part B applied, 32 px/m. Unjittered cop: the three film cops div
 | rivet | 50 | 80 (74-85) | 77 | +3 | 1.00 | +3: walk bob and a facing-down pose; looked at, whole, soles at the lowest row (`crop_rivet_10.png`) |
 
 Could not do: the turret (label overlap, above) and a clean war machine number (shadow). A looser shadow rule (0.2-0.97) was tried and rejected: it also ate outlines (Rivet 76, unjittered cops 47-48). Nothing here is re-rendered; Godot was not run.
+
+## Door carrier height, film vs stills, n29
+
+Brief n29-cast-14. Same 50 frames and method as the section above; `tools/art/cast_film_heights.py` now also writes each figure's bounding box into `h.json`, and the facing of a frame is the direction of the figure's bottom-centre move to the next frame (dominant axis, moves under 8 px skipped; frames at a corner are noisy). Looked at: `build/look/n29-door-height/sheet_door_carrier.png` and `sheet_rivet.png` (4x, frames 3 down, 7 right, 10 up, 14 left, 23 up).
+
+| figure | facing | frames | height median (min-max) |
+|---|---|---|---|
+| shield_robot (door carrier) | down | 18 | 62 (54-67) |
+| | right | 10 | 55 (54-64) |
+| | up | 14 | 69 (64-74) |
+| | left | 7 | 54 (54-73) |
+| rivet | down | 18 | 77 (75-84) |
+| | right | 8 | 78.5 (74-81) |
+| | up | 16 | 81.5 (74-85) |
+| | left | 7 | 78 (75-83) |
+
+Cause: facing. The door carrier is a different drawing per facing: seen from the back (walking up) the door's hazard-striped top edge is held above the head and he reads 64-74 (crop f10, f23); walking down 62; in side view the door is a vertical pole beside him and the figure is 54-55 (crop f7, f14), which matches the 56 of the still (facing (1,1)). The film median 63 is the mix of the four facings (the rectangle walk spends most frames going down and up), so the 7 px gap to the still is the up/down door pose, not a scale error. The max values at corners (73, 75) are the up pose caught early.
+Rivet 80 vs 77: the same effect, smaller: down 77 (= still), sides 78-78.5, up 81.5 (back view, helmet and stride taller); the film median is the facing mix, +3 over the down-facing still. Not measured: whether the up-facing door pose is intended art (it needs the sheet, not this film). Godot not run, no code changed beyond the tool's json.
