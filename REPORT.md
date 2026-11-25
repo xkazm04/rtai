@@ -3,9 +3,10 @@
 Branch `n30-combat`, worktree `gtai-wt/n23-street`, cut from `main` `5114a4441`. Director Opus 5.5; builders Claude
 sub-agents (Agent tool; Sonnet 5.5, Opus 5.5 for the card fall). Films and stills: `C:/Users/kazda/kiro/gtai-masters/n30/combat/`
 (`frames.json`). IMAGES 0/25: every change is code, data or a masked recolour of shipped pixels.
-Gate on the last code commit `2566b97d0` (13:24-13:45): `gate: PASS` (lint 19/19 over 2294 GDScript files; unit 4329
+Gate on the last code commit `3398da308` (14:29-14:48): `gate: PASS` (lint 19/19 over 2294 GDScript files; unit 4330
 passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629;
-selftest; export-audit 1004 loaded, 0 failed), `build/gate/2566b97d0829/gate.json`. Later commits: docs, JOURNAL, REPORT, evidence.
+selftest; export-audit 1004 loaded, 0 failed), `build/gate/3398da308002/gate.json` (the earlier gate on `2566b97d0` also PASS).
+Later commits: docs, JOURNAL, REPORT, evidence.
 `--reels` once after the freeze: (pending).
 
 ## What works
