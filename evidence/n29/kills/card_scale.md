@@ -63,9 +63,24 @@ checked: the three files only):
   inline value), height_px with it.
 - `test_the_same_id_draws_the_same_size`.
 
-## Evidence: no stills this run
+## Evidence: stills (n29 combat 07)
 
-Headless numbers instead (combo view, p70, actor id 1, crowd build 0.8549, fall grid `molotov_torch`, which
+Finding: the kill reel already films it with existing flags plus one dev line. `kill_lab_turn.gd` `melee_victim` now
+returns a single `--foe-mix=<archetype>` for a gun lab too (before: blades only), so the solo guard of a gun kill
+is Mulroney. Two traps: the dev arena starts on the wheel/hands controls (a01c1e530) and takes the lab's gun away
+(0 kills in every reel), so pass `--controls=legacy`; molotov and pistol kill but their frames were not used.
+Command (after = HEAD; before = the same tree with `kill_fall_cells.gd` from 49befa075 copied in for one reel,
+then `git checkout HEAD --` it, tree clean):
+
+    node tools/film/kill_reel.mjs --out=build/n29/cardkill/<before|after> --weapons=machine_pistol --ppm=64 --dirs=90       -- --controls=legacy --foe-mix=sergeant_mulroney
+
+Style: machine_pistol = stitch (fall grid). Same seed 20261109, kill at tick 174. Pair
+`gtai-masters/n29/combat/stills/card_kill_pair_64.png` (before left, rows t172 alive, t180, t194 down). Measured
+(blue-pixel bbox, px at 64 px/m): living 54 x 78 in both; fallen 61 x 47 before, 69 x 53 after (length x1.13,
+fallen/living length 0.78 -> 0.88). Seen: the body lies visibly bigger, same pose and place; the standing figure
+is the same size in both. No contractor arm rendered (time); the headless table below stands for it.
+
+Headless numbers (combo view, p70, actor id 1, crowd build 0.8549, fall grid `molotov_torch`, which
 has no own cells, so the generic `cop/head_swat` fall grid):
 
 | foe | living card global_scale | fall grid scale before | after | before / living |
@@ -76,11 +91,6 @@ has no own cells, so the generic `cop/head_swat` fall grid):
 | rocket_trooper (1.0) | 0.242229 | 0.242229 | 0.242229 | 1.000 |
 
 (The living walk strip and the fall grid are both 192 px cells, so the two scales compare directly.)
-No 64 px/m still: the kill lab (`kill_lab.gd:208`) only swaps its contractor line to another archetype
-(`--foe-mix`) for a blade, the gun kill styles that use the fall grid (snap/pistol, stitch, torch...) kill a
-contractor, whose body_scale is 1.0 on this branch, so the lab film shows no change; Mulroney under a
-fall-grid style needs a lab change and a GPU film that did not fit the 20 minutes left beside the yard
-lane's GPU films. The test is the evidence.
 
 ## Mutate
 

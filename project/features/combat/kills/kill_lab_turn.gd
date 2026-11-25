@@ -20,11 +20,11 @@ const WOUND_HP: float = 100000.0
 ## The film probe selects a drawn card. A solo foe mix distinguishes two archetypes sharing
 ## that card (the contractor and patrol cop, or the SWAT and rocket trooper).
 static func melee_victim(blade: StringName, args: ArenaArgs) -> StringName:
-	if blade.is_empty() or blade not in MeleeTable.weapon_ids():
-		return &""
 	var mix: String = args.text("--foe-mix")
 	if not mix.is_empty() and not mix.contains(","):
 		return StringName(mix)
+	if blade.is_empty() or blade not in MeleeTable.weapon_ids():
+		return &""
 	match args.text("--victim"):
 		"cop/head_helmet":
 			return &"riot_cop"
