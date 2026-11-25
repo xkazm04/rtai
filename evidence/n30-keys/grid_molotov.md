@@ -47,3 +47,25 @@ Files (`C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/`): `grid_molotov_run_
 `grid_plasma_rifle_foot_slide_32.json`, `grid_molotov_arena/rows/`, `grid_plasma_rifle_arena/rows/`,
 `grid_molotov_64.png` / `grid_molotov_32.png` (8 run facings: stop-gap | new | plasma rifle),
 `grid_molotov_arena/candidate_32/`, `candidate_64/` (boulevard run film, 16 samples each).
+
+## Run step trace (n30-09)
+
+The foot_slide run lane (turn_090, lane row 0 = front facing, 32 px/m) plants in two windows: ticks 53-93 over run cells 4,5,6
+(9.86 cm) and ticks 107-147 over cells 0,1,2 (4.69 cm); the donor's are 52-92 and 107-146 (8.93 / 4.45 cm). Sole x
+(`foot_slide.sole_x`, sheet px) of row 1 per cell, molotov vs plasma rifle donor: cols 4,5,6 are 107.5/88.0/102.0 vs 107.5/88.5/102.5,
+cols 0,1,2 are 80.5/84.5/77.0 vs 80.5/84.5/77.5 (col 3 differs by 1.0). Cells are registered within 0.5 px, yet the planted
+step is 1 cm over: the planted foot rides the strip, so the 0.5 px offsets in cols 5 and 6 are the drift.
+
+Route A (data) failed: `p70/molotov/0` 0.98 -> 1.0 gave bit-identical numbers (7.28/9.86): armed runs have no bare cycles, so
+`phase_of` takes `max(cycle * k, speed / MAX_RUN_CYCLES_S)` and the floor binds at 3.2 m/s; the k cannot move this row (left at 0.98).
+Route B (art, registration): row 1 cols 5 and 6 (cells 6 and 7) moved 1 px right inside their cells (alpha moved, not repainted;
+sole x 89.0/103.0, 0.5 px the other side of the donor). Re-measured after `--import`, same capture:
+
+| run | walk hold mean / max cm (bar <= 2) | run step mean / max cm (bar <= 7) | planted steps cm |
+|---|---|---|---|
+| before (4513bda2a) | 0.43 / 1.56 | 7.28 / 9.86 MISS | 9.86, 4.69 |
+| k 1.0 (route A) | 0.43 / 1.56 | 7.28 / 9.86 MISS | 9.86, 4.69 |
+| cols 5,6 +1 px (route B, shipped) | 0.43 / 1.56 PASS | 5.77 / 6.85 PASS | 6.85, 4.69 |
+
+Files: `molotov_run_k100_foot_slide_32.json`, `molotov_run_shift56_foot_slide_32.json` beside the old json in
+`C:/Users/kazda/kiro/gtai-masters/n30/keys/molotov/`.
