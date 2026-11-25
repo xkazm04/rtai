@@ -83,3 +83,16 @@ solid dark (closer to HEAD's weight on this grey floor) - but it is a see-throug
 light floor) and would show in any non-print draw. Landed the opaque one: deterministic, same counts.
 Unit (mapped by `test_map.mjs`, 54 files): `unit-tests: 334 passed, 0 failed, 0 skipped (GUT, headless)`.
 Lint: `lint: all 19 checks pass over 2294 GDScript files`.
+
+## c26 32 px/m film
+
+Command: `CHAPTERS=rocket_launcher,mini_nuke QUIT=1500 node evidence/n29/red/film.mjs build/n30seamfilm/after.mp4` on HEAD with `b0fcfedf5`; copied to `gtai-masters/n30/combat/films/nuke_seam_32.mp4`. Before = `films/blast_floor_after_32.mp4` (pre-seam round).
+
+ffprobe: `h264,1920,1080,60/1` / `25.000000` (bar 1920x1080, 60/1, 15-40 s: met).
+
+Seconds: the nuke is fired at ~7.0 s and is in flight 7.1-7.9 s (blast at ~8.0 s). The camera pans, so the crop (140x70 px) follows the round by hand-placed centres. Vermilion = `r - max(g,b) >= 79`, counts in that crop, after / before:
+7.2 s 89 / 77; 7.4 s 0 / 0; 7.6 s 8 / 0; 7.8 s 28 / 48; 7.9 s 72 / 64.
+
+Still: `gtai-masters/n30/combat/stills/nuke_seam_32_pair.png` (7.6 s, 6x nearest, before | after).
+
+What I saw: the round is about 100x40 px on screen, big enough to judge. In both films the band is yellow/black stripes on a lavender body, soot stripe sits on the yellow, and no visible seam or red line in either. The counts are NOT a clean signal: 7.2, 7.8, 7.9 s crops include blood/decals and the exhaust, and the 7.6 s after count of 8 px is video-compression chroma noise, not a seam. At 32 px/m the numbers do not separate before from after; visually the two rounds are equal (after has a slightly cleaner stripe edge, not measurable here). The t1212 39 -> 0 result from c23 stands on the render-level number, not on this film.
