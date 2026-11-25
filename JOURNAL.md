@@ -294,3 +294,18 @@ NEXT addendum (session 4): insert as step 1b, before the thug: the robot flash l
   which the live game sets (`gunplay_hook.gd:47`, `arena_arsenal.gd:56`): checked by grep, fine.
 - 05:33 FINDING `cast_flash_fight.gd` (`8d665f61e`) has CRLF/LF mix + a long line: quick --no-godot red. Fix in 03d-B first.
 - 05:34 BUILDER RUNNING cast-03d-B (sonnet) since 05:34: `evidence/briefs/n29-cast-03d-thug-checklist.md` PART B, hard stop 06:12.
+- 05:36 MILESTONE `62aa13f5a` (cast-11 commit 2): door walk switch is ONE value now (`WALK70/55`, `WALK_STEP_M` derived
+  from `WALK`), tests follow WALK, height formula test. Feet with f7 (tool's 32 px/m unit, sole / jump): 70 right four
+  2.42/4.34, eight 2.83/6.47 -> 2.04/6.47; 70 dr four U/10.50, eight 1.39/12.21; 55 right four 2.03/5.09, eight 2.16/9.61;
+  55 dr four U/10.43, eight 3.45/13.28. WALK stays FOUR (eight's jump worse in every facing). The codex edit re-encoded
+  every drawing (mean 4.6-4.9 levels): the builder spliced only drawing 7's cell, 39/40 p70 cells byte-identical. Good catch.
+- 05:37 DECISION door eight: no more image edits for it tonight. Looked at `door8/out/door8_55_right.png`: row 2 repeats
+  row 1's leg sequence and drawing 8 swaps the support early (the 7 -> 8 jump); fixing it needs 3+ one-row edits with
+  uncertain hits (one edit moved one number by 0.79), while the war machine's walk is still the four with no exchange
+  (sole 24.75). The eight stays one value away (`CastDoorAnchors.WALK`); next edits named in `docs/art/cast-audit.md`
+  "Door eight with the redrawn drawing 7": p55 drawing 8 (right, down-right), p70 down-right drawing 1.
+- 05:44 BUILDER cast-11-door8-f7 24 accepted: `f867fd556`, `62aa13f5a`. One-value switch (`EIGHT70 if WALK == EIGHT else
+  FOUR70`), test for derived tables + door height formula, mutate foe_shield_card_view lines 6,8,80: 4/4 = 100 %.
+  run_unit full 4231/0/2. Film `door8_walk_32.mp4` re-shot as eight+f7 from a staged copy (25.85 s), still updated.
+  Hook: `step_guard.break.test.mjs` flake once (passed alone).
+- 05:45 BUILDER RUNNING cast-07-war8 PART 1 (opus) since 05:45: `evidence/briefs/n29-cast-07-war8.md` (+ Added 05:44), hard stop 06:15.
