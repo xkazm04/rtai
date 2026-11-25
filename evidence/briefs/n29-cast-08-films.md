@@ -1,7 +1,7 @@
 # Brief n29-cast-08: owed films for items 1 and 2 (size beside the cop at 32 px/m, the flash in a street fight) + mutate
 
 Lane `cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd), branch `n29-cast`. You are a builder sub-agent.
-**Hard stop HARDSTOP local** (check `date +%H:%M` often). **Start your first commit by COMMIT1, your last by LASTCOMMIT**
+**Hard stop 04:58 local** (check `date +%H:%M` often). **Start your first commit by 04:35, your last by 04:44**
 (hook ~12 min). Never end with finished work uncommitted. Then report and END.
 
 ## Goal
@@ -52,3 +52,10 @@ Forbidden: every shipped PNG, `cast_cards.json`, `project/features/**`, `project
 ## Report (then END)
 Commits, clip paths + ffprobe (size, fps, duration), each cop's and foe's px height in the size clip, what you saw in the
 flash frames, the mutate score, the `run_unit --changed` line, what you could not do.
+
+## Added 04:05 (director)
+- The door builder runs beside you until 04:50 in this worktree (it owns `foe_shield_card_view.gd`, `cast_door_*`,
+  `tools/film/cast_door_films.mjs`, `test_cast_door.gd`, `docs/art/cast-audit.md`): never stage or revert them. The lane Godot
+  lock is shared: one run at a time, release right after. The door card may switch to an eight-drawing walk while you film;
+  that is fine, say which walk your flash clip shows (`CastDoorAnchors.WALK` at your take's commit).
+- Order: the size clip first (commit its scene change by 04:35), then the flash clip, then mutate only if time is left.

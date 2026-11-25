@@ -183,3 +183,57 @@ NEXT (session 3, from ~04:05), in order:
 - 03:37 MILESTONE looked at `size_after_32.png`: the one patrol cop in each panel is jittered small (43 px at 32 = 0.86), so
   the contractor (49) and warden (51) read 1.14-1.19x a cop. Matched to the unjittered cop (50 at 32) they are 0.98-1.02.
   The owed 32 px/m clip (brief `n29-cast-08-films.md`, written) shows three cops with their heights labelled.
+- 04:04 BUILDER cast-03b-thug-card 26 accepted: `19c72dfdb` (row off, FoeThugCardView, CastThugAnchors via new
+  `cast_thug_soles.py`, test), `d49ce6eb5` (measured, row off). body_scale 1.45 (his cells are ~190 texels like the gunner's;
+  1.0 = cop size). 32 px/m: sole 0.00 px all four, body jump <= 9.60 (walk/stop/turn/reversal, both pitches), 8.44
+  drawings/s, height 144/154 at 64 (0.935 of Rivet, head to claw tip). Walk step scaled by body_scale (raw 0.1959 m gave 12.25
+  drawings/s). run_unit full 4228/0/2 (FLAKY test_audio_driving). Looked at `thug_beside_64ppm_tilt70.png`: hulking amber-
+  striped brawler with box head + amber lens, a head under Rivet, broad, claw hangs in front of the feet; feet on the lane
+  line, shadow under. Open: 70 down/dr cells put the claw tip on the foot line (shoes 10-30 texels above), so attack/hit/fall
+  may float: the cutter needs a shoe-based foot line. Ink, rim, shadow, palette, attack/hit/fall film, 55 size not done.
+- 04:05 MILESTONE door8 part 1 in: `073321ae7` (sheets, key-clean, provenance). Part 2 in progress.
+- 04:06 BUILDER RUNNING cast-08-films (sonnet) since 04:06: `evidence/briefs/n29-cast-08-films.md`, hard stop 04:58.
+- 04:14 BUILDER cast-06-door8 38 accepted (result: eight NOT shipped): `073321ae7` (sheets p70/p55, body heights match the
+  four within 0.4 px, key-clean 0/0, strict red 0 after lifting 129/148 burnt-orange stripe shadows to amber, provenance),
+  `fac845dd9` (anchors carry FOUR + EIGHT tables, `SHEET = WALK`, `WALK = FOUR`; `FoeShieldCardView.walk_sheet`; audit
+  section; film `gtai-masters/n29/cast/door8_walk_32.mp4` 1920x1080 60/1 25.85 s rendered from a staged copy with EIGHT;
+  still `door8_feet_before_after_64.png` tick 150). Feet (tool's 32 px/m unit), four -> eight: 70 right sole 5.08 -> 8.88,
+  70 dr jump 11.01 -> 13.71, 55 right 3.29 -> 6.16, 55 dr jump 10.31 -> 13.02: the eight is worse; p70 right drawing 7 steps
+  forward (second contact not planted in the art). run_unit full 4228/0/2. Mutate 1/1 (one mutant only). Looked at the
+  still: footprint boxes spread along the line on both walks; Rivet beside for scale.
+- 04:14 FINDING (door8 builder): `FoeShieldCardView.update_fighter` rescales (0.824 px/texel) after the anchored placement at
+  base scale (0.584), so every sole lands 1.41x (p55 1.2x) from the pivot and slides: a placement bug, not only art. Its
+  re-plant probe halves the shipped four's slide (70 right 5.08 -> 2.42, 55 right 3.29 -> 2.03).
+- 04:16 DECISION ship the re-plant first (it fixes the shipped walk for everyone), then judge the eight again with the fix;
+  if the eight still fails the right facing, one image edit row per failing facing (70 right, 55 right) next session.
+- 04:16 BUILDER RUNNING cast-09-door-replant (opus) since 04:16: `evidence/briefs/n29-cast-09-door-replant.md`, hard stop 04:58.
+- 04:16 BUILDER RUNNING cast-08-films (sonnet) since 04:06 (size clip with three cops, flash street clip, mutate far card).
+- 04:45 BUILDER cast-09-door-replant 29 accepted: `61c383438`. `FoeShieldCardView._rescale` keeps the anchored sole's world
+  point through the height rescale (walking only); `CastCardKinds.rows()` keys 4 on `FOUR`, `cell_ratio()` 1.0 for FOUR and
+  EIGHT. Read the diff: placement re-derives position every frame, so no drift. Feet (tool unit), four before -> after:
+  70 right 5.08/6.04 -> 2.42/4.34, 55 right 3.29/6.29 -> 2.03/5.09, dr jumps 10.50 / 10.43 (soles hidden by the slab);
+  eight after: 70 right 2.83/6.47, 70 dr 1.39/12.21, 55 right 2.16/9.61, 55 dr 3.45/13.28. Nothing passes every bar; WALK
+  stays FOUR. Size unchanged 111 px at 64. No other card view rescales after an anchored placement (gunner/thug scale only
+  the shadow; war/turret have no anchored contact). run_unit full 4230/0/2 (FLAKY test_audio_driving). Mutate 7/11 = 63.6 %
+  (3 survivors: line 80 height formula, no test pins the door height; 1 facing index right/left symmetric).
+- 04:45 FRICTION quick gate's Godot parse step fails "Failed to compile depended scripts" on untouched files (gunner view)
+  in this checkout: every builder ran it `--no-godot` and relied on GUT. Not investigated (30+ min).
+- 04:46 MILESTONE session 3 end: no new builder (last 30 min). IMAGES 20/60 (none this session).
+- 04:46 BUILDER RUNNING cast-08-films (sonnet) since 04:06, hard stop 04:58: untracked at 04:44 = `project/dev/cast/
+  cast_flash_fight.{gd,gd.uid,tscn}`, `cast_size_beside_walk.{gd,gd.uid,tscn}`, `tools/film/cast_n29_films.mjs`, modified
+  `tools/debt/baseline.json` (its "films for n29 cast" entry). Not committed yet at 04:44.
+NEXT (session 4, from ~05:05), in order:
+  1. Films: `git log --oneline -5`; if the 08 builder's files are still uncommitted, a sonnet call commits them (gate first)
+     and finishes what is missing (`size_beside_32.mp4` with three cops, `flash_street_32.mp4`, mutate cast_far_card). Look
+     at both clips yourself (extract frames).
+  2. Thug: `evidence/briefs/n29-cast-03c-thug-footline.md` (opus; fill HARDSTOP/COMMIT1/LASTCOMMIT): shoe foot line in the
+     cutter, attack/hit/fall on the ground, poses still + `thug_fight_32.mp4`. Then 03d = remaining checklist (ink, live rim,
+     shadow toggle, palette, 55 size), one point per call where it can fail; switch on only when all pass.
+  3. Door: a call that (a) makes the EIGHT flip one value inside `cast_door_anchors.gd` (generator emits the selected tables;
+     today it needs WALK, WALK70, WALK55, WALK_STEP_M), (b) adds a door height test (kills the line-80 survivors), then
+     (c) image edits for the eight's failing facings: p70 right (drawing 7 steps forward, second contact unplanted) and the dr
+     body jump (13.3/12.2): one row per job of `foes-n29/door8/out/door8_70_right.png` etc., director-run gen.mjs.
+  4. War 8: `evidence/briefs/n29-cast-07-war8.md` (opus); it shares `cast_foe_eight.py`/`cast_foe_soles.py` (door used
+     `cast_door_eight.py`, so they are free). Mind the owner's size rule (war machine 0.84 of Rivet now).
+  5. NEED combat (`kill_fall_cells.gd` card scale) stays open in combat's lane.
+  Last commit 07:15, final gate `node tools/gate/run.mjs --rev=HEAD` by 07:30. IMAGES 20/60.
