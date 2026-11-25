@@ -6,8 +6,16 @@ func after_each() -> void:
 	CastCards._library = null
 
 
-func test_thug_row_is_off_and_his_rig_draws_as_before() -> void:
+func test_thug_row_ships_on() -> void:
 	CastCards._library = null
+	assert_not_null(CastCards.shipped().lookup(FoeThugCardView.ID, "p70"))
+	assert_not_null(CastCards.shipped().lookup(FoeThugCardView.ID, "p55"))
+
+
+func test_thug_row_off_his_rig_draws_as_before() -> void:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	table.raw.archetypes[FoeThugCardView.ID].enabled = false
+	CastCards._library = CastCards.from_table(table)
 	assert_null(CastCards.shipped().lookup(FoeThugCardView.ID, "p70"))
 	assert_null(CastCards.shipped().lookup(FoeThugCardView.ID, "p55"))
 	var host: ArenaRobotRigs = add_child_autofree(ArenaRobotRigs.new())

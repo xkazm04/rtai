@@ -53,7 +53,7 @@
     },
     "robot_thug": {
       "body_scale": 1.42,
-      "enabled": false,
+      "enabled": true,
       "id": "robot_thug",
       "p55": {
         "armed_walk": "robot_thug_planted8_armed_walk.png",
