@@ -196,3 +196,15 @@ Read: side-on walks now hold the head line in the frames too (patrol W/E 8 -> 1 
 patrol run W/E 5 px (bar 7: met), SWAT run E 3 px, W 12 px (13 before; the probe gives 3.0 for both, so the W
 render row is another term: not found in this call). Toward/away and diagonal rows 9-28 px, essentially as before
 (the drawing; see above).
+
+### Gauntlet crop (n31-10, part 3)
+
+`node tools/ground/play_take.mjs --rev=HEAD --seed=7 --ticks=420 --from=0 --ppm=32 --out=build/n31/n31-10/after_s7`
+(HEAD `258f6f6ef`, 1920x1080 60 fps 420 frames by ffprobe), then `python tools/ground/take_crops.py
+--a=build/n31/n31-02/s7_32/take.mp4 --b=build/n31/n31-10/after_s7/take.mp4 --from=300 --count=46 --box=1270,510,240
+--scale=4` -> `build/n31/n31-10/cop_crop/pair_*.png`, stills `build/n31/n31-10/cop_crop_{300,312,324,336}.png`,
+strips `cop_crop_{head,main}_330_345.png` (not committed). Look: on HEAD the wave-1 cops' disc sits under the boots in
+most frames, where main has it right of and below them. At tick 336 it still trails the lowest cop by about 20 px.
+By eye the cap shows no stride dip on HEAD (main: 8 px). Not measured: a quick
+blue-cap tracker jumps between cops (ranges 104 / 68 px are tracking noise), so no number is claimed. (take_crops'
+`measure.json` is Rivet's orange mask and does not apply to cops.)
