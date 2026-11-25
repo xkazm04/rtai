@@ -4,6 +4,12 @@ Worktree (your cwd): `C:\Users\kazda\kiro\gtai-wt\n23-prologue`, branch `n31-foe
 Hard stop: **60 minutes after launch, report and END**. First commit within **25 minutes**; commit each
 finished lever as soon as its checks pass. Never end with uncommitted work or a commit stuck in the hook.
 
+## Split (director, 22:05)
+Run as two calls: **b4a = Part A only** (tools/gauntlet/waiting* + project/dev/foes_n31/waiting_*; it may run
+in parallel with b2b, which only touches tests and pins) and **b4b = Part B** (after b2b has committed).
+`--foe-moves` is not in `project/dev/gauntlet/gauntlet.gd` KNOWN_FLAGS (shared file, NEED director), so the
+gait A/B is `--rev=ba8e470b0` (main) against HEAD, never a flag on one build.
+
 ## The owner's words
 "AI is waiting to shoot too much, cops are just waiting until I can closer to start shooting".
 
