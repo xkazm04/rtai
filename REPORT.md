@@ -28,7 +28,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
    6.10/8.71); walk cycle 74.7 vs the pistol's 76. Her p55 held strips in brass (`7bb6f9cc0`, `b9ca6bf36`) and the left p70
    strip re-cut so cells 2 and 3 keep the whole muzzle (`7b918750e`, cells 191 -> 215 px, muzzle tips re-measured).
    Clip `gloria/gloria_walk_32.mp4` (1920x1080 60/1, 16.52 s); grids `gloria/grid_gloria_64.png`, `_32.png`;
-   strips `gloria/p55_strips_4x.png`, `gloria/gloria_left_p70_cells.png`. Clip beside the pistol `gloria/gloria_vs_pistol_32.mp4` (1920x1080 60/1, 921 frames, 15.35 s): stop-gap | n29 | pistol. Her p55 diagonal flash drawn whole on 224 px cells (`9efd28136`: `RivetGunDiag.HELMET_X["p55/gloria"]` 112.5/79.5/110.0/141.0 = measured +14, body within 1 px per cell, flash scale 1.0 where it was 0.91/0.70): `gloria/p55_diag_flash_64.png` (strip composite as `RivetGunDiag.seat` seats it, not a game capture: `arsenal_turn` has no Gloria attack).
+   strips `gloria/p55_strips_4x.png`, `gloria/gloria_left_p70_cells.png`. Clip beside the pistol `gloria/gloria_vs_pistol_32.mp4` (1920x1080 60/1, 921 frames, 15.35 s): stop-gap | n29 | pistol. Her p55 diagonal flash drawn whole on 224 px cells (`9efd28136`: `RivetGunDiag.HELMET_X["p55/gloria"]` 112.5/79.5/110.0/141.0 = measured +14, body within 1 px per cell, flash scale 1.0 where it was 0.91/0.70): `gloria/p55_diag_flash_64.png` (strip composite as `RivetGunDiag.seat` seats it). In game (`7c553da61`, `evidence/n29-keys/gloria_strips.md`): Gloria | pistol firing at p55, 8 octants, 64 px/m, `gloria/p55_flash_ingame_64.png`: at octants 1, 3, 5, 7 the flash is whole and starts at the barrel end, the gun reads brass, the body sits as the pistol's (offset judged by eye, not pixel-measured). The flash core is still red-orange on this branch for Gloria and the pistol alike: combat's muzzle-core repaint lands at merge.
 4. **p55 sprint collar, row 4** (`802ecb0c0`): a rigid flat ring with straight vermilion/black stripes, neck-only composite
    (29,057 px changed, 0 outside the neck masks, other rows bit-identical: `evidence/n29-keys/collar_p55_row4_proof.json`);
    `collar/collar_p55_row4_neck_3x.png`. **Row 8** (`56cb77065`, `e553b6b9e`): row 4's shipped rigid collar, mirrored (row 8 is
@@ -112,7 +112,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 2. The molotov's own run set (one row per job, the donor's soles fixed by registration); the stop-gap back-swing.
 3. Combat's red audit row 16 after the owner's call: the per-weapon danger-or-heat list from `evidence/n29-keys/held_red/table.md`.
 4. The compact (handheld) HUD: apply `evidence/n29-keys/hud_compact_gap.patch` if the Director did not at merge (Merge notes), run the quick gate and mutate `ghost_form_layout.gd` on the compact lines.
-5. Gloria's p55 diagonal flash in game (needs a dev scene that fires Gloria at p55; `arsenal_turn` has none).
+5. `project/dev/rivet_arsenal/arsenal_turn_rec.gd` cannot fire any gun at HEAD (`no attack for <weapon> at octant 0`: the hands-first wheel's first step stows the gun, `RivetWheel._stow`), and its still crop clips diagonal flashes; the 8-line dev fix used in a snapshot is described in `evidence/n29-keys/gloria_strips.md` (NEED Director: dev tool, not in keys' list).
 
 ## Builder ledger
 
@@ -143,8 +143,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n29\keys\` (`frames.json`, b
 | n29-13-collar-row8-film | sonnet | 3 | accepted (row 8 still + clip) |
 | n29-01e-hud-handheld-snapshot | sonnet | 5 | accepted (1280x800 pair from snapshots; showed the crowded plate 1) |
 | n29-14-hud-compact-gap-patch | sonnet | 5 | accepted (patch + failing-then-passing test in a snapshot, 1280x800 still) |
+| n29-15-gloria-p55-flash-ingame | sonnet | 5 | accepted (8-octant in-game still beside the pistol; dev recorder fixed in a snapshot only) |
 
-25 calls, about 513 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
+26 calls, about 518 builder minutes; 2 bounced. Images 58/60. What I would brief differently: check that the capture
 tool supports the size before briefing a still (the handheld call); give the collar its in-game before|after in the same
 call as the art, not a later films call; for an art item that already failed in n28, budget the owner call from the start
 instead of a third route; look up which file and key the game actually reads before naming them in a brief (two
