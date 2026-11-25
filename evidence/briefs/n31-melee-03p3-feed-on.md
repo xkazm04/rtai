@@ -33,3 +33,12 @@ katana, plasma_sword, electro_baton, claw: `fatal_play_<w>.mp4` with `--kill-fee
 beside film per weapon (as 02p4: 960x540 hstack, labels "main" / "n31 fatality"). Pick a window where kills happen
 (read the kill ticks from the probe log). One 64 px/m still of a chainsaw grind on a patrol cop. LOOK at 3 stills
 per film before committing. Append to `gtai-masters/n31/melee/frames.json` (read it first; 02p4 may have written it).
+
+## Director addendum (session 4) - this call does Parts 1 and 2 only, Part 3 is the next call
+The session ends at 02:15; Part 3 (takes) moves to the next call. Builder 02p4 may be filming in parallel
+(`tools/melee/play_take.mjs`, `project/dev/melee_n31/sweep_clip*`, the masters folder): do not touch those; share the
+lane lock (remove only a lock whose first word is `03p3`). Rounds: `--rounds=2` is enough for Part 1 (say so).
+If the bench lock is held (younger than 20 min) do not wait more than 5 min: measure CONTENDED, say so, go on.
+Order: Part 1 (cost) -> Part 2 (flip + re-pin + one decisions line). Windows given at launch; uncommitted work at
+the END time: write `build/n31/03p3/state.md` (what is done, the exact next command) and leave the tree as it is.
+Before killing any PID print its CommandLine and kill only if it names this worktree or your own tool.
