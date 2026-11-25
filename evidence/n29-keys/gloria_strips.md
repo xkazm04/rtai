@@ -45,3 +45,20 @@ The diag strip is back on the 224 px padded cut (`gtai-art/rivet-n29/gloria_p55/
 1244 passed, 0 failed. Still `gtai-masters/n29/keys/gloria/p55_diag_flash_64.png` (before | after, 2x, cells seated on the helmet
 x as `RivetGunDiag.seat` does), composed from the strips: the in-game shot could not be taken (arsenal_turn cannot fire Gloria,
 the pilot resets `hold.held`). Mutate: `--lines=72` offers no mutants (a packed-array literal); not run.
+
+## n29-15 Gloria p55 flash in game
+- Route 1 (plain, this worktree, no edit): `runGodot(['--rendering-driver','d3d12','--position','0,1440','-s','res://dev/rivet_arsenal/arsenal_turn.gd','--','--weapon=gloria','--pitch=p55','--ppm=64','--out=<build dir>'], {headless:false})` -> `no attack for gloria at octant 0`, exit 1. The pistol fails the same way at HEAD, so it is not a Gloria-only gap.
+- Cause (debug log in the snapshot): `RivetCarry.take` selects nothing while `wheel_inventory` is on, and the first `session.step()` runs the hands-first wheel, which stows the gun (`RivetWheel._stow`: `rivet.weapon = &""`, `gun = null`). `DBG0 w=gloria gun=true` became `DBG1 w= gun=false` one step later. Slot 1 holds gloria and pistol alike.
+- Route 2 (snapshot `gtai-gflash-4c4b35d858c3` of HEAD `4c4b35d85`, dev-only edit in `project/dev/rivet_arsenal/arsenal_turn_rec.gd`): `TurnPad.slot` ORs the weapon's slot key bit (`RivetCarry.SLOT_ACTIONS[slot]`) for one `_step()` before `_record()`, then 5 idle steps (+8 lines); still crop `Vector2i(204, 194)` -> `(404, 294)` and base 164 -> 214 (the stock crop clips every diagonal flash, pistol too). Both runs exit 0, 16 stills each (`oct0..7_fire`), same runGodot command with `--weapon=gloria` and `--weapon=pistol`. APPDATA the keys lane's.
+- Still: `gtai-masters/n29/keys/gloria/p55_flash_ingame_64.png` (6464x1176, 2x nearest; row 1 Gloria, row 2 pistol, octants 0..7 left to right), read by eye.
+
+| octant | flash whole | flash at muzzle tip | gun brass | body |
+|---|---|---|---|---|
+| 1 (down-right) | yes | yes, starts at the barrel end, about 0-3 px | yes | in place |
+| 3 (down-left) | yes | yes, about 0-3 px | yes | in place |
+| 5 (up-left) | yes | yes, about 0-3 px | yes | in place |
+| 7 (up-right) | whole sprite, its top spike touches the crop top (crop, not sprite) | yes, about 0-3 px | yes | in place |
+
+- Offsets are by eye on the 2x still, not pixel-measured: "0-3 px" is not a proven <= 3 px. Clipped flashes in the game: 0. The pistol row shows the same flash positions.
+- Colour: the flash is cream with a red-orange core, the pistol's own art pasted at her muzzle (shared). The "amber, no red" bar is NOT met by the flash art itself (Gloria and pistol alike).
+- Snapshot removed after the run; product files in this worktree untouched.
