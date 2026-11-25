@@ -413,3 +413,13 @@ NEXT update (session 5): step 0 = the thug soles-at-stop call (sonnet, `fixes.md
   drawing p70 R: R R L L R R R L (not a 4/4 exchange). Fix idea (not tried): one registered pad window per contact.
 - 06:38 BUILDER RUNNING cast-13 (sonnet) since 06:38: decision lines (revert, war eight call) + heights measured in
   `size_beside_32.mp4` frames, hard stop 07:14.
+- 06:44 BUILDER cast-03d-A 17 accepted: `804e5c0c8`. Live 64 px/m rim 0 on walk/attack/hit/fall at 70 and 55 (bar 0).
+  Ink runs at y 70/75/80 (planted-8, 192 cell): 70 e.g. 3,15,2 / 7,4,2 .. 3,3,3; 55 five of eight have a 6-13 px run at
+  y 75 vs patrol 3,3,4 / 3,3,3: FAIL on the numbers; cause the contour crossing the dark hose rubber (RGB < 48), the
+  cause the gunner's row accepted. Closure PASS. Looked at `build/look/n29-thug/ink/live_32_64_x4.png`: outline closed
+  and even at 32 and 64, claws and hands whole, no double hatching; the long runs are the hose, not a heavy line.
+- 06:45 DECISION robot thug row stays `enabled: false` tonight: the brief's rule is "on only when every point passes"
+  and ink fails on its numbers (by eye it reads clean); a switch + live re-film cannot commit and pass the hook before
+  07:15. Owner call in REPORT: every other point passes (size 0.92-0.98 of Rivet, feet, stop, palette, shadow, fall,
+  rim 0); the switch is one value (`cast_cards.json` `robot_thug.enabled`).
+- 06:46 mutate (director, background) `foe_thug_card_view.gd --lines=72-100 --max=10 --tests=test_cast_thug` -> `build/dir5/mutate_thug.out`.
