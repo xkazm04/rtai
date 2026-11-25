@@ -53,7 +53,10 @@ DRAFT (session 4, 15:05): sections are filled as items land; the final version i
 
 ## Gate
 
-- `node tools/gate/run.mjs --rev=HEAD` on `74fc5e382` (14:16, 21 min): `gate: PASS; build/gate/74fc5e382e63/gate.json` (lint 19/19,
+- `node tools/gate/run.mjs --rev=HEAD` on `a09f9be52` (15:37, 26 min; the lane's last code commit is `22d3c0fb1`, later commits are
+  evidence/journal only): `gate: PASS; build/gate/a09f9be527a0/gate.json` (lint 19/19 over 2292 files, unit 4316 passed / 0 failed /
+  2 skipped, scenarios 68, parity bit-exact + planted mutation caught at step 629, selftest, export-audit 1003 / 0 failed).
+- Earlier: `node tools/gate/run.mjs --rev=HEAD` on `74fc5e382` (14:16, 21 min): `gate: PASS; build/gate/74fc5e382e63/gate.json` (lint 19/19,
   unit 4314 passed / 0 failed / 2 skipped, scenarios 68, parity bit-exact, selftest, export-audit 1003 / 0 failed). Reels gate: owed after the freeze.
 
 ## What does not
@@ -119,7 +122,10 @@ DRAFT (session 4, 15:05): sections are filled as items land; the final version i
 1. Rivet's collar still rope in: p70 mini-nuke `_left` c0, gatling `_left` c0, `gatling_diag` c0/c2, `gatling_left_fire`,
    `mini_nuke_left_fire` (`evidence/n30-keys/eq_collar_audit.md`), and the p55 run row 8 cell 4 notch / cell 8 streak. Same per-cell
    2x route; for row 8 the mask must reach past the collar hull (the defects sit on the helmet edge), about 8 images in all.
-2. Audit the remaining p70 strips flagged UNSURE (gatling / mini-nuke eq cells, `reload_gatling`) at 4x.
+2. The UNSURE p70 cells are settled (`a744fe9ac`, `evidence/n30-keys/eq_collar_audit.md` "UNSURE settled"): 9 ROPE, 41 RIGID. The
+   next-run edit list is 9 images, one per cell (run8 plasma sword r2c4, run8 assault rifle r2c4, gatling eq c3, electro gun diag
+   c0/c2, flamethrower left c2, reload gatling c3/c5/c6), each with its rigid reference named; contact sheets
+   `C:/Users/kazda/kiro/gtai-masters/n30/keys/eq_collar/unsure_<strip>_4x.png`.
 3. `tools/film/arsenal_turn.mjs` could pass `--sprint-tour` and re-import its snapshots (a snapshot copies the worktree's import
    cache, so an edited sheet renders as HEAD's until `--import`); today the tour film uses a scratch script under `build/n30-16/`.
 4. The vermilion recolour, once you answer Calls 1: masked recolours (like the n29 sword rings) per weapon in the heat column.
