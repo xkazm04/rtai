@@ -18,3 +18,6 @@ Every other repo path (product files, `JOURNAL.md`, `REPORT.md`, `evidence/brief
 
 ## Report (final message, then END)
 Commit sha; ffprobe line; the two ticks; one line per frame looked at; the plate judgement lines; what was not done.
+
+## Added by the director (session 4, 14:35): the span shadow film (owed from brief 03b step 4)
+4. After COMMIT 1: find a seed-7 pilot window where Rivet crosses a span (track from `evidence/yard30/span_shadow_read_measure.txt` / the probe method in `evidence/yard30/span_shadow.md`) and film 32 px/m 1080p60 15..40 s, before | after hstack (two 960x1080 crops centred on Rivet's span): before = the same HEAD with `arched_line.span_shadow` removed by a TEMPORARY table edit (take `build/yard-table.lock` with your tag first, restore the table byte-identical afterwards and check `git diff --quiet -- project/data/tables/prologue_yard_dressings.json`; never commit it). To `C:/Users/kazda/kiro/gtai-masters/n30/yard/span_shadow_before_after_32ppm.mp4` (ffprobe line, the ticks); LOOK at a frame from the middle; one `frames.json` entry. `project/data/tables/prologue_yard_dressings.json` joins your allowlist for this temporary edit only. Item 4 may run before item 3 if item 1's film is still rendering. COMMIT 2 (any evidence text, `evidence/yard30/**` only).
