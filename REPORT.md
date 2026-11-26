@@ -28,7 +28,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
   katana 0.994 -> 1.073 (+7.9 %), plasma sword 1.238 -> 1.189 (-4.0 %). All inside +-15 %.
 - Evidence: `beside_play_{katana,plasma_sword,claw}.mp4` (gauntlet, wheel controls, average bot, seed 7,
   32 px/m, tilt 70, 35 s, main | n31); the labelled polar sheet `volumes_before_after.png` carries the lab
-  evidence. The 64 px/m slow clips `slow_*.mp4` are listed last as lab clips: the hit sector does not read in them.
+  evidence. The 64 px/m slow clips with the hit sector were dropped from masters: the sector does not read in them.
 
 ### Item 3: fatalities where the owner plays (`--kill-feed`, ON by default)
 - What a player now feels: **every melee kill ends in the weapon's own fatality - the chainsaw grinds every
@@ -54,7 +54,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
   sheet's 1 px cream lines, read as a pale grey cop). Now four amber current arcs run from the baton contact to
   head, hands and ground until he falls (`KillOverloadArcs`; `arc_n` 4, `arc_ticks` = the variant's fall tick + 3
   in `signature_kills.json`), with a 3-tick amber-white contact flash. Stills
-  `still_overload_{32,64}_before_after.png` (masters; `evidence/n31-melee/03-fatal/`). Mutate 11/12 = 91.7 %.
+  `still_overload_32_before_after.png` (masters) and both 32/64 px/m pairs in `evidence/n31-melee/03-fatal/`. Mutate 11/12 = 91.7 %.
   The figure under the arcs stays pale (the drawn jolt rows).
 
 ### Item 4: impacts of one quality (view only, no digest)
