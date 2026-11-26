@@ -55,6 +55,12 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   non-lethal melee hit on a robot throws white sparks that land as oil (`thug_hit`), the chainsaw on a riot
   shield sprays off the slab 5 times a second, the baton flicks an amber arc and the plasma sword an ember spit
   off the slab. Stills `evidence/n31-melee/04-impacts/after/d_*.png`.
+- 04e: a pistol, machine pistol, gloria or gatling round that stops on a human throws a small red flick (3
+  drops that land as specks; at most one per victim per 6 ticks, `gun_fx.json` `flick_gap_ticks`), on a robot
+  white sparks that land as oil; a 2-tick cream hot point inside the ink burst. Stills
+  `evidence/n31-melee/04-impacts/after/e_*.png` (the hot point reads at 64 px/m, barely at 32).
+- Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
+  no digest moved (68 scenarios pass).
 
 ## What does not
 - Enemy melee on Rivet (item 1/2 second half): measured (`evidence/n31-melee/01-foes/before/before.md`): no hit
