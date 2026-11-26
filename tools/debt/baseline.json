@@ -204,7 +204,8 @@
         "2026-11-25: n31 foes b4a: the engaged rule + pressing share in the waiting probe, project/dev/foes_n31 as brief b4 names it (dev_loc 40311 -> 40443)",
         "2026-11-26: stalk pilot and track helpers for n31 foes gait take (dev_loc 40443 -> 40578)",
         "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (dev_loc 40578 -> 40677)",
-        "2026-11-26: n31 foes b5b: yard_rounds measuring script for the prologue patrol's rounds per band, project/dev/foes_n31 as brief b5b names it (dev_loc 40677 -> 40725)"
+        "2026-11-26: n31 foes b5b: yard_rounds measuring script for the prologue patrol's rounds per band, project/dev/foes_n31 as brief b5b names it (dev_loc 40677 -> 40725)",
+        "2026-11-26: stalk phases for n31 foes (dev_loc 40725 -> 40732)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -216,7 +217,7 @@
         "project/dev/cast": 4195,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
-        "project/dev/foes_n31": 965,
+        "project/dev/foes_n31": 972,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
@@ -247,7 +248,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40725
+      "total": 40732
     },
     "direct_cmdline_reads": {
       "accepted": [
