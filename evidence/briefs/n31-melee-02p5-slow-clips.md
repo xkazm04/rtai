@@ -1,6 +1,6 @@
 # Builder n31-melee-02p5 (sonnet, 30 min): the slow hit-volume clips the owner can read
 
-Read `evidence/briefs/n31-common.md` (binding). Tag `02p5`. Launched ~02:55; commit by 03:15; report and END by
+Read `evidence/briefs/n31-common.md` (binding). Tag `02p5`. Launched ~02:48; commit by 03:12; report and END by
 03:22 whatever state (a session stop at 03:32 kills you). Commit with `git commit -- <paths>`.
 
 Director looked at `gtai-masters/n31/melee/slow_katana.mp4` (02p4, from `tools/melee/sweep_clip.mjs` +
@@ -28,3 +28,6 @@ Fix, in this order (find the cause of each first, 1 line each in your report):
 Owned: `project/dev/melee_n31/sweep_clip.gd`, `sweep_clip_lines.gd`, `sweep_clip.tscn`, `tools/melee/sweep_clip.mjs`,
 the masters slow_* files and their frames.json entries. Nothing else. Run `node tools/godot/check.mjs` on the
 changed .gd files and `node tools/lint/lint.mjs` (fix your own findings) before the commit.
+Addendum 02:48: builder 03p5 renders fatality takes beside you on the same lane lock (they come first for the
+owner). Do the code fixes 1-3 first (no Godot), then render in short runs; katana and plasma_sword are the must;
+the others if the lock allows by 03:10.
