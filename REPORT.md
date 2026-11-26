@@ -4,6 +4,12 @@ Branch `n31-melee`, worktree `gtai-wt/n23-street`, base `ba8e470b0`. Owner's not
 through, nothing happens; the space in which melee hurts), 6 (fatalities on advanced melee weapons; uneven impacts).
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, best first).
 
+## Gate
+`node tools/gate/run.mjs --rev=HEAD` on `ef6c95c2b` (05:36-05:53, melee slot, no reels): `gate: PASS;
+build/gate/ef6c95c2b4af/gate.json` - lint 19 checks, unit 4434 passed / 0 failed / 2 skipped, scenarios 68,
+parity bit-exact (planted mutation caught at step 629), selftest, release-compile 1010 / 0. Every commit after it
+is docs/evidence/JOURNAL/REPORT only.
+
 ## What works
 
 ### Item 2: the blade hits what it is drawn crossing (`--melee-sweep`, ON by default)
@@ -123,6 +129,14 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
    file) or keep it?
 
 ## Merge notes
+- Code conflict with `n31-ground` (`git merge-tree`, 05:40): `project/tests/scenarios/scenario_prologue_pilot.gd`
+  and `project/tests/unit/test_prologue_pump_tell.gd`. Both lanes re-pinned the prologue pilot digests and the
+  seed-7 shotgun tick (melee 81b877a99: the bot's swept melee, shot 6205 -> 7674; ground 428511fc3: yard
+  footprints). Neither side's numbers hold on the merged tree: take either side's code, then re-measure the
+  LEGACY / LINE_FIRE_TICKS / RAISED_LINE_TICKS / COVER_SEED_7 / LINE_FIRE_SEED_7 pins and the shot tick on the
+  merge (one scenario run + the unit test's failure message), with a dated decisions line. With foes and ghost
+  only the root JOURNAL/REPORT add/add (keep each lane's own) and `tools/debt/baseline.json`
+  (`node tools/debt/merge_baseline.mjs`).
 - `project/features/gauntlet/gauntlet_session.gd`, `project/boot/collect_call/quest1_session.gd`: additive
   install lines for the kill feed (no lane owns them).
 - Digests re-pinned deliberately: see the `DECISION melee n31 item 2` and `item 3` lines (quest1_input moved by

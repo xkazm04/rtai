@@ -204,3 +204,5 @@ NEXT (session 8, ~06:00):
 ## Session 8 (05:35 - 07:05 at the latest)
 - 05:35 START. Tree clean at ef6c95c2b (old n26-n28 .err/.txt untracked). NEED melee: nothing new (ghost's deploy patches served 498568a41; foes b4c informational). Ground first gate 04:45, re-gate 05:24; foes PASS 05:34, ghost PASS 05:32 -> melee slot is open now.
 - 05:36 Final gate started on ef6c95c2b: `build/n31/dir8/gate.sh` (lane lock tag dir8-gate, out `build/n31/dir8/gate.out`). No product commit after it.
+- 05:40 Merge check (`git merge-tree`): code conflict with n31-ground on scenario_prologue_pilot.gd + test_prologue_pump_tell.gd (both lanes re-pinned prologue digests / shot tick) -> REPORT merge note (re-measure on the merge). Foes/ghost: only JOURNAL/REPORT add/add + debt baseline.
+- 05:53 MILESTONE final gate PASS on ef6c95c2b: `gate: PASS; build/gate/ef6c95c2b4af/gate.json` (lint 19, unit 4434/0/2, scenarios 68, parity, selftest, release-compile 1010/0). No FRICTION mem-budget. From here evidence/JOURNAL/REPORT only.
