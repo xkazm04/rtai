@@ -56,7 +56,7 @@ Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\fram
 - No `mem-budget: waiting` in any session; no BLOCKED images (21 of 60 used).
 
 ## Calls for the owner
-- Where Tonnage drops: aim point (shipped) vs on Rivet: at 5.5 m in play the aim point hit 3.86 mean vs 1.17 on Rivet (25 of 54 Rivet drops hit nobody). One data value (`drop_at`).
+- Where Tonnage drops: aim point (shipped) vs on Rivet: at 5.5 m in play the aim point hit 3.86 mean vs 1.17 on Rivet (25 of 54 Rivet drops hit nobody). One data value (`drop_at`). Clip `take-drop-aim-vs-rivet-32ppm.mp4` (27.70 s, seed 3, same recipe as the play take, `evidence/n31/ghost/take-drop-at.md`, `05feec382`): on the aim point he lands in the pack and 8 and 9 cops go down in waves 2 and 3 (24 kills in 4 drops); on Rivet he lands on Rivet and only the 2 or 3 cops pressed against him go down while the rest shoot from outside the ring (8 kills in 3 drops, the bot's first drop waits until tick 1262 instead of 238).
 - Charge 0.45 s: costs about 16 points of share in the lab (cops walk out): it is the counterplay he asked for; one data value (`charge_s`).
 - Radius 6.5 m, dump damage 3 (kills a patrol cop, a riot front takes x0.2): the 8-wave play median stays 3 (the bot drops at >= 3 bodies); 7 m is the screen limit.
 - Ohm radius 3.5 -> 5 m at a 0.3 s charge (play 2.98 -> 3.71 hits per deploy).
@@ -80,11 +80,11 @@ Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\fram
 - Item 5: effect card icons (NEED for the pick card owner), heat parts amber.
 
 ## Builder ledger
-All Claude sub-agents (sonnet or opus) from the director's session, one brief each under `evidence/briefs/n31-ghost-*.md`. 35 calls, 762 minutes, 34 accepted, 1 partly bounced (g27: its tests kept, its rim-over-face draw order reverted by g29 after the strip showed the avatar tinted olive), 0 abandoned. IMAGES 21/60.
+All Claude sub-agents (sonnet or opus) from the director's session, one brief each under `evidence/briefs/n31-ghost-*.md`. 36 calls, 777 minutes, 35 accepted, 1 partly bounced (g27: its tests kept, its rim-over-face draw order reverted by g29 after the strip showed the avatar tinted olive), 0 abandoned. IMAGES 21/60.
 - Tonnage: g01-measure 55, g02-drop 60, g03a-prep 6, g03-beats 64, g04-take 23, g05-keys-test 1, g06-verify 44, g07-kills 32, g08-measure 20, g09-kick 22.
 - Ohm: g10-ohm 26, g11-ohm-prep 5, g12-ohm-beats 30, g13-ohm-play 28, g14-ohm-take 36.
 - Dent: g15-dent 18, g16-dent-prep 4, g17-dent-view 27, g18a-pack 3, g18b-dent-marks 28, g19-dent-take 25, g25-dent-arrive 10.
 - Kerf: g20-kerf-prep 4, g21-kerf-drop 28, g22-kerf-marks 16, g23-kerf-measure 5, g23-kerf-take 30, g24-kerf-relock 16 + 34.
 - Refusal cue: g26-refusal-cue 24, g26b-refusal-strip 9, g27-cue-tests 14 (partly bounced), g29-rim-revert 3.
-- Re-film: g28-dent-refilm 8, g30-ohm-halfspeed 4 (Ohm 64 px/m half-speed 10.65 -> 18.65 s at the same deploy ticks).
+- Re-film: g28-dent-refilm 8, g30-ohm-halfspeed 4 (Ohm 64 px/m half-speed 10.65 -> 18.65 s at the same deploy ticks), g31-drop-at 15 (the drop_at rivet side of the owner's call, temp worktree, no product commit).
 - What I would brief differently: the 60-minute first calls (g01, g02, g03) were the costly ones; 15-30 minute calls with one checklist point were the best value, as n29 said. A measuring builder needs its own temp worktree from the start when another builder edits the measured code (g01). Give mutate its own slot, never beside a stills builder (g06 held the lock 30 min). Check the allowlist covers every test that pins a changed default before launch (g26 shipped 600 instead of 30 for that reason and needed a message).
