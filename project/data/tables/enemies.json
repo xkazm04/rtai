@@ -11,7 +11,7 @@
       "aggression": 0.5,
       "attack_m": 14,
       "body": "human",
-      "cover_bias": 1,
+      "cover_bias": 0.5,
       "danger_m": 4,
       "doc": "Patrol cop: a pistol, keeps 8-10 m, strafes while waiting for a shooting slot, breaks and runs when the squad thins.",
       "fight_speed_k": 0.45,
@@ -433,11 +433,11 @@
     "max_melee": 2,
     "max_shooters": 2,
     "max_shooters_min": 3,
-    "max_shooters_share": 0.75,
+    "max_shooters_share": 0.5,
     "own_weapon_damage": {
       "cannon": 8,
-      "pistol": 1.5,
-      "rifle": 1.5
+      "pistol": 3,
+      "rifle": 2
     },
     "own_weapons": true,
     "panic_s": 3,
