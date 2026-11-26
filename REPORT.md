@@ -46,7 +46,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
   `--melee-sweep=off,--kill-feed=off`, right HEAD): `beside_fatal_chainsaw.mp4` (grind at 14 s, torn pieces at
   18 s), `beside_fatal_katana.mp4` (first split 18 s: blue halves and pools round Rivet, left whole bodies),
   `beside_fatal_plasma_sword.mp4` (16 s: burst pieces; left whole bodies); still `still_grind_chainsaw_64.png`.
-  Baton and claw: see 03p7 below.
+  `beside_fatal_electro_baton.mp4` (13 s: a pale overload figure beside Rivet, charred bodies at 14 s; the
+  weakest of the five, see 04g), `beside_fatal_claw.mp4` (13 s: the cop at Rivet raked into torn pieces with red
+  spray; left whole bodies).
 
 ### Item 4: impacts of one quality (view only, no digest)
 - What a player now feels: **a katana or plasma sword hit leaves a cut or a sear across the body, and the
