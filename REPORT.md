@@ -28,7 +28,8 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   paid back with recovery 13 -> 18 ticks), chainsaw 0.787 -> 0.886 (+12.6 %), baton 1.04 -> 1.17 (+12.9 %),
   katana 0.994 -> 1.073 (+7.9 %), plasma sword 1.238 -> 1.189 (-4.0 %). All inside +-15 %.
 - Evidence: `beside_play_{katana,plasma_sword,claw}.mp4` (gauntlet, wheel controls, average bot, seed 7,
-  32 px/m, tilt 70, 35 s, main | n31); slow clips with the hit sector: OPEN (02p5 re-film).
+  32 px/m, tilt 70, 35 s, main | n31); the labelled polar sheet `volumes_before_after.png` carries the lab
+  evidence. The 64 px/m slow clips `slow_*.mp4` are listed last as lab clips: the hit sector does not read in them.
 
 ### Item 3: fatalities where the owner plays (`--kill-feed`, ON by default)
 - What a player now feels: **every melee kill ends in the weapon's own fatality - the chainsaw grinds every
@@ -42,7 +43,11 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   does not also show (bar PASS), so no grind cap. Draw calls 273 -> 918 p50: the fatality pieces left on the
   street are the cost, not the sim (sim loop p99 1.7 ms). A long wave stacks more pieces than this first minute:
   watch it.
-- Films: OPEN (03p4 fatality takes, chainsaw first).
+- Films (gauntlet, average bot, seed 7, 32 px/m, tilt 70, 1920x1080, 35 s, cropped round Rivet; left main
+  `--melee-sweep=off,--kill-feed=off`, right HEAD): `beside_fatal_chainsaw.mp4` (grind at 14 s, torn pieces at
+  18 s), `beside_fatal_katana.mp4` (first split 18 s: blue halves and pools round Rivet, left whole bodies),
+  `beside_fatal_plasma_sword.mp4` (16 s: burst pieces; left whole bodies); still `still_grind_chainsaw_64.png`.
+  Baton and claw: see 03p7 below.
 
 ### Item 4: impacts of one quality (view only, no digest)
 - What a player now feels: **a katana or plasma sword hit leaves a cut or a sear across the body, and the
@@ -59,6 +64,15 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   drops that land as specks; at most one per victim per 6 ticks, `gun_fx.json` `flick_gap_ticks`), on a robot
   white sparks that land as oil; a 2-tick cream hot point inside the ink burst. Stills
   `evidence/n31-melee/04-impacts/after/e_*.png` (the hot point reads at 64 px/m, barely at 32).
+- Play takes (same fight frame for frame, only the marks differ; left = the audit commit `0f1e1ce95`, right =
+  HEAD with `--melee-sweep=off,--kill-feed=off`): `beside_impacts_katana.mp4` (cuts at 15.2, 16.8, 30.6 s where
+  main shows only the dust), `beside_impacts_plasma_sword.mp4` (12 sears, e.g. 15.2, 17.55, 27.6 s),
+  `beside_impacts_chainsaw.mp4` (bite burst + one camera kick per bite at 15.4, 16.9, 18.65 s). Most bot strikes
+  kill, so the marks show on the non-lethal hits.
+- Audit sheet before | after at 64 px/m (`evidence/n31-melee/04-impacts/sheet_before_after.png`, masters
+  `impacts_sheet_before_after.png`), scores hit human / robot / shield: katana 1/1/2 -> 2/2/2, plasma sword
+  1/1/1 -> 2/2/2, chainsaw 1/0/1 -> 2/2/2, baton 2/2/1 -> 2/2/2, pistol and gatling 1/1/2 -> 2/1/2, claw 3/2/2
+  (the reference) unchanged. Caveats: the 'human' cell is the riot guard; gun rows draw no victim at the stop.
 - Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
   no digest moved (68 scenarios pass).
 
@@ -67,7 +81,9 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   lands with Rivet's whole body past the drawn tip (body contact, fair), but 42 of 58 hits landed while he was
   walking sideways out of the tell (the aim locks at +-60 deg). Not changed: `foe_attacks.gd` is foes' file.
 - The drawn reach depends on facing (katana 3.14 m drawn at facing 0, 1.91 m at 90); one reach per weapon.
-- The 02p4 slow clips do not show the sector readably (OPEN: 02p5).
+- The 64 px/m slow clips with the hit sector drawn do not read (three calls: 02p4, 02p5; the stage's crowd
+  covers the dummies, the sector is lost under the rigs). Stopped by decision; the polar sheet stands in.
+- Nothing reaches 3/3 in the audit except the claw on a human; the light guns on a robot stay 1.
 
 ## What blocked or slowed you
 OPEN.
