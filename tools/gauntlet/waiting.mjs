@@ -101,6 +101,11 @@ export function inRevTree(rev, action, root = ROOT) {
     seedImportCache(root, tree);
     cpSync(join(root, PROBE_DIR), join(tree, PROBE_DIR), { recursive: true,
       filter: (src) => src === join(root, PROBE_DIR) || basename(src).startsWith('waiting_') });
+    if (process.env.GTAI_PROBE_REV) { // a rev without FoeGait cannot compile the newer probe files: use the probe of an older commit
+      for (const n of readdirSync(join(tree, PROBE_DIR))) if (n.startsWith("waiting_")) rmSync(join(tree, PROBE_DIR, n));
+      const co = spawnSync("git", ["-C", tree, "checkout", process.env.GTAI_PROBE_REV, "--", PROBE_DIR], { encoding: "utf8" });
+      if (co.status) throw new Error(co.stderr);
+    }
     return action(tree, sha);
   } finally {
     removeWorktree({ root, path: tree });
