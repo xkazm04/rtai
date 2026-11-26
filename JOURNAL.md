@@ -318,3 +318,11 @@ NEXT (if a session 11 runs before 07:40): nothing to build; REPORT final. Any ch
 - 06:17 Session 11 ledger: BUILDER g32-charge 15 accepted. IMAGES 21/60. No BLOCKED, no FRICTION mem-budget. No product commit; the gate on da97ec3be stays final.
 
 NEXT (if a session 12 runs before 07:40): nothing to build; REPORT final. Any change: re-run `node tools/evidence/cites.mjs REPORT.md`, commit `-- REPORT.md JOURNAL.md`. No builder after 07:00, no `project/` commit.
+
+## Session 12 (07:30 - , STABILIZE, past freeze)
+
+- 07:30 MILESTONE session start; HEAD afc67ff44. `git diff da97ec3be..HEAD -- project tools docs` is empty, so the gate PASS on da97ec3be stays the final gate for this branch. No `NEED ghost` in n23-controls, n23-prologue or n23-street journals.
+- 07:31 REPORT line 4 wording fixed (post-gate commits are JOURNAL, REPORT and evidence/ notes, not only JOURNAL/REPORT). Cites: 25 paths, 24 ok, 1 pattern.
+- 07:31 Session 12 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
+
+NEXT: run over. Director merges `n31-ghost`; the reels run on the merge. Open items are in REPORT Next steps (in-gauntlet take of a refused press; the Kerf and Dent passes beyond what shipped; effect card icons; amber heat parts).

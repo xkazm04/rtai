@@ -1,7 +1,7 @@
 # n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group 
 
 Lane `ghost`, branch `n31-ghost`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, base `main` `ba8e470b0`.
-Gate (final, ghost slot, started 05:15 on `da97ec3be`; later commits are JOURNAL/REPORT only): `node tools/gate/run.mjs --rev=HEAD` -> `gate: PASS` (lint 19 checks, unit 4478 passed 0 failed 2 skipped, scenarios 68 passed, parity bit-exact 1200 steps + planted mutation caught at 629, selftest, release-compile 1018 loaded 0 failed), `build/gate/da97ec3be096/gate.json` (git-ignored, in this worktree).
+Gate (final, ghost slot, started 05:15 on `da97ec3be`; later commits are JOURNAL, REPORT and evidence/ notes only, no project/, tools/ or docs/ path): `node tools/gate/run.mjs --rev=HEAD` -> `gate: PASS` (lint 19 checks, unit 4478 passed 0 failed 2 skipped, scenarios 68 passed, parity bit-exact 1200 steps + planted mutation caught at 629, selftest, release-compile 1018 loaded 0 failed), `build/gate/da97ec3be096/gate.json` (git-ignored, in this worktree).
 Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\frames.json` (15 best: the four gauntlet takes main | HEAD first, then half-speed clips and beat strips; older side clips and stills moved to `extra/`).
 
 ## What works
