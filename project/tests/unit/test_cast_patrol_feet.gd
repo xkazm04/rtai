@@ -15,6 +15,7 @@ func test_registered_soles_hold_through_drawings_and_wrap_in_both_pitches() -> v
 func _check_contacts(path: String, face: Vector2i) -> void:
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
 	contact.configure(path)
+	contact.registered.glide_no_step = false  # n31-13: the foot lock; non-side walks glide
 	var direction: Vector2 = Vector2(-1 if face.y else 1, 1).normalized()
 	contact.travel = direction  # as StreetCopWalk.plant seeds it from the rig's velocity
 	var anchor: Vector2
@@ -176,6 +177,10 @@ func _mid_stance_misses(path: String, direction: Vector2, stances: int) -> Array
 			var first: Vector4 = contact.registered.marks[face.x * 8 + row - row % 4]
 			var flip: float = -1.0 if face.y else 1.0
 			var own: Vector2 = Vector2(first.x * flip, first.y) * TEXEL
-			misses.append(xf * Vector2(ink.x * flip, ink.y) - at - own)
+			var sole: Vector2 = Vector2(ink.x * flip, ink.y)
+			if contact.registered.glides(face.x):  # n31-13: registered on the foot line
+				own.y = 0.0
+				sole.y = 0.0
+			misses.append(xf * sole - at - own)
 		at += direction * speed
 	return misses

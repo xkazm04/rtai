@@ -91,3 +91,32 @@ func test_side_walk_torso_holds_its_line_within_four_screen_pixels() -> void:
 				high = maxf(high, (xf * Vector2(ink.z, ink.w)).y)
 			at += Vector2.LEFT * 3.2 * 32.0 * SimClock.TICK_DT
 		assert_lte(high - low, 4.0, "%s torso travel %.2f px" % [strip, high - low])
+
+
+## n31-13 GLIDE_NO_STEP: walking toward the camera (S, SE) the figure follows the sim point and
+## keeps only its drawn bob (the foot lock held each stance, then jumped: 10-36 px).
+func test_toward_walk_torso_follows_the_ground_point_within_four_screen_pixels() -> void:
+	for strip: String in [StreetCopWalk.EIGHT, CastRiotAnchors.EIGHT, CastSwatAnchors.EIGHT]:
+		for direction: Vector2 in [Vector2.DOWN, Vector2(1, 1).normalized()]:
+			var travel: float = _torso_travel("p70".path_join(strip), direction)
+			assert_lte(travel, 4.0, "%s %s torso travel %.2f px" % [strip, direction, travel])
+
+
+func _torso_travel(path: String, direction: Vector2) -> float:
+	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
+	contact.configure(path)
+	contact.travel = direction
+	var face: Vector2i = RigHeadCard.frame_of(direction.angle())
+	var texel: Vector2 = Vector2(0.3173, 0.3173)
+	var stance: float = contact.step_m * 32.0 * (contact.drawings >> 1)
+	var low: float = INF
+	var high: float = -INF
+	var at: Vector2 = Vector2.ZERO
+	while at.length() < stance * 6.0:
+		var xf: Transform2D = contact.place(at, face, texel, 32.0)
+		var ink: Vector4 = contact.registered.marks[face.x * 8 + posmod(contact.cell, 8)]
+		if at.length() > stance * 2.0:
+			low = minf(low, (xf * Vector2(ink.z, ink.w)).y - at.y)
+			high = maxf(high, (xf * Vector2(ink.z, ink.w)).y - at.y)
+		at += direction * 3.2 * 32.0 * SimClock.TICK_DT
+	return high - low

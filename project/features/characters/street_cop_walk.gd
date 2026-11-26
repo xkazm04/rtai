@@ -79,9 +79,9 @@ class Contact:
 		face = facing
 		last = at
 		if registered != null:
-			registered.stride = travel * step * registered.half
+			var stand: Vector2 = registered.stand_at(origin, at, travel * step, face.x)
 			var phase: float = fmod(walked / step, 1.0) if walked > 0.0 else 0.5
-			placed = registered.pose(origin, cell, face, texel, phase)
+			placed = registered.pose(stand, cell, face, texel, phase)
 			placed = registered.settle(placed, ppm, continuous)
 		else:
 			var d: Vector2 = ADVANCE[face.x] * texel if posmod(cell, 2) else Vector2.ZERO

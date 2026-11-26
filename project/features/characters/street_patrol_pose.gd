@@ -25,6 +25,12 @@ const SHIFT_ACROSS_TRAVEL: bool = true
 const HOLD_TOE_OFF: bool = true
 const TOE_OFF_PX: float = 13.0
 const SIDE_COLUMN: int = 2
+## n31-13: a walk column that draws no forward step (S, N and the three-quarter columns) GLIDES:
+## the stance origin follows the sim point every tick (mid-stance = the sim point), every mark
+## registers on the foot line, so the head shows the drawn bob only, not a held stance then a
+## jump (head travel 1.4-2.9 px, from 10-36 px; the boot skates the stance, 22-33 px). false =
+## the foot lock on every column.
+const GLIDE_NO_STEP: bool = true
 
 ## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
 ## contact on the stance interval so his moving hip shadow crosses the planted boot.
@@ -42,6 +48,7 @@ var row: int
 var face: int
 var texel: Vector2
 var stride: Vector2
+var glide_no_step: bool = GLIDE_NO_STEP
 
 
 func configure(path: String, drawings: int, running: bool) -> float:
@@ -127,10 +134,25 @@ func _ground(phase: int) -> Vector2:
 	return stride * floorf(float(phase) / half) + delta * texel
 
 
-## The sole height a mark registers at (HOLD_TOE_OFF).
+## The sole height a mark registers at (HOLD_TOE_OFF, GLIDE_NO_STEP).
 func foot_y(sole_y: float) -> float:
+	if glides(face):
+		return 0.0
 	var side: bool = HOLD_TOE_OFF and not flight and face == SIDE_COLUMN
 	return 0.0 if side and sole_y < -TOE_OFF_PX else sole_y
+
+
+## Where the stance stands (and its stride): a gliding column on the sim point, less the eased
+## landing settle adds back; any other on the locked stance origin.
+func stand_at(origin: Vector2, at: Vector2, step: Vector2, column: int) -> Vector2:
+	var glide: bool = glides(column)
+	stride = Vector2.ZERO if glide else step * half
+	return at - eased_landing if glide else origin
+
+
+## A walk drawn in this column glides with the sim point instead of locking its boot.
+func glides(column: int) -> bool:
+	return glide_no_step and not flight and column != SIDE_COLUMN
 
 
 ## A strafe can hand over between opposing drawn leads while the aim stays fixed.

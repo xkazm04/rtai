@@ -5,6 +5,7 @@ extends SceneTree
 ## through the placed transform), the stance origin and the mid-point between the stance's soles.
 ## Flags: --out=<file.jsonl> [--ppm=32] [--mps=3.2] [--stances=4]
 ## [--strip=<file in p70/>] (n31-10: "head" = the cell's alpha bbox top through the transform)
+## n31-13: every facing walks twice, "glide" false (the foot lock) then true (GLIDE_NO_STEP).
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--mps", "--stances", "--strip"]
 const PATROL: String = "p70/cop_patrol_planted8_armed_walk.png"
 const OCT: Dictionary[String, Vector2] = {
@@ -14,6 +15,8 @@ const OCT: Dictionary[String, Vector2] = {
 	"E": Vector2.RIGHT,
 	"SE": Vector2(0.7071, 0.7071),
 	"NE": Vector2(0.7071, -0.7071),
+	"SW": Vector2(-0.7071, 0.7071),
+	"NW": Vector2(-0.7071, -0.7071),
 }
 
 var _log: FileAccess
@@ -25,20 +28,20 @@ func _initialize() -> void:
 	var mps: float = float(_arg("--mps", "3.2"))
 	_stances = int(_arg("--stances", "4"))
 	_log = FileAccess.open(_arg("--out", "user://foe_place.jsonl"), FileAccess.WRITE)
-	for dir: String in OCT:
-		_walk(StreetWalkerCards.DIR + "p70/" + _arg("--strip", PATROL.get_file()), dir, ppm, mps)
+	var strip: String = StreetWalkerCards.DIR + "p70/" + _arg("--strip", PATROL.get_file())
+	for glide: bool in [false, true]:
+		for dir: String in OCT:
+			_walk(strip, dir, ppm, mps, glide)
 	_log.close()
 	quit(0)
 
 
-func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
+func _walk(path: String, dir: String, ppm: float, mps: float, glide: bool) -> void:
 	var tex: Texture2D = load(path) as Texture2D
-	var img: Image = tex.get_image()
-	if img.is_compressed():
-		var err: Error = img.decompress()
-		assert(err == OK)
+	var img: Image = _image(tex)
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
 	contact.configure(path)
+	contact.registered.glide_no_step = glide
 	var cell_y: float = tex.get_height() / float(contact.drawings)
 	var s: float = 1.7 * ppm * StreetCopWalk.fill_of(path) * 1.0 / cell_y
 	var face: Vector2i = RigHeadCard.frame_of(OCT[dir].angle())
@@ -54,12 +57,14 @@ func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
 		var off: Vector2 = -Vector2(tex.get_width() / 5.0 * 0.5, cell_y * StreetCopWalk.FOOT_Y)
 		var row: Dictionary = {
 			"dir": dir,
+			"glide": glide,
 			"t": t,
 			"cell": contact.cell,
 			"at": _v(at),
 			"origin": _v(contact.origin),
 			"sole": _v(placed * Vector2(mark.x, mark.y)),
 			"torso": _v(placed * Vector2(mark.z, mark.w)),
+			"foot": _v(placed * Vector2(mark.x, contact.registered.foot_y(mark.y))),
 			"tex_origin": _v(placed.origin),
 			"off_px": _v(off * texel),
 			"texel": s,
@@ -71,6 +76,14 @@ func _walk(path: String, dir: String, ppm: float, mps: float) -> void:
 		var stored: bool = _log.store_line(JSON.stringify(row))
 		assert(stored)
 		at += OCT[dir] * mps * ppm * SimClock.TICK_DT
+
+
+func _image(tex: Texture2D) -> Image:
+	var img: Image = tex.get_image()
+	if img.is_compressed():
+		var err: Error = img.decompress()
+		assert(err == OK)
+	return img
 
 
 ## The cell's topmost opaque row (and its bbox centre column), in the anchors' local frame.
