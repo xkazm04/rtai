@@ -12,6 +12,7 @@ import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { ROOT } from '../lib/repo.mjs';
+import { withRestore, writeOverride } from './override_cfg.mjs';
 import { ensureSnapshot, revParse } from '../lib/snapshot.mjs';
 import { filmedRoot, nativeDiffers, nativeRefusal } from '../film/side.mjs';
 import { encodeArgs, godotArgs, labelOf, parseArgv, sampleFrames, sideArgs, stillArgs, takeFile, SCENES, WRAPPER } from './play_take_lib.mjs';
@@ -60,7 +61,9 @@ function treeFor(f, root) {
   return { tree: ensureSnapshot({ root, rev: f.rev, kind: 'film' }).path, sha };
 }
 
-async function take(f) {
+const take = (f) => withRestore((hold) => takeIn(f, hold));
+
+async function takeIn(f, hold) {
   const root = filmedRoot();
   const { tree, sha } = treeFor(f, root);
   const scene = SCENES[f.ppm];
@@ -68,7 +71,7 @@ async function take(f) {
     mkdirSync(join(tree, dirname(WRAPPER)), { recursive: true });
     copyFileSync(join(ROOT, WRAPPER), join(tree, WRAPPER));
   }
-  writeFileSync(join(tree, "project", "override.cfg"), OVERRIDE); // the movie takes the viewport size, not --resolution
+  hold.restore = writeOverride(tree, OVERRIDE); // the movie takes the viewport size, not --resolution
   const out = resolve(f.out);
   mkdirSync(out, { recursive: true });
   const avi = join(out, 'take.avi');

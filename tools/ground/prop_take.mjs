@@ -11,6 +11,7 @@ import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { ROOT } from '../lib/repo.mjs';
+import { withRestore, writeOverride } from './override_cfg.mjs';
 import { ensureSnapshot, revParse } from '../lib/snapshot.mjs';
 import { filmedRoot } from '../film/side.mjs';
 import { labelOf, sideArgs, takeFile } from './play_take_lib.mjs';
@@ -79,13 +80,15 @@ async function takeLock(waitS = 900) {
 export const godotArgs = (arena, avi, seed) => ['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080', '--fixed-fps', '60',
   '--disable-vsync', '--write-movie', avi, SCENE, ...(arena === 'gauntlet' ? ['--', '--pick-view', '--controls=wheel', `--seed=${seed}`] : [])];
 
-async function take(f) {
+const take = (f) => withRestore((hold) => takeIn(f, hold));
+
+async function takeIn(f, hold) {
   const sha = revParse(filmedRoot(), f.rev);
   if (!sha) throw new Error(`prop_take: ${f.rev} is not a commit`);
   const tree = f.tree ? resolve(f.tree) : ensureSnapshot({ root: filmedRoot(), rev: f.rev, kind: 'film' }).path;
   mkdirSync(join(tree, 'project', 'dev', 'ground_n31'), { recursive: true });
   for (const n of PROBE.filter((x) => existsSync(join(ROOT, 'project', 'dev', 'ground_n31', x)))) copyFileSync(join(ROOT, 'project', 'dev', 'ground_n31', n), join(tree, 'project', 'dev', 'ground_n31', n));
-  writeFileSync(join(tree, 'project', 'override.cfg'), OVERRIDES[f.arena]);
+  hold.restore = writeOverride(tree, OVERRIDES[f.arena]);
   const out = resolve(f.out);
   mkdirSync(out, { recursive: true });
   const built = await buildProbes(tree, f.arena);
