@@ -218,3 +218,9 @@ NEXT (session 9 / report phase, by 07:40):
 2. Re-read REPORT.md top to bottom once (gate line, items 2-5, What does not, Calls, Merge notes incl. the n31-ground prologue pin conflict, ledger), run `node tools/evidence/cites.mjs REPORT.md`, commit REPORT + JOURNAL (pathspec) before 07:40.
 3. Do not start builders or Godot after 07:00.
 - 06:24 Director read REPORT through (NEXT step 2 done early): mutate bullet rewritten per file, ledger minutes corrected 885 -> 864 (sum of the 29 BUILDER lines), cites 17 ok 2 pattern, committed 8caddd301. Report phase only needs a last glance and the final JOURNAL line.
+
+## Session 9 (07:30 - 07:40, STABILIZE past freeze)
+- 07:30 START. Tree clean at 253b14363 (old n26-n28 .err/.txt untracked, not ours to add). HEAD differs from the gated ef6c95c2b only in JOURNAL.md/REPORT.md (`git diff --stat`); `build/gate/ef6c95c2b4af/gate.json` present; cites 19 paths 17 ok 2 pattern. No builder, no Godot, lane lock free. IMAGES 0/60.
+- 07:31 Session 9 end. Nothing to fix: build green as gated, evidence matches the build.
+
+NEXT: none for this lane. Director: merge `n31-melee` (gate PASS on ef6c95c2b); resolve the n31-ground prologue pin conflict (scenario_prologue_pilot.gd, test_prologue_pump_tell.gd) by re-measuring on the merge, keep each lane's own JOURNAL/REPORT, run `node tools/debt/merge_baseline.mjs` on the baseline conflict; clean gtai-mutate-612737eb in Temp after the merge.
