@@ -19,7 +19,7 @@ const tag = arg('tag', '02p4');
 const out = arg('out', 'C:/Users/kazda/kiro/gtai-masters/n31/melee');
 const LOCK = join(ROOT, 'build/n31/godot.lock');
 const scratch = join(ROOT, `build/n31/${tag}/clip`);
-const BASE = ['--enemy-brain=squad', '--silent', '--seed=20261109', '--cam-lock=5,-38', '--ppm=64', '--clean'];
+const BASE = ['--enemy-brain=squad', '--silent', '--seed=20261109', '--cam-lock=-24,26', '--ppm=64', '--clean'];
 const ARMS = [['main', '--melee-sweep=off'], ['sweep', '--melee-sweep']];
 const FONT = "fontfile='C\\:/Windows/Fonts/arialbd.ttf'";
 mkdirSync(scratch, { recursive: true });
@@ -43,7 +43,7 @@ async function render(w, arm, flag) {
   rmSync(avi, { force: true });
   takeLock();
   try {
-    const r = await runGodot(['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080',
+    const r = await runGodot(['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--resolution', '1920x1080',
       '--write-movie', avi, '--fixed-fps', '60', 'res://dev/melee_n31/sweep_clip.tscn', '--', ...BASE, `--blade=${w}`,
       `--swings=${swings}`, flag], { headless: false, timeoutMs: 5 * 60_000, stopOn: SCRIPT_ERROR, name: 'sweep-clip',
       onLine: (l) => /sweep_clip|SCRIPT ERROR/.test(l) && console.log(l) });
@@ -59,7 +59,7 @@ const label = (text) => `drawtext=${FONT}:text='${text}':x=24:y=20:fontsize=34:f
 for (const w of weapons) {
   const [main, sweep] = [await render(w, ...ARMS[0]), await render(w, ...ARMS[1])];
   const mp4 = join(out, `slow_${w}.mp4`);
-  // the middle half of each run (the Movie Maker frame is the window's size, 1280x800 here), side by side,
+  // the middle half of each run (the Movie Maker frame is 1920x1080), side by side,
   // fitted to 1080 lines and padded to 1920x1080
   const crop = 'trim=start_frame=58,setpts=PTS-STARTPTS,crop=iw/2:ih:iw/4:0';  // from the press, not the warm-up
   execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', main, '-i', sweep, '-filter_complex',

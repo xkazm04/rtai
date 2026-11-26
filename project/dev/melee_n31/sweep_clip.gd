@@ -10,9 +10,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--blade", "--swings", "--melee-sweep", "--ppm", "--cam-lock", "--clean", "--silent"
 ]
 const DUMMY: StringName = &"patrol_cop"
-const FROM: Vector2 = Vector2(5, -38)
-## Rings of dummies: [count, distance (m), angle offset (deg)].
-const RINGS: Array[Vector3] = [Vector3(8, 1.6, 0.0), Vector3(8, 2.6, 22.5)]
+const FROM: Vector2 = Vector2(-24, 26)
+const RINGS: Array[Vector3] = [Vector3(8, 1.8, 0.0)]
+const FAR_DEG: Array[float] = [-60.0, -20.0, 20.0, 60.0]
 const WARM: int = 60
 ## Idle ticks past the combo window before the next press (the combo restarts at hit 1).
 const GAP: int = 8
@@ -29,8 +29,6 @@ var _idle: int = 0
 
 
 func _ready() -> void:
-	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
-	get_window().size = Vector2i(1920, 1080)
 	super()
 	process_priority = -1000
 	session.world.set_process(false)
@@ -123,6 +121,8 @@ func _setup() -> void:
 		for i: int in int(ring.x):
 			var deg: float = ring.z + i * 360.0 / ring.x
 			_offsets.append(Vector2.from_angle(deg_to_rad(deg)) * ring.y)
+	for deg: float in FAR_DEG:
+		_offsets.append(Vector2.from_angle(deg_to_rad(deg)) * 2.8)
 	for off: Vector2 in _offsets:
 		var d: Fighter = arena.squad_ai.spawn_member(arena, _origin + off, DUMMY)
 		d.max_hp = 1000000.0
