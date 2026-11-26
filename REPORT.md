@@ -1,4 +1,4 @@
-# n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group (DRAFT, session 4)
+# n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group (DRAFT, session 6)
 
 Lane `ghost`, branch `n31-ghost`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, base `main` `ba8e470b0`.
 Draft written 00:30 by the director; final sections (gate line, ledger totals, Ohm and later ghosts) are filled at 07:40.
@@ -21,12 +21,14 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Kills by the dump play the press crush inside `crush_m` and the thrown wave death beyond (`5d0f98ccd`, `a96de13c0`), stills `dump-kill-{before,after}-64ppm.png`; see the NEED below for the gauntlet street.
 - Films: `take-drop-head-64ppm-halfspeed.mp4` (15.22 s), `tonnage-beats-{32,64}ppm.png`, `dump-dust-d2-{before,after}-64ppm.png`.
 
-### 4. Ohm (done) and Dent (in progress)
+### 4. Ohm, Dent and Kerf
 - Ohm before (main): lab 8-cop share 45 %; play (relaxed bot fit, 10 seeds x 3 waves) 42 deploys, mean 2.98 hits, 52 % of the foes within 9 m (`evidence/n31/ghost/measure-others-main.md`, `evidence/n31/ghost/measure-ohm-play.md`).
 - Ohm after: one press, he stands on the aim point, 0.3 s charge, full circle r 5 m with the body radius (`48d6fbc37`, `649a17523`); lab 8-cop 83 % (`evidence/n31/ghost/measure-ohm-head.md`); play 41 deploys, mean 3.71 hits, 68 % of near, zero whiffs (`6dcc748ed`).
 - Ohm drawn in beats (`8ab450ec9`): amber creep crawling to the rim during the charge, an arc ring at the rim on the discharge, a scorch ring + burn core for 2 s + 1 s; a lighter camera kick (`hit`); drawn radius 5.10 m vs 5 at 64 px/m. The `ohm_spec_hover` sheet warning is gone.
 - Ohm play take (`evidence/n31/ghost/take-ohm.md`, seed 6): wave 1 main 4 of 8 near, HEAD 7 of 12; run 10 vs 17 kills. A player: "Ohm is now one tap: he appears in the crowd, the road crackles amber out to his circle for a beat, and the whole circle drops at once, leaving a burn ring."
-- Dent (`87ac21445`, `8ce635db1`, `evidence/n31/ghost/measure-dent-head.md`): one press, lane from Rivet's side along the aim laid at the press, 0.25 s wind-up, body radius counted. Play mean 1.81 -> 1.79 at the same width; widths 1.3/1.6/1.8/2.0 m give 2.04/2.00/2.07/2.24 hits. View and beats: session 5.
+- Dent (`87ac21445`, `8ce635db1`, `evidence/n31/ghost/measure-dent-head.md`): one press, lane from Rivet's side along the aim laid at the press, 0.25 s wind-up, body radius counted. Play mean 1.81 -> 1.79 at the same width; widths 1.3/1.6/1.8/2.0 m give 2.04/2.00/2.07/2.24 hits. View and beats (`5cef2a3d8`, `24b12bc99`, `cc2bf7da3`): Dent comes out of Rivet's side, cocks 15 ticks while a skid telegraph (tan/soot scrape lines 2 x `ram_half_m` apart) runs down the lane to a cap at the aim point, dives along it on the ram tick, and leaves a scuffed lane held 2 s + 1 s; `ram_half_m` 0.9 -> 1.3. Drawn lane width 2.44-2.69 m vs 2.6 (`evidence/n31/ghost/g18b-dent-lane-measure.txt`); strip `dent-beats-64ppm.png`. Scenarios 68/0 at `24b12bc99`.
+- Dent play take (`evidence/n31/ghost/take-dent.md`, seed 6, shipped bot, wheel): wave 2 main 2 of 3 and 2 of 5 near, HEAD 3 of 3 and 3 of 4; run 8 vs 10 kills; over seeds 1-8 HEAD 1.76 hits per deploy vs main 1.84 (rams of 3+: 6 vs 4). A player: "Dent is now one tap: he pops out at your side, two scrape lines run down the road for a quarter second, then he rockets along them and drops the line, leaving a scuffed lane; he is no stronger than main's shove per deploy."
+- Kerf (`3211dfd49`, `3f0898052`, `0e8d1fb98`, `6f40d0007`): one press locks the target the deploy picker chooses (snap 2 m, cone 35, range 9, clear line); no marker. Kerf appears at Rivet's side with a thin teal sighting line and lock brackets on the target for 0.2 s (12 ticks), the lock follows the target, then he blinks behind it and cuts; a target that died or left range + 2 m = a whiff (cooldown spent); no target = refused, no cooldown. The cut leaves a 2.6 m char seam with an amber thread (measured 2.49 m, centre 0.02 m off) and a scorched star at the rear spot, held 2 s + 1 s. Strip `kerf-beats-64ppm.png`. Full unit 4453/0, scenarios 68/0, no digest moved.
 
 ## What does not
 - (fill at 07:40)
@@ -42,11 +44,12 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Radius 6.5 m, dump damage 3 (kills a patrol cop, a riot front takes x0.2): the 8-wave play median stays 3 (the bot drops at >= 3 bodies); 7 m is the screen limit.
 - Ohm radius 3.5 -> 5 m at a 0.3 s charge (play 2.98 -> 3.71 hits per deploy).
 - Bond and mastery with more kills per deploy (Tonnage, 8 waves, shipped bot): bond per deploy 9.3 -> 13.5 (+45 %), median mastery wave 4 -> 3; a bar of about 100 would restore wave 4. Not changed.
+- Markers: dropped for all four ghosts (Tonnage, Ohm, Dent, Kerf); each keeps `press_mode` hold as one data value. Dent's lane direction comes from the mouse aim at the press; Kerf's target from the deploy picker at the press, and a press with no target is refused (`no_target` refuse|whiff).
 - Dent width: `ram_half_m` 0.9 -> 1.3 halves the whiffs (11 % -> 6 %); no width under 2 m reaches a mean of 2.5 hits because the bot fires Dent at 2 bodies.
 
 ## Merge notes
-- `NEED melee`: the gauntlet street attaches no `BrutalityHook`, so signature kills (incl. the Tonnage crush from the deploy) do not draw in gauntlet play; `NEED melee`: apply `evidence/n31/ghost/ohm_deploy_kills.patch` (`also_weapons: ["deploy_ohm"]` on the `ohm_shock` row) so Ohm deploy kills play the shock death.
-- Digests: scenarios 68/68 at 6.5 m, no digest moved (JOURNAL 23:04).
+- `NEED melee`: the gauntlet street attaches no `BrutalityHook`, so signature kills (incl. the Tonnage crush from the deploy) do not draw in gauntlet play; `NEED melee`: apply `evidence/n31/ghost/ohm_deploy_kills.patch` (`also_weapons: ["deploy_ohm"]` on the `ohm_shock` row) so Ohm deploy kills play the shock death; `NEED melee`: apply `evidence/n31/ghost/kerf_deploy_kills.patch` (`also_weapons: ["deploy_kerf"]` on `kerf_split`).
+- Digests: scenarios 68/68 at 6.5 m, no digest moved (JOURNAL 23:04); again 68/0 after Ohm, Dent and Kerf (no digest moved).
 
 ## Next steps
 - (fill at 07:40)

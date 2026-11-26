@@ -26,3 +26,8 @@ Commits, stills and what you saw, tests, suite + scenarios (digests moved?), mut
 
 ## Added 01:28 (director) - g16's prep is done
 Follow `state.md` section 4 for the code (`_faces_camera`, Ohm-only rise, `DentDropBeats.at/pose`, `DentBody.deploy_pose`). Director answers: no rise for Dent; shipped DIVE rows; ram 8 ticks; 0.3 m recoil. The 6 ground images (`dent-beats/out/`, round started 01:27) belong to the NEXT call (g18: `DentDropMarks` + strip packer mode + beat strip), not this one, unless parts 1-3 are committed with 20+ minutes left.
+
+## Added 01:42 (director) - launch times
+Launched 01:42. **First commit by 02:07, last commit START by 02:22, hard stop 02:37: report and END.** Parts 1 and 2 are the must; part 3 (full suite + scenarios) runs only if part 2 is committed by 02:12, else report "suite not run" (the director runs it). Part 4 mutate only if 15+ minutes remain.
+A parallel builder `g18a-pack` works ONLY in `tools/ghost/**` and `build/n31/dent_pack/**` (no Godot, no souls files): ignore its commits; never stage its paths. You are the only one appending to `docs/decisions.md` this hour and the only one using Godot.
+The stills: write them to `build/n31/g17/` and copy the two you Read into `C:\Users\kazda\kiro\gtai-masters\n31\ghost\` as `dent-view-windup-64ppm.png` and `dent-view-ram-64ppm.png` (frames.json entries appended, before=false).

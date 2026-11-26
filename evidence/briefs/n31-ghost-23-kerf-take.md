@@ -1,0 +1,27 @@
+# n31 ghost 23 - Kerf's drop in real gauntlet play, main | HEAD at the same seed (item 4 Kerf's required first clip) + Kerf play measure
+
+Builder tag: `g23-kerf-take`. **First commit within 25 minutes; hard stop 50 minutes after launch** (last commit START 15 min before it; the hook takes ~12 min). Report and END. Launch time: see the addendum.
+Worktree (cwd): `C:\Users\kazda\kiro\gtai-wt\n25-yard`, branch `n31-ghost`. Read `AGENTS.md`, `git log --oneline -20`, and the finished takes as THE recipe: `evidence/briefs/n31-ghost-19-dent-take.md`, `evidence/n31/ghost/take-dent.md`, `evidence/n31/ghost/take-ohm.md`, `project/dev/ghost_n31/ghost_n31_take.gd` (+ `.tscn`, `_closeup.tscn`; it has `--form=kerf` and `--fit=relaxed`). Also `evidence/n31/ghost/measure-ohm-play.md` (Kerf main relaxed: 60 deploys, 1 hit each, 24 % of near) and the Kerf commits (`git log --grep="ghost 2[12]"`).
+
+## Why
+Owner: every item's first clip is real play in the gauntlet with the default wheel controls, before beside after at the same seed. Kerf on HEAD: one press locks a target (no marker), he appears at Rivet's side with a thin teal sighting line and lock brackets for 12 ticks, blinks behind the target and cuts, leaving a char seam with an amber thread and a scorched star where he landed. A press with no target is refused without cooldown. On main: hold to aim with a teal cone marker, release, an instant blink-cut.
+
+## Do
+1. Kerf PLAY measure HEAD (10 seeds x 3 waves, relaxed fit, the same tool g13 used: `project/dev/ghost_n31/ghost_n31_play*` / `ghost_measure` with `--form=kerf`): deploys, hits, kills, whiffs (lock broke), refusals, press -> damage ticks; table main (from measure-ohm-play.md) | HEAD into `evidence/n31/ghost/measure-kerf-head.md`. Commit it (first commit).
+2. Find a seed (1..10, 3 waves, headless, `--form=kerf`, default fit first, `--fit=relaxed` if the shipped bot never fires Kerf early) where HEAD's cut kills a visible target in wave 1 or 2. Main side = `ba8e470b0` in a temp worktree with this branch's `project/dev/ghost_n31/` copied in (dev files only). Project resolution 1920x1080 only in the temp worktrees' `project.godot` (Movie Maker ignores `--resolution`): HEAD from a second temp worktree at HEAD; never edit this worktree's `project.godot`.
+3. Films at 32 px/m, tilt 70 (`--pick-view`), 1920x1080, `--fixed-fps 60 --write-movie`, d3d12, windowed at `--position 0,1440`, through `node tools/dev/run.mjs` (runGodot): main side, HEAD side, side by side 3840x1080 labelled "main ba8e470b0" | "n31 ghost <hash>", 15-40 s (ffprobe it). 64 px/m: a still pair at the cut (C+2) and a half-speed HEAD clip of one whole drop (press, sight line, blink + cut, seam), 12-20 s (set the frame count for >= 12 s).
+4. Read the frames yourself (extract 4-6 pngs with ffmpeg and Read them): the sight line during the wind-up, the cut at C, the seam after. If a beat is missing on screen, say so plainly; do not fix product code.
+5. `evidence/n31/ghost/take-kerf.md` (layout of take-ohm.md: deploys main | HEAD press / damage tick, hits / kills; files with ffprobe lengths; one honest sentence of what a player feels differently). Masters to `C:\Users\kazda\kiro\gtai-masters\n31\ghost\` with `take-kerf-*` names; ADD entries to the existing `frames.json`. Commit.
+
+## Rules
+- `export APPDATA=C:/Users/kazda/kiro/gtai-n31/appdata/ghost` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'`. Lane Godot lock `build/n31/godot.lock` (`g23-kerf-take <pid>` per run, helper: copy `build/n31/g17lock.sh` with your tag; delete only yours; wait for another's). Films via runGodot only. No `--reels`.
+- Allowlist: `project/dev/ghost_n31/**` (take, play, measure dev files), `tools/ghost/**`, `evidence/n31/ghost/**`, `build/n31/**`, masters ghost folder, `tools/debt/baseline.json` via the debt tool. Any other path: STOP and report a NEED.
+- Typed GDScript, <= 40 lines/function, files <= 200 lines. Fix lint and format findings in your own edit and go on. Stage per path, `git commit -m "..." -- <paths>`; no add -A/./-u, stash, amend, rebase, reset --hard, --no-verify. Commit messages end with a blank line then `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`. Remove your temp worktrees with `git worktree remove` when done; delete only Temp folders you created.
+
+## Report
+Commits, the measure table, the take table, master files with lengths, what you saw in the frames, the player sentence, NEED lines.
+
+## Added 03:09 (director) - THIS call = part 1 only
+Launched 03:09. **Do part 1 only (the Kerf play measure HEAD, 10 seeds x 3 waves, relaxed fit + the default fit if quick). Last commit START by 03:30, hard stop 03:44: report and END.** Parts 2-5 (the take) are the next call.
+- A builder `g19-dent-take` is filming Dent through the lane lock until ~03:41: wait your turn on `build/n31/godot.lock`, never delete its lock. Batch your runs into as few Godot launches as the tool allows. Never stage its paths (`ghost_n31_take*`, `take-dent*`).
+- If the lock keeps you out until 03:25, commit whatever seeds you have with the count stated.
