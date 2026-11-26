@@ -206,7 +206,8 @@
         "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (dev_loc 40578 -> 40677)",
         "2026-11-26: n31 foes b5b: yard_rounds measuring script for the prologue patrol's rounds per band, project/dev/foes_n31 as brief b5b names it (dev_loc 40677 -> 40725)",
         "2026-11-26: stalk phases for n31 foes (dev_loc 40725 -> 40732)",
-        "2026-11-26: n31 foes b4j: waiting probe tallies why in-range clear-line foes TRAVEL (cause split for setting G, dev-only measurement) (dev_loc 40732 -> 40786)"
+        "2026-11-26: n31 foes b4j: waiting probe tallies why in-range clear-line foes TRAVEL (cause split for setting G, dev-only measurement) (dev_loc 40732 -> 40786)",
+        "2026-11-26: --foe-fire for n31 foes (dev_loc 40786 -> 40789)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -218,7 +219,7 @@
         "project/dev/cast": 4195,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
-        "project/dev/foes_n31": 1026,
+        "project/dev/foes_n31": 1029,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
@@ -249,7 +250,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40786
+      "total": 40789
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -538,7 +539,8 @@
         "2026-11-25: --kill-card-fall for n30 combat (files_past_soft_cap 69 -> 69)",
         "2026-11-25: n31 foes b1: the waiting probe lives in project/dev/foes_n31 as brief b1 names it (files_past_soft_cap 69 -> 69)",
         "2026-11-25: n31 foes b4c lever 5 own weapons + flank arrivals: enemy_roster 209, squad_mind 202, scenario_arena_squad 215 (the squad table's own-gun switch and damage, the own gun's cooldown cap, the flank-arrival counter) (files_past_soft_cap 69 -> 72)",
-        "2026-11-25: n31 foes b4c flank check: scenario_arena_squad records flank arrivals + closest approach per seed (215 -> 224 lines) (files_past_soft_cap 72 -> 72)"
+        "2026-11-25: n31 foes b4c flank check: scenario_arena_squad records flank arrivals + closest approach per seed (215 -> 224 lines) (files_past_soft_cap 72 -> 72)",
+        "2026-11-26: --foe-fire for n31 foes (files_past_soft_cap 72 -> 72)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -547,7 +549,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 228,
+        "project/boot/launch_args.gd": 229,
         "project/boot/prologue/prologue_command_view.gd": 255,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
@@ -581,7 +583,7 @@
         "project/features/city/sim/sim_people.gd": 202,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/ai/enemy_roster.gd": 209,
+        "project/features/combat/ai/enemy_roster.gd": 242,
         "project/features/combat/combat_arena.gd": 255,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,

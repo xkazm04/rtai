@@ -23,6 +23,7 @@ const KNOWN: PackedStringArray = [
 	"--zoom-ppm",
 	"--follow",
 	"--foe-moves",
+	"--foe-fire",
 	"--stalk"
 ]
 const FRAME: Vector2i = Vector2i(1920, 1080)

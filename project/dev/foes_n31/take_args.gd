@@ -18,6 +18,8 @@ static func valid(flag: String, s: String) -> bool:
 			ok = not s.is_empty()
 		"--foe-moves":
 			ok = s in ["legacy", "split"]
+		"--foe-fire":
+			ok = s in ["hot"]
 		"--stalk":
 			ok = s.is_empty()
 	return ok

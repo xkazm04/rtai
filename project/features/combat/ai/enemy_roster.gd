@@ -87,7 +87,10 @@ var gait_settle_ticks: int = 15
 ## n31 lever 5: production squad members fire their own weapon (FoeOwnGun) at own_damage.
 var own_weapons: bool = false
 var own_damage: Dictionary[StringName, float] = {}
+var fire_preset_known: bool = true
 var _explicit: Dictionary[StringName, Archetype] = {}
+var _fire_share: Dictionary[String, float] = {}
+var _fire_damage: Dictionary[String, float] = {}  # "<preset>:<weapon>"
 var _errors: Array[String] = []
 
 
@@ -109,6 +112,9 @@ static func shipped(path: String = TABLE, production: bool = false) -> EnemyRost
 			a.uses_cover = a.cover_bias > 0.0
 		r.archetypes[a.id] = a
 	r._squad(t, t.object(t.raw, "squad"))
+	var fire: String = LaunchArgs.value("--foe-fire")
+	if production and not fire.is_empty():
+		r.fire_preset_known = r.apply_fire_preset(fire)
 	r._errors.append_array(t.errors())
 	if not r.ok():
 		Log.error("enemy-ai", str(r._errors))
@@ -125,6 +131,17 @@ func errors() -> Array[String]:
 
 func archetype(id: StringName) -> Archetype:
 	return archetypes.get(id if id != &"" else &"contractor", _explicit.get(id))
+
+
+func apply_fire_preset(preset: String) -> bool:
+	if not _fire_share.has(preset):
+		Log.warn("enemy-ai", "unknown fire preset %s" % preset)
+		return false
+	max_shooters_share = _fire_share[preset]
+	for key: String in _fire_damage:
+		if key.begins_with(preset + ":"):
+			own_damage[StringName(key.get_slice(":", 1))] = _fire_damage[key]
+	return true
 
 
 func _squad(t: DataTable, s: Dictionary) -> void:
@@ -147,6 +164,22 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 	var dmg: Dictionary = t.object(s, "own_weapon_damage") if s.has("own_weapon_damage") else {}
 	for wid: String in dmg:
 		own_damage[StringName(wid)] = t.num(dmg, wid)
+	_read_fire_presets(t, t.object(s, "fire_presets") if s.has("fire_presets") else {})
+
+
+func _read_fire_presets(t: DataTable, presets: Dictionary) -> void:
+	for pid: String in presets:
+		var row: Dictionary = t.object(presets, pid)
+		_fire_share[pid] = (
+			t.num(row, "max_shooters_share")
+			if row.has("max_shooters_share")
+			else max_shooters_share
+		)
+		var dmg: Dictionary = (
+			t.object(row, "own_weapon_damage") if row.has("own_weapon_damage") else {}
+		)
+		for wid: String in dmg:
+			_fire_damage["%s:%s" % [pid, wid]] = t.num(dmg, wid)
 
 
 func _archetype(t: DataTable, row: Dictionary) -> Archetype:

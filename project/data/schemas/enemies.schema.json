@@ -273,6 +273,29 @@
           "minimum": 0,
           "type": "number"
         },
+        "fire_presets": {
+          "additionalProperties": {
+            "additionalProperties": false,
+            "properties": {
+              "max_shooters_share": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "own_weapon_damage": {
+                "additionalProperties": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "description": "Named squad fire settings (--foe-fire=<name>): each overrides max_shooters_share and the listed own_weapon_damage entries.",
+          "type": "object"
+        },
         "gait": {
           "default": "split",
           "description": "split = ranged foes fight slow and travel fast without firing; legacy = one gait (pre-n31).",
