@@ -137,3 +137,14 @@ Calls for the owner gathered: plasma sword damage taken +28 % with the sweep (44
 - 02:48 BUILDER RUNNING 02p5 (sonnet, readable slow clips; END 03:22) since 02:48
 - 03:14 BUILDER 03p5 26 accepted-partial: 36da0230f (tools/melee/fatal_takes.sh: crop around Rivet, 1920x1080, --compose-only), 9c24211d5 (notes). beside_fatal_chainsaw.mp4 re-composed 1920x1080 35 s (figures ~3x larger; grind at 14 s, torn pieces at 18 s). Katana..claw NOT rendered: its katana take sat 27 min with no Godot. CAUSE (director, read play_take.mjs:28-56): play_take takes the lane lock itself (exclusive create, waits while < 30 min old); 03p5 had taken the lock in its own name before calling it -> self-deadlock, not mem-budget (cap status 5.3 GB used at 03:13). Next: run fatal_takes.sh WITHOUT holding the lock (the tool takes it per run).
 - 03:14 FRICTION lock self-deadlock 27 min (03p5).
+
+NEXT (session 6, starts ~03:32):
+1. Check 02p5's work in git log (it ran to 03:22: slow clips; e1d75755a = its code fix). Look at slow_katana.mp4 mid still yourself.
+2. Launch at once (two builders, one Godot lock, both END by ~04:30):
+   a. 03p6 (sonnet, 30 min): `tools/melee/fatal_takes.sh katana plasma_sword electro_baton claw` WITHOUT taking the lane lock first (play_take.mjs takes it per run; 03p5 deadlocked on itself); look at the first fatality second per weapon; frames.json entries after the chainsaw. Brief = evidence/briefs/n31-melee-03p5-fatal-takes2.md steps 3-4 + this note.
+   b. 04f (opus, 45 min, evidence/briefs/n31-melee-04f-impact-takes.md): impact takes (before from temp worktree at 0f1e1ce95), audit sheet before|after, probe re-pin, hot point size. Tell it the lock rule above too.
+3. Then 05 (sonnet, 25 min, evidence/briefs/n31-melee-05-amber-print.md): amber print patch for the Director (Godot-free except one optional still).
+4. A builder adds the enemy-melee DECISION line to docs/decisions.md (journal 02:20) - fold into 05's commit.
+5. Mutate owed (one builder, after the films, --max=20 with test subsets): blade_marks.gd, shield_sparks.gd, gun_fx_wound.gd; quote scores in REPORT.
+6. REPORT: fill OPEN sections (films, blocked minutes, ledger, next). Last product commit by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` in the melee slot (ground's start +20 min; check ground's JOURNAL for its gate start) by 06:15; `node tools/evidence/cites.mjs REPORT.md` before the final commit.
+Builder ledger so far: 01a 38 ap, 01b 47 a, 02 30 ap, 01c 42 ap, 02p2 ?, 01d 22 ap, 03 17 a, 01e 10 ap, 03p2 25 a, 02p3 50 ap, 04a 5 a, 04b 39 ap, 04c 9 ap, 02p3b 30 a, 02p4 62 ap, 03p3 39 ap, 04d 21 ap, 04e 17 ap, 03p4 41 ap, 03p5 26 ap, 02p5 (running). IMAGES 0/60.
