@@ -188,7 +188,7 @@ func _invalid_arg(args: ArenaArgs) -> String:
 			"--controls":
 				valid = s in ["legacy", "wheel"]
 			"--foe-fire":
-				valid = s in ["hot"]
+				valid = s in ["hot", "calm"]
 			"--foe-moves":
 				valid = s in ["legacy", "split"]
 			"--gore":
