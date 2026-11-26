@@ -1,0 +1,14 @@
+diff --git a/project/data/tables/signature_kills.json b/project/data/tables/signature_kills.json
+index f788fc5..8d7d931 100644
+--- a/project/data/tables/signature_kills.json
++++ b/project/data/tables/signature_kills.json
+@@ -1119,6 +1119,9 @@
+       "weapon": "dent_car"
+     },
+     {
++      "also_weapons": [
++        "deploy_kerf"
++      ],
+       "bounce": 0.1,
+       "cone_deg": 10,
+       "cut_deg": 55,
