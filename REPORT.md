@@ -46,7 +46,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\ground\` (`frames.json` 
 - Gauntlet: 5 cover cards (kiosk_plaza#2, market_stalls#3-6) still stand on a post or wheels 2.7-9x narrower than their box; the dark base shows the box, the art does not fill it. Collision rects in the gauntlet did not move (by design); the base now draws them.
 - Yard: `press_carcass` (2.5 x 3.7 m footprint under a thin arm) and the forklift keep footprints larger than their drawing. The softened base (`e1c54b29a`) no longer reads as a black tile, but it still shows that the box is bigger than the art. The real fix is a footprint trim, which is a collision change and needs a pilot re-pin, so it is left for the next run. The item 4 takes were re-shot on the soft base (n31-31 and the director): the yard 64 px/m still shows the forklift's shade still larger than the wreck.
 - The softened base is faint at 32 px/m in the gauntlet (a grey shade under the stall; `item4/prop_walk_gauntlet_32.mp4` around 9 s). There the upright card carries most of the "this blocks" read and the base mostly confirms the footprint. If play shows the cue is lost, raise `PropBase.TINT` alpha (0.66 -> 0.75) before reverting the soft rim: one value, my call.
-- Mutate: `rivet_bob.gd` 52.6 % (10/19), `rig_cast_shadows.gd` 50.0 % (6/12), `evidence/n31-ground/mutate.md`; survivors unpinned; `street_patrol_pose.gd`, `print_stage.gd`, `prop_base.gd` not run.
+- Mutate: `rivet_bob.gd` 52.6 % (10/19), `rig_cast_shadows.gd` 50.0 % (6/12), `evidence/n31-ground/mutate.md`; `street_patrol_pose.gd` 75.0 % (9/12, survivors :137, :155 glide-blend product, :177 settle gate), `print_stage.gd` 75.0 % (9/12, survivors :99, :152, :159: the render-px lock at a stretch != 1 with a non-zero origin is not pinned), **`prop_base.gd` 0.0 % (0/12)**: the base only issues canvas polygons and no test reads them, so the blocking cue itself is unpinned (n31-33, `evidence/n31-ground/mutate.md`). Survivors unpinned tonight: a test added after the green gate would leave the final commit ungated inside the other lanes' gate hour.
 
 ## What blocked or slowed you
 - Film paths turn the window stretch off, so the item 3 drift was invisible in every take until n31-07 measured with the stretch on (about 30 min).
@@ -71,7 +71,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\ground\` (`frames.json` 
 
 ## Next steps
 - Art pass on Rivet's run rows (a foot on the floor in every planted frame) and the cops' S/N walk columns (a forward step), the only way past the code limits above.
-- Pin the mutate survivors; mutate `street_patrol_pose.gd`, `print_stage.gd`, `prop_base.gd`.
+- Pin the mutate survivors: first `prop_base.gd` (0 %: a recording canvas item or a pixel read of one footprint, south / north / rim alpha and the tiny-box path), then the `print_stage.gd` stretch lock, `street_patrol_pose.gd` :155/:177, `rivet_bob.gd` :35/:36/:52, `rig_cast_shadows.gd` :120/:128.
 - Rivet's span shadow as a cast silhouette (item 5, not started).
 
 ## Builder ledger
@@ -108,6 +108,7 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\ground\` (`frames.json` 
 | n31-30 override-leak | sonnet | 4 | accepted |
 | n31-31 soft-stops | sonnet | 21 | accepted (evidence only; gauntlet 32 px/m film re-shot by the director) |
 | n31-32 yard-readability | sonnet | 5 | accepted (evidence only, all bars pass) |
+| n31-33 mutate-owed | sonnet | 16 | accepted (evidence only; prop_base 0 %) |
 
 What I would brief differently: (1) every brief ends with "commit before the session stop" stated as a wall-clock time that is at least 15 min before MY session ends; two builders (n31-13, n31-22) died with uncommitted work because their END was after my stop. (2) Name the measurement box rule in the brief (n31-22 measured before and after at different boxes; n31-25 had to redo it). (3) A footprint change gets the full unit suite in the same call, not only its mapped tests: the red `test_prologue_dialogue` surfaced two calls later. (4) Check the premise number on main first (contact ink: main already passed the darkening bar). Short calls (10-35 min, one point each) were again the best value. (5) A tool that writes into a tree it was handed must restore it: a 1-line side effect (`override.cfg` left in the live tree) cost a red final gate.
 
