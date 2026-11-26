@@ -22,3 +22,14 @@ State: `--melee-sweep` ON (81b877a99) and `--kill-feed` ON (090ae0350) by defaul
 3. `node tools/tests/run_scenarios.mjs --quiet-wait=1` full (47 were pending after 090ae0350): name the result line.
 Owned: as the common law; plus `tools/melee/**`, `evidence/n31-melee/03-fatal/**`. Do not touch combat/ai, squad,
 souls, prologue, gauntlet bot. Before killing a PID print its CommandLine; kill only your own.
+
+## Addendum (session 5, 02:04): Part 0 first, 5 minutes, data only - serve ghost's NEED melee
+Ghost lane asks (its JOURNAL 01:03 / 01:47): Ohm's and Kerf's deploy kills should play the existing soul deaths.
+In `project/data/tables/signature_kills.json` add `"also_weapons": ["deploy_ohm"]` to the `ohm_shock` row (patch:
+`C:/Users/kazda/kiro/gtai-wt/n25-yard/evidence/n31/ghost/ohm_deploy_kills.patch`; read-only, apply by hand, keys
+sorted) and `"also_weapons": ["deploy_kerf"]` to the `kerf_split` row (`also_weapons` is read at
+`signature_kill_table.gd:31`; check that line first). Run `node tools/tests/run_unit.mjs --changed` and commit alone
+("n31 melee 03p4 part 0: ghost NEED"). Your full scenario run in step 3 then shows whether any digest moved; if one
+moved ONLY because of part 0, say which and re-pin with a dated decisions line naming part 0 (gauntlet deploys only;
+quest 1 must not move - if it does, revert part 0 and report).
+Times for this call: launched 02:05; commit each part by 02:30; report and END by 02:55.

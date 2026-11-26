@@ -51,3 +51,6 @@ Owned for this call: `project/features/fx/combat_blood.gd`, `blood_victims.gd`, 
 Anything in `project/core/render/**`, `features/souls/**`, `combat/ai/**`, `combat/squad/**`: NEED, do not edit.
 Lane lock and APPDATA as in the common law. Mutate the main changed file `--max=20 --lines=<changed>` with a test
 subset at the end only if time remains; quote the score.
+
+## Times (session 5): launched 02:05; first commit by 02:30; report and END by 02:55. Godot: one at a time per lane
+with 03p4 (lane lock with your tag; wait for its lock, never delete it).
