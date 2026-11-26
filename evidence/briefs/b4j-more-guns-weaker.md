@@ -47,3 +47,16 @@ commit: `node tools/mutate/mutate.mjs --file=<it> --max=20 --lines=<changed> --t
 the score.
 Report: commits, commands with result lines, the compare columns (react p50/p90, idle, firing/s, never fired,
 damage w1-4, deaths) main | final | A | B, which setting is on HEAD, the pins moved, what you could not do.
+
+## UPDATE 03:18 (director, from the gait64_stalk take eca66b198)
+The followed patrol cop (seed 3 wave 1, final rules) spent 17 of 19 s in TRAVEL, mostly at 1-2 m/s and 4-9 m
+from Rivet, and fired 2 rounds in 20 s: TRAVEL (no fire) is entered by `FoeGaitDrive.moving()` for any walk to a
+cover/flank/route destination > `FoeGait.ARRIVED_M` 0.6 m away, plus `urgent` inside 4 m with the 0.6 s hold
+and 0.25 s settle after each switch. Before A, measure the cause in one seed (count TRAVEL ticks of ranged foes
+in range with a clear line, split by reason: urgent / far / moving-to-cover / moving-to-flank / route); put the
+split in the report. If "moving" with a clear line in range is the largest share, add setting G FIRST (before A):
+a walk to a destination counts as TRAVEL only when the destination is more than `travel_min_m` (one squad value,
+start 3.0 m) away or Rivet is out of range/sight; a shorter in-range adjustment is FIGHT (slow, may fire), the
+same rule b5b chose for the prologue. Same measurement and keep rule as A (idle must drop >= 8 points, rail holds),
+one commit + decisions line, test: a foe walking 2 m to cover with Rivet 8 m away in sight is FIGHT and may fire.
+Then A on top of G if time remains.
