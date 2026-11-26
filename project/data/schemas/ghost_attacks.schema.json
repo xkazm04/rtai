@@ -180,6 +180,11 @@
               "minimum": 0,
               "type": "number"
             },
+            "charge_s": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
             "cooldown_ticks": {
               "minimum": 1,
               "type": "integer"
@@ -190,6 +195,20 @@
             "life_ticks": {
               "minimum": 1,
               "type": "integer"
+            },
+            "no_target": {
+              "enum": [
+                "refuse",
+                "whiff"
+              ],
+              "type": "string"
+            },
+            "press_mode": {
+              "enum": [
+                "drop",
+                "hold"
+              ],
+              "type": "string"
             },
             "range_m": {
               "exclusiveMinimum": 0,
@@ -202,9 +221,12 @@
           },
           "required": [
             "boss_damage_cap",
+            "charge_s",
             "cooldown_ticks",
             "enabled",
             "life_ticks",
+            "no_target",
+            "press_mode",
             "range_m",
             "snap_m"
           ],

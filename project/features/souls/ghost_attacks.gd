@@ -29,6 +29,9 @@ class DeployRow:
 	## (in the table, unused: the souls view has no SimClock).
 	var dump_shake: StringName = &""
 	var dump_hitstop: StringName = &""
+	## Kerf's drop (n31 ghost 21): a press with no target, &"refuse" (nothing, no cooldown) or
+	## &"whiff" (he deploys and blinks along the aim, cooldown spent).
+	var no_target: StringName = &"refuse"
 
 	func drops() -> bool:
 		return press_mode == &"drop"
@@ -57,6 +60,7 @@ static func from_table(t: DataTable) -> GhostAttacks:
 		if id == &"kerf":
 			def.boss_damage_cap = t.num(row, "boss_damage_cap")
 			def.snap_m = t.num(row, "snap_m")
+			_kerf(t, row, def)
 		elif id == &"ohm":
 			_drop_row(t, row, def)
 		elif id == &"dent":
@@ -78,6 +82,15 @@ static func _dent(t: DataTable, row: Dictionary, def: DeployRow) -> void:
 	def.ram_half_m = t.num(row, "ram_half_m")
 	def.press_mode = StringName(t.text(row, "press_mode"))
 	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
+
+
+## Kerf's drop (n31 ghost 21): one press locks the target, the cut lands after the wind-up.
+static func _kerf(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	if not row.has("press_mode"):
+		return
+	def.press_mode = StringName(t.text(row, "press_mode"))
+	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
+	def.no_target = StringName(t.text(row, "no_target"))
 
 
 ## The drop-mode fields Tonnage and Ohm share (n31): press mode, where, charge, circle.

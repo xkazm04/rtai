@@ -5,9 +5,12 @@ extends RefCounted
 ## charge ticks and hits on the dump tick. This holds the countdown and the circle's geometry.
 ## Ohm's drop row (n31 ghost 10) shares it: the same press, charge and circle, his discharge.
 ## Dent's (n31 ghost 15) shares the press and the charge; his ram runs along a lane (DentLane).
+## Kerf's (n31 ghost 21) locks a target on the press (KerfDrop) and cuts it on the last tick.
 
 ## Ticks until the dump; 0 or less = nothing pending.
 var ticks_left: int = -1
+## Kerf's locked target (n31 ghost 21); reset with the dump.
+var kerf: KerfDrop = KerfDrop.new()
 
 
 func pending() -> bool:
@@ -33,6 +36,7 @@ func count() -> bool:
 
 func cancel() -> void:
 	ticks_left = -1
+	kerf.reset()
 
 
 ## A drop-mode press that passed every refusal: no aiming phase, the ghost stands at the spot
@@ -44,6 +48,10 @@ func press(
 	ghost.aim(stage, c, id)
 	if row.drop_at == &"rivet":
 		ghost.spot = stage.arena.rivet.pos
+	if id == KerfStage.GHOST and not kerf.lock(stage, ghost):
+		ghost.last_refusal = &"no_target"
+		ghost.clear()
+		return
 	ghost.activate(row, stage.tick)
 	if id == DentStage.GHOST:
 		# n31 ghost 15: Dent's ram lane is laid now; a foe can step out during the wind-up.

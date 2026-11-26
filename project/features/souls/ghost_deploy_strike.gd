@@ -38,13 +38,17 @@ func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 
 
 func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
-	var foe: Fighter = GhostDeploySpot.kerf_target(stage, ghost.spot, ghost.facing, attacks)
+	var lock: KerfDrop = ghost.dump.kerf
+	var foe: Fighter = lock.cut_target(stage, ghost)
 	if foe == null:
+		if lock.armed:
+			KerfDrop.whiff(stage, ghost)
 		return
 	var behind: float = attacks.num(ghost.form, &"behind_m")
 	var rear: Vector2 = KerfBehind.rear_spot(stage, foe, behind, stage.arena.walls, true)
 	ghost.spot = rear
-	ghost.origin = rear
+	if not lock.armed:  # a drop keeps its press origin at Rivet's side (KerfDropBeats)
+		ghost.origin = rear
 	if rear != foe.pos:
 		ghost.facing = rear.direction_to(foe.pos)
 	var robot: bool = foe.machine or foe.kind == Fighter.Kind.BOSS

@@ -21,7 +21,7 @@ func before_each() -> void:
 	pilot = StagePilot.new(PlayerActions.shipped(false))
 	stage.pilot = pilot
 	ghost = pilot.ghosts.deploy
-	for id: StringName in [&"ohm", &"dent"]:  # n31: shipped drops; these drive the hold flow
+	for id: StringName in [&"ohm", &"dent", &"kerf"]:  # n31: shipped drops; these drive the hold flow
 		ghost.strike.attacks.deploy[id].press_mode = &"hold"
 	ghost.strike.attacks.deploy[&"ohm"].radius_m = 3.5  # Ohm's pre-n31 radius
 	watch_signals(bus)
