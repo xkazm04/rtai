@@ -210,3 +210,10 @@ NEXT (session 8, ~06:00):
 - 06:10 Director re-mutate shield_sparks.gd (--max=20 --tests=test_shield_sparks_melee, 464 s): 84.2 % = 16/(16+3), invalid 1 (was 57.9 %); survivors :64 early-out 0->1, :77 kind 1->0, :103 face offset * -> /. blade_marks.gd (--max=20 --tests=test_blade_marks) started 06:11.
 - 06:13 Temp: removed this lane's gate snapshot gtai-gate-ef6c95c2b4af and film tree gtai-film-636cc0d9f6a0 (+ their .gtai-snapshot markers). Left: gtai-mutate-612737eb (mutate's reused temp tree, in use by the blade_marks run; the Director's post-merge clean), gtai-melee-baseline-e2f881f42af4 (2026-11-22, not tonight's).
 - 06:16 Director mutate blade_marks.gd (--max=20 --tests=test_blade_marks, 345 s): 5.0 % = 1/(1+19); survivors = stroke geometry (offsets, widths, 45 deg slant, alpha). Not fixed (tests are code, after the gate) -> REPORT What does not + Next steps 7.
+- 06:18 Masters check: frames.json 15 entries best first, every file exists, every clip 1920x1080 35.0 s (ffprobe), 16 files = 15 + frames.json. cites 19 paths 17 ok 2 pattern.
+- 06:19 Session 8 end. No builder running. Lane lock free. IMAGES 0/60. BUILDER calls this session: none (Director-only: gate, three mutate runs, REPORT).
+
+NEXT (session 9 / report phase, by 07:40):
+1. No product work: the final gate is PASS on ef6c95c2b (`build/gate/ef6c95c2b4af/gate.json`); every later commit is JOURNAL/REPORT only. Keep it so.
+2. Re-read REPORT.md top to bottom once (gate line, items 2-5, What does not, Calls, Merge notes incl. the n31-ground prologue pin conflict, ledger), run `node tools/evidence/cites.mjs REPORT.md`, commit REPORT + JOURNAL (pathspec) before 07:40.
+3. Do not start builders or Godot after 07:00.
