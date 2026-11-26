@@ -229,3 +229,8 @@ NEXT: none for this lane. Director: merge `n31-melee` (gate PASS on ef6c95c2b); 
 - 07:32 START + end. Re-checked: HEAD 70803ca23 differs from the gated ef6c95c2b only in JOURNAL.md/REPORT.md; `build/gate/ef6c95c2b4af/gate.json` present (gate PASS); cites 19 paths, 17 ok, 2 pattern. No builder, no Godot, lane lock free. IMAGES 0/60. Nothing to fix.
 
 NEXT: none for this lane; Director merge per session 9's NEXT.
+
+## Session 11 (07:40, REPORT phase)
+- 07:41 START + end. REPORT.md already complete (Gate / What works / What does not / What blocked / Calls / Merge notes / Next steps / Builder ledger). Re-checked: cites 19 paths, 17 ok, 2 pattern; HEAD differs from gated ef6c95c2b only in JOURNAL.md/REPORT.md; `build/gate/ef6c95c2b4af/gate.json` present (PASS); masters frames.json 15 entries, 0 missing files. No builder, no Godot. IMAGES 0/60.
+
+NEXT: none for this lane; Director merge per session 9's NEXT.
