@@ -85,8 +85,8 @@ static func furniture(ci: CanvasItem, block: GauntletSegment) -> void:
 			ArenaFloorStatic.barrier(ci, GauntletFrontage.px(r))
 			ci.draw_texture_rect(BARRIER, GauntletFrontage.px(r.grow(-0.08)), false)
 			continue
-		# The slab beneath a standing card shows the full extent of its solid footing.
-		ArenaFloorStatic.barrier(ci, GauntletFrontage.px(r))
+		# The dark contact base is the exact solid footing (one rule with the yard).
+		PropBase.draw(ci, r)
 		var scale_m: float = deck[entry + "_scale"]
 		GauntletPropArt.cover(ci, art, r, scale_m)
 

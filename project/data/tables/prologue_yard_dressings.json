@@ -378,72 +378,72 @@
           {
             "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
-              24,
-              0.6
+              24.01,
+              1.16
             ],
             "id": "conveyor_door",
             "size_m": [
-              5.4,
+              4.19,
               1.2
             ]
           },
           {
             "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
-              30.4,
-              4.4
+              30.08,
+              4.99
             ],
             "id": "conveyor_feed",
             "size_m": [
-              5.2,
+              4.04,
               1.2
             ]
           },
           {
             "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
-              34,
-              8.4
+              33.99,
+              8.96
             ],
             "id": "conveyor_turn",
             "size_m": [
-              5.2,
+              4.22,
               1.2
             ]
           },
           {
             "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
-              29.4,
-              12.6
+              29.72,
+              13.19
             ],
             "id": "conveyor_return",
             "size_m": [
-              5.4,
+              4.04,
               1.2
             ]
           },
           {
             "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
-              25.5,
-              17
+              25.49,
+              17.56
             ],
             "id": "conveyor_bend",
             "size_m": [
-              5.2,
+              4.19,
               1.2
             ]
           },
           {
             "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
-              32.2,
-              20.6
+              32.01,
+              21.39
             ],
             "id": "conveyor_tail",
             "size_m": [
-              5.4,
+              4.41,
               1.2
             ]
           },
@@ -465,6 +465,16 @@
               23,
               29.5
             ],
+            "crop": {
+              "origin": [
+                0,
+                0.29
+              ],
+              "size": [
+                1,
+                0.71
+              ]
+            },
             "id": "fuel_vessel",
             "size_m": [
               2.4,
@@ -561,6 +571,150 @@
             "size_m": [
               2.4,
               1
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              20.95,
+              1.17
+            ],
+            "id": "leg_door_1",
+            "size_m": [
+              1.93,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              27.12,
+              0.97
+            ],
+            "id": "leg_door_2",
+            "size_m": [
+              2.03,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              27.24,
+              4.98
+            ],
+            "id": "leg_feed_1",
+            "size_m": [
+              1.65,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              32.39,
+              4.62
+            ],
+            "id": "leg_feed_2",
+            "size_m": [
+              0.58,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              30.96,
+              8.95
+            ],
+            "id": "leg_turn_1",
+            "size_m": [
+              1.85,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              37.12,
+              8.77
+            ],
+            "id": "leg_turn_2",
+            "size_m": [
+              2.04,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              27.41,
+              12.82
+            ],
+            "id": "leg_return_1",
+            "size_m": [
+              0.58,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              32.57,
+              13.18
+            ],
+            "id": "leg_return_2",
+            "size_m": [
+              1.65,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              22.39,
+              17.37
+            ],
+            "id": "leg_bend_1",
+            "size_m": [
+              2.02,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              28.56,
+              17.57
+            ],
+            "id": "leg_bend_2",
+            "size_m": [
+              1.93,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              28.29,
+              20.97
+            ],
+            "id": "leg_tail_1",
+            "size_m": [
+              0.52,
+              0.3
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
+            "at": [
+              34.78,
+              21.48
+            ],
+            "id": "leg_tail_2",
+            "size_m": [
+              1.13,
+              0.3
             ]
           }
         ],

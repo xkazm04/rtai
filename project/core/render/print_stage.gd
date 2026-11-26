@@ -1,17 +1,14 @@
 class_name PrintStage
 extends Node2D
-## The visual engine as one node any gameplay view drops in (core/render/README.md, "Plugging a
-## view in"): the camera (eased zoom, look-ahead, shake, hit-stop through `rig`), the world lock
-## (`world_px`, zoom-anchored), the D4 print pass + the D5 overlays by look profile and zoom, the
-## actors canvas with the item print, the lights + time-of-day grade, the pooled FX (ground,
-## actor and emissive twins) and the world-UI markers - every one on its declared render layer.
-## The view draws its world as children of this node on the world bands (RenderLayers.z), its
-## people / vehicles under actor_layer() with `material = item_material()`, and calls place()
-## once a frame. CityView predates it and composes the same pieces (to move onto it after the
-## lanes merge). Render only: reads no frame delta, writes nothing back to the sim.
+## The visual engine one gameplay view drops in (core/render/README.md): camera (`rig`), world lock
+## (`world_px`), D4/D5 print, actors canvas + item print (actor_layer(), item_material()), lights,
+## FX, world-UI markers, each on its render layer; place() once a frame. Render only, no delta.
 
 const LOOK_SHADER: String = "res://assets/shaders/look_d4.gdshader"
 const ITEM_SHADER: String = "res://assets/shaders/look_d4_item.gdshader"
+## n31-12: world_px + camera in render px (FRAGCOORD's) under the stretch; false or headless: old.
+const PRINT_IN_RENDER_PX: bool = true
+static var in_render_px: bool = PRINT_IN_RENDER_PX and DisplayServer.get_name() != "headless"
 
 ## Screen px per world px (1.0 = 32 px/m); the rig drives it when set.
 var zoom: float = 1.5
@@ -19,11 +16,9 @@ var zoom: float = 1.5
 var look_id: StringName = LookProfiles.shared().default_id
 var rig: CameraRig = null
 var clock: SimClock = null
-## n15: a host with no clock (the dev arena) gives the lights its sim tick here (a Callable
-## returning int), so lights born on that tick age out; the camera and FX keep tick 0 there.
+## n15: a host with no clock (the dev arena) gives the lights its sim tick (Callable -> int).
 var light_tick: Callable = Callable()
-## A one-off camera offset in world px a host adds this frame (a power's shake with no rig,
-## features/souls/hauler_kick.gd); inside the print lock like the rig's. Zero = bit-identical.
+## A one-off camera offset in world px a host adds this frame, inside the print lock (hauler_kick).
 var kick_px: Vector2 = Vector2.ZERO
 var camera: Camera2D = Camera2D.new()
 var lights: LightLayer = LightLayer.new()
@@ -60,10 +55,7 @@ func _ready() -> void:
 	_build_fx()
 
 
-## Wires the game feel to the F-04 events on `bus` at `p_clock`'s tick: a CameraRig (made here
-## if none, on foot) follows vehicles / the boss / the contract end, and the FX cues fire on
-## player_hit (sparks, the weapon's own cue, rivet_hit hit-stop) and on kills by `player_id`
-## (kill hit-stop). `at` returns the player's position in world px (where hit FX land).
+## F-04 events on `bus`: a CameraRig (made if none), FX cues on hits/kills; `at`: player world px.
 func listen(bus: EventBus, p_clock: SimClock, player_id: int, at: Callable) -> void:
 	clock = p_clock
 	if rig == null:
@@ -94,8 +86,7 @@ func cast_material() -> ShaderMaterial:
 	return _cast_mat
 
 
-## Once a frame: the camera on `focus_m` (metres) at the rig's zoom, the look for that zoom, and
-## every print / light / FX / marker pass stepped on the sim tick with this frame's world_px.
+## Once a frame: the camera on `focus_m` (m), the look, every pass stepped with this world_px.
 func place(focus_m: Vector2) -> void:
 	var tick: int = clock.tick() if clock != null else 0
 	var offset: Vector2 = kick_px
@@ -104,23 +95,22 @@ func place(focus_m: Vector2) -> void:
 		zoom = rig.ppm() / SimConst.PX_PER_M
 		offset += rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = ViewMode.shared().zoom_of(zoom)  # --view: exactly ONE * zoom when flat
-	camera.position = focus_m * SimConst.PX_PER_M + offset
+	var xf: Transform2D = get_viewport().get_final_transform()
+	var cam: Vector2 = focus_m * SimConst.PX_PER_M + offset
+	camera.position = snap_cam(cam, camera.zoom, xf, zoom) if in_render_px else cam
 	ViewMode.eye = camera.position  # view lab: a perspective top_lift lifts away from here
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus_m * SimConst.PX_PER_M
 	_update_look(focus_m)
-	world_px = _print_px() - get_viewport_rect().size * 0.5
-	_item_mat.set_shader_parameter(&"world_px", world_px)
-	_fx_mat.set_shader_parameter(&"world_px", world_px)
-	_cast_mat.set_shader_parameter(&"world_px", world_px)
-	_look_mat.set_shader_parameter(&"world_px", world_px)
+	world_px = lock_px(_print_px(), get_viewport_rect().size * 0.5, xf)
+	for m: ShaderMaterial in [_item_mat, _fx_mat, _cast_mat, _look_mat]:
+		m.set_shader_parameter(&"world_px", world_px)
 	for o: LookOverlay in _overlays:
 		o.update(look_id, zoom * SimConst.PX_PER_M, world_px)
 	lights.set_page_age(LookOverlay.page_age_of(_overlays))
 	lights.step(lights_tick(tick, clock, light_tick), world_px)
-	fx.step(tick, world_px)
-	fx.glow.step(tick, world_px)
-	fx.ground.step(tick, world_px)
+	for f: FxSystem in [fx, fx.glow, fx.ground]:
+		f.step(tick, world_px)
 	markers.step(tick)
 
 
@@ -154,7 +144,19 @@ func _print_px() -> Vector2:
 	if rig != null and _print_zoom > 0.0 and zoom != _print_zoom:
 		_print_off -= camera.position * (zoom - _print_zoom)
 	_print_zoom = zoom
-	return (camera.position * camera.zoom + _print_off).round()
+	return camera.position * camera.zoom + _print_off
+
+
+## `cam` (world px) on whole render px: camera zoom `cz` x the stretch `xf` (old: logical at `z`).
+static func snap_cam(cam: Vector2, cz: Vector2, xf: Transform2D, z: float) -> Vector2:
+	var k: Vector2 = cz * xf.get_scale() if in_render_px else Vector2.ONE * z
+	return (cam * k).round() / k
+
+
+## FRAGCOORD + lock_px is one value per world point, whatever the camera (FRAGCOORD = s px + o).
+static func lock_px(cam_screen: Vector2, half: Vector2, xf: Transform2D) -> Vector2:
+	var t: Transform2D = xf if in_render_px else Transform2D.IDENTITY
+	return (cam_screen * t.get_scale()).round() - (half * t.get_scale() + t.origin)
 
 
 func _build_print() -> void:
@@ -173,8 +175,7 @@ func _build_print() -> void:
 	add_child(look)
 
 
-## FX twins (ground decals on the world canvas, actor fx band, emissive above the lights), the
-## light layer and the world-UI markers, as CityView._build_fx.
+## FX twins (ground decals, actor fx band, emissive), lights, world-UI markers (as CityView's).
 func _build_fx() -> void:
 	_actors.add_child(fx)
 	fx.lights = lights

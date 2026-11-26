@@ -4,25 +4,41 @@ extends RefCounted
 ## the city's original facing and proportions, with their full image behind the roadside rail.
 
 const FLAT: String = "res://features/city/art/props/%s.png"
+## The drawn base: the lowest band of opaque art, metres (tools/ground/props/audit.mjs BAND_M).
+const BASE_BAND_M: float = 0.15
+## Largest base-fit growth over the row's own scale before the body fits the box instead.
+const MAX_FIT: float = 2.0
 static var _table: DataTable
 static var _faces: Dictionary[String, GauntletPropArt] = {}
 
 var image: Texture2D
 var width_m: float
 var _trimmed: Texture2D
+## The trimmed art's used rect in its sheet (empty when the art is not a strip cell).
+var _used: Rect2i
+var _sheet: Image
 
 
+## The card stands undistorted on its box: scaled so its drawn base (the lowest BASE_BAND_M of
+## art) spans the box width and centred on it, so the dark contact base reads as its footing.
+## A base narrower than 1 / MAX_FIT of the box (wheels, a post) fits the whole body instead.
 static func cover(ci: CanvasItem, art: String, box: Rect2, scale_m: float) -> void:
 	var face: GauntletPropArt = _face(art)
-	if face.image != null:
-		var pad: Rect2 = box.grow(-0.04)
-		var size: Vector2 = (face._metres() * scale_m).min(pad.size)
-		var foot: Vector2 = Vector2(pad.get_center().x, pad.end.y)
-		ci.draw_texture_rect(
-			face._cover_face(),
-			GauntletFrontage.px(Rect2(foot - size * Vector2(0.5, 1.0), size)),
-			false
-		)
+	if face.image == null:
+		return
+	var pad: Rect2 = box.grow(-0.04)
+	var texture: Texture2D = face._cover_face()
+	var natural: Vector2 = face._trim_metres() * scale_m
+	var band: Vector2 = face._base_band(natural.y)
+	var fit: float = pad.size.x / (natural.x * (band.y - band.x))
+	if fit > MAX_FIT:
+		fit = pad.size.x / natural.x
+		band = Vector2(0.0, 1.0)
+	var size: Vector2 = natural * fit
+	var left: float = pad.get_center().x - (band.x + band.y) * 0.5 * size.x
+	ci.draw_texture_rect(
+		texture, GauntletFrontage.px(Rect2(Vector2(left, pad.end.y - size.y), size)), false
+	)
 
 
 static func fixture(
@@ -59,7 +75,28 @@ func _cover_face() -> Texture2D:
 				trim.atlas = cell.atlas
 				trim.region = Rect2(used)
 				_trimmed = trim
+				_used = Rect2i(used.position + Vector2i(cell.region.position), used.size)
+				_sheet = sheet
 	return _trimmed
+
+
+## The trimmed art at its own proportions, metres (width from the cell's metres per pixel).
+func _trim_metres() -> Vector2:
+	var full: Vector2 = _metres()
+	var size: Vector2 = _cover_face().get_size()
+	return size * full / image.get_size()
+
+
+## The lowest BASE_BAND_M of opaque art as fractions (x0, x1) of the trimmed width.
+func _base_band(height_m: float) -> Vector2:
+	if _sheet == null or not _used.has_area():
+		return Vector2(0.0, 1.0)
+	var rows: int = clampi(roundi(_used.size.y * BASE_BAND_M / height_m), 1, _used.size.y)
+	var strip: Rect2i = Rect2i(_used.position.x, _used.end.y - rows, _used.size.x, rows)
+	var drawn: Rect2i = _sheet.get_region(strip).get_used_rect()
+	if not drawn.has_area():
+		return Vector2(0.0, 1.0)
+	return Vector2(drawn.position.x, drawn.end.x) / float(_used.size.x)
 
 
 func _metres() -> Vector2:

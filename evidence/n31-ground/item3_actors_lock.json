@@ -1,0 +1,44 @@
+{
+ "schema": "gtai.n31-actor-lock/1",
+ "probe": "project/dev/ground_n31/drift_probe.gd --bot --clip=play (project stretch 1.35, 32 px/m, tilt 70, 1920x1080 requested)",
+ "before": {
+  "rev": "b94e64c0e~1 (54995dd05)",
+  "rows_a": 105,
+  "pan_ticks": [
+   2370,
+   2700
+  ],
+  "print_stage_world_px_moved": [
+   1432.0,
+   487.0
+  ],
+  "part_uniform_world_px_moved": [
+   0.0,
+   0.0
+  ],
+  "gap_stage_vs_part_px": {
+   "max": 1616.733,
+   "mean": 496.424
+  }
+ },
+ "after": {
+  "rev": "HEAD b94e64c0e",
+  "rows_a": 105,
+  "pan_ticks": [
+   2370,
+   2700
+  ],
+  "print_stage_world_px_moved": [
+   1432.0,
+   487.0
+  ],
+  "part_uniform_world_px_moved": [
+   1432.0,
+   487.0
+  ],
+  "gap_stage_vs_part_px": {
+   "max": 0.0,
+   "mean": 0.0
+  }
+ }
+}

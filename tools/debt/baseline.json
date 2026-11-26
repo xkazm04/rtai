@@ -198,7 +198,21 @@
         "2026-11-25: arsenal turn pins for n30 keys (dev_loc 39264 -> 39271)",
         "2026-11-25: sprint tour for n30 keys (dev_loc 39271 -> 39340)",
         "2026-11-25: cast_cop_jitter and cast_warden_probe dev scenes for n30 cast evidence (dev_loc 39253 -> 39551)",
-        "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)"
+        "2026-11-25: dev_loc: yard_span_windows probe + yard_film --seed/--at for n30 yard (dev_loc 39253 -> 39375)",
+        "2026-11-25: dev/ground_n31 lift probe for n31 ground (dev_loc 39760 -> 39922)",
+        "2026-11-25: --ppm passthrough on the n31 ground lift probe (dev_loc 39922 -> 39925)",
+        "2026-11-25: foe_lift_probe dev probe (+190 dev loc) for n31 ground (dev_loc 39925 -> 40115)",
+        "2026-11-25: n31-09 foe placement probe for n31 ground (dev_loc 40115 -> 40183)",
+        "2026-11-25: foe_place_probe --stances + shift/body log for n31 ground (dev_loc 40183 -> 40188)",
+        "2026-11-25: n31-07 prologue drift probes for n31 ground (dev_loc 40188 -> 40400)",
+        "2026-11-26: dev_loc: n31-13 foe_place_probe lock|glide pass (+13) and n31-16 drift_probe (+1) for n31 ground (dev_loc 40400 -> 40414)",
+        "2026-11-26: n31-15 foe_place_probe --share (glide blend) for n31 ground (dev_loc 40414 -> 40424)",
+        "2026-11-26: n31-16 play_film + quest1_drift dev probes (the prologue and quest 1 city under the project stretch) for n31 ground (dev_loc 40424 -> 40570)",
+        "2026-11-26: 2026-11-26: n31-21 prop_walk dev probe (scene + probe/out helpers) for n31 ground (dev_loc 40570 -> 40851) (dev_loc 40570 -> 40851)",
+        "2026-11-26: n31-19 shotgun_tick_probe (dev probe for the re-pinned prologue shotgun tick) (dev_loc 40851 -> 40870)",
+        "2026-11-26: pilot_stall_probe for n31-23 ground (brief: new headless probe) (dev_loc 40870 -> 40966)",
+        "2026-11-26: dev_loc: prop_walk placement/hold/open split for n31-24 ground (probe code, dev only) (dev_loc 40966 -> 41178)",
+        "2026-11-26: dev_loc +3: prop_walk_place group radius for n31-24 ground (dev probe) (dev_loc 41178 -> 41181)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -214,6 +228,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
+        "project/dev/ground_n31": 1421,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -240,7 +255,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 39760
+      "total": 41181
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -260,7 +275,8 @@
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (direct_cmdline_reads 162 -> 163)",
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)",
         "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)",
-        "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)"
+        "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)",
+        "2026-11-25: n31-09 foe placement probe for n31 ground (direct_cmdline_reads 168 -> 169)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -287,6 +303,7 @@
         "project/dev/ghost-powers/powers_clip.gd": 1,
         "project/dev/ghost-powers/quest_ghost_rec.gd": 1,
         "project/dev/ghost-powers/quest_hauler_rec.gd": 1,
+        "project/dev/ground_n31/foe_place_probe.gd": 1,
         "project/dev/gunplay/blood_dirs.gd": 1,
         "project/dev/gunplay/dodge_view.gd": 2,
         "project/dev/gunplay/pistol_fight.gd": 1,
@@ -414,7 +431,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 168
+      "total": 169
     },
     "files_near_cap": {
       "accepted": [

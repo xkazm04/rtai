@@ -17,15 +17,25 @@ static func attach_ochre_first(
 	floor_view: Node2D, plan: PrologueYard, paint: PrologueYardPaint
 ) -> void:
 	var look: PrologueYardDressing = plan.dressing
-	var split: bool = look.ochre_over_impression and look.ochre_strength > 0.0
+	var split: bool = _split(look)
 	if split:
 		attach(floor_view, plan, paint, Part.GROUND)
 	if look.ochre_strength > 0.0:
 		paint.attach_ochre(floor_view, plan)
 	if split:
 		attach(floor_view, plan, paint, Part.PIECES)
-	elif not look.over_print.is_empty() or look.impression != null:
+	elif layered(plan):
 		attach(floor_view, plan, paint)
+
+
+## True when a pieces layer stands over the floor canvas (it then carries the contact bases).
+static func layered(plan: PrologueYard) -> bool:
+	var look: PrologueYardDressing = plan.dressing
+	return _split(look) or not look.over_print.is_empty() or look.impression != null
+
+
+static func _split(look: PrologueYardDressing) -> bool:
+	return look.ochre_over_impression and look.ochre_strength > 0.0
 
 
 ## `Part.ALL` is one node (today). With `ochre_over_impression` the floor attaches `GROUND` before
@@ -95,6 +105,7 @@ static func _draw_ground(node: Node2D, plan: PrologueYard, paint: PrologueYardPa
 static func _draw_pieces(node: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
 	var shade: float = plan.dressing.over_print_shade
 	var shaded: Color = Color(shade, shade, shade)
+	paint.bases(node, plan)
 	for piece: PrologueYard.Wreck in order(plan):
 		if plan.wrecks.has(piece):
 			var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)

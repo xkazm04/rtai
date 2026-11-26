@@ -50,7 +50,10 @@ func _draw() -> void:
 	_stage_decals()
 	_paint.stamps(self, plan.dressing.decals)
 	_paint.shadows(self, plan)
+	_paint.span_shadows(self, plan)
 	_paint.stamps(self, plan.dressing.factory_front)
+	if not PrologueYardOverprint.layered(plan):
+		_paint.bases(self, plan)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
 		if plan.dressing.over_print.has(wreck.id):
 			continue

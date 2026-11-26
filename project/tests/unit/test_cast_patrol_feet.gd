@@ -15,7 +15,9 @@ func test_registered_soles_hold_through_drawings_and_wrap_in_both_pitches() -> v
 func _check_contacts(path: String, face: Vector2i) -> void:
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
 	contact.configure(path)
+	contact.registered.glide_no_step = false  # n31-13: the foot lock; non-side walks glide
 	var direction: Vector2 = Vector2(-1 if face.y else 1, 1).normalized()
+	contact.travel = direction  # as StreetCopWalk.plant seeds it from the rig's velocity
 	var anchor: Vector2
 	var previous: Vector2
 	var step: float = contact.step_m * 32.0
@@ -34,8 +36,15 @@ func _check_contacts(path: String, face: Vector2i) -> void:
 			previous = anchor
 		if path.ends_with(StreetCopWalk.RUN) and row % 4 == 3:
 			continue
+		# n31-10 HOLD_TOE_OFF: a side-view walk toe-off heel is drawn at its lift above the foot line.
+		var first: Vector4 = contact.registered.marks[face.x * 8 + row - row % 4]
+		var lift: float = _lift(contact.registered, ink.y) - _lift(contact.registered, first.y)
 		assert_almost_eq(sole.x, anchor.x, 0.001)
-		assert_almost_eq(sole.y, anchor.y, 0.001)
+		assert_almost_eq(sole.y, anchor.y + lift * TEXEL.y, 0.001)
+
+
+func _lift(pose: StreetPatrolPose, sole_y: float) -> float:
+	return sole_y - pose.foot_y(sole_y)
 
 
 func test_four_drawing_fallback_and_contact_reset() -> void:
@@ -131,3 +140,47 @@ func test_far_patrol_changes_drawing_by_ground_distance_and_other_role_keeps_its
 	assert_eq(patrol.vframes, StreetCopWalk.rows_of(fast))
 	assert_eq(patrol.frame_coords.y, 1 if fast == StreetCopWalk.PLANTED else 0)
 	ViewMode._shared = previous
+
+
+## n31-09: at mid-stance the planted sole of every anchored walk sits on the sim ground point
+## (where the contact disc draws), give or take the drawing's own sole registration, in every
+## direction (the old placement trailed it by half a stance, 11 px at 32 px/m). n31-10: walking up
+## the settle stance shift compounded 3.4 px a stance to 14 px; now it holds over 10 stances.
+func test_mid_stance_sole_sits_on_the_ground_point_down_and_sideways() -> void:
+	var path: String = "p70".path_join(StreetCopWalk.EIGHT)
+	for direction: Vector2 in [Vector2.DOWN, Vector2.UP, Vector2.LEFT, Vector2.RIGHT]:
+		var misses: Array[Vector2] = _mid_stance_misses(path, direction, 10)
+		assert_eq(misses.size(), 9, "stances 2..10 %s" % direction)
+		for miss: Vector2 in misses:
+			assert_almost_eq(miss.x, 0.0, 3.0, "x %s %s" % [direction, misses])
+			assert_almost_eq(miss.y, 0.0, 3.0, "y %s %s" % [direction, misses])
+		assert_lte(misses[-1].distance_to(misses[0]), 1.0, "grows %s %s" % [direction, misses])
+
+
+## Planted sole minus ground point minus the drawing's own first-sole offset, at mid-stance of
+## stances 2..n, walking 3.2 m/s at 32 px/m.
+func _mid_stance_misses(path: String, direction: Vector2, stances: int) -> Array[Vector2]:
+	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
+	contact.configure(path)
+	contact.travel = direction
+	var face: Vector2i = RigHeadCard.frame_of(direction.angle())
+	var stance: float = contact.step_m * 32.0 * (contact.drawings >> 1)
+	var speed: float = 3.2 * 32.0 * SimClock.TICK_DT
+	var misses: Array[Vector2] = []
+	var at: Vector2 = Vector2.ZERO
+	while at.length() < stance * stances:
+		var xf: Transform2D = contact.place(at, face, TEXEL, 32)
+		var into: float = fmod(at.length(), stance)
+		if absf(into - stance * 0.5) <= speed * 0.5 and at.length() > stance:
+			var row: int = posmod(contact.cell, contact.drawings)
+			var ink: Vector4 = contact.registered.marks[face.x * 8 + row]
+			var first: Vector4 = contact.registered.marks[face.x * 8 + row - row % 4]
+			var flip: float = -1.0 if face.y else 1.0
+			var own: Vector2 = Vector2(first.x * flip, first.y) * TEXEL
+			var sole: Vector2 = Vector2(ink.x * flip, ink.y)
+			if contact.registered.glides(face.x):  # n31-13: registered on the foot line
+				own.y = 0.0
+				sole.y = 0.0
+			misses.append(xf * sole - at - own)
+		at += direction * speed
+	return misses

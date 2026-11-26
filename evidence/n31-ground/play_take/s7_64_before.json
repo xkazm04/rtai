@@ -1,0 +1,20 @@
+{
+ "schema": "gtai.play-take/1",
+ "rev": "ba8e470b0",
+ "sha": "ba8e470b0fdfc796c4eb8d256bd086d4d7cfa969",
+ "label": "main ba8e470b0",
+ "scene": "res://dev/ground_n31/gauntlet_64.tscn",
+ "seed": 7,
+ "ticks": 2400,
+ "from": 0,
+ "ppm": 64,
+ "bot": "average",
+ "controls": "wheel",
+ "stills": [
+  600,
+  1200,
+  1800
+ ],
+ "mp4": "take.mp4",
+ "run_seconds": 143
+}

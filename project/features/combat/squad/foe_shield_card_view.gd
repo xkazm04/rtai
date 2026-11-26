@@ -13,6 +13,11 @@ const STEP_PX: float = (
 
 var pose: CastCardPose = CastCardPose.new()
 var _walk_cell: int = -1
+var _shadow: CardContactShadow
+
+
+func _init() -> void:
+	_shadow = CardContactShadow.mount(self)
 
 
 static func enabled(h: Fighter) -> bool:
@@ -70,6 +75,7 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 		_walk_cell = cell
 	else:
 		_walk_cell = -1
+	_shadow.follow(self, h.pos * SimConst.PX_PER_M)
 
 
 ## The door's own height replaces the placement's base scale. A walking drawing keeps its

@@ -1,0 +1,2981 @@
+{
+ "schema": "gtai.prop-audit/1",
+ "summary": {
+  "props": 140,
+  "solid": 68,
+  "solid_mismatch_over_0_25_m": 8,
+  "solid_unmeasured": 0,
+  "decorative_looks_solid": 29,
+  "by_verdict": {
+   "ok": 97,
+   "decorative-looks-solid candidate": 27,
+   "invisible wall": 8,
+   "overhead span (passable by rule: offset floor shadow, no base)": 6,
+   "decorative-looks-solid": 2
+  }
+ },
+ "worst": [
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#3:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#4:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#5:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#6:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza#2:cover_high",
+   "segment": "kiosk_plaza",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    4
+   ],
+   "art": "coffee_kiosk",
+   "scale": 1.7,
+   "drawn_base_m": [
+    2.475,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 3.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.775,
+    "east": 0.75,
+    "north": 3.84,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.775,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#5:cover_low",
+   "segment": "loading_bay",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2,
+    1.2
+   ],
+   "art": "dock_oil_drums",
+   "scale": 1.3,
+   "drawn_base_m": [
+    1.213,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.12,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.381,
+    "east": 0.406,
+    "north": 1.109,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.406,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#2:cover_high",
+   "segment": "market_stalls",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    3.2,
+    2
+   ],
+   "art": "newsstand",
+   "scale": 1.35,
+   "drawn_base_m": [
+    2.681,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.251,
+    "east": 0.268,
+    "north": 1.867,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.268,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk#2:cover_high",
+   "segment": "crosswalk",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    3,
+    2
+   ],
+   "art": "newsstand",
+   "scale": 1.25,
+   "drawn_base_m": [
+    2.509,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.238,
+    "east": 0.253,
+    "north": 1.867,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.253,
+   "sides": [
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  }
+ ],
+ "rows": [
+  {
+   "arena": "gauntlet",
+   "id": "plain_block#0:wall_high",
+   "segment": "plain_block",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    30,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "plain_block#1:wall_high",
+   "segment": "plain_block",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    30,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "plain_block#2:cover_high",
+   "segment": "plain_block",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    3,
+    1.5
+   ],
+   "art": "bus_stop",
+   "scale": 1.35,
+   "drawn_base_m": [
+    2.92,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.42,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.377,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "plain_block#3:cover_low",
+   "segment": "plain_block",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.5,
+    1.2
+   ],
+   "art": "bench",
+   "scale": 1.25,
+   "drawn_base_m": [
+    2.42,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.12,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.02,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "plain_block:payphone@11,-6.7",
+   "segment": "plain_block",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "payphone",
+   "standing_height_m": 2.275,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "plain_block:street_sign@22,-6.6",
+   "segment": "plain_block",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "street_sign",
+   "standing_height_m": 0.958,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "plain_block:bike_racks@8,7.6",
+   "segment": "plain_block",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "bike_racks",
+   "standing_height_m": 1.627,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk#0:wall_high",
+   "segment": "crosswalk",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    32,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk#1:wall_high",
+   "segment": "crosswalk",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    32,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk#2:cover_high",
+   "segment": "crosswalk",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    3,
+    2
+   ],
+   "art": "newsstand",
+   "scale": 1.25,
+   "drawn_base_m": [
+    2.509,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.238,
+    "east": 0.253,
+    "north": 1.867,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.253,
+   "sides": [
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk#3:cover_low",
+   "segment": "crosswalk",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    1
+   ],
+   "art": "down_planter_bed",
+   "scale": 0.85,
+   "drawn_base_m": [
+    3.92,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 0.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 0.904,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk:traffic_light@13,-6.35",
+   "segment": "crosswalk",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "traffic_light",
+   "standing_height_m": 1.35,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk:traffic_light@19,7.25",
+   "segment": "crosswalk",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "traffic_light",
+   "standing_height_m": 1.35,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "crosswalk:down_bollards@9,7.35",
+   "segment": "crosswalk",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_bollards",
+   "standing_height_m": 1.5,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line#0:wall_high",
+   "segment": "barricade_line",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    30,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line#1:wall_high",
+   "segment": "barricade_line",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    30,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line#2:cover_high",
+   "segment": "barricade_line",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    1.25,
+    4.5
+   ],
+   "art": "barricade.png inset 0.08 m on a hatched slab",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line#3:cover_low",
+   "segment": "barricade_line",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    1.25,
+    4
+   ],
+   "art": "barricade.png inset 0.08 m on a hatched slab",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line#4:cover_high",
+   "segment": "barricade_line",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    1.25,
+    4
+   ],
+   "art": "barricade.png inset 0.08 m on a hatched slab",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line:traffic_cone@9,-6.45",
+   "segment": "barricade_line",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "traffic_cone",
+   "standing_height_m": 0.917,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line:traffic_cone@22,-6.45",
+   "segment": "barricade_line",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "traffic_cone",
+   "standing_height_m": 0.917,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line:traffic_cone@15,6.95",
+   "segment": "barricade_line",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "traffic_cone",
+   "standing_height_m": 0.917,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "barricade_line:barricade@14,7.35",
+   "segment": "barricade_line",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "barricade",
+   "standing_height_m": 4,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#0:wall_high",
+   "segment": "loading_bay",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    28,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#1:wall_high",
+   "segment": "loading_bay",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    28,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#2:cover_high",
+   "segment": "loading_bay",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    2
+   ],
+   "art": "dock_cargo_tarp",
+   "scale": 1.25,
+   "drawn_base_m": [
+    3.657,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.195,
+    "east": 0.148,
+    "north": 1.876,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#3:cover_high",
+   "segment": "loading_bay",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    2
+   ],
+   "art": "dock_cargo_tarp",
+   "scale": 1.25,
+   "drawn_base_m": [
+    3.657,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.195,
+    "east": 0.148,
+    "north": 1.876,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#4:cover_high",
+   "segment": "loading_bay",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    2
+   ],
+   "art": "dock_cargo_tarp",
+   "scale": 1.25,
+   "drawn_base_m": [
+    3.657,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.195,
+    "east": 0.148,
+    "north": 1.876,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay#5:cover_low",
+   "segment": "loading_bay",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2,
+    1.2
+   ],
+   "art": "dock_oil_drums",
+   "scale": 1.3,
+   "drawn_base_m": [
+    1.213,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.12,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.381,
+    "east": 0.406,
+    "north": 1.109,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.406,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay:container2@6,-6.5",
+   "segment": "loading_bay",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "container2",
+   "standing_height_m": 4,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay:dock_scrap_skip@24,-6.55",
+   "segment": "loading_bay",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "dock_scrap_skip",
+   "standing_height_m": 4.396,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "loading_bay:barrel_cluster@18,7.5",
+   "segment": "loading_bay",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "barrel_cluster",
+   "standing_height_m": 3.333,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck#0:wall_high",
+   "segment": "alley_neck",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    32,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck#1:wall_high",
+   "segment": "alley_neck",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    32,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck#2:wall_high",
+   "segment": "alley_neck",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    12,
+    2
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck#3:wall_high",
+   "segment": "alley_neck",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    12,
+    2
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck#4:cover_high",
+   "segment": "alley_neck",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    3,
+    1.7
+   ],
+   "art": "dumpster",
+   "scale": 1.45,
+   "drawn_base_m": [
+    2.92,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.62,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.566,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck:down_litter_bins@5,-6.45",
+   "segment": "alley_neck",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_litter_bins",
+   "standing_height_m": 1.484,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck:lamp_post@26,-6.5",
+   "segment": "alley_neck",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "lamp_post",
+   "standing_height_m": 0.934,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "alley_neck:bike_racks@25,7",
+   "segment": "alley_neck",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "bike_racks",
+   "standing_height_m": 1.479,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza#0:wall_high",
+   "segment": "kiosk_plaza",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    34,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza#1:wall_high",
+   "segment": "kiosk_plaza",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    34,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza#2:cover_high",
+   "segment": "kiosk_plaza",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    4
+   ],
+   "art": "coffee_kiosk",
+   "scale": 1.7,
+   "drawn_base_m": [
+    2.475,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 3.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.775,
+    "east": 0.75,
+    "north": 3.84,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.775,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza#3:cover_low",
+   "segment": "kiosk_plaza",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4.5,
+    1
+   ],
+   "art": "down_planter_bed",
+   "scale": 0.85,
+   "drawn_base_m": [
+    4.42,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 0.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 0.904,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza#4:cover_low",
+   "segment": "kiosk_plaza",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4.5,
+    1
+   ],
+   "art": "down_planter_bed",
+   "scale": 0.85,
+   "drawn_base_m": [
+    4.42,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 0.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 0.904,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza:down_street_clock@10,-6.6",
+   "segment": "kiosk_plaza",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_street_clock",
+   "standing_height_m": 2.1,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza:down_plaza_steps@17,-6.85",
+   "segment": "kiosk_plaza",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_plaza_steps",
+   "standing_height_m": 3.522,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza:bench@23,7.4",
+   "segment": "kiosk_plaza",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "bench",
+   "standing_height_m": 1.4,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "kiosk_plaza:down_chess_tables@8,7.5",
+   "segment": "kiosk_plaza",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_chess_tables",
+   "standing_height_m": 7.2,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass#0:wall_high",
+   "segment": "underpass",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    32,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass#1:wall_high",
+   "segment": "underpass",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    32,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass#2:cover_high",
+   "segment": "underpass",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    2
+   ],
+   "art": "procedural pier, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass#3:cover_high",
+   "segment": "underpass",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    2
+   ],
+   "art": "procedural pier, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass#4:cover_high",
+   "segment": "underpass",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    2
+   ],
+   "art": "procedural pier, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass#5:cover_high",
+   "segment": "underpass",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    2
+   ],
+   "art": "procedural pier, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass:lamp_post@6,-6.5",
+   "segment": "underpass",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "lamp_post",
+   "standing_height_m": 0.813,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass:lamp_post@28,-6.5",
+   "segment": "underpass",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "lamp_post",
+   "standing_height_m": 0.813,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "underpass:bike_racks@27,7.2",
+   "segment": "underpass",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "bike_racks",
+   "standing_height_m": 1.627,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#0:wall_high",
+   "segment": "market_stalls",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    34,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#1:wall_high",
+   "segment": "market_stalls",
+   "kind": "wall_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    34,
+    1
+   ],
+   "art": "procedural coping/wing/edge, drawn to the footprint",
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#2:cover_high",
+   "segment": "market_stalls",
+   "kind": "cover_high",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    3.2,
+    2
+   ],
+   "art": "newsstand",
+   "scale": 1.35,
+   "drawn_base_m": [
+    2.681,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.92,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.251,
+    "east": 0.268,
+    "north": 1.867,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 0.268,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#3:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#4:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#5:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls#6:cover_low",
+   "segment": "market_stalls",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "art": "food_cart",
+   "scale": 0.98,
+   "drawn_base_m": [
+    0.358,
+    "front card, no floor depth"
+   ],
+   "card_height_m": 1.72,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.377,
+    "east": 0.565,
+    "north": 1.692,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.377,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls:down_flower_crates@8,-6.8",
+   "segment": "market_stalls",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_flower_crates",
+   "standing_height_m": 2.578,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls:dock_cargo_tarp@20,7.5",
+   "segment": "market_stalls",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "dock_cargo_tarp",
+   "standing_height_m": 3,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls:down_flower_crates@26,-7.1",
+   "segment": "market_stalls",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "down_flower_crates",
+   "standing_height_m": 2.372,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "gauntlet",
+   "id": "market_stalls:bench@10,7.7",
+   "segment": "market_stalls",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "bench",
+   "standing_height_m": 1.342,
+   "projected_shadow": "unknown (card draw)",
+   "verdict": "decorative-looks-solid candidate",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "pallet_west",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.4,
+    1.6
+   ],
+   "art": "pallet_two.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    2.025,
+    1.561
+   ],
+   "opaque_fraction": 0.761,
+   "mismatch_m": {
+    "west": 0.195,
+    "east": 0.18,
+    "north": 0.023,
+    "south": 0.016
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "fuel_vessel",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.4,
+    1.6
+   ],
+   "art": "pallet_toppled.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    2.361,
+    1.567
+   ],
+   "opaque_fraction": 0.705,
+   "mismatch_m": {
+    "west": 0.023,
+    "east": 0.016,
+    "north": 0.011,
+    "south": 0.022
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "burnt_pickup",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4.3,
+    2.7
+   ],
+   "art": "forklift.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    4.3,
+    2.7
+   ],
+   "opaque_fraction": 0.578,
+   "mismatch_m": {
+    "west": 0,
+    "east": 0,
+    "north": 0,
+    "south": 0
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "press_carcass",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.5,
+    3.7
+   ],
+   "art": "toppled_arm.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    2.5,
+    3.7
+   ],
+   "opaque_fraction": 0.544,
+   "mismatch_m": {
+    "west": 0,
+    "east": 0,
+    "north": 0,
+    "south": 0
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "fallen_fridges",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4,
+    1.8
+   ],
+   "art": "fridge_bank.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    4,
+    1.8
+   ],
+   "opaque_fraction": 0.953,
+   "mismatch_m": {
+    "west": 0,
+    "east": 0,
+    "north": 0,
+    "south": 0
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "scrap_skip",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    4.4,
+    2.4
+   ],
+   "art": "appliance_skip.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    4.4,
+    2.4
+   ],
+   "opaque_fraction": 0.9,
+   "mismatch_m": {
+    "west": 0,
+    "east": 0,
+    "north": 0,
+    "south": 0
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "stack_broken_sw",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.4,
+    0.85
+   ],
+   "art": "pallet_broken.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    2.369,
+    0.819
+   ],
+   "opaque_fraction": 0.776,
+   "mismatch_m": {
+    "west": 0.023,
+    "east": 0.008,
+    "north": 0.016,
+    "south": 0.016
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "stack_double_west",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "footprint_m": [
+    2.4,
+    1
+   ],
+   "art": "pallet_double.png",
+   "projected_shadow": true,
+   "drawn_base_m": [
+    2.369,
+    0.977
+   ],
+   "opaque_fraction": 0.918,
+   "mismatch_m": {
+    "west": 0.023,
+    "east": 0.008,
+    "north": 0.008,
+    "south": 0.016
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "arch_door",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_straight_a.png",
+   "footprint_m": [
+    8.668,
+    3.806
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.481,
+    3.63
+   ],
+   "opaque_fraction": 0.69,
+   "legs_m": [
+    {
+     "x": [
+      21.91,
+      25.837
+     ],
+     "y": [
+      1.463,
+      1.76
+     ],
+     "blocked_by": [
+      "conveyor_door"
+     ]
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 1,
+   "verdict": "ok",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_feed",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_curve.png",
+   "footprint_m": [
+    8.646,
+    4.598
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.459,
+    4.422
+   ],
+   "opaque_fraction": 0.518,
+   "legs_m": [
+    {
+     "x": [
+      28.068,
+      31.808
+     ],
+     "y": [
+      5.296,
+      5.593
+     ],
+     "blocked_by": [
+      "conveyor_feed"
+     ]
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 1,
+   "verdict": "ok",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_turn",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_straight_b.png",
+   "footprint_m": [
+    8.723,
+    3.817
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.525,
+    3.63
+   ],
+   "opaque_fraction": 0.689,
+   "legs_m": [
+    {
+     "x": [
+      31.883,
+      35.788
+     ],
+     "y": [
+      9.264,
+      9.561
+     ],
+     "blocked_by": [
+      "conveyor_turn"
+     ]
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 1,
+   "verdict": "ok",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_return",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_curve_mirror.png",
+   "footprint_m": [
+    8.646,
+    4.598
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.459,
+    4.422
+   ],
+   "opaque_fraction": 0.518,
+   "legs_m": [
+    {
+     "x": [
+      27.992,
+      31.732
+     ],
+     "y": [
+      13.496,
+      13.793
+     ],
+     "blocked_by": [
+      "conveyor_return"
+     ]
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 1,
+   "verdict": "ok",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_bend",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_straight_a_mirror.png",
+   "footprint_m": [
+    8.668,
+    3.806
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.481,
+    3.63
+   ],
+   "opaque_fraction": 0.69,
+   "legs_m": [
+    {
+     "x": [
+      23.663,
+      27.59
+     ],
+     "y": [
+      17.863,
+      18.16
+     ],
+     "blocked_by": [
+      "conveyor_bend"
+     ]
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 1,
+   "verdict": "ok",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_tail",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_torn.png",
+   "footprint_m": [
+    8.921,
+    3.674
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.734,
+    3.487
+   ],
+   "opaque_fraction": 0.575,
+   "legs_m": [
+    {
+     "x": [
+      29.808,
+      31.557
+     ],
+     "y": [
+      21.694,
+      21.991
+     ],
+     "blocked_by": [
+      "conveyor_tail"
+     ]
+    },
+    {
+     "x": [
+      32.261,
+      32.635
+     ],
+     "y": [
+      21.694,
+      21.991
+     ],
+     "blocked_by": [
+      "conveyor_tail"
+     ]
+    },
+    {
+     "x": [
+      32.8,
+      34.098
+     ],
+     "y": [
+      21.694,
+      21.991
+     ],
+     "blocked_by": [
+      "conveyor_tail"
+     ]
+    }
+   ],
+   "legs": 3,
+   "legs_blocking": 3,
+   "verdict": "ok",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "span_door_feed",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_door_feed.png",
+   "footprint_m": [
+    8.514,
+    4.928
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    7.799,
+    4.411
+   ],
+   "opaque_fraction": 0.262,
+   "legs_m": [
+    {
+     "x": [
+      34.777,
+      35.327
+     ],
+     "y": [
+      2.002,
+      2.299
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "overhead span (passable by rule: offset floor shadow, no base)",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_feed_turn",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_feed_turn.png",
+   "footprint_m": [
+    6.039,
+    5.269
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    5.247,
+    5.049
+   ],
+   "opaque_fraction": 0.251,
+   "legs_m": [
+    {
+     "x": [
+      27.58,
+      27.998
+     ],
+     "y": [
+      7.01,
+      7.307
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      28.867,
+      29.658
+     ],
+     "y": [
+      7.01,
+      7.307
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 2,
+   "legs_blocking": 0,
+   "verdict": "overhead span (passable by rule: offset floor shadow, no base)",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_turn_return",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_turn_return.png",
+   "footprint_m": [
+    7.161,
+    6.204
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    6.391,
+    6.105
+   ],
+   "opaque_fraction": 0.245,
+   "legs_m": [
+    {
+     "x": [
+      33.745,
+      33.966
+     ],
+     "y": [
+      11.738,
+      12.035
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      35.308,
+      35.781
+     ],
+     "y": [
+      11.738,
+      12.035
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 2,
+   "legs_blocking": 0,
+   "verdict": "overhead span (passable by rule: offset floor shadow, no base)",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_return_bend",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_return_bend.png",
+   "footprint_m": [
+    6.963,
+    7.491
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    6.446,
+    7.392
+   ],
+   "opaque_fraction": 0.24,
+   "legs_m": [
+    {
+     "x": [
+      20.667,
+      21.074
+     ],
+     "y": [
+      15.987,
+      16.284
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      21.393,
+      21.547
+     ],
+     "y": [
+      15.987,
+      16.284
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 2,
+   "legs_blocking": 0,
+   "verdict": "overhead span (passable by rule: offset floor shadow, no base)",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_bend_tail",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_bend_tail.png",
+   "footprint_m": [
+    4.367,
+    5.687
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    4.256,
+    5.323
+   ],
+   "opaque_fraction": 0.297,
+   "legs_m": [
+    {
+     "x": [
+      26.907,
+      27.204
+     ],
+     "y": [
+      19.898,
+      20.194
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      27.424,
+      27.523
+     ],
+     "y": [
+      19.898,
+      20.194
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      27.831,
+      27.941
+     ],
+     "y": [
+      19.898,
+      20.194
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 3,
+   "legs_blocking": 0,
+   "verdict": "overhead span (passable by rule: offset floor shadow, no base)",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_mouth_door",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_mouth_door.png",
+   "footprint_m": [
+    8.789,
+    5.192
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.184,
+    3.982
+   ],
+   "opaque_fraction": 0.248,
+   "legs_m": [
+    {
+     "x": [
+      13.457,
+      13.853
+     ],
+     "y": [
+      1.292,
+      1.589
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "overhead span (passable by rule: offset floor shadow, no base)",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_door vs arch_door",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a.png (over-printed on the box)",
+   "footprint_m": [
+    4.19,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.481,
+    0.154
+   ],
+   "base_south_m": 1.76,
+   "box_south_m": 1.76,
+   "mismatch_m": {
+    "west": -2.161,
+    "east": -2.13,
+    "north": 1.046,
+    "south": 0
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_feed vs arch_feed",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve.png (over-printed on the box)",
+   "footprint_m": [
+    4.04,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.459,
+    0.154
+   ],
+   "base_south_m": 5.593,
+   "box_south_m": 5.59,
+   "mismatch_m": {
+    "west": -1.884,
+    "east": -2.535,
+    "north": 1.049,
+    "south": -0.003
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_turn vs arch_turn",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_b.png (over-printed on the box)",
+   "footprint_m": [
+    4.22,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.525,
+    0.154
+   ],
+   "base_south_m": 9.561,
+   "box_south_m": 9.56,
+   "mismatch_m": {
+    "west": -2.131,
+    "east": -2.174,
+    "north": 1.047,
+    "south": -0.001
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_return vs arch_return",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve_mirror.png (over-printed on the box)",
+   "footprint_m": [
+    4.04,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.459,
+    0.154
+   ],
+   "base_south_m": 13.793,
+   "box_south_m": 13.79,
+   "mismatch_m": {
+    "west": -2.535,
+    "east": -1.884,
+    "north": 1.049,
+    "south": -0.003
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_bend vs arch_bend",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a_mirror.png (over-printed on the box)",
+   "footprint_m": [
+    4.19,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.481,
+    0.154
+   ],
+   "base_south_m": 18.16,
+   "box_south_m": 18.16,
+   "mismatch_m": {
+    "west": -2.13,
+    "east": -2.161,
+    "north": 1.046,
+    "south": 0
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_tail vs arch_tail",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_torn.png (over-printed on the box)",
+   "footprint_m": [
+    4.41,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.734,
+    0.154
+   ],
+   "base_south_m": 21.991,
+   "box_south_m": 21.99,
+   "mismatch_m": {
+    "west": -1.966,
+    "east": -2.358,
+    "north": 1.047,
+    "south": -0.001
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_door_1 vs arch_door",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a.png (drawn leg)",
+   "footprint_m": [
+    1.93,
+    0.3
+   ],
+   "drawn_base_m": [
+    1.914,
+    0.311
+   ],
+   "mismatch_m": {
+    "west": 0.011,
+    "east": 0.005,
+    "north": 0,
+    "south": -0.011
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_door_2 vs arch_door",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a.png (drawn leg)",
+   "footprint_m": [
+    2.03,
+    0.3
+   ],
+   "drawn_base_m": [
+    2.024,
+    0.313
+   ],
+   "mismatch_m": {
+    "west": -0.004,
+    "east": 0.01,
+    "north": 0,
+    "south": -0.013
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_feed_1 vs arch_feed",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve.png (drawn leg)",
+   "footprint_m": [
+    1.65,
+    0.3
+   ],
+   "drawn_base_m": [
+    1.65,
+    0.312
+   ],
+   "mismatch_m": {
+    "west": -0.008,
+    "east": 0.008,
+    "north": 0,
+    "south": -0.012
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_feed_2 vs arch_feed",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve.png (drawn leg)",
+   "footprint_m": [
+    0.58,
+    0.3
+   ],
+   "drawn_base_m": [
+    0.682,
+    0.309
+   ],
+   "mismatch_m": {
+    "west": 0.005,
+    "east": -0.107,
+    "north": 0,
+    "south": -0.009
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_turn_1 vs arch_turn",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_b.png (drawn leg)",
+   "footprint_m": [
+    1.85,
+    0.3
+   ],
+   "drawn_base_m": [
+    1.848,
+    0.31
+   ],
+   "mismatch_m": {
+    "west": 0,
+    "east": 0.002,
+    "north": 0,
+    "south": -0.01
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_turn_2 vs arch_turn",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_b.png (drawn leg)",
+   "footprint_m": [
+    2.04,
+    0.3
+   ],
+   "drawn_base_m": [
+    2.046,
+    0.314
+   ],
+   "mismatch_m": {
+    "west": -0.004,
+    "east": -0.002,
+    "north": 0,
+    "south": -0.014
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_return_1 vs arch_return",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve_mirror.png (drawn leg)",
+   "footprint_m": [
+    0.58,
+    0.3
+   ],
+   "drawn_base_m": [
+    0.682,
+    0.309
+   ],
+   "mismatch_m": {
+    "west": -0.107,
+    "east": 0.005,
+    "north": 0,
+    "south": -0.009
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_return_2 vs arch_return",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve_mirror.png (drawn leg)",
+   "footprint_m": [
+    1.65,
+    0.3
+   ],
+   "drawn_base_m": [
+    1.65,
+    0.312
+   ],
+   "mismatch_m": {
+    "west": -0.002,
+    "east": 0.002,
+    "north": 0,
+    "south": -0.012
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_bend_1 vs arch_bend",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a_mirror.png (drawn leg)",
+   "footprint_m": [
+    2.02,
+    0.3
+   ],
+   "drawn_base_m": [
+    2.024,
+    0.313
+   ],
+   "mismatch_m": {
+    "west": -0.005,
+    "east": 0.001,
+    "north": 0,
+    "south": -0.013
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_bend_2 vs arch_bend",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a_mirror.png (drawn leg)",
+   "footprint_m": [
+    1.93,
+    0.3
+   ],
+   "drawn_base_m": [
+    1.914,
+    0.311
+   ],
+   "mismatch_m": {
+    "west": -0.005,
+    "east": 0.021,
+    "north": 0,
+    "south": -0.011
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_tail_1 vs arch_tail",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_torn.png (drawn leg)",
+   "footprint_m": [
+    0.52,
+    0.3
+   ],
+   "drawn_base_m": [
+    0.594,
+    0.313
+   ],
+   "mismatch_m": {
+    "west": -0.004,
+    "east": -0.07,
+    "north": 0,
+    "south": -0.013
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "leg_tail_2 vs arch_tail",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_torn.png (drawn leg)",
+   "footprint_m": [
+    1.13,
+    0.3
+   ],
+   "drawn_base_m": [
+    1.155,
+    0.375
+   ],
+   "mismatch_m": {
+    "west": -0.128,
+    "east": 0.103,
+    "north": 0,
+    "south": -0.075
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "note": "leg foot: arch art columns over the box, lowest opaque row; N is the leg itself"
+  },
+  {
+   "arena": "yard",
+   "id": "gate_lamp@41.2,32.5",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "gate_lamp.png",
+   "standing_height_m": 1.6,
+   "projected_shadow": true,
+   "verdict": "decorative-looks-solid",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "hook_drum@34.15,8.79",
+   "kind": "fixture",
+   "class": "decorative",
+   "art": "hook_drum.png",
+   "standing_height_m": 0.88,
+   "projected_shadow": true,
+   "verdict": "decorative-looks-solid",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "drag_door",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "oil_drag.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "drag_feed",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "oil_drag.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "drag_turn",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "oil_drag.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "drag_return",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "oil_drag.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "drag_tail",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "oil_drag.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "enamel_feed",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "enamel_spill.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "enamel_turn",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "enamel_spill.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "enamel_tail",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "enamel_spill.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "belt_door",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "belt_fray.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_door_1",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_door_2",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_door_3",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "belt_feed",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "belt_fray.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_feed_1",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_feed_2",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_feed_3",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "belt_turn",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "belt_fold.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_turn_1",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_turn_2",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_turn_3",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "belt_return",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "belt_fold.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_return_1",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_return_2",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_return_3",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "belt_tail",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "belt_fray.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_tail_1",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_tail_2",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "roller_tail_3",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "loose_roller.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "washer_feed",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "fallen_washer.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "door_return",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "fridge_door.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  },
+  {
+   "arena": "yard",
+   "id": "washer_tail",
+   "kind": "debris",
+   "class": "decorative",
+   "art": "fallen_washer.png",
+   "projected_shadow": false,
+   "verdict": "ok",
+   "worst_m": 0
+  }
+ ]
+}

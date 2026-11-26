@@ -4,6 +4,36 @@ extends RefCounted
 ## planted boot between pose centres. The airborne run passes translate as a whole.
 const MAX_LEAN: float = 0.22
 const MAX_STRETCH: float = 0.12
+## n31-09: every anchored walk lands half a stance ahead, in every direction, after the settle
+## easing, so the mid-point between the soles is the sim ground point where the contact discs draw.
+## false = the old placement (centre-stance kinds only, walking up clamped to a quarter, applied
+## before the easing): the disc runs 0..21 px ahead of the planted boot each stance.
+const LAND_MID_STANCE: bool = true
+const LANDING_EASE: float = 0.06
+## n31-10: the footfall shortening keeps only its part across the travel. Along the travel
+## it compounded (the eased body carries the last stance's shift into the next): 3.4 px a
+## stance walking up, to the 14.4 px limit. false = the old shift, the planted sole up to
+## 14 px off the disc walking N.
+const SHIFT_ACROSS_TRAVEL: bool = true
+## n31-10: on a walk's toe-off drawings the marked sole is the lifting planted heel, 15-46 cell
+## px above the foot line, while the other boot already stands on it (cell alpha bottom 0..2).
+## Registering that heel to the ground dropped the whole drawing (patrol side walk: the head
+## pumped 8 px a stride). A side-view walk mark higher than TOE_OFF_PX registers on the foot
+## line instead. false = the old registration. Runs keep every mark (lifted = the flight). The
+## toward/away and three-quarter columns keep it: their screen vertical is also the travel, and
+## the drop there stands in for the step forward the drawing lacks (held: S head travel 9 -> 15).
+const HOLD_TOE_OFF: bool = true
+const TOE_OFF_PX: float = 13.0
+const SIDE_COLUMN: int = 2
+## n31-13: a walk column that draws no forward step (S, N and the three-quarter columns) GLIDES:
+## the stance origin follows the sim point every tick (mid-stance = the sim point), every mark
+## registers on the foot line, so the head shows the drawn bob only, not a held stance then a
+## jump (head travel 1.4-2.9 px, from 10-36 px; the boot skates the stance, 22-33 px). false =
+## the foot lock on every column.
+const GLIDE_NO_STEP: bool = true
+## n31-15: how far a gliding column follows the sim point: 1.0 = the full glide, 0.0 = the foot
+## lock; between, the stand point, the stride and the registered sole blend linearly.
+const GLIDE_SHARE: float = 1.0
 
 ## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
 ## contact on the stance interval so his moving hip shadow crosses the planted boot.
@@ -12,6 +42,7 @@ var previous_body: Vector2
 var stance_shift: Vector2
 var new_stance: bool
 var landing: Vector2
+var eased_landing: Vector2
 var marks: Array[Vector4]
 var flight: bool
 var count: int
@@ -20,6 +51,8 @@ var row: int
 var face: int
 var texel: Vector2
 var stride: Vector2
+var glide_no_step: bool = GLIDE_NO_STEP
+var glide_share: float = GLIDE_SHARE
 
 
 func configure(path: String, drawings: int, running: bool) -> float:
@@ -50,6 +83,9 @@ func configure(path: String, drawings: int, running: bool) -> float:
 func touchdown(travel: Vector2, distance: float) -> void:
 	new_stance = true
 	stance_shift = Vector2.ZERO
+	if LAND_MID_STANCE:
+		landing = travel * distance * 0.5
+		return
 	if not centre_stance:
 		return
 	landing = travel * distance * 0.5
@@ -63,7 +99,7 @@ func pose(
 	face = facing.x
 	row = posmod(index, count)
 	texel = Vector2(-scale_px.x if facing.y else scale_px.x, scale_px.y)
-	at += landing
+	at += Vector2.ZERO if LAND_MID_STANCE else landing
 	var phase: int = posmod(row, half)
 	var centre: Vector2 = _knot(phase)
 	var offset: float = fraction - 0.5
@@ -94,12 +130,35 @@ func _ground(phase: int) -> Vector2:
 	var draw: int = posmod(start + phase, count)
 	var first: Vector4 = marks[face * count + draw - posmod(draw, half)]
 	var ink: Vector4 = marks[face * count + draw]
-	var delta: Vector2 = Vector2(first.x - ink.x + ink.z, first.y - ink.y + ink.w)
+	var delta: Vector2 = Vector2(first.x - ink.x + ink.z, foot_y(first.y) - foot_y(ink.y) + ink.w)
 	if centre_stance:
 		var left: Vector4 = marks[face * count]
 		var right: Vector4 = marks[face * count + half]
-		delta -= Vector2(left.x + right.x, left.y + right.y) * 0.5
+		delta -= Vector2(left.x + right.x, foot_y(left.y) + foot_y(right.y)) * 0.5
 	return stride * floorf(float(phase) / half) + delta * texel
+
+
+## The sole height a mark registers at (HOLD_TOE_OFF, GLIDE_NO_STEP).
+func foot_y(sole_y: float) -> float:
+	if glides(face):
+		return sole_y * (1.0 - glide_share)
+	var side: bool = HOLD_TOE_OFF and not flight and face == SIDE_COLUMN
+	return 0.0 if side and sole_y < -TOE_OFF_PX else sole_y
+
+
+## Where the stance stands (and its stride): a gliding column on the sim point, less the eased
+## landing settle adds back; any other on the locked stance origin.
+func stand_at(origin: Vector2, at: Vector2, step: Vector2, column: int) -> Vector2:
+	if not glides(column):
+		stride = step * half
+		return origin
+	stride = step * half * (1.0 - glide_share)
+	return origin.lerp(at - eased_landing, glide_share)
+
+
+## A walk drawn in this column glides with the sim point instead of locking its boot.
+func glides(column: int) -> bool:
+	return glide_no_step and not flight and column != SIDE_COLUMN
 
 
 ## A strafe can hand over between opposing drawn leads while the aim stays fixed.
@@ -115,9 +174,17 @@ func settle(placed: Transform2D, ppm: float, continuous: bool) -> Transform2D:
 		# Shorten this particular footfall to the reachable point. Keep its sole fixed
 		# until lift, and limit the correction so the figure never drifts from its rig.
 		stance_shift = (body - target).limit_length(ppm * 0.45)
+		if SHIFT_ACROSS_TRAVEL and LAND_MID_STANCE and not landing.is_zero_approx():
+			var along: Vector2 = landing.normalized()
+			stance_shift -= along * stance_shift.dot(along)
 		new_stance = false
 	placed.origin += stance_shift
 	var roll: Vector2 = (body - placed * local) / (ink.w - ink.y)
 	placed.y += roll
 	placed.origin -= roll * ink.y
+	# Past the easing: the body ease and stance shift would otherwise take the landing back. Eased
+	# (LANDING_EASE ppm per tick) so a reversal does not jump the figure a whole stance.
+	var reach: float = ppm * LANDING_EASE if continuous else INF
+	eased_landing = eased_landing.move_toward(landing, reach)
+	placed.origin += eased_landing if LAND_MID_STANCE else Vector2.ZERO
 	return placed

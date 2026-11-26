@@ -23,6 +23,11 @@ const RAISED_LINE_TICKS: Dictionary[int, int] = {
 }
 ## The cover milestone's sorted result bytes, before the dusk art and lights.
 const COVER_SEED_7: String = "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba"
+## arched_line since n31-19: its conveyor boxes on the drawn machines' base, 12 solid arch supports.
+const ARCHED_LINE_TICKS: Dictionary[int, int] = {
+	7: 17712, 3: 10765, 11: 12611, 21: 10199, 42: 11758
+}
+const ARCHED_SEED_7: String = "eb040b06699ea72aa14f0b0283f26e6f6a46ae33faf607da89f8244086ca9068"
 
 
 func run(tree: SceneTree) -> String:
@@ -87,10 +92,13 @@ func _run_seed(tree: SceneTree, measurements: Array[Dictionary]) -> String:
 func _pin(row: Dictionary) -> String:
 	var seed_value: int = row["seed"]
 	if row["dressing"] in ["line_fire", "raised_line", "arched_line"]:
+		var arched: bool = row["dressing"] == "arched_line"
 		var pinned: Dictionary[int, int] = (
-			LINE_FIRE_TICKS if row["dressing"] == "line_fire" else RAISED_LINE_TICKS
+			LINE_FIRE_TICKS
+			if row["dressing"] == "line_fire"
+			else (ARCHED_LINE_TICKS if arched else RAISED_LINE_TICKS)
 		)
-		if seed_value == 7 and row["sha256"] != COVER_SEED_7:
+		if seed_value == 7 and row["sha256"] != (ARCHED_SEED_7 if arched else COVER_SEED_7):
 			return "seed-7 cover result bytes changed: " + str(row["sha256"])
 		if row["ticks"] != pinned[seed_value]:
 			return "finished in %d ticks, expected %d" % [row["ticks"], pinned[seed_value]]

@@ -7,25 +7,14 @@ const CARD: StringName = &"robot_gunner_card"
 const ID: StringName = &"robot_gunner"
 const HIT_HOLD_S: float = 0.20
 
-## Hip height 0.8 m: the patrol's contact rings (radius .5 x hip) under his ground point.
-const HIP_M: float = 0.8
-
 var pose: CastCardPose = CastCardPose.new()
-var _shadow: Node2D = Node2D.new()
+var _shadow: CardContactShadow
 var _planted: Transform2D
 var _planted_row: int = -1
 
 
 func _init() -> void:
-	_shadow.show_behind_parent = true
-	add_child(_shadow)
-	for ring: Vector2 in RigCastShadows.CONTACT_RINGS:
-		var ink: Polygon2D = Polygon2D.new()
-		ink.polygon = RigCastShadows.contact_ellipse(
-			Vector2.ZERO, RigCastShadows.CONTACT_R_HIPS * HIP_M * SimConst.PX_PER_M * ring.x
-		)
-		ink.color = Color(RigCastShadows.SHADOW, ring.y)
-		_shadow.add_child(ink)
+	_shadow = CardContactShadow.mount(self)
 
 
 ## The sprite is a sibling so hiding the articulated rig also hides its detail children.
@@ -61,8 +50,7 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 	pose.attack = FoeCastView.attack_row(h, arena)
 	draw_pose(pose, h, moved, arena.tick)
 	_hold_stop(moved)
-	_shadow.visible = ViewMode.shared().cast_k > 0.0
-	_shadow.scale = Vector2.ONE / transform.get_scale()
+	_shadow.follow(self, h.pos * SimConst.PX_PER_M)
 
 
 ## A halt keeps the last planted drawing and placement, so the body does not jump to the plain

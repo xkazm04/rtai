@@ -38,6 +38,19 @@ def tops_of(path: Path) -> list:
     return out
 
 
+DOC = (
+    "How much of the drawn helmet bounce in Rivet's walk and run grids RivetBob removes "
+    "(tools/art/rivet_bob.py measures grids: art key/file -> rows of helmet-top px per "
+    "column, 110-space, as packed bottom-aligned). n31: each row aims at one figure height "
+    "(its mean, held inside what every frame reaches); each frame moves toward it by damp "
+    "with a height factor about the feet, which stay planted (stretch_min..stretch_max: tall "
+    "frames squash, short ones stretch), and only a run frame the stretch cannot carry lifts,"
+    " by at most lift_max_cell (110-space px; the walk never lifts). The owner's n11 note: "
+    "Rivet jumps too much during the movement; n31: the jump and the shadow below look like "
+    "flying. damp 0 = the drawn bob as before n11."
+)
+
+
 def main() -> None:
     root, table = Path(sys.argv[1]), Path(sys.argv[2])
     grids = {}
@@ -46,17 +59,14 @@ def main() -> None:
             if f.name.startswith(GRIDS) and not f.name.endswith((".import",)):
                 grids[f"{art}/{f.name}"] = tops_of(f)
     doc = {
-        "damp_run": 0.75,
+        "damp_run": 0.9,
         "damp_walk": 0.7,
-        "doc": "How much of the drawn helmet bounce in Rivet's walk and run grids RivetBob removes "
-        "(tools/art/rivet_bob.py measures grids: art key/file -> rows of helmet-top px per column, "
-        "as packed bottom-aligned; each frame takes back (top - the row's highest top) x damp, the first "
-        "stretch_cell px of it as a height stretch from the feet, which stay planted, and only the "
-        "rest as a lift: the run's flight frames). The owner's n11 note: Rivet jumps too much during "
-        "the movement. damp 0 = the drawn bob as before, stretch_cell 0 = the whole take-back lifts.",
+        "doc": DOC,
         "grids": grids,
+        "lift_max_cell": 2.2,
         "schema": "gtai.rivet-bob/1",
-        "stretch_cell": 9,
+        "stretch_max": 1.12,
+        "stretch_min": 0.92,
     }
     table.write_text(json.dumps(doc, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     print("wrote", table, len(grids), "grids")
