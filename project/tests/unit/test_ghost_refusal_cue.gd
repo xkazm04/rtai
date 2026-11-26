@@ -147,3 +147,54 @@ func test_whiff_cooldown_equal_to_the_full_cooldown_restores_before() -> void:
 func test_the_shipped_kerf_row_reads_whiff_cooldown_ticks() -> void:
 	var row: GhostAttacks.DeployRow = GhostAttacks.shipped().deploy[&"kerf"]
 	assert_between(row.whiff_cooldown_ticks, 1, row.cooldown_ticks)
+
+
+func _running(on_cooldown: bool, frames: int) -> GhostRefusalCue:
+	var cue: GhostRefusalCue = GhostRefusalCue.new()
+	cue.notice(1, &"tonnage", on_cooldown)
+	for f: int in frames:
+		cue.notice(1, &"tonnage", on_cooldown)
+	return cue
+
+
+func test_the_shake_is_six_px_scaled_by_the_remaining_cue() -> void:
+	var cue: GhostRefusalCue = _running(true, 1)
+	var want: float = 6.0 * sin(TAU / 6.0) * (17.0 / 18.0)
+	assert_almost_eq(cue.offset(&"tonnage").x, want, 0.01)
+
+
+func test_the_shake_decays_over_the_cue() -> void:
+	var early: float = absf(_running(true, 1).offset(&"tonnage").x)
+	var late: float = absf(_running(true, 7).offset(&"tonnage").x)
+	assert_gt(late, 0.0)
+	assert_lt(late, early)
+
+
+func test_the_cue_is_spent_after_18_frames() -> void:
+	var cue: GhostRefusalCue = _running(true, 18)
+	assert_eq(cue.offset(&"tonnage"), Vector2.ZERO)
+	assert_eq(cue.rim(&"tonnage").a, 0.0)
+
+
+func test_only_a_cooldown_refusal_flashes_the_arc() -> void:
+	var base: Color = Color(0.1, 0.5, 0.5)
+	var hot: Color = _running(true, 3).arc(&"tonnage", base)
+	assert_ne(hot, base)
+	assert_gt(hot.r, base.r, "toward white")
+	assert_eq(_running(false, 3).arc(&"tonnage", base), base, "no target: no flash")
+	assert_eq(_running(true, 3).arc(&"kerf", base), base, "another form: no flash")
+
+
+func test_a_fresh_cue_is_idle() -> void:
+	var cue: GhostRefusalCue = GhostRefusalCue.new()
+	var base: Color = Color(0.2, 0.4, 0.6)
+	assert_false(cue.cooldown)
+	assert_false(cue.active(&"tonnage"))
+	assert_eq(cue.arc(&"tonnage", base), base)
+
+
+func test_sync_without_a_deploy_steps_the_cue_on() -> void:
+	var cue: GhostRefusalCue = _running(true, 2)
+	cue.sync(null)
+	assert_eq(cue.frame, 3, "stepped on, not restarted")
+	assert_true(cue.cooldown)
