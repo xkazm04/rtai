@@ -6,10 +6,11 @@ extends RefCounted
 
 ## Near-black, a touch cool so it never reads as a warm stain on the ochre floor. Densest along
 ## the south edge where the object meets the ground, lighter to the north: a contact shadow.
-const TINT: Color = Color(0.03, 0.03, 0.04, 0.86)
-const NORTH_SHARE: float = 0.62
-## The soft rim, in metres, centred on the footprint edge.
-const EDGE_M: float = 0.08
+const TINT: Color = Color(0.03, 0.03, 0.04, 0.66)
+const NORTH_SHARE: float = 0.45
+## The soft rim, in metres, centred on the footprint edge (0.15 m in, 0.15 m out), so the visible
+## edge stays within 0.25 m of the collision; a contact shade, not a hard slab.
+const EDGE_M: float = 0.30
 
 
 ## `box_m` is the collision footprint in metres; drawn in the canvas's metre-to-pixel space.
