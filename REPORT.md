@@ -46,9 +46,16 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
   `--melee-sweep=off,--kill-feed=off`, right HEAD): `beside_fatal_chainsaw.mp4` (grind at 14 s, torn pieces at
   18 s), `beside_fatal_katana.mp4` (first split 18 s: blue halves and pools round Rivet, left whole bodies),
   `beside_fatal_plasma_sword.mp4` (16 s: burst pieces; left whole bodies); still `still_grind_chainsaw_64.png`.
-  `beside_fatal_electro_baton.mp4` (13 s: a pale overload figure beside Rivet, charred bodies at 14 s; the
-  weakest of the five, see 04g), `beside_fatal_claw.mp4` (13 s: the cop at Rivet raked into torn pieces with red
+  `beside_fatal_electro_baton.mp4` (re-shot after 04g: 12.9-13.5 s the struck cop stands in amber current,
+  falls dark and smoking at 13.6 s; left a plain body on a pool), `beside_fatal_claw.mp4` (13 s: the cop at Rivet raked into torn pieces with red
   spray; left whole bodies).
+
+- Baton overload raised (04g, view only): it was the weakest fatality (white-blue bolts for 20 ticks, then the
+  sheet's 1 px cream lines, read as a pale grey cop). Now four amber current arcs run from the baton contact to
+  head, hands and ground until he falls (`KillOverloadArcs`; `arc_n` 4, `arc_ticks` = the variant's fall tick + 3
+  in `signature_kills.json`), with a 3-tick amber-white contact flash. Stills
+  `still_overload_{32,64}_before_after.png` (masters; `evidence/n31-melee/03-fatal/`). Mutate 11/12 = 91.7 %.
+  The figure under the arcs stays pale (the drawn jolt rows).
 
 ### Item 4: impacts of one quality (view only, no digest)
 - What a player now feels: **a katana or plasma sword hit leaves a cut or a sear across the body, and the
@@ -75,7 +82,8 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
   1/1/1 -> 2/2/2, chainsaw 1/0/1 -> 2/2/2, baton 2/2/1 -> 2/2/2, pistol and gatling 1/1/2 -> 2/1/2, claw 3/2/2
   (the reference) unchanged. Caveats: the 'human' cell is the riot guard; gun rows draw no victim at the stop.
 - Mutate (`evidence/n31-melee/04-impacts/mutate.md`, `--max=20`, test subsets): `shield_sparks.gd` 11/19 =
-  57.9 %, `gun_fx_wound.gd` 8/19 = 42.1 %, `blade_marks.gd` 0/6 (incomplete; the survivors are drawing geometry
+  57.9 %, `gun_fx_wound.gd` 8/19 = 42.1 % (06b then pinned the early-out counts, robot/flesh counts, blocked blood
+  throw and the zero-direction fallback in 10 tests; its re-run hit the time cap, so the score is the old one), `blade_marks.gd` 0/6 (incomplete; the survivors are drawing geometry
   and alpha that a headless test never sees).
 - Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
   no digest moved (68 scenarios pass).
@@ -129,14 +137,16 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
 3. Apply the amber print patch (Director) and re-shoot the plasma sear still.
 4. Make the drawn reach not depend on facing (katana 3.14 m at facing 0, 1.91 m at 90): a per-direction blade
    length in the swing view, or one reach clamp.
-5. Raise the light guns on a robot (audit 1) and give the shotgun its kill row.
+5. Raise the light guns on a robot (audit 1); the shotgun's kill row when it goes on the wheel (it is
+   `enabled:false` today, so the player never meets it).
+7. Repaint the baton overload's jolt rows (the body under the new amber arcs stays pale).
 6. Pixel tests for `blade_marks.gd` (mutate 0/6: drawing geometry no headless test sees).
 
 ## Builder ledger
-26 calls (sonnet and opus Claude sub-agents), about 790 builder-minutes; 5 accepted whole, 20 accepted-partial,
+29 calls (sonnet and opus Claude sub-agents), about 885 builder-minutes; 7 accepted whole, 21 accepted-partial,
 1 bounced (code kept), 0 abandoned. Calls (minutes, verdict): 01a 38 ap, 01b 47 a, 02 30 ap, 01c 42 ap, 02p2 46 ap,
 03 17 a, 01d 22 ap, 01e 10 ap, 03p2 25 a, 04a 5 a, 02p3 50 ap, 04b 39 ap, 04c 9 ap, 02p3b 30 a, 02p4 62 ap,
 03p3 39 ap, 04d 21 ap, 04e 17 ap, 03p4 41 ap, 03p5 26 ap, 02p5 31 b, 03p6 35 ap, 04f 36 ap, 05 5 ap, 03p7 18 ap,
-06 29 ap. Brief differently: say "blade pixels only, never the body" in the first measurement brief; one film
+06 29 ap, 03p8 7 a, 04g 44 a, 06b 43 ap. Brief differently: say "blade pixels only, never the body" in the first measurement brief; one film
 tool per lane at a time, alone on the lock; say in the brief which tools take the lock themselves; the short
 one-point calls (04a, 04c, 05, 03) were the best value, the 50-60 min calls all ended partial.
