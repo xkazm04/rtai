@@ -26,3 +26,5 @@ A player feels: the key was heard and said no - the refused chip winks (white ar
 outline on a whiffed Kerf) for a third of a second, instead of a press that seemingly vanished.
 
 g27 re-render (rim drawn after the face and cooling arc, same probe and flags, cells hstacked unlabelled, 2x, Tonnage row over Kerf row): the amber now reads on the dimmed Tonnage chip at +1/+2/+4 (the avatar takes an amber-green cast, fading by +8, gone at +17) where before it was hidden; it reads as a tint of the avatar's silhouette, not a clean outline. Kerf row unchanged.
+
+g29 revert (3250a9b32): the cue rim goes back under the face (drawn over it, the silhouette rim tinted the whole avatar olive on both rows). Labelled strip re-rendered (`refusal-cue-strip.png`, rows "Tonnage on cooldown" / "Kerf, no target", cells press -1, +1, +2, +4, +8, +17): Kerf shows a clean amber outline at +1/+2/+4 fading by +8, gone at +17; the Tonnage chip shows the white arc flash at +1/+2 (thinning by +4) and no amber; no avatar is tinted.
