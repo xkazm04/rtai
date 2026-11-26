@@ -89,7 +89,9 @@ is docs/evidence/JOURNAL/REPORT only.
   (the reference) unchanged. Caveats: the 'human' cell is the riot guard; gun rows draw no victim at the stop.
 - Mutate (`evidence/n31-melee/04-impacts/mutate.md`, `--max=20`, test subsets): `shield_sparks.gd` 11/19 =
   57.9 %, `gun_fx_wound.gd` 8/19 = 42.1 % (06b then pinned the early-out counts, robot/flesh counts, blocked blood
-  throw and the zero-direction fallback in 10 tests; its re-run hit the time cap, so the score is the old one), `blade_marks.gd` 0/6 (incomplete; the survivors are drawing geometry
+  throw and the zero-direction fallback in 10 tests; the Director's re-run at 06:02 after the gate, `--max=20 --tests=test_gun_fx_wound`, 463 s: `gun_fx_wound.gd`
+  94.7 % = 18 / (18 + 1), invalid 1; the one survivor is the splash position `at * PX_PER_M` at :41, a view-only value); `shield_sparks.gd` 57.9 % -> 84.2 % = 16 / (16 + 3), invalid 1 (464 s, `--tests=test_shield_sparks_melee`;
+  survivors: the early-out count at :64, the robot-vs-slab kind branch value at :77, the face offset at :103), `blade_marks.gd` 0/6 (incomplete; the survivors are drawing geometry
   and alpha that a headless test never sees).
 - Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
   no digest moved (68 scenarios pass).
