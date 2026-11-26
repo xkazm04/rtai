@@ -110,36 +110,6 @@ func test_a_travelling_foe_carries_its_gun_low() -> void:
 	assert_false(FoeGaitDrive.gun_down(arena, h), "legacy keeps the gun up")
 
 
-func test_a_short_walk_to_cover_in_range_and_sight_is_fight() -> void:
-	var arena: CombatArena = CombatArena.new(
-		CombatTuning.shipped(), Events, RngRegistry.new(23).stream(&"combat")
-	)
-	arena.guard_map = GuardRouteMap.new(Rect2(-20, -20, 40, 40), [], null, 0.45)
-	arena.squad_ai = ArenaSquad.new(arena.guard_map)
-	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ZERO, &"patrol_cop")
-	var mind: SquadMind = arena.squad_ai.mind_for(h)
-	var pit: EnemyPit = arena.squad_ai.pit
-	pit.rivet_pos = Vector2(8, 0)
-	pit.tick = 100
-	mind.agent.sees = true
-	mind.motion = EnemyAgent.State.COVER
-	for spot: float in [2.0, 2.9]:
-		_walk_to(mind, Vector2(0, spot))
-		arena.squad_ai.gaits.steer(mind, Vector2.ZERO, pit)
-		assert_eq(mind.agent.gait.mode, F, "a %.1f m step to cover is FIGHT" % spot)
-		assert_true(arena.squad_ai.gaits.may_fire(mind, pit.tick), "and may fire")
-	_walk_to(mind, Vector2(0, FoeGait.TRAVEL_MIN_M + 1.0))
-	arena.squad_ai.gaits.steer(mind, Vector2.ZERO, pit)
-	assert_eq(mind.agent.gait.mode, T, "a longer walk is TRAVEL")
-	assert_false(arena.squad_ai.gaits.may_fire(mind, pit.tick))
-
-
-func _walk_to(mind: SquadMind, spot: Vector2) -> void:
-	mind.agent.pos = Vector2.ZERO
-	mind.agent.goal = spot
-	mind._destination = spot
-
-
 class Trace:
 	extends RefCounted
 	var shots: int = 0

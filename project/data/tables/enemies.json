@@ -433,11 +433,11 @@
     "max_melee": 2,
     "max_shooters": 2,
     "max_shooters_min": 3,
-    "max_shooters_share": 0.5,
+    "max_shooters_share": 0.75,
     "own_weapon_damage": {
       "cannon": 8,
-      "pistol": 3,
-      "rifle": 2
+      "pistol": 2,
+      "rifle": 1.5
     },
     "own_weapons": true,
     "panic_s": 3,
