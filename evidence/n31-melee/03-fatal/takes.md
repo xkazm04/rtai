@@ -90,3 +90,8 @@ washed the cop out; drawn in layer px with the narrower halo now.
 Re-take `beside_fatal_electro_baton.mp4` (fatal_takes.sh electro_baton, 04:51-04:57, HEAD af5005c0e): right half,
 12.9-13.5 s, the struck cop stands in amber current, falls dark and smoking at 13.6 s; left half (main rules) has no
 overload at that kill.
+Checks: `run_unit.mjs --select=test_kill_overload_arcs,test_kill_cook_shred,test_kill_new_styles` 19 passed, 0 failed;
+`run_scenarios.mjs --only=brutality_kills` 1 passed (view-only change, no digest moved); lint 19 checks pass.
+Mutate `kill_overload_arcs.gd --max=12 --tests=test_kill_overload_arcs` at db6b6d48c: score 91.7% = killed 11 /
+(killed 11 + survived 1) (first run at af5005c0e 25.0%: draw() untested; paths()/flash() split out and pinned since).
+Survivor: :73 the contact flash's draw_circle deleted (render-only, seen in the stills, not unit-reachable).
