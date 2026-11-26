@@ -110,21 +110,25 @@ func _save(since: int) -> void:
 			xf * view._body.position,
 			xf * (input.target.pos * SimConst.PX_PER_M)
 		]
-	Log.info(
-		"beats",
-		(
-			"%s: tick=%d phase=%d origin=%s spot=%s screen origin=%s spot=%s body=%s target=%s"
-			% [
-				file,
-				session.stage.tick,
-				ghost.phase,
-				ghost.origin,
-				ghost.spot,
-				px[0],
-				px[1],
-				px[2],
-				px[3]
-			]
+	(
+		Log
+		. info(
+			"beats",
+			(
+				"%s: tick=%d phase=%d origin=%s spot=%s target_m=%s screen origin=%s spot=%s body=%s target=%s"
+				% [
+					file,
+					session.stage.tick,
+					ghost.phase,
+					ghost.origin,
+					ghost.spot,
+					input.target.pos,
+					px[0],
+					px[1],
+					px[2],
+					px[3]
+				]
+			)
 		)
 	)
 	if image.save_png(out_dir.path_join(file)) != OK:

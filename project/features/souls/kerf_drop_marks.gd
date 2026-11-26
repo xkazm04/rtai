@@ -13,6 +13,9 @@ const SPATTER: Texture2D = preload("res://features/souls/art/kerf_cut_spatter.pn
 const REAR: Texture2D = preload("res://features/souls/art/kerf_rear_scorch.png")
 const SCORCH_LONG_M: float = 2.6
 const SCORCH_WIDE_M: float = 0.8
+## The seam's band in its 1024x320 strip (the char seam rows 130-189 and its thrown specks):
+## this band spans SCORCH_WIDE_M across the line, so the seam reads at play zoom.
+const SCORCH_BAND: Vector2 = Vector2(100.0, 220.0)
 const SPATTER_M: float = 1.8
 const REAR_M: float = 1.4
 const SPATTER_TICKS: int = 12
@@ -61,8 +64,11 @@ func draw(ci: CanvasItem, tick: int, ppm: float) -> void:
 		_decal(ci, REAR, heel, REAR_M * ppm, ground)
 		var seam: Transform2D = Transform2D(dir.angle(), at * ppm)
 		ci.draw_set_transform_matrix(seam)
-		var size: Vector2 = Vector2(SCORCH_LONG_M, SCORCH_WIDE_M) * ppm
-		ci.draw_texture_rect(SCORCH, Rect2(-size * 0.5, size), false, Color(1, 1, 1, ground))
+		var sy: float = SCORCH_WIDE_M * ppm / (SCORCH_BAND.y - SCORCH_BAND.x)
+		var long_px: float = SCORCH_LONG_M * ppm
+		var top: float = -SCORCH_WIDE_M * ppm * 0.5 - SCORCH_BAND.x * sy
+		var rect: Rect2 = Rect2(-long_px * 0.5, top, long_px, SCORCH.get_height() * sy)
+		ci.draw_texture_rect(SCORCH, rect, false, Color(1, 1, 1, ground))
 	var spat: float = spatter_alpha(tick)
 	if spat > 0.0:
 		var grow: float = 0.85 + 0.15 * float(tick - cut_tick) / SPATTER_TICKS
