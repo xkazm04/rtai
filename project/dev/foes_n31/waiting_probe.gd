@@ -16,8 +16,12 @@ const KNOWN: PackedStringArray = [
 	"--bot-salt",
 	"--pick-filter",
 	"--wave-timeout",
-	"--waiting-out"
+	"--waiting-out",
+	"--foe-fire",
+	"--foe-moves"
 ]
+## Game flags the gauntlet parent does not list: read by the game itself (LaunchArgs), checked here.
+const GAME_FLAGS: PackedStringArray = ["--foe-fire", "--foe-moves"]
 
 var _out_path: String = ""
 var _tally: Tally
@@ -26,7 +30,9 @@ var _tally: Tally
 func _invalid_arg(args: ArenaArgs) -> String:
 	var rest: ArenaArgs = ArenaArgs.new()
 	for flag: String in args.values:
-		if flag != OUT_FLAG:
+		if GAME_FLAGS.has(flag) and not TakeArgs.valid(flag, args.text(flag)):
+			return "%s=%s" % [flag, args.text(flag)]
+		if flag != OUT_FLAG and not GAME_FLAGS.has(flag):
 			rest.values[flag] = args.values[flag]
 	_out_path = args.text(OUT_FLAG)
 	if args.has(OUT_FLAG) and not _out_path.is_absolute_path():

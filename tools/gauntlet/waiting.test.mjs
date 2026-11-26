@@ -149,3 +149,11 @@ test('--compare prints one column per dir and the damage sum of waves 1-4', () =
     assert.throws(() => compareMarkdown([{ schema: 'x' }], ['a']), /summary/);
   } finally { for (const d of dirs) rmSync(d, { recursive: true, force: true }); }
 });
+
+test('--game-flag rides on every probe argv', () => {
+  const a = parse(['--out=/tmp/x', '--game-flag=--foe-fire=hot', '--seeds=2', '--profiles=average']);
+  const jobs = [...plan(a)];
+  assert.equal(jobs.length, 2);
+  for (const j of jobs) assert.equal(j.argv.at(-1), '--foe-fire=hot');
+  assert.deepEqual([...plan(parse(['--out=/tmp/x', '--seeds=1', '--profiles=average']))][0].argv.filter((x) => x.includes('foe')), []);
+});

@@ -3,7 +3,7 @@
 // profile x seed through tools/dev/run.mjs, one Godot at a time under the lane lock build/n31/godot.lock,
 // then pools the gtai.foes-waiting/1 files into waiting.json + waiting.md (waiting_agg.mjs).
 //   node tools/gauntlet/waiting.mjs --out=<dir> [--profiles=novice,average] [--seeds=10] [--seed0=1]
-//     [--waves=7] [--rev=<commit>] [--from=<dir>] [--parity] [--check] [--tag=b1]
+//     [--game-flag=--foe-fire=hot[,..]] [--waves=7] [--rev=<commit>] [--from=<dir>] [--parity] [--check] [--tag=b1]
 // --rev runs in a temp detached worktree at that commit (the probe files copied in), removed after.
 // --from re-aggregates <dir>/runs/*.json without Godot. --parity also runs plain `gauntlet` with the
 // same args and compares the two run results. --check only parse-checks the probe (in the --rev tree).
@@ -28,7 +28,7 @@ const LOCK = join(ROOT, 'build', 'n31', 'godot.lock');
 
 export function parse(argv) {
   const { values: v } = parseArgs({ args: argv, options: Object.fromEntries(
-    ['profiles', 'seeds', 'seed0', 'waves', 'out', 'rev', 'from', 'tag', 'compare', 'labels'].map((k) => [k, { type: 'string' }])
+    ['profiles', 'seeds', 'seed0', 'waves', 'out', 'rev', 'from', 'tag', 'compare', 'labels', 'game-flag'].map((k) => [k, { type: 'string' }])
       .concat([['parity', { type: 'boolean' }], ['check', { type: 'boolean' }]])) });
   const int = (name, x, min) => {
     if (!/^\d+$/.test(x) || Number(x) < min) throw new Error(`--${name} must be an integer >= ${min}`);
@@ -44,7 +44,7 @@ export function parse(argv) {
   return { profiles, seeds: int('seeds', v.seeds ?? '10', 1), seed0: int('seed0', v.seed0 ?? '1', 0),
     waves: int('waves', v.waves ?? '7', 1), out: v.out ? resolve(v.out) : null, rev: v.rev ?? null,
     from: v.from ? resolve(v.from) : null, parity: v.parity ?? false, check: v.check ?? false, tag: v.tag ?? 'b1',
-    compare, labels };
+    compare, labels, gameFlags: v['game-flag'] ? v['game-flag'].split(',') : [] };
 }
 
 /** The dev-runner argv for one probe run (mirrors commands.mjs entryArgs for a bot run). */
@@ -57,7 +57,10 @@ export function probeArgv({ profile, seed, waves }, runsDir) {
 
 export function* plan(a) {
   for (const profile of a.profiles)
-    for (let seed = a.seed0; seed < a.seed0 + a.seeds; seed++) yield { profile, seed, ...probeArgv({ profile, seed, waves: a.waves }, join(a.out, 'runs')) };
+    for (let seed = a.seed0; seed < a.seed0 + a.seeds; seed++) {
+      const j = probeArgv({ profile, seed, waves: a.waves }, join(a.out, 'runs'));
+      yield { profile, seed, ...j, argv: [...j.argv, ...(a.gameFlags ?? [])] };
+    }
 }
 
 function sleep(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
