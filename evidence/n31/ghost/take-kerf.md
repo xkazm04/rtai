@@ -36,10 +36,50 @@ three whiffs (seed 2 w2, seed 5 w1, seed 10 w1 deploy 2); with the relock seed 1
 only seed where the HEAD side shows the relock, deploy 1 presses on the same tick on both sides (t321) and each cut kills a
 visible cop; main's deploy 2 is in wave 2 (t1008), HEAD's in wave 1 (t922) because the runs split at the first Kerf.
 
-## Main side (filmed first)
+## Take (seed 10, both sides from tick 260; main filmed first, HEAD after g24's relock landed)
 
-`take-kerf-main-32ppm.mp4` 1920x1080 25.00 s (ffprobe), movie frames 0-1499 from tick 260 (`--from=260`): deploy 1 press t321 /
-cut t322 (frame 62), 1 hit / 1 kill (3 near); deploy 2 (wave 2) press t1008 / cut t1009 (frame 933), 1 / 1 (5 near). The movie's
-deploy ticks match the headless seed run. Main frames 61-70 (crop): at the press the teal dashed range ring and a chevron, one
-tick later a teal slash on the cop below-right of Rivet and the cop falls, by frame 70 a translucent teal Kerf figure with blade
-arms stands over the body. The HEAD side and the rest of this note follow in the next commit.
+| clip deploy | main press / damage tick, clip time | main hits / kills (foes within 9 m) | HEAD press / damage tick, clip time | HEAD hits / kills (foes within 9 m) |
+|---|---|---|---|---|
+| 1 (wave 1) | 321 / 322, 1.0 s | 1 / 1 (3) | 321 / 333, 1.1 s / 1.3 s | 1 / 1 (3) |
+| 2 | 1008 / 1009 (wave 2), 15.6 s | 1 / 1 (5) | 922 / 934 (wave 1), 12.0 s / 12.2 s, **relock**: the locked cop died to Rivet's melee 1.0 m away in the wind-up, the cut re-picked the cop behind him | 1 / 1 (1) |
+| clip total | | 2 / 2 | | 2 / 2 |
+| whole 3-wave run | | 3 / 3 (3 deploys) | | 6 / 6 (6 deploys, 0 whiffs, 1 relocked) |
+
+Main damages on the release tick (the bot's hold is one tick); HEAD damages 12 ticks after the press (the sight). HEAD's third
+deploy (t1630) falls after the clip's last frame (the view holds the sim on some frames, e.g. the wave card, so frame n is not tick 260+n).
+The movie deploy ticks match the headless seed runs exactly.
+
+Files (`C:\Users\kazda\kiro\gtai-masters\n31\ghost\`, ffprobe lengths): `take-kerf-main-vs-head-32ppm.mp4` 3840x1080
+25.00 s (labelled "main ba8e470b0" | "n31 ghost f86b03e38"), `take-kerf-main-32ppm.mp4` 1920x1080 25.00 s,
+`take-kerf-head-32ppm.mp4` 1920x1080 25.00 s; both clips are movie frames 0-1499 from tick 260. No audio. At 64 px/m
+(`ghost_n31_take_closeup.tscn`, same seed, same deploy ticks): the still pair at deploy 1, C+2,
+`take-kerf-main-vs-head-64ppm-cut.png` (main cut t322+2, closeup from 260 frame 64 | HEAD cut t333+2, closeup from 260 frame
+79; each alone: `take-kerf-main-64ppm-cut-t324.png`, `take-kerf-head-64ppm-cut-t335.png`) and
+`take-kerf-head-64ppm-halfspeed.mp4` 1920x1080 12.65 s (HEAD deploy 2, the relock, whole at half speed, `setpts=2.0*PTS`,
+closeup from tick 860, frames 0-379: lead-in, press t922, Kerf at Rivet's side with the lock on the near cop, that cop dies to
+Rivet, cut t934 at frame 80 on the cop behind, the body and the seam held until the camera follows Rivet away). Raw logs, AVIs
+and deploy JSON: `build/n31/g23t/` (git-ignored).
+
+## What is on screen
+
+- Main, 32 px/m frames 61-70 (deploy 1): at the press the teal dashed range ring and a chevron; one tick later a teal slash on
+  the cop below-right of Rivet and he falls; by frame 70 a translucent teal Kerf with blade arms stands over the body. 64 px/m
+  C+2: the cop falling with the teal slash across him, no Kerf body yet.
+- HEAD, 32 px/m frames 66-140 (deploy 1, target about 3 m below Rivet): P+1 and P+7 Kerf's teal body at Rivet's side, a thin
+  teal sight line from him down to the target and white bracket arcs around the target: the wind-up reads at the gameplay
+  camera. Frame 77 (C) Kerf is behind the target on the kerb side, blades out; frame 79 a bright teal diagonal slash through
+  him; frame 90 the cop drops; frame 100 a fading teal ring around the body. The char seam and the scorched star are NOT
+  readable at 32 px/m: the body lies on the cut spot and only a few amber specks show by its head (frame 140).
+- HEAD, the relock (32 px/m frames 716-770, 64 px/m half-speed source): two cops in a line below Rivet; at the press Kerf
+  appears at Rivet's side and the near cop carries white lock bars; no sight line is visible (the target is 1 m away, under
+  Kerf's and Rivet's sprites). In the wind-up Rivet's claw kills that cop (blood); at C Kerf is behind the second cop on the
+  kerb and cuts him. Nothing on screen says "re-locked": the brackets do not move to the new cop before the blink, so it reads
+  as Kerf simply taking the next cop. At 64 px/m frames 100-140 a thin dark seam with an amber glint runs diagonally out from
+  under the body and a small tan scorch scribble sits by its head at the kerb; both are mostly covered by the body and the
+  blood, so the seam reads only if you look for it.
+
+What a player would say: on main Kerf is an instant slash on the cop you aim at the moment you let go, his body showing only
+after the kill; on HEAD you tap once, he stands at your side drawing a line and brackets on the cop for a fifth of a second, then
+he is behind that cop and cuts him, and when Rivet kills the cop first Kerf takes the one behind instead of wasting the press;
+still one cop per deploy on both sides, the wind-up reads at 3 m but vanishes under the sprites at 1 m, the seam is mostly
+hidden under the body, and nobody has played it with hands yet.
