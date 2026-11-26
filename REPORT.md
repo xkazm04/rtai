@@ -4,7 +4,9 @@ Branch `n31-foes`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue`, cut from
 Final game setting: `9b3730e36` (HEAD's default game code is the same). Call B is playable behind `--foe-fire=hot`
 (1e9d8632f, off by default).
 Films: `C:\Users\kazda\kiro\gtai-masters\n31\foes\` (`frames.json`, best first).
-Gate: PENDING (`node tools/gate/run.mjs --rev=HEAD` on `7e3ed7a46`, started 05:16, log `build/n31/gate-final.out`).
+Gate: `node tools/gate/run.mjs --rev=HEAD` on `7e3ed7a46`, the last product commit (later commits touch only JOURNAL,
+REPORT and `docs/decisions.md`): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-prologue\build\gate\7e3ed7a460f0\gate.json`.
+Lint 19/19, unit 4399 passed 0 failed, scenarios 68, parity bit for bit, selftest, export-audit 1008 loaded 0 failed.
 
 ## What a player now meets when a wave starts (item 4 paragraph)
 
