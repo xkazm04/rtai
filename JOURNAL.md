@@ -307,3 +307,9 @@ NEXT (if a session 10 runs before 07:40): nothing to build. REPORT is final; if 
 - 05:58 Session 10 ledger: BUILDER g31-drop-at 15 accepted. IMAGES 21/60. No BLOCKED, no FRICTION mem-budget. No product commit; the gate on da97ec3be stays final.
 
 NEXT (if a session 11 runs before 07:40): nothing to build; REPORT final. Any change: re-run `node tools/evidence/cites.mjs REPORT.md`, commit `-- REPORT.md JOURNAL.md`. No builder after 07:00, no `project/` commit.
+
+## Session 11 (05:57 - )
+
+- 05:57 MILESTONE session start; HEAD 2dca1b650; post-gate diff da97ec3be..HEAD = JOURNAL, REPORT, two evidence md only (gate stays final). No `NEED ghost` in n23-controls, n23-prologue or n23-street journals.
+- 06:00 DECISION fill the last evidence gap in Calls: "charge 0.45 s" has a lab number but no clip. Same temp-worktree recipe as g31 with tonnage `charge_s` 0 (uncommitted data value), seed 3 take, side by side with the shipped side + a press..dump still strip (who walks out). Evidence only, no project/ commit.
+- 06:01 BUILDER g32-charge launched (opus, brief `n31-ghost-32-charge-clip.md`), hard stop 06:55. Evidence only.
