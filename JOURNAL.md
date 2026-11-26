@@ -128,3 +128,6 @@ NEXT (session 7, ~04:52): (1) wave6_side main | rev:9b3730e36 (sonnet, ~25 min, 
 - 05:16 final gate started: `node tools/gate/run.mjs --rev=HEAD` on 7e3ed7a46, nohup, out `build/n31/gate-final.out` (early: ground also gated early; mem-budget queues). No product commit after this one.
 - BUILDER b4r-decisions 1 accepted: 9122ba644 decisions line for --foe-fire=hot (call B behind a flag).
 - 05:34 MILESTONE final gate PASS on 7e3ed7a46: `gate: PASS; build/gate/7e3ed7a460f0/gate.json` (lint 19, unit 4399/0, scenarios 68, parity, selftest, export-audit 1008/0). No product commit after it.
+- 05:36 BUILDER b4s-callb-w1 (sonnet) launched: callb_wave1 take HEAD | flags:--foe-fire=hot, seed 3, evidence only; hard stop 05:58.
+- BUILDER RUNNING b4s-callb-w1 since 05:36 (if the session ended first: `git log` for "b4s: callb_wave1"; clips gtai-masters/n31/foes/callb_wave1_*.mp4; add a frames.json note and a REPORT call-0 line from the take JSON means).
+NEXT (session 8, ~06:11): no product work (gate PASS on 7e3ed7a46; any product commit needs a re-gate). (1) b4s result -> REPORT call 0 gets the wave 1 clip + means; frames.json: put callb_wave1_side third, check 8-15 entries. (2) `node tools/evidence/cites.mjs REPORT.md`, final REPORT commit by 07:40. (3) Do not start new builders after 07:00.
