@@ -26,6 +26,29 @@ Patch: `evidence/n31/foes/prologue_moves.patch` (made at `636587d8e`, `git apply
 - `project/tests/unit/test_prologue_panic_gait.gd` (new): no round inside danger_m at 6.65 m/s,
   rounds while backing off at 2.99 m/s between 4 m and 8.8 m.
 
-## Numbers
+## Shots (one take per seed, main vs patched)
 
-PENDING (being measured).
+Headless, the prologue bot (`res://dev/bots/prologue_bot.gd`) on the default dressing, same seed, same
+loop as `scenario_prologue_pilot`, stepped until wave one (the yard patrol) is cleared. A round is
+counted when a `ProloguePanic` member's `EnemyAgent.shot_tick` changes; the band is Rivet's distance
+from that officer after the tick. Main = `git show HEAD:project/boot/prologue/prologue_panic.gd`
+swapped into the same throwaway tree, everything else identical.
+
+| seed | main <4 m | main 4-8.8 m | main >8.8 m | patched <4 m | patched 4-8.8 m | patched >8.8 m | wave one cleared tick main / patched |
+|---|---|---|---|---|---|---|---|
+| 7 | 14 | 20 | 28 | **0** | **10** | 4 | 5215 / 4261 |
+| 3 | 25 | 27 | 50 | **0** | **14** | 2 | 6957 / 4237 |
+| 11 | 2 | 17 | 37 | **0** | **16** | 2 | 4770 / 4247 |
+| 21 | 18 | 19 | 25 | **0** | **10** | 7 | 5187 / 4687 |
+| 42 | 14 | 22 | 28 | **0** | **9** | 17 | 5193 / 4855 |
+
+Bars: inside 4 m = 0 on every seed (main 2-25); 4-8.8 m > 0 on every seed (9-16): they still shoot
+while backing off. Main seed 3 includes one Rivet death and the checkpoint retry (bands summed over
+both attempts; `pistol_rounds` 40 is the retry only).
+
+Side effect to judge (gameplay): the patrol fires far fewer rounds in all (patched 14-26 vs main
+40-64 counted) and wave one clears 300-2700 ticks sooner. Most of the drop is past 8.8 m: an officer
+whose mark (`_centre + offset`, which drifts as the bunch moves) is more than `ARRIVED_M` 0.6 m away
+is TRAVEL and holds its round, then needs 0.6 s hold + 0.25 s settle. If ground wants the yard
+as hot as before past the gap, the lever is a larger "arrived" radius for the yard marks (for
+example 1.5 m) in `step()`'s `moving`; that is ground's tuning call, not part of this patch.
