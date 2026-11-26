@@ -217,3 +217,4 @@ NEXT (session 9 / report phase, by 07:40):
 1. No product work: the final gate is PASS on ef6c95c2b (`build/gate/ef6c95c2b4af/gate.json`); every later commit is JOURNAL/REPORT only. Keep it so.
 2. Re-read REPORT.md top to bottom once (gate line, items 2-5, What does not, Calls, Merge notes incl. the n31-ground prologue pin conflict, ledger), run `node tools/evidence/cites.mjs REPORT.md`, commit REPORT + JOURNAL (pathspec) before 07:40.
 3. Do not start builders or Godot after 07:00.
+- 06:24 Director read REPORT through (NEXT step 2 done early): mutate bullet rewritten per file, ledger minutes corrected 885 -> 864 (sum of the 29 BUILDER lines), cites 17 ok 2 pattern, committed 8caddd301. Report phase only needs a last glance and the final JOURNAL line.
