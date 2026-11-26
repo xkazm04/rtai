@@ -140,3 +140,7 @@ NEXT (session 8): REPORT is final unless something changes; only re-read it, run
 - 05:43 read journal, git log (HEAD ffd0572a0), tree clean, other lanes: no new NEED foes (melee's 21:52 informational one is old). Gate PASS on 7e3ed7a46 stands; no product work.
 - 05:47 BUILDER b4t-call-clips (sonnet) launched: evidence/briefs/b4t-call-clips.md, evidence only: call3_guns (rev 8ce3eb779 shared rifle | 0fbe651eb own guns, share 0.35, seed 3 wave 1) then call2_shooters (ebcd2f37b fixed 2 | 8ce3eb779 share). Hard stop 06:22.
 - BUILDER RUNNING b4t-call-clips since 05:47 (if the session ended first: `git log` for "call3_guns" / "call2_shooters"; clips in gtai-masters/n31/foes/; add REPORT call 2/3 clip lines from the take JSON means).
+- 06:05 BUILDER b4t-call-clips 20 accepted: 7ceb3fb05 call3_guns (8ce3eb779 shared rifle | 0fbe651eb own guns, share 0.35: fired/s 0.82 | 0.68, alive 7.1 | 9.3, Rivet 93 | 97 at 12 s), d9d7f4c13 call2_shooters (ebcd2f37b fixed 2 | 8ce3eb779 share: fired/s 0.54 | 0.82). 1080p60 30 s clips each; frames.json 11 entries (tool rows). Its brief's command lacked `--out=` (the tool requires it): brief differently.
+- LOOK call3 4 s both sides: cops 6-12 m off, guns up, same picture; the guns differ in rhythm and damage, not on screen (matches "rounds look like the rifle's").
+- 06:08 REPORT calls 2 and 3 have their clips; ledger 26 calls / 701 min; cites ok. No product commit since the gate (7e3ed7a46).
+NEXT: REPORT final. Only re-read it, run cites and commit by 07:40 if anything changes. No new builders.

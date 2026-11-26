@@ -89,8 +89,15 @@ every fire number.
    then turns and runs.
 2. Simultaneous shooters: fixed 2 -> `max(3, ceil(0.5 x ranged alive))` (`squad.max_shooters_share`). Lever 1 alone
    (share 0.35): react p90 6.15 -> 4.13 s, damage 62.9 -> 77.4 with the shared rifle.
+   Clip `C:\Users\kazda\kiro\gtai-masters\n31\foes\call2_shooters_side.mp4` (d9d7f4c13): rev `ebcd2f37b` (two
+   moves, fixed 2) | `8ce3eb779` (share 0.35), seed 3, wave 1, same ticks. Foes firing per second 0.54 against 0.82,
+   and wave 1 is cleared in 22 s instead of 28 s. Rivet is at 97 against 93 of 100 at 12 s.
 3. Each kind its own gun (pistol / rifle / cannon, `squad.own_weapons`) against the shared assault rifle. At share
    0.35, damage in waves 1-4 77.4 -> 55.0. Rounds still look like the rifle's (above).
+   Clip `C:\Users\kazda\kiro\gtai-masters\n31\foes\call3_guns_side.mp4` (7ceb3fb05): rev `8ce3eb779` (shared
+   rifle) | `0fbe651eb` (own guns), both at share 0.35, seed 3, wave 1. Foes firing per second 0.82 against 0.68,
+   wave 1 lasts 22 s against 28 s, and Rivet is at 93 against 97 of 100 at 12 s. At 4 s both sides show the same
+   picture: cops 6 to 12 m off, guns up. The difference is in the rhythm and the damage, not in the picture.
 4. Waves 1-4 harder or easier (main -> HEAD, 10 seeds): average bot damage 62.9 -> 71.3, deaths 5 -> 7 of 10, waves
    6/7 reached 6/6 -> 3/3. Novice damage 93.7 -> 92.0, deaths 10 -> 10 of 10. Slightly harder for the average player,
    unchanged for the novice.
@@ -120,7 +127,7 @@ every fire number.
 
 ## Builder ledger
 
-25 Claude sub-agent calls, 681 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
+26 Claude sub-agent calls, 701 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
 
 | call | model | min | verdict | what it delivered |
 | --- | --- | --- | --- | --- |
@@ -149,6 +156,7 @@ every fire number.
 | b4q-hot-flag | sonnet | 23 | accepted | `--foe-fire=hot`, byte-identical proof |
 | b4r-decisions | sonnet | 1 | accepted | decisions line for the flag |
 | b4s-callb-w1 | sonnet | 7 | accepted | callb_wave1 take |
+| b4t-call-clips | sonnet | 20 | accepted | call3_guns, call2_shooters takes |
 
 What I would brief differently:
 - Short single-point calls (b4l 6, b4p 8, b4m 11, b4q 23 min) were the best value. The 50+ minute calls ended partial.
