@@ -1,6 +1,7 @@
 extends GutTest
 ## n31 ghost 17: Dent's drop drawn in beats: faces the lane, waits at the origin through the
-## wind-up, rams to the spot over R..R+8; Tonnage and Ohm keep row 0.
+## wind-up, rams to the spot over R-6..R (n31 ghost 25: he meets the cops on the sim's ram tick);
+## Tonnage and Ohm keep row 0.
 
 var stage: CollectCallStage
 var pilot: StagePilot
@@ -32,50 +33,52 @@ func test_wind_up_stands_at_the_origin_pulled_back_along_the_lane() -> void:
 	var lane: GhostDeploy = _lane()
 	assert_eq(DentDropBeats.at(lane, 0, -15), lane.origin, "arrives on the origin")
 	var back: Vector2 = lane.origin - Vector2.RIGHT * DentDropBeats.RECOIL_M
-	assert_almost_eq(DentDropBeats.at(lane, 10, -5).distance_to(back), 0.0, 0.0001)
-	assert_almost_eq(DentDropBeats.at(lane, 14, -1).distance_to(back), 0.0, 0.0001)
+	assert_almost_eq(DentDropBeats.at(lane, 8, -7).distance_to(back), 0.0, 0.0001, "cocked on R-7")
+	assert_almost_eq(DentDropBeats.at(lane, 9, -6).distance_to(back), 0.0, 0.0001, "launch on R-6")
 
 
-func test_ram_starts_at_the_pull_back_and_reaches_the_spot_on_r_plus_8() -> void:
+func test_ram_starts_at_the_pull_back_on_r_minus_6_and_reaches_the_spot_on_r() -> void:
 	var lane: GhostDeploy = _lane()
-	var back: Vector2 = lane.origin - Vector2.RIGHT * DentDropBeats.RECOIL_M
-	assert_almost_eq(DentDropBeats.at(lane, 15, 0).distance_to(back), 0.0, 0.0001)
+	var dive: int = DentDropBeats.DIVE_TICKS
+	assert_eq(dive, 6)
 	var last: float = -INF
-	for struck: int in DentDropBeats.RAM_TICKS + 1:
+	for struck: int in range(-dive, 1):
 		var x: float = DentDropBeats.at(lane, 15 + struck, struck).x
 		assert_gt(x, last, "monotone toward the spot")
 		last = x
-	assert_gt(DentDropBeats.at(lane, 16, 1).x - back.x, 1.5, "fast start: a ram")
-	assert_eq(DentDropBeats.at(lane, 23, DentDropBeats.RAM_TICKS), lane.spot)
+	assert_gt(DentDropBeats.at(lane, 10, -5).x - lane.origin.x, 1.5, "fast start: a ram")
+	assert_lt(DentDropBeats.at(lane, 14, -1).x, lane.spot.x, "still short on R-1")
+	assert_eq(DentDropBeats.at(lane, 15, 0), lane.spot, "at the spot on R: the hit lands on him")
 	assert_eq(DentDropBeats.at(lane, 40, 25), lane.spot, "stays to the fade")
 
 
 func test_pose_boundaries() -> void:
 	assert_eq(DentDropBeats.pose(3, -12), DentSpectralDrawn.Pose.HOVER)
 	assert_eq(DentDropBeats.pose(4, -11), DentSpectralDrawn.Pose.COCK)
-	assert_eq(DentDropBeats.pose(14, -1), DentSpectralDrawn.Pose.COCK)
-	assert_eq(DentDropBeats.pose(15, 0), DentSpectralDrawn.Pose.DIVE)
-	assert_eq(DentDropBeats.pose(22, 7), DentSpectralDrawn.Pose.DIVE)
-	assert_eq(DentDropBeats.pose(23, 8), DentSpectralDrawn.Pose.JAB)
+	assert_eq(DentDropBeats.pose(8, -7), DentSpectralDrawn.Pose.COCK, "COCK holds to R-7")
+	assert_eq(DentDropBeats.pose(9, -6), DentSpectralDrawn.Pose.DIVE, "DIVE from R-6")
+	assert_eq(DentDropBeats.pose(14, -1), DentSpectralDrawn.Pose.DIVE)
+	assert_eq(DentDropBeats.pose(15, 0), DentSpectralDrawn.Pose.JAB, "JAB from R")
+	assert_eq(DentDropBeats.pose(40, 25), DentSpectralDrawn.Pose.JAB)
 
 
-func test_dropped_dent_is_drawn_at_the_origin_then_at_the_spot_from_r_plus_8() -> void:
+func test_dropped_dent_is_drawn_at_the_origin_then_at_the_spot_from_r() -> void:
 	var layer: CanvasLayer = add_child_autofree(CanvasLayer.new())
 	GhostDeployView.attach(layer, stage, false)
 	var view: GhostDeployView = layer.get_child(0) as GhostDeployView
 	var charge: int = ghost.strike.attacks.deploy[DentStage.GHOST].charge_ticks
 	var drawn: Array[Vector2] = []
-	for i: int in charge + DentDropBeats.RAM_TICKS + 4:
+	for i: int in charge + 6:
 		_drive(key if i == 0 else 0)
 		view._process(0.0)
 		drawn.append(view._body.position / SimConst.PX_PER_M)
 	var reach: float = DentDropBeats.RECOIL_M + 0.001
-	for age: int in charge:
+	for age: int in charge - DentDropBeats.DIVE_TICKS:
 		assert_lt(
 			drawn[age].distance_to(ghost.origin), reach, "wind-up at the origin, age %d" % age
 		)
-	assert_gt(drawn[charge + 3].distance_to(ghost.origin), 2.0, "mid-lane on R+3")
-	for age: int in range(charge + DentDropBeats.RAM_TICKS, drawn.size()):
+	assert_gt(drawn[charge - 3].distance_to(ghost.origin), 2.0, "mid-lane on R-3")
+	for age: int in range(charge, drawn.size()):
 		assert_almost_eq(drawn[age].distance_to(ghost.spot), 0.0, 0.001, "spot, age %d" % age)
 	var body: DentBody = view._body._body as DentBody
 	assert_eq(body.deploy_pose, DentSpectralDrawn.Pose.JAB)

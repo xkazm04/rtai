@@ -1,5 +1,5 @@
 extends GutTest
-## n31 ghost 18b: Dent's drop ground (DentDropMarks): the skid telegraph reaches the spot by R-4
+## n31 ghost 18b: Dent's drop ground (DentDropMarks): the skid telegraph reaches the spot by R-6
 ## and not before P+4, the scuffed lane holds 2 s and fades 1 s, the record outlives the ghost.
 
 const PRESS: int = 100
@@ -13,17 +13,17 @@ func _marks() -> DentDropMarks:
 	return DentDropMarks.new(FROM, TO, PRESS, RAM, HALF)
 
 
-func test_the_skid_front_runs_from_the_origin_to_the_spot_between_p4_and_r4() -> void:
+func test_the_skid_front_runs_from_the_origin_to_the_spot_between_p4_and_r6() -> void:
 	var m: DentDropMarks = _marks()
 	for tick: int in range(PRESS, PRESS + 4):
 		assert_eq(m.skid_m(tick), 0.0, "tick P+%d: no skid on arrival" % (tick - PRESS))
 	var last: float = 0.0
-	for tick: int in range(PRESS + 4, RAM - 4):
+	for tick: int in range(PRESS + 4, RAM - 6):
 		var front: float = m.skid_m(tick)
 		assert_gt(front, last, "tick P+%d: the front moves on" % (tick - PRESS))
-		assert_lt(front, m.length_m(), "tick P+%d: short of the spot until R-4" % (tick - PRESS))
+		assert_lt(front, m.length_m(), "tick P+%d: short of the spot until R-6" % (tick - PRESS))
 		last = front
-	assert_almost_eq(m.skid_m(RAM - 4), 6.0, 0.0001, "on the spot by R-4")
+	assert_almost_eq(m.skid_m(RAM - 6), 6.0, 0.0001, "whole by R-6, the dive's start")
 	assert_almost_eq(m.skid_m(RAM - 1), 6.0, 0.0001)
 
 

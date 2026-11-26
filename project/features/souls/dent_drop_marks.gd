@@ -5,11 +5,11 @@ extends RefCounted
 ## P = press tick, R = the ram tick (P + the row's charge ticks); the lane runs origin -> spot:
 ## - arrival P..P+3: a small launch puff at the origin, billowing backward;
 ## - wind-up P+4..R-1: the skid (art/dent_lane_skid.png) revealed origin -> spot, ease-out, whole
-##   by R-4, its two scrape lines on the lane's edges (2 x ram_half_m apart), and the cap's arcs
-##   converging on the spot: the telegraph (foes can step out);
-## - ram R..R+7: the dust wake from the launch point to the diving body (DentDropBeats.dive), a
-##   bigger launch puff at the origin;
-## - stop R+8..: the stop scuff's heel under the spot, its gouges trailing back to the origin;
+##   by R-6 (the dive's start), its two scrape lines on the lane's edges (2 x ram_half_m apart), and
+##   the cap's arcs converging on the spot: the telegraph (foes can step out);
+## - dive R-6..R+1: the dust wake from the launch point to the diving body (DentDropBeats.dive,
+##   at the spot on R), a bigger launch puff at the origin from R-6;
+## - stop R..: the stop scuff's heel under the spot, its gouges trailing back to the origin;
 ## - aftermath R..: the scuffed lane replaces the skid, holds 2 s and fades 1 s.
 
 const SKID: Texture2D = preload("res://features/souls/art/dent_lane_skid.png")
@@ -34,7 +34,9 @@ const PUFF_M: float = 1.0
 const RAM_PUFF_M: float = 1.4
 const WAKE_WIDTH: float = 0.8
 const ARRIVE_TICKS: int = 4
-const SKID_LEAD_TICKS: int = 4
+const SKID_LEAD_TICKS: int = DentDropBeats.DIVE_TICKS
+## The wake and the launch puff: the dive plus two ticks of settling dust (R-6..R+1).
+const WAKE_TICKS: int = DentDropBeats.DIVE_TICKS + 2
 const CAP_IN_TICKS: int = 4
 const STOP_IN_TICKS: int = 3
 const HOLD_TICKS: int = 120
@@ -65,7 +67,7 @@ func live(tick: int) -> bool:
 	return tick < ram_tick + HOLD_TICKS + FADE_TICKS
 
 
-## The skid's front (metres from the origin): 0 before P+4, ease-out to the spot by R-4.
+## The skid's front (metres from the origin): 0 before P+4, ease-out to the spot by R-6.
 func skid_m(tick: int) -> float:
 	var start: int = press_tick + ARRIVE_TICKS
 	var span: int = ram_tick - SKID_LEAD_TICKS - start + 1
@@ -91,12 +93,13 @@ func draw(ci: CanvasItem, tick: int, ppm: float) -> void:
 	ci.draw_set_transform_matrix(_frame)
 	var scuff: float = ground_alpha(tick)
 	_strip(ci, SCUFF, SCUFF_BAND, Rect2(0.0, -width * 0.5, lane, width), scuff)
-	if struck >= DentDropBeats.RAM_TICKS:
-		var rise: float = clampf(float(struck - DentDropBeats.RAM_TICKS + 1) / STOP_IN_TICKS, 0, 1)
+	if struck >= 0:
+		var rise: float = clampf(float(struck + 1) / STOP_IN_TICKS, 0, 1)
 		_decal(ci, STOP, _pin(STOP_HEEL, lane, STOP_M * ppm), scuff * rise)
 	if struck < 0:
 		_telegraph(ci, tick, ppm)
-	elif struck < DentDropBeats.RAM_TICKS:
+	var dove: int = struck + DentDropBeats.DIVE_TICKS
+	if dove >= 0 and dove < WAKE_TICKS:
 		_wake(ci, struck, ppm, width)
 	_puffs(ci, tick, ppm)
 	ci.draw_set_transform(Vector2.ZERO)
@@ -123,20 +126,20 @@ func _wake(ci: CanvasItem, struck: int, ppm: float, width: float) -> void:
 	if to - from <= 1.0:
 		return
 	var w: float = width * WAKE_WIDTH
-	var fade: float = 1.0 - float(struck) / (DentDropBeats.RAM_TICKS + 2)
+	var fade: float = 1.0 - float(struck + DentDropBeats.DIVE_TICKS) / (WAKE_TICKS + 2)
 	_strip(ci, WAKE, WAKE_BAND, Rect2(from, -w * 0.5, to - from, w), fade)
 
 
-## The small puff on arrival (P..P+3) and the bigger one on the launch (R..R+7).
+## The small puff on arrival (P..P+3) and the bigger one on the launch (R-6..R+1).
 func _puffs(ci: CanvasItem, tick: int, ppm: float) -> void:
 	var at: float = -DentDropBeats.RECOIL_M * ppm
 	var since: int = tick - press_tick
 	if since >= 0 and since < ARRIVE_TICKS:
 		var k: float = float(since) / ARRIVE_TICKS
 		_decal(ci, PUFF, _pin(PUFF_PIN, at, PUFF_M * ppm * (0.7 + 0.3 * k)), 1.0 - k * k)
-	var struck: int = tick - ram_tick
-	if struck >= 0 and struck < DentDropBeats.RAM_TICKS:
-		var u: float = float(struck) / DentDropBeats.RAM_TICKS
+	var dove: int = tick - ram_tick + DentDropBeats.DIVE_TICKS
+	if dove >= 0 and dove < WAKE_TICKS:
+		var u: float = float(dove) / WAKE_TICKS
 		_decal(ci, PUFF, _pin(PUFF_PIN, at, RAM_PUFF_M * ppm * (0.8 + 0.4 * u)), 1.0 - u * u)
 
 
