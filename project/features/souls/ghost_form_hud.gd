@@ -125,13 +125,13 @@ func _chip(id: StringName, at: Vector2) -> void:
 	GhostChipFace.rim(self, id, c, r, [INK, RIM_PX + (CURRENT_RIM_PX if on else 0.0)])
 	if on:
 		GhostChipFace.rim(self, id, c, r, [TEAL, CURRENT_RIM_PX])
-	if cue.active(id):
-		GhostChipFace.rim(self, id, c, r, [cue.rim(id), GhostRefusalCue.RIM_PX])
 	var dim: Color = COOL_DIM if cool > 0.0 and not on else Color.WHITE
 	if not GhostChipFace.draw(self, id, c, r, dim):
 		GhostChipGlyph.draw(self, id, c, r * 0.55, PAPER if on else INK)
 	if cool > 0.0:
 		_cool_arc(c, r, cool, cue.arc(id, TEAL))
+	if cue.active(id):
+		GhostChipFace.rim(self, id, c, r, [cue.rim(id), GhostRefusalCue.RIM_PX])
 	if layout.all_names or id == _named:
 		_name(id, c, font)
 	if id == selected and key_hint != "":
