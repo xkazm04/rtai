@@ -24,14 +24,14 @@ func test_at_most_max_shooters_hold_a_token() -> void:
 	for e: EnemyAgent in pit.agents:
 		e.sees = true
 	EnemySquad.assign(pit.agents, pit.rivet_pos, pit.roster)
-	# n31 foes lever 1: 5 ranged alive -> max(3, ceil(0.35 x 5)) = 3 tokens.
+	# n31 foes: 5 ranged alive -> max(3, ceil(0.5 x 5)) = 3 tokens (share 0.5, b4f).
 	assert_eq(EnemySquad.holders(pit.agents, false), EnemySquad.shooter_slots(pit.roster, 5))
 	assert_eq(EnemySquad.holders(pit.agents, false), 3)
 
 
 func test_shooter_slots_are_a_share_of_the_ranged_alive() -> void:
 	var r: EnemyRoster = EnemyRoster.shipped()
-	assert_eq(EnemySquad.shooter_slots(r, 13), 5)
+	assert_eq(EnemySquad.shooter_slots(r, 13), 7, "ceil(0.5 x 13)")
 	assert_eq(EnemySquad.shooter_slots(r, 4), 3)
 	assert_eq(EnemySquad.shooter_slots(r, 2), 3, "the floor covers a small squad")
 	r.max_shooters_share = 0.0
@@ -45,16 +45,16 @@ func test_the_token_cap_counts_only_ranged_members_alive() -> void:
 	for e: EnemyAgent in pit.agents:
 		e.sees = true
 	EnemySquad.assign(pit.agents, pit.rivet_pos, pit.roster)
-	assert_eq(EnemySquad.holders(pit.agents, false), 5)
+	assert_eq(EnemySquad.holders(pit.agents, false), 7)
 	for e: EnemyAgent in pit.agents:
 		e.token = false
 		e.state = EnemyAgent.State.DEAD if e.id % 2 == 0 else e.state
 	EnemySquad.assign(pit.agents, pit.rivet_pos, pit.roster)
-	assert_eq(EnemySquad.holders(pit.agents, false), 3, "7 alive of 13: the dead do not count")
+	assert_eq(EnemySquad.holders(pit.agents, false), 4, "7 alive of 13: the dead do not count")
 	for e: EnemyAgent in pit.agents:
 		e.token = false
 	EnemySquad.assign(pit.agents, pit.rivet_pos, pit.roster, 13)
-	assert_eq(EnemySquad.holders(pit.agents, false), 5, "a caller's ranged count wins")
+	assert_eq(EnemySquad.holders(pit.agents, false), 7, "a caller's ranged count wins")
 
 
 func test_a_hit_staggers_a_cop_and_cancels_the_windup() -> void:
