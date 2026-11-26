@@ -3,8 +3,8 @@
 Read `evidence/briefs/n31-common.md` (binding) and the audit `evidence/n31-melee/04-impacts/audit.md` (pistol,
 machine_pistol, gloria, gatling: hit human 1, hit robot 1 - "a 0.12 m ink burst for 4 ticks, flash 4, kick 1 px,
 no blood on a wound"). Read what 04d just committed (`git log --oneline -8`, its robot spark wiring in
-`combat_blood.gd`) before you start: build on it, do not redo it. Tag `04e`. Launched ~02:57; commit by 03:18;
-report and END by 03:24 whatever state (the session stops at 03:32 and kills you). `git commit -- <paths>`.
+`combat_blood.gd`) before you start: build on it, do not redo it. Tag `04e`. Launched ~02:28; commit by 03:00;
+report and END by 03:12 whatever state (the session stops at 03:32 and kills you). `git commit -- <paths>`.
 View/feel only: no damage, timing or hit rule; scenario/replay digests must not move (run
 `node tools/tests/run_unit.mjs --changed` and the gun scenarios you touch, e.g. `--only=` names from
 `tools/tests/run_scenarios.mjs --list` that mention gun/ranged, if one exists).
