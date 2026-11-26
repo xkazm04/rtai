@@ -81,7 +81,8 @@ func test_draft_places_fill_at_show_time_and_leave_owner_words_verbatim() -> voi
 func test_recurring_orders_show_the_owner_row_through_its_reading_time() -> void:
 	var game: PrologueGame = PrologueGame.new()
 	game.with_view = false
-	game.boot("7")
+	## Seed 21: the pilot reaches beat two with no death replay (no stray HUD row).
+	game.boot("21")
 	add_child_autofree(game)
 	game.world.set_process(false)
 	var bot: InputSource = PILOT.new(game.stage, game.encounter)
