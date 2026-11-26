@@ -1,0 +1,605 @@
+{
+  "schema": "gtai.foes-play-takes/1",
+  "args": {
+    "seed": 3,
+    "wave": 1,
+    "seconds": 20,
+    "profile": "average",
+    "ppm": 64,
+    "lead": 1,
+    "out": "C:\\Users\\kazda\\kiro\\gtai-masters\\n31\\foes",
+    "name": "gait64_hold",
+    "follow": "patrol_cop",
+    "stalk": true,
+    "left": {
+      "kind": "rev",
+      "value": "ba8e470b0"
+    },
+    "right": {
+      "kind": "rev",
+      "value": "6b849d94c"
+    }
+  },
+  "sides": [
+    {
+      "key": "left",
+      "rev": "ba8e470b0fdfc796c4eb8d256bd086d4d7cfa969",
+      "flags": [],
+      "label": "main",
+      "scout_spawn_tick": 238,
+      "take": {
+        "first_tick": 178,
+        "frames": 1200,
+        "mode": "take",
+        "per_s": [
+          {
+            "alive": 0,
+            "fired": 0,
+            "followed": {
+              "dist_m": 0,
+              "fight_ticks": 0,
+              "id": -1,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 0,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 6.2,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 4,
+              "speed_mps": 1.33,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 6.6,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 3,
+              "speed_mps": 0.72,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 4,
+            "followed": {
+              "dist_m": 7.2,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 1,
+              "speed_mps": 1.16,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 8.1,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 3.09,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 7.4,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 1.23,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 3.2,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.35,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 3.3,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.32,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 3.9,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 1.1,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 3.6,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.06,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 2.7,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.62,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 10.2,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 3.12,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 12,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 3.03,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 8,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.47,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 1,
+            "followed": {
+              "dist_m": 4.6,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.51,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 4.9,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 3.2,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 6.6,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 1.96,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 8.3,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 4,
+              "speed_mps": 1.62,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 6,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 2.4,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 1,
+            "followed": {
+              "dist_m": 2.3,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 1.11,
+              "travel_ticks": 0
+            }
+          }
+        ],
+        "seed": 3,
+        "spawn_tick": 238,
+        "wave": 1,
+        "wave_reached": 1
+      }
+    },
+    {
+      "key": "right",
+      "rev": "6b849d94c4da528f1155c9b9d08caa98cdc58e31",
+      "flags": [],
+      "label": "6b849d94c",
+      "scout_spawn_tick": 238,
+      "take": {
+        "first_tick": 178,
+        "frames": 1200,
+        "mode": "take",
+        "per_s": [
+          {
+            "alive": 0,
+            "fired": 0,
+            "followed": {
+              "dist_m": 0,
+              "fight_ticks": 0,
+              "id": -1,
+              "mode": "none",
+              "rounds": 0,
+              "speed_mps": 0,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 4,
+            "followed": {
+              "dist_m": 6.1,
+              "fight_ticks": 59,
+              "id": 10,
+              "mode": "FIGHT",
+              "rounds": 2,
+              "speed_mps": 1.08,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 6.4,
+              "fight_ticks": 60,
+              "id": 10,
+              "mode": "FIGHT",
+              "rounds": 0,
+              "speed_mps": 0.26,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 4,
+            "followed": {
+              "dist_m": 6.6,
+              "fight_ticks": 60,
+              "id": 10,
+              "mode": "FIGHT",
+              "rounds": 1,
+              "speed_mps": 0.31,
+              "travel_ticks": 0
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 1,
+            "followed": {
+              "dist_m": 7.4,
+              "fight_ticks": 24,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 1,
+              "speed_mps": 1.86,
+              "travel_ticks": 36
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 6.4,
+              "fight_ticks": 29,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 1.68,
+              "travel_ticks": 31
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 1,
+            "followed": {
+              "dist_m": 2.7,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 3.09,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 7.8,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.06,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 12.6,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.99,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 10.1,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.91,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 12.1,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.74,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 1,
+            "followed": {
+              "dist_m": 14.5,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.27,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 14.5,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 3.09,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 12.2,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 3.2,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 9.3,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.88,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 6.5,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 3.16,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 3,
+            "followed": {
+              "dist_m": 4,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 1.49,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 3.8,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 0.55,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 2,
+            "followed": {
+              "dist_m": 3.8,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 1.73,
+              "travel_ticks": 60
+            }
+          },
+          {
+            "alive": 13,
+            "fired": 0,
+            "followed": {
+              "dist_m": 2.8,
+              "fight_ticks": 0,
+              "id": 10,
+              "mode": "TRAVEL",
+              "rounds": 0,
+              "speed_mps": 2.22,
+              "travel_ticks": 60
+            }
+          }
+        ],
+        "seed": 3,
+        "spawn_tick": 238,
+        "wave": 1,
+        "wave_reached": 1
+      }
+    }
+  ],
+  "ticks": "wave 1 starts at tick 238 on both sides",
+  "probes": {
+    "gait64_hold_left.mp4": {
+      "width": 1920,
+      "height": 1080,
+      "avg_frame_rate": "60/1",
+      "duration": "20.000000",
+      "nb_frames": "1200"
+    },
+    "gait64_hold_right.mp4": {
+      "width": 1920,
+      "height": 1080,
+      "avg_frame_rate": "60/1",
+      "duration": "20.000000",
+      "nb_frames": "1200"
+    },
+    "gait64_hold_side.mp4": {
+      "width": 1920,
+      "height": 1080,
+      "avg_frame_rate": "60/1",
+      "duration": "20.000000",
+      "nb_frames": "1200"
+    }
+  }
+}
