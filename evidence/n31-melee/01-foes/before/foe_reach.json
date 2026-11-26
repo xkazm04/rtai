@@ -1,0 +1,3222 @@
+{
+  "schema": "gtai.foe-reach-report/1",
+  "label": "before",
+  "step_ticks": 3,
+  "speeds_mps": [
+    3,
+    5,
+    6.75
+  ],
+  "verdicts": [
+    {
+      "foe": "riot_cop",
+      "weapon": "baton",
+      "hit_reach_m": 1.6,
+      "swing_starts_within_m": 2.2,
+      "hit_reach_centre_m": 2.2,
+      "drawn_tip_m": 1.6,
+      "drawn_source": "authored reach_m (the art's strike frame is not measured)",
+      "telegraph_ticks": 33,
+      "trials": 72,
+      "hits": 19,
+      "hits_centre_beyond_drawn_tip": 19,
+      "hits_body_beyond_drawn_tip": 0,
+      "max_centre_overhang_m": 0.574,
+      "hits_while_walking_sideways": 14,
+      "max_lateral_at_hit_m": 0.9,
+      "earliest_hit_since_tell": 32
+    },
+    {
+      "foe": "robot_thug",
+      "weapon": "claw",
+      "hit_reach_m": 2,
+      "swing_starts_within_m": 2.6,
+      "hit_reach_centre_m": 2.6,
+      "drawn_tip_m": 2,
+      "drawn_source": "authored reach_m (the art's strike frame is not measured)",
+      "telegraph_ticks": 48,
+      "trials": 102,
+      "hits": 23,
+      "hits_centre_beyond_drawn_tip": 23,
+      "hits_body_beyond_drawn_tip": 0,
+      "max_centre_overhang_m": 0.576,
+      "hits_while_walking_sideways": 17,
+      "max_lateral_at_hit_m": 1.05,
+      "earliest_hit_since_tell": 47
+    },
+    {
+      "foe": "appliance_warden",
+      "weapon": "shove",
+      "hit_reach_m": 1.8,
+      "swing_starts_within_m": 2.4,
+      "hit_reach_centre_m": 2.4,
+      "drawn_tip_m": 1.8,
+      "drawn_source": "authored reach_m (the art's strike frame is not measured)",
+      "telegraph_ticks": 33,
+      "trials": 72,
+      "hits": 12,
+      "hits_centre_beyond_drawn_tip": 12,
+      "hits_body_beyond_drawn_tip": 0,
+      "max_centre_overhang_m": 0.59,
+      "hits_while_walking_sideways": 9,
+      "max_lateral_at_hit_m": 0.5,
+      "earliest_hit_since_tell": 32
+    },
+    {
+      "foe": "shield_robot",
+      "weapon": "shove",
+      "hit_reach_m": 1.8,
+      "swing_starts_within_m": 2.4,
+      "hit_reach_centre_m": 2.4,
+      "drawn_tip_m": 2.2,
+      "drawn_source": "FoeShoveZone.polygon tip, what FoeShieldView draws",
+      "telegraph_ticks": 48,
+      "trials": 102,
+      "hits": 4,
+      "hits_centre_beyond_drawn_tip": 2,
+      "hits_body_beyond_drawn_tip": 0,
+      "max_centre_overhang_m": 0.484,
+      "hits_while_walking_sideways": 2,
+      "max_lateral_at_hit_m": 0.9,
+      "earliest_hit_since_tell": 62
+    }
+  ],
+  "foes": [
+    {
+      "authored_reach_m": 1.6,
+      "cooldown_ticks": 72,
+      "drawn_source": "authored reach_m (the art's strike frame is not measured)",
+      "drawn_tip_m": 1.6,
+      "foe": "riot_cop",
+      "hit_reach_centre_m": 2.2,
+      "lunge_m": 0,
+      "rivet_radius_m": 0.6,
+      "swing_starts_within_m": 2.2,
+      "telegraph_ticks": 33,
+      "trials": [
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.07243394851685,
+          "delay": 30,
+          "forward_m": 2.34664821624756,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.92271363735199,
+          "delay": 33,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.17226910591125,
+          "delay": 30,
+          "forward_m": 2.44664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.92271363735199,
+          "delay": 33,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.92271363735199,
+          "delay": 33,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.17395949363709,
+          "delay": 15,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.899999976158142,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.10761833190918,
+          "delay": 18,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.74999988079071,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.05012440681458,
+          "delay": 21,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.600000023841858,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.00223970413208,
+          "delay": 24,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.449999988079071,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.96466755867004,
+          "delay": 27,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.300000011920929,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.9380077123642,
+          "delay": 30,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.149999856948853,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.92271363735199,
+          "delay": 33,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.10761833190918,
+          "delay": 24,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.750000059604645,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.01708841323853,
+          "delay": 27,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.5,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.95454275608063,
+          "delay": 30,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.25,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.92271363735199,
+          "delay": 33,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 2.07771682739258,
+          "delay": 27,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.675000011920929,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.97305881977081,
+          "delay": 30,
+          "forward_m": 2.19664812088013,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0.337499976158142,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        },
+        {
+          "centre_dist_m": 1.92271363735199,
+          "delay": 33,
+          "forward_m": 2.19664835929871,
+          "hit": true,
+          "hit_tick": 69,
+          "lateral_m": 0,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.19664835929871,
+          "tell_tick": 37
+        }
+      ],
+      "weapon": "baton"
+    },
+    {
+      "authored_reach_m": 2,
+      "cooldown_ticks": 96,
+      "drawn_source": "authored reach_m (the art's strike frame is not measured)",
+      "drawn_tip_m": 2,
+      "foe": "robot_thug",
+      "hit_reach_centre_m": 2.6,
+      "lunge_m": 3,
+      "rivet_radius_m": 0.6,
+      "swing_starts_within_m": 2.6,
+      "telegraph_ticks": 48,
+      "trials": [
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.57593607902527,
+          "delay": 42,
+          "forward_m": 2.89564943313599,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "away",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.4260790348053,
+          "delay": 45,
+          "forward_m": 2.74564957618713,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "away",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.2762405872345,
+          "delay": 48,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "away",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.52598190307617,
+          "delay": 45,
+          "forward_m": 2.84564924240112,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.2762405872345,
+          "delay": 48,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "away",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 45,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.2762405872345,
+          "delay": 48,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "away",
+          "since_tell": 47,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.55203008651733,
+          "delay": 27,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.04999995231628,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.48749494552612,
+          "delay": 30,
+          "forward_m": 2.59564971923828,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.900000095367432,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.43051528930664,
+          "delay": 33,
+          "forward_m": 2.59564924240112,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.749999821186066,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.38163328170776,
+          "delay": 36,
+          "forward_m": 2.59564971923828,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.599999904632568,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.3413565158844,
+          "delay": 39,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.449999809265137,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.31013512611389,
+          "delay": 42,
+          "forward_m": 2.59564924240112,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.299999833106995,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.28833961486816,
+          "delay": 45,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.149999856948853,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.2762405872345,
+          "delay": 48,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 3,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.52971291542053,
+          "delay": 36,
+          "forward_m": 2.59564971923828,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.999999940395355,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.43051528930664,
+          "delay": 39,
+          "forward_m": 2.59564924240112,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.749999821186066,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.35379672050476,
+          "delay": 42,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.49999988079071,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.30180692672729,
+          "delay": 45,
+          "forward_m": 2.59564924240112,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.24999988079071,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.2762405872345,
+          "delay": 48,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 5,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.53521823883057,
+          "delay": 39,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.01249992847443,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.405029296875,
+          "delay": 42,
+          "forward_m": 2.59564971923828,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.674999952316284,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.31706976890564,
+          "delay": 45,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 0.337499856948853,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        },
+        {
+          "centre_dist_m": 2.2762405872345,
+          "delay": 48,
+          "forward_m": 2.5956494808197,
+          "hit": true,
+          "hit_tick": 78,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "side",
+          "since_tell": 47,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.59564971923828,
+          "tell_tick": 31
+        }
+      ],
+      "weapon": "claw"
+    },
+    {
+      "authored_reach_m": 1.8,
+      "cooldown_ticks": 72,
+      "drawn_source": "authored reach_m (the art's strike frame is not measured)",
+      "drawn_tip_m": 1.8,
+      "foe": "appliance_warden",
+      "hit_reach_centre_m": 2.4,
+      "lunge_m": 0,
+      "rivet_radius_m": 0.6,
+      "swing_starts_within_m": 2.4,
+      "telegraph_ticks": 33,
+      "trials": [
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.32125496864319,
+          "delay": 33,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.32125496864319,
+          "delay": 33,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.32125496864319,
+          "delay": 33,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.37845015525818,
+          "delay": 24,
+          "forward_m": 2.3890528678894,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0.449999988079071,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.34998393058777,
+          "delay": 27,
+          "forward_m": 2.38905239105225,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0.299999952316284,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.33084225654602,
+          "delay": 30,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0.149999976158142,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.32125496864319,
+          "delay": 33,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 3,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.3899564743042,
+          "delay": 27,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0.500000059604645,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.34255385398865,
+          "delay": 30,
+          "forward_m": 2.3890528678894,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0.25,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.32125496864319,
+          "delay": 33,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 5,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.3562376499176,
+          "delay": 30,
+          "forward_m": 2.3890528678894,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0.337499856948853,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        },
+        {
+          "centre_dist_m": 2.32125496864319,
+          "delay": 33,
+          "forward_m": 2.38905262947083,
+          "hit": true,
+          "hit_tick": 70,
+          "lateral_m": 0,
+          "mode": "side",
+          "since_tell": 32,
+          "speed_mps": 6.75,
+          "tell_dist_m": 2.38905262947083,
+          "tell_tick": 38
+        }
+      ],
+      "weapon": "shove"
+    },
+    {
+      "authored_reach_m": 1.8,
+      "cooldown_ticks": 72,
+      "drawn_source": "FoeShoveZone.polygon tip, what FoeShieldView draws",
+      "drawn_tip_m": 2.2,
+      "foe": "shield_robot",
+      "hit_reach_centre_m": 2.4,
+      "lunge_m": 0,
+      "lunge_travel_m": 0.4,
+      "rivet_radius_m": 0.6,
+      "slab_half_width_m": 0.32,
+      "swing_starts_within_m": 2.4,
+      "telegraph_ticks": 48,
+      "trials": [
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "centre_dist_m": 2.28379559516907,
+          "delay": 45,
+          "forward_m": 2.68379640579224,
+          "hit": true,
+          "hit_tick": 152,
+          "lateral_m": 1.19209289550781e-7,
+          "mode": "away",
+          "since_tell": 62,
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "centre_dist_m": 2.13379549980164,
+          "delay": 48,
+          "forward_m": 2.5337963104248,
+          "hit": true,
+          "hit_tick": 152,
+          "lateral_m": 0,
+          "mode": "away",
+          "since_tell": 62,
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 45,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 48,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 45,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 48,
+          "hit": false,
+          "mode": "away",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "centre_dist_m": 1.65072417259216,
+          "delay": 45,
+          "forward_m": 1.7837963104248,
+          "hit": true,
+          "hit_tick": 152,
+          "lateral_m": 0.900000214576721,
+          "mode": "side",
+          "since_tell": 62,
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "centre_dist_m": 1.57397258281708,
+          "delay": 48,
+          "forward_m": 1.7837963104248,
+          "hit": true,
+          "hit_tick": 152,
+          "lateral_m": 0.75000011920929,
+          "mode": "side",
+          "since_tell": 62,
+          "speed_mps": 3,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 45,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 48,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 5,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 0,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 3,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 6,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 9,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 12,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 15,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 18,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 21,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 24,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 27,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 30,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 33,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 36,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 39,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 42,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 45,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        },
+        {
+          "delay": 48,
+          "hit": false,
+          "mode": "side",
+          "speed_mps": 6.75,
+          "tell_dist_m": 1.78379619121552,
+          "tell_tick": 90
+        }
+      ],
+      "weapon": "shove"
+    }
+  ]
+}

@@ -128,7 +128,10 @@ func test_a_released_grind_runs_out_and_does_not_lunge() -> void:
 	assert_eq(combo.hit_index, 0, "the release lets the hit run into its recovery and end")
 
 
+## The one-tick before (--melee-sweep=off): the plasma's cone reaches the flank. With the sweep
+## (default since 02p3) the flank is undrawn and spared: test_melee_sweep_arc.
 func test_the_plasma_sweep_cuts_the_flank_and_spares_the_rear() -> void:
+	MeleeSweep.on = false
 	_carry(&"plasma_sword")
 	var behind: Fighter = _cop(Vector2.UP * 1.5)
 	var flank: Fighter = _cop(Vector2.DOWN.rotated(deg_to_rad(100)) * 1.5)
@@ -141,3 +144,4 @@ func test_the_plasma_sweep_cuts_the_flank_and_spares_the_rear() -> void:
 	assert_gte(died, 0)
 	assert_eq(behind.hp, behind.max_hp)
 	assert_eq(outside.hp, outside.max_hp)
+	MeleeSweep.on = MeleeHit.default_sweep()

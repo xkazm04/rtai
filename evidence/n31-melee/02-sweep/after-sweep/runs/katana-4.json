@@ -1,0 +1,32 @@
+{
+  "alive": true,
+  "damage_taken": 79.2,
+  "death": "",
+  "finished": true,
+  "hits": 31,
+  "kills_all": 51,
+  "kills_by_weapon": {
+    "assault-rifle": 21,
+    "katana": 30
+  },
+  "kills_own_weapon": 30,
+  "melee_all": {
+    "claw": {
+      "landed": 0,
+      "swings": 0,
+      "whiffs": 0
+    },
+    "katana": {
+      "landed": 31,
+      "swings": 45,
+      "whiffs": 11
+    }
+  },
+  "schema": "gtai.play-baseline-run/1",
+  "seed": 4,
+  "swings": 45,
+  "ticks": 4948,
+  "wave_reached": 4,
+  "weapon": "katana",
+  "whiffs": 11
+}

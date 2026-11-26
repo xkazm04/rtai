@@ -1,0 +1,93 @@
+{
+  "schema": "gtai.n31-feed-cost/1",
+  "weapon": "chainsaw",
+  "seed": 7,
+  "ticks": 3600,
+  "engine": "editor build (debug), d3d12, 1920x1080, vsync off, --fixed-fps 60, tilt70 32 px/m",
+  "arms": [
+    {
+      "name": "off",
+      "user": [
+        "--kill-feed=off"
+      ]
+    },
+    {
+      "name": "on",
+      "user": []
+    }
+  ],
+  "runs": [
+    {
+      "arm": "off",
+      "round": 0,
+      "p50": 4.36100006103516,
+      "p99": 8.53400039672852,
+      "worst": 70.6179962158203,
+      "over25": 3,
+      "frames": 3444,
+      "ticks": 3598,
+      "busy_cores_first_20s": 3.7569201558908762,
+      "other_runs": 1,
+      "kills": "n/a (03p3 r1 logged them; the log line is gone)",
+      "hitches": 2
+    },
+    {
+      "arm": "on",
+      "round": 0,
+      "p50": 5.96199989318848,
+      "p99": 12.0069999694824,
+      "worst": 67.5849990844727,
+      "over25": 2,
+      "frames": 3452,
+      "ticks": 3598,
+      "busy_cores_first_20s": 5.486901309869013,
+      "other_runs": 1,
+      "kills": "n/a (03p3 r1 logged them; the log line is gone)",
+      "hitches": 2
+    },
+    {
+      "arm": "on",
+      "round": 1,
+      "p50": 6.31099987030029,
+      "p99": 12.168999671936,
+      "worst": 83.8929977416992,
+      "over25": 1,
+      "frames": 3504,
+      "ticks": 3598,
+      "busy_cores_first_20s": 8.262392564461324,
+      "other_runs": 1,
+      "kills": "n/a (03p3 r1 logged them; the log line is gone)",
+      "hitches": 2
+    },
+    {
+      "arm": "off",
+      "round": 1,
+      "p50": 4.78800010681152,
+      "p99": 10.576000213623,
+      "worst": 67.9150009155273,
+      "over25": 8,
+      "frames": 3439,
+      "ticks": 3598,
+      "busy_cores_first_20s": 5.1205379462053795,
+      "other_runs": 2,
+      "kills": "n/a (03p3 r1 logged them; the log line is gone)",
+      "hitches": 3
+    }
+  ],
+  "median": {
+    "off": {
+      "p50": 4.57450008392334,
+      "p99": 9.55500030517576,
+      "worst": 69.2664985656738,
+      "over25": 5.5,
+      "busy_cores_first_20s": 4.438729051048128
+    },
+    "on": {
+      "p50": 6.136499881744385,
+      "p99": 12.0879998207092,
+      "worst": 75.73899841308595,
+      "over25": 1.5,
+      "busy_cores_first_20s": 6.874646937165169
+    }
+  }
+}

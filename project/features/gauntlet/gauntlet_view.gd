@@ -16,6 +16,7 @@ func _init(street: GauntletStreet) -> void:
 
 func _ready() -> void:
 	super._ready()
+	_attach_kills()
 	if blood != null:
 		# The quest's pool hook reads the victim again before the fighter is moved.
 		# With no second lookup, both human blood and machine oil use _locate's free point.
@@ -24,6 +25,17 @@ func _ready() -> void:
 		blood.solid = _street.pose_solid_px
 		if blood.oil != null:
 			blood.oil.solid = _street.pose_solid_px
+
+
+## The street's signature-kill feed draws on the print stage (GauntletSession.install_kills).
+## Only the BrutalityHook attaches here: the other street hooks keep their own view wiring.
+func _attach_kills() -> void:
+	var arena_stage: ArenaStage = _stage as ArenaStage
+	if arena_stage == null:
+		return
+	for hook: ArenaHook in arena_stage.hooks:
+		if hook is BrutalityHook and (hook as BrutalityHook).view == null:
+			hook.attach_view(self)
 
 
 ## The shipped ghost strip draws the selected cost in teal even with all ghosts locked.

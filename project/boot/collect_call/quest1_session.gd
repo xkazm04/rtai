@@ -45,6 +45,8 @@ var report: QuestReport = QuestReport.new()
 var autosave: Quest1Autosave
 var cash_before: int = 0
 var master_seed: int = MASTER_SEED
+## n31 melee: the signature-kill feed; on with the rig cast since 03p3, null with `--kill-feed=off`.
+var kills_feed: QuestKillFeed = null
 var _last_beat: String = ""
 
 
@@ -65,6 +67,8 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.stage.watch(s.system)
 	s.world.add_system(s.stage)
 	s.world.add_system(s.system)
+	if SignatureKills.feed_on() and QuestKillFeed.rig_cast(Quest1Game.RIGS_UNDER_CARDS):
+		s.kills_feed = QuestKillFeed.install(s.world.add_system, s.stage)
 	if on_city:
 		s._add_city()
 	s.master_seed = seed

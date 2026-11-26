@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/melee_n31/fatality_probe.gd" id="1"]
+
+[node name="FatalityProbe" type="Node"]
+script = ExtResource("1")

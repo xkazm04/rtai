@@ -54,6 +54,11 @@
       "knockback_m": 0.4,
       "reach_m": 1.4,
       "recovery_ticks": 13,
+      "sweep_arc_deg": [
+        -62,
+        34
+      ],
+      "sweep_recovery_ticks": 18,
       "windup_ticks": 5
     },
     "swing_style": "rake",

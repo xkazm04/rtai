@@ -280,12 +280,12 @@
       "id": "rocket_launcher"
     },
     {
-      "doc": "n7-melee: the grind lands every tick: no stop per bite (it would stutter), only a 1 px judder kick once per strike (MeleeWound's gap). The kill takes the kill stop.",
+      "doc": "n7-melee: the grind lands every tick: no stop per bite (it would stutter). n31-melee 04b: the bite reads harder (view only, FeelCam: camera offset, no sim state): a 2.5 px kick along the blow and the low gunfire shake (1.5 px, 4 ticks) once per strike (MeleeWound's gap), the kerf mark (melee_marks.json chainsaw) held on the victim through the grind. The kill takes the kill stop.",
       "hitstop": "",
       "id": "chainsaw",
-      "kick_px": 1,
+      "kick_px": 2.5,
       "kick_ticks": 4,
-      "shake": ""
+      "shake": "gunfire"
     },
     {
       "doc": "n7-melee: the claw jab (class melee via MeleeFeel): a 3-tick hold and a small kick along the blow, no shake (a combo lands 3-4 jabs a second). A kill takes the kill stop and 1.5x the kick.",

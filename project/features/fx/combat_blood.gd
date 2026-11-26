@@ -122,10 +122,10 @@ func attach(triggers: FxTriggers) -> void:
 		row["fx"] = kept
 
 
-## Follows a quest fight's Events instead of the cues: actor_killed bleeds the victim along
-## killer -> victim, player_hit leaks the player's oil. `locate`: Callable(id) -> Vector2 metres
-## (Vector2.INF when unknown); `player` = the player's actor id.
+## Follows a quest fight's Events, not the cues: actor_killed bleeds along killer -> victim,
+## player_hit leaks oil, gun hits flick (GunFxWound); `locate`: Callable(id) -> m (INF unknown).
 func listen(bus: EventBus, locate: Callable, player: int) -> void:
+	GunFxWound.use(self)
 	_locate = locate
 	_player = player
 	player_px = func() -> Vector2:

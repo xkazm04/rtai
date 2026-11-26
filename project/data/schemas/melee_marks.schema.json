@@ -2,6 +2,70 @@
   "$id": "gtai.melee_marks/1",
   "additionalProperties": false,
   "properties": {
+    "chainsaw": {
+      "additionalProperties": false,
+      "properties": {
+        "blood_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "burst_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "core_px": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cut_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "edge_px": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "flash_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "style": {
+          "enum": [
+            "bite",
+            "cut",
+            "sear"
+          ],
+          "type": "string"
+        },
+        "tilt_deg": {
+          "maximum": 90,
+          "minimum": -90,
+          "type": "number"
+        }
+      },
+      "required": [
+        "blood_m",
+        "burst_m",
+        "core_px",
+        "cut_m",
+        "doc",
+        "edge_px",
+        "flash_ticks",
+        "style",
+        "tilt_deg"
+      ],
+      "type": "object"
+    },
     "claw": {
       "additionalProperties": false,
       "properties": {
@@ -73,6 +137,134 @@
     "doc": {
       "minLength": 1,
       "type": "string"
+    },
+    "katana": {
+      "additionalProperties": false,
+      "properties": {
+        "blood_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "burst_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "core_px": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cut_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "edge_px": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "flash_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "style": {
+          "enum": [
+            "bite",
+            "cut",
+            "sear"
+          ],
+          "type": "string"
+        },
+        "tilt_deg": {
+          "maximum": 90,
+          "minimum": -90,
+          "type": "number"
+        }
+      },
+      "required": [
+        "blood_m",
+        "burst_m",
+        "core_px",
+        "cut_m",
+        "doc",
+        "edge_px",
+        "flash_ticks",
+        "style",
+        "tilt_deg"
+      ],
+      "type": "object"
+    },
+    "plasma_sword": {
+      "additionalProperties": false,
+      "properties": {
+        "blood_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "burst_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "core_px": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cut_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "edge_px": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "flash_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "style": {
+          "enum": [
+            "bite",
+            "cut",
+            "sear"
+          ],
+          "type": "string"
+        },
+        "tilt_deg": {
+          "maximum": 90,
+          "minimum": -90,
+          "type": "number"
+        }
+      },
+      "required": [
+        "blood_m",
+        "burst_m",
+        "core_px",
+        "cut_m",
+        "doc",
+        "edge_px",
+        "flash_ticks",
+        "style",
+        "tilt_deg"
+      ],
+      "type": "object"
     },
     "saw": {
       "additionalProperties": false,

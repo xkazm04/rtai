@@ -87,7 +87,9 @@ func _verdict(s: Quest1Session, log: ReplayLog, out: Dictionary) -> String:
 		return "not paid: state %s at beat %s, tick %d" % at
 	if log.input_changes() < 100:
 		return "too few input changes (%d): the input path was idle" % log.input_changes()
-	if log.final_hash != "c211ee9720fcc5ffc57d42f3aa33d3dbbdc159332d721fd4236c1537b15fb13a":
+	# n31 melee 03p3: re-pinned for the kill feed's state only (on by default; --kill-feed=off gives
+	# 08e20727.. with the same ticks, kills, shots and checkpoints); quest 1's script is unchanged
+	if log.final_hash != "1111b382a4df6c875c9e75718faa4c281cbd340b947ab5905982691691f8bbb2":
 		return "quest 1 input final hash changed: " + log.final_hash
 	LaunchArgs.parse(["--controls=legacy" if s.actions.wheel else "--controls=wheel"])
 	var loaded: ReplayLog = ControlsReplay.load_for_playback(_log_path) if out.log_saved else null

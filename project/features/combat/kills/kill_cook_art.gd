@@ -2,6 +2,8 @@ class_name KillCookArt
 extends RefCounted
 ## The baton's contact flash and crawling current follow the posed victim, including drawn
 ## death cards. The first twenty ticks jerk about the planted feet, then each row's fall takes over.
+## A row with fx `arc_n` draws KillOverloadArcs' amber current (to its `arc_ticks`) instead of
+## the twenty-tick white bolts.
 
 const SEIZURE_TICKS: int = 20
 const FLASH_TICKS: int = 3
@@ -35,7 +37,9 @@ static func char_body(d: KillNewStyles.Death, age: int) -> void:
 
 
 static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
-	if age >= 0 and age < SEIZURE_TICKS:
+	if KillOverloadArcs.count(d.extra) > 0:  # n31 04g: amber current over him to his fall
+		KillOverloadArcs.draw(ci, d, age)
+	elif age >= 0 and age < SEIZURE_TICKS:
 		_current(ci, d, age)
 	var from: float = d.extra.num("cook_from", 3.0)
 	var to: float = d.extra.num("cook_to", 45.0)

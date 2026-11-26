@@ -222,7 +222,17 @@
         "2026-11-26: stalk phases for n31 foes (dev_loc 40725 -> 40732)",
         "2026-11-26: n31 foes b4j: waiting probe tallies why in-range clear-line foes TRAVEL (cause split for setting G, dev-only measurement) (dev_loc 40732 -> 40786)",
         "2026-11-26: --foe-fire for n31 foes (dev_loc 40786 -> 40789)",
-        "2026-11-26: --foe-fire for n31 foes: probe game-flag check (dev_loc 40789 -> 40795)"
+        "2026-11-26: --foe-fire for n31 foes: probe game-flag check (dev_loc 40789 -> 40795)",
+        "2026-11-25: n31 melee 01b gauntlet melee baseline probe, dev-only measurement (dev_loc 39760 -> 39950)",
+        "2026-11-25: n31 melee 01b foe reach probe, dev-only measurement (dev_loc 39950 -> 40103)",
+        "2026-11-25: n31 melee 01a: blade_volume dev measurement scene in project/dev/melee_n31 (dev only, measures the before) (dev_loc 40103 -> 40867)",
+        "2026-11-25: 2026-11-25: n31 melee 01c: blade_pixels dev probe renders the drawn swing (pixels, not the node model) for the drawn-vs-hit before/after (dev_loc 40867 -> 41068)",
+        "2026-11-25: n31 melee 03p2: dev/melee_n31/fatality_probe.gd, the fatality proof table's headless probe (dev only) (dev_loc 41068 -> 41216)",
+        "2026-11-25: n31 melee 04b: marks_still dev probe, stills of the blade hit marks on a cop at 64 px/m (dev only) (dev_loc 41216 -> 41339)",
+        "2026-11-26: n31 melee 02p4: sweep_clip dev scene (the hit volume filmed live, brief part 2) (dev_loc 41339 -> 41575)",
+        "2026-11-26: n31 melee 04d: marks_still picks a robot or riot victim and names stills by zoom (dev probe, view only) (dev_loc 41575 -> 41597)",
+        "2026-11-26: n31 melee 04d: marks_still turns the riot cop's shield back to Rivet before each weapon (dev probe) (dev_loc 41597 -> 41598)",
+        "2026-11-26: n31 melee 04e: marks_still's gun path (the light-gun flick and hot point stills, dev only) (dev_loc 41598 -> 41629)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -245,6 +255,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
+        "project/dev/melee_n31": 1869,
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
@@ -266,7 +277,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 42216
+      "total": 44085
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -288,7 +299,9 @@
         "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)",
         "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)",
         "2026-11-25: n31-09 foe placement probe for n31 ground (direct_cmdline_reads 168 -> 169)",
-        "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (direct_cmdline_reads 168 -> 169)"
+        "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (direct_cmdline_reads 168 -> 169)",
+        "2026-11-25: --melee-sweep for n31 melee (direct_cmdline_reads 168 -> 169)",
+        "2026-11-25: --melee-sweep for n31 melee: the flag read moves to MeleeHit (leaf class, MeleeTable load cycle) (direct_cmdline_reads 169 -> 169)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -430,6 +443,7 @@
         "project/features/combat/weapons/art/weapon_fx_trail.gd": 1,
         "project/features/combat/weapons/gunplay_hook.gd": 3,
         "project/features/player/arena_arsenal.gd": 1,
+        "project/features/player/melee_hit.gd": 1,
         "project/features/player/melee_swing.gd": 1,
         "project/features/player/pickups_view.gd": 1,
         "project/features/player/player_melee.gd": 1,
@@ -444,7 +458,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 170
+      "total": 171
     },
     "files_near_cap": {
       "accepted": [
@@ -558,7 +572,10 @@
         "2026-11-25: n31 foes b1: the waiting probe lives in project/dev/foes_n31 as brief b1 names it (files_past_soft_cap 69 -> 69)",
         "2026-11-25: n31 foes b4c lever 5 own weapons + flank arrivals: enemy_roster 209, squad_mind 202, scenario_arena_squad 215 (the squad table's own-gun switch and damage, the own gun's cooldown cap, the flank-arrival counter) (files_past_soft_cap 69 -> 72)",
         "2026-11-25: n31 foes b4c flank check: scenario_arena_squad records flank arrivals + closest approach per seed (215 -> 224 lines) (files_past_soft_cap 72 -> 72)",
-        "2026-11-26: --foe-fire for n31 foes (files_past_soft_cap 72 -> 72)"
+        "2026-11-26: --foe-fire for n31 foes (files_past_soft_cap 72 -> 72)",
+        "2026-11-25: --melee-sweep for n31 melee (files_past_soft_cap 69 -> 70)",
+        "2026-11-25: --kill-feed for n31 melee (files_past_soft_cap 70 -> 70)",
+        "2026-11-26: n31 merge: launch_args KNOWN_FLAGS of foes (--foe-moves, --foe-fire) and melee (--melee-sweep, --kill-feed) combine (files_past_soft_cap 73 -> 73)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -567,7 +584,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 229,
+        "project/boot/launch_args.gd": 232,
         "project/boot/prologue/prologue_command_view.gd": 255,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
@@ -615,10 +632,11 @@
         "project/features/combat/weapons/fight_areas.gd": 227,
         "project/features/combat/weapons/fight_areas_art.gd": 250,
         "project/features/combat/weapons/gun_fx.gd": 223,
-        "project/features/combat/weapons/gun_fx_art.gd": 215,
+        "project/features/combat/weapons/gun_fx_art.gd": 214,
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/corpse_stains.gd": 245,
         "project/features/fx/noir/blood_fx.gd": 269,
+        "project/features/player/player_melee.gd": 207,
         "project/features/player/rivet_held_view.gd": 282,
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,
@@ -634,7 +652,7 @@
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 72
+      "total": 73
     },
     "lane_named_dev_dirs": {
       "accepted": [
@@ -646,13 +664,12 @@
       "files": {
         "project/dev/audio": 1,
         "project/dev/cheats": 1,
-        "project/dev/controls": 1,
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 7
+      "total": 6
     },
     "unused_class_names": {
       "accepted": [

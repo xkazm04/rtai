@@ -1,0 +1,33 @@
+{
+  "alive": true,
+  "damage_taken": 37.2,
+  "death": "",
+  "finished": true,
+  "hits": 17,
+  "kills_all": 50,
+  "kills_by_weapon": {
+    "assault-rifle": 14,
+    "deploy_tonnage": 14,
+    "plasma_sword": 22
+  },
+  "kills_own_weapon": 22,
+  "melee_all": {
+    "claw": {
+      "landed": 0,
+      "swings": 0,
+      "whiffs": 0
+    },
+    "plasma_sword": {
+      "landed": 17,
+      "swings": 19,
+      "whiffs": 0
+    }
+  },
+  "schema": "gtai.play-baseline-run/1",
+  "seed": 2,
+  "swings": 19,
+  "ticks": 4060,
+  "wave_reached": 4,
+  "weapon": "plasma_sword",
+  "whiffs": 0
+}

@@ -489,6 +489,9 @@
       "weapon": "electro_gun"
     },
     {
+      "also_weapons": [
+        "deploy_ohm"
+      ],
       "bounce": 0.1,
       "cone_deg": 10,
       "doc": "Ohm's forked bolt (lane ghost-powers, weapon ohm_bolt): the electro gun's X-ray kill done by the soul: the victim locks in the stiff convulsion while the skeleton strobes inside soul-teal arcs on a teal-white zap star (edge soul; the electro gun's are cream), then drops stiff, scorched, smoke from the collar. No blood. Under --reduced-motion no strobe and no shake.",
@@ -1119,6 +1122,9 @@
       "weapon": "dent_car"
     },
     {
+      "also_weapons": [
+        "deploy_kerf"
+      ],
       "bounce": 0.1,
       "cone_deg": 10,
       "cut_deg": 55,
@@ -1657,10 +1663,12 @@
         }
       },
       "cone_deg": 16,
-      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe, no arcs; the current cooks him from inside. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, facing the shooter, 5 facings x 4 frames): t0 locked rigid, cream veins of light; t20 brighter, arcs and steam; t40 sagging, head lolling, smoke; from t45 on his back, smoking, in a grey soot ring, turned to lie along the blow (fx cells_turn_from 3). The drawing carries the glow, veins and eyes; the coded steam and smoke stay.",
+      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe; the current cooks him from inside. n31 04g: fx arc_n amber arcs (KillOverloadArcs, ElectricArc jag) run live from the baton contact to his head, hands and the ground from the kill tick to fx arc_ticks (cells_at + 3), with an amber-white contact flash, so the overload reads at 32 px/m over the drawn jolt rows. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, facing the shooter, 5 facings x 4 frames): t0 locked rigid, cream veins of light; t20 brighter, arcs and steam; t40 sagging, head lolling, smoke; from t45 on his back, smoking, in a grey soot ring, turned to lie along the blow (fx cells_turn_from 3). The drawing carries the glow, veins and eyes; the coded steam and smoke stay.",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
+        "arc_n": 4,
+        "arc_ticks": 48,
         "cells_at": 45,
         "cells_ticks": 10,
         "cells_turn_from": 3,
@@ -1718,6 +1726,7 @@
           },
           "fall": "back",
           "fx": {
+            "arc_ticks": 27,
             "cells_at": 24,
             "cells_lean": 1,
             "cells_ticks": 18,
@@ -1778,6 +1787,7 @@
           },
           "fall": "forward",
           "fx": {
+            "arc_ticks": 38,
             "cells_at": 35,
             "cells_lean": 1,
             "cells_ticks": 11,
@@ -1838,6 +1848,7 @@
           },
           "fall": "side",
           "fx": {
+            "arc_ticks": 42,
             "cells_at": 39,
             "cells_lean": 1,
             "cells_ticks": 17,
@@ -1900,6 +1911,7 @@
           },
           "fall": "side",
           "fx": {
+            "arc_ticks": 39,
             "cells_at": 36,
             "cells_lean": 1,
             "cells_ticks": 15,
@@ -1960,6 +1972,7 @@
           },
           "fall": "forward",
           "fx": {
+            "arc_ticks": 35,
             "cells_at": 32,
             "cells_lean": 1,
             "cells_ticks": 28,

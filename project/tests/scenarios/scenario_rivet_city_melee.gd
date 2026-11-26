@@ -4,12 +4,36 @@ extends Scenario
 ## the nearest guard (side-stepping cover it stalls on) and swings only there, so the katana,
 ## chainsaw and baton meet bodies on the live path. Two guards must drop in 30 s, and the run
 ## replays identical (SIM-05). TST-05: a planted fault (the old stand-off at gun reach,
-## melee_close_in = false) must fail to land kills with the full carried loadout.
+## melee_close_in = false, swinging only from past STAND_OFF_M) must fail to land kills with the
+## full carried loadout.
 
 const LIMIT_TICKS: int = 30 * SimClock.TICK_RATE
 const LOADOUT: Array[StringName] = [&"katana", &"chainsaw", &"electro_baton"]
 const EVIDENCE_FILE: String = "rivet-city-melee-telemetry.json"
 const MIN_KILLS: int = 2
+## The planted fault's stand-off: past the longest drawn sweep reach (2.25 m, n31 melee 02p3b)
+## plus a guard's body radius (0.45 m) and a 0.8 m margin. A guard walking into Rivet inside it is
+## not swung at, so only a bot that closes in lands the loadout.
+const STAND_OFF_M: float = 3.5
+
+
+## The planted fault's input: the stand-off bot, its fire held while a standing guard is inside
+## STAND_OFF_M.
+class StandOff:
+	extends InputSource
+	var bot: ArenaArsenalBot
+
+	func _init(p_bot: ArenaArsenalBot) -> void:
+		bot = p_bot
+
+	func sample(tick: int) -> TickInput:
+		var t: TickInput = bot.sample(tick)
+		var rivet: Vector2 = bot.stage.arena.rivet.pos
+		for f: Fighter in bot.stage.pit.standing:
+			if f.alive() and rivet.distance_to(f.pos) <= STAND_OFF_M:
+				t.buttons &= ~(1 << bot.actions.bit(&"fire"))
+				break
+		return t
 
 
 func run(_tree: SceneTree) -> String:
@@ -83,7 +107,7 @@ func _planted() -> String:
 	var bot: ArenaArsenalBot = ArenaArsenalBot.new(s.stage, s.actions)
 	bot.melee_close_in = false
 	bot.never_close_in(LIMIT_TICKS + 1)
-	s.world.loop().set_input(bot)
+	s.world.loop().set_input(StandOff.new(bot))
 	var tel: Dictionary = _play(s)
 	s.world.free()
 	bus.free()

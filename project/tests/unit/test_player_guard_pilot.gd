@@ -38,9 +38,10 @@ func test_legacy_pilot_state_matches_the_pre_guard_tape() -> void:
 		pilot.write_state(tape)
 	assert_null(stage.arena.guard)
 	# Captured from e3d5799e8, before the pilot had a guard.
+	# Re-pinned n31 melee 02p3 (2026-11-26): --melee-sweep on by default adds the sweep state.
 	assert_eq(
 		tape.data_array.hex_encode().sha256_text(),
-		"e49fc269dbf052c6223a735e1d2fd8371a29b600c8ee8fa5289f7251d1467299"
+		"24ca6e8e0b057f4f3b7720e4a8aed05380b134f4bc2dd5cacdc5d650b3af9f1e"
 	)
 
 

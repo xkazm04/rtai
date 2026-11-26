@@ -39,6 +39,12 @@ var push_out: Callable = Callable()
 var _rng: RandomNumberGenerator = null
 
 
+## n31 melee 03p3: the gauntlet street and quest 1 (rig cast) feed signature kills by default;
+## `--kill-feed=off` restores the generic deaths (the bare `--kill-feed` of 03 is still accepted).
+static func feed_on() -> bool:
+	return LaunchArgs.value("--kill-feed") != "off"
+
+
 func _init(p_table: SignatureKillTable, rng: RandomNumberGenerator) -> void:
 	table = p_table
 	_rng = rng

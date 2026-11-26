@@ -19,6 +19,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--blood",
 	"--kill-beat",
 	"--gore",
+	"--kill-feed",  # n31 melee 03: the gauntlet street feeds signature kills (GauntletSession)
 	"--rigs",
 	# d7-calls: the old defaults of the owner's 2026-11-05 picks on the main-scene paths (quest 1)
 	"--ghosts-free",
@@ -72,6 +73,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--saw-part",
 	# n7-melee: --melee-dir=off leaves a melee kill the last round's line (the before)
 	"--melee-dir",
+	# n31 melee 02: hit on every drawn cutting tick, blade sector; default on, =off is the before
+	"--melee-sweep",
 	# n7-melee: --kerf-glide=off snaps the camera with each Kerf blink (the before)
 	"--kerf-glide",
 	"--kerf-cruise-wings",

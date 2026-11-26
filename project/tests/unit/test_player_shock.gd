@@ -93,7 +93,10 @@ func test_a_half_charge_stuns_without_a_kill() -> void:
 	assert_between(stun, s.stun_min + 1, s.stun_full - 1, "the stun scales with the charge")
 
 
+## Pinned to the one-tick before (--melee-sweep=off): the mash's landed count is the before's.
 func test_a_mash_and_a_short_hold_never_discharge() -> void:
+	MeleeSweep.on = false
+	before_each()  # the stage's tables re-read without the sweep geometry
 	@warning_ignore("return_value_discarded")
 	_cop(_stage.arena.rivet.pos + Vector2.DOWN * 1.2, 100.0)
 	for t: int in 120:
@@ -103,6 +106,7 @@ func test_a_mash_and_a_short_hold_never_discharge() -> void:
 		_pilot.melee.landed, 2, "two rakes connect before knockback puts the cop out of reach"
 	)
 	assert_eq(_hold(_jab + _pilot.shock.shock.charge_min - 2), -1, "under the threshold")
+	MeleeSweep.on = MeleeHit.default_sweep()
 
 
 func test_planted_fault_charge_during_the_jab_is_caught() -> void:

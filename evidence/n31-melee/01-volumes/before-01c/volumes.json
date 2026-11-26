@@ -1,0 +1,169 @@
+{
+	"schema": "gtai.blade-volumes/2",
+	"source": "pixels",
+	"label": "before",
+	"head": "ba8e470b0",
+	"tree": "C:\\Users\\kazda\\AppData\\Local\\Temp\\gtai-melee-01c-base",
+	"hits": "C:\\Users\\kazda\\kiro\\gtai-wt\\n23-street\\evidence\\n31-melee\\01-volumes\\before-model",
+	"ppm": 64,
+	"pitch_deg": 70,
+	"weapons": [
+		{
+			"weapon": "hands",
+			"weapon_id": "claw",
+			"drawn_no_hit": 13,
+			"hit_not_drawn": 0,
+			"both": 8,
+			"neither": 39,
+			"drawn_no_hit_after_test": 11,
+			"hit_test_ks": [
+				4
+			],
+			"cut_window": [
+				1,
+				6
+			],
+			"drawn_window": [
+				0,
+				12
+			],
+			"overlay_k": 5,
+			"overlap_window": [
+				0,
+				12
+			],
+			"mover": {
+				"trials": 14,
+				"hit": 12,
+				"drawn": 13,
+				"drawn_no_hit": 1
+			}
+		},
+		{
+			"weapon": "chainsaw",
+			"weapon_id": "chainsaw",
+			"drawn_no_hit": 27,
+			"hit_not_drawn": 0,
+			"both": 6,
+			"neither": 27,
+			"drawn_no_hit_after_test": 23,
+			"hit_test_ks": [
+				11,
+				22,
+				30
+			],
+			"cut_window": [
+				8,
+				15
+			],
+			"drawn_window": [
+				0,
+				48
+			],
+			"overlay_k": 12,
+			"overlap_window": [
+				0,
+				48
+			],
+			"mover": {
+				"trials": 14,
+				"hit": 11,
+				"drawn": 14,
+				"drawn_no_hit": 3
+			}
+		},
+		{
+			"weapon": "electro_baton",
+			"weapon_id": "electro_baton",
+			"drawn_no_hit": 21,
+			"hit_not_drawn": 0,
+			"both": 7,
+			"neither": 32,
+			"drawn_no_hit_after_test": 19,
+			"hit_test_ks": [
+				3
+			],
+			"cut_window": [
+				0,
+				5
+			],
+			"drawn_window": [
+				0,
+				19
+			],
+			"overlay_k": 4,
+			"overlap_window": [
+				0,
+				19
+			],
+			"mover": {
+				"trials": 14,
+				"hit": 13,
+				"drawn": 13,
+				"drawn_no_hit": 1
+			}
+		},
+		{
+			"weapon": "katana",
+			"weapon_id": "katana",
+			"drawn_no_hit": 19,
+			"hit_not_drawn": 3,
+			"both": 13,
+			"neither": 25,
+			"drawn_no_hit_after_test": 13,
+			"hit_test_ks": [
+				6
+			],
+			"cut_window": [
+				3,
+				9
+			],
+			"drawn_window": [
+				0,
+				25
+			],
+			"overlay_k": 7,
+			"overlap_window": [
+				0,
+				25
+			],
+			"mover": {
+				"trials": 14,
+				"hit": 14,
+				"drawn": 14,
+				"drawn_no_hit": 0
+			}
+		},
+		{
+			"weapon": "plasma_sword",
+			"weapon_id": "plasma_sword",
+			"drawn_no_hit": 19,
+			"hit_not_drawn": 10,
+			"both": 15,
+			"neither": 16,
+			"drawn_no_hit_after_test": 15,
+			"hit_test_ks": [
+				7
+			],
+			"cut_window": [
+				4,
+				13
+			],
+			"drawn_window": [
+				0,
+				31
+			],
+			"overlay_k": 8,
+			"overlap_window": [
+				0,
+				31
+			],
+			"mover": {
+				"trials": 14,
+				"hit": 14,
+				"drawn": 13,
+				"drawn_no_hit": 0
+			}
+		}
+	]
+}

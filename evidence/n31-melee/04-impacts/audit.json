@@ -1,0 +1,406 @@
+{
+ "schema": "gtai.n31-impact-audit/1",
+ "scale": "0 nothing distinct, 1 stop/kick only, 2 a drawn mark or class-specific feel, 3 reference (claw rake / plasma scorch / saw grind)",
+ "gauntlet_wave_order": [
+  "w1 patrol_cop, riot_cop",
+  "w2 swat, riot_cop, robot_thug",
+  "w3 robot_thug, robot_gunner, swat, riot_cop"
+ ],
+ "weapons": {
+  "claw": {
+   "kind": "melee",
+   "wheel": "hands (default, always owned)",
+   "human": {
+    "what": "ClawMarks: three cream/ink rakes across the victim on the hit frame, full length held by the stop, fade 10 ticks (claw_marks.gd:44-56, project/data/tables/melee_marks.json claw; drawn by FxView, boot/collect_call/view/fx_view.gd:73, which the gauntlet view extends: gauntlet_view.gd:2). Stop rivet_hit 3 ticks, kick 2 px/6, no shake (project/data/tables/hit_feel.json:293). Reaction melee = spin (side) or fold (front) (project/data/tables/human_reactions.json map.melee). No blood on a wound: CombatBlood only bleeds a kill (combat_blood.gd:164-181).",
+    "score": 3
+   },
+   "robot": {
+    "what": "Same rakes (keyed by weapon, not victim) and stop; the robot rig shoves and flashes (arena_robot_rigs.gd:100-105). No sparks, no oil: oil is thrown only on the kill (combat_blood.gd:183).",
+    "score": 2
+   },
+   "shield": {
+    "what": "vs_shield blocked (project/data/tables/rivet_melee.json:65): the slab takes it, the shield recoil family plays and ShieldSparks throws white sparks off the face (react_link.gd:130-135, shield_sparks.gd:12-24). The rake mark draws only if CombatArena.wounded fires (unverified on film).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_melee + kill stop 6 ticks (camera.json hitstops kill; fx_triggers rivet_kill) + red spurt/pool (combat_blood.gd:213-225).",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "claw_rake_kill (style rake, own cells + fall, variants x5; project/data/tables/signature_kills.json); proof table evidence/n31-melee/03-fatal/table.md: 100% own variant.",
+    "score": 3
+   }
+  },
+  "chainsaw": {
+   "kind": "melee",
+   "wheel": "weapon_chainsaw",
+   "human": {
+    "what": "No mark: SawMarks live only in KillSplitFx (kill_split_fx.gd:121,166), never on a wound. hitstop empty, shake empty, kick 1 px/4 once per strike (the grind lands every tick, MeleeWound gap) (project/data/tables/hit_feel.json:285-291). Reaction spin/fold; no blood on a wound.",
+    "score": 1
+   },
+   "robot": {
+    "what": "Identical to the human case minus blood: nothing metal (no sparks, no oil) while the saw grinds a machine.",
+    "score": 0
+   },
+   "shield": {
+    "what": "vs_shield through (project/data/tables/melee_weapons.json:76), shield_break 40 ticks (project/data/tables/melee_weapons.json:52): the saw goes through the slab; nothing drawn for the shield breaking.",
+    "score": 1
+   },
+   "kill_default": {
+    "what": "generic death_melee + kill stop 6 + red spurt.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "chainsaw_grind: grind 54 ticks, saw_chunks 8, spray 24 at 70 deg, SawMarks release burst 1.2 m, held-body judder 0.06 m (project/data/tables/signature_kills.json, project/data/tables/melee_marks.json saw). The reference 3; 138/138 in the proof table.",
+    "score": 3
+   }
+  },
+  "electro_baton": {
+   "kind": "melee",
+   "wheel": "weapon_electro_baton",
+   "human": {
+    "what": "Stop melee_hit 4 ticks, kick 2.5 px/7 (project/data/tables/hit_feel.json:312); a stunned body gets ShockJolt arcs following the torso (shock_arcs_view.gd:98-101, StunCrowd.electric); stun 30/90 ticks (project/data/tables/melee_weapons.json baton hits). No mark of its own. No shake.",
+    "score": 2
+   },
+   "robot": {
+    "what": "machine_stun_ticks 150 (project/data/tables/melee_weapons.json:134) with the same arcs on the stunned chassis; no sparks at the contact point.",
+    "score": 2
+   },
+   "shield": {
+    "what": "vs_shield through (project/data/tables/melee_weapons.json:164): arcs on the bearer, nothing on the slab.",
+    "score": 1
+   },
+   "kill_default": {
+    "what": "generic death_melee + kill stop 6; on a robot the standard robot death.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "baton_overload (style cook, own variants x5; humans) and electric_shutdown:<id> (robots, RobotShutdownFx) (project/data/tables/signature_kills.json); 03-fatal table 100% own variant. Art not re-viewed (Godot-free).",
+    "score": 3
+   }
+  },
+  "katana": {
+   "kind": "melee",
+   "wheel": "weapon_katana",
+   "human": {
+    "what": "NO impact mark (melee_marks.json has claw, deflect, saw, swing only). Stop melee_hit 4, kick 3 px/8, no shake (project/data/tables/hit_feel.json:320); reaction spin/fold; no blood on a wound. Only the swing arc (rig) and the stop say a blade landed.",
+    "score": 1
+   },
+   "robot": {
+    "what": "As the human case minus blood; nothing metallic (no spark where a blade meets a chassis).",
+    "score": 1
+   },
+   "shield": {
+    "what": "vs_shield blocked (project/data/tables/melee_weapons.json:249): shield recoil + ShieldSparks; the same sparks every gun gets.",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_melee + kill stop 6 + red spurt.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "katana_split: cut_deg 55, streak 1 m x 0.06, stop 6, own halves x5 variants (project/data/tables/signature_kills.json).",
+    "score": 3
+   }
+  },
+  "plasma_sword": {
+   "kind": "melee",
+   "wheel": "weapon_plasma_sword",
+   "human": {
+    "what": "NO hit mark and no scorch for the blade (DeflectMarks fires only on a bat of a round: deflect_marks.gd, project/data/tables/melee_marks.json deflect). Same row as the katana: stop melee_hit 4, kick 3/8 (project/data/tables/hit_feel.json:344).",
+    "score": 1
+   },
+   "robot": {
+    "what": "As the human case; no scorch, no spark on metal.",
+    "score": 1
+   },
+   "shield": {
+    "what": "vs_shield through (project/data/tables/melee_weapons.json:333): nothing drawn on the slab.",
+    "score": 1
+   },
+   "kill_default": {
+    "what": "generic death_melee + kill stop 6.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "plasma_sword_split (own halves x5 variants; project/data/tables/signature_kills.json).",
+    "score": 3
+   }
+  },
+  "pistol": {
+   "kind": "gun",
+   "wheel": "weapon_pistol",
+   "gun_fx": "gun_fx.json pistol: casing .24, mag_drop, spikes 3, smoke 1.4",
+   "human": {
+    "what": "BODY hit: ink burst 0.12 m for 4 ticks and the shot trail (pistol trail_ticks) (gun_fx_marks.gd:9-15,66-67; gun_fx_rounds.gd:53,64). Class light: flash 4, kick 1 px, no stop, no shake, flinch (project/data/tables/hit_feel.json classes.light). No blood on a wound. Muzzle star k1.6 (project/data/tables/hit_feel.json:272).",
+    "score": 1
+   },
+   "robot": {
+    "what": "Same BODY ink burst as a human (gun_fx_rounds.gd:53 takes every hostile): a robot is not drawn differently; oil only on the kill (combat_blood.gd:183).",
+    "score": 1
+   },
+   "shield": {
+    "what": "METAL (gun_fx_rounds.gd:57 via GunFx.shield_test, react_link.gd:154-166) + ShieldSparks: white sparks fanned back off the slab, shield recoil (shield_sparks.gd:12-41).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_bullet + kill stop 6 + spurt.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "pistol_snap (style snap, cells, track; project/data/tables/signature_kills.json).",
+    "score": 2
+   }
+  },
+  "machine_pistol": {
+   "kind": "gun",
+   "wheel": "weapon_machine_pistol",
+   "gun_fx": "gun_fx.json machine_pistol: spikes 4, casing .17",
+   "human": {
+    "what": "BODY hit: ink burst 0.12 m for 4 ticks and the shot trail (machine_pistol trail_ticks) (gun_fx_marks.gd:9-15,66-67; gun_fx_rounds.gd:53,64). Class light: flash 4, kick 1 px, no stop, no shake, flinch (project/data/tables/hit_feel.json classes.light). No blood on a wound. kick 0.6 px, quieter than the pistol.",
+    "score": 1
+   },
+   "robot": {
+    "what": "Same BODY ink burst as a human (gun_fx_rounds.gd:53 takes every hostile): a robot is not drawn differently; oil only on the kill (combat_blood.gd:183).",
+    "score": 1
+   },
+   "shield": {
+    "what": "METAL (gun_fx_rounds.gd:57 via GunFx.shield_test, react_link.gd:154-166) + ShieldSparks: white sparks fanned back off the slab, shield recoil (shield_sparks.gd:12-41).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_bullet + kill stop 6.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "smg_stitch (style stitch; project/data/tables/signature_kills.json).",
+    "score": 2
+   }
+  },
+  "gloria": {
+   "kind": "gun",
+   "wheel": "weapon_gloria",
+   "gun_fx": "gun_fx.json: none (default row)",
+   "human": {
+    "what": "BODY hit: ink burst 0.12 m for 4 ticks and the shot trail (gloria trail_ticks) (gun_fx_marks.gd:9-15,66-67; gun_fx_rounds.gd:53,64). Class light: flash 4, kick 1 px, no stop, no shake, flinch (project/data/tables/hit_feel.json classes.light). No blood on a wound. Fire kick 1.5 px; no gun_fx.json row (default: smoke only).",
+    "score": 1
+   },
+   "robot": {
+    "what": "Same BODY ink burst as a human (gun_fx_rounds.gd:53 takes every hostile): a robot is not drawn differently; oil only on the kill (combat_blood.gd:183).",
+    "score": 1
+   },
+   "shield": {
+    "what": "METAL (gun_fx_rounds.gd:57 via GunFx.shield_test, react_link.gd:154-166) + ShieldSparks: white sparks fanned back off the slab, shield recoil (shield_sparks.gd:12-41).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_bullet + kill stop 6.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "nail_pin (style pin: pins the body; project/data/tables/signature_kills.json).",
+    "score": 2
+   }
+  },
+  "gatling": {
+   "kind": "gun",
+   "wheel": "weapon_gatling",
+   "gun_fx": "gun_fx.json gatling: spikes 6, casing .17, smoke .6",
+   "human": {
+    "what": "BODY hit: ink burst 0.12 m for 4 ticks and the shot trail (gatling trail_ticks) (gun_fx_marks.gd:9-15,66-67; gun_fx_rounds.gd:53,64). Class light: flash 4, kick 1 px, no stop, no shake, flinch (project/data/tables/hit_feel.json classes.light). No blood on a wound. Medium class by data but hitstop and shake overridden empty (project/data/tables/hit_feel.json:221): a rumble only.",
+    "score": 1
+   },
+   "robot": {
+    "what": "Same BODY ink burst as a human (gun_fx_rounds.gd:53 takes every hostile): a robot is not drawn differently; oil only on the kill (combat_blood.gd:183).",
+    "score": 1
+   },
+   "shield": {
+    "what": "METAL (gun_fx_rounds.gd:57 via GunFx.shield_test, react_link.gd:154-166) + ShieldSparks: white sparks fanned back off the slab, shield recoil (shield_sparks.gd:12-41).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_bullet + kill stop 6.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "gatling_shred (style shred, spray 28 at 50 deg; project/data/tables/signature_kills.json).",
+    "score": 3
+   }
+  },
+  "hand_cannon": {
+   "kind": "gun",
+   "wheel": "weapon_hand_cannon",
+   "gun_fx": "gun_fx.json hand_cannon: fat 3, ring_m 1.2, dump 6, smoke 2.4",
+   "human": {
+    "what": "BODY ink burst + trail 4 ticks; class heavy: stop melee_hit 4, hit shake 4 px/10, kick 5 px/10, stagger 24 ticks (project/data/tables/hit_feel.json:239, classes.heavy). Ring 1.2 m at the muzzle (gun_fx.json). No blood on a wound.",
+    "score": 2
+   },
+   "robot": {
+    "what": "Same BODY ink burst as a human (gun_fx_rounds.gd:53 takes every hostile): a robot is not drawn differently; oil only on the kill (combat_blood.gd:183). The heavy stop and shake still land.",
+    "score": 2
+   },
+   "shield": {
+    "what": "METAL (gun_fx_rounds.gd:57 via GunFx.shield_test, react_link.gd:154-166) + ShieldSparks: white sparks fanned back off the slab, shield recoil (shield_sparks.gd:12-41).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_bullet (heavy) + kill stop 6.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "hand_cannon_blowback (style blowback, wound_m 0.2, stop 3; project/data/tables/signature_kills.json).",
+    "score": 2
+   }
+  },
+  "plasma_rifle": {
+   "kind": "gun",
+   "wheel": "weapon_plasma_rifle",
+   "gun_fx": "gun_fx.json plasma_rifle: scorch, pop, bolt_px 13",
+   "human": {
+    "what": "Reference. Bolt scorch ring + pop on the body (gun_fx.json plasma_rifle scorch, pop_*; gun_fx_marks.gd:89-108), PlasmaScorchView burnt marks on the body, 120-tick glow + smoke 150 ticks (plasma_scorch_view.gd:14-19, react_link.gd:139-148), own heavy stagger family (human_reactions weapon_wound). Medium class: stop rivet_hit 3, gunfire shake 1.5 px.",
+    "score": 3
+   },
+   "robot": {
+    "what": "Scorch ring + pop draw (they key off the weapon); PlasmaScorchView marks only on human rigs (ReactLink); no oil.",
+    "score": 2
+   },
+   "shield": {
+    "what": "METAL + sparks; the bearer still staggers (react_link.gd:139-148).",
+    "score": 2
+   },
+   "kill_default": {
+    "what": "generic death_bullet + kill stop 6.",
+    "score": 1
+   },
+   "kill_feed": {
+    "what": "plasma_hole (style hole, hole_up 0.4 m, scorch 0.3 m; project/data/tables/signature_kills.json).",
+    "score": 3
+   }
+  },
+  "flamethrower": {
+   "kind": "gun",
+   "wheel": "weapon_flamethrower",
+   "gun_fx": "gun_fx.json: default row",
+   "human": {
+    "what": "Class burn: no stop, no kick, no shake; the burning reaction (flails 2.5 s) and a char tint (human_reactions map.burn; DRY_KILLS blood_victims.gd:9-12). Ignite whump kick + flare (project/data/tables/hit_feel.json:210). Flame and patch drawn by FightAreasArt.",
+    "score": 2
+   },
+   "robot": {
+    "what": "Burn class reaction none (project/data/tables/hit_feel.json classes.burn); the fire patch is all there is.",
+    "score": 1
+   },
+   "shield": {
+    "what": "No shield case drawn: the cone passes round the slab; nothing distinct.",
+    "score": 1
+   },
+   "kill_default": {
+    "what": "death_burn + kill stop 6, dry (no red).",
+    "score": 2
+   },
+   "kill_feed": {
+    "what": "burn_char (any fire death, style burn, ash .62 m, crumble 75 ticks; project/data/tables/signature_kills.json; signature_kills.gd:54-55).",
+    "score": 3
+   }
+  },
+  "rocket_launcher": {
+   "kind": "gun",
+   "wheel": "weapon_rocket_launcher",
+   "gun_fx": "gun_fx.json: default row (FightAreasArt draws the rocket)",
+   "human": {
+    "what": "Class blast: boss_hit stop 8, explosion shake 10 px/24, kick 7, knockdown 60 ticks (project/data/tables/hit_feel.json:280, classes.blast); explosion + smoke + debris. Splash 3.5 m.",
+    "score": 2
+   },
+   "robot": {
+    "what": "As the human case (blast class, knockdown).",
+    "score": 2
+   },
+   "shield": {
+    "what": "Splash passes the slab: no distinct case.",
+    "score": 1
+   },
+   "kill_default": {
+    "what": "death_blast + kill stop 6.",
+    "score": 2
+   },
+   "kill_feed": {
+    "what": "rocket_gib (style gib, spray 18, scorch 1.3 m; project/data/tables/signature_kills.json).",
+    "score": 3
+   }
+  },
+  "shotgun": {
+   "kind": "gun",
+   "wheel": "not on the wheel (enabled:false)",
+   "gun_fx": "gun_fx.json: none",
+   "human": {
+    "what": "8 pellets (weapons.json shotgun enabled:false): would take the light class; no hit_feel row, no gun_fx row, no signature row. Not buyable.",
+    "score": 0
+   },
+   "robot": {
+    "what": "-",
+    "score": 0
+   },
+   "shield": {
+    "what": "-",
+    "score": 0
+   },
+   "kill_default": {
+    "what": "generic death_bullet",
+    "score": 0
+   },
+   "kill_feed": {
+    "what": "none (no row in signature_kills.json)",
+    "score": 0
+   }
+  }
+ },
+ "lift": [
+  {
+   "rank": "1",
+   "where": "katana, plasma sword, chainsaw, baton: hit on a patrol/riot/SWAT cop (wave 1 onward; every melee pick except the claw)",
+   "score": "1",
+   "change": "Add rows `katana`, `plasma_sword`, `chainsaw`, `electro_baton` to `melee_marks.json` and read them in `claw_marks.gd` instead of the hardcoded `WEAPON = &\"claw\"` (`claw_marks.gd:13,44-55`): one cream-and-ink slash streak (blades), a short spark stroke at the bite (saw), a crack-star (baton), reusing `KillSlashStreak` (streak 1 m x 0.06, already in the katana kill). Owner: `project/features/combat/react/claw_marks.gd` + `project/data/tables/melee_marks.json` (lane-owned)."
+  },
+  {
+   "rank": "2",
+   "where": "Hit on a robot, any weapon (robot_thug from wave 2, robot_gunner wave 3)",
+   "score": "0-1",
+   "change": "Throw the existing `thug_hit` sparks (`blood_fx.json`) on a wound of an id in `blood.victims.robot_ids`, the call `ShieldSparks.throw` already makes. Owner: a new `project/features/combat/react/robot_hit_sparks.gd` beside `shield_sparks.gd`, wired next to `project/features/arena/arena_rigs.gd:71`. combat_blood.gd is at its size stop. NEED if arena_rigs is another lane's."
+  },
+  {
+   "rank": "3",
+   "where": "Chainsaw hit (any victim): no stop, no shake, 1 px kick, nothing drawn on a wound",
+   "score": "1 (0 on a robot)",
+   "change": "Data only: `hit_feel.json` chainsaw row `kick_px` 1 -> 2.5 and `shake: gunfire` (1.5 px, 4 ticks) once per strike (MeleeWound's gap already limits it to one per strike; no stop, the grind must not stutter); the bite spark stroke comes from item 1's row. Owner: `project/data/tables/hit_feel.json` (lane-owned)."
+  },
+  {
+   "rank": "4",
+   "where": "Chainsaw/baton/plasma sword on a riot cop's shield (wave 1-3)",
+   "score": "1",
+   "change": "`vs_shield: through` draws nothing on the slab. Throw `ShieldSparks.throw` at the face when the blow passes the slab (`MeleeWound.past_slab`, react_link.gd:130-135) on the strike tick. Owner: `project/features/combat/react/react_link.gd` + `shield_sparks.gd` (confirm the react folder is melee's to touch)."
+  },
+  {
+   "rank": "5",
+   "where": "Pistol, machine pistol, gloria, gatling hit on a cop (wave 1 guns): a 4-tick ink dot, 1 px kick, no blood",
+   "score": "1",
+   "change": "Smallest: `hit_feel.json` classes.light flash 4 -> 6 and kick_px 1 -> 2 (the assault rifle row already did exactly this: kick_px 2, hit_feel.json weapons assault_rifle); a 3-drop spurt along the round for a body hit needs `gun_fx_marks.gd`. Owner: `hit_feel.json` (lane-owned) / `gun_fx_marks.gd`."
+  },
+  {
+   "rank": "6",
+   "where": "Kill today, every weapon (generic death + one blood spray)",
+   "score": "1",
+   "change": "Make `--kill-feed` the gauntlet default after 03p2's digest re-pin: lifts every melee kill to 3 and the gun rows to 2-3. Owner: `project/features/gauntlet/gauntlet_session.gd:35` + the re-pinned digests."
+  },
+  {
+   "rank": "7",
+   "where": "Flamethrower and rocket on a shield or a robot",
+   "score": "1",
+   "change": "A burn mark / blast ring on the slab and a scorch on a robot chassis: reuse `fight_scorch_art.gd`. Owner: `project/features/combat/weapons/fight_scorch_art.gd`."
+  },
+  {
+   "rank": "8",
+   "where": "The plasma sword leaves no scorch though the plasma rifle does",
+   "score": "1",
+   "change": "A `weapon_wound` row for plasma_sword in `human_reactions.json` plus `PlasmaScorchView.mark` on its wound (react_link.gd:139-148). Owner: `human_reactions.json` / `plasma_scorch_view.gd`."
+  }
+ ]
+}

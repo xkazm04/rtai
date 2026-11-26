@@ -1,0 +1,2570 @@
+{
+	"schema": "gtai.blade-pixels-judged/1",
+	"weapon": "electro_baton",
+	"weapon_id": "electro_baton",
+	"drawn_no_hit": 9,
+	"hit_not_drawn": 2,
+	"both": 15,
+	"neither": 34,
+	"drawn_no_hit_after_test": 8,
+	"drawn_no_hit_in_cut": 7,
+	"repeats": [
+		{
+			"k": 3,
+			"strike_t": 0.0833333333333333,
+			"prev_strike_t": 0.0666666666666667
+		},
+		{
+			"k": 4,
+			"strike_t": 0.1,
+			"prev_strike_t": 0.0833333333333333
+		},
+		{
+			"k": 47,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 48,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 49,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 50,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 51,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 52,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 53,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 54,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 55,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		},
+		{
+			"k": 56,
+			"strike_t": -1,
+			"prev_strike_t": -1
+		}
+	],
+	"body_cut_m": 0.6,
+	"body_cut_px": {
+		"0": {
+			"radius": 60,
+			"head": 0,
+			"floor": 33,
+			"left": 2055
+		},
+		"1": {
+			"radius": 60,
+			"head": 0,
+			"floor": 32,
+			"left": 2076
+		},
+		"2": {
+			"radius": 185,
+			"head": 57,
+			"floor": 36,
+			"left": 4873
+		},
+		"3": {
+			"radius": 185,
+			"head": 57,
+			"floor": 36,
+			"left": 4873
+		},
+		"4": {
+			"radius": 185,
+			"head": 57,
+			"floor": 36,
+			"left": 4873
+		},
+		"5": {
+			"radius": 188,
+			"head": 52,
+			"floor": 40,
+			"left": 4869
+		},
+		"6": {
+			"radius": 190,
+			"head": 43,
+			"floor": 45,
+			"left": 4831
+		},
+		"7": {
+			"radius": 190,
+			"head": 38,
+			"floor": 44,
+			"left": 4716
+		},
+		"8": {
+			"radius": 195,
+			"head": 35,
+			"floor": 42,
+			"left": 4658
+		},
+		"9": {
+			"radius": 199,
+			"head": 31,
+			"floor": 43,
+			"left": 4528
+		},
+		"10": {
+			"radius": 202,
+			"head": 21,
+			"floor": 44,
+			"left": 4503
+		},
+		"11": {
+			"radius": 198,
+			"head": 10,
+			"floor": 46,
+			"left": 4411
+		},
+		"12": {
+			"radius": 193,
+			"head": 5,
+			"floor": 41,
+			"left": 4340
+		},
+		"13": {
+			"radius": 186,
+			"head": 0,
+			"floor": 38,
+			"left": 4403
+		},
+		"14": {
+			"radius": 187,
+			"head": 0,
+			"floor": 43,
+			"left": 4433
+		},
+		"15": {
+			"radius": 183,
+			"head": 0,
+			"floor": 38,
+			"left": 4737
+		},
+		"16": {
+			"radius": 195,
+			"head": 0,
+			"floor": 25,
+			"left": 4662
+		},
+		"17": {
+			"radius": 200,
+			"head": 0,
+			"floor": 36,
+			"left": 4580
+		},
+		"18": {
+			"radius": 175,
+			"head": 0,
+			"floor": 35,
+			"left": 4514
+		},
+		"19": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"20": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"25": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"26": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"27": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"30": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"31": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"32": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"33": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"34": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"35": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"38": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"39": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"40": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"41": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"42": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"43": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"46": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"47": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"48": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"49": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"50": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"51": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"52": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"53": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"54": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"55": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		},
+		"56": {
+			"radius": 0,
+			"head": 0,
+			"floor": 0,
+			"left": 0
+		}
+	},
+	"overlays": [
+		3,
+		6
+	],
+	"hit_test_ks": [
+		2
+	],
+	"cut_window": [
+		0,
+		5
+	],
+	"drawn_window": [
+		0,
+		18
+	],
+	"overlay_k": 3,
+	"overlap_window": [
+		0,
+		18
+	],
+	"mover": {
+		"trials": 14,
+		"hit": 14,
+		"drawn": 14,
+		"drawn_no_hit": 0
+	},
+	"cells": [
+		{
+			"angle_deg": 0,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 2,
+			"radius_m": 0.45,
+			"struck_k": 2
+		},
+		{
+			"angle_deg": 30,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"angle_deg": 60,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"angle_deg": 90,
+			"dist_m": 0.8,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 120,
+			"dist_m": 0.8,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 150,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 180,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 210,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 240,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 270,
+			"dist_m": 0.8,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 300,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"angle_deg": 330,
+			"dist_m": 0.8,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"angle_deg": 0,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"angle_deg": 30,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"angle_deg": 60,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"angle_deg": 90,
+			"dist_m": 1.4,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 120,
+			"dist_m": 1.4,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 150,
+			"dist_m": 1.4,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 180,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				15,
+				16
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 210,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 240,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 270,
+			"dist_m": 1.4,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 300,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 5,
+			"radius_m": 0.45,
+			"struck_k": 5
+		},
+		{
+			"angle_deg": 330,
+			"dist_m": 1.4,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"angle_deg": 0,
+			"dist_m": 2,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"angle_deg": 30,
+			"dist_m": 2,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 2,
+			"radius_m": 0.45,
+			"struck_k": 2
+		},
+		{
+			"angle_deg": 60,
+			"dist_m": 2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"angle_deg": 90,
+			"dist_m": 2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 120,
+			"dist_m": 2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 150,
+			"dist_m": 2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 180,
+			"dist_m": 2,
+			"drawn": true,
+			"drawn_ks": [
+				15
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 210,
+			"dist_m": 2,
+			"drawn": true,
+			"drawn_ks": [
+				1
+			],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 240,
+			"dist_m": 2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 270,
+			"dist_m": 2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 300,
+			"dist_m": 2,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 5,
+			"radius_m": 0.45,
+			"struck_k": 5
+		},
+		{
+			"angle_deg": 330,
+			"dist_m": 2,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"angle_deg": 0,
+			"dist_m": 2.6,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"angle_deg": 30,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": true,
+			"kind": "ring",
+			"land_k": 2,
+			"radius_m": 0.45,
+			"struck_k": 2
+		},
+		{
+			"angle_deg": 60,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 90,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 120,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 150,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 180,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 210,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 240,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 270,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 300,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 330,
+			"dist_m": 2.6,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 0,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 30,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 60,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 90,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 120,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 150,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 180,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 210,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 240,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 270,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 300,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		},
+		{
+			"angle_deg": 330,
+			"dist_m": 3.2,
+			"drawn": false,
+			"drawn_ks": [],
+			"hit": false,
+			"kind": "ring",
+			"land_k": 7,
+			"radius_m": 0.45,
+			"struck_k": -1
+		}
+	],
+	"movers": [
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": -10,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 0,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 10,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 20,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 30,
+			"land_k": 2,
+			"radius_m": 0.45,
+			"struck_k": 2
+		},
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 45,
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"dir": 1,
+			"drawn": true,
+			"drawn_ks": [
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 60,
+			"land_k": 1,
+			"radius_m": 0.45,
+			"struck_k": 1
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": -10,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 0,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 10,
+			"land_k": 3,
+			"radius_m": 0.45,
+			"struck_k": 3
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 20,
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 30,
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 45,
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		},
+		{
+			"dir": -1,
+			"drawn": true,
+			"drawn_ks": [
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18
+			],
+			"hit": true,
+			"kind": "mover",
+			"lag": 60,
+			"land_k": 4,
+			"radius_m": 0.45,
+			"struck_k": 4
+		}
+	],
+	"drawn": {
+		"0": {
+			"cut_ks": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"land_ks": [
+				7
+			],
+			"window": [
+				0,
+				19
+			],
+			"ticks": {
+				"0": {
+					"deg": [
+						-178.2,
+						179.6
+					],
+					"reach_m": 1.81,
+					"points": 511,
+					"deg_p5_p95": [
+						-165.5,
+						-22.9
+					],
+					"reach_p95": 1.52
+				},
+				"1": {
+					"deg": [
+						-178.2,
+						179.6
+					],
+					"reach_m": 1.86,
+					"points": 530,
+					"deg_p5_p95": [
+						-166.8,
+						-24.1
+					],
+					"reach_p95": 1.54
+				},
+				"2": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.43,
+					"points": 1220,
+					"deg_p5_p95": [
+						-138.7,
+						39.5
+					],
+					"reach_p95": 2.15
+				},
+				"3": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.43,
+					"points": 1220,
+					"deg_p5_p95": [
+						-138.7,
+						39.5
+					],
+					"reach_p95": 2.15
+				},
+				"4": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.43,
+					"points": 1220,
+					"deg_p5_p95": [
+						-138.7,
+						39.5
+					],
+					"reach_p95": 2.15
+				},
+				"5": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.43,
+					"points": 1210,
+					"deg_p5_p95": [
+						-139.6,
+						38.6
+					],
+					"reach_p95": 2.16
+				},
+				"6": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.43,
+					"points": 1198,
+					"deg_p5_p95": [
+						-140.6,
+						38.1
+					],
+					"reach_p95": 2.14
+				},
+				"7": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.43,
+					"points": 1177,
+					"deg_p5_p95": [
+						-141,
+						37.8
+					],
+					"reach_p95": 2.15
+				},
+				"8": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.42,
+					"points": 1170,
+					"deg_p5_p95": [
+						-142.5,
+						37.3
+					],
+					"reach_p95": 2.15
+				},
+				"9": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.42,
+					"points": 1125,
+					"deg_p5_p95": [
+						-143.5,
+						38.3
+					],
+					"reach_p95": 2.13
+				},
+				"10": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.38,
+					"points": 1136,
+					"deg_p5_p95": [
+						-145.5,
+						36.6
+					],
+					"reach_p95": 2.13
+				},
+				"11": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.38,
+					"points": 1108,
+					"deg_p5_p95": [
+						-144.7,
+						38
+					],
+					"reach_p95": 2.11
+				},
+				"12": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.38,
+					"points": 1090,
+					"deg_p5_p95": [
+						-149.6,
+						35.8
+					],
+					"reach_p95": 2.15
+				},
+				"13": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.35,
+					"points": 1097,
+					"deg_p5_p95": [
+						-148.3,
+						34.9
+					],
+					"reach_p95": 2.13
+				},
+				"14": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.33,
+					"points": 1099,
+					"deg_p5_p95": [
+						-150.5,
+						34.9
+					],
+					"reach_p95": 2.11
+				},
+				"15": {
+					"deg": [
+						-179.1,
+						179.6
+					],
+					"reach_m": 2.36,
+					"points": 1179,
+					"deg_p5_p95": [
+						-174.1,
+						30.7
+					],
+					"reach_p95": 2.1
+				},
+				"16": {
+					"deg": [
+						-178.8,
+						179.6
+					],
+					"reach_m": 2.33,
+					"points": 1165,
+					"deg_p5_p95": [
+						-172.3,
+						31
+					],
+					"reach_p95": 2.1
+				},
+				"17": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.33,
+					"points": 1133,
+					"deg_p5_p95": [
+						-155.4,
+						33.2
+					],
+					"reach_p95": 2.09
+				},
+				"18": {
+					"deg": [
+						-178.3,
+						179.6
+					],
+					"reach_m": 2.33,
+					"points": 1122,
+					"deg_p5_p95": [
+						-155.4,
+						31.6
+					],
+					"reach_p95": 2.09
+				}
+			}
+		},
+		"90": {
+			"cut_ks": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"land_ks": [
+				7
+			],
+			"window": [
+				0,
+				19
+			],
+			"ticks": {
+				"0": {
+					"deg": [
+						-137.5,
+						153.2
+					],
+					"reach_m": 1.83,
+					"points": 190,
+					"deg_p5_p95": [
+						-128.8,
+						145.7
+					],
+					"reach_p95": 1.61
+				},
+				"1": {
+					"deg": [
+						-137.5,
+						153.2
+					],
+					"reach_m": 1.83,
+					"points": 190,
+					"deg_p5_p95": [
+						-128.8,
+						145.7
+					],
+					"reach_p95": 1.61
+				},
+				"2": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"3": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"4": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"5": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"6": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"7": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"8": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"9": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"10": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"11": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"12": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"13": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"14": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"15": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"16": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"17": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				},
+				"18": {
+					"deg": [
+						-150.2,
+						144.4
+					],
+					"reach_m": 1.65,
+					"points": 588,
+					"deg_p5_p95": [
+						-138.5,
+						135.8
+					],
+					"reach_p95": 1.54
+				}
+			}
+		},
+		"315": {
+			"cut_ks": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"land_ks": [
+				7
+			],
+			"window": [
+				0,
+				19
+			],
+			"ticks": {
+				"0": {
+					"deg": [
+						-104.2,
+						18.7
+					],
+					"reach_m": 1.72,
+					"points": 215,
+					"deg_p5_p95": [
+						-98.5,
+						15.1
+					],
+					"reach_p95": 1.55
+				},
+				"1": {
+					"deg": [
+						-104.9,
+						33.8
+					],
+					"reach_m": 1.74,
+					"points": 328,
+					"deg_p5_p95": [
+						-98.1,
+						27.9
+					],
+					"reach_p95": 1.54
+				},
+				"2": {
+					"deg": [
+						-20.4,
+						45.4
+					],
+					"reach_m": 1.75,
+					"points": 169,
+					"deg_p5_p95": [
+						-17.1,
+						32.3
+					],
+					"reach_p95": 1.65
+				},
+				"3": {
+					"deg": [
+						-20.4,
+						45.4
+					],
+					"reach_m": 1.75,
+					"points": 132,
+					"deg_p5_p95": [
+						-17.5,
+						33.3
+					],
+					"reach_p95": 1.66
+				},
+				"4": {
+					"deg": [
+						-20.4,
+						45.4
+					],
+					"reach_m": 1.75,
+					"points": 132,
+					"deg_p5_p95": [
+						-17.5,
+						33.3
+					],
+					"reach_p95": 1.66
+				},
+				"5": {
+					"deg": [
+						-20.4,
+						35.8
+					],
+					"reach_m": 1.75,
+					"points": 129,
+					"deg_p5_p95": [
+						-17.5,
+						31.6
+					],
+					"reach_p95": 1.66
+				},
+				"6": {
+					"deg": [
+						-19.5,
+						38.4
+					],
+					"reach_m": 1.69,
+					"points": 121,
+					"deg_p5_p95": [
+						-17.4,
+						33.5
+					],
+					"reach_p95": 1.64
+				},
+				"7": {
+					"deg": [
+						-18.5,
+						34.1
+					],
+					"reach_m": 1.67,
+					"points": 91,
+					"deg_p5_p95": [
+						-17,
+						31
+					],
+					"reach_p95": 1.61
+				},
+				"8": {
+					"deg": [
+						-19,
+						33.5
+					],
+					"reach_m": 1.66,
+					"points": 75,
+					"deg_p5_p95": [
+						-17.5,
+						30.7
+					],
+					"reach_p95": 1.63
+				},
+				"9": {
+					"deg": [
+						-19,
+						33.5
+					],
+					"reach_m": 1.66,
+					"points": 53,
+					"deg_p5_p95": [
+						-16.2,
+						30.1
+					],
+					"reach_p95": 1.58
+				},
+				"10": {
+					"deg": [
+						-17.4,
+						29.2
+					],
+					"reach_m": 1.57,
+					"points": 32,
+					"deg_p5_p95": [
+						-16.8,
+						2.1
+					],
+					"reach_p95": 1.57
+				},
+				"11": {
+					"deg": [
+						-16.2,
+						28.1
+					],
+					"reach_m": 1.58,
+					"points": 15,
+					"deg_p5_p95": [
+						-16.2,
+						28.1
+					],
+					"reach_p95": 1.58
+				},
+				"12": {
+					"deg": [
+						-14.7,
+						-5.3
+					],
+					"reach_m": 1.38,
+					"points": 3,
+					"deg_p5_p95": [
+						-14.7,
+						-5.3
+					],
+					"reach_p95": 1.38
+				}
+			}
+		}
+	}
+}

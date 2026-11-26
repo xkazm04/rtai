@@ -47,7 +47,7 @@ func _process(_frame: float) -> void:
 	on = on and MeleeSwing.cutting(rig.clips.strike_t, rig.clips.strike_ph)
 	z_index = rig.plan.head_z - 1 - _z_over_rigs() if o >= 5 else 0
 	_root = to_local(rig.global_position + ShotLift.up_m() * SimConst.PX_PER_M)
-	_r = clampf(_reach_m(), ARM_MIN_M, REACH_MAX_M) * SimConst.PX_PER_M
+	_r = clampf(_reach_m(), ARM_MIN_M, reach_max_m(_reach_m())) * SimConst.PX_PER_M
 	if on:
 		_after = 0
 		var a: float = rig.face_to + _sweep(rig) - global_rotation
@@ -88,6 +88,12 @@ func _draw() -> void:
 	if not Geometry2D.triangulate_polygon(band).is_empty():
 		draw_colored_polygon(band, Color(CREAM, CREAM.a * fade))
 	draw_polyline(outer, Color(Ink.INK, fade), EDGE_PX, true)
+
+
+## The crescent's largest radius: REACH_MAX_M; with --melee-sweep (n31 melee 02) the hit's own
+## reach, so the drawn arc reaches as far as the sweep that tests it.
+static func reach_max_m(reach_m: float) -> float:
+	return maxf(REACH_MAX_M, reach_m) if MeleeSweep.on else REACH_MAX_M
 
 
 func _sweep(rig: CutRig) -> float:

@@ -78,6 +78,31 @@
           "minimum": 0,
           "type": "integer"
         },
+        "sweep_arc_deg": {
+          "items": {
+            "maximum": 180,
+            "minimum": -180,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "sweep_lunge_ticks": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "sweep_reach_m": {
+          "maximum": 6,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "sweep_recovery_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
         "windup_ticks": {
           "maximum": 120,
           "minimum": 1,

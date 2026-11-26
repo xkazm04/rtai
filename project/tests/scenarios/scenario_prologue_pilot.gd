@@ -6,23 +6,24 @@ const ENTRY: PackedScene = preload("res://boot/prologue/prologue.tscn")
 const PILOT: GDScript = preload("res://dev/bots/prologue_bot.gd")
 const Watch = preload("res://dev/prologue_yard/yard_motion_watch.gd")
 const BUDGET: int = 300 * SimClock.TICK_RATE
-## SHA-256 over PrologueGame's sorted result JSON at the end card, measured before line_fire.
+## SHA-256 over PrologueGame's sorted result JSON at the end card (torn_line and plain), measured
+## before line_fire; re-pinned in n31 melee 02p3b (the melee hit follows the drawn blade).
 const LEGACY: Dictionary[int, String] = {
-	7: "3d7547b9331afafe2946c4fe894c9e06a7691526e6e2e5034408f4863b7108cc",
-	3: "e8e3f3843e5739d21b15759df6b273e1347b1bbfc199562e02835c0cdfa9b592",
-	11: "0bc70fe79eb40f1cf7e03506e88ab88dfe4def6459fef0a3ee40ee268ff9b361",
-	21: "f2db6c6381d3adc5b44f6a54cd68582daaa7b569a1f5770895c38c70af3b25c8",
-	42: "c24e6541726ff885917bc6dd0210a21f33db7dd397ad67c29e514714d9207b7d",
+	7: "34263b7abd8a43dd995c9752c41d606cbe1cd39eb989bc44dad49917e1db3d7e",
+	3: "4a9e9741a6c6f9245ac37dd7a6027c00fc2160de92cd810d038e276eb6d49dc6",
+	11: "37516f5d82a98c75091ccc26302107b8893daed1ad145e9c18fac2e8ad1080b6",
+	21: "cc779316abfe0865722c4aec07cd01e38bf06856249ab9b52fa2e7060743d36e",
+	42: "f00023e7f663761d256aae5643a305f9c1827793751a239d02f7d0eee9a54178",
 }
-const LINE_FIRE_TICKS: Dictionary[int, int] = {7: 11701, 3: 13014, 11: 10392, 21: 12158, 42: 13278}
+## Finish ticks per seed, re-pinned in n31 melee 02p3b (melee sweep on).
+const LINE_FIRE_TICKS: Dictionary[int, int] = {7: 11123, 3: 9956, 11: 10616, 21: 10168, 42: 10333}
 ## The shipped default is arched_line: raised_line's collision, so these ticks (raised_line one
-## flag away). They keep line_fire's bytes except seed 3, where the two west stacks change the
-## run (the same deaths and lowest health, a different finish).
-const RAISED_LINE_TICKS: Dictionary[int, int] = {
-	7: 11701, 3: 11958, 11: 10392, 21: 12158, 42: 13278
-}
-## The cover milestone's sorted result bytes, before the dusk art and lights.
-const COVER_SEED_7: String = "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba"
+## flag away). Since the melee sweep (n31 melee 02p3b) they no longer share line_fire's run.
+const RAISED_LINE_TICKS: Dictionary[int, int] = {7: 11717, 3: 11210, 11: 10031, 21: 9576, 42: 10029}
+## Seed 7's sorted result bytes per collision (raised_line, arched_line and line_fire),
+## re-pinned on the n31 merge (melee sweep on + ground's yard footprints).
+const COVER_SEED_7: String = "2285282b2739e400e99967142b2c2be6bb908fad224f1df965596879e300efa1"
+const LINE_FIRE_SEED_7: String = "30fca0d8671cede4c9babb875db20e9b8c4b71076b0a80ccc097a52307c5ab0a"
 ## arched_line since n31-19: its conveyor boxes on the drawn machines' base, 12 solid arch supports.
 const ARCHED_LINE_TICKS: Dictionary[int, int] = {
 	7: 17712, 3: 10765, 11: 12611, 21: 10199, 42: 11758
@@ -98,7 +99,10 @@ func _pin(row: Dictionary) -> String:
 			if row["dressing"] == "line_fire"
 			else (ARCHED_LINE_TICKS if arched else RAISED_LINE_TICKS)
 		)
-		if seed_value == 7 and row["sha256"] != (ARCHED_SEED_7 if arched else COVER_SEED_7):
+		var seed_7: String = ARCHED_SEED_7 if arched else COVER_SEED_7
+		if row["dressing"] == "line_fire":
+			seed_7 = LINE_FIRE_SEED_7
+		if seed_value == 7 and row["sha256"] != seed_7:
 			return "seed-7 cover result bytes changed: " + str(row["sha256"])
 		if row["ticks"] != pinned[seed_value]:
 			return "finished in %d ticks, expected %d" % [row["ticks"], pinned[seed_value]]
