@@ -55,3 +55,33 @@ Reproduce: `node tools/ground/play_take.mjs --rev=<ba8e470b0|HEAD> --seed=7 --ti
 
 ## One sentence for the REPORT
 At 32 px/m a player sees the cops' ground disc land under or between the boots on about half of the stride frames instead of trailing a boot-width behind them (median offset 6.9 -> 2.4 px), but the cap still pumps on diagonal walks and the one card foe we could film (a thug at a wall) looks the same, so the change is small and real only on the cops.
+
+## n31-15: lock | glide in play (GLIDE_NO_STEP, commit `830858c2d`)
+Arms: main `ba8e470b0` (`build/n31/n31-02/s7_32`) | lock `b94e64c0e` (foe code as `661f95fb6` plus the print-lock commits) | glide `830858c2d` (lock + `GLIDE_NO_STEP` = true).
+Takes: `node tools/ground/play_take.mjs --rev=<b94e64c0e|830858c2d> --seed=7 --ticks=420 --ppm=32 --out=build/n31/n31-15/<lock|glide>_s7`; the n31-11 take
+(`661f95fb6`) is not the same rev, so the lock arm was re-rendered. Same seed and ticks: Rivet and the camera are frame-identical between lock and glide (kerb rows equal on every frame, Rivet crop identical at t260); the scattered pixel differences are encoder noise.
+
+Where the glide engages (lock vs glide frame diff, threshold 200): the wave-1 group walking S toward the camera, ticks **282-300**, and one cop against the wall at
+about (1400,300), ticks 318-414. The n31-11 tracked cop (ticks 300-345) backpedals E while aiming W: side column, the glide does not engage on him.
+
+| measure (32 px/m, delivered 1080p frames) | main | lock | glide |
+|---|---|---|---|
+| n31-11 cop, ticks 300-345: cap top travel, linear detrend (n31-11 method, `build/n31/n31-15/cop3.py`) | 13.9 px | 12.6 px | 14.8 px |
+| same cop: cap top minus the kerb top edge, detrended (camera removed, `kerb_rel.py`) | 10.3 px | 8.6 px | 14.2 px (one-frame spike at t332 of 10 px; otherwise within ~3 px from t303) |
+| same cop: disc centre minus boot midpoint x, median / mean abs / worst | +6.9 / 8.2 / 20 px | +3.7 / 7.0 / 21 px | +1.8 / 6.7 / 19 px |
+| same cop: disc minus lowest boot row y, median | +4.5 px | +4.1 px | +3.4 px |
+| S-walking cop of the group, ticks 280-302: cap-top frame steps >= 3 px / largest | 4 / 16 px | 4 / 20 px (may be the tracker switching cops at t288) | **2 / 4 px** |
+
+Correction to the n31-11 table: its 14 px "head travel" for this cop is mostly the camera (the kerb moves with him: 703 -> 681 px over the window); measured against
+the kerb his cap is flat within about 3 px in lock and glide after the turn at t300-302. The skate: the probe's sole slide is 22-24 px a stance (patrol S/SE,
+3.2 m/s); in play, inside a moving crowd at 32 px/m, I could not see the boots slide on the x2 crops
+(`group_walkin_32_lock_glide.png`); boot slide in the take: **not measured** (no ground feature under those cops to track against in the time).
+Seen (`group_walkin_32_lock_glide.png`): glide cops sit a few px lower, nearer their discs, the body moves on evenly while the legs cycle; lock cops hold, then shift.
+
+Blend lever (`GLIDE_SHARE`, commit `4fc9246d7`, probe only): at 0.5, patrol walk, head / planted boot to disc / sole slide: S 5.3 / 7.3 / 13.6 px, SE 5.1 / 8.6 / 14.0
+(1.0: 2.0 / 5.2 / 22.1 and 1.5 / 6.7 / 24.4; lock: 12.4 / 12.2 / 9.4 and 10.1 / 13.9 / 9.3): it misses both head <= 4 and slide <= 12, so the default stays 1.0.
+
+Masters (`item2/frames.json`, first five): `group_walkin_32_lock_glide.png`, `gauntlet_cops_glide_side_32.mp4` (24.5 s, 1920x1080 60 fps: 7 s lock | glide then 0.4x),
+`cops_stride_32_main_lock_glide.png`, `cops_wall_pair_32_t366_lock_glide.png`, `cops_measure3_32.json`.
+
+One sentence: at 32 px/m the cops walking toward the camera now move on smoothly instead of holding and hopping, the skate of their boots is too small to see in the crowd, and the side-on cops look exactly as before.

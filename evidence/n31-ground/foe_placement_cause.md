@@ -144,3 +144,9 @@ planted boot travels with the sim point, the whole stance (22-33 px per stance a
 drawings make no forward step to cancel it), against 9-14 px locked (where the slide is the toe-off
 heel registration dropping the figure). The glide trades the hold-then-jump for a skate of the
 walking speed on these columns.
+
+## Glide share (n31-15): probe at 0.5
+`StreetPatrolPose.GLIDE_SHARE` (`4fc9246d7`) blends a gliding column's stand point (`origin.lerp(at - eased_landing, share)`), stride (`x (1 - share)`) and registered sole
+(`sole_y x (1 - share)`). `foe_place_probe.gd --share=0.5`, patrol walk, 32 px/m, stats `build/n31/n31-13/stats.py` (head / planted boot to disc / slide, px):
+S lock 12.4 / 12.2 / 9.4 | 0.5 **5.3 / 7.3 / 13.6** | 1.0 2.0 / 5.2 / 22.1. SE lock 10.1 / 13.9 / 9.3 | 0.5 **5.1 / 8.6 / 14.0** | 1.0 1.5 / 6.7 / 24.4.
+N 0.5: 8.3 / 6.0 / 14.0; NE 0.5: 6.6 / 11.5 / 14.0. Share 1.0 reproduces the n31-13 glide numbers exactly. 0.5 meets neither head <= 4 nor slide <= 12: the default stays 1.0.
