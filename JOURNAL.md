@@ -219,3 +219,7 @@ NEXT: none for this run. The Director merges `n31-ground`; merge notes and Next 
 ## Session 10 (07:30 - 07:32, STABILIZE past freeze)
 - 07:30 MILESTONE session start. HEAD `abe814d85`. Checked: no diff under project/, tools/, native/ since the green gate on `88bc88996` (`build/gate/88bc88996d2f/gate.json` present); no `project/override.cfg` in the live tree; `node tools/evidence/cites.mjs REPORT.md` 31 paths, 30 ok, 1 pattern. No builder live, no lane lock. No change, no re-gate. IMAGES 0/25.
 NEXT: none for this run. The Director merges `n31-ground`; see REPORT.md Merge notes and Next steps.
+
+## Session 11 (07:40 - 07:43, REPORT phase)
+- 07:40 MILESTONE session start. HEAD `b7b544f63`. REPORT.md complete (header, What works items 1-4, What does not, What blocked, Calls for the owner, Merge notes, Next steps, Builder ledger, Gate). Checked: no diff under project/, tools/, native/ since the green gate on `88bc88996` (`build/gate/88bc88996d2f/gate.json` present); no `project/override.cfg` in the live tree; `node tools/evidence/cites.mjs REPORT.md` 31 paths, 30 ok, 1 pattern. No builder live, no lane lock. No change to REPORT content. IMAGES 0/25.
+NEXT: none for this run. The Director merges `n31-ground`; see REPORT.md Merge notes and Next steps (first: a pinning test for prop_base.gd, mutate 0/12).
