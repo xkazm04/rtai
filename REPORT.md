@@ -1,10 +1,10 @@
 # REPORT lane foes, run n31 (2026-11-25 night)
 
 Branch `n31-foes`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue`, cut from `main` `ba8e470b0`.
-Final game setting: `9b3730e36` (HEAD's default game code is the same; call B is playable behind `--foe-fire=hot`,
-PENDING b4q).
+Final game setting: `9b3730e36` (HEAD's default game code is the same). Call B is playable behind `--foe-fire=hot`
+(1e9d8632f, off by default).
 Films: `C:\Users\kazda\kiro\gtai-masters\n31\foes\` (`frames.json`, best first).
-Gate: PENDING (`node tools/gate/run.mjs --rev=HEAD`).
+Gate: PENDING (`node tools/gate/run.mjs --rev=HEAD` on `7e3ed7a46`, started 05:16, log `build/n31/gate-final.out`).
 
 ## What a player now meets when a wave starts (item 4 paragraph)
 
@@ -17,8 +17,9 @@ A cop that is shooting walks slowly backwards and sideways while facing you, and
 gun and runs. What a player feels: the first rounds come sooner and from more guns, and a rush now breaks a cop's
 fire instead of being met by a full-speed backpedal while it shoots. What has not changed enough: cops still spend
 a lot of time walking to cover without firing. On HEAD, fewer foes fire per second than on main (0.83 against 1.02,
-average bot) because a cop walking to cover is in the no-fire travel move. In wave 3 on seed 3 the HEAD take shows
-less fire than main (0.40 against 0.67 foes firing per second). Setting B (call 0) is the one that beats main on
+average bot) because a cop walking to cover is in the no-fire travel move. On seed 3 the HEAD takes show more fire
+than main in wave 1 (0.93 against 0.63 foes firing per second) but less in wave 3 (0.40 against 0.67) and wave 6
+(0.80 against 1.23). Setting B (call 0) is the one that beats main on
 every fire number.
 
 ## What works
@@ -28,7 +29,8 @@ every fire number.
 | 1 measure the waiting | `tools/gauntlet/waiting.mjs` + probe (5e081baa5, 214602c88, f1dfc7492), `evidence/n31/foes/waiting-main/waiting.md` | main: react in range p50/p90 1.05/6.15 s, idle share 66 % (engaged rule), cops shoot from a median 9.0 m though they see 24 m, 173 of 569 ranged foes never fired, 1.02 foes firing per second with 6.4 alive |
 | 2 two movement types | `project/features/combat/squad/foe_gait.gd`, `foe_gait_drive.gd` (a4a7a3537, 09d6abdba, 7dfba0b0f); mutate foe_gait.gd 20/20 | FIGHT = 0.45 x speed, faces Rivet, the only state that may fire; TRAVEL = full speed (panic x1.6), no fire, gun lowered; urgent inside 4 m; at least 0.6 s per mode; 0.25 s settle before the first shot. Clip `gait64_hold_side.mp4` (64 px/m, seed 3): the followed cop backs off at 0.26-1.08 m/s 6.1-6.6 m away and fires 3 rounds (s 1-3), then runs at 3.09 m/s with 0 rounds when Rivet rushes inside 4 m (s 6) |
 | 3 they open fire | `evidence/n31/foes/item3-compare.md`, `waiting-final/`, `noise.md` | react p50 1.05 -> 0.68 s (bar <= 1.0: holds), p90 6.15 -> 2.58 s (bar 2.5: 0.08 over), idle 66 -> 55 % (bar < 35 %: fails), never fired 173 -> 160 of ~500, damage w1-4 62.9 -> 71.3 (rail 53.5..72.3 holds). 20 seeds: damage 63.8 -> 70.0 (+9.7 %) |
-| 4 re-measure and film | `wave1_side`, `wave3_side`, `callb_wave3`, `gait64_hold`, wave 6 PENDING b4p (`evidence/n31/foes/takes/`) | wave 1 seed 3: foes that fired per second 0.63 -> 0.93 with fewer alive (9.2 -> 7.1); wave 3 seed 3: 0.67 -> 0.40 (less, see above) |
+| 4 re-measure and film | `wave1_side`, `wave3_side`, `wave6_side`, `callb_wave3`, `gait64_hold` (`evidence/n31/foes/takes/`) | seed 3, foes that fired per second main -> HEAD (mean alive): wave 1 0.63 -> 0.93 (9.2 -> 7.1); wave 3 0.67 -> 0.40 (4.6 -> 5.1); wave 6 1.23 -> 0.80 (6.1 -> 5.4), Rivet at 18 s 77 -> 86 of 110 |
+| call B behind a flag | `--foe-fire=hot`, `squad.fire_presets.hot` (1e9d8632f), `evidence/n31/foes/hot-flag-proof.md` (7e3ed7a46) | HEAD + flag = rev `c825715e8` byte for byte on seed 3; GUT 3/3; mutate enemy_roster.gd changed lines 5/7 = 71.4 % (2 survivors on the flag guard, equivalent without a flag) |
 | 5a prologue two moves (patch for ground) | `evidence/n31/foes/prologue_moves.patch` + `.md` | yard patrol rounds while Rivet < 4 m: main 2-25 -> 0 on 5 seeds; not pinned (see Merge notes) |
 
 ## What does not
@@ -62,8 +64,9 @@ every fire number.
 
 0. **Setting B: more cops shooting, each round weaker.** It is one data block in `enemies.json`
    (`squad.max_shooters_share` 0.5 -> 0.75, `own_weapon_damage` pistol 3 -> 1.5, rifle 2 -> 1.5). Play it with
-   `gauntlet.tscn -- --pick-view --foe-fire=hot` (PENDING b4q; the gauntlet's own flag list needs
-   `need_gauntlet_flags.patch`, see Merge notes). Average bot, 20 seeds (`evidence/n31/foes/noise.md`), main | final
+   `gauntlet.tscn -- --pick-view --foe-fire=hot` (1e9d8632f). The gauntlet's own flag list needs
+   `need_gauntlet_flags.patch` first, see Merge notes. Proof that the flag is B: on seed 3, HEAD with the flag and rev
+   `c825715e8` write byte-identical waiting tallies and run results (`evidence/n31/foes/hot-flag-proof.md`). Average bot, 20 seeds (`evidence/n31/foes/noise.md`), main | final
    (HEAD) | B:
    - idle share 65 | 53 | 43 %
    - foes firing per second 1.02 | 0.83 | 1.07
@@ -89,7 +92,7 @@ every fire number.
 
 ## Merge notes
 
-- NEED director: `evidence/n31/foes/need_gauntlet_flags.patch` (PENDING b4q). `project/dev/gauntlet/gauntlet.gd`'s
+- NEED director: `evidence/n31/foes/need_gauntlet_flags.patch` (eb7173407, `git apply --check` clean). `project/dev/gauntlet/gauntlet.gd`'s
   own `KNOWN_FLAGS` rejects `--foe-fire` and `--foe-moves` (exit 2). Without it, B is playable only through the take
   tool (`project/dev/foes_n31/play_take.tscn`).
 - NEED director: `evidence/n31/foes/need_gun_down.patch` (arena_rigs.gd, unowned): no AIMING pose while in TRAVEL.
@@ -112,4 +115,37 @@ every fire number.
 
 ## Builder ledger
 
-PENDING final minutes for b4p, b4q.
+23 Claude sub-agent calls, 673 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
+
+| call | model | min | verdict | what it delivered |
+| --- | --- | --- | --- | --- |
+| b1-waiting | opus | 45 | accepted | waiting tool + probe, main BEFORE table |
+| b2-gait | opus | 57 | partial | FoeGait FIGHT/TRAVEL split |
+| b3-takes | opus | 39 | partial | play_takes tool |
+| b2b-gait | sonnet | 28 | accepted (debt) | gait checks, tests |
+| b4a-idle | opus | 42 | accepted | engaged-rule idle, gait column |
+| b3c-crf | not logged | 8 | accepted | take encode size |
+| b4b-levers | opus | 39 | accepted | lever 1 shooter share |
+| b4c-weapons | opus | 53 | partial | lever 5 own guns, lever 2 rejected |
+| b4e-ownwin | sonnet | 12 | partial | probe own-gun window |
+| b4f-share | opus | 50 | accepted | share 0.5 = final, tables, aim-lead tests |
+| b4d-takes | sonnet | 9 | accepted | wave1_side |
+| b4g-gait64 | sonnet | 8 | bounced | killing-bot camera cannot follow one cop |
+| b5-prologue | opus | 28 | partial | prologue_moves.patch v1 |
+| b4h-stalk | sonnet | 34 | accepted (code only) | stalk pilot, sticky follow |
+| b5b-heat | opus | 25 | partial | prologue patch v2, yard_rounds |
+| b4k-takes | sonnet | 35 | partial | gait64_stalk (superseded) |
+| b4l-stalk | sonnet | 6 | accepted | hold / rush phases |
+| b4m-stalk-take | sonnet | 11 | accepted | gait64_hold |
+| b4j-moregun | opus | 40 | accepted | G/A/B/C measured, cause split |
+| b4n-waves | sonnet | 36 | partial | wave3_side, callb_wave3 |
+| b4o-noise | not logged | 37 | accepted | 20-seed noise band |
+| b4p-wave6 | sonnet | 8 | accepted | wave6_side |
+| b4q-hot-flag | sonnet | 23 | accepted | `--foe-fire=hot`, byte-identical proof |
+
+What I would brief differently:
+- Short single-point calls (b4l 6, b4p 8, b4m 11, b4q 23 min) were the best value. The 50+ minute calls ended partial.
+- Measure the noise band FIRST (b4o came last). Two settings were judged on a 1-3 point rail margin that the 20-seed
+  band (sd 21-37 per seed) cannot resolve.
+- A film of one enemy's movement needs scripted input from the start. The killing bot cannot show it (b4g, b4k).
+- Every measurement of HEAD runs with `--rev=<commit>` when two builders share the tree.
