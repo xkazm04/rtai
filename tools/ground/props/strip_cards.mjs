@@ -8,10 +8,11 @@ import { join, resolve } from 'node:path';
 import { auditGauntlet, opaqueBox, mismatch, verdict, load, rectOf, r3, PROJECT, BAND_M, TOL_M, SOLID } from './audit.mjs';
 
 const FACINGS = 5;
+export const MAX_FIT = 2.0; // GauntletPropArt.MAX_FIT
 const facades = JSON.parse(readFileSync(join(PROJECT, 'data/tables/city_facades.json'), 'utf8'));
 
 /** Strip card `name` at view art `art` (p70), cell 0, fitted into `box` (m) at `scale`; null when the table has no card. */
-export function fitStrip(name, box, scale, art = 'p70') {
+export function fitStrip(name, box, scale, art = 'p70', legacy = false) {
   const row = facades.props[name];
   if (!row) return null;
   const file = [art, facades.art_fallback[art] ?? art].map((k) => join(PROJECT, row.art.replace('<art>', k).replace('res://', ''))).find(existsSync);
@@ -24,12 +25,11 @@ export function fitStrip(name, box, scale, art = 'p70') {
   const wM = row['cell_w_m_' + art] ?? row.cell_w_m;
   const cell = { w: wM, h: (wM * png.height) / cw / gk };
   const pad = { w: box.x1 - box.x0 - 0.08, h: box.y1 - box.y0 - 0.08 };
-  const sw = Math.min(cell.w * scale, pad.w);
-  const sh = Math.min(cell.h * scale, pad.h);
-  const foot = [(box.x0 + box.x1) / 2, box.y1 - 0.04];
-  const drawn = { x0: foot[0] - sw / 2, x1: foot[0] + sw / 2, y0: foot[1] - sh, y1: foot[1] };
   const uw = used.x1 - used.x0;
   const uh = used.y1 - used.y0;
+  const foot = [(box.x0 + box.x1) / 2, box.y1 - 0.04];
+  const { sw, sh, left } = legacy ? legacyFit(cell, scale, pad, foot) : baseFit(png, used, cell, cw, scale, pad, foot);
+  const drawn = { x0: left, x1: left + sw, y0: foot[1] - sh, y1: foot[1] };
   const bandPx = Math.max(1, Math.round((BAND_M / sh) * uh));
   const band = opaqueBox(png, { x: used.x0, y: used.y1 - bandPx, w: uw, h: bandPx }, 1);
   const base = { x0: drawn.x0 + ((band.x0 - used.x0) / uw) * sw, x1: drawn.x0 + ((band.x1 - used.x0) / uw) * sw, y0: drawn.y1 - (bandPx / uh) * sh, y1: drawn.y1 };
@@ -37,7 +37,28 @@ export function fitStrip(name, box, scale, art = 'p70') {
   return { drawn, base, body_w_m: r3(sw), body_fills_box_width: sw >= pad.w - 0.01, card_h_m: r3(sh), stretch: r3(sw / uw / (sh / uh) / (cell.w / cw / (cell.h / png.height))), clipped_to_box: sw < cell.w * scale - 1e-9 || sh < cell.h * scale - 1e-9, natural_trim_m: [r3(natural.w), r3(natural.h)] };
 }
 
-export function auditStrips(art = 'p70') {
+/** n31-18 fit (GauntletPropArt.cover before n31-19): metres * scale clipped to the pad, trim stretched into it. */
+function legacyFit(cell, scale, pad, foot) {
+  const sw = Math.min(cell.w * scale, pad.w);
+  return { sw, sh: Math.min(cell.h * scale, pad.h), left: foot[0] - sw / 2 };
+}
+
+/** n31-19 fit (GauntletPropArt.cover): the trim undistorted, scaled so its lowest BAND_M spans the pad width and
+ * centred on it; past MAX_FIT the whole body spans the pad instead. */
+export function baseFit(png, used, cell, cw, scale, pad, foot) {
+  const uw = used.x1 - used.x0;
+  const uh = used.y1 - used.y0;
+  const nat = { w: (cell.w * scale * uw) / cw, h: (cell.h * scale * uh) / png.height };
+  const rows = Math.min(uh, Math.max(1, Math.round((uh * BAND_M) / nat.h)));
+  const b = opaqueBox(png, { x: used.x0, y: used.y1 - rows, w: uw, h: rows }, 1);
+  let band = b ? [(b.x0 - used.x0) / uw, (b.x1 - used.x0) / uw] : [0, 1];
+  let fit = pad.w / (nat.w * (band[1] - band[0]));
+  if (fit > MAX_FIT) { fit = pad.w / nat.w; band = [0, 1]; }
+  const sw = nat.w * fit;
+  return { sw, sh: nat.h * fit, left: foot[0] - ((band[0] + band[1]) / 2) * sw };
+}
+
+export function auditStrips(art = 'p70', legacy = false) {
   const flat = new Map(auditGauntlet().map((r) => [r.id, r]));
   const rows = [];
   for (const seg of JSON.parse(readFileSync(join(PROJECT, 'data/tables/gauntlet.json'), 'utf8')).segments) {
@@ -47,7 +68,7 @@ export function auditStrips(art = 'p70') {
       const id = `${seg.id}#${i}:${p.kind}`;
       const key = p.kind === 'cover_high' ? 'high' : 'low';
       const box = rectOf([0, 0], p.size);
-      const fit = fitStrip(d[key], box, d[key + '_scale'], art);
+      const fit = fitStrip(d[key], box, d[key + '_scale'], art, legacy);
       const was = flat.get(id);
       if (!fit) { rows.push({ id, art: d[key], footprint_m: p.size, flat_verdict: was.verdict, verdict: 'unmeasured', note: 'no strip card, flat art draws' }); return; }
       const mm = mismatch(box, fit.base);

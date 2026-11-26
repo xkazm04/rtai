@@ -4,9 +4,14 @@ import { fitStrip, auditStrips } from './strip_cards.mjs';
 
 test('a strip card with no table row is null, a real one is fitted foot-on-south-edge', () => {
   assert.equal(fitStrip('no_such_prop', { x0: 0, x1: 2, y0: 0, y1: 1 }, 1), null);
-  const fit = fitStrip('dumpster', { x0: -1.5, x1: 1.5, y0: -0.85, y1: 0.85 }, 1);
+  const box = { x0: -1.5, x1: 1.5, y0: -0.85, y1: 0.85 };
+  const old = fitStrip('dumpster', box, 1, 'p70', true);
+  assert.ok(Math.abs(old.drawn.y1 - (0.85 - 0.04)) < 1e-9);
+  assert.ok(old.drawn.x1 - old.drawn.x0 <= 3 - 0.08 + 1e-9);
+  const fit = fitStrip('dumpster', box, 1);
   assert.ok(Math.abs(fit.drawn.y1 - (0.85 - 0.04)) < 1e-9);
-  assert.ok(fit.drawn.x1 - fit.drawn.x0 <= 3 - 0.08 + 1e-9);
+  assert.ok(Math.abs(fit.base.x0 - box.x0) <= 0.25 && Math.abs(box.x1 - fit.base.x1) <= 0.25, 'n31-19: base on the box');
+  assert.equal(fit.stretch, 1);
 });
 
 test('the 8 rows the flat audit flagged each get a confirmation', () => {

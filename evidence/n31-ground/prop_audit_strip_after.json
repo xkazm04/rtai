@@ -1,0 +1,514 @@
+{
+ "schema": "gtai.prop-audit-strip/1",
+ "art": "p70",
+ "rows": [
+  {
+   "id": "plain_block#2:cover_high",
+   "art": "bus_stop",
+   "footprint_m": [
+    3,
+    1.5
+   ],
+   "drawn_base_m": [
+    2.92
+   ],
+   "body_w_m": 3.578,
+   "body_fills_box_width": true,
+   "card_h_m": 2.833,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.308,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "plain_block#3:cover_low",
+   "art": "bench",
+   "footprint_m": [
+    2.5,
+    1.2
+   ],
+   "drawn_base_m": [
+    2.42
+   ],
+   "body_w_m": 2.524,
+   "body_fills_box_width": true,
+   "card_h_m": 1.388,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.005,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "crosswalk#2:cover_high",
+   "art": "newsstand",
+   "footprint_m": [
+    3,
+    2
+   ],
+   "drawn_base_m": [
+    2.904
+   ],
+   "body_w_m": 3.67,
+   "body_fills_box_width": true,
+   "card_h_m": 3.628,
+   "stretch": 1,
+   "clipped_to_box": false,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.056,
+    "north": 1.804,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 0.253,
+   "flagged_by_flat": true,
+   "confirmation": "not confirmed"
+  },
+  {
+   "id": "crosswalk#3:cover_low",
+   "art": "down_planter_bed",
+   "footprint_m": [
+    4,
+    1
+   ],
+   "drawn_base_m": [
+    3.92
+   ],
+   "body_w_m": 3.92,
+   "body_fills_box_width": true,
+   "card_h_m": 1.974,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 0.811,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "loading_bay#2:cover_high",
+   "art": "dock_cargo_tarp",
+   "footprint_m": [
+    4,
+    2
+   ],
+   "drawn_base_m": [
+    3.92
+   ],
+   "body_w_m": 4.077,
+   "body_fills_box_width": true,
+   "card_h_m": 3.427,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.811,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "loading_bay#3:cover_high",
+   "art": "dock_cargo_tarp",
+   "footprint_m": [
+    4,
+    2
+   ],
+   "drawn_base_m": [
+    3.92
+   ],
+   "body_w_m": 4.077,
+   "body_fills_box_width": true,
+   "card_h_m": 3.427,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.811,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "loading_bay#4:cover_high",
+   "art": "dock_cargo_tarp",
+   "footprint_m": [
+    4,
+    2
+   ],
+   "drawn_base_m": [
+    3.92
+   ],
+   "body_w_m": 4.077,
+   "body_fills_box_width": true,
+   "card_h_m": 3.427,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 1.811,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "loading_bay#5:cover_low",
+   "art": "dock_oil_drums",
+   "footprint_m": [
+    2,
+    1.2
+   ],
+   "drawn_base_m": [
+    1.86
+   ],
+   "body_w_m": 2.535,
+   "body_fills_box_width": true,
+   "card_h_m": 3.943,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.085,
+    "east": 0.055,
+    "north": 1.016,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 0.406,
+   "flagged_by_flat": true,
+   "confirmation": "not confirmed"
+  },
+  {
+   "id": "alley_neck#4:cover_high",
+   "art": "dumpster",
+   "footprint_m": [
+    3,
+    1.7
+   ],
+   "drawn_base_m": [
+    2.871
+   ],
+   "body_w_m": 3.817,
+   "body_fills_box_width": true,
+   "card_h_m": 3.906,
+   "stretch": 1,
+   "clipped_to_box": false,
+   "mismatch_m": {
+    "west": 0.056,
+    "east": 0.073,
+    "north": 1.504,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "kiosk_plaza#2:cover_high",
+   "art": "coffee_kiosk",
+   "footprint_m": [
+    4,
+    4
+   ],
+   "drawn_base_m": [
+    1.671
+   ],
+   "body_w_m": 3.92,
+   "body_fills_box_width": true,
+   "card_h_m": 5.517,
+   "stretch": 1,
+   "clipped_to_box": false,
+   "mismatch_m": {
+    "west": 0.875,
+    "east": 1.454,
+    "north": 3.8,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.454,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 0.775,
+   "flagged_by_flat": true,
+   "confirmation": "confirmed"
+  },
+  {
+   "id": "kiosk_plaza#3:cover_low",
+   "art": "down_planter_bed",
+   "footprint_m": [
+    4.5,
+    1
+   ],
+   "drawn_base_m": [
+    4.42
+   ],
+   "body_w_m": 4.42,
+   "body_fills_box_width": true,
+   "card_h_m": 2.226,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 0.806,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "kiosk_plaza#4:cover_low",
+   "art": "down_planter_bed",
+   "footprint_m": [
+    4.5,
+    1
+   ],
+   "drawn_base_m": [
+    4.42
+   ],
+   "body_w_m": 4.42,
+   "body_fills_box_width": true,
+   "card_h_m": 2.226,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.04,
+    "north": 0.806,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "ok",
+   "flat_worst_m": 0,
+   "flagged_by_flat": false,
+   "confirmation": ""
+  },
+  {
+   "id": "market_stalls#2:cover_high",
+   "art": "newsstand",
+   "footprint_m": [
+    3.2,
+    2
+   ],
+   "drawn_base_m": [
+    3.103
+   ],
+   "body_w_m": 3.922,
+   "body_fills_box_width": true,
+   "card_h_m": 3.877,
+   "stretch": 1,
+   "clipped_to_box": false,
+   "mismatch_m": {
+    "west": 0.04,
+    "east": 0.057,
+    "north": 1.812,
+    "south": 0.04
+   },
+   "verdict": "ok",
+   "worst_m": 0,
+   "sides": [],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 0.268,
+   "flagged_by_flat": true,
+   "confirmation": "not confirmed"
+  },
+  {
+   "id": "market_stalls#3:cover_low",
+   "art": "food_cart",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "drawn_base_m": [
+    0.252
+   ],
+   "body_w_m": 2.22,
+   "body_fills_box_width": true,
+   "card_h_m": 3.105,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.013,
+    "east": 1.036,
+    "north": 1.614,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.036,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 1.377,
+   "flagged_by_flat": true,
+   "confirmation": "confirmed"
+  },
+  {
+   "id": "market_stalls#4:cover_low",
+   "art": "food_cart",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "drawn_base_m": [
+    0.252
+   ],
+   "body_w_m": 2.22,
+   "body_fills_box_width": true,
+   "card_h_m": 3.105,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.013,
+    "east": 1.036,
+    "north": 1.614,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.036,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 1.377,
+   "flagged_by_flat": true,
+   "confirmation": "confirmed"
+  },
+  {
+   "id": "market_stalls#5:cover_low",
+   "art": "food_cart",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "drawn_base_m": [
+    0.252
+   ],
+   "body_w_m": 2.22,
+   "body_fills_box_width": true,
+   "card_h_m": 3.105,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.013,
+    "east": 1.036,
+    "north": 1.614,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.036,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 1.377,
+   "flagged_by_flat": true,
+   "confirmation": "confirmed"
+  },
+  {
+   "id": "market_stalls#6:cover_low",
+   "art": "food_cart",
+   "footprint_m": [
+    2.3,
+    1.8
+   ],
+   "drawn_base_m": [
+    0.252
+   ],
+   "body_w_m": 2.22,
+   "body_fills_box_width": true,
+   "card_h_m": 3.105,
+   "stretch": 1,
+   "clipped_to_box": true,
+   "mismatch_m": {
+    "west": 1.013,
+    "east": 1.036,
+    "north": 1.614,
+    "south": 0.04
+   },
+   "verdict": "invisible wall",
+   "worst_m": 1.036,
+   "sides": [
+    "west",
+    "east"
+   ],
+   "flat_verdict": "invisible wall",
+   "flat_worst_m": 1.377,
+   "flagged_by_flat": true,
+   "confirmation": "confirmed"
+  }
+ ]
+}
