@@ -6,6 +6,9 @@ extends "res://dev/test_player/gauntlet_bot_film.gd"
 ## Flags: the gauntlet's own, plus --deploys=<abs.json> (the release rows) and --from=<tick>
 ## (windowed only: step the sim headless to that tick before the view opens, so a write-movie
 ## starts near the filmed deploys; bodies and stains of earlier kills are then not drawn).
+## --form=<tonnage|ohm|dent|kerf> grants and logs that form instead (default tonnage);
+## --fit=relaxed swaps the bot's spot scorer for GhostN31BotSpot (Ohm at 3+ bodies, Kerf at
+## any target).
 
 const KNOWN: PackedStringArray = [
 	"--seed",
@@ -19,11 +22,21 @@ const KNOWN: PackedStringArray = [
 	"--pick-filter",
 	"--wave-timeout",
 	"--from",
-	"--deploys"
+	"--deploys",
+	"--form",
+	"--fit"
 ]
+const FORMS: Dictionary = {
+	"tonnage": HaulerStage.GHOST,
+	"ohm": OhmStage.GHOST,
+	"dent": DentStage.GHOST,
+	"kerf": KerfStage.GHOST
+}
 
 var _from: int = 0
 var _deploys_path: String = ""
+var _form: StringName = HaulerStage.GHOST
+var _relaxed: bool = false
 var _ghost: GhostDeploy
 var _strike: GhostN31Strike
 var _logged: int = 0
@@ -40,10 +53,15 @@ func _invalid_arg(args: ArenaArgs) -> String:
 		_deploys_path = args.text("--deploys")
 		if not _deploys_path.is_absolute_path():
 			return "--deploys=%s" % _deploys_path
-	@warning_ignore("return_value_discarded")
-	args.values.erase("--from")
-	@warning_ignore("return_value_discarded")
-	args.values.erase("--deploys")
+	_form = FORMS.get(args.text("--form", "tonnage"), &"")
+	if _form == &"":
+		return "--form=%s" % args.text("--form")
+	_relaxed = args.text("--fit", "shipped") == "relaxed"
+	if not _relaxed and args.text("--fit", "shipped") != "shipped":
+		return "--fit=%s" % args.text("--fit")
+	for own: String in ["--from", "--deploys", "--form", "--fit"]:
+		@warning_ignore("return_value_discarded")
+		args.values.erase(own)
 	return super._invalid_arg(args)
 
 
@@ -52,17 +70,20 @@ func _open_street(args: ArenaArgs) -> GauntletSession:
 	if opened != null:
 		_ghost = opened.stage.pilot.ghosts.deploy
 		_strike = GhostN31Strike.new(_ghost.strike.attacks, _ghost.strike.press)
+		_strike.form = _form
 		_ghost.strike = _strike
 	return opened
 
 
 func _run_headless() -> void:
+	_install_fit()
 	while not waves.done and session.tick() < RUN_TICKS:
 		_step_once()
 	super._run_headless()
 
 
 func _open_view(film: bool) -> void:
+	_install_fit()
 	while session.tick() < _from and not waves.done:
 		_step_once()
 	if _from > 0:
@@ -93,12 +114,18 @@ func _step_once() -> void:
 	_after_step(before)
 
 
+## After the bot is bound (its brain exists): --fit=relaxed swaps in the dev spot scorer.
+func _install_fit() -> void:
+	if _relaxed and (pilot == null or not GhostN31BotSpot.install(pilot)):
+		Log.error("ghost-take", "--fit=relaxed: cannot install GhostN31BotSpot")
+
+
 func _grant() -> void:
 	var forms: GhostForms = session.stage.pilot.ghosts.forms
-	if forms.locks.done.size() != 1 or forms.locks.done[0] != HaulerStage.GHOST:
+	if forms.locks.done.size() != 1 or forms.locks.done[0] != _form:
 		forms.locks.done.clear()
-		forms.locks.done.append(HaulerStage.GHOST)
-	forms.selected = HaulerStage.GHOST
+		forms.locks.done.append(_form)
+	forms.selected = _form
 
 
 func _after_step(before: GhostDeploy.Phase) -> void:
@@ -139,6 +166,8 @@ func _write_deploys() -> void:
 		"schema": "gtai.ghost-n31-take/1",
 		"seed": run.seed,
 		"profile": String(run.profile),
+		"form": String(_form),
+		"fit": "relaxed" if _relaxed else "shipped",
 		"from": _from,
 		"deploys": _strike.deploys,
 	}

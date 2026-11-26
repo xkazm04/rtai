@@ -205,7 +205,8 @@
         "2026-11-25: n31 ghost take scene (dev_loc 40552 -> 40704)",
         "2026-11-25: n31 ghost beats probe --kill (dev_loc 40704 -> 40723)",
         "2026-11-25: n31 ghost measure dev tool (dev_loc 40723 -> 40762)",
-        "2026-11-25: n31 ghost 12: dev probe ghost_n31_ohm_beats (Ohm drop beat stills, the 64 px/m strip and the D+2 radius measure); dev-only, excluded from release (dev_loc 40762 -> 40962)"
+        "2026-11-25: n31 ghost 12: dev probe ghost_n31_ohm_beats (Ohm drop beat stills, the 64 px/m strip and the D+2 radius measure); dev-only, excluded from release (dev_loc 40762 -> 40962)",
+        "2026-11-26: n31 ghost 14: take scene --form/--fit flags (dev only) (dev_loc 40962 -> 40991)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -221,7 +222,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ghost_n31": 1202,
+        "project/dev/ghost_n31": 1231,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -248,7 +249,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40962
+      "total": 40991
     },
     "direct_cmdline_reads": {
       "accepted": [
