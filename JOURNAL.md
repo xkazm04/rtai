@@ -333,3 +333,10 @@ NEXT: run over. Director merges `n31-ghost`; the reels run on the merge. Open it
 - 07:31 Session 13 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
 
 NEXT: run over. Director merges `n31-ghost`; reels on the merge. Open items in REPORT Next steps.
+
+## Session 14 (07:40 - , REPORT phase)
+
+- 07:40 MILESTONE session start; HEAD 323885ee9. `git diff da97ec3be..HEAD -- project tools docs` empty: gate PASS on da97ec3be (`build/gate/da97ec3be096/gate.json`) stays final. REPORT.md already holds every required section (header, What works, What does not, What blocked, Calls for the owner, Merge notes, Next steps, Builder ledger). Cites: 25 paths, 24 ok, 1 pattern. No `NEED ghost` in n23-controls, n23-prologue or n23-street journals.
+- 07:41 Session 14 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
+
+NEXT: run over. Director merges `n31-ghost`; reels on the merge. Open items in REPORT Next steps.
