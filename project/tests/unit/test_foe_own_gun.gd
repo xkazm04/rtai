@@ -80,7 +80,9 @@ func test_carries_is_false_for_explicit_spawn_melee_off_switch_and_a_swapped_gun
 	assert_false(FoeOwnGun.carries(cop, e, roster), "a member not on the production rifle")
 	cop.weapon = e.arch.production_weapon
 	var riot: Fighter = arena.squad_ai.spawn_member(arena, Vector2.RIGHT, &"riot_cop")
-	assert_false(FoeOwnGun.carries(riot, arena.squad_ai.mind_for(riot).agent, roster), "melee")
+	var riot_agent: EnemyAgent = arena.squad_ai.mind_for(riot).agent
+	riot.weapon = riot_agent.arch.production_weapon
+	assert_false(FoeOwnGun.carries(riot, riot_agent, roster), "melee, even on the production rifle")
 	roster.own_weapons = false
 	assert_false(FoeOwnGun.carries(cop, e, roster), "the switch off")
 
@@ -91,9 +93,9 @@ func test_aim_leads_a_moving_rivet_on_the_first_round_and_keeps_it_through_the_b
 	var pit: EnemyPit = arena.squad_ai.pit
 	var w: EnemyWeapon = mind.agent.arch.weapon
 	assert_gt(pit.roster.aim_lead, 0.0, "the table leads")
-	h.pos = Vector2.ZERO
+	h.pos = Vector2(0, 2)
 	h.facing = Vector2.RIGHT
-	pit.rivet_pos = Vector2(10, 0)
+	pit.rivet_pos = Vector2(10, 2)
 	pit.rivet_vel = Vector2(0, 5)
 	h.burst_left = w.burst
 	FoeOwnGun.aim(h, mind, pit, w)
@@ -106,3 +108,34 @@ func test_aim_leads_a_moving_rivet_on_the_first_round_and_keeps_it_through_the_b
 	pit.rivet_vel = Vector2(0, -5)
 	FoeOwnGun.aim(h, mind, pit, w)
 	assert_almost_eq(h.facing.angle(), first.angle(), 0.001, "the line is kept through the burst")
+
+
+func test_the_first_round_of_a_burst_leaves_on_the_led_line() -> void:
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ZERO, &"patrol_cop")
+	var mind: SquadMind = arena.squad_ai.mind_for(h)
+	var pit: EnemyPit = arena.squad_ai.pit
+	h.pos = Vector2.ZERO
+	h.facing = Vector2.RIGHT
+	mind.agent.aim = Vector2.ZERO
+	pit.rivet_pos = Vector2(10, 0)
+	pit.rivet_vel = Vector2(0, 5)
+	h.cooldown = 0
+	h.burst_left = 0
+	h.burst_gap = 0
+	assert_null(FoeOwnGun.trigger(h, mind, arena, pit, rng), "the burst arms")
+	assert_not_null(FoeOwnGun.trigger(h, mind, arena, pit, rng), "the first round")
+	assert_gt(h.facing.angle(), 0.001, "it fired ahead of where Rivet stands")
+
+
+func test_aim_lead_zero_leaves_the_facing_alone() -> void:
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ZERO, &"patrol_cop")
+	var mind: SquadMind = arena.squad_ai.mind_for(h)
+	var pit: EnemyPit = arena.squad_ai.pit
+	var w: EnemyWeapon = mind.agent.arch.weapon
+	pit.roster.aim_lead = 0.0
+	h.pos = Vector2.ZERO
+	h.facing = Vector2.RIGHT
+	pit.rivet_pos = Vector2(10, 10)
+	h.burst_left = w.burst
+	FoeOwnGun.aim(h, mind, pit, w)
+	assert_eq(h.facing, Vector2.RIGHT, "no lead: GuardBrain's facing stands")
