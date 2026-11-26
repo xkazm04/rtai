@@ -1,23 +1,20 @@
 extends Node
-## n31-21: Rivet walks into props with the real input path (Input move_* actions pressed, sampled by
-## LiveInput) and the probe logs where he stops. The prologue yard or the gauntlet street (waves
-## held off: the GauntletWaves hook is dropped), tilt 70, 32 px/m, one sim tick per frame; meant for
-## `--write-movie`. The probe list comes from the JSON file named by the PROP_WALK environment
-## variable (the gauntlet scene rejects flags it does not know, so no flag carries it):
-## {arena: yard|gauntlet, result: <abs dir>, ppm, probes: [{id, segment?, start:[x,y], dir:[dx,dy],
-## edge (drawn base edge along dir's axis), ticks, mode: stop|pass, pass_to}]}. Gauntlet x values
-## are local to the segment. Writes walk.jsonl (tick, rivet_m, probe) and stops.json.
+## n31-21/24: Rivet walks into props with the real input path (Input move_* actions, sampled by
+## LiveInput) and the probe logs where he stops (waves held off, tilt 70, one sim tick per frame,
+## for `--write-movie`). The probe list is the JSON file named by env PROP_WALK (see
+## tools/ground/prop_take.mjs): {arena, result, ppm, probes: [...]}. Writes walk.jsonl, stops.json.
 
 const KNOWN_FLAGS: PackedStringArray = []
 const NEEDS_WINDOW: bool = true
-const YARD: PackedScene = preload("res://boot/prologue/prologue.tscn")
-const GAUNTLET: PackedScene = preload("res://dev/gauntlet/gauntlet.tscn")
+const Open = preload("res://dev/ground_n31/prop_walk_open.gd")
 const Probe = preload("res://dev/ground_n31/prop_walk_probe.gd")
 const Out = preload("res://dev/ground_n31/prop_walk_out.gd")
 const IDLE_TICKS: int = 36
 const HOLD_TICKS: int = 18
 const STILL_M: float = 0.004
 const STILL_TICKS: int = 14
+const HOLD_STOP_TICKS: int = 60
+const BACK_TICKS: int = 48
 const MOVES: Dictionary = {
 	Vector2i(0, -1): &"move_up",
 	Vector2i(0, 1): &"move_down",
@@ -27,7 +24,6 @@ const MOVES: Dictionary = {
 
 var _cfg: Dictionary
 var _arena: CombatArena
-var _stage: ArenaStage
 var _loop: SimLoop
 var _street: GauntletStreet
 var _out: Out
@@ -38,6 +34,8 @@ var _phase_tick: int = 0
 var _still: int = 0
 var _last: Vector2 = Vector2.ZERO
 var _walked: float = 0.0
+var _from: Vector2 = Vector2.ZERO
+var _placed: Vector2 = Vector2.ZERO
 var _hops: int = 0
 var _tick: int = 0
 var _ready_done: bool = false
@@ -55,50 +53,20 @@ func _ready() -> void:
 	var rows: Array = _cfg.get("probes", [])
 	for row: Variant in rows:
 		var one: Dictionary = row
-		_probes.append(_probe_of(one))
+		var probe: Probe = Probe.new()
+		probe.fill(one)
+		_probes.append(probe)
 	_out = Out.new(str(_cfg["result"]))
+	var open: Open = Open.new()
+	var ppm: float = Probe.num(_cfg.get("ppm", 32))
 	if str(_cfg["arena"]) == "gauntlet":
-		_open_gauntlet()
+		open.gauntlet(self, ppm)
 	else:
-		_open_yard()
+		open.yard(self, ppm)
+	_arena = open.arena
+	_loop = open.loop
+	_street = open.street
 	_ready_done = _arena != null
-
-
-func _probe_of(row: Dictionary) -> Probe:
-	var p: Probe = Probe.new()
-	p.fill(row)
-	return p
-
-
-func _open_yard() -> void:
-	ViewMode.select("tilt70")
-	var game: PrologueGame = YARD.instantiate() as PrologueGame
-	add_child(game)
-	game.result_path = ""
-	game.world.set_process(false)
-	_stage = game.stage
-	_arena = game.stage.arena
-	_loop = game.world.loop()
-	_stage.hooks.erase(game.encounter)
-	for child: Node in game.get_children():
-		if child is PrologueView:
-			var view: PrologueView = child as PrologueView
-			view.px_per_m = Probe.num(_cfg.get("ppm", 32))
-			view.print_stage.zoom = view.px_per_m / SimConst.PX_PER_M
-
-
-func _open_gauntlet() -> void:
-	var g: Node = GAUNTLET.instantiate()
-	add_child(g)
-	g.set_physics_process(false)
-	var session: GauntletSession = g.get("session")
-	var waves: GauntletWaves = g.get("waves")
-	session.stage.hooks.erase(waves)
-	_stage = session.stage
-	_arena = _stage.arena
-	_street = session.street
-	_loop = session.world.loop()
-	session.world.set_process(false)
 
 
 func _process(_delta: float) -> void:
@@ -118,6 +86,10 @@ func _process(_delta: float) -> void:
 			_idle(probe)
 		"walk":
 			_walk(probe)
+		"hold":
+			_hold(probe)
+		"back":
+			_back(probe)
 
 
 func _shift(probe: Probe) -> float:
@@ -136,13 +108,18 @@ func _idle(probe: Probe) -> void:
 		_hop()
 		return
 	if _phase_tick == 1:
-		_arena.rivet.pos = Vector2(dx + probe.start.x, probe.start.y)
+		var boxes: Array[Rect2] = [] if _arena.walls == null else _arena.walls.boxes
+		_placed = probe.place(boxes, dx, _arena.rivet.radius_m)
+		_arena.rivet.pos = _placed
+	if _phase_tick > 1:
+		_arena.rivet.pos = _placed
 	if _phase_tick >= IDLE_TICKS:
 		_phase = "walk"
 		_phase_tick = 0
 		_still = 0
 		_walked = 0.0
 		_last = _arena.rivet.pos
+		_from = _last
 		_press(probe)
 
 
@@ -182,7 +159,31 @@ func _walk(probe: Probe) -> void:
 		row["ticks"] = _phase_tick
 		row["tick"] = _tick
 		row["radius_m"] = _arena.rivet.radius_m
+		row["placed_at"] = [
+			snappedf(_placed.x - _shift_or_zero(probe), 0.001), snappedf(_placed.y, 0.001)
+		]
+		row["start_m"] = [
+			snappedf(_from.x - _shift_or_zero(probe), 0.001), snappedf(_from.y, 0.001)
+		]
 		_out.stop(row)
+		_phase = "hold"
+		_phase_tick = 0
+
+
+## He keeps pushing a second into what stopped him, then walks back a metre or so.
+func _hold(probe: Probe) -> void:
+	var held: int = HOLD_STOP_TICKS if _arena.rivet.pos.distance_to(_last) < STILL_M else 0
+	_last = _arena.rivet.pos
+	if _phase_tick >= held:
+		_release()
+		var back: StringName = MOVES[-probe.dir]
+		Input.action_press(back)
+		_phase = "back"
+		_phase_tick = 0
+
+
+func _back(_probe: Probe) -> void:
+	if _phase_tick >= BACK_TICKS:
 		_next()
 
 

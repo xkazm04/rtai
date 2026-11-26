@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { drawnEdge, gauntletProbes, passProbe, stopProbe, stopsMarkdown, yardProbes } from './prop_take_lib.mjs';
+import { drawnEdge, gauntletProbes, judge, passProbe, stopProbe, stopsMarkdown, yardProbes } from './prop_take_lib.mjs';
 import { godotArgs, parse } from './prop_take.mjs';
 
 const box = { x0: 10, x1: 14, y0: 2, y1: 4 };
@@ -55,4 +55,28 @@ test('parse and godotArgs', () => {
   assert.equal(parse(['--rev=x', '--out=o']).f.arena, 'yard');
   assert.ok(godotArgs('gauntlet', 'a.avi', '3').includes('--pick-view'));
   assert.ok(!godotArgs('yard', 'a.avi', '3').includes('--pick-view'));
+});
+
+test('stopProbe carries the dressing box, side and base flag for the probe to place from the sim rect', () => {
+  const p = stopProbe({ id: 'c', box, side: 'W', gap: 3, arena: 'yard', base: true });
+  assert.deepEqual(p.hint, [10, 2, 14, 4]);
+  assert.equal(p.side, 'W');
+  assert.equal(p.base, true);
+});
+
+test('judge: base_m where the rev draws a pad, else stop_m; the bar is the radius +- 0.25', () => {
+  const stop = { mode: 'stop', base: true };
+  assert.equal(judge(stop, { verdict: 'stopped', stop_m: 1.6, box_m: 0.62, radius_m: 0.6 }).bar, 'pass');
+  assert.equal(judge(stop, { verdict: 'stopped', stop_m: 0.62, box_m: 1.6, radius_m: 0.6 }).bar, 'FAIL');
+  assert.equal(judge({ mode: 'stop', base: false }, { verdict: 'stopped', stop_m: 1.6, box_m: 0.6, radius_m: 0.6 }).bar, 'FAIL');
+  assert.equal(judge({ mode: 'pass' }, { verdict: 'passed' }).bar, 'pass');
+  assert.equal(judge({ mode: 'pass', fixture: true }, { verdict: 'stopped' }).bar, 'n/a');
+  assert.equal(judge(stop, { verdict: 'not run' }).bar, 'unmeasured');
+});
+
+test('report table counts bar passes and skips n/a fixtures', async () => {
+  const { table } = await import('./prop_take_report.mjs');
+  const row = (bar) => ({ id: 'x', b: {}, a: {}, jb: { bar: 'FAIL', on: '' }, ja: { bar, on: 'stop_m' } });
+  const md = table('yard', [row('pass'), row('FAIL'), row('n/a')]);
+  assert.match(md, /before 0\/3, after 1\/2/);
 });

@@ -17,7 +17,7 @@ import { labelOf, sideArgs, takeFile } from './play_take_lib.mjs';
 import { gauntletProbes, stopsMarkdown, yardProbes } from './prop_take_lib.mjs';
 
 export const SCENE = 'res://dev/ground_n31/prop_walk.tscn';
-export const PROBE = ['prop_walk.gd', 'prop_walk.gd.uid', 'prop_walk.tscn', 'prop_walk_probe.gd', 'prop_walk_probe.gd.uid', 'prop_walk_out.gd', 'prop_walk_out.gd.uid'];
+export const PROBE = ['prop_walk.gd', 'prop_walk.gd.uid', 'prop_walk.tscn', 'prop_walk_probe.gd', 'prop_walk_probe.gd.uid', 'prop_walk_out.gd', 'prop_walk_out.gd.uid', 'prop_walk_place.gd', 'prop_walk_place.gd.uid', 'prop_walk_open.gd', 'prop_walk_open.gd.uid'];
 const OVERRIDES = {
   yard: '[display]\n\nwindow/size/window_width_override=1920\nwindow/size/window_height_override=1080\n',
   gauntlet: '[display]\n\nwindow/size/viewport_width=1920\nwindow/size/viewport_height=1080\n',
@@ -55,10 +55,12 @@ async function auditRows(tree) {
 export async function buildProbes(tree, arena) {
   const audit = await auditRows(tree);
   const data = join(tree, 'project', 'data', 'tables');
-  if (arena === 'gauntlet') return { probes: gauntletProbes(readJson(join(data, 'gauntlet.json')).segments, audit.strips), audit };
+  const base = existsSync(join(tree, 'project', 'features', 'gauntlet', 'prop_base.gd'));
+  audit.base = base;
+  if (arena === 'gauntlet') return { probes: gauntletProbes(readJson(join(data, 'gauntlet.json')).segments, audit.strips, base), audit };
   const stage = readJson(join(data, 'prologue_stage.json'));
   const look = readJson(join(data, 'prologue_yard_dressings.json')).dressings[stage.yard.dressing];
-  return { probes: yardProbes(look, audit.yard), audit };
+  return { probes: yardProbes(look, audit.yard), audit }; // the yard is judged on the art (stop_m), the gauntlet on its pad (base_m)
 }
 
 async function takeLock(waitS = 900) {
@@ -107,7 +109,7 @@ async function take(f) {
   const size = run('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,nb_frames', '-of', 'csv=s=x:p=0', join(out, 'take.mp4')]).stdout.trim();
   const label = f.label ?? labelOf(f.rev, sha);
   writeFileSync(join(out, 'stops.md'), stopsMarkdown(`prop walk ${f.arena} ${label}`, probes, stops));
-  writeFileSync(takeFile(out), `${JSON.stringify({ schema: 'gtai.play-take/1', rev: f.rev, sha, label, scene: SCENE, arena: f.arena, mp4: 'take.mp4', size, drawn_from: audit.source }, null, 1)}\n`);
+  writeFileSync(takeFile(out), `${JSON.stringify({ schema: 'gtai.play-take/1', rev: f.rev, sha, label, scene: SCENE, arena: f.arena, mp4: 'take.mp4', size, drawn_from: audit.source, prop_base: audit.base }, null, 1)}\n`);
   rmSync(avi, { force: true });
   console.log(`prop_take: ${join(out, 'take.mp4')} ${size}`);
   return 0;
