@@ -55,7 +55,9 @@ func _write_waiting() -> void:
 		return
 	var dir_error: Error = DirAccess.make_dir_recursive_absolute(_out_path.get_base_dir())
 	var file: FileAccess = FileAccess.open(_out_path, FileAccess.WRITE) if dir_error == OK else null
-	if file == null or not file.store_string(JSON.stringify(_tally.to_dict(), "  ", true) + "\n"):
+	var out: Dictionary = _tally.to_dict()
+	out["travel_cause"] = _tally.cause.to_dict()  # b4j: why in-range clear-line foes TRAVEL
+	if file == null or not file.store_string(JSON.stringify(out, "  ", true) + "\n"):
 		Log.error("foes-waiting", "cannot write %s" % _out_path)
 		return
 	file.close()

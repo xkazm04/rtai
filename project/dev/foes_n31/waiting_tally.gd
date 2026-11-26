@@ -4,6 +4,7 @@ extends RefCounted
 
 const Wave = preload("res://dev/foes_n31/waiting_wave.gd")
 const Engaged = preload("res://dev/foes_n31/waiting_engaged.gd")
+const Cause = preload("res://dev/foes_n31/waiting_cause.gd")
 const SCHEMA: String = "gtai.foes-waiting/1"
 
 
@@ -23,6 +24,7 @@ class Foe:
 	var done: bool = false
 
 
+var cause: Cause = Cause.new()
 var _run: GauntletRun
 var _foes: Dictionary[int, Foe] = {}
 var _waves: Dictionary[int, Wave] = {}
@@ -115,6 +117,7 @@ func _sample(foe: Foe, h: Fighter, arena: CombatArena, mind: SquadMind) -> bool:
 		_clear(foe, k, tick, busy, engaged)
 	if clear and dist <= k.attack_m:
 		_clear_in(foe, k, tick, busy, engaged)
+		cause.note(foe.wave, mind if _split else null, arena.rivet.pos)
 	if fired:
 		_fired(foe, k, wave, tick, dist)
 	return engaged or (mind != null and Engaged.pushing(mind, step, arena, _split))

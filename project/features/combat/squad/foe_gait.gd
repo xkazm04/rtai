@@ -9,6 +9,9 @@ enum Mode { FIGHT, TRAVEL }
 
 ## A foe this close to its cover or flank spot is holding there, not travelling to it.
 const ARRIVED_M: float = 0.6
+## n31 setting G: with Rivet in range and sight, a walk to a spot this close or closer is an
+## in-range adjustment (FIGHT: slow, may fire); only a longer walk is TRAVEL.
+const TRAVEL_MIN_M: float = 3.0
 const NEVER: int = -1000000
 
 var mode: Mode = Mode.FIGHT

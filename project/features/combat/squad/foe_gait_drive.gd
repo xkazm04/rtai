@@ -54,9 +54,11 @@ static func gun_down(arena: CombatArena, h: Fighter) -> bool:
 	return squad.gaits.uses(e) and e.gait.mode == FoeGait.Mode.TRAVEL
 
 
-## Walking to cover, a flank spot, a shield shoulder or along a route (not strafing or holding).
+## Walking to cover, a flank spot, a shield shoulder or along a route more than
+## FoeGait.TRAVEL_MIN_M away (not strafing, holding or a short in-range adjustment). Out of range
+## or sight the caller's `far` makes any walk TRAVEL.
 static func moving(mind: SquadMind) -> bool:
 	if mind.strafing:
 		return false
 	var to: Vector2 = mind.destination()
-	return to.is_finite() and mind.agent.pos.distance_to(to) > FoeGait.ARRIVED_M
+	return to.is_finite() and mind.agent.pos.distance_to(to) > FoeGait.TRAVEL_MIN_M
