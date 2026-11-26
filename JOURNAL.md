@@ -68,3 +68,8 @@ NEXT (session 5) item (1) replaced: brief b4h (sonnet or opus, ~35 min): tools/g
 - 02:03 full unit suite on HEAD ae739a19f (game code = 997197df2): `unit-tests: 4396 passed, 0 failed, 2 skipped (GUT, headless)`, exit 0 (log build/n31/s4-unit-full.log). NEXT item (6) done.
 - 02:03 no builder running, no lane Godot, tree clean. Session 4 ends here (16 min left: too short for b4h's 40 min).
 NEXT (session 5, first): launch b4h (sonnet, evidence/briefs/b4h-stalk-gait.md) -> look at gait64_stalk myself -> item 2 feel sentence. Then b4d rest (wave3_side, wave6_side main | rev:9b3730e36), b5 prologue (opus), optional item 3 quality (share 0.65 + weaker pistol), warden hat. Commit new work by 06:00, final gate ~06:25.
+
+## Session 5 (02:03)
+- 02:04 read journal, git log (HEAD 636587d8e), tree clean, other lanes: no new NEED foes.
+- 02:05 BUILDER b4h-stalk (sonnet) launched: evidence/briefs/b4h-stalk-gait.md (sticky follow, --stalk scripted Rivet, per-second followed-cop rows, gait64_stalk main | HEAD). Hard stop 02:45. Lane lock build/n31/godot.lock shared.
+- 02:05 BUILDER b5-prologue (opus) launched: evidence/briefs/b5-prologue-moves.md in throwaway ../gtai-foes-b5, patch only. Hard stop 02:55. Shares the lane lock with b4h (disjoint files).
