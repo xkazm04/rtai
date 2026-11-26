@@ -86,7 +86,13 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
 - Nothing reaches 3/3 in the audit except the claw on a human; the light guns on a robot stay 1.
 
 ## What blocked or slowed you
-OPEN.
+- Lane Godot lock self-deadlock (03p5 took the lock, then a tool that takes it itself): 27 min, two films lost.
+- Lock interleave (a mutate builder took the lock between a film tool's per-run locks): ~15 min, claw fatality
+  take lost.
+- Lab slow clips with the live hit sector: three calls (02p4 part, 02p5 31 min bounced) and still unreadable.
+- Shared tree: builders' live edits leaked into each other's films (21:52); one builder killed another lane's
+  Godot after a timeout (22:14, apologised in JOURNAL; every brief since prints CommandLine before a kill).
+- Busy machine: blade_marks.gd mutate baseline took 261 s, the run did not finish.
 
 ## Calls for the owner
 1. Plasma sword: with the sweep it no longer cuts sideways where nothing is drawn; damage taken per run 44.4 ->
@@ -110,4 +116,10 @@ OPEN.
 OPEN.
 
 ## Builder ledger
-OPEN.
+26 calls (sonnet and opus Claude sub-agents), about 790 builder-minutes; 5 accepted whole, 20 accepted-partial,
+1 bounced (code kept), 0 abandoned. Calls (minutes, verdict): 01a 38 ap, 01b 47 a, 02 30 ap, 01c 42 ap, 02p2 46 ap,
+03 17 a, 01d 22 ap, 01e 10 ap, 03p2 25 a, 04a 5 a, 02p3 50 ap, 04b 39 ap, 04c 9 ap, 02p3b 30 a, 02p4 62 ap,
+03p3 39 ap, 04d 21 ap, 04e 17 ap, 03p4 41 ap, 03p5 26 ap, 02p5 31 b, 03p6 35 ap, 04f 36 ap, 05 5 ap, 03p7 18 ap,
+06 29 ap. Brief differently: say "blade pixels only, never the body" in the first measurement brief; one film
+tool per lane at a time, alone on the lock; say in the brief which tools take the lock themselves; the short
+one-point calls (04a, 04c, 05, 03) were the best value, the 50-60 min calls all ended partial.
