@@ -1,9 +1,7 @@
 class_name GhostDeploy
 extends RefCounted
-## The first ghost skill. A deploy action holds a cursor in world metres. Its falling edge commits a
-## single strike and starts two independent clocks for the apparition and the form. A drop-mode
-## row (Tonnage, Ohm and Dent, n31) skips the hold: the press edge places it, the strike lands after
-## its charge.
+## The first ghost skill. A deploy holds a cursor in world metres; its falling edge commits one
+## strike and starts the apparition's and the form's clocks. A drop row (n31) skips the hold.
 
 enum Phase { IDLE, AIMING, ACTIVE }
 
@@ -15,6 +13,8 @@ var facing: Vector2 = Vector2.RIGHT
 var ticks_left: int = 0
 var cooldowns: Dictionary[StringName, int] = {}
 var last_refusal: StringName = &""
+var refusals: int = 0
+var refused_form: StringName = &""
 var strike: GhostDeployStrike
 ## The tick this deployment went ACTIVE (the release, or a drop's press).
 var start_tick: int = -1
@@ -47,8 +47,9 @@ func step(
 	if _number_form != &"" and not forms.locks.allows(forms.table, id):
 		_cancel_hold()
 		return
-	# A drop-mode row (n31 Tonnage, Ohm, Dent) deploys on the press edge itself: there is no hold.
-	var drop: bool = phase != Phase.AIMING and _drops(id)
+	# A drop row (n31 Tonnage, Ohm, Dent, Kerf) deploys on the press edge: there is no hold.
+	var row: GhostAttacks.DeployRow = strike.attacks.deploy.get(id)
+	var drop: bool = phase != Phase.AIMING and row != null and row.drops()
 	if c.is_held(actions, _action) and not drop:
 		if phase != Phase.ACTIVE:
 			aim(stage, c, id)
@@ -57,6 +58,7 @@ func step(
 	_number_form = &""
 	last_refusal = _refusal(forms, id)
 	if last_refusal != &"":
+		refuse(id)
 		if phase == Phase.AIMING:
 			clear()
 		return
@@ -91,6 +93,12 @@ func held_form(forms: GhostForms) -> StringName:
 	return forms.selected if _number_form == &"" else _number_form
 
 
+## View-only (n31 ghost 26): count a refused press of form id for the HUD's cue (not replayed).
+func refuse(id: StringName) -> void:
+	refusals += 1
+	refused_form = id
+
+
 func _cancel_hold() -> void:
 	_action = &""
 	_number_form = &""
@@ -120,11 +128,6 @@ func activate(row: GhostAttacks.DeployRow, tick: int) -> void:
 	cooldowns[form] = row.cooldown_ticks
 	origin = spot
 	start_tick = tick
-
-
-func _drops(id: StringName) -> bool:
-	var row: GhostAttacks.DeployRow = strike.attacks.deploy.get(id)
-	return row != null and row.drops()
 
 
 func _advance() -> void:

@@ -50,6 +50,7 @@ func press(
 		ghost.spot = stage.arena.rivet.pos
 	if id == KerfStage.GHOST and not kerf.lock(stage, ghost):
 		ghost.last_refusal = &"no_target"
+		ghost.refuse(id)
 		ghost.clear()
 		return
 	ghost.activate(row, stage.tick)
