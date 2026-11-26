@@ -28,6 +28,23 @@ Main damages on the release tick (1 tick after the key goes down: the bot's hold
 press (the charge). The runs share the seed and the start tick and split at the first Ohm, so each row is the same wave and
 the same bot, not the same instant.
 
-FILES_PLACEHOLDER
+Files (`C:\Users\kazda\kiro\gtai-masters\n31\ghost\`, ffprobe lengths): `take-ohm-main-vs-head-32ppm.mp4` 3840x1080 24.50 s
+(labelled "main ba8e470b0" | "n31 ghost 8abdee4d9"), `take-ohm-main-32ppm.mp4` 1920x1080 24.50 s, `take-ohm-head-32ppm.mp4`
+1920x1080 24.50 s; both clips are movie frames 0-1469 from tick 400. No audio. At 64 px/m (`ghost_n31_take_closeup.tscn`,
+same seed, same deploy ticks; HEAD from tick 440, main from 470): the still pair at deploy 1
+`take-ohm-main-vs-head-64ppm-discharge.png` (main release t563 movie frame 94 | HEAD discharge t530 frame 91, plus each alone:
+`take-ohm-main-64ppm-release-t563.png`, `take-ohm-head-64ppm-discharge-t530.png`) and `take-ohm-head-64ppm-halfspeed.mp4`
+1920x1080 10.65 s (HEAD deploy 1 whole at half speed, `setpts=2.0*PTS`, frames 0-319: lead-in, press t512, creep, discharge,
+scorch; under the asked 12 s because the closeup render held 320 frames). Raw logs and deploy JSON: `build/n31/g14/` (git-ignored).
 
-What a player would say: PLAYER_PLACEHOLDER
+Read from the movies: 32 px/m HEAD frame 128 (between press t512 and discharge t530) shows Ohm's teal body on the aim point
+with the amber creep cracks spreading through the pack; frame 135 (discharge) teal bolts from him to every body inside an
+amber, dark-fringed ring at the rim; frame 200 (1.1 s later) a charred scorch ring and a dark core stay on the road with the
+bodies lying along the ring. All three beats read at the gameplay camera. Main at its release (frame 168): a teal forked bolt
+chain jumps over four cops from beside them, no Ohm body on screen. At 64 px/m the camera follows Rivet and the HEAD circle
+sits at the lower right edge of the frame, partly cut off at the discharge; the scorch (closeup frame 200) is fully in frame.
+
+What a player would say: on main Ohm is a zap that chains through three or four cops the moment you let go; on HEAD you
+tap once, he appears in the middle of the crowd, the ground crackles amber for a beat, and the whole circle goes down at once
+(7 of the 12 near in wave 1, main 4 of 8) leaving a burn mark; the 0.3 s charge reads as a wind-up because his body and the
+creep are on screen during it, not as lag, but nobody has played it with hands yet.
