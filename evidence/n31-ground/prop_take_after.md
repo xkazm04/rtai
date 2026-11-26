@@ -40,3 +40,10 @@ Bar passes: before 1/5, after 5/5 (n/a = fixture behind the building wall, not c
 - Yard belt_feed "walk along" was a pass on main and now stops (0.52): one of the arch supports n31-19 made solid stands on that debris lane. That is the rule working (a support is a thing), but a lane that used to be open is now blocked; reported, not changed.
 - Gauntlet: collision did not move (stop distances are the same on both revs except the stalls, whose stop_m grew 0.41 because the drawn edge moved: the stall cards now stand on their boxes); the visible cue changed: the dark PropBase pad IS the box, so on HEAD all 5 covers stop at the pad's edge (base_m 0.6 each) where main stopped 0.7-2.1 m short of the drawn base. Against the art itself (the post/wheels of kiosk and stalls) he still stops 1.5-2.05 m short: the art did not move to the collision, the collision got drawn.
 - The opening line box of the yard encounter is now hidden in the take (probe swaps the view's HUD feed; no prologue edit).
+
+## Soft base re-shoot (n31-31)
+
+HEAD `88bc88996` (base_soft; the gauntlet take ran at `ef1b356f8`, only JOURNAL/REPORT newer, no product change). The n31-24 stills and film showed the old hard PropBase pad; re-shot with the same tool and flags on the softened base, main halves reused from the n31-24 takes (`ba8e470b0`, same probes and stop tick).
+- Re-shot: `prop_walk_yard_64_stop.png` (conveyor_return from E, `--ppm=64 --only=2`), `prop_walk_gauntlet_64_stop.png` (market_stalls#3 from W), `prop_walk_yard_32.mp4` (24.0 s, 1920x1080 60 fps, ffprobe). `prop_walk_gauntlet_32.mp4` NOT re-shot (kept the old hard-base film).
+- stop_m on HEAD, equal to the n31-24 HEAD numbers (collision did not change): conveyor_return 0.371; market_stalls#3 stop_m 1.613, base_m 0.6. Yard 32 px/m, all 8 probes identical to n31-24: conveyor_door 0.6, conveyor_turn 0.314, conveyor_return 0.371, fuel_vessel 0.611, arch_feed -0.03, span_door_feed -0.021, drag_door -0.081, belt_feed 0.52.
+- Looked at both stills: Rivet's feet at the pad edge, soft contact shade visible on HEAD.
