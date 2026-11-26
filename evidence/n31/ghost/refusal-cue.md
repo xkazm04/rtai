@@ -24,3 +24,5 @@ What I see:
 
 A player feels: the key was heard and said no - the refused chip winks (white arc on cooldown, amber
 outline on a whiffed Kerf) for a third of a second, instead of a press that seemingly vanished.
+
+g27 re-render (rim drawn after the face and cooling arc, same probe and flags, cells hstacked unlabelled, 2x, Tonnage row over Kerf row): the amber now reads on the dimmed Tonnage chip at +1/+2/+4 (the avatar takes an amber-green cast, fading by +8, gone at +17) where before it was hidden; it reads as a tint of the avatar's silhouette, not a clean outline. Kerf row unchanged.
