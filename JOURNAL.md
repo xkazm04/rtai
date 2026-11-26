@@ -114,3 +114,9 @@ NEXT (session 7, ~04:52, first): (1) git log/status: b4n (callB_wave3, wave6_sid
 - FINDING: final fires FEWER rounds per second than main (0.83 vs 1.02) while reacting faster and idling less: the gait's TRAVEL (no fire while walking to cover / panicking) eats the token gain. B is the only setting that beats main on every fire number (idle 43 %, 1.07/s, 255 never fired) at main's death count; it misses the +-15 % rail by 0.6 on 20 seeds.
 - DECISION foes: HEAD stays final (9b3730e36 values), per the brief's rule; B (enemies.json squad.max_shooters_share 0.75, own_weapon_damage pistol 1.5 / rifle 1.5) is the FIRST call for the owner, with callb_wave3 and noise.md. Not shipped behind a flag: no time for a flag + KNOWN_FLAGS + tests before 06:00 with the gate due.
 NEXT (session 7, ~04:52): (1) wave6_side main | rev:9b3730e36 (sonnet, ~25 min, b4n brief step 3) + 2 stills I read. (2) REPORT: item 4 paragraph (honest: faster reaction, fewer idle, but fewer rounds/s than main; B is the setting that answers the complaint), calls (B first, with noise.md numbers), ledger, frames.json best first 8-15 (prune gait64_patrol_*, gait64_stalk_*). (3) Gate `node tools/gate/run.mjs --rev=HEAD` at ~06:25. (4) cites.mjs REPORT.md, final commit by 07:40.
+
+## Session 7 (04:41)
+- 04:42 read journal, git log (HEAD 0fc3d0d7b), tree clean, other lanes: no new NEED foes.
+- 04:45 BUILDER b4p-wave6 (sonnet) launched: evidence/briefs/b4p-wave6.md (wave6_side main | rev:9b3730e36 seed 3). Hard stop 05:20.
+- DECISION foes: call B ships behind a launch flag that is off (`--foe-fire=hot`, data preset `squad.fire_presets.hot` in enemies.json), so the owner can play final and B in the gauntlet; default stays HEAD bit for bit. Proof: HEAD + flag = rev c825715e8 on one seed.
+- 04:53 BUILDER b4q-hot-flag (sonnet) launched: evidence/briefs/b4q-hot-flag.md. Commit part 1 by 05:18, hard stop 05:38. Shares the lane lock with b4p (disjoint files).
