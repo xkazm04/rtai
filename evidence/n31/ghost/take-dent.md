@@ -84,3 +84,32 @@ you tap once, he pops out at your side, two scrape lines run down the road to th
 rockets along them and drops the whole line (3 of 3 and 3 of 4 in wave 2, main 2 of 3 and 2 of 5) leaving a scuffed lane;
 the wind-up reads as a wind-up because the lines are drawn before the hit, but over 10 seeds the ram is a 3+ hit only a
 little more often than main's shove, and nobody has played it with hands yet.
+
+## Re-film at c2973118d (g28)
+
+Builder `g28-dent-refilm`, 2026-11-26. The HEAD side re-shot at `c2973118d` (after `1da987d15`, the arrival fix: the dive
+runs R-6..R so the body meets the ram tick), main side unchanged (the existing `take-dent-main-32ppm.mp4`, `ba8e470b0`).
+Same recipe as g19: temp worktree `gtai-wt/g28-head` (1920x1080 in its own `project.godot`), seed 6, `--form=dent
+--fit=shipped --bot=average --pick=random --controls=wheel --waves=3 --pick-view`, `--from=450`, tilt 70, 32 px/m,
+`--fixed-fps 60 --write-movie`, d3d12, windowed at 0,1440, through `runGodot` under the lane lock. Scratch:
+`build/n31/g28/` (git-ignored).
+
+Deploy ticks, press / damage (movie frame of the damage): 573 / 588 (142), 1275 / 1290 (1024), 1756 / 1771 (1547), hits
+2 / 3 / 3, kills 2 / 3 / 3: identical to g19, frames included. The 64 px/m closeup from 1210: 573 / 588, 1275 / 1290 at
+frame 80, 3 hits, as g19.
+
+Files (`C:\Users\kazda\kiro\gtai-masters\n31\ghost\`, ffprobe): `take-dent-main-vs-head-32ppm.mp4` 3840x1080 1600 frames
+26.67 s (labels "main ba8e470b0" | "n31 ghost c2973118d"); `extra/take-dent-head-32ppm.mp4` 1920x1080 1600 frames 26.67 s;
+`extra/take-dent-head-64ppm-halfspeed.mp4` 1920x1080 799 frames 13.32 s (closeup from 1210, frames 0-399, half speed);
+`dent-arrive-take-64ppm-R.png` (closeup frame 80 = ram tick 1290, deploy 2). The replaced g19 files are in `extra/` with
+the suffix `-81a831263`. `frames.json`: the side-by-side's note names the new commit.
+
+Read from the movies, deploy 2 (R = tick 1290). 32 px/m frame 1022 (R-2): Dent's teal body is mid-dive at the near edge of
+the three cops on the kerb, the skid lines behind him, no stars yet. Frame 1024 (R): the teal body sits among the cops and
+three white hit stars burst around it, the cops tipping over, a dust wake back to Rivet. At 64 px/m frame 78 (R-2) Dent is
+already touching the first cop, the other two standing just past him; frame 80 (R) his body is in the middle of the three
+with a hit star on each and the dust wake whole behind him. The body is at the cops when the stars appear (g19's take had
+the stars at R with the body still near the lane origin and arriving about 4 ticks later).
+
+What a player sees now: Dent rockets down the scraped lane and the cops drop the instant he slams into them, not a beat
+before he gets there.
