@@ -54,3 +54,14 @@ func test_a_chainsaw_bite_holds_a_kerf_through_the_grind() -> void:
 	assert_gt(m.ticks_of(&"chainsaw"), 16, "outlasts grind_min_ticks")
 	arena.wounded.emit(_guard(arena, Vector2(1.0, 0.0), 5.0), &"chainsaw")
 	assert_eq(m.marks.size(), 1, "the GRIND contact's wound prints the bite")
+
+
+## n31 04d: the sear's core is one opaque ember stroke (the FX print snaps a blend to vermilion or
+## cream), full width while hot (at least the first 10 of its 30 ticks), thinning away to the char.
+func test_the_sear_core_stays_ember_hot_then_thins() -> void:
+	var m: ClawMarks = ClawMarks.attach(_arena())
+	var life: float = float(m.ticks_of(&"plasma_sword"))
+	assert_eq(BladeMarks.sear_core_k(0.0), 1.0)
+	assert_eq(BladeMarks.sear_core_k(10.0 / life), 1.0, "full ember core on tick 10")
+	assert_lt(BladeMarks.sear_core_k(0.75), 1.0, "cooling")
+	assert_eq(BladeMarks.sear_core_k(1.0), 0.0, "char only at the end")

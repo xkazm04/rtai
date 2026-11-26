@@ -3,10 +3,11 @@ extends RefCounted
 ## n31-melee 04b: one weapon's hit mark beside the claw's rakes (melee_marks.json `katana`,
 ## `plasma_sword`, `chainsaw`; drawn by ClawMarks, view only, never read by the sim). Styles:
 ## `cut` one thin straight line along the swing's tangent, ink edged with a cream highlight, and on
-## a human a short red bead line welling up along it; `sear` the same line burnt in the plasma
-## scorch's palette (a white-hot core cooling through ember to a dark char); `bite` the saw's kerf
-## at the contact, a jagged ink stroke with a chattering cream starburst (SawMarks.burst) held on
-## the victim while the grind holds. Full length on the hit frame (the hit-stop holds it).
+## a human a short red bead line welling up along it; `sear` the same line burnt in ember
+## (an opaque ember core and rim on the ink line, the core thinning away to the dark char);
+## `bite` the saw's kerf at the contact, a jagged ink stroke with a chattering cream starburst
+## (SawMarks.burst) held on the victim while the grind holds. Full length on the hit frame (the
+## hit-stop holds it).
 
 const BEADS: int = 5
 const TEETH: int = 7
@@ -14,6 +15,12 @@ const TEETH: int = 7
 const BITE_M: float = 0.2
 ## The teeth chatter for this share of the bite's life (the grind); the kerf fades over the rest.
 const GRIND_FRAC: float = 0.6
+## The sear's ember core holds full width to this share of its life, then thins to 0 by SEAR_COOL_T.
+const SEAR_HOT_T: float = 0.5
+const SEAR_COOL_T: float = 0.9
+## The opaque ember rim round the sear's ink line (px each side) for its first SEAR_RIM_T.
+const SEAR_RIM_PX: float = 2.0
+const SEAR_RIM_T: float = 0.25
 
 var style: StringName = &""
 var flash_ticks: int = 0
@@ -74,15 +81,48 @@ func _beads(ci: CanvasItem, at: Vector2, blow: float, across: Vector2, t: float)
 		ci.draw_circle(p, r, Color(KillMarkArt.BLOOD, a))
 
 
-## The plasma cut: an ember heat bloom and a white-hot core that cools to ember then to a dark sear.
+## The plasma cut, drawn for the FX print (look_d4_item: a pixel under alpha 0.75 prints as a flat
+## ink tint and an opaque one snaps to its nearest ink, so an ember-to-char or cream-to-ember blend
+## snaps to vermilion or cream): unblended strokes only. While hot an opaque ember rim round the ink
+## line and an opaque ember core; cooling, the core thins to nothing and the ink fades as the char.
 func _sear(ci: CanvasItem, p0: Vector2, p1: Vector2, t: float) -> void:
-	var hot: float = clampf(t * 2.0, 0.0, 1.0)
-	var cool: float = clampf(t * 2.0 - 1.0, 0.0, 1.0)
-	var core: Color = KillHoleFx.HOT.lerp(KillHoleFx.EMBER, hot).lerp(PlasmaScorchView.CHAR, cool)
-	var a: float = 1.0 - t * t * t
-	ci.draw_line(p0, p1, Color(KillHoleFx.EMBER, 0.55 * (1.0 - hot)), edge_px * 2.2, true)
-	ci.draw_line(p0, p1, Color(Ink.INK, a), edge_px, true)
-	ci.draw_line(p0, p1, Color(core, a), core_px * (1.0 - 0.3 * cool), true)
+	var core_k: float = sear_core_k(t)
+	if t < SEAR_RIM_T:
+		ci.draw_line(p0, p1, KillHoleFx.EMBER, edge_px + SEAR_RIM_PX * 2.0, true)
+	ci.draw_line(p0, p1, Color(PlasmaScorchView.CHAR, 1.0 - t * t * t), edge_px, true)
+	if core_k > 0.0:
+		ci.draw_line(p0, p1, KillHoleFx.EMBER, maxf(core_px * core_k, 1.0), true)
+
+
+## n31 04d: a through-the-slab blow's flick off the shield's face at `at` (m), the blow along
+## `blow`, `t` of its life: the baton's amber arc (a zig-zag jumping back toward Rivet) or the
+## plasma sword's ember spit (short strokes fanned back). Opaque ink under opaque ember (the FX
+## print keeps amber), thinning rather than fading (a translucent stroke prints as ink).
+static func slab(ci: CanvasItem, at: Vector2, blow: float, t: float, arc: bool) -> void:
+	var back: Vector2 = Vector2.from_angle(blow + PI)
+	var w: float = 1.0 - 0.6 * t
+	var reach: float = 0.3 + 0.4 * t
+	if arc:
+		var pts: PackedVector2Array = PackedVector2Array()
+		for i: int in 6:
+			var k: float = float(i) / 5.0
+			var side: float = 0.1 * (1.0 if (i + int(t * 9.0)) % 2 == 0 else -1.0) * k
+			@warning_ignore("return_value_discarded")
+			pts.push_back(Ink.px(at + back * reach * k + back.orthogonal() * side))
+		ci.draw_polyline(pts, Ink.INK, 6.0 * w, true)
+		ci.draw_polyline(pts, KillHoleFx.EMBER, 3.0 * w, true)
+		return
+	for i: int in 4:
+		var d: Vector2 = back.rotated(deg_to_rad(-45.0 + 30.0 * float(i)))
+		var p0: Vector2 = Ink.px(at + d * reach * 0.45)
+		var p1: Vector2 = Ink.px(at + d * reach)
+		ci.draw_line(p0, p1, Ink.INK, 6.0 * w, true)
+		ci.draw_line(p0, p1, KillHoleFx.EMBER, 3.0 * w, true)
+
+
+## The sear's ember core width (share of core_px) at life share `t`: full while hot, thinning to 0.
+static func sear_core_k(t: float) -> float:
+	return clampf((SEAR_COOL_T - t) / (SEAR_COOL_T - SEAR_HOT_T), 0.0, 1.0)
 
 
 ## The saw's bite: a jagged kerf across the contact and a chattering burst on the teeth.

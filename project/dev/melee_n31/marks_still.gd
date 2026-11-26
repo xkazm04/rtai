@@ -6,6 +6,9 @@ extends ArenaGame
 ## held, and two crops round the cop are written to GTAI_MARKS_OUT: `marks_<weapon>_64.png` (the
 ## first drawn frame, age 0) and `marks_<weapon>_64_mid.png` (MID_FRAC of the mark's life later).
 ## A view-only probe: it emits the signal the hit would, it lands no hit. Dev only.
+## n31 04d: GTAI_MARKS_VICTIM picks the victim: `cop` (default, a human guard), `robot` (a robot
+## thug: the sparks and oil of a non-lethal hit), `riot` (a riot cop: the slab's sparks); the file
+## names carry the zoom (`--ppm`) and the victim; a chainsaw re-emits the hit each tick (the grind).
 
 const WARM: int = 60
 const NEAR_M: float = 1.1
@@ -20,6 +23,7 @@ var _wi: int = 0
 var _phase: int = 0
 var _wait: int = 0
 var _snap: String = ""
+var _victim: String = "cop"
 
 
 func _ready() -> void:
@@ -30,6 +34,8 @@ func _ready() -> void:
 	session.live.viewport = null
 	_weapons = OS.get_environment("GTAI_MARKS_WEAPONS").split(",", false)
 	_out = OS.get_environment("GTAI_MARKS_OUT")
+	_victim = OS.get_environment("GTAI_MARKS_VICTIM")
+	_victim = "cop" if _victim == "" else _victim
 	@warning_ignore("return_value_discarded")
 	RenderingServer.frame_post_draw.connect(_capture)
 
@@ -46,6 +52,8 @@ func _process(_delta: float) -> void:
 	if _wait > 0:
 		_wait -= 1
 		session.step()
+		if _phase == 1 and _weapons[_wi] == "chainsaw":
+			session.stage.arena.wounded.emit(_cop, &"chainsaw")
 		return
 	_next()
 
@@ -53,20 +61,34 @@ func _process(_delta: float) -> void:
 ## One human cop in front of Rivet; the rest of the room cleared.
 func _stand() -> void:
 	var arena: CombatArena = session.stage.arena
+	var squad: ArenaSquad = arena.squad_ai
+	if _victim == "robot" and squad != null:  # the pit's first waves are human: enrol a thug
+		_cop = squad.spawn_member(arena, arena.rivet.pos + Vector2.RIGHT * NEAR_M, &"robot_thug")
 	for h: Fighter in arena.hostiles:
-		if h.alive() and not h.machine and h.kind == Fighter.Kind.GUARD:
+		if _cop == null and h.alive() and _wanted(h):
 			_cop = h
 			break
 	if _cop == null or _weapons.is_empty() or _out == "":
-		_fail("no human cop, GTAI_MARKS_WEAPONS or GTAI_MARKS_OUT")
+		_fail("no %s, GTAI_MARKS_WEAPONS or GTAI_MARKS_OUT" % _victim)
 		return
 	arena.hostiles = [_cop]
+	if _victim == "riot":
+		_cop.archetype = &"riot_cop"
 	arena.rivet.hp = 100000.0
 	arena.rivet.facing = Vector2.RIGHT
 	_cop.pos = arena.rivet.pos + Vector2.RIGHT * NEAR_M
 	_cop.facing = Vector2.LEFT
 	_cop.hp = 100000.0
 	_wait = SETTLE
+
+
+func _wanted(h: Fighter) -> bool:
+	match _victim:
+		"robot":
+			return h.machine
+		"riot":  # --riot dresses the wave's first guard; the arena leaves its archetype unset
+			return h.archetype == &"riot_cop" or (h.archetype == &"" and not h.machine)
+	return not h.machine and h.kind == Fighter.Kind.GUARD
 
 
 func _next() -> void:
@@ -81,11 +103,11 @@ func _next() -> void:
 		_cop.pos = arena.rivet.pos + Vector2.RIGHT * NEAR_M
 		arena.tick = session.stage.tick
 		arena.wounded.emit(_cop, w)
-		_snap = "marks_%s_64.png" % w
+		_snap = "marks_%s_%s_%d.png" % [w, _victim, roundi(px_per_m)]
 		_phase = 1
 		_wait = maxi(int(_life(w) * MID_FRAC), 1)
 		return
-	_snap = "marks_%s_64_mid.png" % w
+	_snap = "marks_%s_%s_%d_mid.png" % [w, _victim, roundi(px_per_m)]
 	_phase = 0
 	_wi += 1
 	_wait = _life(w) + SETTLE
