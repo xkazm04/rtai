@@ -125,6 +125,11 @@
         "dent": {
           "additionalProperties": false,
           "properties": {
+            "charge_s": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
             "cooldown_ticks": {
               "minimum": 1,
               "type": "integer"
@@ -136,6 +141,13 @@
               "minimum": 1,
               "type": "integer"
             },
+            "press_mode": {
+              "enum": [
+                "drop",
+                "hold"
+              ],
+              "type": "string"
+            },
             "ram_half_m": {
               "exclusiveMinimum": 0,
               "type": "number"
@@ -146,9 +158,11 @@
             }
           },
           "required": [
+            "charge_s",
             "cooldown_ticks",
             "enabled",
             "life_ticks",
+            "press_mode",
             "ram_half_m",
             "range_m"
           ],

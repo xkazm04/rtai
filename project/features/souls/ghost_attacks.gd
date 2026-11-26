@@ -18,7 +18,7 @@ class DeployRow:
 	var boss_damage_cap: float
 	var radius_m: float
 	var ram_half_m: float
-	## Tonnage and Ohm (n31): &"drop" deploys on the key's press edge, &"hold" is the aim-and-release.
+	## Tonnage, Ohm and Dent (n31): &"drop" deploys on the press edge, &"hold" aims and releases.
 	var press_mode: StringName = &"hold"
 	## &"aim" = the aim point within range_m, &"rivet" = Rivet's own position.
 	var drop_at: StringName = &"aim"
@@ -60,7 +60,7 @@ static func from_table(t: DataTable) -> GhostAttacks:
 		elif id == &"ohm":
 			_drop_row(t, row, def)
 		elif id == &"dent":
-			def.ram_half_m = t.num(row, "ram_half_m")
+			_dent(t, row, def)
 		elif id == &"tonnage":
 			_tonnage(t, row, def)
 		g.deploy[id] = def
@@ -71,6 +71,13 @@ static func from_table(t: DataTable) -> GhostAttacks:
 static func _tonnage(t: DataTable, row: Dictionary, def: DeployRow) -> void:
 	_drop_row(t, row, def)
 	def.dump_damage = t.num(row, "dump_damage")
+
+
+## Dent's drop (n31 ghost 15): the press and the wind-up; the ram's lane has no drop spot.
+static func _dent(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	def.ram_half_m = t.num(row, "ram_half_m")
+	def.press_mode = StringName(t.text(row, "press_mode"))
+	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
 
 
 ## The drop-mode fields Tonnage and Ohm share (n31): press mode, where, charge, circle.

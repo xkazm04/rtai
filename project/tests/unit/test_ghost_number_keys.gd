@@ -24,10 +24,11 @@ func _reset_pilot() -> void:
 	pilot = StagePilot.new(actions)
 	stage.pilot = pilot
 	deploy = pilot.ghosts.deploy
-	# n31: these pin the hold-aim-release flow; the shipped Tonnage and Ohm drops are
-	# test_tonnage_drop.gd and test_ohm_drop.gd.
+	# n31: these pin the hold-aim-release flow; the shipped Tonnage, Ohm and Dent drops are
+	# test_tonnage_drop.gd, test_ohm_drop.gd and test_dent_drop.gd.
 	deploy.strike.attacks.deploy[&"tonnage"].press_mode = &"hold"
 	deploy.strike.attacks.deploy[&"ohm"].press_mode = &"hold"
+	deploy.strike.attacks.deploy[&"dent"].press_mode = &"hold"
 
 
 func _drive(bits: int = 0, move: int = 0) -> void:

@@ -30,6 +30,8 @@ func test_losing_a_form_while_its_number_is_held_clears_the_aim() -> void:
 	var actions: PlayerActions = PlayerActions.shipped()
 	var pilot: StagePilot = StagePilot.new(actions)
 	var deploy: GhostDeploy = pilot.ghosts.deploy
+	# n31 ghost Dent drop: the shipped row drops on the press; this holds the aim.
+	deploy.strike.attacks.deploy[&"dent"].press_mode = &"hold"
 	var forms: GhostForms = pilot.ghosts.forms
 	var c: PlayerCommand = PlayerCommand.new()
 	c.aim = Vector2.RIGHT

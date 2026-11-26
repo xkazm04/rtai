@@ -4,6 +4,7 @@ extends RefCounted
 ## Tonnage's drop-mode deploy lands on the key's press edge, stands charging for the row's
 ## charge ticks and hits on the dump tick. This holds the countdown and the circle's geometry.
 ## Ohm's drop row (n31 ghost 10) shares it: the same press, charge and circle, his discharge.
+## Dent's (n31 ghost 15) shares the press and the charge; his ram runs along a lane (DentLane).
 
 ## Ticks until the dump; 0 or less = nothing pending.
 var ticks_left: int = -1
@@ -44,6 +45,10 @@ func press(
 	if row.drop_at == &"rivet":
 		ghost.spot = stage.arena.rivet.pos
 	ghost.activate(row, stage.tick)
+	if id == DentStage.GHOST:
+		# n31 ghost 15: Dent's ram lane is laid now; a foe can step out during the wind-up.
+		@warning_ignore("return_value_discarded")
+		DentLane.lay(stage, ghost)
 	if arm(row.charge_ticks):
 		_land(ghost, stage, forms)
 

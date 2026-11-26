@@ -2,7 +2,7 @@ class_name GhostDeploy
 extends RefCounted
 ## The first ghost skill. A deploy action holds a cursor in world metres. Its falling edge commits a
 ## single strike and starts two independent clocks for the apparition and the form. A drop-mode
-## row (Tonnage and Ohm, n31) skips the hold: the press edge places it, the strike lands after
+## row (Tonnage, Ohm and Dent, n31) skips the hold: the press edge places it, the strike lands after
 ## its charge.
 
 enum Phase { IDLE, AIMING, ACTIVE }
@@ -47,7 +47,7 @@ func step(
 	if _number_form != &"" and not forms.locks.allows(forms.table, id):
 		_cancel_hold()
 		return
-	# A drop-mode row (n31 Tonnage, Ohm) deploys on the press edge itself: there is no hold.
+	# A drop-mode row (n31 Tonnage, Ohm, Dent) deploys on the press edge itself: there is no hold.
 	var drop: bool = phase != Phase.AIMING and _drops(id)
 	if c.is_held(actions, _action) and not drop:
 		if phase != Phase.ACTIVE:

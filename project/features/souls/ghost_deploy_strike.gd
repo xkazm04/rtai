@@ -148,20 +148,15 @@ func _crack(stage: CollectCallStage, foe: Fighter) -> void:
 
 func _dent(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
-	var side: Vector2 = ghost.facing.orthogonal() * arena.rivet.radius_m
-	ghost.origin = GhostDeploySpot.clip(stage, arena.rivet.pos, arena.rivet.pos + side)
-	ghost.spot = GhostDeploySpot.clip(stage, ghost.origin, ghost.spot)
+	var row: GhostAttacks.DeployRow = attacks.deploy[ghost.form]
+	# n31 drop: the lane was laid on the press (DentLane) and stays put through the wind-up.
+	if not row.drops() and not DentLane.lay(stage, ghost):
+		return
 	var dir: Vector2 = ghost.origin.direction_to(ghost.spot)
 	if dir == Vector2.ZERO:
 		return
-	ghost.facing = dir
 	for foe: Fighter in arena.hostiles:
-		if not foe.alive() or not foe.exposed:
-			continue
-		var near: Vector2 = Geometry2D.get_closest_point_to_segment(
-			foe.pos, ghost.origin, ghost.spot
-		)
-		if near.distance_to(foe.pos) > attacks.deploy[ghost.form].ram_half_m:
+		if not DentLane.reaches(foe, ghost.origin, ghost.spot, row.ram_half_m, row.drops()):
 			continue
 		_hit(arena, foe, dir, attacks.num(ghost.form, &"jab_damage"), &"deploy_dent")
 		var pushed: Vector2 = foe.pos + dir * attacks.num(ghost.form, &"jab_knock_m")
