@@ -110,7 +110,7 @@ func test_a_press_with_no_target_is_refused_without_cooldown() -> void:
 	assert_eq(out_of_range.hp, out_of_range.max_hp)
 
 
-func test_relock_none_whiffs_a_target_that_dies_in_the_wind_up_with_cooldown_spent() -> void:
+func test_relock_none_whiffs_a_target_that_dies_in_the_wind_up_with_the_whiff_cooldown() -> void:
 	row.relock = &"none"
 	var foe: Fighter = _spawn(Vector2(6, 0))
 	var bystander: Fighter = _spawn(Vector2(6, 1.5))
@@ -120,7 +120,7 @@ func test_relock_none_whiffs_a_target_that_dies_in_the_wind_up_with_cooldown_spe
 	assert_eq(bystander.hp, bystander.max_hp, "relock none: no fresh pick")
 	assert_eq(ghost.dump.kerf.broke, &"dead")
 	assert_false(ghost.dump.kerf.relocked)
-	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
+	assert_eq(ghost.cooldowns[&"kerf"], row.whiff_cooldown_ticks, "n31 ghost 26: 0.5 s")
 	var dash: float = ghost.strike.attacks.num(&"kerf", &"dash_m")
 	assert_almost_eq(ghost.spot, ghost.origin + ghost.facing * dash, Vector2.ONE * 0.0001)
 
@@ -157,14 +157,14 @@ func test_a_target_killed_in_the_wind_up_hands_the_cut_to_a_second_foe_in_the_co
 	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
 
 
-func test_a_relock_that_finds_nobody_whiffs_with_cooldown_spent() -> void:
+func test_a_relock_that_finds_nobody_whiffs_with_the_whiff_cooldown() -> void:
 	var foe: Fighter = _spawn(Vector2(6, 0))
 	_press_and_wind_up()
 	foe.hp = 0.0
 	_drive()
 	assert_eq(ghost.dump.kerf.broke, &"dead")
 	assert_false(ghost.dump.kerf.relocked, "nobody else: the cut whiffs")
-	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
+	assert_eq(ghost.cooldowns[&"kerf"], row.whiff_cooldown_ticks, "n31 ghost 26: 0.5 s")
 	var dash: float = ghost.strike.attacks.num(&"kerf", &"dash_m")
 	assert_almost_eq(ghost.spot, ghost.origin + ghost.facing * dash, Vector2.ONE * 0.0001)
 
