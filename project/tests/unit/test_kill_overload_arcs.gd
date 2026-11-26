@@ -38,6 +38,8 @@ func test_a_row_without_arc_n_draws_none() -> void:
 	var extra: KillTrackRows.Extra = KillTrackRows.Extra.new()
 	assert_eq(KillOverloadArcs.count(extra), 0)
 	assert_false(KillOverloadArcs.live(extra, 0))
+	extra.fx["arc_n"] = 1.0
+	assert_true(KillOverloadArcs.live(extra, 0), "one arc is live")
 	extra.fx["arc_n"] = 9.0
 	assert_eq(KillOverloadArcs.count(extra), KillOverloadArcs.MAX_ARCS, "clamped")
 
@@ -103,3 +105,14 @@ func test_the_contact_flash_is_three_ticks_and_not_under_reduced_motion() -> voi
 	assert_true(KillOverloadArcs.flash(KillOverloadArcs.FLASH_TICKS - 1, false))
 	assert_false(KillOverloadArcs.flash(KillOverloadArcs.FLASH_TICKS, false))
 	assert_false(KillOverloadArcs.flash(0, true))
+
+
+func test_each_arc_jags_on_its_own_seed_serial_times_16_plus_slot() -> void:
+	var d: KillNewStyles.Death = _death(&"baton_overload")
+	var ends: Array[PackedVector2Array] = KillOverloadArcs.ends(d, 32.0)
+	var paths: Array[PackedVector2Array] = KillOverloadArcs.paths(d, 9, 32.0, false)
+	for i: int in paths.size():
+		var m: PackedVector2Array = PackedVector2Array([ends[i][0] / 32.0, ends[i][1] / 32.0])
+		var want: PackedVector2Array = ElectricArc.shape(m, d.serial * 16 + i, 9, false)
+		for k: int in want.size():
+			assert_almost_eq(paths[i][k], want[k] * 32.0, Vector2(0.001, 0.001), "arc %d" % i)
