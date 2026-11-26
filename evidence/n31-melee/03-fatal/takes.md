@@ -57,3 +57,13 @@ Plasma sword rendered at 03:51: `beside_fatal_plasma_sword.mp4`, 1920x1080, 35.0
 yellow blade; left half whole bodies on small pools. At 20 s the right half keeps a pile of gore at the west edge, the
 left a few flat pools. electro_baton and claw were NOT rendered: the lane lock was held by 04f for most of the window
 (each arm waited), and the electro_baton run was stopped at 03:52 (own PID tree only, lock removed).
+
+## 03p7 (03:58-)
+
+Electro baton rendered: `beside_fatal_electro_baton.mp4`, 1920x1080, 35.0 s (stills at 10, 12, 13, 14, 18, 22 s).
+First fatality at 13 s: on the right half (n31 fatality) the struck cop is drawn as a pale overload flash beside Rivet,
+where the left (main) half shows a plain dark body. At 14 s the right half has charred dark bodies lying on the road
+with fewer red pools; the left keeps red pools. No amber current was clearly visible in the 1 s stills (the effect is
+short); the charred bodies are the readable part. At 18 and 22 s no fatality is in frame.
+Claw NOT rendered: its before arm waited for the lane lock (held by builder 06 from 04:10) and the 04:15 / 04:22 cut-offs
+came first. Next: `tools/melee/fatal_takes.sh claw`.
