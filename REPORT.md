@@ -31,7 +31,7 @@ every fire number.
 | 1 measure the waiting | `tools/gauntlet/waiting.mjs` + probe (5e081baa5, 214602c88, f1dfc7492), `evidence/n31/foes/waiting-main/waiting.md` | main: react in range p50/p90 1.05/6.15 s, idle share 66 % (engaged rule), cops shoot from a median 9.0 m though they see 24 m, 173 of 569 ranged foes never fired, 1.02 foes firing per second with 6.4 alive |
 | 2 two movement types | `project/features/combat/squad/foe_gait.gd`, `foe_gait_drive.gd` (a4a7a3537, 09d6abdba, 7dfba0b0f); mutate foe_gait.gd 20/20 | FIGHT = 0.45 x speed, faces Rivet, the only state that may fire; TRAVEL = full speed (panic x1.6), no fire, gun lowered; urgent inside 4 m; at least 0.6 s per mode; 0.25 s settle before the first shot. Clip `gait64_hold_side.mp4` (64 px/m, seed 3): the followed cop backs off at 0.26-1.08 m/s 6.1-6.6 m away and fires 3 rounds (s 1-3), then runs at 3.09 m/s with 0 rounds when Rivet rushes inside 4 m (s 6) |
 | 3 they open fire | `evidence/n31/foes/item3-compare.md`, `waiting-final/`, `noise.md` | react p50 1.05 -> 0.68 s (bar <= 1.0: holds), p90 6.15 -> 2.58 s (bar 2.5: 0.08 over), idle 66 -> 55 % (bar < 35 %: fails), never fired 173 -> 160 of ~500, damage w1-4 62.9 -> 71.3 (rail 53.5..72.3 holds). 20 seeds: damage 63.8 -> 70.0 (+9.7 %) |
-| 4 re-measure and film | `wave1_side`, `wave3_side`, `wave6_side`, `callb_wave3`, `gait64_hold` (`evidence/n31/foes/takes/`) | seed 3, foes that fired per second main -> HEAD (mean alive): wave 1 0.63 -> 0.93 (9.2 -> 7.1); wave 3 0.67 -> 0.40 (4.6 -> 5.1); wave 6 1.23 -> 0.80 (6.1 -> 5.4), Rivet at 18 s 77 -> 86 of 110 |
+| 4 re-measure and film | `wave1_side`, `wave3_side`, `wave6_side`, `callb_wave1`, `callb_wave3`, `gait64_hold` (`evidence/n31/foes/takes/`) | seed 3, foes that fired per second main -> HEAD (mean alive): wave 1 0.63 -> 0.93 (9.2 -> 7.1); wave 3 0.67 -> 0.40 (4.6 -> 5.1); wave 6 1.23 -> 0.80 (6.1 -> 5.4), Rivet at 18 s 77 -> 86 of 110 |
 | call B behind a flag | `--foe-fire=hot`, `squad.fire_presets.hot` (1e9d8632f), `evidence/n31/foes/hot-flag-proof.md` (7e3ed7a46) | HEAD + flag = rev `c825715e8` byte for byte on seed 3; GUT 3/3; mutate enemy_roster.gd changed lines 5/7 = 71.4 % (2 survivors on the flag guard, equivalent without a flag) |
 | 5a prologue two moves (patch for ground) | `evidence/n31/foes/prologue_moves.patch` + `.md` | yard patrol rounds while Rivet < 4 m: main 2-25 -> 0 on 5 seeds; not pinned (see Merge notes) |
 
@@ -120,7 +120,7 @@ every fire number.
 
 ## Builder ledger
 
-25 Claude sub-agent calls, 682 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
+25 Claude sub-agent calls, 681 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
 
 | call | model | min | verdict | what it delivered |
 | --- | --- | --- | --- | --- |
