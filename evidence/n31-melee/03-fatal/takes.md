@@ -51,3 +51,9 @@ the right half already has more spray and loose pieces than the left. At 22 s a 
 half (red spray at the blade) while the left shows none.
 Plasma sword: before arm rendered (`fatalb_play_plasma_sword.mp4`), after arm still waiting for the lane lock at
 03:44; electro_baton and claw not rendered.
+
+Plasma sword rendered at 03:51: `beside_fatal_plasma_sword.mp4`, 1920x1080, 35.0 s. First fatality at 16 s (stills 12,
+16, 20 s): right half shows cops burst into blue and red pieces scattered around the pools, Rivet beside them with the
+yellow blade; left half whole bodies on small pools. At 20 s the right half keeps a pile of gore at the west edge, the
+left a few flat pools. electro_baton and claw were NOT rendered: the lane lock was held by 04f for most of the window
+(each arm waited), and the electro_baton run was stopped at 03:52 (own PID tree only, lock removed).
