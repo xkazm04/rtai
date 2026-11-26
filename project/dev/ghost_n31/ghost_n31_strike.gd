@@ -106,6 +106,30 @@ func _reason(stage: CollectCallStage, ghost: GhostDeploy) -> Dictionary:
 		out.killed_by = deaths[foe.id].weapon
 		out.killed_tick = deaths[foe.id].tick
 		out.cut_tick = stage.tick
+	if not lock.relocked:
+		out.miss = _relock_miss(stage, ghost)
+	return out
+
+
+## A relock that found nobody: live foes within range_m of Rivet, of them with a clear line,
+## of those inside the cone of the press's aim, and the clear ones' smallest angle off it.
+func _relock_miss(stage: CollectCallStage, ghost: GhostDeploy) -> Dictionary:
+	var range_m: float = ghost.strike.attacks.deploy[KerfStage.GHOST].range_m
+	var cone: float = ghost.strike.attacks.num(KerfStage.GHOST, &"cone_deg")
+	var from: Vector2 = stage.arena.rivet.pos
+	var out: Dictionary = {"in_range": 0, "clear": 0, "in_cone": 0, "min_off_deg": -1.0}
+	for foe: Fighter in stage.arena.hostiles:
+		var to: Vector2 = foe.pos - from
+		if not foe.alive() or to.length() > range_m:
+			continue
+		out.in_range += 1
+		if not GhostDeploySpot.clear(stage, from, foe.pos):
+			continue
+		out.clear += 1
+		var off: float = absf(rad_to_deg(ghost.dump.kerf.aim.angle_to(to)))
+		out.in_cone += int(off <= cone)
+		if out.min_off_deg < 0.0 or off < out.min_off_deg:
+			out.min_off_deg = off
 	return out
 
 

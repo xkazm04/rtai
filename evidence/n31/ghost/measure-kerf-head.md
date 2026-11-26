@@ -39,3 +39,33 @@ File: `evidence/n31/ghost/measure-1f074f187-play-head-kerf-cause.json`.
 ```
 node tools/ghost/deploy_measure.mjs --mode=play --form=kerf --fit=relaxed --seeds=10 --waves=3 --tag=head-kerf-cause
 ```
+
+## Part 2 (g24b): the relock, before -> after (HEAD `f86b03e38`, kerf row `relock: nearest`)
+
+Same play measure (relaxed fit, seeds 1-10, 3 waves, profile average, real strike). A lock broken at the cut re-picks with `GhostDeploySpot.kerf_target` from Rivet's position along the press's aim (snap_m of the press's aim point, else the 35 deg cone, range_m, clear line). The dev log now also records, for a relock that found nobody, the live foes within range_m of Rivet at the cut, how many of them had a clear line, how many of those were in the cone, and the smallest angle off the aim.
+
+| side | deploys | mean hits / deploy | kills | whiffs (0 hit) | relocked | press->damage ticks (median) |
+|---|---|---|---|---|---|---|
+| before (`1f074f187`, no relock) | 60 | 0.85 | 51 | 9 (15 %) | - | 12 |
+| after (`f86b03e38`, relock nearest) | 60 | 0.87 | 52 | 8 (13.3 %) | 1 | 12 |
+
+**Bar not met** (whiffs <= 1 of 60, mean hits >= 0.98). Per wave whiffs: 1 of 22, 4 of 20, 3 of 18. The relock saved 1 of the 9 breaks (seed 4 wave 2: claw killed the lock 11 ticks before the cut, a second foe was in the cone). The 8 left:
+
+| break | seed / wave | live foes within 9 m of Rivet at the cut | of them clear line | of those in the 35 deg cone | why the relock found nobody |
+|---|---|---|---|---|---|
+| dead (claw) | 5 / 1 | 0 | 0 | 0 | nobody alive in range at all |
+| dead (claw) | 5 / 2 | 0 | 0 | 0 | nobody alive in range at all |
+| dead (katana) | 6 / 3 | 1 | 0 | 0 | the only foe in range is behind a wall |
+| dead (gloria) | 9 / 2 | 1 | 1 | 0 | one clear foe, 80 deg off the press's aim |
+| dead (claw) | 10 / 2 | 1 | 1 | 0 | one clear foe, 168 deg off (behind Rivet) |
+| wall | 1 / 2 | 2 | 0 | 0 | every foe in range behind a wall |
+| wall | 2 / 3 | 1 | 0 | 0 | every foe in range behind a wall |
+| wall | 7 / 3 | 3 | 0 | 0 | every foe in range behind a wall |
+
+- 6 of the 8 had NO live foe with a clear line within range_m of Rivet on the cut tick, in any direction: no re-pick rule at the cut can land them (even a 360 deg relock would leave 6 whiffs = 10 %). Only 2 (seeds 9, 10) had a clear foe, outside the cone (80 and 168 deg off the aim).
+- So the remaining whiffs are decided at the press, not the cut: 4 of the 5 dead ones are a foe Rivet was already finishing with his claw or katana (0.7-2.7 m), and the 3 wall ones are Rivet against cover where nothing else is reachable either. Options for the director (not built): refund the cooldown on a cut that finds nobody (a broken press costs nothing, like the no-target refusal); or at the press prefer a target Rivet's own swing is not about to kill; or a wider (360 deg) relock, which reaches at most 2 more (8 -> 6).
+
+File: `evidence/n31/ghost/measure-f86b03e38-play-head-kerf-relock.json`.
+```
+node tools/ghost/deploy_measure.mjs --mode=play --form=kerf --fit=relaxed --seeds=10 --waves=3 --tag=head-kerf-relock
+```
