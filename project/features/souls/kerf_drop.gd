@@ -13,11 +13,14 @@ const SLACK_M: float = 2.0
 var target: Fighter = null
 ## True for a drop deployment: the strike takes the lock and never picks afresh.
 var armed: bool = false
+## Why the last cut found no target: &"dead", &"range", &"wall" (&"" = it held, or no lock).
+var broke: StringName = &""
 
 
 func reset() -> void:
 	target = null
 	armed = false
+	broke = &""
 
 
 ## The press. False when nothing is locked and the row refuses (no deployment, no cooldown);
@@ -46,11 +49,19 @@ func cut_target(stage: CollectCallStage, ghost: GhostDeploy) -> Fighter:
 	var attacks: GhostAttacks = ghost.strike.attacks
 	if not armed:
 		return GhostDeploySpot.kerf_target(stage, ghost.spot, ghost.facing, attacks)
-	if target == null or not target.alive():
+	broke = &""
+	if target == null:
+		return null
+	if not target.alive():
+		broke = &"dead"
 		return null
 	var from: Vector2 = stage.arena.rivet.pos
 	var reach: float = attacks.deploy[KerfStage.GHOST].range_m + SLACK_M
-	if from.distance_to(target.pos) > reach or not GhostDeploySpot.clear(stage, from, target.pos):
+	if from.distance_to(target.pos) > reach:
+		broke = &"range"
+		return null
+	if not GhostDeploySpot.clear(stage, from, target.pos):
+		broke = &"wall"
 		return null
 	return target
 

@@ -209,7 +209,8 @@
         "2026-11-26: n31 ghost 14: take scene --form/--fit flags (dev only) (dev_loc 40962 -> 40991)",
         "2026-11-26: n31 ghost 17: dev probe ghost_n31_dent_beats (Dent drop beat stills at 64 px/m, wind-up R-5 and ram R+3); dev-only, excluded from release (dev_loc 40991 -> 41178)",
         "2026-11-26: n31 ghost 21: dev probe ghost_n31_kerf_beats (copy of g17's Dent probe) for the Kerf drop stills (dev_loc 41178 -> 41387)",
-        "2026-11-26: n31 ghost 22: the Kerf beats probe logs the target's world position for the scorch measure (+4 dev lines) (dev_loc 41387 -> 41391)"
+        "2026-11-26: n31 ghost 22: the Kerf beats probe logs the target's world position for the scorch measure (+4 dev lines) (dev_loc 41387 -> 41391)",
+        "2026-11-26: n31 ghost 24: Kerf cause log in the dev measure (kill weapon per victim, broke reason) (dev_loc 41391 -> 41423)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -225,7 +226,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ghost_n31": 1631,
+        "project/dev/ghost_n31": 1663,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -252,7 +253,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 41391
+      "total": 41423
     },
     "direct_cmdline_reads": {
       "accepted": [

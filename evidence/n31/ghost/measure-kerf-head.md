@@ -19,3 +19,23 @@ Files: `evidence/n31/ghost/measure-60e6bbdea-play-head-kerf-relaxed.json`, `meas
 node tools/ghost/deploy_measure.mjs --mode=play --form=kerf --fit=relaxed --seeds=10 --waves=3 --tag=head-kerf-relaxed
 node tools/ghost/deploy_measure.mjs --mode=play --form=kerf --seeds=10 --waves=3 --tag=head-kerf-shipped
 ```
+
+## Part 1 (g24): why each whiff broke (HEAD `1f074f187` + `KerfDrop.broke`)
+
+Same play measure (relaxed fit, seeds 1-10, 3 waves, profile average): 60 deploys, 51 hits, 9 whiffs, identical to the section above. Each whiff now carries `broke` (`KerfDrop.broke`, set by `cut_target`) plus, from the dev tool, the weapon that killed a dead lock (kill_landed) and the target's distance from Rivet at the cut.
+
+| cause | whiffs of 9 | detail |
+|---|---|---|
+| dead: killed by Rivet (his own weapon) during the 12-tick wind-up | 6 | claw 4 (seeds 4, 5, 5, 10), katana 1 (seed 6), gloria 1 (seed 9); killed 3 to 11 ticks before the cut; the target was at 0.7-2.7 m (seed 9: 7.8 m) |
+| dead: killed by another ghost / other (fire, blast, ...) | 0 | none: no deploy_* or other weapon in the kill log |
+| wall (line to the target blocked at the cut) | 3 | seeds 1, 2, 7 at 8.0, 8.5, 5.2 m; the target was alive and in range |
+| range (past range + 2 m) | 0 | none |
+
+- So 6 of the 9 whiffs (10 % of deploys) are the target dying to Rivet's own melee in the wind-up: the press locked a foe he was already fighting. 3 (5 %) are a wall that came between Rivet and a live, in-range target (Rivet or the foe moved). No lock broke from range.
+- A re-lock on a live second foe would fix the 6 dead ones only if another foe stands in the cone; the 3 wall ones re-pick from Rivet's position and may find a clear foe or not.
+- `broke` is also asserted in `test_kerf_drop.gd` (dead, range).
+
+File: `evidence/n31/ghost/measure-1f074f187-play-head-kerf-cause.json`.
+```
+node tools/ghost/deploy_measure.mjs --mode=play --form=kerf --fit=relaxed --seeds=10 --waves=3 --tag=head-kerf-cause
+```

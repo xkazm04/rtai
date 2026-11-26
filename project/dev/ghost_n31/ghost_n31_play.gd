@@ -37,6 +37,7 @@ func run_seed(
 	strike.geometry = geometry
 	strike.form = form
 	strike.charge_ticks = charge
+	strike.watch(session.stage.arena)
 	ghost.strike = strike
 	var cap: int = waves_cap * 7200
 	var stamped: int = 0

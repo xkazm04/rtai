@@ -14,15 +14,29 @@ var charge_ticks: int = 0
 var press_tick: int = -1
 var press_rivet: Vector2 = Vector2.ZERO
 var deploys: Array[Dictionary] = []
+## Kerf cause log: victim id -> {weapon, tick} of its death (watch() connects the arena).
+var deaths: Dictionary = {}
 var _contacts: int = 0
 var _near: int = 0
 var _pending: Dictionary = {}
+var _why: Dictionary = {}
+
+
+## Log every kill's weapon and tick, so a broken Kerf lock can name who killed the target.
+func watch(arena: CombatArena) -> void:
+	var log_death: Callable = func(
+		victim: Fighter, weapon: StringName, _d: Vector2, _a: Vector2, _k: StringName
+	) -> void:
+		deaths[victim.id] = {"weapon": weapon, "tick": arena.tick}
+	@warning_ignore("return_value_discarded")
+	arena.kill_landed.connect(log_death)
 
 
 func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	_contacts = 0
 	_near = _count_near(stage, ghost) if ghost.form == form else 0
 	super.land(stage, ghost)
+	_why = _reason(stage, ghost)
 	if ghost.form == form and _pending.is_empty():
 		_record(stage.tick)
 
@@ -80,6 +94,21 @@ func _count_near(stage: CollectCallStage, ghost: GhostDeploy) -> int:
 	return n
 
 
+## Kerf only: why the cut found nobody (KerfDrop.broke), who killed a dead lock, how far it was.
+func _reason(stage: CollectCallStage, ghost: GhostDeploy) -> Dictionary:
+	var lock: KerfDrop = ghost.dump.kerf
+	if ghost.form != KerfStage.GHOST or lock.broke == &"":
+		return {}
+	var out: Dictionary = {"whiff_reason": lock.broke}
+	var foe: Fighter = lock.target
+	out.dist_m = stage.arena.rivet.pos.distance_to(foe.pos)
+	if deaths.has(foe.id):
+		out.killed_by = deaths[foe.id].weapon
+		out.killed_tick = deaths[foe.id].tick
+		out.cut_tick = stage.tick
+	return out
+
+
 func _record(tick: int) -> void:
 	var held: int = tick - press_tick if press_tick >= 0 else -1
 	deploys.append(
@@ -88,6 +117,8 @@ func _record(tick: int) -> void:
 			"press_to_damage_ticks": held,
 			"hits": _contacts,
 			"kills": release_kills,
-			"near": _near
+			"near": _near,
+			"why": _why
 		}
 	)
+	_why = {}

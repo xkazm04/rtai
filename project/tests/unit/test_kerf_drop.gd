@@ -116,6 +116,7 @@ func test_a_target_that_dies_in_the_wind_up_is_a_whiff_with_cooldown_spent() -> 
 	foe.hp = 0.0
 	_drive()
 	assert_eq(bystander.hp, bystander.max_hp, "no fresh pick")
+	assert_eq(ghost.dump.kerf.broke, &"dead")
 	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
 	var dash: float = ghost.strike.attacks.num(&"kerf", &"dash_m")
 	assert_almost_eq(ghost.spot, ghost.origin + ghost.facing * dash, Vector2.ONE * 0.0001)
@@ -127,6 +128,7 @@ func test_a_target_past_range_and_slack_breaks_the_lock() -> void:
 	foe.pos = Vector2(row.range_m + KerfDrop.SLACK_M + 0.1, 0)
 	_drive()
 	assert_eq(foe.hp, foe.max_hp, "beyond range_m + 2 m: no cut")
+	assert_eq(ghost.dump.kerf.broke, &"range")
 
 
 func test_whiff_mode_deploys_without_a_target_and_spends_the_cooldown() -> void:
