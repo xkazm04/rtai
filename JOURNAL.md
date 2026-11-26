@@ -326,3 +326,10 @@ NEXT (if a session 12 runs before 07:40): nothing to build; REPORT final. Any ch
 - 07:31 Session 12 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
 
 NEXT: run over. Director merges `n31-ghost`; the reels run on the merge. Open items are in REPORT Next steps (in-gauntlet take of a refused press; the Kerf and Dent passes beyond what shipped; effect card icons; amber heat parts).
+
+## Session 13 (07:31 - , STABILIZE, past freeze)
+
+- 07:31 MILESTONE session start; HEAD 58e1e3eb9. `git diff da97ec3be..HEAD -- project tools docs` empty: gate PASS on da97ec3be stays final. Cites 25 paths, 24 ok, 1 pattern. No `NEED ghost` in the other three lane journals. Untracked `hs_err_pid*.log` / `bash.exe.stackdump` are not this lane's output: left alone, not committed.
+- 07:31 Session 13 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
+
+NEXT: run over. Director merges `n31-ghost`; reels on the merge. Open items in REPORT Next steps.
