@@ -37,3 +37,7 @@ Killed: the `admit` gap/tick arithmetic at :48-49 and the `or -> and` at :30.
 ## Not done
 - blade_marks.gd full 20 (see above); `--max` beyond 20 for all three. Mutate.json of blade is empty.
 - No tests or product code were changed.
+
+## 06b re-run
+Pin tests added in commit 2c6cf0dd3 (`test_gun_fx_wound.gd`: 6 tests on the early-out counts 0, human 1, robot 2, robot without oil, reuse after `use()`, dead blood ref; `test_shield_sparks_melee.gd`: 4 tests on the blocked-round blood throw, the wounded/kill_landed lethal flag, the zero-length fallback direction, the kind counts). `run_unit --select=test_gun_fx_wound,test_shield_sparks_melee`: 17 passed, 0 failed.
+Mutate re-run of `gun_fx_wound.gd` (`--max=20 --tests=test_gun_fx_wound`, 05:12-05:21, own `--worktree` because builder 04g's mutate held the default temp dir) was killed by the 560 s outer cap before any mutant result: no new score. The old score (8/19 = 42.1%) stands until a re-run; the shield_sparks.gd re-run was not attempted.
