@@ -18,8 +18,15 @@ static func at(ghost: GhostDeploy, age: int, struck: int) -> Vector2:
 	var dir: Vector2 = ghost.origin.direction_to(ghost.spot)
 	if struck < 0:
 		return ghost.origin - dir * RECOIL_M * smoothstep(0.0, RECOIL_TICKS, float(age))
+	return dive(ghost.origin, ghost.spot, struck)
+
+
+## The diving body (m) `struck` ticks after R: from the pulled-back point to the spot, ease-out
+## quad over RAM_TICKS (n31 ghost 18b: the dust wake's head follows it too).
+static func dive(origin: Vector2, spot: Vector2, struck: int) -> Vector2:
+	var launch: Vector2 = origin - origin.direction_to(spot) * RECOIL_M
 	var u: float = clampf(float(struck) / RAM_TICKS, 0.0, 1.0)
-	return (ghost.origin - dir * RECOIL_M).lerp(ghost.spot, 1.0 - (1.0 - u) * (1.0 - u))
+	return launch.lerp(spot, 1.0 - (1.0 - u) * (1.0 - u))
 
 
 ## The shipped spectral cell (DentSpectralDrawn.Pose) for the beat.

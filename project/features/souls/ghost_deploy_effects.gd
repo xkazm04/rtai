@@ -15,6 +15,8 @@ var _hits: PackedVector2Array = []
 var _drop: TonnageDropMarks = null
 ## n31 ghost 12: Ohm's drop ground (creep telegraph, arc ring, scorch); outlives him for the scorch.
 var _ohm_drop: OhmDropMarks = null
+## n31 ghost 18b: Dent's drop ground (skid telegraph, dust wake, scuffed lane); outlives him.
+var _dent_drop: DentDropMarks = null
 ## Ohm's ground sits under the actors while his bolts stay on the FX band above them.
 var _ground: Node2D = Node2D.new()
 
@@ -57,7 +59,8 @@ func _contact(weapon: StringName, at: Vector2) -> void:
 	_hits.append(at * PPM)
 
 
-## True while a landed drop's crater (Tonnage) or scorch (Ohm) still shows after the ghost has gone.
+## True while a landed drop's crater (Tonnage), scorch (Ohm) or scuff (Dent) still shows after
+## the ghost has gone.
 func lingers() -> bool:
 	# A drop cancelled before its dump (Rivet died) leaves no ground.
 	var active: bool = stage.pilot.ghosts.deploy.phase == GhostDeploy.Phase.ACTIVE
@@ -69,7 +72,10 @@ func lingers() -> bool:
 	var ohm: OhmDropMarks = _ohm_drop
 	if ohm != null and (not ohm.live(stage.tick) or stage.tick < ohm.dump_tick and not active):
 		_ohm_drop = null
-	return _drop != null or _ohm_drop != null
+	var dent: DentDropMarks = _dent_drop
+	if dent != null and (not dent.live(stage.tick) or stage.tick < dent.ram_tick and not active):
+		_dent_drop = null
+	return _drop != null or _ohm_drop != null or _dent_drop != null
 
 
 func _draw() -> void:
@@ -116,19 +122,29 @@ func _slam(ghost: GhostDeploy, sec: float, release: int) -> void:
 	HaulerMarks.draw(self, at, sec, ghost.strike.press.num(&"stomp_radius_m"), PPM, release)
 
 
-## Ohm's drop row draws its ground under the actors from the press (OhmDropMarks); the record
-## outlives him for the scorch.
+## Ohm's and Dent's drop rows draw their ground under the actors from the press (OhmDropMarks,
+## DentDropMarks); the records outlive them for the scorch and the scuff.
 func _draw_ground() -> void:
+	track()
+	if _ohm_drop != null:
+		_ohm_drop.draw(_ground, stage.tick, PPM)
+	if _dent_drop != null:
+		_dent_drop.draw(_ground, stage.tick, PPM)
+
+
+## Lay a new record on a drop's press (Ohm, Dent) and drop the ones that are done.
+func track() -> void:
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	var row: GhostAttacks.DeployRow = ghost.strike.attacks.deploy.get(ghost.form)
-	var live: bool = ghost.phase == GhostDeploy.Phase.ACTIVE and ghost.form == OhmStage.GHOST
-	if live and row.drops():
-		if _ohm_drop == null or _ohm_drop.press_tick != ghost.start_tick:
-			var dump: int = ghost.start_tick + row.charge_ticks
-			_ohm_drop = OhmDropMarks.new(ghost.spot * PPM, ghost.start_tick, dump, row.radius_m)
-	elif not lingers() or _ohm_drop == null:
-		return
-	_ohm_drop.draw(_ground, stage.tick, PPM)
+	if ghost.phase == GhostDeploy.Phase.ACTIVE and row != null and row.drops():
+		var press: int = ghost.start_tick
+		var hit: int = press + row.charge_ticks
+		if ghost.form == OhmStage.GHOST and (_ohm_drop == null or _ohm_drop.press_tick != press):
+			_ohm_drop = OhmDropMarks.new(ghost.spot * PPM, press, hit, row.radius_m)
+		if ghost.form == DentStage.GHOST and (_dent_drop == null or _dent_drop.press_tick != press):
+			_dent_drop = DentDropMarks.new(ghost.origin, ghost.spot, press, hit, row.ram_half_m)
+	@warning_ignore("return_value_discarded")
+	lingers()
 
 
 func _bolt(ghost: GhostDeploy, target: Vector2, index: int, age: int) -> void:
