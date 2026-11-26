@@ -26,3 +26,17 @@ Scenarios: `node tools/tests/run_scenarios.mjs --quiet-wait=1` at 02:22-02:29 (H
 then uncommitted view edits): `scenario-tests: 68 passed (headless)`, exit 0; quest1_input ok, city_parity_ref
 ok, rig_stress and city_chase ok (no CONTENDED). Part 0 (deploy_ohm / deploy_kerf) moved no pinned digest:
 no re-pin, no decisions line.
+
+## 03p5 (02:45-03:15)
+
+`tools/melee/fatal_takes.sh [--compose-only] <weapons>` (tag 03p5) replaces `build/n31/03p4/takes.sh`: each raw take is
+cropped to its middle half (`crop=iw/2:ih:iw/4:0`, follows Rivet), scaled to 1080 lines, hstacked, padded to 1920x1080,
+labels "main" / "n31 fatality" 34 px. `beside_fatal_chainsaw.mp4` re-composed with `--compose-only` (no Godot):
+1920x1080, 35.0 s. Looked at 14 s (after: Rivet with a cop on the saw at the south kerb, red spray, the figures now
+about 3x larger than the 960x540 cut) and 18 s (after: torn pieces with ragged red edges at the kerb; main: whole
+bodies on small pools). The grind reads on the right half.
+
+Not rendered: katana, plasma_sword, electro_baton, claw. The take launch started 02:46 but `play_take.mjs` never
+spawned a Godot in 27 min (no output after the flags line; the machine was full of other lanes' Godots, most likely
+the memory-budget wait), so no fatality seconds exist for them. Stopped at 03:13 (own PIDs only). Next:
+`tools/melee/fatal_takes.sh katana plasma_sword electro_baton claw` under the lane lock on a quieter machine.
