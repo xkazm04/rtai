@@ -1,7 +1,8 @@
-# n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group (DRAFT, session 6)
+# n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group 
 
 Lane `ghost`, branch `n31-ghost`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, base `main` `ba8e470b0`.
-Draft written 00:30 by the director; final sections (gate line, ledger totals, Ohm and later ghosts) are filled at 07:40.
+Gate: (filled after the final gate, see the end of What works).
+Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\frames.json` (15 best: the four gauntlet takes main | HEAD first, then half-speed clips and beat strips; older side clips and stills moved to `extra/`).
 
 ## What works
 
@@ -38,7 +39,14 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - A player: "A ghost key that cannot fire now answers: its chip jolts sideways with an amber rim for a third of a second, and a Kerf cut that finds nobody costs half a second instead of the full ten."
 
 ## What does not
-- (fill at 07:40)
+- **Dent is no stronger than main per deploy**: 1.76 hits vs main's 1.84 over seeds 1-8 (rams of 3+: 6 vs 4). The one-press lane, the wind-up and the wider ram (`ram_half_m` 1.3) changed how he reads, not what he does: the bot fires him at 2 bodies, and no width under 2 m reaches a mean of 2.5. A balance call, not changed.
+- **The Dent take predates the arrival fix**: `take-dent-main-vs-head-32ppm.mp4` was filmed at `81a831263`; in it the hit stars land about 4 ticks before Dent's body reaches the cops. Fixed at `1da987d15` (the dive now runs R-6..R and the body meets the ram tick; still `dent-arrive-hit-64ppm.png`), not re-filmed.
+- **Kerf still whiffs 8 of 60 relaxed-bot drops**: 6 of the 8 had no reachable foe anywhere at the cut. They are now cheap (0.5 s) and cued, not prevented.
+- **Kerf view**: the sight line is hidden by the body at 1 m range; a relock shows no sign that the lock moved; the seam and scorch lie mostly under the body at 64 px/m.
+- **The probe cops are not drawn** in the Ohm, Dent and Kerf lab probes (the effects and ghost bodies are); the gauntlet takes show the real cops.
+- **Signature kills in the gauntlet**: deploy kills draw the Tonnage crush only where a `BrutalityHook` is attached; the gauntlet street attaches none, and the Ohm/Kerf rows wait for melee to apply our patches (Merge notes).
+- **The refusal cue** is shown on a HUD probe fed through `GhostRefusalCue.notice`, not through a real press in the gauntlet; no in-gauntlet take of a refused press.
+- **Item 5 not started**: the effect card face is drawn by `project/dev/gauntlet/gauntlet_pick_card.gd` (shared read-only tonight); the heat parts to amber is colour polish with no play value tonight.
 
 ## What blocked or slowed you
 - Session 1: a measure-on-main builder shared the tree with an edit builder (numbers had to be re-taken in a temp worktree), ~15 min.
@@ -60,7 +68,18 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Digests: scenarios 68/68 at 6.5 m, no digest moved (JOURNAL 23:04); again 68/0 after Ohm, Dent and Kerf (no digest moved).
 
 ## Next steps
-- (fill at 07:40)
+- The owner plays Tonnage and Ohm in the gauntlet and picks the radius, charge and drop point (Calls); then the bond bar for the bigger circle.
+- Dent: decide what Dent is for (a lane shove that opens a path, or a damage tool); if damage, ram damage or a 2-body min in the bot, measured with the same seed table.
+- Kerf: a visible relock (brackets jump to the new target) and the sight line drawn over the body at short range.
+- Apply melee's patches and attach `BrutalityHook` to the gauntlet street so ghost kills play their signature deaths in the owner's mode.
+- An in-gauntlet take of a refused press (scripted presses in the take scene).
+- Item 5: effect card icons (NEED for the pick card owner), heat parts amber.
 
 ## Builder ledger
-- (fill at 07:40 from JOURNAL `BUILDER` lines)
+All Claude sub-agents (sonnet or opus) from the director's session, one brief each under `evidence/briefs/n31-ghost-*.md`. 31 calls, 733 minutes, 31 accepted, 0 bounced, 0 abandoned (before g27, see JOURNAL). IMAGES 21/60.
+- Tonnage: g01-measure 55, g02-drop 60, g03a-prep 6, g03-beats 64, g04-take 23, g05-keys-test 1, g06-verify 44, g07-kills 32, g08-measure 20, g09-kick 22.
+- Ohm: g10-ohm 26, g11-ohm-prep 5, g12-ohm-beats 30, g13-ohm-play 28, g14-ohm-take 36.
+- Dent: g15-dent 18, g16-dent-prep 4, g17-dent-view 27, g18a-pack 3, g18b-dent-marks 28, g19-dent-take 25, g25-dent-arrive 10.
+- Kerf: g20-kerf-prep 4, g21-kerf-drop 28, g22-kerf-marks 16, g23-kerf-measure 5, g23-kerf-take 30, g24-kerf-relock 16 + 34.
+- Refusal cue: g26-refusal-cue 24, g26b-refusal-strip 9.
+- What I would brief differently: the 60-minute first calls (g01, g02, g03) were the costly ones; 15-30 minute calls with one checklist point were the best value, as n29 said. A measuring builder needs its own temp worktree from the start when another builder edits the measured code (g01). Give mutate its own slot, never beside a stills builder (g06 held the lock 30 min). Check the allowlist covers every test that pins a changed default before launch (g26 shipped 600 instead of 30 for that reason and needed a message).
