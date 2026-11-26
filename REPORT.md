@@ -31,6 +31,11 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Kerf (`3211dfd49`, `3f0898052`, `0e8d1fb98`, `6f40d0007`): one press locks the target the deploy picker chooses (snap 2 m, cone 35, range 9, clear line); no marker. Kerf appears at Rivet's side with a thin teal sighting line and lock brackets on the target for 0.2 s (12 ticks), the lock follows the target, then he blinks behind it and cuts; a target that died or left range + 2 m = a whiff (cooldown spent); no target = refused, no cooldown. The cut leaves a 2.6 m char seam with an amber thread (measured 2.49 m, centre 0.02 m off) and a scorched star at the rear spot, held 2 s + 1 s. Strip `kerf-beats-64ppm.png`. Full unit 4453/0, scenarios 68/0, no digest moved.
 - Kerf play (`evidence/n31/ghost/measure-kerf-head.md`, relaxed bot fit, 10 seeds x 3 waves; the shipped bot never fires Kerf): main 60 deploys, 1.00 hit, 0 whiffs, press -> damage 1 tick | drop 60 deploys, 0.85 hit, 9 whiffs, 12 ticks. Cause per whiff (`e485c7be1`): 6 targets killed by Rivet's own claw/katana/gloria during the wind-up, 3 behind a wall. Relock (`f86b03e38`, `4e80cd811`): a broken lock re-picks along the press's aim at the cut: whiffs 9 -> 8, mean 0.87; 6 of the 8 had no reachable foe in any direction at the cut.
 - Kerf play take (`evidence/n31/ghost/take-kerf.md`, seed 10, relaxed fit, wheel): both sides 1/1 per deploy; HEAD's deploy 2 relocks (the locked cop dies to Rivet's claw, Kerf cuts the one behind); run 3 vs 6 kills. A player: "Kerf is now one tap: he stands at your side marking the cop for a fifth of a second, then blinks behind him and cuts; if Rivet kills that cop first he takes the one behind instead of wasting the press; still one kill per deploy."
+- Kerf whiff refund (`0963ad16f`, `95bea4081`): a drop cut that finds nobody even after the relock leaves only `whiff_cooldown_ticks` 30 (0.5 s) instead of the 600-tick cooldown, and cues the chip. Mutate on the relock lines of `kerf_drop.gd`: 100 % (10 / 10).
+
+### 5. A refused ghost press answers (raising the weakest point: one-press ghosts made a refused press silent)
+- `8159b5fa0`, `1f52464e1`, `3aa0be020`: every refused press (cooldown, busy, locked, no target, a Kerf whiff) is counted once (`GhostDeploy.refusals`, view-only, not replayed) and the refused ghost's HUD chip jolts sideways 6 px with an amber rim for 18 frames (`GhostRefusalCue`); a cooldown refusal also flashes the cooling arc. Tests `test_ghost_refusal_cue.gd`; scenarios 68/68, no digest moved.
+- A player: "A ghost key that cannot fire now answers: its chip jolts sideways with an amber rim for a third of a second, and a Kerf cut that finds nobody costs half a second instead of the full ten."
 
 ## What does not
 - (fill at 07:40)
@@ -47,6 +52,7 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Ohm radius 3.5 -> 5 m at a 0.3 s charge (play 2.98 -> 3.71 hits per deploy).
 - Bond and mastery with more kills per deploy (Tonnage, 8 waves, shipped bot): bond per deploy 9.3 -> 13.5 (+45 %), median mastery wave 4 -> 3; a bar of about 100 would restore wave 4. Not changed.
 - Markers: dropped for all four ghosts (Tonnage, Ohm, Dent, Kerf); each keeps `press_mode` hold as one data value. Dent's lane direction comes from the mouse aim at the press; Kerf's target from the deploy picker at the press, and a press with no target is refused (`no_target` refuse|whiff).
+- Kerf whiffs: 8 of 60 relaxed-bot drops still cut nobody (6 had no reachable foe at the cut: the target died to Rivet's own swing, or every foe was behind a wall). Shipped: the relock + a whiff costs 0.5 s (`whiff_cooldown_ticks` 30; 600 = before). Alternative: refuse a lock on a foe Rivet is already finishing.
 - Dent width: `ram_half_m` 0.9 -> 1.3 halves the whiffs (11 % -> 6 %); no width under 2 m reaches a mean of 2.5 hits because the bot fires Dent at 2 bodies.
 
 ## Merge notes
