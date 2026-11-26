@@ -226,3 +226,22 @@ Notes (b4f, 2026-11-26):
 - Still failing on the average bot: idle 55 % (bar < 35 %) and p90 2.58 s (bar 2.5). Idle is foes with a clear line in
   range and no token (token share 47 %); closing it needs more tokens, which the rail no longer allows, or a rail move:
   owner's call.
+
+## b4j (2026-11-26): G, A, B, C measured, none kept
+
+Average bot, seeds 1-10, `--waves=7`, each `--rev` its own commit (full table: `b4j-compare.md`; cause split:
+`travel-cause/cause.md`). Keep rule: damage w1-4 in 53.5..72.3 AND idle <= 47 % AND react p50 <= 1.0.
+
+| bar (average) | final 9b3730e36 | G a4224e310 (walk <= 3 m in range = FIGHT) | A 89f6aab9a (share 0.75, pistol 2, rifle 1.5) | B c825715e8 (A + pistol 1.5) | C 1d3c89804 (cop cover_bias 0.5) |
+| --- | --- | --- | --- | --- | --- |
+| react in range p50 <= 1.0 s (p90) | 0.68 (2.58) | 0.72 (3.23) | 0.72 (3.48) | 0.70 (3.55) | 0.78 (3.32) |
+| idle share <= 47 % | 55 % | 53 %: no | 44 %: yes | 43 %: yes | 52 %: no |
+| firing / s | 0.83 | 0.76 | 1.04 | 1.02 | 0.81 |
+| never fired / ranged | 160 / 499 | 171 / 525 | 132 / 531 | 144 / 547 | 146 / 488 |
+| rail: damage w1-4 in 53.5..72.3 | 71.3 | 74.4: no | 83.0: no | 75.1: no | 81.7: no |
+| deaths incl. w5 (runs) / w6, w7 reached | 7 (10) / 3, 3 | 7 (10) / 4, 4 | 6 (10) / 6, 4 | 6 (10) / 7, 5 | 7 (10) / 3, 2 |
+
+Notes (b4j): all four measured, not kept; HEAD (64381976a) is back on the 9b3730e36 values and gait rule. Only more
+tokens (A, B) move idle by the bar; each costs rail. B is the nearest (idle 43 %, 2.8 over the rail top). The rail
+moves several points between settings that do not change fire much (G 74.4, C 81.7 vs 71.3), so a 10-seed rail
+margin under ~5 points is inside its spread. No novice tables (no setting kept).
