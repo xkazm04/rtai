@@ -1,0 +1,24 @@
+diff --git a/project/dev/gauntlet/gauntlet.gd b/project/dev/gauntlet/gauntlet.gd
+index 02821368e..94765f8d4 100644
+--- a/project/dev/gauntlet/gauntlet.gd
++++ b/project/dev/gauntlet/gauntlet.gd
+@@ -9,6 +9,8 @@ const KNOWN_FLAGS: PackedStringArray = [
+ 	"--result",
+ 	"--controls",
+ 	"--pick-view",
++	"--foe-fire",
++	"--foe-moves",
+ 	"--bot-salt",
+ 	"--pick-filter",
+ 	"--wave-timeout"
+@@ -182,6 +184,10 @@ func _invalid_arg(args: ArenaArgs) -> String:
+ 				valid = s in ["random", "greedy"]
+ 			"--controls":
+ 				valid = s in ["legacy", "wheel"]
++			"--foe-fire":
++				valid = s in ["hot"]
++			"--foe-moves":
++				valid = s in ["legacy", "split"]
+ 			"--result":
+ 				valid = s.is_absolute_path()
+ 		if not valid:
