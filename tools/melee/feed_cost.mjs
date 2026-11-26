@@ -5,7 +5,7 @@
 // weapon, tilt 70 at --ppm 32, 1080p) under --fixed-fps 60 with vsync off, its FightFrames log
 // (--frames, the fight gate's probe) per run, arms alternating per round.
 //   node tools/melee/feed_cost.mjs [--weapon=chainsaw] [--rounds=2] [--ticks=3600] [--seed=7]
-//     [--arms=off:--kill-feed=off,on:] [--out=build/n31/03p3/feed-cost] [--headless]
+//     [--arms=off:--kill-feed=off,on:] [--out=build/n31/03p3/feed-cost] [--headless] [--tag=03p3]
 // --headless: no GPU (the frame is the CPU side only: sim, hooks, the views' script and canvas work);
 // used when other lanes saturate the GPU (03p3: draw 270 ms a frame on the off arm, 01:20-01:28).
 // Takes the lane Godot lock (build/n31/godot.lock) per run, waiting while another builder holds it.
@@ -31,13 +31,14 @@ const arms = arg('arms', 'off:--kill-feed=off,on:').split(',').map((s) => {
   return { name, user: rest.join(':').split(' ').filter(Boolean) };
 });
 const headless = process.argv.includes('--headless');
+const tag = arg('tag', '03p3'); // first word of the lane lock
 const LOCK = join(ROOT, 'build', 'n31', 'godot.lock');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function takeLock() {
   for (;;) {
     try {
-      writeFileSync(LOCK, `03p3 ${process.pid} ${new Date().toTimeString().slice(0, 8)}\n`, { flag: 'wx' });
+      writeFileSync(LOCK, `${tag} ${process.pid} ${new Date().toTimeString().slice(0, 8)}\n`, { flag: 'wx' });
       return;
     } catch {
       console.log(`feed-cost: lane lock held (${readFileSync(LOCK, 'utf8').trim()}), waiting 30 s`);

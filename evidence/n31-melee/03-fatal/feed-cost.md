@@ -57,3 +57,42 @@ dummy-renderer shader compile, not new.
 
 Raw: `evidence/n31-melee/03-fatal/feed-cost.json` (per run + medians); frame logs in
 `build/n31/03p3/feed-cost/` (git-ignored).
+
+## 03p4: the rendered measure (2026-11-26 02:15-02:19, bench lock held)
+
+`node tools/melee/feed_cost.mjs --rounds=2 --tag=03p4 --out=build/n31/03p4/feed-cost` (rendered: d3d12,
+editor build, vsync off, `--fixed-fps 60`, chainsaw, seed 7, 3600 ticks; arms off = `--kill-feed=off`,
+on = HEAD default). `C:\Users\kazda\kiro\gtai-n31\bench.lock` created by 03p4 for the run, removed after.
+GPU free: worst draw of a frame 23-31 ms (startup tick 2 only), draw p50 under 1.2 ms, so not CONTENDED.
+
+| run | p50 ms | p99 ms | worst ms | frames > 25 ms | busy cores |
+|---|---|---|---|---|---|
+| off r0 | 4.36 | 8.53 | 70.6 | 3 | 3.8 |
+| on r0 | 5.96 | 12.01 | 67.6 | 2 | 5.5 |
+| on r1 | 6.31 | 12.17 | 83.9 | 1 | 8.3 |
+| off r1 | 4.79 | 10.58 | 67.9 | 8 | 5.1 |
+| median off / on | 4.57 / 6.14 | 9.56 / 12.09 | 69.3 / 75.7 | 5.5 / 1.5 | |
+
+(The tool's `>25` column skips the startup ticks; the per-tick list below does not.)
+
+Per component, p50 off -> on (both rounds alike): draw 0.65 -> 1.12 ms, flush 1.3 -> 2.4 ms, render GPU
+0.35 -> 0.80 ms, render CPU 0.24 -> 0.50 ms, process 2.45 -> 2.5 ms, sim loop 0.66 -> 0.69 ms; draw calls
+273 -> 918 p50 (416 -> 1328 p99): the fatality pieces left on the street are the cost, about +1.5 ms p50
+per frame paired by round (r0 +1.6, r1 +1.5), not the sim.
+
+Frames over 25 ms, by tick: off r0 t2, 5, 14, 1971, 2572, 3090; on r0 t2, 5, 14, 2572, 3251; on r1 t2,
+5, 14, 273, 2572; off r1 t2, 14, 2293, 2300 x2, 2489 x2, 2572, 3090, 3251. Every on-arm tick is also an
+off-arm tick (t2/5/14 = startup, t2572 = the wave turn, 64-79 ms of process in all four runs, t3251 off r1)
+except on r1 t273: 30.5 ms there, but t273 is a 20 ms process spike in EVERY run (off r0 21.1, on r0 21.3,
+off r1 21.0) and on r1 ran 1.6x slower all round (8.3 busy cores, its t268-272 frames 3.2 ms against 1.9),
+so it is the same event pushed over the line by load, not a feed-made frame.
+
+### Verdict (rendered)
+- Bar "no frame over 25 ms in the on arm that the off arm (same round load) does not also show": PASS
+  (t273 on r1 is the shared spike above, under load). No grind pile-up: the sim loop p99 stays 1.7 ms.
+- So no grind cap: no `signature_kills.json` value, no decisions line.
+- The fatality's render cost is real but small at this load: +1.5 ms p50, +2.5 ms p99, draw calls x3.4
+  (pieces stay on the street). Worth a look if a long wave stacks more pieces than seed 7's first minute.
+
+Raw: `evidence/n31-melee/03-fatal/feed-cost-rendered.json` (per run + medians); frame logs in
+`build/n31/03p4/feed-cost/` (git-ignored).
