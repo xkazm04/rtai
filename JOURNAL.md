@@ -211,3 +211,7 @@ NEXT (session 8 = report phase, after 06:17): 1. `git log -3`: if n31-31 committ
 - 06:16 Temp: removed this lane's gate snapshots gtai-gate-7b73c0d206b1 and gtai-gate-88bc88996d2f (+ .gtai-snapshot); left 7e3ed7a460f0 and da97ec3be096 (other lanes').
 - 06:16 MILESTONE session 8 done. REPORT final (all sections filled, cites 30 ok / 1 pattern), gate GREEN on `88bc88996` (`build/gate/88bc88996d2f/gate.json`), every commit after it inert. No builder running, no lane lock. IMAGES 0/25. Ledger this session: n31-32 5 accepted, n31-33 16 accepted.
 NEXT (any later session before 08:00): nothing new on product. Only if asked: read REPORT once more; do not re-gate (other lanes' gate hour).
+
+## Session 9 (07:30 - 07:35, STABILIZE past freeze)
+- 07:30 MILESTONE session start. HEAD `84a852eaa`, all commits after the green gate on `88bc88996` are inert (REPORT/JOURNAL/evidence). No builder live, no lane lock. `build/gate/88bc88996d2f/gate.json` present; `node tools/evidence/cites.mjs REPORT.md`: 31 paths, 30 ok, 1 pattern. REPORT sections complete. No product change, no re-gate (other lanes' gate hour, freeze). IMAGES 0/25.
+NEXT: none for this run. The Director merges `n31-ground`; merge notes and Next steps are in REPORT.md (first next step: a pinning test for prop_base.gd, mutate 0/12).
