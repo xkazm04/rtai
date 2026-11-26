@@ -1,6 +1,6 @@
 # Prop audit before (n31-17)
 
-Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the 3/4 strip cards are not measured here. Tolerance 0.25 m. Mismatch = footprint minus drawn base per side in m (positive: the footprint reaches beyond the drawing). Gauntlet N is not measurable (front-facing card).
+Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 strip cards the game actually shows are NOT measured here. In the tilt70 stills (masters n31/ground/item4/audit_gauntlet_before.png) market stalls, kiosk and loading-bay props fill their footprint outline, so the gauntlet "invisible wall" rows below are flat-art numbers and need the strip-based probe (next call). The yard numbers read the art the yard really draws. The existing overlays (show_solid_bounds, --footprints) draw one thin white outline for every solid and do not label class. Tolerance 0.25 m. Mismatch = footprint minus drawn base per side in m (positive: the footprint reaches beyond the drawing). Gauntlet N is not measurable (front-facing card).
 
 ```json
 {
