@@ -30,7 +30,7 @@ const run = (bin, args, cwd) => spawnSync(bin, args, { cwd, encoding: 'utf8', wi
 export function parse(argv) {
   const f = { arena: 'yard', seed: '1', ppm: '32' };
   for (const a of argv) {
-    const m = /^--(rev|arena|out|label|side|seed|ppm|tree|dry-run)(?:=(.*))?$/.exec(a);
+    const m = /^--(rev|arena|out|label|side|seed|ppm|tree|only|dry-run)(?:=(.*))?$/.exec(a);
     if (!m) return { error: `prop_take: bad argument ${a}` };
     f[m[1]] = m[2] ?? true;
   }
@@ -88,7 +88,10 @@ async function take(f) {
   writeFileSync(join(tree, 'project', 'override.cfg'), OVERRIDES[f.arena]);
   const out = resolve(f.out);
   mkdirSync(out, { recursive: true });
-  const { probes, audit } = await buildProbes(tree, f.arena);
+  const built = await buildProbes(tree, f.arena);
+  const { audit } = built;
+  const only = f.only ? String(f.only).split(',').map(Number) : null; // probe indexes: a short take for a 64 px/m still
+  const probes = only ? built.probes.filter((_, i) => only.includes(i)) : built.probes;
   const cfg = join(out, 'probes.json');
   writeFileSync(cfg, `${JSON.stringify({ arena: f.arena, result: out, ppm: Number(f.ppm), probes, drawn_from: audit.source }, null, 1)}\n`);
   const avi = join(out, 'take.avi');

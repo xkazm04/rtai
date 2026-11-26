@@ -211,7 +211,8 @@
         "2026-11-26: 2026-11-26: n31-21 prop_walk dev probe (scene + probe/out helpers) for n31 ground (dev_loc 40570 -> 40851) (dev_loc 40570 -> 40851)",
         "2026-11-26: n31-19 shotgun_tick_probe (dev probe for the re-pinned prologue shotgun tick) (dev_loc 40851 -> 40870)",
         "2026-11-26: pilot_stall_probe for n31-23 ground (brief: new headless probe) (dev_loc 40870 -> 40966)",
-        "2026-11-26: dev_loc: prop_walk placement/hold/open split for n31-24 ground (probe code, dev only) (dev_loc 40966 -> 41178)"
+        "2026-11-26: dev_loc: prop_walk placement/hold/open split for n31-24 ground (probe code, dev only) (dev_loc 40966 -> 41178)",
+        "2026-11-26: dev_loc +3: prop_walk_place group radius for n31-24 ground (dev probe) (dev_loc 41178 -> 41181)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -227,7 +228,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ground_n31": 1418,
+        "project/dev/ground_n31": 1421,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -254,7 +255,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 41178
+      "total": 41181
     },
     "direct_cmdline_reads": {
       "accepted": [

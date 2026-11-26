@@ -53,7 +53,10 @@ func _split(boxes: Array[Rect2], box: Rect2, group: Array[Rect2], others: Array[
 		grew = false
 		for b: Rect2 in rest.duplicate():
 			for g: Rect2 in group:
-				if g.grow(0.05).intersects(b):
+				if (
+					g.grow(0.05).intersects(b)
+					and b.get_center().distance_to(box.get_center()) < 3.5
+				):
 					group.append(b)
 					rest.erase(b)
 					grew = true

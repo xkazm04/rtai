@@ -17,14 +17,14 @@ export function compare(beforeDir, afterDir) {
     const q = bp.probes.find((x) => x.id === p.id) ?? p;
     const b = bs.find((s) => s.id === p.id) ?? {};
     const a = as.find((s) => s.id === p.id) ?? {};
-    return { id: p.id, mode: p.mode, b, a, jb: judge(q, b), ja: judge(p, a) };
+    return { id: p.id, pb: q.base, pa: p.base, mode: p.mode, b, a, jb: judge(q, b), ja: judge(p, a) };
   });
 }
 
 export function table(arena, rows) {
   const out = [`## ${arena}`, '', '| probe | before stop_m | before base_m | before bar | after stop_m | after base_m | after bar (judged on) | radius before / after | placed from (after) |', '|---|---|---|---|---|---|---|---|---|'];
   for (const r of rows) {
-    out.push(`| ${r.id} | ${cell(r.b.stop_m)} | ${cell(r.b.box_m)} | ${r.jb.bar} | ${cell(r.a.stop_m)} | ${cell(r.a.box_m)} | ${r.ja.bar} (${r.ja.on}) | ${cell(r.b.radius_m)} / ${cell(r.a.radius_m)} | ${cell(r.a.placed)} |`);
+    out.push(`| ${r.id} | ${cell(r.b.stop_m)} | ${r.pb ? cell(r.b.box_m) : ''} | ${r.jb.bar} | ${cell(r.a.stop_m)} | ${r.pa ? cell(r.a.box_m) : ''} | ${r.ja.bar} (${r.ja.on}) | ${cell(r.b.radius_m)} / ${cell(r.a.radius_m)} | ${cell(r.a.placed)} |`);
   }
   const n = (k) => rows.filter((r) => r[k].bar === 'pass').length;
   const live = (k) => rows.filter((r) => r[k].bar !== 'n/a').length;
