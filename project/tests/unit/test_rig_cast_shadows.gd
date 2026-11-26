@@ -123,13 +123,15 @@ class CityShadowProbe:
 		polys.append(points)
 
 
-func test_city_contact_draws_three_complete_rings_at_tick_634() -> void:
+func test_city_contact_draws_every_ink_ring_complete_at_tick_634() -> void:
 	var probe: CityShadowProbe = autofree(CityShadowProbe.new())
 	var at: Vector2 = Vector2(16961.630859375, 16930.5390625)
 	var hip: float = 21.0392377138649
 	probe._contact(at, hip, Vector2.ONE)  # n31: not lifted
-	assert_eq(probe.polys.size(), 3)
-	var radii: PackedFloat32Array = [hip * 0.5, hip * 0.39, hip * 0.275]
+	assert_eq(probe.polys.size(), ContactInk.RINGS.size())
+	var radii: Array[float] = []
+	for ring_def: Vector2 in ContactInk.RINGS:
+		radii.append(hip * RigCastShadows.CONTACT_R_HIPS * ring_def.x)
 	for i: int in probe.polys.size():
 		var ring: PackedVector2Array = probe.polys[i]
 		assert_eq(Geometry2D.triangulate_polygon(ring).size(), 54, "18 triangles per ring")

@@ -29,12 +29,12 @@ const HEAD_AT: float = 0.9
 ## under the feet instead of a figure along the ground.
 const CONTACT_BELOW_K: float = 0.6
 ## The contact ellipse: radius in hip heights, flattened on the ground, slid along the cast.
-const CONTACT_R_HIPS: float = 0.5
+const CONTACT_R_HIPS: float = 0.62  # n31: was 0.5
 const CONTACT_FLAT: float = 0.62
-const CONTACT_SLIDE_HIPS: float = 0.05
+const CONTACT_SLIDE_HIPS: float = 0.08  # was 0.05
 const CONTACT_POINTS: int = 20
-## The soft edge: nested ellipses (radius share, alpha), printed over one another.
-const CONTACT_RINGS: Array[Vector2] = [Vector2(1.0, 0.22), Vector2(0.78, 0.24), Vector2(0.55, 0.3)]
+## n31: the ring table (radius share, alpha) lives in ContactInk.
+const CONTACT_RINGS: Array[Vector2] = ContactInk.RINGS
 
 ## n17 npc-react (DEFECTS 23): a dying street card still standing (its thrown-back hit cell, a fall
 ## grid row before the lying one) keeps the contact ellipse; false = none from the kill tick.
