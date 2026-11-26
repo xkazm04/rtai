@@ -9,13 +9,17 @@ extends RefCounted
 ## never read by the sim. n31-melee 04b: every other row of the table with a `style` is a
 ## weapon's own mark keyed by its id (BladeMarks: katana, plasma_sword, chainsaw), drawn on the
 ## victim at gun height (ShotLift) as it moves; a repeat hit of one weapon on one victim
-## refreshes its mark.
+## refreshes its mark. n31 04d: a through-the-slab blow (ShieldSparks.through: the baton, the
+## plasma sword) on a riot shield's front flicks off the slab's face for SLAB_TICKS
+## (BladeMarks.slab: the baton an amber arc, the plasma sword an ember spit); the saw's are
+## ShieldSparks' white sparks.
 
 const TABLE: String = "res://data/tables/melee_marks.json"
 const SCHEMA: String = "gtai.melee_marks/1"
 const WEAPON: StringName = &"claw"
 const RAKES: int = 3
 const KEEP: int = 8
+const SLAB_TICKS: int = 9
 ## The blade mark rides the torso: the gun-height lift times this, so the line crosses his body.
 const TORSO_K: float = 3.0
 
@@ -28,7 +32,10 @@ var gap_m: float = 0.0
 var blades: Dictionary[StringName, BladeMarks] = {}
 ## (at.x, at.y, blow angle, tick) per marked hit, oldest first; _who and _weapon run beside it.
 var marks: Array[Vector4] = []
+## (face x, y (m), blow angle, tick) per through-the-slab blow; _slab_arc beside it (baton = arc).
+var slabs: Array[Vector4] = []
 var _who: Array[Fighter] = []
+var _slab_arc: Array[bool] = []
 var _weapon: Array[StringName] = []
 
 
@@ -73,10 +80,12 @@ func ticks_of(weapon: StringName) -> int:
 
 
 func _add(victim: Fighter, weapon: StringName) -> void:
-	if not enabled or ticks_of(weapon) <= 0:
-		return
 	var d: Vector2 = victim.pos - arena.rivet.pos
 	var a: float = d.angle() if d.length() > 0.001 else victim.facing.angle() + PI
+	if enabled and weapon != &"chainsaw" and not victim.machine and ShieldSparks.through(weapon):
+		_slab(victim, Vector2.from_angle(a), weapon)
+	if not enabled or ticks_of(weapon) <= 0:
+		return
 	var i: int = _repeat(victim, weapon)
 	if i >= 0:
 		marks.remove_at(i)
@@ -91,6 +100,18 @@ func _add(victim: Fighter, weapon: StringName) -> void:
 		_weapon.remove_at(0)
 
 
+## A through-the-slab blow on a shield's front: its flick off the face (one a hit, oldest dropped).
+func _slab(victim: Fighter, dir: Vector2, weapon: StringName) -> void:
+	if not ShieldSparks.fronts(victim, dir):
+		return
+	var face: Vector2 = victim.pos - dir * ShieldSparks.FACE_M
+	slabs.append(Vector4(face.x, face.y, dir.angle(), arena.tick))
+	_slab_arc.append(weapon == &"electro_baton")
+	if slabs.size() > KEEP:
+		slabs.remove_at(0)
+		_slab_arc.remove_at(0)
+
+
 ## A blade's mark still showing on this victim (its repeat refreshes it); the claw stacks.
 func _repeat(victim: Fighter, weapon: StringName) -> int:
 	if weapon == WEAPON:
@@ -102,6 +123,11 @@ func _repeat(victim: Fighter, weapon: StringName) -> int:
 
 
 func draw(ci: CanvasItem, tick: int) -> void:
+	for i: int in slabs.size():
+		var age: int = tick - int(slabs[i].w)
+		if age >= 0 and age < SLAB_TICKS:
+			var at: Vector2 = Vector2(slabs[i].x, slabs[i].y) + ShotLift.up_m() * TORSO_K
+			BladeMarks.slab(ci, at, slabs[i].z, float(age) / SLAB_TICKS, _slab_arc[i])
 	for i: int in marks.size():
 		var m: Vector4 = marks[i]
 		var w: StringName = _weapon[i]

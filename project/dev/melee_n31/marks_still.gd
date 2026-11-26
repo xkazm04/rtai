@@ -101,6 +101,7 @@ func _next() -> void:
 	var arena: CombatArena = session.stage.arena
 	if _phase == 0:
 		_cop.pos = arena.rivet.pos + Vector2.RIGHT * NEAR_M
+		_cop.facing = Vector2.LEFT  # the shield's front toward Rivet again (the sim turned him)
 		arena.tick = session.stage.tick
 		arena.wounded.emit(_cop, w)
 		_snap = "marks_%s_%s_%d.png" % [w, _victim, roundi(px_per_m)]

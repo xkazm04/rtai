@@ -206,7 +206,8 @@
         "2026-11-25: n31 melee 03p2: dev/melee_n31/fatality_probe.gd, the fatality proof table's headless probe (dev only) (dev_loc 41068 -> 41216)",
         "2026-11-25: n31 melee 04b: marks_still dev probe, stills of the blade hit marks on a cop at 64 px/m (dev only) (dev_loc 41216 -> 41339)",
         "2026-11-26: n31 melee 02p4: sweep_clip dev scene (the hit volume filmed live, brief part 2) (dev_loc 41339 -> 41575)",
-        "2026-11-26: n31 melee 04d: marks_still picks a robot or riot victim and names stills by zoom (dev probe, view only) (dev_loc 41575 -> 41597)"
+        "2026-11-26: n31 melee 04d: marks_still picks a robot or riot victim and names stills by zoom (dev probe, view only) (dev_loc 41575 -> 41597)",
+        "2026-11-26: n31 melee 04d: marks_still turns the riot cop's shield back to Rivet before each weapon (dev probe) (dev_loc 41597 -> 41598)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -227,7 +228,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/melee_n31": 1837,
+        "project/dev/melee_n31": 1838,
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
@@ -249,7 +250,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 41597
+      "total": 41598
     },
     "direct_cmdline_reads": {
       "accepted": [
