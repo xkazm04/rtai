@@ -127,3 +127,4 @@ NEXT (session 7, ~04:52): (1) wave6_side main | rev:9b3730e36 (sonnet, ~25 min, 
 - MILESTONE call B playable: `--foe-fire=hot` = B exactly; gauntlet.tscn needs the Director to apply need_gauntlet_flags.patch (shared read-only folder).
 - 05:16 final gate started: `node tools/gate/run.mjs --rev=HEAD` on 7e3ed7a46, nohup, out `build/n31/gate-final.out` (early: ground also gated early; mem-budget queues). No product commit after this one.
 - BUILDER b4r-decisions 1 accepted: 9122ba644 decisions line for --foe-fire=hot (call B behind a flag).
+- 05:34 MILESTONE final gate PASS on 7e3ed7a46: `gate: PASS; build/gate/7e3ed7a460f0/gate.json` (lint 19, unit 4399/0, scenarios 68, parity, selftest, export-audit 1008/0). No product commit after it.
