@@ -65,21 +65,34 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 	if a <= 0.0:
 		return
 	var ppm: float = maxf(1.0, ci.ppm)
-	var slot: int = 0
-	for pair: PackedVector2Array in ends(d, ppm):
-		var m: PackedVector2Array = PackedVector2Array([pair[0] / ppm, pair[1] / ppm])
-		var path: PackedVector2Array = ElectricArc.shape(
-			m, d.serial * 16 + slot, age, ci.reduced_motion
-		)
-		for i: int in path.size():  # ElectricArc jags in metres; drawn in layer px
-			path[i] *= ppm
+	for path: PackedVector2Array in paths(d, age, ppm, ci.reduced_motion):
 		for s: ElectricArc.Stroke in strokes(1.0, a):
 			ci.draw_polyline(path, s.color, s.width, true)
-		slot += 1
-	if age < FLASH_TICKS and not ci.reduced_motion:
+	if flash(age, ci.reduced_motion):
 		var c: Vector2 = contact(d, ppm)
 		ci.draw_circle(c, ppm * 0.3, Color(ElectricArc.HALO, 0.55))
 		ci.draw_circle(c, ppm * 0.12, ElectricArc.CORE)
+
+
+## Each arc's jagged path in layer px at `age` (ElectricArc jags in metres; `frozen` holds it).
+static func paths(
+	d: KillNewStyles.Death, age: int, ppm: float, frozen: bool
+) -> Array[PackedVector2Array]:
+	var out: Array[PackedVector2Array] = []
+	var slot: int = 0
+	for pair: PackedVector2Array in ends(d, ppm):
+		var m: PackedVector2Array = PackedVector2Array([pair[0] / ppm, pair[1] / ppm])
+		var path: PackedVector2Array = ElectricArc.shape(m, d.serial * 16 + slot, age, frozen)
+		for i: int in path.size():
+			path[i] *= ppm
+		out.append(path)
+		slot += 1
+	return out
+
+
+## The amber-white contact flash: the first FLASH_TICKS, never under reduced motion.
+static func flash(age: int, reduced_motion: bool) -> bool:
+	return age >= 0 and age < FLASH_TICKS and not reduced_motion
 
 
 ## The stroke passes, widest first, widths times `scale`, alpha times `a`.

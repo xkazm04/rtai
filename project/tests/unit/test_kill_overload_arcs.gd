@@ -62,3 +62,44 @@ func test_the_jag_is_a_replay_and_holds_under_reduced_motion() -> void:
 	assert_eq(ElectricArc.shape(pts, 64, 7, false), ElectricArc.shape(pts, 64, 7, false))
 	assert_eq(ElectricArc.shape(pts, 64, 0, true), ElectricArc.shape(pts, 64, 30, true))
 	assert_ne(ElectricArc.shape(pts, 64, 0, false), ElectricArc.shape(pts, 64, 30, false))
+
+
+func test_the_paths_run_contact_to_limb_in_layer_px_jagged() -> void:
+	var d: KillNewStyles.Death = _death(&"baton_overload")
+	var ends: Array[PackedVector2Array] = KillOverloadArcs.ends(d, 32.0)
+	var paths: Array[PackedVector2Array] = KillOverloadArcs.paths(d, 5, 32.0, false)
+	assert_eq(paths.size(), 4)
+	for i: int in paths.size():
+		var p: PackedVector2Array = paths[i]
+		assert_almost_eq(p[0], ends[i][0], Vector2(0.01, 0.01), "starts at the contact")
+		assert_almost_eq(p[p.size() - 1], ends[i][1], Vector2(0.01, 0.01), "ends on its limb")
+		var off: float = 0.0
+		for q: Vector2 in p:
+			off = maxf(off, Geometry2D.get_closest_point_to_segment(q, p[0], p[-1]).distance_to(q))
+		assert_gt(off, 0.3, "jagged off the straight line (px)")
+		assert_lt(off, ElectricArc.AMP_M * 32.0 * 1.5, "by ElectricArc's amplitude, in px")
+	assert_almost_eq(absf(ends[1][1].x), 0.34 * 32.0, 0.01, "a hand 0.34 m across")
+
+
+func test_the_stroke_is_screen_px_amber_and_fades() -> void:
+	var full: Array[ElectricArc.Stroke] = KillOverloadArcs.strokes(1.0, 1.0)
+	assert_eq(full.size(), 3)
+	assert_almost_eq(full[0].width, KillOverloadArcs.HALO_PX, 0.001)
+	assert_almost_eq(full[1].width, KillOverloadArcs.AMBER_PX, 0.001)
+	assert_almost_eq(full[2].width, KillOverloadArcs.CORE_PX, 0.001)
+	assert_gte(full[1].width, 2.0, "the amber body is at least 2 px")
+	assert_almost_eq(full[0].color.a, 0.25, 0.001)
+	assert_almost_eq(full[1].color.a, 0.95, 0.001)
+	assert_almost_eq(full[2].color.a, 1.0, 0.001)
+	var half: Array[ElectricArc.Stroke] = KillOverloadArcs.strokes(0.5, 0.5)
+	for i: int in 3:
+		assert_almost_eq(half[i].width, full[i].width * 0.5, 0.001)
+		assert_almost_eq(half[i].color.a, full[i].color.a * 0.5, 0.001)
+
+
+func test_the_contact_flash_is_three_ticks_and_not_under_reduced_motion() -> void:
+	assert_false(KillOverloadArcs.flash(-1, false))
+	assert_true(KillOverloadArcs.flash(0, false))
+	assert_true(KillOverloadArcs.flash(KillOverloadArcs.FLASH_TICKS - 1, false))
+	assert_false(KillOverloadArcs.flash(KillOverloadArcs.FLASH_TICKS, false))
+	assert_false(KillOverloadArcs.flash(0, true))
