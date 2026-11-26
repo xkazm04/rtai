@@ -60,6 +60,8 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 			if kind == GunFx.Hit.BODY:  # n7-ranged it24: the round's path stays a moment
 				var origin: Vector2 = last[3]
 				WeaponFxTrail.add(fx.trails, origin, at, arena.gun.trigger.spec.id, tick)
+				@warning_ignore("return_value_discarded")
+				GunFxWound.on_round(fx, arena, h, at, hop)  # n31 04e: the flick off the body
 			break
 	if kind == GunFx.Hit.GROUND:
 		for m: Vector2 in arena.metal:

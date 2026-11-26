@@ -13,6 +13,9 @@ const BODY_INK_M: float = 0.12
 const BODY_INK_N7_M: float = 0.22
 const BODY_SHRINK: float = 0.136
 const BODY_TICKS: int = 4
+## n31 04e: the body hit's cream hot point holds this many ticks, its last at HOT_LAST of its size.
+const HOT_TICKS: int = 2
+const HOT_LAST: float = 0.6
 static var _body_m: float = -1.0
 
 
@@ -83,6 +86,19 @@ static func body_radius(age: int) -> float:
 		var n7: bool = ArenaArgs.parse().text("--body-ink") == "n7"
 		_body_m = BODY_INK_N7_M if n7 else BODY_INK_M
 	return _body_m * (1.0 - BODY_SHRINK * float(age))
+
+
+## What lies over a stop `code` (GunFx.Hit + SCORCH) for the held gun's `row`: a plasma bolt's
+## pop; n31 04e: a round on a body pops a cream hot point inside the ink burst for HOT_TICKS
+## (gun_fx.json body_hot_m, its radius; 0 = none), at HOT_LAST of it on the last tick.
+static func over(ci: CanvasItem, at: Vector2, age: int, code: int, row: Dictionary) -> void:
+	if code >= GunFx.SCORCH:
+		pop(ci, at, age, row)
+		return
+	var hot_m: float = row.get("body_hot_m", 0.0)
+	if code == GunFx.Hit.BODY and age < HOT_TICKS and hot_m > 0.0:
+		var k: float = 1.0 if age < HOT_TICKS - 1 else HOT_LAST
+		ci.draw_circle(Ink.px(at), hot_m * k * Ink.PX_PER_M, Ink.CREAM)
 
 
 ## Where a plasma bolt stopped: a burnt ring in the ground that fades over SCUFF_TICKS.
