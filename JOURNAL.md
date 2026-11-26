@@ -184,3 +184,5 @@ NEXT (session 7, starts ~04:46):
 - 04:31 BUILDER RUNNING 03p8 (sonnet, claw fatality take alone on the lock + masters frames.json trim to 15 best-first + delete unreferenced masters files; END 05:00) since 04:31
 - 04:33 BUILDER RUNNING 04g (opus, baton_overload readable at 32 px/m: cause first, then ElectricArc current over the body in the jolt window, fx values in the row; Godot only after 03p8's commit or 05:05; first commit 05:30, END 05:55) since 04:33
 - 04:33 Director looked at p70/cop_patrol_baton_overload.png: the jolt row's current is thin pale cream lines on dark blue, 1 px at 32 px/m -> the cause is likely the drawing, not the feed. IMAGES 0/60.
+- 04:34 DECISION melee n31: no shotgun kill row tonight. The shotgun is `enabled:false` in weapons.json and off the gauntlet wheel (04a audit), so the player never meets it; the slot goes to the baton overload (the weakest fatality he does meet). REPORT Next steps keeps it.
+- 04:34 Brief 06b (sonnet, pinning tests for the gun_fx_wound/shield_sparks mutate survivors + re-mutate) to launch when 03p8 ends; it must not take the lock while fatal_takes/play_take runs.
