@@ -17,6 +17,8 @@ var _drop: TonnageDropMarks = null
 var _ohm_drop: OhmDropMarks = null
 ## n31 ghost 18b: Dent's drop ground (skid telegraph, dust wake, scuffed lane); outlives him.
 var _dent_drop: DentDropMarks = null
+## n31 ghost 22: Kerf's cut ground (seam scorch, spatter, rear scorch); laid by a landed cut only.
+var _kerf_drop: KerfDropMarks = null
 ## Ohm's ground sits under the actors while his bolts stay on the FX band above them.
 var _ground: Node2D = Node2D.new()
 
@@ -40,12 +42,14 @@ func redraw() -> void:
 
 
 func _wounded(foe: Fighter, weapon: StringName) -> void:
+	_cut(foe, weapon)
 	_contact(weapon, foe.pos)
 
 
 func _killed(
 	foe: Fighter, weapon: StringName, dir: Vector2, at: Vector2, _kind: StringName
 ) -> void:
+	_cut(foe, weapon)
 	_contact(weapon, at + dir * foe.radius_m)
 
 
@@ -59,7 +63,19 @@ func _contact(weapon: StringName, at: Vector2) -> void:
 	_hits.append(at * PPM)
 
 
-## True while a landed drop's crater (Tonnage), scorch (Ohm) or scuff (Dent) still shows after
+## A drop deploy's cut that lands lays Kerf's ground on the target's position at C (a whiff
+## sends no contact, so it leaves none).
+func _cut(foe: Fighter, weapon: StringName) -> void:
+	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
+	if weapon != &"deploy_kerf" or not ghost.dump.kerf.armed:
+		return
+	if _kerf_drop != null and _kerf_drop.cut_tick == stage.tick:
+		return
+	var line: Vector2 = ghost.facing.rotated(deg_to_rad(KerfView.CUT_DEG))
+	_kerf_drop = KerfDropMarks.new(foe.pos, line, ghost.spot, stage.tick)
+
+
+## True while a landed drop's crater (Tonnage), scorch (Ohm, Kerf) or scuff (Dent) shows after
 ## the ghost has gone.
 func lingers() -> bool:
 	# A drop cancelled before its dump (Rivet died) leaves no ground.
@@ -75,7 +91,9 @@ func lingers() -> bool:
 	var dent: DentDropMarks = _dent_drop
 	if dent != null and (not dent.live(stage.tick) or stage.tick < dent.ram_tick and not active):
 		_dent_drop = null
-	return _drop != null or _ohm_drop != null or _dent_drop != null
+	if _kerf_drop != null and not _kerf_drop.live(stage.tick):
+		_kerf_drop = null
+	return _drop != null or _ohm_drop != null or _dent_drop != null or _kerf_drop != null
 
 
 func _draw() -> void:
@@ -130,6 +148,8 @@ func _draw_ground() -> void:
 		_ohm_drop.draw(_ground, stage.tick, PPM)
 	if _dent_drop != null:
 		_dent_drop.draw(_ground, stage.tick, PPM)
+	if _kerf_drop != null:
+		_kerf_drop.draw(_ground, stage.tick, PPM)
 
 
 ## Lay a new record on a drop's press (Ohm, Dent) and drop the ones that are done.
