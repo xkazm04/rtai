@@ -18,6 +18,28 @@ class DeployRow:
 	var boss_damage_cap: float
 	var radius_m: float
 	var ram_half_m: float
+	## Tonnage, Ohm and Dent (n31): &"drop" deploys on the press edge, &"hold" aims and releases.
+	var press_mode: StringName = &"hold"
+	## &"aim" = the aim point within range_m, &"rivet" = Rivet's own position.
+	var drop_at: StringName = &"aim"
+	## Ticks from the press to the dump (round(charge_s x TICK_RATE)).
+	var charge_ticks: int = 0
+	var dump_damage: float
+	## Drop rows (n31): the camera.json shake on the dump tick (&"" = none) and the hit-stop id
+	## (in the table, unused: the souls view has no SimClock).
+	var dump_shake: StringName = &""
+	var dump_hitstop: StringName = &""
+	## Kerf's drop (n31 ghost 21): a press with no target, &"refuse" (nothing, no cooldown) or
+	## &"whiff" (he deploys and blinks along the aim, cooldown spent).
+	var no_target: StringName = &"refuse"
+	## Kerf's drop (n31 ghost 24b): a lock broken at the cut, &"nearest" re-picks with the
+	## deploy's picker from Rivet along the press's aim, &"none" whiffs.
+	var relock: StringName = &"none"
+	## Kerf's drop (n31 ghost 26): the cooldown a whiff (nobody cut) leaves; cooldown_ticks = before.
+	var whiff_cooldown_ticks: int = 0
+
+	func drops() -> bool:
+		return press_mode == &"drop"
 
 
 var blocks: Dictionary[StringName, Dictionary] = {}
@@ -43,13 +65,54 @@ static func from_table(t: DataTable) -> GhostAttacks:
 		if id == &"kerf":
 			def.boss_damage_cap = t.num(row, "boss_damage_cap")
 			def.snap_m = t.num(row, "snap_m")
+			_kerf(t, row, def)
 		elif id == &"ohm":
-			def.radius_m = t.num(row, "radius_m")
+			_drop_row(t, row, def)
 		elif id == &"dent":
-			def.ram_half_m = t.num(row, "ram_half_m")
+			_dent(t, row, def)
+		elif id == &"tonnage":
+			_tonnage(t, row, def)
 		g.deploy[id] = def
 	g._errors = t.errors()
 	return g
+
+
+static func _tonnage(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	_drop_row(t, row, def)
+	def.dump_damage = t.num(row, "dump_damage")
+
+
+## Dent's drop (n31 ghost 15): the press and the wind-up; the ram's lane has no drop spot.
+static func _dent(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	def.ram_half_m = t.num(row, "ram_half_m")
+	def.press_mode = StringName(t.text(row, "press_mode"))
+	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
+
+
+## Kerf's drop (n31 ghost 21): one press locks the target, the cut lands after the wind-up.
+static func _kerf(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	if not row.has("press_mode"):
+		return
+	def.press_mode = StringName(t.text(row, "press_mode"))
+	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
+	def.no_target = StringName(t.text(row, "no_target"))
+	if row.has("relock"):
+		def.relock = StringName(t.text(row, "relock"))
+	def.whiff_cooldown_ticks = def.cooldown_ticks
+	if row.has("whiff_cooldown_ticks"):
+		def.whiff_cooldown_ticks = t.integer(row, "whiff_cooldown_ticks")
+
+
+## The drop-mode fields Tonnage and Ohm share (n31): press mode, where, charge, circle.
+static func _drop_row(t: DataTable, row: Dictionary, def: DeployRow) -> void:
+	def.press_mode = StringName(t.text(row, "press_mode"))
+	def.drop_at = StringName(t.text(row, "drop_at"))
+	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
+	def.radius_m = t.num(row, "radius_m")
+	if row.has("dump_shake"):
+		def.dump_shake = StringName(t.text(row, "dump_shake"))
+	if row.has("dump_hitstop"):
+		def.dump_hitstop = StringName(t.text(row, "dump_hitstop"))
 
 
 func ok() -> bool:

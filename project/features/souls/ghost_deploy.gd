@@ -1,7 +1,7 @@
 class_name GhostDeploy
 extends RefCounted
-## The first ghost skill. A deploy action holds a cursor in world metres. Its falling edge commits a
-## single strike and starts two independent clocks for the apparition and the form.
+## The first ghost skill. A deploy holds a cursor in world metres; its falling edge commits one
+## strike and starts the apparition's and the form's clocks. A drop row (n31) skips the hold.
 
 enum Phase { IDLE, AIMING, ACTIVE }
 
@@ -13,7 +13,12 @@ var facing: Vector2 = Vector2.RIGHT
 var ticks_left: int = 0
 var cooldowns: Dictionary[StringName, int] = {}
 var last_refusal: StringName = &""
+var refusals: int = 0
+var refused_form: StringName = &""
 var strike: GhostDeployStrike
+## The tick this deployment went ACTIVE (the release, or a drop's press).
+var start_tick: int = -1
+var dump: TonnageDump = TonnageDump.new()
 var _action: StringName = &""
 var _number_form: StringName = &""
 
@@ -28,7 +33,10 @@ func step(
 	_advance()
 	if GhostNumberKeys.in_car(stage):
 		_cancel_hold()
+		if dump.pending():
+			clear()
 		return
+	dump.step(self, stage, forms)
 	if _action == &"" and not _begin_hold(stage, c, actions, forms):
 		return
 	if not stage.arena.rivet.alive():
@@ -39,19 +47,26 @@ func step(
 	if _number_form != &"" and not forms.locks.allows(forms.table, id):
 		_cancel_hold()
 		return
-	if c.is_held(actions, _action):
+	# A drop row (n31 Tonnage, Ohm, Dent, Kerf) deploys on the press edge: there is no hold.
+	var row: GhostAttacks.DeployRow = strike.attacks.deploy.get(id)
+	var drop: bool = phase != Phase.AIMING and row != null and row.drops()
+	if c.is_held(actions, _action) and not drop:
 		if phase != Phase.ACTIVE:
-			_aim(stage, c, id)
+			aim(stage, c, id)
 		return
 	_action = &""
 	_number_form = &""
 	last_refusal = _refusal(forms, id)
 	if last_refusal != &"":
+		refuse(id)
 		if phase == Phase.AIMING:
-			_clear()
+			clear()
 		return
-	_release(stage, c, id)
-	forms.bond.record(id, strike.release_kills, strike.release_stuns, strike.release_boss_cuts)
+	if drop:
+		dump.press(self, stage, c, id, forms)
+	else:
+		_release(stage, c, id)
+		forms.bond.record(id, strike.release_kills, strike.release_stuns, strike.release_boss_cuts)
 
 
 func _begin_hold(
@@ -78,17 +93,23 @@ func held_form(forms: GhostForms) -> StringName:
 	return forms.selected if _number_form == &"" else _number_form
 
 
+## View-only (n31 ghost 26): count a refused press of form id for the HUD's cue (not replayed).
+func refuse(id: StringName) -> void:
+	refusals += 1
+	refused_form = id
+
+
 func _cancel_hold() -> void:
 	_action = &""
 	_number_form = &""
 	if phase == Phase.AIMING:
-		_clear()
+		clear()
 
 
 func _release(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -> void:
 	var row: GhostAttacks.DeployRow = strike.attacks.deploy[selected]
 	if c.aim != Vector2.ZERO or phase != Phase.AIMING or form != selected:
-		_aim(stage, c, selected)
+		aim(stage, c, selected)
 	else:
 		# A pad can centre its aim stick on release after Rivet's last movement tick.
 		var from: Vector2 = stage.arena.rivet.pos
@@ -96,11 +117,17 @@ func _release(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -
 		spot = GhostDeploySpot.clip(stage, from, to)
 		if spot != from:
 			facing = from.direction_to(spot)
+	activate(row, stage.tick)
+	strike.land(stage, self)
+
+
+## Stand the ghost at the spot from this tick: its life and the form's cooldown start here.
+func activate(row: GhostAttacks.DeployRow, tick: int) -> void:
 	phase = Phase.ACTIVE
 	ticks_left = row.life_ticks
 	cooldowns[form] = row.cooldown_ticks
 	origin = spot
-	strike.land(stage, self)
+	start_tick = tick
 
 
 func _advance() -> void:
@@ -114,10 +141,11 @@ func _advance() -> void:
 	if phase == Phase.ACTIVE:
 		ticks_left -= 1
 		if ticks_left == 0:
-			_clear()
+			clear()
 
 
-func _aim(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -> void:
+## Place the cursor: the aim within range_m (or the aim distance), clipped at walls.
+func aim(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -> void:
 	form = selected
 	phase = Phase.AIMING
 	var rivet: Fighter = stage.arena.rivet
@@ -142,12 +170,13 @@ func _refusal(forms: GhostForms, id: StringName) -> StringName:
 	return &""
 
 
-func _clear() -> void:
+func clear() -> void:
 	phase = Phase.IDLE
 	form = &""
 	spot = Vector2.ZERO
 	origin = Vector2.ZERO
 	facing = Vector2.RIGHT
+	dump.cancel()
 
 
 func write_state(out: StreamPeerBuffer) -> void:
@@ -166,3 +195,6 @@ func write_state(out: StreamPeerBuffer) -> void:
 		out.put_32(left)
 	if _number_form != &"":
 		out.put_utf8_string(_number_form)
+	if dump.pending():
+		out.put_utf8_string("dump")
+		out.put_32(dump.ticks_left)

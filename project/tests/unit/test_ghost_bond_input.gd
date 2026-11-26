@@ -14,6 +14,8 @@ func before_each() -> void:
 	stage.pilot = pilot
 	forms = pilot.ghosts.forms
 	stage.arena.rivet.pos = Vector2.ZERO
+	# n31 ghost Ohm drop: the shipped row drops; these tests drive the hold flow.
+	pilot.ghosts.deploy.strike.attacks.deploy[&"ohm"].press_mode = &"hold"
 
 
 func _drive(bits: int = 0) -> void:

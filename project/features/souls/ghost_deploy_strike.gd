@@ -38,13 +38,17 @@ func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 
 
 func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
-	var foe: Fighter = GhostDeploySpot.kerf_target(stage, ghost.spot, ghost.facing, attacks)
+	var lock: KerfDrop = ghost.dump.kerf
+	var foe: Fighter = lock.cut_target(stage, ghost)
 	if foe == null:
+		if lock.armed:
+			KerfDrop.whiff(stage, ghost)
 		return
 	var behind: float = attacks.num(ghost.form, &"behind_m")
 	var rear: Vector2 = KerfBehind.rear_spot(stage, foe, behind, stage.arena.walls, true)
 	ghost.spot = rear
-	ghost.origin = rear
+	if not lock.armed:  # a drop keeps its press origin at Rivet's side (KerfDropBeats)
+		ghost.origin = rear
 	if rear != foe.pos:
 		ghost.facing = rear.direction_to(foe.pos)
 	var robot: bool = foe.machine or foe.kind == Fighter.Kind.BOSS
@@ -87,55 +91,76 @@ func _boss(stage: CollectCallStage, foe: Fighter) -> bool:
 
 func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
-	var radius: float = attacks.deploy[ghost.form].radius_m
+	var row: GhostAttacks.DeployRow = attacks.deploy[ghost.form]
 	# Discard expired references even outside a measured wave.
 	@warning_ignore("return_value_discarded")
 	stunned_count(arena, stage.tick)
 	var applied: bool = false
-	for foe: Fighter in arena.hostiles:
-		if not foe.alive() or ghost.spot.distance_to(foe.pos) > radius:
+	# n31 drop: the discharge is a full circle that counts each body's radius (TonnageDump's).
+	var foes: Array[Fighter] = arena.hostiles
+	if row.drops():
+		foes = TonnageDump.victims(arena.hostiles, ghost.spot, row.radius_m)
+	for foe: Fighter in foes:
+		if not foe.alive() or not _in_ohm(row, ghost.spot, foe):
 			continue
 		if OhmShortCircuit.short_machine(arena, foe, stage.tick):
 			release_stuns += 1
 			_shorts[foe] = arena.squad_ai.mind_for(foe).stun_until
 			applied = true
-		var dir: Vector2 = ghost.spot.direction_to(foe.pos)
+		var dir: Vector2 = TonnageDump.push_dir(ghost.spot, foe.pos, ghost.facing)
 		_hit(arena, foe, dir, attacks.num(ghost.form, &"bolt_damage"), &"deploy_ohm")
 	if applied:
 		arena.move_tally.record(MoveTable.SHORT_CIRCUIT)
 
 
+## A hold-mode bolt reaches the foe's centre; a drop's victims are already in the circle.
+static func _in_ohm(row: GhostAttacks.DeployRow, spot: Vector2, foe: Fighter) -> bool:
+	return row.drops() or spot.distance_to(foe.pos) <= row.radius_m
+
+
 func _tonnage(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
+	var row: GhostAttacks.DeployRow = attacks.deploy[ghost.form]
+	if row.drops():
+		# The dump: a full circle on the spot, no facing test, each body's radius counts.
+		for foe: Fighter in TonnageDump.victims(arena.hostiles, ghost.spot, row.radius_m):
+			_crack(stage, foe)
+			var dir: Vector2 = TonnageDump.push_dir(ghost.spot, foe.pos, ghost.facing)
+			# Same deaths as the press slam (hauler_stage.gd): flattened inside crush_m of the
+			# drop centre, thrown by the wave beyond. Armour kind stays `shot`.
+			var crushed: bool = (
+				foe.pos.distance_to(ghost.spot) <= attacks.num(ghost.form, &"crush_m")
+			)
+			_hit(arena, foe, dir, row.dump_damage, &"stomp" if crushed else &"stomp_wave")
+		return
 	var head: Vector2 = ghost.spot + ghost.facing * attacks.num(ghost.form, &"press_ahead_m")
-	var squad: ArenaSquad = arena.squad_ai
 	for foe: Fighter in arena.hostiles:
 		var offset: Vector2 = foe.pos - ghost.spot
 		if not foe.alive() or offset.dot(ghost.facing) < 0.0:
 			continue
 		if head.distance_to(foe.pos) > press.num(&"stomp_radius_m"):
 			continue
-		if foe.archetype == &"war_machine" and squad != null and squad.owns(foe):
-			TonnageCrack.open(arena, squad.mind_for(foe), stage.tick)
+		_crack(stage, foe)
 		_hit(arena, foe, offset.normalized(), press.num(&"stomp_damage"), &"deploy_tonnage")
+
+
+func _crack(stage: CollectCallStage, foe: Fighter) -> void:
+	var squad: ArenaSquad = stage.arena.squad_ai
+	if foe.archetype == &"war_machine" and squad != null and squad.owns(foe):
+		TonnageCrack.open(stage.arena, squad.mind_for(foe), stage.tick)
 
 
 func _dent(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
-	var side: Vector2 = ghost.facing.orthogonal() * arena.rivet.radius_m
-	ghost.origin = GhostDeploySpot.clip(stage, arena.rivet.pos, arena.rivet.pos + side)
-	ghost.spot = GhostDeploySpot.clip(stage, ghost.origin, ghost.spot)
+	var row: GhostAttacks.DeployRow = attacks.deploy[ghost.form]
+	# n31 drop: the lane was laid on the press (DentLane) and stays put through the wind-up.
+	if not row.drops() and not DentLane.lay(stage, ghost):
+		return
 	var dir: Vector2 = ghost.origin.direction_to(ghost.spot)
 	if dir == Vector2.ZERO:
 		return
-	ghost.facing = dir
 	for foe: Fighter in arena.hostiles:
-		if not foe.alive() or not foe.exposed:
-			continue
-		var near: Vector2 = Geometry2D.get_closest_point_to_segment(
-			foe.pos, ghost.origin, ghost.spot
-		)
-		if near.distance_to(foe.pos) > attacks.deploy[ghost.form].ram_half_m:
+		if not DentLane.reaches(foe, ghost.origin, ghost.spot, row.ram_half_m, row.drops()):
 			continue
 		_hit(arena, foe, dir, attacks.num(ghost.form, &"jab_damage"), &"deploy_dent")
 		var pushed: Vector2 = foe.pos + dir * attacks.num(ghost.form, &"jab_knock_m")

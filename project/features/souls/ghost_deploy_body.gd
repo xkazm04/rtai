@@ -7,6 +7,8 @@ const PIXELS: Vector2i = Vector2i(768, 768)
 const FOOT: Vector2 = Vector2(384, 480)
 const RES: float = 2.0
 const APPEAR_TICKS: int = 6
+## n31 ghost 12: a dropped Ohm rises this high over the spot while he fades in.
+const OHM_RISE_M: float = 0.5
 
 var source: SubViewport
 var stage: CollectCallStage
@@ -78,32 +80,81 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	var pitch: float = ViewMode.shared().ground_k()
 	source.canvas_transform = Transform2D(0.0, Vector2(RES, RES * pitch), 0.0, FOOT)
 	scale = Vector2(1.0 / RES, 1.0 / (RES * pitch))
-	var yaw: float = ghost.facing.angle()
 	var drawn: GhostDrawn = _body.get(&"drawn")
-	# Keep the authored follow-through cell while the apparition lingers.
-	drawn.deploy_age = mini(age, GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS - 1)
+	# Keep the authored follow-through cell while the apparition lingers. A charging drop
+	# (n31 Tonnage) holds its wind-up until the dump tick, the strike's own age 0.
+	var struck: int = ghost.dump.strike_age(ghost, stage.tick)
+	var yaw: float = _yaw(ghost, struck)
+	drawn.deploy_age = clampi(struck, -1, GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS - 1)
 	drawn.jab = ghost.form == DentStage.GHOST
-	drawn.feed(1, -1, stage.tick, false, stage.tick - drawn.deploy_age)
-	position = ghost.spot * SimConst.PX_PER_M
-	if ghost.form == OhmStage.GHOST:
-		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
-		# Use the near quadrant so the fork and Rivet's gun both have a clear outline.
-		var angle: float = deg_to_rad(-30.0 if ghost.facing.x >= 0.0 else 30.0)
-		position -= ghost.facing.rotated(angle) * short_radius * SimConst.PX_PER_M
-	elif drawn.jab:
-		var travel: float = smoothstep(0.0, 7.0, age)
-		position = ghost.origin.lerp(ghost.spot, travel) * SimConst.PX_PER_M
+	var landed: int = stage.tick - drawn.deploy_age if struck >= 0 else -1
+	drawn.feed(1, -1, stage.tick, struck < 0, landed)
+	_stand(ghost, age, drawn.jab, struck)
 	var at: Vector2 = GhostFormBodies.place_body(drawn, Vector2.ZERO, yaw, steps, true)
 	if _body is DentBody:
-		(_body as DentBody).step(true, at, yaw, steps, stage.tick)
+		var dent: DentBody = _body as DentBody
+		dent.deploy_pose = DentDropBeats.cell(_drops(ghost), age, struck)
+		dent.step(true, at, yaw, steps, stage.tick)
 	else:
 		_body.visible = true
 		_body.position = at
 		_body.rotation = yaw
 		_body.set(&"unfold", 1.0)
+		if _body is KerfRig:
+			_pose_kerf(ghost, age, struck, drawn.deploy_age)
 		_body.call(&"advance", steps * SimClock.TICK_DT)
+	if _drops(ghost) and ghost.form == HaulerStage.GHOST:
+		_beats(ghost, age, struck)
+	elif _drops(ghost) and ghost.form == OhmStage.GHOST:
+		# n31 ghost 12: a dropped Ohm stands on the spot and rises into his hover as he fades in.
+		position += ViewMode.shared().lift_px(OHM_RISE_M * smoothstep(0.0, APPEAR_TICKS, age))
 	_wash_body(ghost, age)
 	source.render_target_update_mode = SubViewport.UPDATE_ONCE
+
+
+func _stand(ghost: GhostDeploy, age: int, jab: bool, struck: int) -> void:
+	position = ghost.spot * SimConst.PX_PER_M
+	if ghost.form == OhmStage.GHOST and not _drops(ghost):
+		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
+		# Use the near quadrant so the fork and Rivet's gun both have a clear outline.
+		var angle: float = deg_to_rad(-30.0 if ghost.facing.x >= 0.0 else 30.0)
+		position -= ghost.facing.rotated(angle) * short_radius * SimConst.PX_PER_M
+	elif ghost.form == KerfStage.GHOST and _drops(ghost):
+		position = KerfDropBeats.at(ghost, age, struck) * SimConst.PX_PER_M
+	elif jab and _drops(ghost):
+		position = DentDropBeats.at(ghost, age, struck) * SimConst.PX_PER_M
+	elif jab:
+		var travel: float = smoothstep(0.0, 7.0, age)
+		position = ghost.origin.lerp(ghost.spot, travel) * SimConst.PX_PER_M
+
+
+## A deploy in drop mode (one press, a charge, the strike on its last tick).
+func _drops(ghost: GhostDeploy) -> bool:
+	return ghost.strike.attacks.deploy[ghost.form].drops()
+
+
+## Dropped Tonnage and Ohm face the camera (row 0); Dent his lane (n31 g17), Kerf his target.
+func _faces_camera(ghost: GhostDeploy) -> bool:
+	return _drops(ghost) and ghost.form not in [DentStage.GHOST, KerfStage.GHOST]
+
+
+func _yaw(ghost: GhostDeploy, struck: int) -> float:
+	if _faces_camera(ghost):
+		return PI * 0.5
+	if _drops(ghost) and ghost.form == KerfStage.GHOST:
+		return KerfDropBeats.yaw(ghost, struck)
+	return ghost.facing.angle()
+
+
+func _pose_kerf(ghost: GhostDeploy, age: int, struck: int, drawn_age: int) -> void:
+	(_body as KerfRig).deploy_pose = KerfDropBeats.cell(_drops(ghost), age, struck, drawn_age)
+
+
+## Tonnage's drop beats (TonnageDropBeats): the fall and rise, and the strip's cell.
+func _beats(ghost: GhostDeploy, age: int, struck: int) -> void:
+	position += ViewMode.shared().lift_px(TonnageDropBeats.lift_m(age, struck))
+	var charge: int = ghost.strike.attacks.deploy[ghost.form].charge_ticks
+	TonnageDropBeats.paint(_body, TonnageDropBeats.col(age, charge, struck))
 
 
 func _wash_body(ghost: GhostDeploy, age: int) -> void:

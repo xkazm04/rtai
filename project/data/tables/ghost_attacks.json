@@ -23,32 +23,50 @@
   },
   "deploy": {
     "dent": {
+      "charge_s": 0.25,
       "cooldown_ticks": 480,
       "enabled": true,
-      "life_ticks": 42,
-      "ram_half_m": 0.9,
+      "life_ticks": 57,
+      "press_mode": "drop",
+      "ram_half_m": 1.3,
       "range_m": 8
     },
-    "doc": "range_m limits cursor reach from Rivet. cooldown_ticks counts 60 Hz ticks from release until this ghost can deploy again. enabled permits deployment. life_ticks is the number of ticks the ghost remains at the end of its single strike. Kerf prefers a hostile within snap_m of the cursor. Ohm strikes within radius_m of the spot. Dent strikes within ram_half_m of the segment from Rivet's side to the spot. Kerf's boss_damage_cap limits the HP lost per deployed cut to this fraction of the boss's maximum HP, after armour and damage bonuses.",
+    "doc": "range_m limits cursor reach from Rivet. cooldown_ticks counts 60 Hz ticks from release until this ghost can deploy again. enabled permits deployment. life_ticks is the number of ticks the ghost remains at the end of its single strike. Kerf prefers a hostile within snap_m of the cursor. Ohm: press_mode hold strikes at the release every live hostile whose centre is within radius_m of the spot (the ohm block's bolt_damage, a flagged machine short-circuited); press_mode drop (n31, as Tonnage below: one press, no marker) stands him at the aim point within range_m, charges for charge_s (nothing is hit), then discharges on a full circle that counts each body's radius; in drop mode life_ticks counts from the press and covers the charge. Dent: press_mode hold strikes at the release every exposed live hostile whose centre is within ram_half_m of the segment from Rivet's side to the spot; press_mode drop (n31, one press, no marker) lays that lane on the press along the current aim to the aim point within range_m, winds up for charge_s (nothing is hit, the lane stays put: a foe can step out), then rams every exposed live hostile whose body reaches within ram_half_m of it; in drop mode life_ticks counts from the press and covers the wind-up. Kerf's boss_damage_cap limits the HP lost per deployed cut to this fraction of the boss's maximum HP, after armour and damage bonuses. Tonnage (n31, the owner: no placement marker, a short charge, then a dump on a full circle): press_mode drop deploys on the key's press edge with no aiming phase (hold = the old hold-aim-release half-disc stomp ahead of the spot at powers.json hauler stomp_radius_m); drop_at aim puts him at the aim point within range_m (wall-clipped), rivet on Rivet's own spot; he stands charging for charge_s (nothing is hit), then every live hostile with its body inside radius_m of the spot takes dump_damage (kind shot) on the dump tick. life_ticks counts from the press and covers the charge. Kerf (n31 ghost 21, one press as the others): press_mode drop locks the hostile the deploy's own picker takes on the press (snap_m of the aim point, else the nearest to the aim line inside the kerf block's cone_deg, within range_m of Rivet, clear line); Kerf arrives at Rivet's side facing it and winds up for charge_s while the lock follows the target, then blinks behind it (behind_m) and cuts it on the charge's last tick; a target that died, went past range_m + 2 m or behind a wall during the wind-up is not locked any more: relock nearest (n31 ghost 24b) re-picks on the cut tick with the same picker from Rivet's position along the press's aim (snap_m of the press's aim point, else the cone, range_m, clear line) and cuts that foe; only when it finds nobody, or relock none, is nothing cut (Kerf blinks dash_m along his facing, cooldown spent). no_target refuse = a press with no target deploys nothing and spends no cooldown (last_refusal no_target); whiff = Kerf still deploys and blinks dash_m along the aim, cooldown spent. whiff_cooldown_ticks (n31 ghost 26): a drop cut that finds nobody leaves only this cooldown (never more than is left; 30 = 0.5 s shipped, cooldown_ticks = the full cooldown as before) and the HUD chip shows the refusal cue. press_mode hold = the old hold-aim-release cut at the release.",
     "kerf": {
       "boss_damage_cap": 0.1,
+      "charge_s": 0.2,
       "cooldown_ticks": 600,
       "enabled": true,
       "life_ticks": 45,
+      "no_target": "refuse",
+      "press_mode": "drop",
       "range_m": 9,
-      "snap_m": 2
+      "relock": "nearest",
+      "snap_m": 2,
+      "whiff_cooldown_ticks": 30
     },
     "ohm": {
+      "charge_s": 0.3,
       "cooldown_ticks": 480,
+      "drop_at": "aim",
+      "dump_shake": "hit",
       "enabled": true,
-      "life_ticks": 48,
-      "radius_m": 3.5,
+      "life_ticks": 66,
+      "press_mode": "drop",
+      "radius_m": 5,
       "range_m": 9
     },
     "tonnage": {
+      "charge_s": 0.45,
       "cooldown_ticks": 480,
+      "drop_at": "aim",
+      "dump_damage": 3,
+      "dump_hitstop": "boss_hit",
+      "dump_shake": "crash",
       "enabled": true,
-      "life_ticks": 54,
+      "life_ticks": 81,
+      "press_mode": "drop",
+      "radius_m": 6.5,
       "range_m": 6
     }
   },

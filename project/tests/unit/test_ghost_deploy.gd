@@ -17,6 +17,9 @@ func before_each() -> void:
 	pilot = StagePilot.new(actions)
 	stage.pilot = pilot
 	ghost = pilot.ghosts.deploy
+	# Pins the pre-n31 hold flow: the shipped drops Tonnage and Kerf are switched back to hold.
+	ghost.strike.attacks.deploy[&"tonnage"].press_mode = &"hold"
+	ghost.strike.attacks.deploy[&"kerf"].press_mode = &"hold"
 	q = 1 << actions.bit(&"ghost_deploy")
 
 

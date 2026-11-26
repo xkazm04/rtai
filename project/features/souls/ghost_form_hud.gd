@@ -32,6 +32,8 @@ var key_hint: String
 ## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
 ## strip folds to the one avatar that matters, the current form (in base the selected ghost).
 var compact: bool = false
+## n31 ghost 26: a refused press shakes its chip under a fading amber rim.
+var cue: GhostRefusalCue = GhostRefusalCue.new()
 var layout: GhostFormLayout = GhostFormLayout.for_device(DeviceProfile.shared())
 var _named: StringName = &""
 var _cursor: WeaponCursor = WeaponCursor.new()
@@ -68,6 +70,7 @@ func sync(g: GhostForms, weapon: StringName = &"", pilot: GhostPilot = null) -> 
 	var sel: GhostFormDef = g.table.form(selected)
 	var row: PowerDef = g.powers.table.row(sel.power) if sel != null else null
 	cost_k = row.madness_cost / g.powers.table.madness_max if row != null else 0.0
+	cue.sync(pilot.deploy if pilot != null else null)
 	_cursor.show_for(weapon, current)
 	queue_redraw()
 
@@ -108,8 +111,9 @@ func named_chip(shown: Array[StringName]) -> StringName:
 	return selected if shown.has(selected) else shown[0]
 
 
-func _chip(id: StringName, c: Vector2) -> void:
+func _chip(id: StringName, at: Vector2) -> void:
 	var font: Font = ThemeDB.fallback_font
+	var c: Vector2 = at + cue.offset(id)
 	if locked.get(id, false):
 		_locked_chip(id, c)
 		return
@@ -121,11 +125,13 @@ func _chip(id: StringName, c: Vector2) -> void:
 	GhostChipFace.rim(self, id, c, r, [INK, RIM_PX + (CURRENT_RIM_PX if on else 0.0)])
 	if on:
 		GhostChipFace.rim(self, id, c, r, [TEAL, CURRENT_RIM_PX])
+	if cue.active(id):
+		GhostChipFace.rim(self, id, c, r, [cue.rim(id), GhostRefusalCue.RIM_PX])
 	var dim: Color = COOL_DIM if cool > 0.0 and not on else Color.WHITE
 	if not GhostChipFace.draw(self, id, c, r, dim):
 		GhostChipGlyph.draw(self, id, c, r * 0.55, PAPER if on else INK)
 	if cool > 0.0:
-		_cool_arc(c, r, cool)
+		_cool_arc(c, r, cool, cue.arc(id, TEAL))
 	if layout.all_names or id == _named:
 		_name(id, c, font)
 	if id == selected and key_hint != "":
@@ -169,12 +175,12 @@ func _locked_chip(id: StringName, c: Vector2) -> void:
 
 
 ## The time left to cool: a teal arc on an ink arc round the dimmed avatar, `k` of the circle.
-func _cool_arc(c: Vector2, r: float, k: float) -> void:
+func _cool_arc(c: Vector2, r: float, k: float, ink: Color) -> void:
 	var a: float = -PI * 0.5
 	var at: float = r * COOL_ARC_K
 	var steps: int = maxi(4, ceili(32.0 * k))
 	draw_arc(c, at, a, a + TAU * k, steps, INK, COOL_ARC_PX + 3.0, true)
-	draw_arc(c, at, a, a + TAU * k, steps, TEAL, COOL_ARC_PX, true)
+	draw_arc(c, at, a, a + TAU * k, steps, ink, COOL_ARC_PX, true)
 
 
 func _madness(bar: Rect2) -> void:

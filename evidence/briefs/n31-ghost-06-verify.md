@@ -1,0 +1,21 @@
+# n31 ghost 06 - verify Tonnage's drop at radius 6.5: scenarios, two edge tests, mutate
+
+Builder tag: `g06-verify`. Launched 22:22. **Commit each finished part as soon as its checks pass (first commit by 22:50). Hard stop 23:20: commit what passes, report, END.** Never end with a commit sitting in the pre-commit hook (budget ~12 min for it).
+Worktree (cwd): `C:\Users\kazda\kiro\gtai-wt\n25-yard`, branch `n31-ghost`. Read `AGENTS.md`, `git log --oneline -12`, `evidence/briefs/n31-ghost-02-drop.md` (the mechanics), `project/features/souls/tonnage_dump.gd`, `project/tests/unit/test_tonnage_drop.gd`.
+
+## State
+Commit `d7db0eb24` made Tonnage's deploy one press, a 27-tick charge (`charge_s` 0.45), a full-circle dump (victim radius added); `0f81d27dd` raised `radius_m` 5.5 -> 6.5 (`project/data/tables/ghost_attacks.json`, tonnage row). Scenarios passed 68/68 at 5.5 m; at 6.5 m a run was killed at 61/68 (by another lane, not a failure). A partial mutate of `tonnage_dump.gd` survived 7 of 13 mutants: the `arm()` zero-charge branch and the `<=` circle edge.
+
+## Do, in order
+1. **Two tests** in `project/tests/unit/test_tonnage_drop.gd` (or a new `test_tonnage_drop_edge.gd` if the file would pass ~200 lines): (a) a charge of 0 ticks (`arm` with 0 / a row with `charge_s` 0) resolves the dump on the press tick itself; (b) a foe whose centre sits at exactly `radius_m + its radius` from the drop centre is hit, and one 0.05 m beyond is not. Read the code first so the tests pin what it does. Run them: `node tools/tests/run_unit.mjs --select=test_tonnage_drop,test_tonnage_drop_bot[,test_tonnage_drop_edge]`. Commit.
+2. **Scenarios at 6.5 m**: `node tools/tests/run_scenarios.mjs` (read its flags; the whole suite, ~10-15 min). If all pass and no digest moved: write that in your report (no commit). If a digest/pin moved because of the radius: re-pin it once and append ONE line to `docs/decisions.md`: `- [2026-11-25] DECISION n31 ghost digests: Tonnage drop radius 6.5 moved <scenario> <old> -> <new>; re-pinned.` Before staging decisions.md run `git diff docs/decisions.md`: if it shows lines that are not yours (another builder appends in parallel), do not stage; report the line instead. If a scenario FAILS for a reason that is not a pin, report the cause (file:line) and do not "fix" product code beyond the allowlist.
+3. **Mutate**: `node tools/mutate/mutate.mjs --file=project/features/souls/tonnage_dump.gd --max=20 --tests=test_tonnage_drop,test_tonnage_drop_bot[,test_tonnage_drop_edge]` (after your test commit; mutate works at HEAD). Quote killed/(killed+survived); for each survivor say whether it is equivalent or a gap. If time allows, one more test for a real gap, commit.
+
+## Rules
+- `export APPDATA=C:/Users/kazda/kiro/gtai-n31/appdata/ghost` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'` before every Godot-using command. **Lane Godot lock** `build/n31/godot.lock`: before each Godot-using command, wait until the file is absent, write `g06-verify <your shell pid>`, delete it when your command ends; never delete another's lock. Another builder (`g03-beats`, art + souls code) shares the lane; keep each of your Godot holds short (one command), then release so it can take stills.
+- Allowlist: `project/tests/unit/test_tonnage_drop*.gd` (+ `.uid`), scenario pin/digest files only if a digest moved, `docs/decisions.md` (append one line, see above), `build/n31/**`. Any other path: STOP and report a NEED. Do not touch `project/features/souls/**` (g03-beats edits it now), other lanes' files, `project/dev/gauntlet/**`.
+- Typed GDScript, <= 40 lines/function, `Log` not `print`. New `.gd` -> `"$GODOT_BIN" --headless --path project --import` through the lock (or `node tools/godot/check.mjs`), commit the `.uid`.
+- Fix lint and format findings in your own edit and go on. Stage per path, `git commit -m "..." -- <paths>`; no add -A/./-u, no stash, amend, rebase, reset --hard; never skip the hook (a fail on `kill_reel_*.break.test.mjs` = stale class cache: `--import`, commit again). Commit messages end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+
+## Report (final message)
+Commits, the two tests (names, pass), scenarios (N pass / M, digests moved or not, the run's summary line), mutate score and survivors, NEED lines, what you could not do.

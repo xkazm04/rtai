@@ -26,8 +26,9 @@ func best(
 	_form = form
 	_require_fit = require_fit
 	_row = _attacks.deploy[form]
-	_ahead = _attacks.num(form, &"press_ahead_m") if form == HaulerStage.GHOST else 0.0
-	_radius = _stage.pilot.hauler.form.num(&"stomp_radius_m") if form == HaulerStage.GHOST else 0.0
+	var stomp: bool = form == HaulerStage.GHOST and not _row.drops()
+	_ahead = _attacks.num(form, &"press_ahead_m") if stomp else 0.0
+	_radius = _stage.pilot.hauler.form.num(&"stomp_radius_m") if stomp else 0.0
 	var rivet: Fighter = _stage.arena.rivet
 	var margin: float = maxf(_row.radius_m, _row.ram_half_m) + _ahead + _radius + rivet.radius_m
 	_nearby.clear()
@@ -83,7 +84,12 @@ func _score(face: Vector2, spot: Vector2) -> int:
 				if spot.distance_to(foe.pos) > _row.radius_m:
 					continue
 			HaulerStage.GHOST:
-				if (
+				if _row.drops():
+					# n31: the dump is a full circle on the spot (or on Rivet, drop_at rivet).
+					var at: Vector2 = r.pos if _row.drop_at == &"rivet" else spot
+					if at.distance_to(foe.pos) > _row.radius_m:
+						continue
+				elif (
 					(foe.pos - spot).dot(face) < 0.0
 					or (spot + face * _ahead).distance_to(foe.pos) > _radius
 				):

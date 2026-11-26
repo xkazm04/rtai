@@ -1,0 +1,13 @@
+n31 ghost 18b (g18b-dent-marks), commit cc2bf7da3, dev ghost_n31_dent_beats --ppm=64 --at=2,11,18,25,105 (tilt70, 64 px/m; screen y = 60.1 px/m).
+lane origin (13.0,-0.6) m -> screen (768,540); spot (19.0,0.0) -> (1152,576.1); lane 6.03 m at 5.7 deg; ram_half_m 1.3 -> 2.6 m = 157.1 px vertical gap at a fixed column.
+R-4 (p011) minus base (p-01), ink-darkened centroid of each skid line per 40 px column:
+x 880 lane y 550.5 upper 465.2 lower 626.4 gap px 161.3 centre off -4.7
+x 920 lane y 554.3 upper 466.6 lower 629.3 gap px 162.7 centre off -6.3
+x 960 lane y 558.0 upper 483.0 lower 642.3 gap px 159.3 centre off 4.6
+x 1000 lane y 561.8 upper 486.5 lower 640.1 gap px 153.5 centre off 1.5
+x 1040 lane y 565.6 upper 484.6 lower 634.4 gap px 149.8 centre off -6.0
+x 1080 lane y 569.3 upper 494.9 lower 642.3 gap px 147.3 centre off -0.7
+far end (rightmost changed px in each line's row band):
+band 470 500 x min 700 x max 1154 p99 1142
+band 615 650 x min 761 x max 1137 p99 1119
+=> width 2.44-2.69 m (mean 2.58) vs 2.6 m (bar +-0.25: pass); far end upper 1154 px (0.03 m past the spot), lower 1137 px (0.24 m short; bar 0.25: pass).

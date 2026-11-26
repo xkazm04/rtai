@@ -1,0 +1,28 @@
+# n31 ghost 09 - Tonnage's dump lands with a screen kick; the dump dust ring stops hiding the crack rim
+
+Builder tag: `g09-kick`. **First commit within 25 minutes of launch; hard stop 45 minutes after launch: commit what passes, report, END.** Never end with a commit sitting in the pre-commit hook (~12 min on this machine).
+Worktree (cwd): `C:\Users\kazda\kiro\gtai-wt\n25-yard`, branch `n31-ghost`. Read `AGENTS.md`, `git log --oneline -12` (the beats landed in `b8e1739eb`; kills in g07's commit).
+
+## Why
+Owner: Tonnage's "animation of ghost deployment and effect needs more detailed work". The dump (the slam frame at press + 27 ticks) draws its ring, crack and debris but the camera does not move: the Q-form stomp lands with a shake + hit-stop (`features/souls/hauler_kick.gd`, ids `stomp_shake` = camera.json `crash`, `stomp_hitstop` = `boss_hit` in `powers.json` hauler), the deploy's dump has none. And at D+2 the dump dust ring is heavy and covers the crack's rim, the one line that tells a player where the circle ends.
+
+## Known (director, read before you build)
+- `GhostFormView` (`features/souls/ghost_form_view.gd`) owns `camera: CameraRig` (the print stage's or the city view's) and attaches `GhostDeployView` at `:51` (`GhostDeployView.attach(layer, stage, v.reduced_motion)`); `_beat()` at `:151-156` already kicks that camera with `camera.kick(id, arena.tick)`. So the dump kick is souls-only: pass the camera to the deploy view (or let the form view watch the deploy's dump), kick once per dump tick. Find where the dump tick is known (the drop's dump record in `ghost_deploy_effects.gd` / `tonnage_drop_marks.gd`, or the deploy state `GhostDeploy` / `tonnage_dump.gd`).
+- Hit-stop: `CameraRig.hitstop(id, tick)` + `SimClock.hold(ticks * SimClock.TICK_DT)` as `hauler_kick.gd:38-41` (wall time only, every tick unchanged, replays identical). Do it only if the clock is reachable from souls without touching other folders; else shake only and say so.
+- Ids: add `dump_shake` and `dump_hitstop` fields to the tonnage row of `project/data/tables/ghost_attacks.json` (+ its schema if the schema lists the fields) naming camera.json ids; start values: `crash` and `boss_hit` (the Q stomp's). Respect `reduced_motion` (no shake when set, like CameraRig does).
+- Dust: `features/souls/tonnage_drop_marks.gd` (129 lines) draws `tonnage_drop_dust.png` with its outer edge at radius_m. Make it lighter so the crack rim reads at D+2..D+10: e.g. peak alpha <= 0.55 and a faster fade, or draw the dust under the crack. Keep the outer edge at radius_m (+-0.25 m).
+
+## Do
+1. The kick (+ hit-stop if reachable) on the dump tick, once per deploy, never for the Q stomp twice. Test in a new `project/tests/unit/test_tonnage_dump_kick.gd`: one dump -> one kick at the dump tick (a CameraRig double or its own counters), none during the charge, none with reduced_motion. Commit.
+2. Dust lighter. A 64 px/m still pair at D+2 and D+8 before (HEAD before your dust commit) | after, through the existing probe `project/dev/ghost_n31/ghost_n31_beats.tscn` with `node tools/dev/run.mjs` (`--rendering-driver d3d12 --position 0,1440`; read the probe's flags). Look at both (Read the png): the crack rim must be visible all round at D+2 after. To `C:\Users\kazda\kiro\gtai-masters\n31\ghost\` (png) + entries in its `frames.json` (keep existing entries). Commit.
+3. One `docs/decisions.md` line (`- [2026-11-25] DECISION ghost n31 dump kick: ...` with the ids and the dust alpha before -> after). `git diff docs/decisions.md` must show only your line before staging.
+4. Mutate: `node tools/mutate/mutate.mjs --file=project/features/souls/tonnage_drop_marks.gd --lines=<your changed lines> --max=10 --tests=test_tonnage_beats,test_tonnage_dump_kick` and quote killed/(killed+survived).
+
+## Rules
+- `export APPDATA=C:/Users/kazda/kiro/gtai-n31/appdata/ghost` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'` before every Godot command. Lane Godot lock `build/n31/godot.lock`: wait until absent, write `g09-kick <pid>`, hold it per run only, delete yours after; never delete another's (builder `g04-take` films with it).
+- Allowlist: `project/features/souls/ghost_form_view.gd`, `ghost_deploy_view.gd`, `ghost_deploy_effects.gd`, `tonnage_drop_marks.gd`, `tonnage_dump.gd` (read-mostly), a small new `project/features/souls/tonnage_dump_kick.gd` if it keeps a file under 200 lines, `project/data/tables/ghost_attacks.json` (+ `project/data/schemas/ghost_attacks.schema.json`), `project/tests/unit/test_tonnage_dump_kick.gd`, `project/dev/ghost_n31/**`, `evidence/n31/ghost/**`, `build/n31/**`, `docs/decisions.md` (one line), masters ghost folder (png + frames.json). NOT `ghost_deploy_strike.gd` (g07's), `project/features/combat/**`, `project/boot/**`, `camera.json`, other lanes' files. Any other path: STOP and report a NEED.
+- Typed GDScript, ~200 lines/file (hard 300), <= 40 lines/function, <= 5 params, `Log` not `print`. New `.gd` -> `--import` through runGodot, commit the `.uid`. Run `node tools/tests/run_unit.mjs --select=test_tonnage_beats,test_tonnage_dump_kick,test_tonnage_drop,test_tonnage_drop_edge` before each commit.
+- Fix lint and format findings in your own edit and go on. Stage per path, `git commit -m "..." -- <paths>`; no add -A/./-u, stash, amend, rebase, reset --hard; never skip the hook (a fail on `kill_reel_*.break.test.mjs` = stale class cache: `--import`, commit again). Commit messages end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+
+## Report
+Commits, how the kick is wired (file:line), hit-stop yes/no and why, tests, still paths and what you saw, mutate score, NEED lines.

@@ -232,7 +232,21 @@
         "2026-11-26: n31 melee 02p4: sweep_clip dev scene (the hit volume filmed live, brief part 2) (dev_loc 41339 -> 41575)",
         "2026-11-26: n31 melee 04d: marks_still picks a robot or riot victim and names stills by zoom (dev probe, view only) (dev_loc 41575 -> 41597)",
         "2026-11-26: n31 melee 04d: marks_still turns the riot cop's shield back to Rivet before each weapon (dev probe) (dev_loc 41597 -> 41598)",
-        "2026-11-26: n31 melee 04e: marks_still's gun path (the light-gun flick and hot point stills, dev only) (dev_loc 41598 -> 41629)"
+        "2026-11-26: n31 melee 04e: marks_still's gun path (the light-gun flick and hot point stills, dev only) (dev_loc 41598 -> 41629)",
+        "2026-11-25: n31 ghost measure dev tool (dev_loc 39760 -> 40320)",
+        "2026-11-25: n31 ghost measure: drop-mode support (dev_loc 40320 -> 40331)",
+        "2026-11-25: n31 ghost measure dev tool (dev_loc 40331 -> 40552)",
+        "2026-11-25: n31 ghost take scene (dev_loc 40552 -> 40704)",
+        "2026-11-25: n31 ghost beats probe --kill (dev_loc 40704 -> 40723)",
+        "2026-11-25: n31 ghost measure dev tool (dev_loc 40723 -> 40762)",
+        "2026-11-25: n31 ghost 12: dev probe ghost_n31_ohm_beats (Ohm drop beat stills, the 64 px/m strip and the D+2 radius measure); dev-only, excluded from release (dev_loc 40762 -> 40962)",
+        "2026-11-26: n31 ghost 14: take scene --form/--fit flags (dev only) (dev_loc 40962 -> 40991)",
+        "2026-11-26: n31 ghost 17: dev probe ghost_n31_dent_beats (Dent drop beat stills at 64 px/m, wind-up R-5 and ram R+3); dev-only, excluded from release (dev_loc 40991 -> 41178)",
+        "2026-11-26: n31 ghost 21: dev probe ghost_n31_kerf_beats (copy of g17's Dent probe) for the Kerf drop stills (dev_loc 41178 -> 41387)",
+        "2026-11-26: n31 ghost 22: the Kerf beats probe logs the target's world position for the scorch measure (+4 dev lines) (dev_loc 41387 -> 41391)",
+        "2026-11-26: n31 ghost 24: Kerf cause log in the dev measure (kill weapon per victim, broke reason) (dev_loc 41391 -> 41423)",
+        "2026-11-26: n31 ghost 24b: the Kerf measure logs why a relock found nobody (dev only) (dev_loc 41423 -> 41447)",
+        "2026-11-26: ghost_n31_refusal probe for n31 ghost (dev_loc 41447 -> 41526)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -249,6 +263,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
+        "project/dev/ghost_n31": 1766,
         "project/dev/ground_n31": 1421,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
@@ -277,7 +292,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 44085
+      "total": 45851
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -301,7 +316,8 @@
         "2026-11-25: n31-09 foe placement probe for n31 ground (direct_cmdline_reads 168 -> 169)",
         "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (direct_cmdline_reads 168 -> 169)",
         "2026-11-25: --melee-sweep for n31 melee (direct_cmdline_reads 168 -> 169)",
-        "2026-11-25: --melee-sweep for n31 melee: the flag read moves to MeleeHit (leaf class, MeleeTable load cycle) (direct_cmdline_reads 169 -> 169)"
+        "2026-11-25: --melee-sweep for n31 melee: the flag read moves to MeleeHit (leaf class, MeleeTable load cycle) (direct_cmdline_reads 169 -> 169)",
+        "2026-11-26: ghost_n31_refusal probe for n31 ghost (direct_cmdline_reads 168 -> 169)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -329,6 +345,7 @@
         "project/dev/ghost-powers/powers_clip.gd": 1,
         "project/dev/ghost-powers/quest_ghost_rec.gd": 1,
         "project/dev/ghost-powers/quest_hauler_rec.gd": 1,
+        "project/dev/ghost_n31/ghost_n31_refusal.gd": 1,
         "project/dev/ground_n31/foe_place_probe.gd": 1,
         "project/dev/gunplay/blood_dirs.gd": 1,
         "project/dev/gunplay/dodge_view.gd": 2,
@@ -458,7 +475,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 171
+      "total": 172
     },
     "files_near_cap": {
       "accepted": [
@@ -575,7 +592,8 @@
         "2026-11-26: --foe-fire for n31 foes (files_past_soft_cap 72 -> 72)",
         "2026-11-25: --melee-sweep for n31 melee (files_past_soft_cap 69 -> 70)",
         "2026-11-25: --kill-feed for n31 melee (files_past_soft_cap 70 -> 70)",
-        "2026-11-26: n31 merge: launch_args KNOWN_FLAGS of foes (--foe-moves, --foe-fire) and melee (--melee-sweep, --kill-feed) combine (files_past_soft_cap 73 -> 73)"
+        "2026-11-26: n31 merge: launch_args KNOWN_FLAGS of foes (--foe-moves, --foe-fire) and melee (--melee-sweep, --kill-feed) combine (files_past_soft_cap 73 -> 73)",
+        "2026-11-25: n31 ghost measure dev tool (files_past_soft_cap 69 -> 70)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -648,11 +666,12 @@
         "project/tests/unit/test_cast_war_machine.gd": 209,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
+        "project/tests/unit/test_ghost_deploy_attacks.gd": 203,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 73
+      "total": 74
     },
     "lane_named_dev_dirs": {
       "accepted": [

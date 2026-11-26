@@ -56,8 +56,10 @@ static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 static func walk_of(
 	path: String, steps: PackedFloat32Array, standing_only: bool = false
 ) -> GhostSheet:
-	if standing_only:
-		var pose_sheet: GhostSheet = of(path.trim_suffix("walk8.png") + "spec_hover.png", 0)
+	# An authored cell grid (Ohm's 2 x 8 hover, <name>_spec_cells.json) is never a pose sheet.
+	var stem: String = path.trim_suffix("walk8.png")
+	if standing_only and not FileAccess.file_exists(stem + "spec_cells.json"):
+		var pose_sheet: GhostSheet = of(stem + "spec_hover.png", 0)
 		if pose_sheet != null:
 			return pose_sheet
 	var sheet: GhostSheet = of(path, GhostStride.cols_of(steps))

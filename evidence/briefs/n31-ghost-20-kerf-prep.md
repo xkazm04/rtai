@@ -1,0 +1,21 @@
+# n31 ghost 20 - Kerf deploy: one-press rule + beats, prep (no Godot, no repo edit, no images)
+
+Builder tag: `g20-kerf-prep`. Hard stop 30 minutes after launch (see the addendum). Report and END. Model this on g16's Dent prep: read `C:\Users\kazda\kiro\gtai-art\ghost-n31\dent-beats\state.md` for the format and depth wanted (chain with file:line, beat plan table, jobs, code change, open questions).
+Worktree (read only): `C:\Users\kazda\kiro\gtai-wt\n25-yard`, branch `n31-ghost`. Write ONLY under `C:\Users\kazda\kiro\gtai-art\ghost-n31\kerf-beats\` (state.md, jobs.json, make_jobs.py, refs/).
+
+## Why
+Owner: "Tonnage deployment does not need visualization of placement ... The animation of ghost deployment and effect needs more detailed work - expecting the same issue will be for other ghosts". Tonnage, Ohm and Dent are now one press (`press_mode` "drop" in `project/data/tables/ghost_attacks.json` deploy block; see `GhostAttacks.DeployRow` in `project/features/souls/ghost_attacks.gd`, `tonnage_dump.gd`, `dent_lane.gd`, `ghost_deploy_strike.gd`), with a short charge, a telegraph drawn by the effect, and drawn beats. Kerf (key 3, deploy row `kerf`: range_m 9, snap_m 2, life_ticks 45, cooldown 600) still uses the hold + marker flow and strikes on release: one target (the live hostile nearest the aim in a cone, humans 99 dmg = split kill, robots 4). On main the play measure gives 1 hit per deploy, 24 % of the foes near (relaxed bot fit).
+
+## Do
+1. The chain (code reading): how Kerf's deploy picks its target today (cone half-angle, snap_m, line of sight, file:line), what the marker draws for Kerf (`ghost_deploy_marker.gd`), how the deployed Kerf body is drawn (`ghost_deploy_body.gd` Kerf path, Kerf sheets under `project/features/souls/art/view/p70/kerf_*`, the act cells), what the strike and effects draw (`ghost_deploy_effects.gd` kerf branch, cut line, flare), the kill reaction weapon id and whether `signature_kills.json` `kerf_split` keys on it (`signature_kill_table.gd` `also_weapons`). The gauntlet `--pick-view` uses p70 art.
+2. The one-press rule (recommend one, with the alternative as one data value): at the press, the target = the live hostile nearest the aim inside the cone and range with a clear line (KerfStage.pick or the deploy's own picker), locked at the press; no target: what happens (whiff blink along the aim, or the press is refused with a sound and no cooldown spent: recommend). Wind-up length (recommend 0.2 s = 12 ticks: Kerf is the precise one) and whether the target lock must be visible during it (the effect itself: a thin teal sighting line from Kerf to the target is the ghost's own beam, allowed teal; a ground scorch is world colour).
+3. The beat plan at 32 px/m (P = press, C = the cut tick): arrival (Kerf appears where? beside Rivet or behind the target), wind-up (aim/lock cell, the sighting line growing to the target), cut (blink + beam slash across the target, the cut line, the split kill), aftermath (a scorched cut line on the ground held 2 s + 1 s, Kerf fades). Which shipped cells carry each beat; list missing cells.
+4. Code changes, exact lines (like g16's section 4): a `press_mode` drop branch for kerf in the deploy row loader and `tonnage_dump.gd`/strike, the view (facing the target, pose by beat), the effects record (`KerfDropMarks`, copy `OhmDropMarks`).
+5. Image jobs: at most 4, ground effects only (cut scorch line strip, a molten drip/spark spatter at the cut point; chroma green #00B140; world colours: soot, ink, amber heat for the molten cut; never teal on the ground, never red, never vermilion), each with a reference crop in `refs/` from the shipped Ohm/Tonnage decals. `jobs.json` like `ohm-beats/jobs.json` (read `C:\Users\kazda\kiro\gtai-art\gen.mjs`). Do NOT run gen.mjs.
+6. Which test files pin Kerf's hold flow today (`grep -rln "kerf" project/tests`): list each with the line, so the build call can pin them to hold in the same commit.
+
+## Rules
+No Godot, no repo edit, no commit, no image generation. Write state.md early and keep it current. Report: the state.md path, the 3 most important findings, open questions with your recommendation.
+
+## Added 01:43 (director, launch)
+Launched now; hard stop 30 minutes later. Write state.md early and keep it current.

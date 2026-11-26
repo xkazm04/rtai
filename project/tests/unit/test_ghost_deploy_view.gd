@@ -12,6 +12,8 @@ func before_each() -> void:
 	actions = PlayerActions.shipped(false)
 	stage.pilot = StagePilot.new(actions)
 	stage.pilot.ghosts.forms.selected = OhmStage.GHOST
+	# n31 ghost Ohm drop: the shipped row drops; these tests drive the hold flow.
+	stage.pilot.ghosts.deploy.strike.attacks.deploy[&"ohm"].press_mode = &"hold"
 
 
 func test_rig_and_attack_hosts_share_one_quiet_view_without_changing_the_replay() -> void:
