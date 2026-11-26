@@ -51,9 +51,9 @@ func note(arena: CombatArena, h: Fighter, mind: SquadMind) -> void:
 	_last = h.pos
 	if mind == null:
 		return
-	var gait: Object = mind.agent.get("gait") as Object
-	if gait != null:
-		if int(gait.get("mode")) == 0:
+	var gait: Variant = mind.agent.get("gait")
+	if gait is Object:
+		if (gait as Object).get("mode") == 0:
 			_fight += 1
 		else:
 			_travel += 1
