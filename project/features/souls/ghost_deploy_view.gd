@@ -9,6 +9,7 @@ var camera: CameraRig = null
 var dump_kick: TonnageDumpKick = TonnageDumpKick.shipped()
 var _body: GhostDeployBody = GhostDeployBody.new()
 var _fx: GhostDeployEffects = GhostDeployEffects.new()
+var _sight: KerfSightLine = KerfSightLine.new()
 var _tick: int = -1
 
 
@@ -40,6 +41,8 @@ func _ready() -> void:
 	_fx.stage = stage
 	_fx.body = _body
 	add_child(_fx)
+	_sight.z_index = RenderLayers.z(&"fx")
+	add_child(_sight)
 	process_priority = 23
 
 
@@ -50,6 +53,7 @@ func _process(_delta: float) -> void:
 	_tick = stage.tick
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	if ghost.phase != GhostDeploy.Phase.ACTIVE:
+		_sight.hide()
 		_body.dismiss()
 		_fx.visible = _fx.lingers()
 		_fx.redraw()
@@ -68,5 +72,6 @@ func _process(_delta: float) -> void:
 	elif ghost.form == HaulerStage.GHOST:
 		_fx.z_index = RenderLayers.z(&"actors") - 2
 	_body.show_strike(ghost, age, mini(age + 1, steps))
+	_sight.show_for(ghost, age)
 	_fx.show()
 	_fx.redraw()

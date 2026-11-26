@@ -207,7 +207,8 @@
         "2026-11-25: n31 ghost measure dev tool (dev_loc 40723 -> 40762)",
         "2026-11-25: n31 ghost 12: dev probe ghost_n31_ohm_beats (Ohm drop beat stills, the 64 px/m strip and the D+2 radius measure); dev-only, excluded from release (dev_loc 40762 -> 40962)",
         "2026-11-26: n31 ghost 14: take scene --form/--fit flags (dev only) (dev_loc 40962 -> 40991)",
-        "2026-11-26: n31 ghost 17: dev probe ghost_n31_dent_beats (Dent drop beat stills at 64 px/m, wind-up R-5 and ram R+3); dev-only, excluded from release (dev_loc 40991 -> 41178)"
+        "2026-11-26: n31 ghost 17: dev probe ghost_n31_dent_beats (Dent drop beat stills at 64 px/m, wind-up R-5 and ram R+3); dev-only, excluded from release (dev_loc 40991 -> 41178)",
+        "2026-11-26: n31 ghost 21: dev probe ghost_n31_kerf_beats (copy of g17's Dent probe) for the Kerf drop stills (dev_loc 41178 -> 41387)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -223,7 +224,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ghost_n31": 1418,
+        "project/dev/ghost_n31": 1627,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -250,7 +251,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 41178
+      "total": 41387
     },
     "direct_cmdline_reads": {
       "accepted": [
