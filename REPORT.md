@@ -91,7 +91,7 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   take lost.
 - Lab slow clips with the live hit sector: three calls (02p4 part, 02p5 31 min bounced) and still unreadable.
 - Shared tree: builders' live edits leaked into each other's films (21:52); one builder killed another lane's
-  Godot after a timeout (22:14, apologised in JOURNAL; every brief since prints CommandLine before a kill).
+  Godot after a timeout (22:14; the ghost lane was told at 22:15; every brief since prints CommandLine before a kill).
 - Busy machine: blade_marks.gd mutate baseline took 261 s, the run did not finish.
 
 ## Calls for the owner
