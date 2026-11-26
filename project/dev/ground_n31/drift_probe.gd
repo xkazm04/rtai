@@ -84,6 +84,7 @@ func _write(tick: int, pass_id: String) -> void:
 		"cam": [cam.position.x, cam.position.y],
 		"zoom": [cam.zoom.x, cam.zoom.y],
 		"world_px": [stage.world_px.x, stage.world_px.y],
+		"part_world_px": [PartMaterials.world_px.x, PartMaterials.world_px.y],
 		"canvas_origin": _origin(),
 		"stretch": _stretch(),
 		"rivet_m": [rivet.x, rivet.y],
