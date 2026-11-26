@@ -69,6 +69,37 @@ func test_the_counter_never_enters_the_replay_state() -> void:
 	assert_eq(after.data_array, before.data_array)
 
 
+func test_the_cue_shakes_its_chip_and_fades_out_after_18_frames() -> void:
+	var cue: GhostRefusalCue = GhostRefusalCue.new()
+	cue.notice(0, &"", false)
+	assert_false(cue.active(&"tonnage"), "no refusal, no cue")
+	cue.notice(1, &"tonnage", true)
+	cue.notice(1, &"tonnage", true)
+	assert_ne(cue.offset(&"tonnage"), Vector2.ZERO, "mid-cue the chip is off its spot")
+	assert_eq(cue.offset(&"kerf"), Vector2.ZERO, "only the refused chip shakes")
+	assert_gt(cue.rim(&"tonnage").a, 0.9)
+	assert_ne(cue.arc(&"tonnage", Color.BLACK), Color.BLACK, "a cooldown cue flashes the arc")
+	for f: int in GhostRefusalCue.FRAMES:
+		cue.notice(1, &"tonnage", true)
+	assert_false(cue.active(&"tonnage"))
+	assert_eq(cue.offset(&"tonnage"), Vector2.ZERO)
+	assert_eq(cue.rim(&"tonnage").a, 0.0)
+
+
+func test_a_new_refusal_restarts_the_cue_on_its_form() -> void:
+	var cue: GhostRefusalCue = GhostRefusalCue.new()
+	cue.notice(1, &"tonnage", true)
+	for f: int in 10:
+		cue.notice(1, &"tonnage", true)
+	assert_eq(cue.frame, 10)
+	cue.notice(2, &"kerf", false)
+	assert_eq(cue.frame, 0)
+	assert_true(cue.active(&"kerf"))
+	assert_false(cue.active(&"tonnage"))
+	cue.notice(2, &"kerf", false)
+	assert_eq(cue.arc(&"kerf", Color.BLACK), Color.BLACK, "no flash off a cooldown refusal")
+
+
 ## n31 ghost 26 step 1b: a Kerf drop whose lock dies in the wind-up and finds nobody to relock.
 func _kerf_whiff(whiff_ticks: int, kill: bool) -> GhostAttacks.DeployRow:
 	stage.arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), [], null, 0.45)
