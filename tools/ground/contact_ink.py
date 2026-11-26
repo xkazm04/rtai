@@ -76,6 +76,56 @@ def measure(img, x, y):
             "edge_step_pct": round(100 * step, 2)}
 
 
+def free_mask(img, pad=6):
+    """True where a pixel is floor or shadow: not sprite (brown/orange/skin/blue/red: any saturated or bright pixel) and not within pad px of one."""
+    c = img.astype(int)
+    sat = c.max(axis=2) - c.min(axis=2)
+    bad = (sat > 28) | (lum(img) > 120)
+    return ~ndimage.binary_dilation(bad, iterations=pad)
+
+
+def measure_free(img, cx=961, cy=546, hw=20, hh=14):
+    """Same rule for every take: the darkest 6x3 box in the window around the sole point that touches no sprite
+    pixel (so it is shadow on floor, not outline), against the median of the free boxes 36-44 px to each side on
+    that row; the edge step is the largest smoothed luminance gradient (per px) in the free part of the window, as a
+    share of that floor. None if no free box is found (a body, a blood decal or the boots cover the window)."""
+    free = free_mask(img)
+    L = lum(img)
+    best = None
+    for y in range(cy - hh, cy + hh + 1):
+        for x in range(cx - hw, cx + hw + 1):
+            if free[y - 1:y + 2, x - 3:x + 3].all():
+                v = box(L, x, y)
+                if best is None or v < best[0]:
+                    best = (v, x, y)
+    if best is None:
+        return None
+    core, x, y = best
+    side = [box(L, x + d, y) for d in range(-44, -35, 2) + list(range(36, 45, 2))
+            if free[y - 1:y + 2, x + d - 3:x + d + 3].all()] if False else []
+    for d in list(range(-44, -35, 2)) + list(range(36, 45, 2)):
+        if free[y - 1:y + 2, x + d - 3:x + d + 3].all():
+            side.append(box(L, x + d, y))
+    if not side:
+        return None
+    floor = float(np.median(side))
+    G = ndimage.gaussian_filter(L, 1.5)
+    gy, gx = np.gradient(G)
+    m = free[cy - hh - 6:cy + hh + 7, cx - hw - 6:cx + hw + 7]
+    g = np.hypot(gx, gy)[cy - hh - 6:cy + hh + 7, cx - hw - 6:cx + hw + 7][m]
+    prof = []  # the skirt along the row, right of the core: the mean of the free pixels in rows y-1..y+1 per column
+    for xx in range(x, min(x + 48, 1900)):
+        col = free[y - 1:y + 2, xx]
+        prof.append(float(L[y - 1:y + 2, xx][col].mean()) if col.all() else np.nan)
+    pr = np.array(prof)
+    ok = ~np.isnan(pr)
+    pr = np.interp(np.arange(len(pr)), np.arange(len(pr))[ok], pr[ok]) if ok.sum() > 8 else pr
+    pr = ndimage.uniform_filter1d(pr, 5)
+    skirt = round(100 * float(np.abs(np.diff(pr)).max()) / max(floor, 1.0), 2) if ok.sum() > 8 else None
+    return {"x": x, "y": y, "skirt_step_pct": skirt, "core": round(core, 1), "floor": round(floor, 1), "dark_pct": round(100 * (1 - core / floor), 1),
+            "edge_step_pct": round(100 * float(g.max()) / max(floor, 1.0), 2) if g.size else None}
+
+
 def main(argv):
     mp4 = arg(argv, "mp4")
     ticks = [int(t) for t in arg(argv, "ticks").split(",")]
@@ -83,6 +133,9 @@ def main(argv):
     out = []
     for i, t in enumerate(ticks):
         img = frame(mp4, t)
+        if "--free" in argv:
+            out.append({"tick": t, **(measure_free(img) or {"disqualified": "no sprite-free box in the window"})})
+            continue
         if ats:
             x, y = [int(v) for v in ats[i].split("=")[1].split(",")]
         else:
