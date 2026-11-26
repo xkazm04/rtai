@@ -52,6 +52,8 @@ Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\fram
 - Session 1: a measure-on-main builder shared the tree with an edit builder (numbers had to be re-taken in a temp worktree), ~15 min.
 - Session 1: our scenario run killed by another lane's builder (PID mix-up), one re-run.
 - Session 2: the lane Godot lock held ~30 min by mutate runs, delaying the art builder's first still, ~30 min.
+- Session 8: a builder's draw-order fix (rim over the chip face) looked right in code and wrong on screen (olive tint); caught on the strip, reverted, ~8 min.
+- No `mem-budget: waiting` in any session; no BLOCKED images (21 of 60 used).
 
 ## Calls for the owner
 - Where Tonnage drops: aim point (shipped) vs on Rivet: at 5.5 m in play the aim point hit 3.86 mean vs 1.17 on Rivet (25 of 54 Rivet drops hit nobody). One data value (`drop_at`).
@@ -65,6 +67,8 @@ Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\fram
 
 ## Merge notes
 - `NEED melee`: the gauntlet street attaches no `BrutalityHook`, so signature kills (incl. the Tonnage crush from the deploy) do not draw in gauntlet play; `NEED melee`: apply `evidence/n31/ghost/ohm_deploy_kills.patch` (`also_weapons: ["deploy_ohm"]` on the `ohm_shock` row) so Ohm deploy kills play the shock death; `NEED melee`: apply `evidence/n31/ghost/kerf_deploy_kills.patch` (`also_weapons: ["deploy_kerf"]` on `kerf_split`).
+- Shared append-only files touched: `docs/decisions.md` (15 commits of one line each, all `[2026-11-2x] DECISION ghost n31 ...`), `tools/debt/baseline.json` (14 commits through the debt tool, new dev probes under `project/dev/ghost_n31/` accepted as regressions), `steam/ai-provenance/2026-11.jsonl` (21 lines: the generated ghost cells). No `KNOWN_FLAGS` change in `launch_args.gd` (the probes declare their own). On a conflict in the baseline: `node tools/debt/merge_baseline.mjs`, then `--update`.
+- The diff from `ba8e470b0` is 247 files; the large line counts are measurement JSON under `evidence/n31/ghost/` and the cluster shapes `project/dev/ghost_n31/shapes.json`.
 - Digests: scenarios 68/68 at 6.5 m, no digest moved (JOURNAL 23:04); again 68/0 after Ohm, Dent and Kerf (no digest moved).
 
 ## Next steps
@@ -76,11 +80,11 @@ Films and stills for the owner: `C:\Users\kazda\kiro\gtai-masters\n31\ghost\fram
 - Item 5: effect card icons (NEED for the pick card owner), heat parts amber.
 
 ## Builder ledger
-All Claude sub-agents (sonnet or opus) from the director's session, one brief each under `evidence/briefs/n31-ghost-*.md`. 34 calls, 758 minutes, 33 accepted, 1 partly bounced (g27: its tests kept, its rim-over-face draw order reverted by g29 after the strip showed the avatar tinted olive), 0 abandoned. IMAGES 21/60.
+All Claude sub-agents (sonnet or opus) from the director's session, one brief each under `evidence/briefs/n31-ghost-*.md`. 35 calls, 762 minutes, 34 accepted, 1 partly bounced (g27: its tests kept, its rim-over-face draw order reverted by g29 after the strip showed the avatar tinted olive), 0 abandoned. IMAGES 21/60.
 - Tonnage: g01-measure 55, g02-drop 60, g03a-prep 6, g03-beats 64, g04-take 23, g05-keys-test 1, g06-verify 44, g07-kills 32, g08-measure 20, g09-kick 22.
 - Ohm: g10-ohm 26, g11-ohm-prep 5, g12-ohm-beats 30, g13-ohm-play 28, g14-ohm-take 36.
 - Dent: g15-dent 18, g16-dent-prep 4, g17-dent-view 27, g18a-pack 3, g18b-dent-marks 28, g19-dent-take 25, g25-dent-arrive 10.
 - Kerf: g20-kerf-prep 4, g21-kerf-drop 28, g22-kerf-marks 16, g23-kerf-measure 5, g23-kerf-take 30, g24-kerf-relock 16 + 34.
 - Refusal cue: g26-refusal-cue 24, g26b-refusal-strip 9, g27-cue-tests 14 (partly bounced), g29-rim-revert 3.
-- Re-film: g28-dent-refilm 8.
+- Re-film: g28-dent-refilm 8, g30-ohm-halfspeed 4 (Ohm 64 px/m half-speed 10.65 -> 18.65 s at the same deploy ticks).
 - What I would brief differently: the 60-minute first calls (g01, g02, g03) were the costly ones; 15-30 minute calls with one checklist point were the best value, as n29 said. A measuring builder needs its own temp worktree from the start when another builder edits the measured code (g01). Give mutate its own slot, never beside a stills builder (g06 held the lock 30 min). Check the allowlist covers every test that pins a changed default before launch (g26 shipped 600 instead of 30 for that reason and needed a message).

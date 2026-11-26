@@ -279,3 +279,10 @@ NEXT (session 8, written 04:53) - the 04:25 NEXT stands, with these changes:
 - 05:32 MILESTONE final gate PASS on da97ec3be (started 05:15, 17 min): lint 19 checks, unit 4478/0/2 skipped, scenarios 68, parity bit-exact + mutation caught at 629, selftest, release-compile 1018/0; `build/gate/da97ec3be096/gate.json`. No FRICTION mem-budget. Snapshot worktree (mine) removed. From here no product commits (evidence and JOURNAL/REPORT only), so the gate stays the final one.
 - 05:34 masters clip check (ffprobe): all frames.json clips 15-28 s except `take-ohm-head-64ppm-halfspeed.mp4` 10.65 s (g14's closeup held 320 frames).
 - 05:36 BUILDER g30-ohm-halfspeed launched (opus, brief `n31-ghost-30-ohm-halfspeed.md`: re-render the Ohm 64 px/m closeup at HEAD with 560 frames, half speed ~18.7 s; evidence only), hard stop 06:08.
+- 05:37 BUILDER g30-ohm-halfspeed 4 accepted: commit d1e999b67 (take-ohm.md section). HEAD closeup at 168139f1e, seed 6, ticks identical to g14 (press 512, discharge 530, 7 hits / 7 kills); masters `take-ohm-head-64ppm-halfspeed.mp4` 18.65 s (old 10.65 s in `extra/`). Director look at the discharge frame (f90): amber crackle ring, teal bolts forking to a hit ring on each cop, cops falling. ACCEPT.
+- 05:38 Session 8 ledger: BUILDER g27-cue-tests 14 bounced (partly), g28-dent-refilm 8 accepted, g29-rim-revert 3 accepted, g30-ohm-halfspeed 4 accepted. MUTATE ghost_refusal_cue.gd 91.7 %. IMAGES 21/60. No BLOCKED, no FRICTION mem-budget. All frames.json clips now 15-28 s.
+
+NEXT (session 9, report session, written 05:38):
+1. No product commits (the gate PASS on da97ec3be is final; everything after it is evidence/JOURNAL/REPORT). If something under `project/` must change, a full re-gate is needed (17 min) and must start before 07:10.
+2. REPORT: read it top to bottom once; it is complete (gate line, What works 1-5, What does not, blocked, Calls, Merge notes, Next steps, ledger). Run `node tools/evidence/cites.mjs REPORT.md` and commit `-- REPORT.md JOURNAL.md` by 07:40.
+3. Optional evidence only: none needed. Do not start a builder after 07:00.
