@@ -5,8 +5,10 @@
         384x320 transparent strip (created when missing), as the spectral sheets are packed.
   decal <job.png> <out.png> <size>             key the green, crop to the art, fit it in a
         <size> px square (centred, transparent) and print its opaque extent.
+  strip <job.png> <out.png> [w h]              key the green, crop to the art, fit it (aspect kept,
+        centred, transparent pad) in a w x h strip (default 1024x320); prints the art extent.
 
-Run: py -3 -I tools/ghost/drop_pack.py cell|decal ...
+Run: py -3 -I tools/ghost/drop_pack.py cell|decal|strip ...
 """
 
 import sys
@@ -75,12 +77,25 @@ def decal(job, out, size):
     print(f"decal {Path(out).name}: art {art.width}x{art.height} in {size}x{size}")
 
 
+def strip(job, out, width=1024, height=320):
+    art = despill(keyed_image(job))
+    art = art.crop(art.getbbox())
+    k = min(width / art.width, height / art.height)
+    art = art.resize((max(1, round(art.width * k)), max(1, round(art.height * k))), Image.LANCZOS)
+    sheet = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    sheet.paste(art, ((width - art.width) // 2, (height - art.height) // 2), art)
+    sheet.save(out)
+    print(f"strip {Path(out).name}: art {art.width}x{art.height} in {width}x{height}")
+
+
 def main():
     mode, args = sys.argv[1], sys.argv[2:]
     if mode == "cell":
         cell(args[0], args[1], int(args[2]), int(args[3]))
     elif mode == "decal":
         decal(args[0], args[1], int(args[2]))
+    elif mode == "strip":
+        strip(args[0], args[1], *(int(a) for a in args[2:4]))
     else:
         raise SystemExit(__doc__)
 
