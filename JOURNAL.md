@@ -153,3 +153,8 @@ NEXT: none for this lane tonight. Director: merge notes in REPORT (need_gauntlet
 ## Session 10 (07:30, STABILIZE)
 - 07:31 re-checked: tree clean; since gate commit 7e3ed7a46 only evidence/docs/JOURNAL/REPORT changed, so `gate: PASS; build/gate/7e3ed7a460f0/gate.json` still covers HEAD's product files. cites 18/18 ok. Other lanes: no new NEED foes. No builder, no lane Godot.
 NEXT: none tonight. REPORT final; Director merge notes in REPORT.
+
+## Session 11 (07:40, REPORT)
+- 07:41 checked: tree clean; REPORT sections all present (header, item 4 paragraph, What works, What does not, Blocked, Calls, Merge notes, Next steps, Builder ledger); `node tools/evidence/cites.mjs REPORT.md` 18 paths, 18 ok; `build/gate/7e3ed7a460f0/gate.json` present; no project/ or tools/ change since gate commit 7e3ed7a46; masters frames.json 11 entries, every file exists. No builder, no lane Godot.
+- DECISION foes: REPORT unchanged; it stands as written at 06:08.
+NEXT: none tonight. Director: merge notes in REPORT (need_gauntlet_flags.patch for `--foe-fire=hot`, need_gun_down.patch, prologue_moves.patch).
