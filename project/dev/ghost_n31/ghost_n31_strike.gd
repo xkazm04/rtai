@@ -94,13 +94,13 @@ func _count_near(stage: CollectCallStage, ghost: GhostDeploy) -> int:
 	return n
 
 
-## Kerf only: why the cut found nobody (KerfDrop.broke), who killed a dead lock, how far it was.
+## Kerf only: why the lock broke (KerfDrop.broke), relocked or not, who killed it, how far.
 func _reason(stage: CollectCallStage, ghost: GhostDeploy) -> Dictionary:
 	var lock: KerfDrop = ghost.dump.kerf
 	if ghost.form != KerfStage.GHOST or lock.broke == &"":
 		return {}
-	var out: Dictionary = {"whiff_reason": lock.broke}
-	var foe: Fighter = lock.target
+	var out: Dictionary = {"whiff_reason": lock.broke, "relocked": lock.relocked}
+	var foe: Fighter = lock.lost
 	out.dist_m = stage.arena.rivet.pos.distance_to(foe.pos)
 	if deaths.has(foe.id):
 		out.killed_by = deaths[foe.id].weapon

@@ -32,6 +32,9 @@ class DeployRow:
 	## Kerf's drop (n31 ghost 21): a press with no target, &"refuse" (nothing, no cooldown) or
 	## &"whiff" (he deploys and blinks along the aim, cooldown spent).
 	var no_target: StringName = &"refuse"
+	## Kerf's drop (n31 ghost 24b): a lock broken at the cut, &"nearest" re-picks with the
+	## deploy's picker from Rivet along the press's aim, &"none" whiffs.
+	var relock: StringName = &"none"
 
 	func drops() -> bool:
 		return press_mode == &"drop"
@@ -91,6 +94,8 @@ static func _kerf(t: DataTable, row: Dictionary, def: DeployRow) -> void:
 	def.press_mode = StringName(t.text(row, "press_mode"))
 	def.charge_ticks = roundi(t.num(row, "charge_s") * SimClock.TICK_RATE)
 	def.no_target = StringName(t.text(row, "no_target"))
+	if row.has("relock"):
+		def.relock = StringName(t.text(row, "relock"))
 
 
 ## The drop-mode fields Tonnage and Ohm share (n31): press mode, where, charge, circle.

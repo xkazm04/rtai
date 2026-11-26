@@ -61,6 +61,7 @@ func test_shipped_row_is_a_quick_drop_that_refuses_without_a_target() -> void:
 	assert_eq(shipped.press_mode, &"drop", "n31: one press, a wind-up, the cut")
 	assert_eq(shipped.charge_ticks, 12, "0.2 s: Kerf is the quick one")
 	assert_eq(shipped.no_target, &"refuse")
+	assert_eq(shipped.relock, &"nearest", "n31 ghost 24b: a broken lock re-picks")
 
 
 func test_the_locked_target_is_cut_on_the_last_tick_and_not_before() -> void:
@@ -109,14 +110,16 @@ func test_a_press_with_no_target_is_refused_without_cooldown() -> void:
 	assert_eq(out_of_range.hp, out_of_range.max_hp)
 
 
-func test_a_target_that_dies_in_the_wind_up_is_a_whiff_with_cooldown_spent() -> void:
+func test_relock_none_whiffs_a_target_that_dies_in_the_wind_up_with_cooldown_spent() -> void:
+	row.relock = &"none"
 	var foe: Fighter = _spawn(Vector2(6, 0))
 	var bystander: Fighter = _spawn(Vector2(6, 1.5))
 	_press_and_wind_up()
 	foe.hp = 0.0
 	_drive()
-	assert_eq(bystander.hp, bystander.max_hp, "no fresh pick")
+	assert_eq(bystander.hp, bystander.max_hp, "relock none: no fresh pick")
 	assert_eq(ghost.dump.kerf.broke, &"dead")
+	assert_false(ghost.dump.kerf.relocked)
 	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
 	var dash: float = ghost.strike.attacks.num(&"kerf", &"dash_m")
 	assert_almost_eq(ghost.spot, ghost.origin + ghost.facing * dash, Vector2.ONE * 0.0001)
@@ -138,3 +141,60 @@ func test_whiff_mode_deploys_without_a_target_and_spends_the_cooldown() -> void:
 	assert_eq(ghost.phase, GhostDeploy.Phase.ACTIVE)
 	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks)
 	assert_null(ghost.dump.kerf.target)
+
+
+func test_a_target_killed_in_the_wind_up_hands_the_cut_to_a_second_foe_in_the_cone() -> void:
+	var foe: Fighter = _spawn(Vector2(6, 0))
+	var second: Fighter = _spawn(Vector2(6, 1.5))
+	_press_and_wind_up()
+	foe.hp = 0.0
+	_drive()
+	assert_eq(second.max_hp - second.hp, _cut(), "relock nearest: the second is cut on C")
+	assert_eq(ghost.dump.kerf.broke, &"dead", "the first break is kept")
+	assert_true(ghost.dump.kerf.relocked)
+	assert_eq(ghost.dump.kerf.target, second)
+	assert_eq(ghost.dump.kerf.lost, foe)
+	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
+
+
+func test_a_relock_that_finds_nobody_whiffs_with_cooldown_spent() -> void:
+	var foe: Fighter = _spawn(Vector2(6, 0))
+	_press_and_wind_up()
+	foe.hp = 0.0
+	_drive()
+	assert_eq(ghost.dump.kerf.broke, &"dead")
+	assert_false(ghost.dump.kerf.relocked, "nobody else: the cut whiffs")
+	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
+	var dash: float = ghost.strike.attacks.num(&"kerf", &"dash_m")
+	assert_almost_eq(ghost.spot, ghost.origin + ghost.facing * dash, Vector2.ONE * 0.0001)
+
+
+func test_a_new_press_clears_the_last_broken_lock() -> void:
+	var foe: Fighter = _spawn(Vector2(6, 0))
+	_press_and_wind_up()
+	foe.hp = 0.0
+	_drive()
+	var drop: KerfDrop = ghost.dump.kerf
+	assert_eq(drop.broke, &"dead")
+	assert_false(drop.lock(stage, ghost), "nobody alive: refused")
+	assert_null(drop.target, "the old target is not kept")
+	assert_eq(drop.broke, &"", "nor the old break")
+	assert_false(drop.armed)
+
+
+func test_a_target_exactly_at_range_and_slack_stays_locked() -> void:
+	row.range_m = 4.0
+	var foe: Fighter = _spawn(Vector2(4, 0))
+	_drive(key)
+	var drop: KerfDrop = ghost.dump.kerf
+	foe.pos = Vector2(row.range_m + KerfDrop.SLACK_M, 0)
+	assert_eq(drop.cut_target(stage, ghost), foe, "range_m + SLACK_M is still in reach")
+	assert_eq(drop.broke, &"")
+
+
+func test_kerf_arrives_square_to_a_snapped_target_off_the_aim_line() -> void:
+	var foe: Fighter = _spawn(Vector2(6, 1.5))  # within snap_m of the aim point (6, 0)
+	_drive(key)
+	assert_eq(ghost.dump.kerf.target, foe)
+	var side: Vector2 = Vector2.ZERO.direction_to(foe.pos).orthogonal() * arena.rivet.radius_m
+	assert_almost_eq(ghost.origin, side, Vector2.ONE * 0.0001, "side of Rivet square to the foe")

@@ -214,6 +214,13 @@
               "exclusiveMinimum": 0,
               "type": "number"
             },
+            "relock": {
+              "enum": [
+                "nearest",
+                "none"
+              ],
+              "type": "string"
+            },
             "snap_m": {
               "exclusiveMinimum": 0,
               "type": "number"
