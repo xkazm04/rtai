@@ -192,3 +192,10 @@ NEXT (session 7, starts ~04:46):
 - 05:22 BUILDER 06b 43 accepted-partial: 2c6cf0dd3 (10 pinning tests: gun_fx_wound early-outs/robot-flesh counts/reuse; shield_sparks blocked blood throw, wounded vs kill_landed, zero-dir fallback, robot vs slab counts; 17/17 pass), 9fa19e7cc (re-mutate killed by its 560 s cap: no new score). Director: full lint 19/19 pass at 05:21.
 - 05:23 Director runs the full unit suite under the lane lock (early gate check). No builder running; no new builder this session (< 40 min left, product commits close 06:00).
 - 05:26 Director full unit at 05:2x HEAD: `unit-tests: 4434 passed, 0 failed, 2 skipped` (exit 0). Scenarios started 05:27 under the lane lock (build/n31/dir7/scen.out).
+- 05:34 Director scenarios at HEAD: `scenario-tests: 68 passed (headless)` (exit 0). With unit 4434/0 and lint 19/19, HEAD is gate-ready. Product work is closed for the night (last product commit 9fa19e7cc / 9110841ff before 05:20).
+- 05:35 Session 7 end. No builder running. Lane lock free. IMAGES 0/60.
+
+NEXT (session 8, ~06:00):
+1. No new product work. Final gate in the melee slot (ground's gate start + 20 min; ground planned 06:15 -> ~06:35, check ../n23-controls/JOURNAL.md): `export APPDATA=C:/Users/kazda/kiro/gtai-n31/appdata/melee`, take the lane lock, `node tools/gate/run.mjs --rev=HEAD` in the background, free the lock after. Quote its result line + the gate.json path in REPORT (add a `## Gate` line under the header). If it fails: read the triage, fix only by a short sonnet call before 07:30 freeze, or record it under What does not.
+2. REPORT: add the gate line; re-run `node tools/evidence/cites.mjs REPORT.md`; commit REPORT + JOURNAL. Masters frames.json has 18 entries after 04g's two stills (bar 8-15): drop slow_katana + slow_plasma_sword entries (and files) and one impact take if still > 15 - one node read-modify-write, then check every entry's file exists.
+3. Clean Temp leftovers this lane created (gtai-mutate-06b already deleted by 06b; check for other gtai-mutate-*/gtai-gate-* of ours only after the gate ends).
