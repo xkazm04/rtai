@@ -246,7 +246,8 @@
         "2026-11-26: n31 ghost 22: the Kerf beats probe logs the target's world position for the scorch measure (+4 dev lines) (dev_loc 41387 -> 41391)",
         "2026-11-26: n31 ghost 24: Kerf cause log in the dev measure (kill weapon per victim, broke reason) (dev_loc 41391 -> 41423)",
         "2026-11-26: n31 ghost 24b: the Kerf measure logs why a relock found nobody (dev only) (dev_loc 41423 -> 41447)",
-        "2026-11-26: ghost_n31_refusal probe for n31 ghost (dev_loc 41447 -> 41526)"
+        "2026-11-26: ghost_n31_refusal probe for n31 ghost (dev_loc 41447 -> 41526)",
+        "2026-11-26: n31 merge: foes' need_gun_down.patch in arena_rigs.gd (+2), gauntlet.gd accepts the n31 flags (+13) (dev_loc 45851 -> 45864)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -260,7 +261,7 @@
         "project/dev/enemy_ai": 2285,
         "project/dev/foes_n31": 1035,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 2592,
+        "project/dev/gauntlet": 2605,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
         "project/dev/ghost_n31": 1766,
@@ -292,7 +293,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 45851
+      "total": 45864
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -496,14 +497,15 @@
         "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)",
         "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_near_cap 13 -> 13)",
         "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_near_cap 13 -> 13)",
-        "2026-11-23: --skip-prologue for n25 path (files_near_cap 13 -> 13)"
+        "2026-11-23: --skip-prologue for n25 path (files_near_cap 13 -> 13)",
+        "2026-11-26: n31 merge: foes' need_gun_down.patch in arena_rigs.gd (+2), gauntlet.gd accepts the n31 flags (+13) (files_near_cap 13 -> 13)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 270,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 290,
+        "project/features/arena/arena_rigs.gd": 292,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/kills/kill_view.gd": 286,
@@ -593,7 +595,8 @@
         "2026-11-25: --melee-sweep for n31 melee (files_past_soft_cap 69 -> 70)",
         "2026-11-25: --kill-feed for n31 melee (files_past_soft_cap 70 -> 70)",
         "2026-11-26: n31 merge: launch_args KNOWN_FLAGS of foes (--foe-moves, --foe-fire) and melee (--melee-sweep, --kill-feed) combine (files_past_soft_cap 73 -> 73)",
-        "2026-11-25: n31 ghost measure dev tool (files_past_soft_cap 69 -> 70)"
+        "2026-11-25: n31 ghost measure dev tool (files_past_soft_cap 69 -> 70)",
+        "2026-11-26: n31 merge: foes' need_gun_down.patch in arena_rigs.gd (+2), gauntlet.gd accepts the n31 flags (+13) (files_past_soft_cap 74 -> 75)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -611,6 +614,7 @@
         "project/dev/bench/node_spans.gd": 263,
         "project/dev/cast/cast_size_beside.gd": 204,
         "project/dev/enemy_ai/enemy_rig_fight.gd": 243,
+        "project/dev/gauntlet/gauntlet.gd": 213,
         "project/dev/ghost-powers/ghost_reel.gd": 209,
         "project/dev/gunplay/pistol_fight.gd": 255,
         "project/dev/human_react/react_board.gd": 201,
@@ -622,7 +626,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 290,
+        "project/features/arena/arena_rigs.gd": 292,
         "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
@@ -671,7 +675,7 @@
         "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 74
+      "total": 75
     },
     "lane_named_dev_dirs": {
       "accepted": [

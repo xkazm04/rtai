@@ -9,6 +9,11 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--result",
 	"--controls",
 	"--pick-view",
+	"--foe-fire",
+	"--foe-moves",
+	"--gore",
+	"--kill-feed",
+	"--melee-sweep",
 	"--bot-salt",
 	"--pick-filter",
 	"--wave-timeout"
@@ -182,6 +187,14 @@ func _invalid_arg(args: ArenaArgs) -> String:
 				valid = s in ["random", "greedy"]
 			"--controls":
 				valid = s in ["legacy", "wheel"]
+			"--foe-fire":
+				valid = s in ["hot"]
+			"--foe-moves":
+				valid = s in ["legacy", "split"]
+			"--gore":
+				valid = s in ["full", "reduced"]
+			"--kill-feed", "--melee-sweep":
+				valid = s in ["", "on", "off"]
 			"--result":
 				valid = s.is_absolute_path()
 		if not valid:

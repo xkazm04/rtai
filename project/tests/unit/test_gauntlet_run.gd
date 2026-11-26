@@ -12,6 +12,11 @@ func test_entry_validates_the_launch_contract() -> void:
 		"--wave-timeout=12",
 		"--pick=random",
 		"--controls=wheel",
+		"--foe-fire=hot",
+		"--foe-moves=legacy",
+		"--gore=reduced",
+		"--kill-feed=off",
+		"--melee-sweep=off",
 		"--result=C:/temp/run.json",
 	]
 	assert_eq(entry._invalid_arg(ArenaArgs.parse(good)), "")
@@ -23,6 +28,8 @@ func test_entry_validates_the_launch_contract() -> void:
 		"--wave-timeout=0",
 		"--wave-timeout=banana",
 		"--controls=x",
+		"--foe-fire=cold",
+		"--kill-feed=maybe",
 		"--result=relative.json",
 		"--unused=yes"
 	]:

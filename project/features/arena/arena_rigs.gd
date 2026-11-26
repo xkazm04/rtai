@@ -200,6 +200,8 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	if armed:  # the gun out and aimed along the facing (Rivet's pistol, rifles)
 		f.flags[i] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
 		f.aim[i] = at + who.facing * 4.0 * SimConst.PX_PER_M
+		if stage != null and FoeGaitDrive.gun_down(stage.arena, who):
+			f.flags[i] = RigFeed.Flag.GUN_OUT  # n31 foes: a TRAVEL run carries the gun low
 	var before: Vector2i = _fire_seen.get(who.id, mark)
 	var shot: bool = fired(before, mark)
 	_fire_seen[who.id] = mark

@@ -24,11 +24,12 @@ const RAISED_LINE_TICKS: Dictionary[int, int] = {7: 11717, 3: 11210, 11: 10031, 
 ## re-pinned on the n31 merge (melee sweep on + ground's yard footprints).
 const COVER_SEED_7: String = "2285282b2739e400e99967142b2c2be6bb908fad224f1df965596879e300efa1"
 const LINE_FIRE_SEED_7: String = "30fca0d8671cede4c9babb875db20e9b8c4b71076b0a80ccc097a52307c5ab0a"
-## arched_line since n31-19: its conveyor boxes on the drawn machines' base, 12 solid arch supports.
+## arched_line since n31-19: its conveyor boxes on the drawn machines' base, 12 solid arch supports;
+## re-measured on the n31 merge (those footprints + the swept melee together).
 const ARCHED_LINE_TICKS: Dictionary[int, int] = {
-	7: 17712, 3: 10765, 11: 12611, 21: 10199, 42: 11758
+	7: 11552, 3: 10051, 11: 13383, 21: 12466, 42: 10451
 }
-const ARCHED_SEED_7: String = "eb040b06699ea72aa14f0b0283f26e6f6a46ae33faf607da89f8244086ca9068"
+const ARCHED_SEED_7: String = "b4a113db5829b7416312d6f43164b682a3a5701816c5b695f98efa7f7684dedf"
 
 
 func run(tree: SceneTree) -> String:
