@@ -436,7 +436,7 @@
     "max_shooters_share": 0.75,
     "own_weapon_damage": {
       "cannon": 8,
-      "pistol": 2,
+      "pistol": 1.5,
       "rifle": 1.5
     },
     "own_weapons": true,
