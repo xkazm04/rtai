@@ -150,3 +150,79 @@ Notes (b4c):
   spot that moves with Rivet. Recorded in `arena-squad.json`, not judged.
 - Gait column re-run from `--rev=f1dfc7492` (e) and levers 4 / share 0.5 / cover_bias not run (time).
 - Checks at lever 5 (0fbe651eb) + the flank counter: `node tools/tests/run_scenarios.mjs` 68 passed; `node tools/tests/run_unit.mjs` 4391 passed, 0 failed, 2 skipped. Mutate not run (time).
+
+## b4f: own-gun window, share 0.5 (kept), lever 4 (measured, not kept), final
+
+Columns: lever1 = 8ce3eb779, lever5 = 0fbe651eb (both live tree holding exactly that setting, probe on the shared
+assault-rifle window); lever5-ownwin = 1789c3b37 (game code as 0fbe651eb, probe judges own-gun foes on their own
+gun's window, b4e d6bacc8ab); share05 = scratch a59258bd4 (1789c3b37 + `max_shooters_share` 0.5, the exact tree of
+9b3730e36); share05+lever4 = scratch b43025906 (826d1898c + a token-less ranged foe's strafe ring `attack_m - 1`,
+melee unchanged; not on the branch); final = 9b3730e36 (`--rev`, novice + average). The scratch commits are
+`git commit-tree` objects for `--rev` only (no branch moved). Old-rev check: the probe at `--rev=ba8e470b0`
+compiles and its average seed 1 run file is byte-identical to `waiting-main/runs/average-1.json`.
+
+### average
+
+| metric | main | gait | lever1 | lever5 | lever5-ownwin | share05 | share05+lever4 | final |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| react in range p50 / p90 s | 1.05 / 6.15 | 1.13 / 6.32 | 0.75 / 4.13 | 0.72 / 3.57 | 0.72 / 3.57 | 0.68 / 2.58 | 0.72 / 2.6 | 0.68 / 2.58 |
+| react any distance p50 / p90 s | 3.37 / 8.72 | 3.13 / 9.07 | 2.13 / 6.5 | 1.95 / 6.37 | 1.95 / 6.37 | 1.67 / 5.47 | 1.7 / 5.47 | 1.67 / 5.47 |
+| idle share (engaged rule, in range) | 66 % | 70 % | 60 % | 69 % | 60 % | 55 % | 54 % | 55 % |
+| idle strict (any distance / in range) | 89 % / 86 % | 92 % / 90 % | 88 % / 85 % | 92 % / 90 % | 92 % / 90 % | 92 % / 90 % | 91 % / 90 % | 92 % / 90 % |
+| pressing share | 69 % | 62 % | 65 % | 66 % | 71 % | 75 % | 76 % | 75 % |
+| enemies firing / s (ranged alive) | 1.02 (6.4) | 0.66 (6.3) | 0.94 (6.4) | 0.65 (6.7) | 0.65 (6.7) | 0.83 (6.6) | 0.76 (6.4) | 0.83 (6.6) |
+| never fired / ranged foes | 173 / 569 | 308 / 570 | 194 / 554 | 219 / 509 | 219 / 509 | 160 / 499 | 174 / 517 | 160 / 499 |
+| token share | 25 % | 26 % | 42 % | 39 % | 39 % | 47 % | 47 % | 47 % |
+| damage taken w1 mean | 12.5 | 6 | 8.2 | 11.7 | 11.7 | 11.7 | 12.9 | 11.7 |
+| damage taken w2 mean | 10.6 | 4 | 8.3 | 7.5 | 7.5 | 13.8 | 9.3 | 13.8 |
+| damage taken w3 mean | 22.6 | 15.3 | 31.7 | 27.9 | 27.9 | 29.6 | 24.1 | 29.6 |
+| damage taken w4 mean | 17.2 | 13.7 | 29.2 | 7.9 | 7.9 | 16.2 | 24.4 | 16.2 |
+| damage taken w1-4 sum | 62.9 | 39 | 77.4 | 55 | 55 | 71.3 | 70.7 | 71.3 |
+| deaths, all waves incl. 5 (runs) / waves 6, 7 reached | 5 (10) / 6, 6 | 4 (10) / 6, 6 | 7 (10) / 6, 5 | 8 (10) / 4, 3 | 8 (10) / 4, 3 | 7 (10) / 3, 3 | 7 (10) / 4, 3 | 7 (10) / 3, 3 |
+
+### novice
+
+| metric | main | gait | lever1 | lever5 | lever5-ownwin | share05 | share05+lever4 | final |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| react in range p50 / p90 s | 1.32 / 5.6 | 0.75 / 3.38 | - | - | - | - | - | 0.67 / 2.07 |
+| react any distance p50 / p90 s | 3.58 / 8.45 | 2.08 / 6.8 | - | - | - | - | - | 1.75 / 5.15 |
+| idle share (engaged rule, in range) | 71 % | 61 % | - | - | - | - | - | 58 % |
+| idle strict (any distance / in range) | 91 % / 89 % | 90 % / 88 % | - | - | - | - | - | 94 % / 93 % |
+| pressing share | 67 % | 69 % | - | - | - | - | - | 66 % |
+| enemies firing / s (ranged alive) | 0.99 (6.5) | 1.07 (6.6) | - | - | - | - | - | 0.79 (6.6) |
+| never fired / ranged foes | 124 / 441 | 154 / 441 | - | - | - | - | - | 148 / 441 |
+| token share | 23 % | 38 % | - | - | - | - | - | 44 % |
+| damage taken w1 mean | 17.5 | 10.1 | - | - | - | - | - | 11.4 |
+| damage taken w2 mean | 16.1 | 10.4 | - | - | - | - | - | 11.4 |
+| damage taken w3 mean | 33.6 | 36.8 | - | - | - | - | - | 37.5 |
+| damage taken w4 mean | 26.5 | 22.2 | - | - | - | - | - | 31.7 |
+| damage taken w1-4 sum | 93.7 | 79.5 | - | - | - | - | - | 92 |
+| deaths, all waves incl. 5 (runs) / waves 6, 7 reached | 10 (10) / 0, 0 | 10 (10) / 1, 0 | - | - | - | - | - | 10 (10) / 0, 0 |
+
+
+| bar (average) | main | lever5-ownwin | share05 = final | share05+lever4 |
+| --- | --- | --- | --- | --- |
+| react in range p50 <= 1.0 s | 1.05: no | 0.72: yes | 0.68: **yes** | 0.72: yes |
+| react in range p90 <= 2.5 s | 6.15: no | 3.57: no | 2.58: no (0.08 over) | 2.6: no |
+| idle share (engaged rule) < 35 % | 66 %: no | 60 %: no | 55 %: no | 54 %: no |
+| pressing share >= 0.6 | 0.69: yes | 0.71: yes | 0.75: yes | 0.76: yes |
+| guard rail: damage w1-4 in 53.5..72.3 | 62.9: yes | 55.0: yes | 71.3: **yes** (1.0 under the top) | 70.7: yes |
+
+| novice (informational) | main | gait | final |
+| --- | --- | --- | --- |
+| react in range p50 / p90 s | 1.32 / 5.6 | 0.75 / 3.38 | 0.67 / 2.07 (both bars would hold) |
+| idle share (engaged rule) | 71 % | 61 % | 58 % |
+| damage w1-4 (rail informational) | 93.7 | 79.5 | 92.0 (main -1.7) |
+| deaths (runs) / waves 6, 7 reached | 10 (10) / 0, 0 | 10 (10) / 1, 0 | 10 (10) / 0, 0 |
+
+Notes (b4f, 2026-11-26):
+- Own-gun window (STEP 0): same runs as lever 5 (react, damage, never fired identical), only the engaged rule moved:
+  idle 69 % -> 60 %, pressing 66 % -> 71 %. The lever-5 idle rise was the probe's assault-rifle window.
+- Share 0.5 kept: p90 3.57 -> 2.58, idle 60 -> 55 %, firing/s 0.65 -> 0.83, never fired 219 -> 160, damage 55.0 -> 71.3
+  (deaths in waves 1-4 + 6-7: 3 -> 1 of 10; all waves incl. 5: 8 -> 7). The rail has 1.0 left: any further lever that
+  adds fire breaks it. Final (9b3730e36) reproduces share05 exactly (same tree).
+- Lever 4 on top of share 0.5: every number within noise (p50 0.68 -> 0.72, p90 2.58 -> 2.6, idle 55 -> 54 %, damage
+  71.3 -> 70.7); no bar crosses, and landing it needs a `squad.waiting_ring` schema field (not this lane's file). Not kept.
+- Still failing on the average bot: idle 55 % (bar < 35 %) and p90 2.58 s (bar 2.5). Idle is foes with a clear line in
+  range and no token (token share 47 %); closing it needs more tokens, which the rail no longer allows, or a rail move:
+  owner's call.
