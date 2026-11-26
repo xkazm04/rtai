@@ -1,0 +1,18 @@
+diff --git a/project/assets/shaders/look_d4_item.gdshader b/project/assets/shaders/look_d4_item.gdshader
+index 581caf125..4fa6b329d 100644
+--- a/project/assets/shaders/look_d4_item.gdshader
++++ b/project/assets/shaders/look_d4_item.gdshader
+@@ -80,6 +80,13 @@ void fragment() {
+ 		if (dv < best) { best = dv; o = VERM; }
+ 		float da = amber_ink > 0.5 ? distance(col, AMBER) : 9.0;
+ 		if (da < best) { best = da; o = AMBER; }
++		// amber print rule: a fire blend between AMBER and INK is nearer VERM than either end;
++		// vermilion is danger and the collar only, so keep it only when VERM is nearer than the AMBER-INK segment
++		if (amber_ink > 0.5 && distance(o, VERM) < 0.001) {
++			vec3 ab = INK - AMBER;
++			float t = clamp(dot(col - AMBER, ab) / dot(ab, ab), 0.0, 1.0);
++			if (distance(col, AMBER + ab * t) <= dv) { o = t < 0.5 ? AMBER : ink_tone; }
++		}
+ 		float dt = distance(col, TEAL);
+ 		if (dt < best) { o = TEAL; }
+ 		COLOR = vec4(o * g, 1.0);
