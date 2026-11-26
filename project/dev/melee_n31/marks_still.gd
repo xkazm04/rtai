@@ -6,12 +6,10 @@ extends ArenaGame
 ## held, and two crops round the cop are written to GTAI_MARKS_OUT: `marks_<weapon>_64.png` (the
 ## first drawn frame, age 0) and `marks_<weapon>_64_mid.png` (MID_FRAC of the mark's life later).
 ## A view-only probe: it emits the signal the hit would, it lands no hit. Dev only.
-## n31 04d: GTAI_MARKS_VICTIM picks the victim: `cop` (default, a human guard), `robot` (a robot
-## thug: the sparks and oil of a non-lethal hit), `riot` (a riot cop: the slab's sparks); the file
-## names carry the zoom (`--ppm`) and the victim; a chainsaw re-emits the hit each tick (the grind).
-## n31 04e: a gun id in GTAI_MARKS_WEAPONS (run with `--weapon=<the same gun>`) stops one of its
-## rounds on the victim instead (GunFx's body impact + GunFxWound's flick, as GunFxRounds would);
-## its mid still is GUN_MID ticks on, when the flick's drops have landed.
+## n31 04d: GTAI_MARKS_VICTIM = `cop` (default, a human guard) | `robot` (a thug: sparks, oil) |
+## `riot` (the slab's sparks); names carry zoom and victim; a chainsaw re-emits the hit each tick.
+## n31 04e: a gun id (run with `--weapon=<that gun>`) stops one round on the victim (GunFx body
+## impact + GunFxWound flick, as GunFxRounds would); its mid still is GUN_MID ticks on.
 
 const WARM: int = 60
 const NEAR_M: float = 1.1
@@ -58,8 +56,11 @@ func _process(_delta: float) -> void:
 	if _wait > 0:
 		_wait -= 1
 		session.step()
-		if _phase == 1 and _weapons[_wi] == "chainsaw":
-			session.stage.arena.wounded.emit(_cop, &"chainsaw")
+		if _phase == 1:  # 04f: the sim walks him back to his post: re-pin him under the mark
+			_cop.pos = session.stage.arena.rivet.pos + Vector2.RIGHT * NEAR_M
+			_cop.facing = Vector2.LEFT
+			if _weapons[_wi] == "chainsaw":
+				session.stage.arena.wounded.emit(_cop, &"chainsaw")
 		return
 	_next()
 
