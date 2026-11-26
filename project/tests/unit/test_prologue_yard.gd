@@ -20,8 +20,14 @@ func test_yard_loads_and_wrecks_stop_rivet_and_shots() -> void:
 		)
 		assert_false(box.has_point(stage.collide_preview(middle)), wreck.id)
 		assert_true(stage.arena.walls.blocks(middle - box.size, middle + box.size), wreck.id)
+	# The first wreck with clear floor 1 m west of it (n31-19: arch supports flank the belt boxes).
 	var first: Rect2 = plan.wrecks[0].footprint
 	var west: Vector2 = Vector2(first.position.x - 1.0, first.get_center().y)
+	for wreck: PrologueYard.Wreck in plan.wrecks:
+		first = wreck.footprint
+		west = Vector2(first.position.x - 1.0, first.get_center().y)
+		if stage.walls.push_out(west, stage.arena.rivet.radius_m) == west:
+			break
 	stage.arena.rivet.pos = west
 	for tick: int in SimClock.TICK_RATE:
 		stage.step(tick, TickInput.new(0, TickInput.AXIS_MAX, 0))

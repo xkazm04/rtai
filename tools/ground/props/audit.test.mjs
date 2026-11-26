@@ -41,7 +41,7 @@ test('the real tables audit: every solid prop gets a verdict and the counts add 
   const sum = summarize(rows);
   assert.equal(sum.props, rows.length);
   assert.ok(sum.solid >= 50);
-  assert.equal(rows.filter((r) => r.arena === 'yard' && r.kind === 'cover_low').length, 14);
+  assert.equal(rows.filter((r) => r.arena === 'yard' && r.kind === 'cover_low').length, 26); // n31-19: + 12 arch supports
   assert.ok(Object.values(sum.by_verdict).reduce((a, b) => a + b, 0) === rows.length);
 });
 
@@ -59,9 +59,10 @@ test('placedBase puts the lowest band and its column runs in world metres', () =
   assert.equal(pb.base.y1, 6);
 });
 
-test('the yard audit lists the six arches and six spans and none of their legs is blocked', () => {
+test('the yard audit lists the six arches (legs blocked, n31-19) and six spans (none blocked)', () => {
   const rows = auditYard();
   assert.equal(rows.filter((r) => r.legs_m).length, 12);
-  assert.ok(rows.filter((r) => r.legs_m).every((r) => r.legs_blocking === 0));
-  assert.equal(rows.filter((r) => r.id.includes(' vs ') && r.verdict === 'footprint north of drawn base').length, 6);
+  assert.ok(rows.filter((r) => r.kind === 'span').every((r) => r.legs_blocking === 0));
+  assert.ok(rows.filter((r) => r.kind === 'arch').every((r) => r.legs_blocking === r.legs));
+  assert.equal(rows.filter((r) => r.id.includes(' vs ') && r.verdict === 'footprint north of drawn base').length, 0); // n31-19 (was 6)
 });

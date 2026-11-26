@@ -22,11 +22,15 @@ static func draw(ci: CanvasItem, box_m: Rect2, tint: Color = TINT) -> void:
 	var shade: PackedColorArray = PackedColorArray([north, north, tint, tint])
 	var a: PackedVector2Array = _corners(inner)
 	var b: PackedVector2Array = _corners(box_m.grow(half))
+	# Straight to the canvas item (same command list and transform as CanvasItem.draw_*), so a
+	# recorder replaying a draw pass outside NOTIFICATION_DRAW adds commands instead of erroring.
+	var item: RID = ci.get_canvas_item()
 	if inner.has_area():
-		ci.draw_polygon(a, shade)
+		RenderingServer.canvas_item_add_polygon(item, a, shade)
 	for i: int in 4:
 		var j: int = (i + 1) % 4
-		ci.draw_polygon(
+		RenderingServer.canvas_item_add_polygon(
+			item,
 			PackedVector2Array([a[i], a[j], b[j], b[i]]),
 			PackedColorArray([shade[i], shade[j], Color(shade[j], 0.0), Color(shade[i], 0.0)])
 		)

@@ -166,8 +166,9 @@ func test_arched_line_keeps_the_six_boxes_and_hangs_its_belt_as_arch_pieces() ->
 	var arched: Dictionary[String, Dictionary] = _cover("arched_line")
 	var raised: Dictionary[String, Dictionary] = _cover("raised_line")
 	for id: String in BELT:
-		assert_eq(str(arched[id]["at"]), str(raised[id]["at"]), id)
-		assert_eq(str(arched[id]["size_m"]), str(raised[id]["size_m"]), id)
+		# n31-19: arched_line's box sits on its own drawn machines' base, south of raised_line's.
+		assert_gt(float(str(arched[id]["at"][1])), float(str(raised[id]["at"][1])), id)
+		assert_eq(str(arched[id]["size_m"][1]), str(raised[id]["size_m"][1]), id)
 	var over: Array = _row("arched_line")["over_print"]
 	var arches: int = 0
 	for piece: Dictionary in _row("arched_line")["layout"]["debris"]:

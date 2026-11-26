@@ -4,6 +4,9 @@ extends RefCounted
 
 const SCORCH: Texture2D = preload("res://features/city/art/decals/scorch.png")
 const OCHRE: Shader = preload("res://boot/prologue/art/yard_ochre.gdshader")
+## An overhead belt span throws an offset floor shadow and has no base: it blocks nothing.
+const SPAN_SHADOW_OFFSET_M: Vector2 = Vector2(0.45, 0.9)
+const SPAN_SHADOW: Color = Color(0.03, 0.03, 0.04, 0.32)
 
 ## Modulate for a skinned wreck (cover art); the over-print layer sets it around its draw.
 var skin_tint: Color = Color.WHITE
@@ -90,11 +93,25 @@ func shadows(canvas: CanvasItem, plan: PrologueYard) -> void:
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
-## The contact base under every solid wreck the canvas draws (`over_print` picks the layer).
-func bases(canvas: CanvasItem, plan: PrologueYard, over_print: bool) -> void:
+## The contact base under every solid wreck, on the topmost floor layer (the over-print layer
+## when the dressing has one: its impression would hide a base on the floor canvas).
+func bases(canvas: CanvasItem, plan: PrologueYard) -> void:
 	for cover: PrologueYard.Wreck in plan.wrecks:
-		if plan.dressing.over_print.has(cover.id) == over_print:
-			PropBase.draw(canvas, cover.footprint)
+		PropBase.draw(canvas, cover.footprint)
+
+
+func span_shadows(canvas: CanvasItem, plan: PrologueYard) -> void:
+	for piece: PrologueYard.Wreck in plan.debris:
+		if not piece.id.begins_with(PrologueYardOverprint.OVERHEAD_PREFIX):
+			continue
+		var art: Texture2D = texture(piece.art)
+		var source: Rect2 = Rect2(
+			piece.crop.position * art.get_size(), piece.crop.size * art.get_size()
+		)
+		var box: Rect2 = pixels(piece.footprint)
+		canvas.draw_set_transform(box.get_center() + Ink.px(SPAN_SHADOW_OFFSET_M), piece.rotation)
+		canvas.draw_texture_rect_region(art, Rect2(-box.size * 0.5, box.size), source, SPAN_SHADOW)
+	canvas.draw_set_transform(Vector2.ZERO)
 
 
 func _shadow(canvas: CanvasItem, art: Texture2D, box: Rect2, reach_m: Vector2, tint: Color) -> void:

@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { opaqueBox, mismatch, verdict, load, r3, PROJECT, BAND_M } from './audit.mjs';
 
 export const LEG_BAND_M = 0.3;
+export const FOOT_PAD_M = 0.12;
 const hit = (a, b) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
 
 /** Art stretched into rect `at`/`size` (m), as PrologueYardPaint.wreck lays an unrotated piece: opaque bounds, lowest-band
@@ -53,10 +54,10 @@ export function auditYardStructures(look, coverBoxes) {
     const legs = pb.legs.map((l) => ({ ...l, blocked_by: coverBoxes.filter((c) => hit(l, c.box)).map((c) => c.id) }));
     const blocked = legs.filter((l) => l.blocked_by.length).length;
     const span = pb.opaque.x1 - pb.opaque.x0;
-    rows.push({ ...row, drawn_span_m: [r3(span), r3(pb.opaque.y1 - pb.opaque.y0)], opaque_fraction: r3(pb.fraction), legs_m: legs.map((l) => ({ x: [l.x0, l.x1], y: [l.y0, l.y1], blocked_by: l.blocked_by })), legs: legs.length, legs_blocking: blocked, verdict: span > 3 && blocked < legs.length ? 'big drawn structure, legs walkable' : 'ok', worst_m: 0, note: row.kind === 'span' ? 'overhead span: PrologueSpanShadow draws Rivet under it, no collider' : 'belt + machines art over-printed on the conveyor_* box; only the box blocks' });
+    rows.push({ ...row, drawn_span_m: [r3(span), r3(pb.opaque.y1 - pb.opaque.y0)], opaque_fraction: r3(pb.fraction), legs_m: legs.map((l) => ({ x: [l.x0, l.x1], y: [l.y0, l.y1], blocked_by: l.blocked_by })), legs: legs.length, legs_blocking: blocked, verdict: row.kind === 'span' ? 'overhead span (passable by rule: offset floor shadow, no base)' : span > 3 && blocked < legs.length ? 'big drawn structure, legs walkable' : 'ok', worst_m: 0, note: row.kind === 'span' ? 'overhead span: PrologueSpanShadow draws Rivet under it, no collider' : 'belt + machines art over-printed on the conveyor_* box; only the box blocks' });
   }
   for (const c of coverBoxes.filter((b) => b.id.startsWith('conveyor_'))) {
-    const arch = pieces.find((d) => d.id.startsWith('arch_') && Math.abs(d.at[0] - (c.box.x0 + c.box.x1) / 2) < 0.01);
+    const arch = pieces.find((d) => d.id === 'arch_' + c.id.slice('conveyor_'.length));
     if (!arch) continue;
     const png = load(join(PROJECT, arch.art.replace('res://', '')));
     const pb = png.error ? null : placedBase(png, arch.at, arch.size_m, BAND_M);
@@ -64,5 +65,32 @@ export function auditYardStructures(look, coverBoxes) {
     const mm = mismatch(c.box, pb.base);
     rows.push({ arena: 'yard', id: `${c.id} vs ${arch.id}`, kind: 'cover_low', class: 'blocks movement + shots', art: arch.art.split('/').pop() + ' (over-printed on the box)', footprint_m: [r3(c.box.x1 - c.box.x0), r3(c.box.y1 - c.box.y0)], drawn_base_m: [r3(pb.base.x1 - pb.base.x0), r3(pb.base.y1 - pb.base.y0)], base_south_m: pb.base.y1, box_south_m: r3(c.box.y1), mismatch_m: mm, ...footVerdict(mm), note: 'footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m' });
   }
+  for (const c of coverBoxes.filter((b) => b.id.startsWith('leg_'))) {
+    const arch = pieces.find((d) => d.id === 'arch_' + c.id.split('_')[1]);
+    const png = arch ? load(join(PROJECT, arch.art.replace('res://', ''))) : { error: 'no arch' };
+    const base = png.error ? null : footUnder(png, arch, c.box);
+    const row = { arena: 'yard', id: `${c.id} vs ${arch?.id}`, kind: 'cover_low', class: 'blocks movement + shots', art: `${arch?.art.split('/').pop()} (drawn leg)`, footprint_m: [r3(c.box.x1 - c.box.x0), r3(c.box.y1 - c.box.y0)] };
+    if (!base) { rows.push({ ...row, verdict: 'invisible wall', worst_m: r3(c.box.x1 - c.box.x0), note: 'no drawn leg over the box' }); continue; }
+    const mm = mismatch(c.box, base);
+    rows.push({ ...row, drawn_base_m: [r3(base.x1 - base.x0), r3(base.y1 - base.y0)], mismatch_m: mm, ...verdict(mm, ['west', 'east', 'south']), note: 'leg foot: arch art columns over the box, lowest opaque row; N is the leg itself' });
+  }
   return rows;
+}
+
+/** The drawn foot of an arch leg over `box` (m): opaque columns of the placed arch art within `pad` m of the box
+ * whose lowest pixel falls in its depth (+ `pad` south), their x extent and lowest row. Null when none qualifies. */
+export function footUnder(png, piece, box, pad = FOOT_PAD_M) {
+  const kx = piece.size_m[0] / png.width;
+  const ky = piece.size_m[1] / png.height;
+  const left = piece.at[0] - piece.size_m[0] / 2;
+  const top = piece.at[1] - piece.size_m[1] / 2;
+  let x0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (let x = Math.max(0, Math.floor((box.x0 - pad - left) / kx)); x < Math.min(png.width, Math.ceil((box.x1 + pad - left) / kx)); x++) {
+    const col = opaqueBox(png, { x, y: 0, w: 1, h: png.height });
+    if (!col) continue;
+    const bottom = top + col.y1 * ky;
+    if (bottom < box.y0 || bottom > box.y1 + pad) continue;
+    x0 = Math.min(x0, left + x * kx); x1 = Math.max(x1, left + (x + 1) * kx); y1 = Math.max(y1, bottom);
+  }
+  return x1 > x0 ? { x0: r3(x0), x1: r3(x1), y0: r3(box.y0), y1: r3(y1) } : null;
 }
