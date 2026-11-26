@@ -78,9 +78,12 @@ every fire number.
    - deaths 13 | 15 | 13 of 20 runs; waves 6/7 reached 10/9 | 7/5 | 12/9
 
    B minus final damage is 4.0 +- 21.3 (95 %), inside the noise. B is the only setting that beats main on every fire
-   number at main's death count. It is not the default only because it misses the brief's rail by 0.6. Clip:
-   `C:\Users\kazda\kiro\gtai-masters\n31\foes\callb_wave3_side.mp4` (final | B, seed 3, wave 3: 0.40 against 0.63
-   foes firing per second, 3-round bursts, wave 3 cleared earlier).
+   number at main's death count. It is not the default only because it misses the brief's rail by 0.6. Clips:
+   - `C:\Users\kazda\kiro\gtai-masters\n31\foes\callb_wave1_side.mp4`: HEAD | `--foe-fire=hot`, seed 3, wave 1, the
+     same ticks (b83b38b97). Foes alive 7.3 against 8.3, firing per second 0.97 against 1.21. At 10 s on the B side,
+     about eight cops stand in a loose ring 4 to 15 m off, guns up, and Rivet is at 94/100.
+   - `C:\Users\kazda\kiro\gtai-masters\n31\foes\callb_wave3_side.mp4`: final | B, seed 3, wave 3. Firing per second
+     0.40 against 0.63, 3-round bursts, and wave 3 is cleared earlier.
 1. Fight-move speed share 0.45 of `speed_mps` (`enemies.json` `fight_speed_k`). Clip `gait64_hold_side.mp4`: the
    firing cop backs off at 0.26-1.08 m/s. Rivet walks faster, so he can close on a cop that is shooting, and the cop
    then turns and runs.
@@ -117,7 +120,7 @@ every fire number.
 
 ## Builder ledger
 
-23 Claude sub-agent calls, 673 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
+25 Claude sub-agent calls, 682 minutes in total. Every call was accepted except one bounced by a tool limit; 9 calls were partial. "partial" means part of the brief was committed and the rest was moved to a later call.
 
 | call | model | min | verdict | what it delivered |
 | --- | --- | --- | --- | --- |
@@ -144,6 +147,8 @@ every fire number.
 | b4o-noise | not logged | 37 | accepted | 20-seed noise band |
 | b4p-wave6 | sonnet | 8 | accepted | wave6_side |
 | b4q-hot-flag | sonnet | 23 | accepted | `--foe-fire=hot`, byte-identical proof |
+| b4r-decisions | sonnet | 1 | accepted | decisions line for the flag |
+| b4s-callb-w1 | sonnet | 7 | accepted | callb_wave1 take |
 
 What I would brief differently:
 - Short single-point calls (b4l 6, b4p 8, b4m 11, b4q 23 min) were the best value. The 50+ minute calls ended partial.
