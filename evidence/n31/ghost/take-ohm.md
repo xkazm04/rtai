@@ -48,3 +48,27 @@ What a player would say: on main Ohm is a zap that chains through three or four 
 tap once, he appears in the middle of the crowd, the ground crackles amber for a beat, and the whole circle goes down at once
 (7 of the 12 near in wave 1, main 4 of 8) leaving a burn mark; the 0.3 s charge reads as a wind-up because his body and the
 creep are on screen during it, not as lag, but nobody has played it with hands yet.
+
+## Half-speed re-render (g30)
+
+Builder `g30-ohm-halfspeed`, 2026-11-26. Only the 64 px/m half-speed clip, re-rendered long enough (g14's was 10.65 s, under
+the 15-40 s rule, because its closeup render held 320 frames). Temp worktree `gtai-wt/g30-head` at `168139f1e` (detached;
+git-ignored runtime copied from this worktree: `.godot`, `data/generated/city`, `native/bin`; 1920x1080 in its own
+`project.godot` only), `ghost_n31_take_closeup.tscn`, seed 6, `--form=ohm --fit=relaxed --bot=average --pick=random
+--controls=wheel --waves=3 --pick-view --from=440`, 560 frames, `--fixed-fps 60 --write-movie`, d3d12, windowed at 0,1440,
+through `runGodot` under the lane lock. Scratch: `build/n31/g30/` (git-ignored).
+
+Deploy 1: press 512, discharge 530 (movie frame 90), wave 1, hits 7 / kills 7, near 12: the same ticks and counts as g14.
+
+File (`C:\Users\kazda\kiro\gtai-masters\n31\ghost\`): `take-ohm-head-64ppm-halfspeed.mp4` 1920x1080 h264 60 fps, 1119 frames,
+ffprobe 18.65 s (movie frames 0-559, `setpts=2.0*PTS`). The g14 clip moved to
+`extra/take-ohm-head-64ppm-halfspeed-8abdee4d9.mp4`. `frames.json`: that entry's title and note name the new commit and length.
+
+Read from the movie (1280-wide stills in `build/n31/g30/fr/`). Frame 72 (press t512): Rivet rolling as the ball beside the
+zebra, the cops spread to the right and below, the Ohm slot lit in the HUD; nothing of Ohm on the road yet. Frame 78 (t518,
+creep): Ohm's teal body stands among the cops lower right with amber cracks spreading out from under him. Frame 90 (discharge
+t530): an amber crackle ring with a dark fringe fills the lower right, thick teal bolts fork from his body to teal hit rings on
+the cops inside it, some already falling; the circle runs off the bottom and right edges of the frame (the camera follows
+Rivet, as g14 noted). Frame 150 (discharge + 60): Rivet back on his feet running right along the kerb; a charred dark ring
+with spiky fringe and a scorched core stay on the road, cops lying along the ring with their rifles dropped, the cops outside
+it still standing and aiming.
