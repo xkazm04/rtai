@@ -37,7 +37,11 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   and `--kill-feed=off` turn it off. Proof (`evidence/n31-melee/03-fatal/table.md`, waves 1-4 x 5 weapons x seeds
   1-5): chainsaw on a shieldless human = `chainsaw_grind` 138/138 (100 %, bar 100 % over >= 40); every melee
   kill plays its weapon's row; riot cops: 21 saw kills all through the shield face -> `chainsaw_grind_riot_cop`.
-- Frame cost: CPU p50 +0.4 ms (headless); rendered cost under the bench lock: OPEN (03p4).
+- Frame cost (`evidence/n31-melee/03-fatal/feed-cost.md`, rendered d3d12 under the bench lock, chainsaw, seed 7,
+  3600 ticks, 2 rounds): frame p50 4.57 -> 6.14 ms, p99 9.56 -> 12.09 ms; no frame over 25 ms that the off arm
+  does not also show (bar PASS), so no grind cap. Draw calls 273 -> 918 p50: the fatality pieces left on the
+  street are the cost, not the sim (sim loop p99 1.7 ms). A long wave stacks more pieces than this first minute:
+  watch it.
 - Films: OPEN (03p4 fatality takes, chainsaw first).
 
 ### Item 4: impacts of one quality (view only, no digest)
@@ -45,8 +49,12 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   chainsaw bites and chatters on whatever it touches, not only in the kill.**
 - Audit `evidence/n31-melee/04-impacts/` (14 weapons x human/robot/shield/kill, scored 0-3). Lifted: katana cut
   (ink + cream, red beads on a human, 9/4 px, 1.0 m), plasma sword sear (scorch palette), chainsaw bite (kerf +
-  SawMarks burst held 36 ticks, kick 1 -> 2.5 px). OPEN: plasma heat core, robot sparks/oil, through-shield
-  sparks (04d).
+  SawMarks burst held 36 ticks, kick 1 -> 2.5 px). Lifted in round 2 (04d), below.
+- 04d: the plasma sear reads hot (cause: the FX print `look_d4_item.gdshader:72-96` snapped the white-hot core
+  to cream, the ember->char blend to vermilion and the alpha glow to ink; now opaque ember strokes); a
+  non-lethal melee hit on a robot throws white sparks that land as oil (`thug_hit`), the chainsaw on a riot
+  shield sprays off the slab 5 times a second, the baton flicks an amber arc and the plasma sword an ember spit
+  off the slab. Stills `evidence/n31-melee/04-impacts/after/d_*.png`.
 
 ## What does not
 - Enemy melee on Rivet (item 1/2 second half): measured (`evidence/n31-melee/01-foes/before/before.md`): no hit
