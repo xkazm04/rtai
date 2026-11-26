@@ -1,0 +1,325 @@
+{
+  "schema": "gtai.foes-play-takes/1",
+  "args": {
+    "seed": 3,
+    "wave": 6,
+    "seconds": 30,
+    "profile": "average",
+    "ppm": 32,
+    "lead": 1,
+    "out": "C:\\Users\\kazda\\kiro\\gtai-masters\\n31\\foes",
+    "name": "wave6_side",
+    "follow": "",
+    "stalk": false,
+    "left": {
+      "kind": "rev",
+      "value": "ba8e470b0"
+    },
+    "right": {
+      "kind": "rev",
+      "value": "9b3730e36"
+    }
+  },
+  "sides": [
+    {
+      "key": "left",
+      "rev": "ba8e470b0fdfc796c4eb8d256bd086d4d7cfa969",
+      "flags": [],
+      "label": "main",
+      "scout_spawn_tick": 5250,
+      "take": {
+        "first_tick": 5190,
+        "frames": 1800,
+        "mode": "take",
+        "per_s": [
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 12,
+            "fired": 1
+          },
+          {
+            "alive": 11,
+            "fired": 2
+          },
+          {
+            "alive": 10,
+            "fired": 2
+          },
+          {
+            "alive": 10,
+            "fired": 2
+          },
+          {
+            "alive": 10,
+            "fired": 2
+          },
+          {
+            "alive": 9,
+            "fired": 2
+          },
+          {
+            "alive": 9,
+            "fired": 1
+          },
+          {
+            "alive": 9,
+            "fired": 2
+          },
+          {
+            "alive": 9,
+            "fired": 1
+          },
+          {
+            "alive": 8,
+            "fired": 1
+          },
+          {
+            "alive": 7,
+            "fired": 0
+          },
+          {
+            "alive": 7,
+            "fired": 2
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 2
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 2
+          },
+          {
+            "alive": 6,
+            "fired": 2
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 5,
+            "fired": 2
+          },
+          {
+            "alive": 5,
+            "fired": 1
+          },
+          {
+            "alive": 4,
+            "fired": 1
+          },
+          {
+            "alive": 4,
+            "fired": 1
+          },
+          {
+            "alive": 3,
+            "fired": 1
+          },
+          {
+            "alive": 2,
+            "fired": 2
+          },
+          {
+            "alive": 1,
+            "fired": 0
+          },
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 0,
+            "fired": 0
+          }
+        ],
+        "seed": 3,
+        "spawn_tick": 5250,
+        "wave": 6,
+        "wave_reached": 6
+      }
+    },
+    {
+      "key": "right",
+      "rev": "9b3730e3652b93af8aacc147034f8cc9576a2e23",
+      "flags": [],
+      "label": "9b3730e36",
+      "scout_spawn_tick": 5005,
+      "take": {
+        "first_tick": 4945,
+        "frames": 1800,
+        "mode": "take",
+        "per_s": [
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 12,
+            "fired": 1
+          },
+          {
+            "alive": 12,
+            "fired": 4
+          },
+          {
+            "alive": 11,
+            "fired": 0
+          },
+          {
+            "alive": 10,
+            "fired": 2
+          },
+          {
+            "alive": 9,
+            "fired": 3
+          },
+          {
+            "alive": 7,
+            "fired": 0
+          },
+          {
+            "alive": 7,
+            "fired": 2
+          },
+          {
+            "alive": 7,
+            "fired": 2
+          },
+          {
+            "alive": 7,
+            "fired": 0
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 1
+          },
+          {
+            "alive": 6,
+            "fired": 0
+          },
+          {
+            "alive": 5,
+            "fired": 1
+          },
+          {
+            "alive": 4,
+            "fired": 0
+          },
+          {
+            "alive": 4,
+            "fired": 0
+          },
+          {
+            "alive": 4,
+            "fired": 2
+          },
+          {
+            "alive": 3,
+            "fired": 0
+          },
+          {
+            "alive": 3,
+            "fired": 1
+          },
+          {
+            "alive": 3,
+            "fired": 0
+          },
+          {
+            "alive": 2,
+            "fired": 2
+          },
+          {
+            "alive": 2,
+            "fired": 1
+          },
+          {
+            "alive": 1,
+            "fired": 0
+          },
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 0,
+            "fired": 0
+          },
+          {
+            "alive": 13,
+            "fired": 0
+          },
+          {
+            "alive": 13,
+            "fired": 0
+          }
+        ],
+        "seed": 3,
+        "spawn_tick": 5005,
+        "wave": 6,
+        "wave_reached": 7
+      }
+    }
+  ],
+  "ticks": "wave 6 starts at tick 5250 (main) and 5005 (9b3730e36), -245 ticks apart",
+  "probes": {
+    "wave6_side_left.mp4": {
+      "width": 1920,
+      "height": 1080,
+      "avg_frame_rate": "60/1",
+      "duration": "30.000000",
+      "nb_frames": "1800"
+    },
+    "wave6_side_right.mp4": {
+      "width": 1920,
+      "height": 1080,
+      "avg_frame_rate": "60/1",
+      "duration": "30.000000",
+      "nb_frames": "1800"
+    },
+    "wave6_side_side.mp4": {
+      "width": 1920,
+      "height": 1080,
+      "avg_frame_rate": "60/1",
+      "duration": "30.000000",
+      "nb_frames": "1800"
+    }
+  }
+}
