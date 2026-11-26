@@ -68,3 +68,25 @@ short); the charred bodies are the readable part. At 18 and 22 s no fatality is 
 Claw rendered (03p8): `beside_fatal_claw.mp4`, 1920x1080, 35.0 s (stills at 8-22 s). First fatality at 13 s: on the right half (n31 fatality) the cop
 at Rivet is raked into torn pieces beside him with red spray; at 14 s orange-and-blue pieces lie on a pool at the lower right. The left (main)
 half shows whole bodies on small pools. At 10 and 12 s no fatality is in frame yet.
+
+## 04g baton overload (04:33-)
+
+Cause (03p7 take, 12.5-15 s stills): the coded current (KillCookArt._current) lived only ticks 0-19 and was white core
+over a BLUE pass with a 65 % amber fringe, so it read white-blue; ticks 20-cells_at showed the drawn jolt rows alone
+(KillDeathCells owns the cells, so the coded glow/veins/eyes are skipped) whose current is 1 px pale cream lines the
+print flattens, and from 0.7 x cook_to the body is modulated to grey 0.45 (char_body). Nothing amber over him from
+tick 20 to his fall: "a pale grey overloaded cop, no amber current".
+Lever: `KillOverloadArcs` (kill_overload_arcs.gd), row fx `arc_n` 4 and `arc_ticks` 48 (variants cells_at + 3: contractor
+27, patrol_cop 38, riot_cop 42, rocket_trooper 39, swat 35): 4 ElectricArc-jagged arcs (no RNG, re-jag every 3 ticks,
+held under reduced motion) from the baton contact (chest, 0.16 m back along the blow) to head, both hands and the
+ground; strokes 7 px amber halo 25 %, 4 px amber 95 %, 1.5 px cream core (screen px); last 4 ticks fade; amber-white
+flash on the contact 3 ticks. Replaces the 20-tick white-blue bolts for rows with arc_n. View only.
+Stills (tools/film/film.mjs kill:electro_baton --victim=cop/head_cap --on=kill:1+40, tick 90 = kill + 22, drawn jolt row):
+`still_overload_32_before_after.png`, `still_overload_64_before_after.png` (here and in masters). 32 px/m: before
+the cop alone with thin cream lines, no amber; after four amber strokes ~4 px wide from above his cap to below his
+boots (> 60 % of his height), his figure readable under them. 64 px/m the same, thinner relative to him.
+First try had a 10 px 30 % halo drawn under a ppm-scaled transform: Godot's antialias feather scaled with it and
+washed the cop out; drawn in layer px with the narrower halo now.
+Re-take `beside_fatal_electro_baton.mp4` (fatal_takes.sh electro_baton, 04:51-04:57, HEAD af5005c0e): right half,
+12.9-13.5 s, the struck cop stands in amber current, falls dark and smoking at 13.6 s; left half (main rules) has no
+overload at that kill.
