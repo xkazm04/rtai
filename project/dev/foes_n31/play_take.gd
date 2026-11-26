@@ -22,7 +22,8 @@ const KNOWN: PackedStringArray = [
 	"--frames-out",
 	"--zoom-ppm",
 	"--follow",
-	"--foe-moves"
+	"--foe-moves",
+	"--stalk"
 ]
 const FRAME: Vector2i = Vector2i(1920, 1080)
 const HZ: int = 60
@@ -40,6 +41,8 @@ var _capturing: bool = false
 var _alive_peak: int = 0
 var _fired_ids: Dictionary[int, bool] = {}
 var _per_s: Array[Dictionary] = []
+var _stalk: bool = false
+var _track: StalkTrack = StalkTrack.new()
 
 
 func _invalid_arg(args: ArenaArgs) -> String:
@@ -48,33 +51,16 @@ func _invalid_arg(args: ArenaArgs) -> String:
 		if KNOWN.find(flag) < OWN_FIRST:
 			rest.values[flag] = args.values[flag]
 	for flag: String in KNOWN.slice(OWN_FIRST):
-		if args.has(flag) and not _valid(flag, args.text(flag)):
+		if args.has(flag) and not TakeArgs.valid(flag, args.text(flag)):
 			return "%s=%s" % [flag, args.text(flag)]
 	_wave = args.text("--take-wave", "1").to_int()
 	_take_tick = args.text("--take-tick", "-1").to_int()
 	_frames_total = roundi(args.text("--take-s", "30").to_float() * HZ)
 	_frames_out = args.text("--frames-out")
 	_follow = StringName(args.text("--follow"))
+	_stalk = args.has("--stalk")
 	camera_ppm = args.text("--zoom-ppm", "32").to_float()
 	return super._invalid_arg(rest)
-
-
-func _valid(flag: String, s: String) -> bool:
-	var ok: bool = true
-	match flag:
-		"--take-wave", "--take-tick":
-			ok = s.is_valid_int() and s.to_int() >= int(flag == "--take-wave")
-		"--take-s":
-			ok = s.is_valid_float() and s.to_float() >= 1.0 and s.to_float() <= 120.0
-		"--frames-out":
-			ok = s.is_absolute_path()
-		"--zoom-ppm":
-			ok = s in ["32", "64"]
-		"--follow":
-			ok = not s.is_empty()
-		"--foe-moves":
-			ok = s in ["legacy", "split"]
-	return ok
 
 
 func _run_headless() -> void:
@@ -147,18 +133,19 @@ func _observe() -> void:
 	_alive_peak = maxi(_alive_peak, alive)
 
 
+func _bot() -> GauntletPilot:
+	return StalkPilot.new() if _stalk else super._bot()
+
+
 func _aim() -> void:
 	if _follow == &"" or view == null:
 		return
-	var arena: CombatArena = session.stage.arena
-	var best: Vector2 = Vector2.INF
-	var near: float = INF
-	for h: Fighter in arena.hostiles:
-		var d: float = h.pos.distance_to(arena.rivet.pos)
-		if h.alive() and h.archetype == _follow and d < near:
-			near = d
-			best = h.pos
-	view.focus = best
+	var foe: Fighter = _track.follow(
+		session.stage.arena, _follow, _capturing and _written < _frames_total
+	)
+	view.focus = foe.pos if foe != null else Vector2.INF
+	if pilot is StalkPilot:
+		(pilot as StalkPilot).target = view.focus
 
 
 func _on_drawn() -> void:
@@ -175,7 +162,10 @@ func _on_drawn() -> void:
 		return
 	_written += 1
 	if _written % HZ == 0 or _written == _frames_total:
-		_per_s.append({"alive": _alive_peak, "fired": _fired_ids.size()})
+		var row: Dictionary = {"alive": _alive_peak, "fired": _fired_ids.size()}
+		if _follow != &"":
+			row["followed"] = _track.flush(HZ)
+		_per_s.append(row)
 		_alive_peak = 0
 		_fired_ids.clear()
 	if _written == _frames_total:

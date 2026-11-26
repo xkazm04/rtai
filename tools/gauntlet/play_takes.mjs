@@ -2,7 +2,7 @@
 // n31 foes: play takes of the real gauntlet (bot, --pick-view, wheel, tilt 70), before beside after.
 //   node tools/gauntlet/play_takes.mjs --seed=<n> --wave=<n> --seconds=<15..40> --out=<abs masters dir>
 //     --name=<stem> [--profile=average] [--left=rev:<commit>|flags:<extra flags>]
-//     [--right=HEAD|live|rev:<commit>|flags:<extra flags>] [--ppm=32|64] [--follow=<archetype>] [--lead=1.0]
+//     [--right=HEAD|live|rev:<commit>|flags:<extra flags>] [--ppm=32|64] [--follow=<archetype>] [--stalk] [--lead=1.0]
 // Each side: a headless scout of res://dev/foes_n31/play_take.tscn finds the tick wave n first spawns,
 // then a windowed take fast-forwards to `lead` s before it and writes the frames. Revs run in a temp
 // worktree (rev_tree.mjs); flags: sides run at the HEAD sha taken at launch. Every Godot run goes through
@@ -25,7 +25,7 @@ const TAG = 'b3';
 
 export function parse(argv) {
   const opts = ['seed', 'wave', 'seconds', 'profile', 'out', 'name', 'left', 'right', 'ppm', 'follow', 'lead'];
-  const { values: v } = parseArgs({ args: argv, options: Object.fromEntries(opts.map((k) => [k, { type: 'string' }])) });
+  const { values: v } = parseArgs({ args: argv, options: { ...Object.fromEntries(opts.map((k) => [k, { type: 'string' }])), stalk: { type: 'boolean' } } });
   const int = (name, min, max) => {
     const x = v[name];
     if (!/^\d+$/.test(x ?? '') || Number(x) < min || Number(x) > max) throw new Error(`--${name} must be an integer in ${min}..${max}`);
@@ -40,7 +40,7 @@ export function parse(argv) {
   const lead = Number(v.lead ?? '1.0');
   if (!(lead >= 0 && lead <= 10)) throw new Error('--lead must be 0..10 s');
   return { seed: int('seed', 0, 2 ** 31), wave: int('wave', 1, 30), seconds: int('seconds', 15, 40), profile, ppm, lead,
-    out: v.out, name: v.name, follow: v.follow ?? '', left: sideSpec(v.left ?? 'rev:' + MAIN, 'left'),
+    out: v.out, name: v.name, follow: v.follow ?? '', stalk: v.stalk === true, left: sideSpec(v.left ?? 'rev:' + MAIN, 'left'),
     right: sideSpec(v.right ?? 'HEAD', 'right') };
 }
 
@@ -66,7 +66,7 @@ export function sides(a, { head, mainSha, resolve = (r) => r }) {
 
 function common(a, side) {
   return ['--seed=' + a.seed, '--bot=' + a.profile, '--pick=greedy', '--controls=wheel', '--pick-view',
-    '--take-wave=' + a.wave, ...side.flags];
+    '--take-wave=' + a.wave, ...(a.stalk ? ['--stalk'] : []), ...side.flags];
 }
 
 export function scoutArgs(a, side) {
