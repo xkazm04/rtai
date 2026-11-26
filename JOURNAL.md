@@ -200,3 +200,7 @@ NEXT (session 8, ~06:00):
 2. REPORT: add the gate line; re-run `node tools/evidence/cites.mjs REPORT.md`; commit REPORT + JOURNAL. Masters frames.json has 18 entries after 04g's two stills (bar 8-15): drop slow_katana + slow_plasma_sword entries (and files) and one impact take if still > 15 - one node read-modify-write, then check every entry's file exists.
 3. Clean Temp leftovers this lane created (gtai-mutate-06b already deleted by 06b; check for other gtai-mutate-*/gtai-gate-* of ours only after the gate ends).
 - 05:38 Director trimmed masters frames.json to 15 (dropped slow_katana, slow_plasma_sword, still_overload_64 entries and files; deleted the two fatal_play_electro_baton_* sources 04g's re-take left). Every entry's file exists. NEXT item 2 (trim) done.
+
+## Session 8 (05:35 - 07:05 at the latest)
+- 05:35 START. Tree clean at ef6c95c2b (old n26-n28 .err/.txt untracked). NEED melee: nothing new (ghost's deploy patches served 498568a41; foes b4c informational). Ground first gate 04:45, re-gate 05:24; foes PASS 05:34, ghost PASS 05:32 -> melee slot is open now.
+- 05:36 Final gate started on ef6c95c2b: `build/n31/dir8/gate.sh` (lane lock tag dir8-gate, out `build/n31/dir8/gate.out`). No product commit after it.

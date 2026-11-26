@@ -139,8 +139,8 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, 
    length in the swing view, or one reach clamp.
 5. Raise the light guns on a robot (audit 1); the shotgun's kill row when it goes on the wheel (it is
    `enabled:false` today, so the player never meets it).
-7. Repaint the baton overload's jolt rows (the body under the new amber arcs stays pale).
-6. Pixel tests for `blade_marks.gd` (mutate 0/6: drawing geometry no headless test sees).
+6. Repaint the baton overload's jolt rows (the body under the new amber arcs stays pale).
+7. Pixel tests for `blade_marks.gd` (mutate 0/6: drawing geometry no headless test sees).
 
 ## Builder ledger
 29 calls (sonnet and opus Claude sub-agents), about 885 builder-minutes; 7 accepted whole, 21 accepted-partial,
