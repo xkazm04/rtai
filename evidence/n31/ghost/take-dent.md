@@ -35,3 +35,52 @@ Filmed: seed 6, the only one with two 3-body rams in one wave, each against a 2-
 The honest read of the table: the 2.6 m lane does not change the typical count much. Most rams on both sides take 2; HEAD
 whole runs over seeds 1-8 hit 60 in 34 deploys (1.76 each), main 59 in 32 (1.84 each); HEAD has 6 rams of 3+ against
 main's 4, and 4 zero-hit deploys against main's 3.
+
+## Films (seed 6, `--bot=average --pick=random --controls=wheel --waves=3 --form=dent --fit=shipped`)
+
+Gauntlet bot film, `--pick-view`, 32 px/m, tilt 70, 1920x1080, `--fixed-fps 60 --write-movie`, d3d12, windowed at 0,1440,
+through `runGodot` (`build/n31/g19/rg.mjs`) under the lane lock. Both movies start at tick 450 (`--from=450`, stepped headless
+before the view opens) and their deploy ticks match the headless runs of the same seed exactly. Movie frames run ahead of
+ticks while the wave 1 upgrade card is up (about 185 frames), so clip time is frame / 60, not tick / 60.
+
+| clip deploy | main press / damage tick, clip time | main hits / kills (foes within 9 m) | HEAD press / damage tick, clip time | HEAD hits / kills (foes within 9 m) |
+|---|---|---|---|---|
+| 1 (wave 1) | 694 / 695, 4.4 s | 2 / 2 (7) | 573 / 588, 2.4 s | 2 / 2 (10) |
+| 2 (wave 2) | 1176 / 1177, 15.2 s | 2 / 2 (3) | 1275 / 1290, 17.1 s | 3 / 3 (3) |
+| 3 (wave 2) | 1658 / 1659, 23.8 s | 2 / 2 (5) | 1756 / 1771, 25.8 s | 3 / 3 (4) |
+| clip total | | 6 / 6 | | 8 / 8 |
+| whole 3-wave run | | 8 / 8 (4 deploys) | | 10 / 10 (5 deploys) |
+
+Main damages on the release tick (1 tick after the key goes down: the bot's hold is that short); HEAD damages 15 ticks after
+the press (the cock). The runs share the seed and the start tick and split at the first Dent, so each row is the same wave
+and the same bot, not the same instant.
+
+Files (`C:\Users\kazda\kiro\gtai-masters\n31\ghost\`, ffprobe lengths): `take-dent-main-vs-head-32ppm.mp4` 3840x1080
+26.67 s (labelled "main ba8e470b0" | "n31 ghost 81a831263"), `take-dent-main-32ppm.mp4` 1920x1080 26.67 s,
+`take-dent-head-32ppm.mp4` 1920x1080 26.67 s; both clips are movie frames 0-1599 from tick 450. No audio. At 64 px/m
+(`ghost_n31_take_closeup.tscn`, same seed, same deploy ticks): the still pair at deploy 3, R+3
+`take-dent-main-vs-head-64ppm-ram.png` (main release t1659 + 3, closeup from 1600 frame 68 | HEAD ram t1771 + 3, closeup
+from 1686 frame 94; each alone: `take-dent-main-64ppm-release-t1662.png`, `take-dent-head-64ppm-ram-t1774.png`) and
+`take-dent-head-64ppm-halfspeed.mp4` 1920x1080 13.32 s (HEAD deploy 2 whole at half speed, closeup from tick 1210, frames
+0-399: lead-in, press t1275 at frame 65, cock + skid, dive and ram t1290 at frame 80, scuffed lane held to the end; deploy 3
+was not used for it because the wave 2 upgrade card covers the screen from about R+60). Raw logs and deploy JSON:
+`build/n31/g19/` (git-ignored).
+
+Read from the movies: 32 px/m HEAD frame 1019 (between press t1275 and ram t1290, crop) shows Dent's teal body at Rivet's
+side and two dark scrape lines with tan grit running down-right from him to the three cops on the kerb: the telegraph reads
+at the gameplay camera. Frame 1027 (R+3) the teal body is in the dust wake among the cops with hit stars on them; frames 1110
+and 1180 (1.4 s and 2.6 s later) a tan-brown scuffed lane stays on the road with the three bodies lying at its end. At 64
+px/m, deploy 3: frame 87 (R-4) Dent cocked just behind Rivet, both skid lines whole up the lane to four cops; frame 94 (R+3)
+Dent mid-dive with a thick dust wake behind him, three white hit stars on the three cops at the lane's end, blood spray;
+frames 101-120 the scuff under the lane, then the wave-clear card. Main at its release + 3 (64 px/m frame 68): two white hit
+stars on the cops pressed against Rivet, no Dent body and no teal capsule on screen (the bot holds for 1 tick, so the
+capsule never shows). One thing a player may read as off: in the half-speed clip (frame 80 = R) the hit stars are already on
+the cops while Dent's body is still near the lane origin; it reaches them about 4 ticks later (the dive is R..R+8, ease-out),
+so the bodies drop just before he arrives. At 64 px/m Dent's body also crosses Rivet's sprite at the start of the dive
+(Rivet walked into the lane during the cock).
+
+What a player would say: on main Dent is a shove you barely see, two cops next to you fall at the instant you let go; on HEAD
+you tap once, he pops out at your side, two scrape lines run down the road to the cops for a quarter second, then he
+rockets along them and drops the whole line (3 of 3 and 3 of 4 in wave 2, main 2 of 3 and 2 of 5) leaving a scuffed lane;
+the wind-up reads as a wind-up because the lines are drawn before the hit, but over 10 seeds the ram is a 3+ hit only a
+little more often than main's shove, and nobody has played it with hands yet.
