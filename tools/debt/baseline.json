@@ -207,7 +207,8 @@
         "2026-11-25: n31-07 prologue drift probes for n31 ground (dev_loc 40188 -> 40400)",
         "2026-11-26: dev_loc: n31-13 foe_place_probe lock|glide pass (+13) and n31-16 drift_probe (+1) for n31 ground (dev_loc 40400 -> 40414)",
         "2026-11-26: n31-15 foe_place_probe --share (glide blend) for n31 ground (dev_loc 40414 -> 40424)",
-        "2026-11-26: n31-16 play_film + quest1_drift dev probes (the prologue and quest 1 city under the project stretch) for n31 ground (dev_loc 40424 -> 40570)"
+        "2026-11-26: n31-16 play_film + quest1_drift dev probes (the prologue and quest 1 city under the project stretch) for n31 ground (dev_loc 40424 -> 40570)",
+        "2026-11-26: 2026-11-26: n31-21 prop_walk dev probe (scene + probe/out helpers) for n31 ground (dev_loc 40570 -> 40851) (dev_loc 40570 -> 40851)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -223,7 +224,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ground_n31": 810,
+        "project/dev/ground_n31": 1091,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -250,7 +251,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40570
+      "total": 40851
     },
     "direct_cmdline_reads": {
       "accepted": [
