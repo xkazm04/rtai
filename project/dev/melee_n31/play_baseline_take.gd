@@ -1,9 +1,8 @@
 extends Node
-## n31 melee 01b part C: the before play take. The gauntlet, wheel controls, the average bot with
-## ONE melee weapon, drawn at --ppm (tilt 70). Record with Movie Maker; tools/melee/play_take.mjs
-## wraps it. --weapon=claw|chainsaw|electro_baton|katana|plasma_sword --seed=N --ppm=N
+## n31 melee 01b C: the before play take (gauntlet, wheel, average bot, ONE melee weapon, tilt 70)
+## for tools/melee/play_take.mjs. --weapon --seed --ppm; 03p3: --frames=<json> [--frames-ticks=N].
 
-const KNOWN_FLAGS: PackedStringArray = ["--weapon", "--seed", "--ppm"]
+const KNOWN_FLAGS: PackedStringArray = ["--weapon", "--seed", "--ppm", "--frames", "--frames-ticks"]
 
 var session: GauntletSession
 var waves: GauntletWaves
@@ -29,6 +28,7 @@ func _ready() -> void:
 	hook.weapon = weapon
 	session.stage.hooks.append(hook)
 	_open_view(args.number("--ppm", 32.0))
+	FightFrames.attach(self, args, session.world)
 
 
 func _open_view(ppm: float) -> void:

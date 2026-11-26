@@ -1,0 +1,93 @@
+{
+  "schema": "gtai.n31-feed-cost/1",
+  "weapon": "chainsaw",
+  "seed": 7,
+  "ticks": 3600,
+  "engine": "editor build (debug), --headless (CPU side only), vsync off, --fixed-fps 60, tilt70 32 px/m",
+  "arms": [
+    {
+      "name": "off",
+      "user": [
+        "--kill-feed=off"
+      ]
+    },
+    {
+      "name": "on",
+      "user": []
+    }
+  ],
+  "runs": [
+    {
+      "arm": "off",
+      "round": 0,
+      "p50": 4.45100021362305,
+      "p99": 7.98400020599365,
+      "worst": 59.5690002441406,
+      "over25": 3,
+      "frames": 3399,
+      "ticks": 3598,
+      "busy_cores_first_20s": 8.166758310422395,
+      "other_runs": 2,
+      "kills": "none (feed off)",
+      "hitches": 3
+    },
+    {
+      "arm": "on",
+      "round": 0,
+      "p50": 4.89400005340576,
+      "p99": 16.9290008544922,
+      "worst": 69.6660003662109,
+      "over25": 10,
+      "frames": 3409,
+      "ticks": 3598,
+      "busy_cores_first_20s": 12.292203898050975,
+      "other_runs": 1,
+      "kills": "{\"split\":25}",
+      "hitches": 8
+    },
+    {
+      "arm": "on",
+      "round": 1,
+      "p50": 5.2020001411438,
+      "p99": 27.2220001220703,
+      "worst": 307.635009765625,
+      "over25": 44,
+      "frames": 3447,
+      "ticks": 3598,
+      "busy_cores_first_20s": 15.738352329534093,
+      "other_runs": 2,
+      "kills": "{\"split\":25}",
+      "hitches": 20
+    },
+    {
+      "arm": "off",
+      "round": 1,
+      "p50": 4.86800003051758,
+      "p99": 37.4199981689453,
+      "worst": 139.438003540039,
+      "over25": 94,
+      "frames": 3549,
+      "ticks": 3598,
+      "busy_cores_first_20s": 16.034943011397722,
+      "other_runs": 2,
+      "kills": "none (feed off)",
+      "hitches": 52
+    }
+  ],
+  "median": {
+    "off": {
+      "p50": 4.659500122070315,
+      "p99": 22.701999187469475,
+      "worst": 99.5035018920898,
+      "over25": 48.5,
+      "busy_cores_first_20s": 12.100850660910059
+    },
+    "on": {
+      "p50": 5.04800009727478,
+      "p99": 22.07550048828125,
+      "worst": 188.65050506591794,
+      "over25": 27,
+      "busy_cores_first_20s": 14.015278113792533
+    }
+  }
+}
