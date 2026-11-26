@@ -1,4 +1,4 @@
-# n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group (DRAFT, session 3)
+# n31 ghost - Tonnage drops, charges and dumps on a circle that clears a group (DRAFT, session 4)
 
 Lane `ghost`, branch `n31-ghost`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, base `main` `ba8e470b0`.
 Draft written 00:30 by the director; final sections (gate line, ledger totals, Ohm and later ghosts) are filled at 07:40.
@@ -21,9 +21,12 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Kills by the dump play the press crush inside `crush_m` and the thrown wave death beyond (`5d0f98ccd`, `a96de13c0`), stills `dump-kill-{before,after}-64ppm.png`; see the NEED below for the gauntlet street.
 - Films: `take-drop-head-64ppm-halfspeed.mp4` (15.22 s), `tonnage-beats-{32,64}ppm.png`, `dump-dust-d2-{before,after}-64ppm.png`.
 
-### 4. Ohm (in progress)
-- Before (main): lab 8-cop share 45 %; the shipped bot never fires Ohm in early waves (`evidence/n31/ghost/measure-others-main.md`).
-- Drop code + radius sweep (`48d6fbc37`, `74dddaad7`, `evidence/n31/ghost/measure-ohm-head.md`): at a 0.3 s charge, r 5 m is the smallest circle with 8-cop share >= 75 % (83 %). Not shipped yet (the row stays hold until its view and tests land).
+### 4. Ohm (done) and Dent (in progress)
+- Ohm before (main): lab 8-cop share 45 %; play (relaxed bot fit, 10 seeds x 3 waves) 42 deploys, mean 2.98 hits, 52 % of the foes within 9 m (`evidence/n31/ghost/measure-others-main.md`, `evidence/n31/ghost/measure-ohm-play.md`).
+- Ohm after: one press, he stands on the aim point, 0.3 s charge, full circle r 5 m with the body radius (`48d6fbc37`, `649a17523`); lab 8-cop 83 % (`evidence/n31/ghost/measure-ohm-head.md`); play 41 deploys, mean 3.71 hits, 68 % of near, zero whiffs (`6dcc748ed`).
+- Ohm drawn in beats (`8ab450ec9`): amber creep crawling to the rim during the charge, an arc ring at the rim on the discharge, a scorch ring + burn core for 2 s + 1 s; a lighter camera kick (`hit`); drawn radius 5.10 m vs 5 at 64 px/m. The `ohm_spec_hover` sheet warning is gone.
+- Ohm play take (`evidence/n31/ghost/take-ohm.md`, seed 6): wave 1 main 4 of 8 near, HEAD 7 of 12; run 10 vs 17 kills. A player: "Ohm is now one tap: he appears in the crowd, the road crackles amber out to his circle for a beat, and the whole circle drops at once, leaving a burn ring."
+- Dent (`87ac21445`, `8ce635db1`, `evidence/n31/ghost/measure-dent-head.md`): one press, lane from Rivet's side along the aim laid at the press, 0.25 s wind-up, body radius counted. Play mean 1.81 -> 1.79 at the same width; widths 1.3/1.6/1.8/2.0 m give 2.04/2.00/2.07/2.24 hits. View and beats: session 5.
 
 ## What does not
 - (fill at 07:40)
@@ -37,11 +40,12 @@ Draft written 00:30 by the director; final sections (gate line, ledger totals, O
 - Where Tonnage drops: aim point (shipped) vs on Rivet: at 5.5 m in play the aim point hit 3.86 mean vs 1.17 on Rivet (25 of 54 Rivet drops hit nobody). One data value (`drop_at`).
 - Charge 0.45 s: costs about 16 points of share in the lab (cops walk out): it is the counterplay he asked for; one data value (`charge_s`).
 - Radius 6.5 m, dump damage 3 (kills a patrol cop, a riot front takes x0.2): the 8-wave play median stays 3 (the bot drops at >= 3 bodies); 7 m is the screen limit.
-- Ohm radius 3.5 -> 5 m at a 0.3 s charge.
-- Bond and mastery with more kills per deploy: (to measure).
+- Ohm radius 3.5 -> 5 m at a 0.3 s charge (play 2.98 -> 3.71 hits per deploy).
+- Bond and mastery with more kills per deploy (Tonnage, 8 waves, shipped bot): bond per deploy 9.3 -> 13.5 (+45 %), median mastery wave 4 -> 3; a bar of about 100 would restore wave 4. Not changed.
+- Dent width: `ram_half_m` 0.9 -> 1.3 halves the whiffs (11 % -> 6 %); no width under 2 m reaches a mean of 2.5 hits because the bot fires Dent at 2 bodies.
 
 ## Merge notes
-- `NEED melee`: the gauntlet street attaches no `BrutalityHook`, so signature kills (incl. the Tonnage crush from the deploy) do not draw in gauntlet play; patches for the Ohm deploy shock death follow in `evidence/n31/ghost/`.
+- `NEED melee`: the gauntlet street attaches no `BrutalityHook`, so signature kills (incl. the Tonnage crush from the deploy) do not draw in gauntlet play; `NEED melee`: apply `evidence/n31/ghost/ohm_deploy_kills.patch` (`also_weapons: ["deploy_ohm"]` on the `ohm_shock` row) so Ohm deploy kills play the shock death.
 - Digests: scenarios 68/68 at 6.5 m, no digest moved (JOURNAL 23:04).
 
 ## Next steps
