@@ -135,3 +135,8 @@ NEXT (session 8, ~06:11): no product work (gate PASS on 7e3ed7a46; any product c
 - 05:43 REPORT complete (cites 18/18 ok): item 4 paragraph, calls 0-4 with clips, gate PASS line, merge notes (need_gauntlet_flags.patch, need_gun_down.patch, prologue_moves.patch), ledger 25 calls / 681 min. Tree clean, no builder running, no lane Godot.
 - DECISION foes: no product work after the gate (a change now needs a re-gate after 06:00 and lands nothing filmed). Cover stickiness (the biggest TRAVEL cause, 53 %) stays in Next steps.
 NEXT (session 8): REPORT is final unless something changes; only re-read it, run `node tools/evidence/cites.mjs REPORT.md`, check frames.json (9 entries, valid JSON) and commit by 07:40. No product commits, no new builders.
+
+## Session 8 (05:42)
+- 05:43 read journal, git log (HEAD ffd0572a0), tree clean, other lanes: no new NEED foes (melee's 21:52 informational one is old). Gate PASS on 7e3ed7a46 stands; no product work.
+- 05:47 BUILDER b4t-call-clips (sonnet) launched: evidence/briefs/b4t-call-clips.md, evidence only: call3_guns (rev 8ce3eb779 shared rifle | 0fbe651eb own guns, share 0.35, seed 3 wave 1) then call2_shooters (ebcd2f37b fixed 2 | 8ce3eb779 share). Hard stop 06:22.
+- BUILDER RUNNING b4t-call-clips since 05:47 (if the session ended first: `git log` for "call3_guns" / "call2_shooters"; clips in gtai-masters/n31/foes/; add REPORT call 2/3 clip lines from the take JSON means).
