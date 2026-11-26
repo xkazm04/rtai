@@ -205,7 +205,8 @@
         "2026-11-25: n31-09 foe placement probe for n31 ground (dev_loc 40115 -> 40183)",
         "2026-11-25: foe_place_probe --stances + shift/body log for n31 ground (dev_loc 40183 -> 40188)",
         "2026-11-25: n31-07 prologue drift probes for n31 ground (dev_loc 40188 -> 40400)",
-        "2026-11-26: dev_loc: n31-13 foe_place_probe lock|glide pass (+13) and n31-16 drift_probe (+1) for n31 ground (dev_loc 40400 -> 40414)"
+        "2026-11-26: dev_loc: n31-13 foe_place_probe lock|glide pass (+13) and n31-16 drift_probe (+1) for n31 ground (dev_loc 40400 -> 40414)",
+        "2026-11-26: n31-15 foe_place_probe --share (glide blend) for n31 ground (dev_loc 40414 -> 40424)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -221,7 +222,7 @@
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
-        "project/dev/ground_n31": 654,
+        "project/dev/ground_n31": 664,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
@@ -248,7 +249,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40414
+      "total": 40424
     },
     "direct_cmdline_reads": {
       "accepted": [

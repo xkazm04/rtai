@@ -31,6 +31,9 @@ const SIDE_COLUMN: int = 2
 ## jump (head travel 1.4-2.9 px, from 10-36 px; the boot skates the stance, 22-33 px). false =
 ## the foot lock on every column.
 const GLIDE_NO_STEP: bool = true
+## n31-15: how far a gliding column follows the sim point: 1.0 = the full glide, 0.0 = the foot
+## lock; between, the stand point, the stride and the registered sole blend linearly.
+const GLIDE_SHARE: float = 1.0
 
 ## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
 ## contact on the stance interval so his moving hip shadow crosses the planted boot.
@@ -49,6 +52,7 @@ var face: int
 var texel: Vector2
 var stride: Vector2
 var glide_no_step: bool = GLIDE_NO_STEP
+var glide_share: float = GLIDE_SHARE
 
 
 func configure(path: String, drawings: int, running: bool) -> float:
@@ -137,7 +141,7 @@ func _ground(phase: int) -> Vector2:
 ## The sole height a mark registers at (HOLD_TOE_OFF, GLIDE_NO_STEP).
 func foot_y(sole_y: float) -> float:
 	if glides(face):
-		return 0.0
+		return sole_y * (1.0 - glide_share)
 	var side: bool = HOLD_TOE_OFF and not flight and face == SIDE_COLUMN
 	return 0.0 if side and sole_y < -TOE_OFF_PX else sole_y
 
@@ -145,9 +149,11 @@ func foot_y(sole_y: float) -> float:
 ## Where the stance stands (and its stride): a gliding column on the sim point, less the eased
 ## landing settle adds back; any other on the locked stance origin.
 func stand_at(origin: Vector2, at: Vector2, step: Vector2, column: int) -> Vector2:
-	var glide: bool = glides(column)
-	stride = Vector2.ZERO if glide else step * half
-	return at - eased_landing if glide else origin
+	if not glides(column):
+		stride = step * half
+		return origin
+	stride = step * half * (1.0 - glide_share)
+	return origin.lerp(at - eased_landing, glide_share)
 
 
 ## A walk drawn in this column glides with the sim point instead of locking its boot.

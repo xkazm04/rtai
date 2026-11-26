@@ -6,7 +6,10 @@ extends SceneTree
 ## Flags: --out=<file.jsonl> [--ppm=32] [--mps=3.2] [--stances=4]
 ## [--strip=<file in p70/>] (n31-10: "head" = the cell's alpha bbox top through the transform)
 ## n31-13: every facing walks twice, "glide" false (the foot lock) then true (GLIDE_NO_STEP).
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--mps", "--stances", "--strip"]
+## n31-15: [--share=<0..1>] the glide pass runs at that StreetPatrolPose.glide_share (default 1).
+const KNOWN_FLAGS: PackedStringArray = [
+	"--out", "--ppm", "--mps", "--stances", "--strip", "--share"
+]
 const PATROL: String = "p70/cop_patrol_planted8_armed_walk.png"
 const OCT: Dictionary[String, Vector2] = {
 	"S": Vector2.DOWN,
@@ -39,9 +42,7 @@ func _initialize() -> void:
 func _walk(path: String, dir: String, ppm: float, mps: float, glide: bool) -> void:
 	var tex: Texture2D = load(path) as Texture2D
 	var img: Image = _image(tex)
-	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
-	contact.configure(path)
-	contact.registered.glide_no_step = glide
+	var contact: StreetCopWalk.Contact = _contact(path, glide)
 	var cell_y: float = tex.get_height() / float(contact.drawings)
 	var s: float = 1.7 * ppm * StreetCopWalk.fill_of(path) * 1.0 / cell_y
 	var face: Vector2i = RigHeadCard.frame_of(OCT[dir].angle())
@@ -58,6 +59,7 @@ func _walk(path: String, dir: String, ppm: float, mps: float, glide: bool) -> vo
 		var row: Dictionary = {
 			"dir": dir,
 			"glide": glide,
+			"share": contact.registered.glide_share,
 			"t": t,
 			"cell": contact.cell,
 			"at": _v(at),
@@ -76,6 +78,14 @@ func _walk(path: String, dir: String, ppm: float, mps: float, glide: bool) -> vo
 		var stored: bool = _log.store_line(JSON.stringify(row))
 		assert(stored)
 		at += OCT[dir] * mps * ppm * SimClock.TICK_DT
+
+
+func _contact(path: String, glide: bool) -> StreetCopWalk.Contact:
+	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
+	contact.configure(path)
+	contact.registered.glide_no_step = glide
+	contact.registered.glide_share = float(_arg("--share", "1.0"))
+	return contact
 
 
 func _image(tex: Texture2D) -> Image:
