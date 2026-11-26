@@ -65,5 +65,6 @@ First fatality at 13 s: on the right half (n31 fatality) the struck cop is drawn
 where the left (main) half shows a plain dark body. At 14 s the right half has charred dark bodies lying on the road
 with fewer red pools; the left keeps red pools. No amber current was clearly visible in the 1 s stills (the effect is
 short); the charred bodies are the readable part. At 18 and 22 s no fatality is in frame.
-Claw NOT rendered: its before arm waited for the lane lock (held by builder 06 from 04:10) and the 04:15 / 04:22 cut-offs
-came first. Next: `tools/melee/fatal_takes.sh claw`.
+Claw rendered (03p8): `beside_fatal_claw.mp4`, 1920x1080, 35.0 s (stills at 8-22 s). First fatality at 13 s: on the right half (n31 fatality) the cop
+at Rivet is raked into torn pieces beside him with red spray; at 14 s orange-and-blue pieces lie on a pool at the lower right. The left (main)
+half shows whole bodies on small pools. At 10 and 12 s no fatality is in frame yet.
