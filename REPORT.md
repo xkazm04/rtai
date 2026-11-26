@@ -87,13 +87,16 @@ is docs/evidence/JOURNAL/REPORT only.
   `impacts_sheet_before_after.png`), scores hit human / robot / shield: katana 1/1/2 -> 2/2/2, plasma sword
   1/1/1 -> 2/2/2, chainsaw 1/0/1 -> 2/2/2, baton 2/2/1 -> 2/2/2, pistol and gatling 1/1/2 -> 2/1/2, claw 3/2/2
   (the reference) unchanged. Caveats: the 'human' cell is the riot guard; gun rows draw no victim at the stop.
-- Mutate (`evidence/n31-melee/04-impacts/mutate.md`, `--max=20`, test subsets): `shield_sparks.gd` 11/19 =
-  57.9 %, `gun_fx_wound.gd` 8/19 = 42.1 % (06b then pinned the early-out counts, robot/flesh counts, blocked blood
-  throw and the zero-direction fallback in 10 tests; the Director's re-run at 06:02 after the gate, `--max=20 --tests=test_gun_fx_wound`, 463 s: `gun_fx_wound.gd`
-  94.7 % = 18 / (18 + 1), invalid 1; the one survivor is the splash position `at * PX_PER_M` at :41, a view-only value); `shield_sparks.gd` 57.9 % -> 84.2 % = 16 / (16 + 3), invalid 1 (464 s, `--tests=test_shield_sparks_melee`;
-  survivors: the early-out count at :64, the robot-vs-slab kind branch value at :77, the face offset at :103), `blade_marks.gd` 5.0 % = 1 / (1 + 19) (Director's full run at 06:11,
-  `--max=20 --tests=test_blade_marks`, 345 s): the survivors are the cut and sear stroke geometry (offsets,
-  widths, the 45 deg slant, alpha) that no headless test reads. Not fixed tonight (after the gate; tests are code).
+- Mutate (`--max=20`, test subsets; first runs in `evidence/n31-melee/04-impacts/mutate.md`, re-runs by the
+  Director after the gate on HEAD, once 06b had pinned the early-out counts, robot/flesh counts, blocked blood throw
+  and the zero-direction fallback in 10 tests):
+  - `gun_fx_wound.gd` 42.1 % -> 94.7 % = 18 / (18 + 1), invalid 1 (`--tests=test_gun_fx_wound`, 463 s); the
+    survivor is the splash position `at * PX_PER_M` at :41 (view only).
+  - `shield_sparks.gd` 57.9 % -> 84.2 % = 16 / (16 + 3), invalid 1 (`--tests=test_shield_sparks_melee`, 464 s);
+    survivors: the early-out count at :64, the kind value at :77, the face offset at :103.
+  - `blade_marks.gd` 5.0 % = 1 / (1 + 19) (`--tests=test_blade_marks`, 345 s; the first run never finished): the
+    survivors are the cut and sear stroke geometry (offsets, widths, the 45 deg slant, alpha) no headless test
+    reads. Not fixed tonight (tests are code, and they came after the gate).
 - Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
   no digest moved (68 scenarios pass).
 
@@ -161,10 +164,11 @@ is docs/evidence/JOURNAL/REPORT only.
 7. Pixel or stroke-list tests for `blade_marks.gd` (mutate 5.0 %, 19 survivors in the cut/sear stroke geometry).
 
 ## Builder ledger
-29 calls (sonnet and opus Claude sub-agents), about 885 builder-minutes; 7 accepted whole, 21 accepted-partial,
+29 calls (sonnet and opus Claude sub-agents), 864 builder-minutes; 7 accepted whole, 21 accepted-partial,
 1 bounced (code kept), 0 abandoned. Calls (minutes, verdict): 01a 38 ap, 01b 47 a, 02 30 ap, 01c 42 ap, 02p2 46 ap,
 03 17 a, 01d 22 ap, 01e 10 ap, 03p2 25 a, 04a 5 a, 02p3 50 ap, 04b 39 ap, 04c 9 ap, 02p3b 30 a, 02p4 62 ap,
 03p3 39 ap, 04d 21 ap, 04e 17 ap, 03p4 41 ap, 03p5 26 ap, 02p5 31 b, 03p6 35 ap, 04f 36 ap, 05 5 ap, 03p7 18 ap,
-06 29 ap, 03p8 7 a, 04g 44 a, 06b 43 ap. Brief differently: say "blade pixels only, never the body" in the first measurement brief; one film
+06 29 ap, 03p8 7 a, 04g 44 a, 06b 43 ap. Session 8 ran no builder (Director: gate, three mutate
+re-runs, REPORT). Brief differently: say "blade pixels only, never the body" in the first measurement brief; one film
 tool per lane at a time, alone on the lock; say in the brief which tools take the lock themselves; the short
 one-point calls (04a, 04c, 05, 03) were the best value, the 50-60 min calls all ended partial.
