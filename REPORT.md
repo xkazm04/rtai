@@ -1,0 +1,83 @@
+# REPORT - lane melee, run n31 (2026-11-25 night)
+
+Branch `n31-melee`, worktree `gtai-wt/n23-street`, base `ba8e470b0`. Owner's notes served: 5 (melee passes
+through, nothing happens; the space in which melee hurts), 6 (fatalities on advanced melee weapons; uneven impacts).
+Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, best first).
+DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
+
+## What works
+
+### Item 2: the blade hits what it is drawn crossing (`--melee-sweep`, ON by default)
+- What a player now feels: **the cop the drawn blade crosses goes down, and a swing no longer kills a man
+  standing beside you where nothing was drawn.**
+- Rule: on main the hit was tested on one tick (the last windup tick) from Rivet's centre with the table cone;
+  the blade was drawn cutting 2-6 ticks after it, so anyone it crossed later took nothing. Now the hit is tested
+  on every tick the blade is drawn cutting, inside the sector the drawn blade crossed since the last tick, each
+  enemy at most once per swing (`MeleeSweep`). Tested ticks per swing, main -> n31: claw 1 -> 7 (2..8), baton
+  1 -> 7 (1..7), katana 1 -> 8 (4..11), plasma sword 1 -> 11 (5..15), chainsaw 1 -> until its first bite
+  (then the grind re-tests as before).
+- Reach to the victim's centre minus his radius (m), main -> n31: claw 1.4 -> 1.4, chainsaw 1.65 -> 1.65,
+  baton 1.55 -> 2.2, katana 2.1 -> 2.25 (+ its 0.55 m lunge now arrives before contact: `sweep_lunge_ticks` 4),
+  plasma sword 2.2 -> 2.2. Arc (whole sweep, deg) main cone -> drawn range: claw 120 -> 96 (-62..34),
+  chainsaw 74 -> 68, baton 106 -> 95, katana 142 -> 120 (-100..20), plasma sword 203 -> 89 (-48..41).
+- Owner's complaint as a number (pixel-measured drawn blade vs hit, 60 ring cells per weapon; in front of the aim
+  +-90 deg, inside the cut): see `evidence/n31-melee/01-volumes/` and `02-sweep/volumes/`; plot
+  `volumes_before_after.png` (masters). Baton and katana meet the bars (drawn-no-hit 0 in front); claw and plasma
+  sword miss by one cell; the chainsaw by 4 (its swing-in before the cut).
+- Guard rail (kills per swing, average bot, waves 1-4, seeds 1-5), main -> n31: claw 0.795 -> 0.872 (+9.7 %,
+  paid back with recovery 13 -> 18 ticks), chainsaw 0.787 -> 0.886 (+12.6 %), baton 1.04 -> 1.17 (+12.9 %),
+  katana 0.994 -> 1.073 (+7.9 %), plasma sword 1.238 -> 1.189 (-4.0 %). All inside +-15 %.
+- Evidence: `beside_play_{katana,plasma_sword,claw}.mp4` (gauntlet, wheel controls, average bot, seed 7,
+  32 px/m, tilt 70, 35 s, main | n31); slow clips with the hit sector: OPEN (02p5 re-film).
+
+### Item 3: fatalities where the owner plays (`--kill-feed`, ON by default)
+- What a player now feels: **every melee kill ends in the weapon's own fatality - the chainsaw grinds every
+  shieldless cop it kills, the katana and plasma sword split, the baton overloads, the claw rakes.**
+- The signature-kill feed is installed in the gauntlet street and in quest 1 with the rig cast; `--gore=reduced`
+  and `--kill-feed=off` turn it off. Proof (`evidence/n31-melee/03-fatal/table.md`, waves 1-4 x 5 weapons x seeds
+  1-5): chainsaw on a shieldless human = `chainsaw_grind` 138/138 (100 %, bar 100 % over >= 40); every melee
+  kill plays its weapon's row; riot cops: 21 saw kills all through the shield face -> `chainsaw_grind_riot_cop`.
+- Frame cost: CPU p50 +0.4 ms (headless); rendered cost under the bench lock: OPEN (03p4).
+- Films: OPEN (03p4 fatality takes, chainsaw first).
+
+### Item 4: impacts of one quality (view only, no digest)
+- What a player now feels: **a katana or plasma sword hit leaves a cut or a sear across the body, and the
+  chainsaw bites and chatters on whatever it touches, not only in the kill.**
+- Audit `evidence/n31-melee/04-impacts/` (14 weapons x human/robot/shield/kill, scored 0-3). Lifted: katana cut
+  (ink + cream, red beads on a human, 9/4 px, 1.0 m), plasma sword sear (scorch palette), chainsaw bite (kerf +
+  SawMarks burst held 36 ticks, kick 1 -> 2.5 px). OPEN: plasma heat core, robot sparks/oil, through-shield
+  sparks (04d).
+
+## What does not
+- Enemy melee on Rivet (item 1/2 second half): measured (`evidence/n31-melee/01-foes/before/before.md`): no hit
+  lands with Rivet's whole body past the drawn tip (body contact, fair), but 42 of 58 hits landed while he was
+  walking sideways out of the tell (the aim locks at +-60 deg). Not changed: `foe_attacks.gd` is foes' file.
+- The drawn reach depends on facing (katana 3.14 m drawn at facing 0, 1.91 m at 90); one reach per weapon.
+- The 02p4 slow clips do not show the sector readably (OPEN: 02p5).
+
+## What blocked or slowed you
+OPEN.
+
+## Calls for the owner
+1. Plasma sword: with the sweep it no longer cuts sideways where nothing is drawn; damage taken per run 44.4 ->
+   56.8 (+28 %), kills per swing -4 %. Keep (fair blade) or widen its drawn arc? Clip: `beside_play_plasma_sword.mp4`.
+2. Every melee kill is now a fatality (100 % of 1200+ kills in the table). Frequency is your call; the lever is
+   one value (a share or a cooldown for the non-chainsaw weapons; the chainsaw stays 100 % on shieldless humans).
+3. Claw recovery 13 -> 18 ticks to pay back the sweep (+24 % kills/swing -> +9.7 %).
+4. Hit windows and reaches above (item 2).
+5. Enemy melee: a sidestep out of a baton or claw tell still gets hit (aim locked +-60 deg). Narrow it (foes'
+   file) or keep it?
+
+## Merge notes
+- `project/features/gauntlet/gauntlet_session.gd`, `project/boot/collect_call/quest1_session.gd`: additive
+  install lines for the kill feed (no lane owns them).
+- Digests re-pinned deliberately: see the `DECISION melee n31 item 2` and `item 3` lines (quest1_input moved by
+  the hit rule and by kill state; its script and lines unchanged; native parity unmoved).
+- NEED director: `project/dev/gauntlet/gauntlet.gd` KNOWN_FLAGS "--gore", "--kill-feed"; `camera.json` a held
+  low shake id for the grind.
+
+## Next steps
+OPEN.
+
+## Builder ledger
+OPEN.

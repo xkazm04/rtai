@@ -120,3 +120,12 @@ NEXT (session 5, starts ~02:15):
 4. Enemy melee on Rivet (item 2 second half): 01b measured; foe_attacks.gd is foes' file -> only a NEED unless a melee-owned value (combat.json hurt radius) fixes it. Decide next session.
 5. REPORT.md draft by 05:30; last commit 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` in the melee slot (ground +20 min, ~06:05); films/REPORT after.
 Calls for the owner gathered: plasma sword damage taken +28 % with the sweep (44.4 -> 56.8 per run, kills/swing -4 %); every melee kill is a fatality (frequency his call; lever = a share or cooldown, one value); sweep hit windows and reaches (decisions lines 02p2/02p3); claw recovery 13 -> 18 ticks.
+
+## Session 5 (02:02 - 03:32 at the latest)
+- 02:02 START. Tree clean at d7051662e (old n26-n28 .err untracked). NEED melee (ghost 01:03/01:47): `also_weapons` deploy_ohm on ohm_shock and deploy_kerf on kerf_split in signature_kills.json -> folded into 03p4 as part 0 (its full scenario run shows any digest move). Gauntlet BrutalityHook NEED already served (090ae0350, feed ON). Foes b4c: informational, REPORT call.
+- 02:05 BUILDER RUNNING 03p4 (opus, part 0 ghost NEED + fatality takes chainsaw first + rendered cost under bench lock + full scenarios; first commit 02:30, END 02:55) since 02:05
+- 02:05 BUILDER RUNNING 04d (opus, plasma sear hot (cause first), robot hit sparks+oil, through-shield sparks, 32/64 px/m stills; END 02:55) since 02:05
+- 02:05 IMAGES 0/60
+- 02:12 Director looked at slow_katana.mp4 (3 s, 9 s): picture fills the top ~62 % (black band), wall + roof take the top third, 16 cops packed in blood, sector not visible. Brief 02p5 (sonnet, 30 min, launch when 03p4/04d end): frame cause, open spot, sparser ring, thicker sector + fill, re-render 5.
+- 02:20 MILESTONE REPORT.md draft (items 2-4 numbers, calls, merge notes; OPEN marks for 03p4/04d/02p5/gate).
+- 02:20 DECISION melee n31 enemy melee on Rivet: not changed tonight. 01b: no hit with his whole body past the drawn tip (fair by body contact); 42/58 hits land while he walks sideways out of the tell (aim locked +-60 deg in foe_attacks.gd, foes' file). REPORT call for the owner, not a NEED tonight (foes is busy with the fire decision).
