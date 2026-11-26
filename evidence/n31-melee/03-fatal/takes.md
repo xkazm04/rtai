@@ -1,8 +1,8 @@
 # n31 melee 03p4: fatality play takes (main | n31 fatality)
 
 Films in `C:/Users/kazda/kiro/gtai-masters/n31/melee/` (not in git). Both arms rendered at 02:08-02:13 from
-the same tree (HEAD 498568a41 + no edits in the view paths the take draws), so the blade marks match and only
-the rules differ: before = `--melee-sweep=off --kill-feed=off` (main), after = HEAD defaults.
+the same tree (HEAD 498568a41 plus the 04d builder's then uncommitted blade-mark edits in
+`blade_marks.gd`, in both arms), so the blade marks match and only the rules differ: before = `--melee-sweep=off --kill-feed=off` (main), after = HEAD defaults.
 `build/n31/03p4/takes.sh <weapons>` drives `tools/melee/play_take.mjs --seed=7 --frames=2100 --ppm=32
 --tag=03p4` (tilt 70, Movie Maker 60 fps; frames come out 1280x800, the window size) and the ffmpeg hstack
 (each half 960x540, labels "main" / "n31 fatality").
@@ -18,7 +18,8 @@ so the window is the whole 35 s from the start; the first grind lands at about 1
 Not filmed: katana, plasma_sword, electro_baton, claw. From 02:29 every take launch stopped on a parse error
 in the shared tree that is not this lane's 03p4 work (`Casting "Variant" to "CombatBlood" is unsafe`, the
 04d builder's uncommitted `combat_blood.gd` / `gun_fx_wound.gd` edits); the 02:07 first attempt failed the
-same way for a moment. Next: `build/n31/03p4/takes.sh katana plasma_sword electro_baton claw` once the tree
+same way for a moment. 04d fixed it at 02:32; the retry then waited on the lane lock (held by `04e` from
+02:31:40 past 02:42) and 03p4 stopped its own waiting take at 02:43 (no Godot had started) to end on time. Next: `build/n31/03p4/takes.sh katana plasma_sword electro_baton claw` once the tree
 parses (about 5 min per weapon, both arms).
 
 Scenarios: `node tools/tests/run_scenarios.mjs --quiet-wait=1` at 02:22-02:29 (HEAD 9a3268812 + 04d's
