@@ -35,6 +35,8 @@ class DeployRow:
 	## Kerf's drop (n31 ghost 24b): a lock broken at the cut, &"nearest" re-picks with the
 	## deploy's picker from Rivet along the press's aim, &"none" whiffs.
 	var relock: StringName = &"none"
+	## Kerf's drop (n31 ghost 26): the cooldown a whiff (nobody cut) leaves; cooldown_ticks = before.
+	var whiff_cooldown_ticks: int = 0
 
 	func drops() -> bool:
 		return press_mode == &"drop"
@@ -96,6 +98,9 @@ static func _kerf(t: DataTable, row: Dictionary, def: DeployRow) -> void:
 	def.no_target = StringName(t.text(row, "no_target"))
 	if row.has("relock"):
 		def.relock = StringName(t.text(row, "relock"))
+	def.whiff_cooldown_ticks = def.cooldown_ticks
+	if row.has("whiff_cooldown_ticks"):
+		def.whiff_cooldown_ticks = t.integer(row, "whiff_cooldown_ticks")
 
 
 ## The drop-mode fields Tonnage and Ohm share (n31): press mode, where, charge, circle.

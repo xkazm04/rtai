@@ -224,6 +224,10 @@
             "snap_m": {
               "exclusiveMinimum": 0,
               "type": "number"
+            },
+            "whiff_cooldown_ticks": {
+              "minimum": 1,
+              "type": "integer"
             }
           },
           "required": [

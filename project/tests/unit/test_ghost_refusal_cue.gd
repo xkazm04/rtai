@@ -67,3 +67,52 @@ func test_the_counter_never_enters_the_replay_state() -> void:
 	ghost.write_state(after)
 	assert_eq(ghost.refusals, 1)
 	assert_eq(after.data_array, before.data_array)
+
+
+## n31 ghost 26 step 1b: a Kerf drop whose lock dies in the wind-up and finds nobody to relock.
+func _kerf_whiff(whiff_ticks: int, kill: bool) -> GhostAttacks.DeployRow:
+	stage.arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), [], null, 0.45)
+	var squad: ArenaSquad = ArenaSquad.new(stage.arena.guard_map)
+	stage.arena.squad_ai = squad
+	var row: GhostAttacks.DeployRow = ghost.strike.attacks.deploy[&"kerf"]
+	row.whiff_cooldown_ticks = whiff_ticks
+	pilot.ghosts.forms.selected = &"kerf"
+	var foe: Fighter = squad.spawn_member(stage.arena, Vector2(6, 0), &"contractor")
+	foe.pos = Vector2(6, 0)
+	foe.max_hp = 1000.0
+	foe.hp = 1000.0
+	_drive(key)
+	var pressed: int = stage.tick
+	while stage.tick < pressed + row.charge_ticks - 1:
+		_drive()
+	if kill:
+		foe.hp = 0.0
+	_drive()
+	return row
+
+
+func test_a_kerf_whiff_leaves_the_short_cooldown_and_cues_the_chip() -> void:
+	var row: GhostAttacks.DeployRow = _kerf_whiff(30, true)
+	assert_lt(30, row.cooldown_ticks)
+	assert_eq(ghost.dump.kerf.broke, &"dead")
+	assert_eq(ghost.cooldowns[&"kerf"], 30, "a whiff costs 0.5 s, not the full cooldown")
+	assert_eq(ghost.refusals, 1)
+	assert_eq(ghost.refused_form, &"kerf")
+
+
+func test_a_landed_cut_spends_the_full_cooldown_and_no_cue() -> void:
+	var row: GhostAttacks.DeployRow = _kerf_whiff(30, false)
+	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
+	assert_eq(ghost.refusals, 0)
+
+
+func test_whiff_cooldown_equal_to_the_full_cooldown_restores_before() -> void:
+	var full: int = ghost.strike.attacks.deploy[&"kerf"].cooldown_ticks
+	var row: GhostAttacks.DeployRow = _kerf_whiff(full, true)
+	assert_eq(ghost.refusals, 1, "the chip still answers")
+	assert_eq(ghost.cooldowns[&"kerf"], row.cooldown_ticks - row.charge_ticks)
+
+
+func test_the_shipped_kerf_row_reads_whiff_cooldown_ticks() -> void:
+	var row: GhostAttacks.DeployRow = GhostAttacks.shipped().deploy[&"kerf"]
+	assert_between(row.whiff_cooldown_ticks, 1, row.cooldown_ticks)

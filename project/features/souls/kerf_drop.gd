@@ -6,7 +6,8 @@ extends RefCounted
 ## charge's last tick. The lock follows the target; it breaks when the target dies, walks past
 ## range_m + SLACK_M from Rivet or goes behind a wall. A broken lock re-picks on the cut tick
 ## (row relock nearest, n31 ghost 24b: the deploy's picker from Rivet along the press's aim);
-## only when that finds nobody (or relock none) does the cut whiff.
+## only when that finds nobody (or relock none) does the cut whiff. A drop whiff (n31 ghost 26)
+## cuts the cooldown to the row's whiff_cooldown_ticks and cues the chip (GhostDeploy.refuse).
 
 ## How far past range_m the locked target may walk before the lock breaks.
 const SLACK_M: float = 2.0
@@ -93,7 +94,13 @@ func _broken(stage: CollectCallStage, attacks: GhostAttacks) -> StringName:
 	return &""
 
 
-## No cut: Kerf blinks dash_m along his facing from the origin (wall-clipped).
+## No cut: Kerf blinks dash_m along his facing from the origin (wall-clipped); the press costs
+## only whiff_cooldown_ticks (never more than is left) and the HUD chip says it was refused.
 static func whiff(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var dash: float = ghost.strike.attacks.num(KerfStage.GHOST, &"dash_m")
 	ghost.spot = GhostDeploySpot.clip(stage, ghost.origin, ghost.origin + ghost.facing * dash)
+	var left: int = ghost.cooldowns.get(KerfStage.GHOST, 0)
+	if left > 0:
+		var refund: int = ghost.strike.attacks.deploy[KerfStage.GHOST].whiff_cooldown_ticks
+		ghost.cooldowns[KerfStage.GHOST] = mini(left, refund)
+	ghost.refuse(KerfStage.GHOST)
