@@ -45,6 +45,15 @@ firing walks slowly (45 % of its speed) and backs off facing you; a cop you rush
 
 ## Calls for the owner
 
+0. **Setting B: more cops shooting, each round weaker** (`c825715e8`, one data block in `enemies.json`:
+   `squad.max_shooters_share` 0.5 -> 0.75, `own_weapon_damage` pistol 3 -> 1.5, rifle 2 -> 1.5). Average bot, 20
+   seeds (`evidence/n31/foes/noise.md`), main | final (HEAD) | B: idle share 65 | 53 | 43 %, foes firing per second
+   1.02 | 0.83 | 1.07, foes that never fired 332 | 308 | 255 of ~1050, react p50 1.05 | 0.67 | 0.70 s, Rivet damage
+   waves 1-4 63.8 | 70.0 | 74.0 (rail +-15 % = 54.2..73.4: B is 0.6 over), deaths 13 | 15 | 13 of 20 runs, waves 6/7
+   reached 10/9 | 7/5 | 12/9. B minus final damage 4.0 +- 21.3 (95 %): inside the noise. B is the only setting that
+   beats main on every fire number at main's death count; it is not on HEAD only because it misses the brief's rail by
+   0.6. Clip: `C:\Users\kazda\kiro\gtai-masters\n31\foes\callb_wave3_side.mp4` (final | B, seed 3, wave 3).
+
 1. Fight-move speed share 0.45 of `speed_mps` (`enemies.json` `fight_speed_k`): (clip pending).
 2. Simultaneous shooters: fixed 2 -> `max(3, ceil(0.5 x ranged alive))` (`squad.max_shooters_share`).
 3. Each kind its own gun (pistol / rifle / cannon, `squad.own_weapons`) against the shared assault rifle: damage
