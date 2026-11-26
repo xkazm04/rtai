@@ -3,7 +3,6 @@
 Branch `n31-melee`, worktree `gtai-wt/n23-street`, base `ba8e470b0`. Owner's notes served: 5 (melee passes
 through, nothing happens; the space in which melee hurts), 6 (fatalities on advanced melee weapons; uneven impacts).
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n31\melee\` (`frames.json`, best first).
-DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
 
 ## What works
 
@@ -73,8 +72,17 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   `impacts_sheet_before_after.png`), scores hit human / robot / shield: katana 1/1/2 -> 2/2/2, plasma sword
   1/1/1 -> 2/2/2, chainsaw 1/0/1 -> 2/2/2, baton 2/2/1 -> 2/2/2, pistol and gatling 1/1/2 -> 2/1/2, claw 3/2/2
   (the reference) unchanged. Caveats: the 'human' cell is the riot guard; gun rows draw no victim at the stop.
+- Mutate (`evidence/n31-melee/04-impacts/mutate.md`, `--max=20`, test subsets): `shield_sparks.gd` 11/19 =
+  57.9 %, `gun_fx_wound.gd` 8/19 = 42.1 %, `blade_marks.gd` 0/6 (incomplete; the survivors are drawing geometry
+  and alpha that a headless test never sees).
 - Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
   no digest moved (68 scenarios pass).
+
+### Item 5: the amber print rule (a patch for the Director, core render)
+- `evidence/n31-melee/05-amber/look_d4_item.patch` + `rule.md`: in `look_d4_item.gdshader` vermilion is kept only
+  when the colour is nearer vermilion than the amber-ink segment; the dark ember mixes (t 0.30-0.35) now print
+  amber instead of vermilion and the rim-to-ink half ink. Pure vermilion and Rivet's collar stay vermilion.
+  Node mirror `tools/melee/amber_rule.mjs` + test 4/4. Not applied (core render is no lane's file); no still pair.
 
 ## What does not
 - Enemy melee on Rivet (item 1/2 second half): measured (`evidence/n31-melee/01-foes/before/before.md`): no hit
@@ -113,7 +121,14 @@ DRAFT (session 5, 02:20): sections marked OPEN are filled at the end.
   low shake id for the grind.
 
 ## Next steps
-OPEN.
+1. Owner's verdict on the fatality frequency (call 2): if every kill is too much, a share or cooldown value.
+2. Enemy melee tells (foes): unlock the aim at the strike or narrow it, so a sidestep out of a drawn swing is
+   safe; then re-run `tools/melee/foe_reach.mjs` (the before is committed).
+3. Apply the amber print patch (Director) and re-shoot the plasma sear still.
+4. Make the drawn reach not depend on facing (katana 3.14 m at facing 0, 1.91 m at 90): a per-direction blade
+   length in the swing view, or one reach clamp.
+5. Raise the light guns on a robot (audit 1) and give the shotgun its kill row.
+6. Pixel tests for `blade_marks.gd` (mutate 0/6: drawing geometry no headless test sees).
 
 ## Builder ledger
 26 calls (sonnet and opus Claude sub-agents), about 790 builder-minutes; 5 accepted whole, 20 accepted-partial,
