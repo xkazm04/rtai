@@ -53,7 +53,8 @@ func note(arena: CombatArena, h: Fighter, mind: SquadMind) -> void:
 		return
 	var gait: Variant = mind.agent.get("gait")
 	if gait is Object:
-		if (gait as Object).get("mode") == 0:
+		var obj: Object = gait
+		if obj.get("mode") == 0:
 			_fight += 1
 		else:
 			_travel += 1

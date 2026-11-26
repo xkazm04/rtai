@@ -202,7 +202,8 @@
         "2026-11-25: n31 foes b1: the waiting probe lives in project/dev/foes_n31 as brief b1 names it (dev_loc 39760 -> 40114)",
         "2026-11-25: n31 foes b3: play_take dev scene for before|after gauntlet films (dev_loc 40114 -> 40311)",
         "2026-11-25: n31 foes b4a: the engaged rule + pressing share in the waiting probe, project/dev/foes_n31 as brief b4 names it (dev_loc 40311 -> 40443)",
-        "2026-11-26: stalk pilot and track helpers for n31 foes gait take (dev_loc 40443 -> 40578)"
+        "2026-11-26: stalk pilot and track helpers for n31 foes gait take (dev_loc 40443 -> 40578)",
+        "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (dev_loc 40578 -> 40677)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -214,7 +215,7 @@
         "project/dev/cast": 4195,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
-        "project/dev/foes_n31": 818,
+        "project/dev/foes_n31": 917,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 2592,
         "project/dev/ghost-forms": 1939,
@@ -245,7 +246,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 40578
+      "total": 40677
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -265,7 +266,8 @@
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (direct_cmdline_reads 162 -> 163)",
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)",
         "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)",
-        "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)"
+        "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)",
+        "2026-11-26: foes_n31 dev helpers (stalk track, b5 yard rounds) (direct_cmdline_reads 168 -> 169)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -284,6 +286,7 @@
         "project/dev/enemy_ai/aim_lead_ab.gd": 1,
         "project/dev/enemy_ai/enemy_pit_view.gd": 1,
         "project/dev/enemy_ai/enemy_rig_fight_run.gd": 1,
+        "project/dev/foes_n31/yard_rounds.gd": 1,
         "project/dev/frames/collect_call_frames.gd": 1,
         "project/dev/frames/quest1_clip.gd": 1,
         "project/dev/ghost-forms/forms_lineup.gd": 1,
@@ -419,7 +422,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 168
+      "total": 169
     },
     "files_near_cap": {
       "accepted": [
