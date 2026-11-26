@@ -204,7 +204,8 @@
         "2026-11-25: n31 melee 01a: blade_volume dev measurement scene in project/dev/melee_n31 (dev only, measures the before) (dev_loc 40103 -> 40867)",
         "2026-11-25: 2026-11-25: n31 melee 01c: blade_pixels dev probe renders the drawn swing (pixels, not the node model) for the drawn-vs-hit before/after (dev_loc 40867 -> 41068)",
         "2026-11-25: n31 melee 03p2: dev/melee_n31/fatality_probe.gd, the fatality proof table's headless probe (dev only) (dev_loc 41068 -> 41216)",
-        "2026-11-25: n31 melee 04b: marks_still dev probe, stills of the blade hit marks on a cop at 64 px/m (dev only) (dev_loc 41216 -> 41339)"
+        "2026-11-25: n31 melee 04b: marks_still dev probe, stills of the blade hit marks on a cop at 64 px/m (dev only) (dev_loc 41216 -> 41339)",
+        "2026-11-26: n31 melee 02p4: sweep_clip dev scene (the hit volume filmed live, brief part 2) (dev_loc 41339 -> 41575)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -225,7 +226,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/melee_n31": 1579,
+        "project/dev/melee_n31": 1815,
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
@@ -247,7 +248,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 41339
+      "total": 41575
     },
     "direct_cmdline_reads": {
       "accepted": [
