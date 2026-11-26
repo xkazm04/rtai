@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { placedBase } from './yard_structures.mjs';
 import { opaqueBox, mismatch, verdict, fitCard, auditGauntlet, auditYard, summarize, PX_PER_M } from './audit.mjs';
 
 // A w x h RGBA image, opaque inside [x0,x1) x [y0,y1).
@@ -42,4 +43,25 @@ test('the real tables audit: every solid prop gets a verdict and the counts add 
   assert.ok(sum.solid >= 50);
   assert.equal(rows.filter((r) => r.arena === 'yard' && r.kind === 'cover_low').length, 14);
   assert.ok(Object.values(sum.by_verdict).reduce((a, b) => a + b, 0) === rows.length);
+});
+
+test('placedBase puts the lowest band and its column runs in world metres', () => {
+  // 96 x 48 px art stretched into 4 x 2 m centred at (10, 5): 24 px/m. Two feet 0.5 m wide in the bottom rows.
+  const w = 96, h = 48;
+  const data = Buffer.alloc(w * h * 4);
+  const fill = (x0, y0, x1, y1) => { for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) data[(y * w + x) * 4 + 3] = 255; };
+  fill(0, 0, 96, 20);
+  fill(10, 20, 22, 48);
+  fill(70, 20, 82, 48);
+  const pb = placedBase({ width: w, height: h, channels: 4, data }, [10, 5], [4, 2]);
+  assert.equal(pb.legs.length, 2);
+  assert.ok(Math.abs(pb.legs[0].x0 - 8.417) < 0.01 && Math.abs(pb.legs[0].x1 - 8.917) < 0.01);
+  assert.equal(pb.base.y1, 6);
+});
+
+test('the yard audit lists the six arches and six spans and none of their legs is blocked', () => {
+  const rows = auditYard();
+  assert.equal(rows.filter((r) => r.legs_m).length, 12);
+  assert.ok(rows.filter((r) => r.legs_m).every((r) => r.legs_blocking === 0));
+  assert.equal(rows.filter((r) => r.id.includes(' vs ') && r.verdict === 'footprint north of drawn base').length, 6);
 });

@@ -3,13 +3,15 @@
  "summary": {
   "props": 128,
   "solid": 56,
-  "solid_mismatch_over_0_25_m": 9,
+  "solid_mismatch_over_0_25_m": 15,
   "solid_unmeasured": 0,
   "decorative_looks_solid": 29,
   "by_verdict": {
-   "ok": 90,
+   "ok": 72,
    "decorative-looks-solid candidate": 27,
    "invisible wall": 9,
+   "big drawn structure, legs walkable": 12,
+   "footprint north of drawn base": 6,
    "decorative-looks-solid": 2
   }
  },
@@ -143,6 +145,35 @@
    "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
   },
   {
+   "arena": "yard",
+   "id": "conveyor_tail vs arch_tail",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_torn.png (over-printed on the box)",
+   "footprint_m": [
+    5.4,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.734,
+    0.154
+   ],
+   "base_south_m": 21.991,
+   "box_south_m": 21.2,
+   "mismatch_m": {
+    "west": -1.661,
+    "east": -1.673,
+    "north": 1.837,
+    "south": -0.791
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.791,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
    "arena": "gauntlet",
    "id": "kiosk_plaza#2:cover_high",
    "segment": "kiosk_plaza",
@@ -176,126 +207,119 @@
   },
   {
    "arena": "yard",
-   "id": "fuel_vessel",
+   "id": "conveyor_feed vs arch_feed",
    "kind": "cover_low",
    "class": "blocks movement + shots",
+   "art": "belt_curve.png (over-printed on the box)",
    "footprint_m": [
-    2.4,
-    1.6
-   ],
-   "art": "pallet_toppled.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    2.361,
-    1.116
-   ],
-   "opaque_fraction": 0.502,
-   "mismatch_m": {
-    "west": 0.023,
-    "east": 0.016,
-    "north": 0.468,
-    "south": 0.016
-   },
-   "verdict": "invisible wall",
-   "worst_m": 0.468,
-   "sides": [
-    "north"
-   ]
-  },
-  {
-   "arena": "gauntlet",
-   "id": "loading_bay#5:cover_low",
-   "segment": "loading_bay",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    2,
+    5.2,
     1.2
    ],
-   "art": "dock_oil_drums",
-   "scale": 1.3,
    "drawn_base_m": [
-    1.213,
-    "front card, no floor depth"
+    8.459,
+    0.154
    ],
-   "card_height_m": 1.12,
-   "clipped_to_box": true,
+   "base_south_m": 5.593,
+   "box_south_m": 5,
    "mismatch_m": {
-    "west": 0.381,
-    "east": 0.406,
-    "north": 1.109,
-    "south": 0.04
+    "west": -1.624,
+    "east": -1.635,
+    "north": 1.639,
+    "south": -0.593
    },
-   "verdict": "invisible wall",
-   "worst_m": 0.406,
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.593,
    "sides": [
-    "west",
-    "east"
+    "south"
    ],
-   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
   },
   {
-   "arena": "gauntlet",
-   "id": "market_stalls#2:cover_high",
-   "segment": "market_stalls",
-   "kind": "cover_high",
+   "arena": "yard",
+   "id": "conveyor_return vs arch_return",
+   "kind": "cover_low",
    "class": "blocks movement + shots",
+   "art": "belt_curve_mirror.png (over-printed on the box)",
    "footprint_m": [
-    3.2,
-    2
+    5.4,
+    1.2
    ],
-   "art": "newsstand",
-   "scale": 1.35,
    "drawn_base_m": [
-    2.681,
-    "front card, no floor depth"
+    8.459,
+    0.154
    ],
-   "card_height_m": 1.92,
-   "clipped_to_box": true,
+   "base_south_m": 13.793,
+   "box_south_m": 13.2,
    "mismatch_m": {
-    "west": 0.251,
-    "east": 0.268,
-    "north": 1.867,
-    "south": 0.04
+    "west": -1.535,
+    "east": -1.524,
+    "north": 1.639,
+    "south": -0.593
    },
-   "verdict": "invisible wall",
-   "worst_m": 0.268,
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.593,
    "sides": [
-    "west",
-    "east"
+    "south"
    ],
-   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
   },
   {
-   "arena": "gauntlet",
-   "id": "crosswalk#2:cover_high",
-   "segment": "crosswalk",
-   "kind": "cover_high",
+   "arena": "yard",
+   "id": "conveyor_turn vs arch_turn",
+   "kind": "cover_low",
    "class": "blocks movement + shots",
+   "art": "belt_straight_b.png (over-printed on the box)",
    "footprint_m": [
-    3,
-    2
+    5.2,
+    1.2
    ],
-   "art": "newsstand",
-   "scale": 1.25,
    "drawn_base_m": [
-    2.509,
-    "front card, no floor depth"
+    8.525,
+    0.154
    ],
-   "card_height_m": 1.92,
-   "clipped_to_box": true,
+   "base_south_m": 9.561,
+   "box_south_m": 9,
    "mismatch_m": {
-    "west": 0.238,
-    "east": 0.253,
-    "north": 1.867,
-    "south": 0.04
+    "west": -1.651,
+    "east": -1.674,
+    "north": 1.607,
+    "south": -0.561
    },
-   "verdict": "invisible wall",
-   "worst_m": 0.253,
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.561,
    "sides": [
-    "east"
+    "south"
    ],
-   "note": "north side not measurable (front-facing card); hatched slab marks the footprint"
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_door vs arch_door",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a.png (over-printed on the box)",
+   "footprint_m": [
+    5.4,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.481,
+    0.154
+   ],
+   "base_south_m": 1.76,
+   "box_south_m": 1.2,
+   "mismatch_m": {
+    "west": -1.546,
+    "east": -1.535,
+    "north": 1.606,
+    "south": -0.56
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.56,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
   }
  ],
  "rows": [
@@ -1491,162 +1515,6 @@
   },
   {
    "arena": "yard",
-   "id": "conveyor_door",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    5.4,
-    1.2
-   ],
-   "art": "footing_shadow.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    4.957,
-    1.106
-   ],
-   "opaque_fraction": 0.658,
-   "mismatch_m": {
-    "west": 0.232,
-    "east": 0.211,
-    "north": 0.056,
-    "south": 0.038
-   },
-   "verdict": "ok",
-   "worst_m": 0,
-   "sides": []
-  },
-  {
-   "arena": "yard",
-   "id": "conveyor_feed",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    5.2,
-    1.2
-   ],
-   "art": "footing_shadow.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    4.773,
-    1.106
-   ],
-   "opaque_fraction": 0.658,
-   "mismatch_m": {
-    "west": 0.223,
-    "east": 0.203,
-    "north": 0.056,
-    "south": 0.037
-   },
-   "verdict": "ok",
-   "worst_m": 0,
-   "sides": []
-  },
-  {
-   "arena": "yard",
-   "id": "conveyor_turn",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    5.2,
-    1.2
-   ],
-   "art": "footing_shadow.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    4.773,
-    1.106
-   ],
-   "opaque_fraction": 0.658,
-   "mismatch_m": {
-    "west": 0.223,
-    "east": 0.203,
-    "north": 0.056,
-    "south": 0.037
-   },
-   "verdict": "ok",
-   "worst_m": 0,
-   "sides": []
-  },
-  {
-   "arena": "yard",
-   "id": "conveyor_return",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    5.4,
-    1.2
-   ],
-   "art": "footing_shadow.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    4.957,
-    1.106
-   ],
-   "opaque_fraction": 0.658,
-   "mismatch_m": {
-    "west": 0.232,
-    "east": 0.211,
-    "north": 0.056,
-    "south": 0.037
-   },
-   "verdict": "ok",
-   "worst_m": 0,
-   "sides": []
-  },
-  {
-   "arena": "yard",
-   "id": "conveyor_bend",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    5.2,
-    1.2
-   ],
-   "art": "footing_shadow.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    4.773,
-    1.106
-   ],
-   "opaque_fraction": 0.658,
-   "mismatch_m": {
-    "west": 0.223,
-    "east": 0.203,
-    "north": 0.056,
-    "south": 0.038
-   },
-   "verdict": "ok",
-   "worst_m": 0,
-   "sides": []
-  },
-  {
-   "arena": "yard",
-   "id": "conveyor_tail",
-   "kind": "cover_low",
-   "class": "blocks movement + shots",
-   "footprint_m": [
-    5.4,
-    1.2
-   ],
-   "art": "footing_shadow.png",
-   "projected_shadow": true,
-   "drawn_base_m": [
-    4.957,
-    1.106
-   ],
-   "opaque_fraction": 0.658,
-   "mismatch_m": {
-    "west": 0.232,
-    "east": 0.211,
-    "north": 0.056,
-    "south": 0.038
-   },
-   "verdict": "ok",
-   "worst_m": 0,
-   "sides": []
-  },
-  {
-   "arena": "yard",
    "id": "pallet_west",
    "kind": "cover_low",
    "class": "blocks movement + shots",
@@ -1854,6 +1722,677 @@
    "verdict": "ok",
    "worst_m": 0,
    "sides": []
+  },
+  {
+   "arena": "yard",
+   "id": "arch_door",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_straight_a.png",
+   "footprint_m": [
+    8.668,
+    3.806
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.481,
+    3.63
+   ],
+   "opaque_fraction": 0.69,
+   "legs_m": [
+    {
+     "x": [
+      21.91,
+      25.837
+     ],
+     "y": [
+      1.463,
+      1.76
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_feed",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_curve.png",
+   "footprint_m": [
+    8.646,
+    4.598
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.459,
+    4.422
+   ],
+   "opaque_fraction": 0.518,
+   "legs_m": [
+    {
+     "x": [
+      28.068,
+      31.808
+     ],
+     "y": [
+      5.296,
+      5.593
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_turn",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_straight_b.png",
+   "footprint_m": [
+    8.723,
+    3.817
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.525,
+    3.63
+   ],
+   "opaque_fraction": 0.689,
+   "legs_m": [
+    {
+     "x": [
+      31.883,
+      35.788
+     ],
+     "y": [
+      9.264,
+      9.561
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_return",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_curve_mirror.png",
+   "footprint_m": [
+    8.646,
+    4.598
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.459,
+    4.422
+   ],
+   "opaque_fraction": 0.518,
+   "legs_m": [
+    {
+     "x": [
+      27.992,
+      31.732
+     ],
+     "y": [
+      13.496,
+      13.793
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_bend",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_straight_a_mirror.png",
+   "footprint_m": [
+    8.668,
+    3.806
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.481,
+    3.63
+   ],
+   "opaque_fraction": 0.69,
+   "legs_m": [
+    {
+     "x": [
+      23.663,
+      27.59
+     ],
+     "y": [
+      17.863,
+      18.16
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "arch_tail",
+   "kind": "arch",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_torn.png",
+   "footprint_m": [
+    8.921,
+    3.674
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.734,
+    3.487
+   ],
+   "opaque_fraction": 0.575,
+   "legs_m": [
+    {
+     "x": [
+      29.808,
+      31.557
+     ],
+     "y": [
+      21.694,
+      21.991
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      32.261,
+      32.635
+     ],
+     "y": [
+      21.694,
+      21.991
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      32.8,
+      34.098
+     ],
+     "y": [
+      21.694,
+      21.991
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 3,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "belt + machines art over-printed on the conveyor_* box; only the box blocks"
+  },
+  {
+   "arena": "yard",
+   "id": "span_door_feed",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_door_feed.png",
+   "footprint_m": [
+    8.514,
+    4.928
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    7.799,
+    4.411
+   ],
+   "opaque_fraction": 0.262,
+   "legs_m": [
+    {
+     "x": [
+      34.777,
+      35.327
+     ],
+     "y": [
+      2.002,
+      2.299
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_feed_turn",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_feed_turn.png",
+   "footprint_m": [
+    6.039,
+    5.269
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    5.247,
+    5.049
+   ],
+   "opaque_fraction": 0.251,
+   "legs_m": [
+    {
+     "x": [
+      27.58,
+      27.998
+     ],
+     "y": [
+      7.01,
+      7.307
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      28.867,
+      29.658
+     ],
+     "y": [
+      7.01,
+      7.307
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 2,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_turn_return",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_turn_return.png",
+   "footprint_m": [
+    7.161,
+    6.204
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    6.391,
+    6.105
+   ],
+   "opaque_fraction": 0.245,
+   "legs_m": [
+    {
+     "x": [
+      33.745,
+      33.966
+     ],
+     "y": [
+      11.738,
+      12.035
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      35.308,
+      35.781
+     ],
+     "y": [
+      11.738,
+      12.035
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 2,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_return_bend",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_return_bend.png",
+   "footprint_m": [
+    6.963,
+    7.491
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    6.446,
+    7.392
+   ],
+   "opaque_fraction": 0.24,
+   "legs_m": [
+    {
+     "x": [
+      20.667,
+      21.074
+     ],
+     "y": [
+      15.987,
+      16.284
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      21.393,
+      21.547
+     ],
+     "y": [
+      15.987,
+      16.284
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 2,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_bend_tail",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_bend_tail.png",
+   "footprint_m": [
+    4.367,
+    5.687
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    4.256,
+    5.323
+   ],
+   "opaque_fraction": 0.297,
+   "legs_m": [
+    {
+     "x": [
+      26.907,
+      27.204
+     ],
+     "y": [
+      19.898,
+      20.194
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      27.424,
+      27.523
+     ],
+     "y": [
+      19.898,
+      20.194
+     ],
+     "blocked_by": []
+    },
+    {
+     "x": [
+      27.831,
+      27.941
+     ],
+     "y": [
+      19.898,
+      20.194
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 3,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "span_mouth_door",
+   "kind": "span",
+   "class": "passable (not in layout.cover)",
+   "art": "belt_span_mouth_door.png",
+   "footprint_m": [
+    8.789,
+    5.192
+   ],
+   "projected_shadow": false,
+   "drawn_span_m": [
+    8.184,
+    3.982
+   ],
+   "opaque_fraction": 0.248,
+   "legs_m": [
+    {
+     "x": [
+      13.457,
+      13.853
+     ],
+     "y": [
+      1.292,
+      1.589
+     ],
+     "blocked_by": []
+    }
+   ],
+   "legs": 1,
+   "legs_blocking": 0,
+   "verdict": "big drawn structure, legs walkable",
+   "worst_m": 0,
+   "note": "overhead span: PrologueSpanShadow draws Rivet under it, no collider"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_door vs arch_door",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a.png (over-printed on the box)",
+   "footprint_m": [
+    5.4,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.481,
+    0.154
+   ],
+   "base_south_m": 1.76,
+   "box_south_m": 1.2,
+   "mismatch_m": {
+    "west": -1.546,
+    "east": -1.535,
+    "north": 1.606,
+    "south": -0.56
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.56,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_feed vs arch_feed",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve.png (over-printed on the box)",
+   "footprint_m": [
+    5.2,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.459,
+    0.154
+   ],
+   "base_south_m": 5.593,
+   "box_south_m": 5,
+   "mismatch_m": {
+    "west": -1.624,
+    "east": -1.635,
+    "north": 1.639,
+    "south": -0.593
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.593,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_turn vs arch_turn",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_b.png (over-printed on the box)",
+   "footprint_m": [
+    5.2,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.525,
+    0.154
+   ],
+   "base_south_m": 9.561,
+   "box_south_m": 9,
+   "mismatch_m": {
+    "west": -1.651,
+    "east": -1.674,
+    "north": 1.607,
+    "south": -0.561
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.561,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_return vs arch_return",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_curve_mirror.png (over-printed on the box)",
+   "footprint_m": [
+    5.4,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.459,
+    0.154
+   ],
+   "base_south_m": 13.793,
+   "box_south_m": 13.2,
+   "mismatch_m": {
+    "west": -1.535,
+    "east": -1.524,
+    "north": 1.639,
+    "south": -0.593
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.593,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_bend vs arch_bend",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_straight_a_mirror.png (over-printed on the box)",
+   "footprint_m": [
+    5.2,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.481,
+    0.154
+   ],
+   "base_south_m": 18.16,
+   "box_south_m": 17.6,
+   "mismatch_m": {
+    "west": -1.635,
+    "east": -1.646,
+    "north": 1.606,
+    "south": -0.56
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.56,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
+  },
+  {
+   "arena": "yard",
+   "id": "conveyor_tail vs arch_tail",
+   "kind": "cover_low",
+   "class": "blocks movement + shots",
+   "art": "belt_torn.png (over-printed on the box)",
+   "footprint_m": [
+    5.4,
+    1.2
+   ],
+   "drawn_base_m": [
+    8.734,
+    0.154
+   ],
+   "base_south_m": 21.991,
+   "box_south_m": 21.2,
+   "mismatch_m": {
+    "west": -1.661,
+    "east": -1.673,
+    "north": 1.837,
+    "south": -0.791
+   },
+   "verdict": "footprint north of drawn base",
+   "worst_m": 0.791,
+   "sides": [
+    "south"
+   ],
+   "note": "footing_shadow row above is the floor shadow; this is the machine/belt art drawn over it. south = box south minus drawn bottom (negative: art hangs below the box). W/E/N not compared: belt art spans 8.7 m, box 5.2 m"
   },
   {
    "arena": "yard",
@@ -2183,126 +2722,6 @@
    "kind": "debris",
    "class": "decorative",
    "art": "fallen_washer.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "arch_door",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_straight_a.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "arch_feed",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_curve.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "arch_turn",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_straight_b.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "arch_return",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_curve_mirror.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "arch_bend",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_straight_a_mirror.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "arch_tail",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_torn.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "span_door_feed",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_span_door_feed.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "span_feed_turn",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_span_feed_turn.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "span_turn_return",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_span_turn_return.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "span_return_bend",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_span_return_bend.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "span_bend_tail",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_span_bend_tail.png",
-   "projected_shadow": false,
-   "verdict": "ok",
-   "worst_m": 0
-  },
-  {
-   "arena": "yard",
-   "id": "span_mouth_door",
-   "kind": "debris",
-   "class": "decorative",
-   "art": "belt_span_mouth_door.png",
    "projected_shadow": false,
    "verdict": "ok",
    "worst_m": 0

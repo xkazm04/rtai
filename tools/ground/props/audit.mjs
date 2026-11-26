@@ -5,18 +5,15 @@
 // size = min(art metres * scale, box - 0.04)) and prologue_yard_paint.gd `wreck` (art stretched
 // into the footprint, optional crop). Usage: node tools/ground/props/audit.mjs [--out=<dir>]
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path'; import { fileURLToPath } from 'node:url';
 import { readPng } from '../../film/png.mjs';
+import { auditYardStructures } from './yard_structures.mjs';
 
 export const PX_PER_M = 48; // boot/collect_call/view/ink.gd
-export const TOL_M = 0.25;
-export const ALPHA = 32;
-export const BAND_M = 0.15; // gauntlet base = the lowest 15 cm of opaque art
+export const TOL_M = 0.25; export const ALPHA = 32; export const BAND_M = 0.15; // gauntlet base = the lowest 15 cm of opaque art
 export const SOLID = ['wall_high', 'cover_high', 'cover_low'];
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
-const PROJECT = join(ROOT, 'project');
-const r3 = (v) => Math.round(v * 1000) / 1000;
+export const PROJECT = join(ROOT, 'project'); export const r3 = (v) => Math.round(v * 1000) / 1000;
 
 /** Opaque bounding box {x0,y0,x1,y1} (px, x1/y1 exclusive) of a region, or null when nothing is opaque. */
 export function opaqueBox(png, region = { x: 0, y: 0, w: png.width, h: png.height }, alpha = ALPHA) {
@@ -87,9 +84,9 @@ export function fitCard(png, box, scaleM) {
   return { drawn, base, cardH: r3((opaque.y1 - opaque.y0) * ky), clipped: sw < art.w * scaleM - 1e-9 || sh < art.h * scaleM - 1e-9 };
 }
 
-const rectOf = (at, size) => ({ x0: at[0] - size[0] / 2, x1: at[0] + size[0] / 2, y0: at[1] - size[1] / 2, y1: at[1] + size[1] / 2 });
+export const rectOf = (at, size) => ({ x0: at[0] - size[0] / 2, x1: at[0] + size[0] / 2, y0: at[1] - size[1] / 2, y1: at[1] + size[1] / 2 });
 const readJson = (rel) => JSON.parse(readFileSync(join(PROJECT, rel), 'utf8'));
-const load = (path) => {
+export const load = (path) => {
   try {
     return readPng(path);
   } catch (e) {
@@ -152,14 +149,18 @@ export function auditYard() {
     const mm = mismatch(box, base);
     rows.push({ ...row, drawn_base_m: [r3(base.x1 - base.x0), r3(base.y1 - base.y0)], opaque_fraction: r3(o.fraction), mismatch_m: mm, ...verdict(mm, ['west', 'east', 'north', 'south']) });
   }
+  const st = auditYardStructures(look, look.layout.cover.map((c) => ({ id: c.id, box: rectOf(c.at, c.size_m) })));
+  const paired = new Set(st.filter((r) => r.id.includes(' vs ')).map((r) => r.id.split(' vs ')[0]));
+  rows.splice(0, rows.length, ...rows.filter((r) => !paired.has(r.id)), ...st);
   const fxShadow = Boolean(look.shadows?.fixture_reach_m);
   for (const f of look.fixtures) {
     const height = f.size_m[1];
     rows.push({ arena: 'yard', id: f.art.split('/').pop().replace('.png', '') + '@' + f.at.join(','), kind: 'fixture', class: 'decorative', art: f.art.split('/').pop(), standing_height_m: height, projected_shadow: fxShadow, verdict: height > 0.5 && fxShadow ? 'decorative-looks-solid' : 'ok', worst_m: 0 });
   }
-  for (const d of look.layout.debris) rows.push({ arena: 'yard', id: d.id, kind: 'debris', class: 'decorative', art: d.art.split('/').pop(), projected_shadow: false, verdict: 'ok', worst_m: 0 });
+  for (const d of look.layout.debris.filter((x) => !/^(arch|span)_/.test(x.id))) rows.push({ arena: 'yard', id: d.id, kind: 'debris', class: 'decorative', art: d.art.split('/').pop(), projected_shadow: false, verdict: 'ok', worst_m: 0 });
   return rows;
 }
+
 
 export function summarize(rows) {
   const solid = rows.filter((r) => r.class.startsWith('blocks'));
@@ -177,7 +178,7 @@ export function summarize(rows) {
 export const worst = (rows, n = 10) => rows.filter((r) => r.verdict !== 'ok' && r.verdict !== 'unmeasured' && r.worst_m > 0).sort((a, b) => b.worst_m - a.worst_m).slice(0, n);
 
 export function markdown(rows, sum) {
-  const lines = ['# Prop audit before (n31-17)', '', 'Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 strip cards the game actually shows are NOT measured here. In the tilt70 stills (masters n31/ground/item4/audit_gauntlet_before.png) market stalls, kiosk and loading-bay props fill their footprint outline, so the gauntlet "invisible wall" rows below are flat-art numbers and need the strip-based probe (next call). The yard numbers read the art the yard really draws. The existing overlays (show_solid_bounds, --footprints) draw one thin white outline for every solid and do not label class. Tolerance 0.25 m. Mismatch = footprint minus drawn base per side in m (positive: the footprint reaches beyond the drawing). Gauntlet N is not measurable (front-facing card).', '', '```json', JSON.stringify(sum, null, 1), '```', '', '| arena | id | class | footprint m | drawn base m | W | E | N | S | verdict | worst m |', '|---|---|---|---|---|---|---|---|---|---|---|'];
+  const lines = ['# Prop audit before (n31-17, yard structures n31-18)', '', 'Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 strip cards the game actually shows are NOT measured here. In the tilt70 stills (masters n31/ground/item4/audit_gauntlet_before.png) market stalls, kiosk and loading-bay props fill their footprint outline, so the gauntlet "invisible wall" rows below are flat-art numbers and need the strip-based probe (next call). The yard numbers read the art the yard really draws. The existing overlays (show_solid_bounds, --footprints) draw one thin white outline for every solid and do not label class. Tolerance 0.25 m. Mismatch = footprint minus drawn base per side in m (positive: the footprint reaches beyond the drawing). Gauntlet N is not measurable (front-facing card).', '', '```json', JSON.stringify(sum, null, 1), '```', '', '| arena | id | class | footprint m | drawn base m | W | E | N | S | verdict | worst m |', '|---|---|---|---|---|---|---|---|---|---|---|'];
   for (const r of rows) {
     const m = r.mismatch_m ?? {};
     const foot = r.footprint_m ? r.footprint_m.join('x') : r.standing_height_m != null ? 'h ' + r.standing_height_m : '';

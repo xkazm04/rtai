@@ -1,4 +1,4 @@
-# Prop audit before (n31-17)
+# Prop audit before (n31-17, yard structures n31-18)
 
 Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 strip cards the game actually shows are NOT measured here. In the tilt70 stills (masters n31/ground/item4/audit_gauntlet_before.png) market stalls, kiosk and loading-bay props fill their footprint outline, so the gauntlet "invisible wall" rows below are flat-art numbers and need the strip-based probe (next call). The yard numbers read the art the yard really draws. The existing overlays (show_solid_bounds, --footprints) draw one thin white outline for every solid and do not label class. Tolerance 0.25 m. Mismatch = footprint minus drawn base per side in m (positive: the footprint reaches beyond the drawing). Gauntlet N is not measurable (front-facing card).
 
@@ -6,13 +6,15 @@ Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 stri
 {
  "props": 128,
  "solid": 56,
- "solid_mismatch_over_0_25_m": 9,
+ "solid_mismatch_over_0_25_m": 15,
  "solid_unmeasured": 0,
  "decorative_looks_solid": 29,
  "by_verdict": {
-  "ok": 90,
+  "ok": 72,
   "decorative-looks-solid candidate": 27,
   "invisible wall": 9,
+  "big drawn structure, legs walkable": 12,
+  "footprint north of drawn base": 6,
   "decorative-looks-solid": 2
  }
 }
@@ -89,12 +91,6 @@ Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 stri
 | gauntlet | market_stalls:dock_cargo_tarp@20,7.5 | decorative | h 3 |  |  |  |  |  | decorative-looks-solid candidate | 0 |
 | gauntlet | market_stalls:down_flower_crates@26,-7.1 | decorative | h 2.372 |  |  |  |  |  | decorative-looks-solid candidate | 0 |
 | gauntlet | market_stalls:bench@10,7.7 | decorative | h 1.342 |  |  |  |  |  | decorative-looks-solid candidate | 0 |
-| yard | conveyor_door | blocks movement + shots | 5.4x1.2 | 4.957 x 1.106 | 0.232 | 0.211 | 0.056 | 0.038 | ok | 0 |
-| yard | conveyor_feed | blocks movement + shots | 5.2x1.2 | 4.773 x 1.106 | 0.223 | 0.203 | 0.056 | 0.037 | ok | 0 |
-| yard | conveyor_turn | blocks movement + shots | 5.2x1.2 | 4.773 x 1.106 | 0.223 | 0.203 | 0.056 | 0.037 | ok | 0 |
-| yard | conveyor_return | blocks movement + shots | 5.4x1.2 | 4.957 x 1.106 | 0.232 | 0.211 | 0.056 | 0.037 | ok | 0 |
-| yard | conveyor_bend | blocks movement + shots | 5.2x1.2 | 4.773 x 1.106 | 0.223 | 0.203 | 0.056 | 0.038 | ok | 0 |
-| yard | conveyor_tail | blocks movement + shots | 5.4x1.2 | 4.957 x 1.106 | 0.232 | 0.211 | 0.056 | 0.038 | ok | 0 |
 | yard | pallet_west | blocks movement + shots | 2.4x1.6 | 2.025 x 1.561 | 0.195 | 0.18 | 0.023 | 0.016 | ok | 0 |
 | yard | fuel_vessel | blocks movement + shots | 2.4x1.6 | 2.361 x 1.116 | 0.023 | 0.016 | 0.468 | 0.016 | invisible wall | 0.468 |
 | yard | burnt_pickup | blocks movement + shots | 4.3x2.7 | 4.3 x 2.7 | 0 | 0 | 0 | 0 | ok | 0 |
@@ -103,6 +99,24 @@ Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 stri
 | yard | scrap_skip | blocks movement + shots | 4.4x2.4 | 4.4 x 2.4 | 0 | 0 | 0 | 0 | ok | 0 |
 | yard | stack_broken_sw | blocks movement + shots | 2.4x0.85 | 2.369 x 0.819 | 0.023 | 0.008 | 0.016 | 0.016 | ok | 0 |
 | yard | stack_double_west | blocks movement + shots | 2.4x1 | 2.369 x 0.977 | 0.023 | 0.008 | 0.008 | 0.016 | ok | 0 |
+| yard | arch_door | passable (not in layout.cover) | 8.668x3.806 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | arch_feed | passable (not in layout.cover) | 8.646x4.598 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | arch_turn | passable (not in layout.cover) | 8.723x3.817 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | arch_return | passable (not in layout.cover) | 8.646x4.598 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | arch_bend | passable (not in layout.cover) | 8.668x3.806 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | arch_tail | passable (not in layout.cover) | 8.921x3.674 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | span_door_feed | passable (not in layout.cover) | 8.514x4.928 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | span_feed_turn | passable (not in layout.cover) | 6.039x5.269 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | span_turn_return | passable (not in layout.cover) | 7.161x6.204 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | span_return_bend | passable (not in layout.cover) | 6.963x7.491 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | span_bend_tail | passable (not in layout.cover) | 4.367x5.687 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | span_mouth_door | passable (not in layout.cover) | 8.789x5.192 |  |  |  |  |  | big drawn structure, legs walkable | 0 |
+| yard | conveyor_door vs arch_door | blocks movement + shots | 5.4x1.2 | 8.481 x 0.154 | -1.546 | -1.535 | 1.606 | -0.56 | footprint north of drawn base | 0.56 |
+| yard | conveyor_feed vs arch_feed | blocks movement + shots | 5.2x1.2 | 8.459 x 0.154 | -1.624 | -1.635 | 1.639 | -0.593 | footprint north of drawn base | 0.593 |
+| yard | conveyor_turn vs arch_turn | blocks movement + shots | 5.2x1.2 | 8.525 x 0.154 | -1.651 | -1.674 | 1.607 | -0.561 | footprint north of drawn base | 0.561 |
+| yard | conveyor_return vs arch_return | blocks movement + shots | 5.4x1.2 | 8.459 x 0.154 | -1.535 | -1.524 | 1.639 | -0.593 | footprint north of drawn base | 0.593 |
+| yard | conveyor_bend vs arch_bend | blocks movement + shots | 5.2x1.2 | 8.481 x 0.154 | -1.635 | -1.646 | 1.606 | -0.56 | footprint north of drawn base | 0.56 |
+| yard | conveyor_tail vs arch_tail | blocks movement + shots | 5.4x1.2 | 8.734 x 0.154 | -1.661 | -1.673 | 1.837 | -0.791 | footprint north of drawn base | 0.791 |
 | yard | gate_lamp@41.2,32.5 | decorative | h 1.6 |  |  |  |  |  | decorative-looks-solid | 0 |
 | yard | hook_drum@34.15,8.79 | decorative | h 0.88 |  |  |  |  |  | decorative-looks-solid | 0 |
 | yard | drag_door | decorative |  |  |  |  |  |  | ok | 0 |
@@ -136,15 +150,3 @@ Gauntlet measured on the flat art (city/art/props PNG, 48 px/m); the tilt70 stri
 | yard | washer_feed | decorative |  |  |  |  |  |  | ok | 0 |
 | yard | door_return | decorative |  |  |  |  |  |  | ok | 0 |
 | yard | washer_tail | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | arch_door | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | arch_feed | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | arch_turn | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | arch_return | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | arch_bend | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | arch_tail | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | span_door_feed | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | span_feed_turn | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | span_turn_return | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | span_return_bend | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | span_bend_tail | decorative |  |  |  |  |  |  | ok | 0 |
-| yard | span_mouth_door | decorative |  |  |  |  |  |  | ok | 0 |
