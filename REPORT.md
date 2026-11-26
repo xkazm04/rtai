@@ -91,8 +91,9 @@ is docs/evidence/JOURNAL/REPORT only.
   57.9 %, `gun_fx_wound.gd` 8/19 = 42.1 % (06b then pinned the early-out counts, robot/flesh counts, blocked blood
   throw and the zero-direction fallback in 10 tests; the Director's re-run at 06:02 after the gate, `--max=20 --tests=test_gun_fx_wound`, 463 s: `gun_fx_wound.gd`
   94.7 % = 18 / (18 + 1), invalid 1; the one survivor is the splash position `at * PX_PER_M` at :41, a view-only value); `shield_sparks.gd` 57.9 % -> 84.2 % = 16 / (16 + 3), invalid 1 (464 s, `--tests=test_shield_sparks_melee`;
-  survivors: the early-out count at :64, the robot-vs-slab kind branch value at :77, the face offset at :103), `blade_marks.gd` 0/6 (incomplete; the survivors are drawing geometry
-  and alpha that a headless test never sees).
+  survivors: the early-out count at :64, the robot-vs-slab kind branch value at :77, the face offset at :103), `blade_marks.gd` 5.0 % = 1 / (1 + 19) (Director's full run at 06:11,
+  `--max=20 --tests=test_blade_marks`, 345 s): the survivors are the cut and sear stroke geometry (offsets,
+  widths, the 45 deg slant, alpha) that no headless test reads. Not fixed tonight (after the gate; tests are code).
 - Ghost lane's NEED served: Ohm's and Kerf's deploy kills play `ohm_shock` / `kerf_split` (`also_weapons`),
   no digest moved (68 scenarios pass).
 
@@ -110,6 +111,7 @@ is docs/evidence/JOURNAL/REPORT only.
 - The 64 px/m slow clips with the hit sector drawn do not read (three calls: 02p4, 02p5; the stage's crowd
   covers the dummies, the sector is lost under the rigs). Stopped by decision; the polar sheet stands in.
 - Nothing reaches 3/3 in the audit except the claw on a human; the light guns on a robot stay 1.
+- `blade_marks.gd` (the katana cut and plasma sear marks) is barely tested: mutate 5.0 %, only its wiring is pinned.
 
 ## What blocked or slowed you
 - Lane Godot lock self-deadlock (03p5 took the lock, then a tool that takes it itself): 27 min, two films lost.
@@ -118,7 +120,7 @@ is docs/evidence/JOURNAL/REPORT only.
 - Lab slow clips with the live hit sector: three calls (02p4 part, 02p5 31 min bounced) and still unreadable.
 - Shared tree: builders' live edits leaked into each other's films (21:52); one builder killed another lane's
   Godot after a timeout (22:14; the ghost lane was told at 22:15; every brief since prints CommandLine before a kill).
-- Busy machine: blade_marks.gd mutate baseline took 261 s, the run did not finish.
+- Busy machine: blade_marks.gd mutate baseline took 261 s, the first run did not finish (re-run after the gate, 345 s).
 
 ## Calls for the owner
 1. Plasma sword: with the sweep it no longer cuts sideways where nothing is drawn; damage taken per run 44.4 ->
@@ -156,7 +158,7 @@ is docs/evidence/JOURNAL/REPORT only.
 5. Raise the light guns on a robot (audit 1); the shotgun's kill row when it goes on the wheel (it is
    `enabled:false` today, so the player never meets it).
 6. Repaint the baton overload's jolt rows (the body under the new amber arcs stays pale).
-7. Pixel tests for `blade_marks.gd` (mutate 0/6: drawing geometry no headless test sees).
+7. Pixel or stroke-list tests for `blade_marks.gd` (mutate 5.0 %, 19 survivors in the cut/sear stroke geometry).
 
 ## Builder ledger
 29 calls (sonnet and opus Claude sub-agents), about 885 builder-minutes; 7 accepted whole, 21 accepted-partial,
