@@ -25,9 +25,16 @@ firing walks slowly (45 % of its speed) and backs off facing you; a cop you rush
 
 ## What does not
 
-- Idle share 55 % (bar < 35 %): the remaining idle is foes in range without a token (token share 47 %); more
-  tokens at today's round damage break the damage rail (DRAFT: b4j tries more tokens with weaker rounds).
+- Idle share 55 % (bar < 35 %). Why (`evidence/n31/foes/travel-cause/cause.md`, seed 3, waves 1-4): of the ranged
+  foe-ticks with a clear line in range, 61 % are in TRAVEL (no fire): walking to cover 53 % (85 % of those walks are
+  longer than 3 m: a token-less cop re-picks a cover spot within 8 m every 12 ticks), morale panic 32 %, Rivet inside
+  4 m 12 %. A foe in FIGHT without a token still does not fire, so idle is token-bound. Four more settings were
+  measured and none kept (`evidence/n31/foes/item3-compare.md`, b4j section): G (a walk <= 3 m in range is FIGHT)
+  idle 53 %, damage 74.4; A (share 0.75, pistol 2, rifle 1.5) idle 44 %, damage 83.0; B (A + pistol 1.5) idle 43 %,
+  damage 75.1; C (patrol cover_bias 0.5) idle 52 %, damage 81.7. Every setting that adds fire breaks the damage rail
+  (top 72.3), so item 3 stops at `9b3730e36` as the brief says; B is a call below.
 - React p90 2.58 s (bar 2.5 s).
+- The damage rail itself is noisy at 10 seeds: G and C barely change fire but move damage by 3 and 10 points.
 
 ## What blocked or slowed you (minutes each)
 
