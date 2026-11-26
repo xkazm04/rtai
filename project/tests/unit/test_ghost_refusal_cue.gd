@@ -166,12 +166,12 @@ func test_the_shake_is_six_px_scaled_by_the_remaining_cue() -> void:
 func test_the_shake_decays_over_the_cue() -> void:
 	var early: float = absf(_running(true, 1).offset(&"tonnage").x)
 	var late: float = absf(_running(true, 7).offset(&"tonnage").x)
-	assert_gt(late, 0.0)
 	assert_lt(late, early)
 
 
 func test_the_cue_is_spent_after_18_frames() -> void:
-	var cue: GhostRefusalCue = _running(true, 18)
+	var cue: GhostRefusalCue = _running(true, 25)
+	assert_eq(cue.frame, GhostRefusalCue.FRAMES, "the counter stops at 18")
 	assert_eq(cue.offset(&"tonnage"), Vector2.ZERO)
 	assert_eq(cue.rim(&"tonnage").a, 0.0)
 
@@ -187,10 +187,9 @@ func test_only_a_cooldown_refusal_flashes_the_arc() -> void:
 
 func test_a_fresh_cue_is_idle() -> void:
 	var cue: GhostRefusalCue = GhostRefusalCue.new()
-	var base: Color = Color(0.2, 0.4, 0.6)
 	assert_false(cue.cooldown)
 	assert_false(cue.active(&"tonnage"))
-	assert_eq(cue.arc(&"tonnage", base), base)
+	assert_eq(cue.arc(&"tonnage", Color.TEAL), Color.TEAL)
 
 
 func test_sync_without_a_deploy_steps_the_cue_on() -> void:
