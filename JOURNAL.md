@@ -295,3 +295,9 @@ NEXT (session 9, report session, written 05:38):
 - 05:39 Session 9 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
 
 NEXT (if a session 10 runs before 07:40): nothing to build. REPORT is final; if anything changes, re-run `node tools/evidence/cites.mjs REPORT.md` and commit `-- REPORT.md JOURNAL.md`. No builder after 07:00, no `project/` commit (the gate on da97ec3be is final).
+
+## Session 10 (05:40 - )
+
+- 05:40 MILESTONE session start; HEAD 90ab8023f; tree clean under project/tools/docs. No product commit possible before 06:00 (pre-commit hook ~12 min + re-gate 17 min), so evidence only.
+- 05:44 DECISION fill the one evidence gap in Calls: "where Tonnage drops" had numbers (aim 3.86 vs Rivet 1.17 hits per deploy) but no clip. A temp worktree at HEAD with tonnage `drop_at` rivet (uncommitted data value) renders the shipped take scene at seed 3; side by side with the shipped aim side. Rejected: a charge_s 0 vs 0.45 clip as well (one Godot per lane, time).
+- 05:45 BUILDER g31-drop-at launched (opus, brief `n31-ghost-31-drop-at-clip.md`), hard stop 06:50. Evidence only.
