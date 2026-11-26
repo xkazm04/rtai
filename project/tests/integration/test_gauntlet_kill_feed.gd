@@ -93,7 +93,23 @@ func test_reduced_gore_leaves_the_standard_death() -> void:
 	assert_true(hook.kills.consumed.is_empty())
 
 
-func test_the_feed_is_off_by_default() -> void:
-	assert_null(session.kills_hook, "flag off: the street digests stay as pinned")
+func test_the_feed_is_on_by_default_once() -> void:
+	assert_not_null(session.kills_hook, "n31 melee 03p3: the street feeds signature kills")
+	var feeds: int = 0
 	for hook: ArenaHook in session.stage.hooks:
+		feeds += 1 if hook is BrutalityHook else 0
+	assert_eq(feeds, 1, "one feed per street")
+	assert_same(session.install_kills(), session.kills_hook, "installing again keeps the one feed")
+
+
+func test_kill_feed_off_installs_nothing() -> void:
+	var flags: Dictionary[String, String] = LaunchArgs._values.duplicate()
+	LaunchArgs._values["--kill-feed"] = "off"
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	var off: GauntletSession = GauntletSession.open_street(bus, data, GauntletRun.new())
+	LaunchArgs._values = flags
+	assert_null(off.kills_hook, "--kill-feed=off: the generic deaths")
+	for hook: ArenaHook in off.stage.hooks:
 		assert_false(hook is BrutalityHook)
+	off.close()

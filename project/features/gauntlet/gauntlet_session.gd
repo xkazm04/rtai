@@ -5,7 +5,8 @@ extends ArenaSession
 
 var street: GauntletStreet
 var bonuses: GauntletBonusApply
-## n31 melee 03: the signature-kill feed (BrutalityHook), null unless --kill-feed installs it.
+## n31 melee 03: the signature-kill feed (BrutalityHook); on by default since 03p3, null with
+## `--kill-feed=off` (SignatureKills.feed_on).
 var kills_hook: BrutalityHook
 
 
@@ -32,7 +33,7 @@ static func open_street(
 	GauntletCombat.install(s.stage, s.world.context(), run)
 	s.stage.hooks.append(s.street)
 	s.street.setup(s.stage, s.world.context())
-	if LaunchArgs.has("--kill-feed"):  # off by default until the street digests re-pin
+	if SignatureKills.feed_on():  # n31 melee 03p3: on unless --kill-feed=off
 		@warning_ignore("return_value_discarded")
 		s.install_kills()
 	(s.stage.arena.squad_ai as GauntletStreet.StreetSquad).mods = run.mods
@@ -52,6 +53,8 @@ static func open_street(
 ## steps the hook and folds its gibs into write_state. `--gore=reduced` before `--` (LaunchArgs)
 ## or after it (ArenaArgs) turns every signature kill into the standard death.
 func install_kills() -> BrutalityHook:
+	if kills_hook != null:  # one feed per street (open_street installs it by default)
+		return kills_hook
 	kills_hook = BrutalityHook.new()
 	stage.hooks.append(kills_hook)
 	kills_hook.setup(stage, world.context())

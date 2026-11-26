@@ -1,7 +1,7 @@
 class_name QuestKillFeed
 extends WorldSystem
-## n31 melee 03p2: the signature-kill feed in quest 1, behind `--kill-feed` (off by default until
-## the quest digests re-pin). Quest 1's stage is a plain CollectCallStage (no ArenaHook list), so
+## n31 melee 03p2: the signature-kill feed in quest 1 (on by default since 03p3; `--kill-feed=off`
+## restores the generic deaths). Quest 1's stage is a plain CollectCallStage (no ArenaHook list), so
 ## this is a world system after the stage: CombatArena's lethal hits go into SignatureKills from
 ## the `brutality` RNG stream on the 60 Hz tick, and its state folds into the world hash (SimLoop
 ## folds every system). The view half (attach_view) draws the kills over the rig cast; the sprite
