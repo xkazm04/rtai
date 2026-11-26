@@ -1,0 +1,210 @@
+diff --git a/project/boot/prologue/prologue_panic.gd b/project/boot/prologue/prologue_panic.gd
+index c743e9c65..098f5009b 100644
+--- a/project/boot/prologue/prologue_panic.gd
++++ b/project/boot/prologue/prologue_panic.gd
+@@ -1,7 +1,11 @@
+ class_name ProloguePanic
+ extends RefCounted
+ ## The second file waits on the pavement. Inside the yard the patrol bunches up
+-## between short pistol bursts and breaks away when Rivet closes.
++## between short pistol bursts and breaks away when Rivet closes. Each officer runs the
++## gauntlet's FoeGait (n31): inside danger_m or on a morale break it runs at retreat_mps
++## without a round (TRAVEL), as it does to chase Rivet out of pistol range or out of sight;
++## otherwise it backs off or walks to its mark facing Rivet at fight_speed_k of that pace and
++## may fire (FIGHT). `--foe-moves=legacy` keeps the old gait.
+ 
+ var members: Dictionary[Fighter, ProloguePatrol.Officer] = {}
+ var _start: int
+@@ -45,32 +49,74 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator, can_fire:
+ 	if not officer.inside:
+ 		if officer.reserve and _front_standing and arena.tick - _start < _delay:
+ 			return null
+-		_walk(h, officer.gate_exit)
++		_walk(h, officer.gate_exit, _speed)
+ 		officer.inside = h.pos.distance_to(officer.gate_exit) < 0.2
+ 		return null
++	var mind: SquadMind = arena.squad_ai.mind_for(h)
++	if not arena.squad_ai.gaits.split:
++		return _legacy(h, arena, rng, can_fire)
+ 	var player: Vector2 = arena.rivet.pos
++	var dist: float = h.pos.distance_to(player)
++	var range_m: float = arena.tuning.weapon(h.weapon).range_m
++	var mark: Vector2 = _mark(h, officer, player, range_m)
++	# TRAVEL is the chase or relocation: Rivet out of pistol range or out of sight. Walking to a
++	# mark with Rivet in range and in sight is fighting (FIGHT pace, may fire); urgent is in _gait.
++	var travel: bool = dist > range_m or not arena.guard_map.sight_line(h.pos, player)
++	var g: FoeGait = _gait(mind, arena, dist, travel)
++	var fight: bool = g.mode == FoeGait.Mode.FIGHT
++	var speed: float = _speed * (mind.agent.arch.fight_speed_k if fight else 1.0)
++	if dist < _gap or g.panic:
++		_escape(h, arena.guard_map, player.direction_to(h.pos), speed)
++	else:
++		_walk(h, mark, speed)
++	h.facing = h.pos.direction_to(player)
++	if g.may_fire(arena.tick):
++		return _fire(h, arena, rng, can_fire)
++	return null
++
++
++## Picks the mode before the step: urgent (danger_m, morale) skips the hold, as in FoeGaitDrive.
++func _gait(mind: SquadMind, arena: CombatArena, dist: float, travel: bool) -> FoeGait:
++	var g: FoeGait = mind.agent.gait
++	g.panic = mind.motion == EnemyAgent.State.PANIC
++	var now: bool = FoeGait.urgent(g.panic, dist, mind.agent.arch)
++	var roster: EnemyRoster = arena.squad_ai.pit.roster
++	var want: FoeGait.Mode = FoeGait.wanted(now, travel, false)
++	g.update(arena.tick, want, now, roster.gait_min_ticks, roster.gait_settle_ticks)
++	return g
++
++
++func _mark(h: Fighter, officer: ProloguePatrol.Officer, player: Vector2, range_m: float) -> Vector2:
+ 	var away: Vector2 = player.direction_to(h.pos)
++	var mark: Vector2 = _centre + officer.offset
++	if mark.distance_to(player) < _gap or h.pos.distance_to(player) > range_m:
++		mark = player + away * _gap + officer.offset
++	return mark.clamp(_yard.position, _yard.end)
++
++
++func _legacy(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator, can_fire: bool) -> Shot:
++	var player: Vector2 = arena.rivet.pos
++	var range_m: float = arena.tuning.weapon(h.weapon).range_m
+ 	if h.pos.distance_to(player) < _gap:
+-		_escape(h, arena.guard_map, away)
++		_escape(h, arena.guard_map, player.direction_to(h.pos), _speed)
+ 	else:
+-		var mark: Vector2 = _centre + officer.offset
+-		if mark.distance_to(player) < _gap:
+-			mark = player + away * _gap + officer.offset
+-		if h.pos.distance_to(player) > arena.tuning.weapon(h.weapon).range_m:
+-			mark = player + away * _gap + officer.offset
+-		_walk(h, mark.clamp(_yard.position, _yard.end))
++		_walk(h, _mark(h, members[h], player, range_m), _speed)
+ 	h.facing = h.pos.direction_to(player)
+-	var range_m: float = arena.tuning.weapon(h.weapon).range_m
++	return _fire(h, arena, rng, can_fire)
++
++
++func _fire(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator, can_fire: bool) -> Shot:
++	var player: Vector2 = arena.rivet.pos
+ 	if (
+ 		can_fire
+-		and h.pos.distance_to(player) <= range_m
++		and h.pos.distance_to(player) <= arena.tuning.weapon(h.weapon).range_m
+ 		and arena.guard_map.sight_line(h.pos, player)
+ 	):
+ 		return GuardBrain.trigger(h, arena.tuning, rng)
+ 	return null
+ 
+ 
+-func _escape(h: Fighter, map: GuardRouteMap, away: Vector2) -> void:
++func _escape(h: Fighter, map: GuardRouteMap, away: Vector2, speed: float) -> void:
+ 	# Peel along the obstacle if a straight retreat would hit it. Stable handedness
+ 	# keeps two frightened cops from choosing the same shoulder every time.
+ 	var side: float = 1.0 if h.id % 2 == 0 else -1.0
+@@ -78,10 +124,10 @@ func _escape(h: Fighter, map: GuardRouteMap, away: Vector2) -> void:
+ 		var dir: Vector2 = away.rotated(angle * side)
+ 		var ahead: Vector2 = h.pos + dir * 1.5
+ 		if _yard.has_point(ahead) and map.clear_line(h.pos, ahead):
+-			h.pos += dir * _speed * SimClock.TICK_DT
++			h.pos += dir * speed * SimClock.TICK_DT
+ 			return
+ 
+ 
+-func _walk(h: Fighter, mark: Vector2) -> void:
+-	if not h.pursuit.advance(h, mark, _speed):
+-		h.pos = h.pos.move_toward(mark, _speed * SimClock.TICK_DT)
++func _walk(h: Fighter, mark: Vector2, speed: float) -> void:
++	if not h.pursuit.advance(h, mark, speed):
++		h.pos = h.pos.move_toward(mark, speed * SimClock.TICK_DT)
+diff --git a/project/tests/unit/test_prologue_panic_gait.gd b/project/tests/unit/test_prologue_panic_gait.gd
+new file mode 100644
+index 000000000..fd1097f45
+--- /dev/null
++++ b/project/tests/unit/test_prologue_panic_gait.gd
+@@ -0,0 +1,79 @@
++extends GutTest
++## n31: the yard patrol's two moves. Inside danger_m it runs at retreat_mps without a round;
++## between danger_m and retreat_gap_m, or walking to its mark with Rivet in range and in sight,
++## it moves at fight_speed_k of that pace and fires.
++
++const ENTRY: PackedScene = preload("res://boot/prologue/prologue.tscn")
++
++
++func _officer(game: PrologueGame) -> Fighter:
++	game.world.set_process(false)
++	var patrol: ProloguePatrol = game.encounter.patrol
++	patrol.place(game.stage.arena, true)
++	var h: Fighter = patrol.officers[1].body
++	h.pos = Vector2(18.0, 12.0)
++	return h
++
++
++func _rounds(game: PrologueGame, h: Fighter, gap: float, ticks: int) -> Array[float]:
++	var arena: CombatArena = game.stage.arena
++	var panic: ProloguePanic = game.encounter.patrol.squad.panic
++	var rng: RandomNumberGenerator = game.world.context().rng.stream(&"combat")
++	var fired: int = 0
++	var step_m: float = 0.0
++	for tick: int in ticks:
++		arena.tick = tick
++		arena.rivet.pos = h.pos + Vector2.RIGHT * gap
++		var from: Vector2 = h.pos
++		panic.regroup()
++		if panic.step(h, arena, rng, true) != null:
++			fired += 1
++		step_m = from.distance_to(h.pos)
++	return [float(fired), step_m]
++
++
++func test_inside_danger_m_the_officer_runs_without_a_round() -> void:
++	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
++	add_child_autofree(game)
++	var h: Fighter = _officer(game)
++	var got: Array[float] = _rounds(game, h, 3.0, 90)
++	assert_eq(got[0], 0.0, "no round inside danger_m")
++	assert_eq(game.encounter.patrol.squad.mind_for(h).agent.gait.mode, FoeGait.Mode.TRAVEL)
++	assert_almost_eq(got[1], 6.65 * SimClock.TICK_DT, 0.01, "full retreat pace")
++	PlayerActions.shipped().install()
++
++
++func test_between_danger_m_and_the_gap_the_officer_backs_off_slowly_and_fires() -> void:
++	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
++	add_child_autofree(game)
++	var h: Fighter = _officer(game)
++	var got: Array[float] = _rounds(game, h, 6.0, 150)
++	assert_gt(got[0], 0.0, "rounds while backing off")
++	assert_eq(game.encounter.patrol.squad.mind_for(h).agent.gait.mode, FoeGait.Mode.FIGHT)
++	assert_almost_eq(got[1], 0.45 * 6.65 * SimClock.TICK_DT, 0.01, "fight walk pace")
++	PlayerActions.shipped().install()
++
++
++func test_walking_to_a_mark_with_rivet_in_range_the_officer_fires() -> void:
++	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
++	add_child_autofree(game)
++	var h: Fighter = _officer(game)
++	var arena: CombatArena = game.stage.arena
++	var panic: ProloguePanic = game.encounter.patrol.squad.panic
++	var offset: Vector2 = panic.members[h].offset
++	var rng: RandomNumberGenerator = game.world.context().rng.stream(&"combat")
++	var fired: int = 0
++	var step_m: float = 0.0
++	for tick: int in 120:
++		arena.tick = tick
++		arena.rivet.pos = h.pos + Vector2.RIGHT * 10.0
++		# The bunch's centre drifts: the officer's mark stays 3 m off, Rivet 10 m away in range.
++		panic._centre = h.pos + Vector2.DOWN * 3.0 - offset
++		var from: Vector2 = h.pos
++		if panic.step(h, arena, rng, true) != null:
++			fired += 1
++		step_m = from.distance_to(h.pos)
++	assert_gt(fired, 0, "rounds while walking to the mark")
++	assert_eq(game.encounter.patrol.squad.mind_for(h).agent.gait.mode, FoeGait.Mode.FIGHT)
++	assert_almost_eq(step_m, 0.45 * 6.65 * SimClock.TICK_DT, 0.01, "fight walk pace")
++	PlayerActions.shipped().install()
+diff --git a/project/tests/unit/test_prologue_panic_gait.gd.uid b/project/tests/unit/test_prologue_panic_gait.gd.uid
+new file mode 100644
+index 000000000..165f18d23
+--- /dev/null
++++ b/project/tests/unit/test_prologue_panic_gait.gd.uid
+@@ -0,0 +1 @@
++uid://5r3ytp6e18ii

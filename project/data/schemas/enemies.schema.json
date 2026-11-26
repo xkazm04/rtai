@@ -76,6 +76,13 @@
             "minimum": 0,
             "type": "number"
           },
+          "danger_m": {
+            "default": 0,
+            "description": "Rivet inside this many metres makes a ranged foe run (TRAVEL gait, no fire) at once; 0 = never.",
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"
@@ -83,6 +90,13 @@
           "explicit_spawn": {
             "description": "Available by id outside the legacy pit selection pool.",
             "type": "boolean"
+          },
+          "fight_speed_k": {
+            "default": 1,
+            "description": "Fraction of speed_mps a ranged foe may move while in its FIGHT gait (able to shoot).",
+            "maximum": 1,
+            "minimum": 0.05,
+            "type": "number"
           },
           "flanks": {
             "type": "boolean"
@@ -259,6 +273,50 @@
           "minimum": 0,
           "type": "number"
         },
+        "fire_presets": {
+          "additionalProperties": {
+            "additionalProperties": false,
+            "properties": {
+              "max_shooters_share": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "own_weapon_damage": {
+                "additionalProperties": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "description": "Named squad fire settings (--foe-fire=<name>): each overrides max_shooters_share and the listed own_weapon_damage entries.",
+          "type": "object"
+        },
+        "gait": {
+          "default": "split",
+          "description": "split = ranged foes fight slow and travel fast without firing; legacy = one gait (pre-n31).",
+          "enum": [
+            "legacy",
+            "split"
+          ],
+          "type": "string"
+        },
+        "gait_min_mode_s": {
+          "description": "Seconds a gait is held before an ordinary switch (panic and danger switch at once).",
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "gait_settle_s": {
+          "description": "Seconds after TRAVEL -> FIGHT before the first round.",
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
         "hearing_m": {
           "maximum": 100,
           "minimum": 0,
@@ -273,6 +331,29 @@
           "maximum": 8,
           "minimum": 0,
           "type": "integer"
+        },
+        "max_shooters_min": {
+          "maximum": 8,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "max_shooters_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "own_weapon_damage": {
+          "additionalProperties": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": "With own_weapons: Rivet hp per round of each weapon a production squad member fires (the dev pit keeps the weapon's damage).",
+          "type": "object"
+        },
+        "own_weapons": {
+          "description": "true: patrol cop, SWAT, contractor and robot gunner fire their own weapon row instead of the shared production rifle.",
+          "type": "boolean"
         },
         "panic_s": {
           "maximum": 30,
@@ -303,6 +384,8 @@
       "required": [
         "aim_lead",
         "aim_lock_s",
+        "gait_min_mode_s",
+        "gait_settle_s",
         "hearing_m",
         "max_melee",
         "max_shooters",

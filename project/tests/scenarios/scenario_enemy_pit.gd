@@ -47,7 +47,8 @@ func _squad_cap(plant: bool) -> Dictionary:
 	PitLayout.squad(pit, PitLayout.many(&"patrol_cop", 6))
 	pit.plant_no_squad = plant
 	var r: Dictionary = PitLayout.fight(pit, PitDummy.new(PitDummy.Mode.STAND), 15.0)
-	r["max_shooters"] = pit.roster.max_shooters
+	# n31 foes lever 1: the cap is the share rule for the 6 ranged (max(3, ceil(0.35 x 6)) = 3).
+	r["max_shooters"] = EnemySquad.shooter_slots(pit.roster, 6)
 	return r
 
 

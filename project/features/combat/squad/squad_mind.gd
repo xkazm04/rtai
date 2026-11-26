@@ -22,6 +22,7 @@ var plan_pending: bool = false
 var route_pending: bool = false
 var search_ceiling: int = 0
 var motion: EnemyAgent.State = S.ENGAGE
+var strafing: bool = false
 ## The hiding spot a token holder left, retained through its timed peek and return.
 var _hide: Vector2 = Vector2.INF
 var _peek: int = -1
@@ -30,7 +31,6 @@ var _blind: int = 0
 var _route: PackedVector2Array = PackedVector2Array()
 var _next: int = 0
 var _destination: Vector2 = Vector2.INF
-var _strafe: bool = false
 var _plan_offset: int = 0
 
 
@@ -47,8 +47,10 @@ func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
 func available(h: Fighter, arena: CombatArena) -> bool:
 	if agent.arch.explicit_spawn and not agent.melee():
 		return h.cooldown <= 1
-	var w: CombatTuning.Weapon = arena.tuning.weapon(agent.arch.production_weapon)
-	return arena.tick >= _return_until and h.cooldown <= w.cooldown_ticks and agent.cooldown == 0
+	var cap: int = arena.tuning.weapon(agent.arch.production_weapon).cooldown_ticks
+	if arena.squad_ai != null and FoeOwnGun.carries(h, agent, arena.squad_ai.pit.roster):
+		cap = agent.arch.weapon.cooldown_ticks  # n31 lever 5: its own gun's cooldown
+	return arena.tick >= _return_until and h.cooldown <= cap and agent.cooldown == 0
 
 
 func destination() -> Vector2:
@@ -78,7 +80,7 @@ func velocity(pit: EnemyPit, map: GuardRouteMap, fallen: float) -> Vector2:
 		if overdue and not plan_pending:
 			_plan_offset = (pit.tick + e.id) % PLAN_TICKS
 	e.state = motion
-	if _strafe:
+	if strafing:
 		var ring: float = (
 			e.arch.preferred_m
 			if e.token
@@ -119,7 +121,7 @@ func _plan(pit: EnemyPit, map: GuardRouteMap) -> void:
 	plan_pending = pit.tick >= _return_until and seek_cover and map.cover_searches >= cover_ceiling
 	if plan_pending:
 		return
-	_strafe = false
+	strafing = false
 	motion = S.ENGAGE
 	if pit.tick < _return_until:
 		motion = S.COVER
@@ -143,7 +145,7 @@ func _plan(pit: EnemyPit, map: GuardRouteMap) -> void:
 		motion = S.FLANK
 		_set_goal(EnemyBrain.flank_spot(e, pit), map)
 	elif e.sees:
-		_strafe = true
+		strafing = true
 		_destination = Vector2.INF
 		route_pending = false
 	else:
@@ -193,7 +195,7 @@ func forget_route() -> void:
 	_hide = Vector2.INF
 	_return_until = -1
 	_peek = -1
-	_strafe = false
+	strafing = false
 	_blind = 0
 	agent.goal = agent.pos
 	route_pending = false

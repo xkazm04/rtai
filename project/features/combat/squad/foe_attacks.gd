@@ -3,9 +3,10 @@ extends RefCounted
 ## Explicit gauntlet spawns fire their enemies.json rounds in the arena's normal projectile loop.
 
 
-static func trigger(e: EnemyAgent, h: Fighter, arena: CombatArena) -> Shot:
+## `may_fire` false (a FoeGait in TRAVEL or settling) is handled like no token: no round.
+static func trigger(e: EnemyAgent, h: Fighter, arena: CombatArena, may_fire: bool = true) -> Shot:
 	h.cooldown = maxi(0, h.cooldown - 1)
-	if not e.token or not e.has_shot_at(arena.rivet.pos):
+	if not may_fire or not e.token or not e.has_shot_at(arena.rivet.pos):
 		h.burst_left = 0
 		h.swing_left = 0
 		return null

@@ -8,6 +8,7 @@ func _arena(boxes: Array[Rect2] = []) -> CombatArena:
 	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), Events, rng)
 	arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), boxes, null, 0.45)
 	arena.squad_ai = ArenaSquad.new(arena.guard_map)
+	arena.squad_ai.pit.roster.own_weapons = false  # n31 foes lever 5: pins the shared rifle
 	arena.rivet.hp = 10000
 	arena.rivet.max_hp = 10000
 	return arena
@@ -69,7 +70,8 @@ func test_firing_bearings_spread_and_bursts_obey_token_limit() -> void:
 		peak = maxi(peak, bursts)
 	assert_gt(rad_to_deg(spread), 60.0)
 	assert_gt(peak, 0)
-	assert_lte(peak, arena.squad_ai.pit.roster.max_shooters)
+	# n31 foes lever 1: the cap is the share of the ranged squad, not the fixed max_shooters.
+	assert_lte(peak, EnemySquad.shooter_slots(arena.squad_ai.pit.roster, arena.hostiles.size()))
 
 
 func test_local_query_deduplicates_large_boxes_and_filters_by_distance() -> void:
@@ -154,7 +156,7 @@ func test_aggression_moves_the_waiting_ring_inward() -> void:
 	var a: EnemyRoster.Archetype = arena.squad_ai.pit.roster.archetype(g.archetype)
 	for aggression: float in [0.0, 1.0]:
 		a.aggression = aggression
-		for tick: int in 480:
+		for tick: int in 960:
 			arena.step(tick)
 		assert_almost_eq(g.pos.length(), lerpf(a.attack_m, a.preferred_m, aggression), 0.25)
 

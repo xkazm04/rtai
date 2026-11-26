@@ -107,7 +107,8 @@ static func judge(ev: Dictionary) -> String:
 static func _judge_squad_moves(ev: Dictionary) -> String:
 	if ev["flank"]["spread_deg"] < 70.0:
 		return "SWAT did not flank: %s" % ev["flank"]
-	if ev["cover"]["hidden_frac"] < 0.4:
+	# n31 foes lever 1: 3 tokens for 6 (not 2), so fewer SWAT wait in cover (0.395 measured).
+	if ev["cover"]["hidden_frac"] < 0.35:
 		return "SWAT did not use cover: %s" % ev["cover"]
 	if ev["panic"]["patrol_cop"] < 1 or ev["panic"]["robot_thug"] != 0:
 		return "morale wrong (cops must break, robots never): %s" % ev["panic"]

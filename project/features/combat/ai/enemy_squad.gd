@@ -1,12 +1,18 @@
 class_name EnemySquad
 extends RefCounted
-## The squad layer: attack tokens. At most max_shooters fire and max_melee swing at once, so
+## The squad layer: attack tokens. At most shooter_slots() fire (a share of the ranged
+## alive, or the fixed max_shooters) and max_melee swing at once, so
 ## Rivet is never shredded from every side; the rest reposition (cover, flank, orbit). A holder
 ## keeps its token through its windup and shot, then for token_hold ticks at most; free tokens
 ## go to whoever waited longest, then the nearest, then the lowest id (deterministic).
 
 
-static func assign(agents: Array[EnemyAgent], target: Vector2, roster: EnemyRoster) -> void:
+## `ranged_alive` < 0 counts the ranged members of `agents`; a caller that passes only the
+## agents free to attack passes the whole squad's count.
+static func assign(
+	agents: Array[EnemyAgent], target: Vector2, roster: EnemyRoster, ranged_alive: int = -1
+) -> void:
+	var slots: int = shooter_slots(roster, ranged_alive if ranged_alive >= 0 else ranged(agents))
 	var shooters: int = 0
 	var swingers: int = 0
 	var want: Array[EnemyAgent] = []
@@ -38,21 +44,23 @@ static func assign(agents: Array[EnemyAgent], target: Vector2, roster: EnemyRost
 				wants_ranged = true
 	if (
 		(not wants_melee or swingers >= roster.max_melee)
-		and (not wants_ranged or shooters >= roster.max_shooters)
+		and (not wants_ranged or shooters >= slots)
 	):
 		return
-	_grant_waiters(want, target, roster, shooters, swingers)
+	_grant_waiters(want, target, roster, Vector2i(shooters, swingers), slots)
 
 
 static func _grant_waiters(
-	want: Array[EnemyAgent], target: Vector2, roster: EnemyRoster, shooters: int, swingers: int
+	want: Array[EnemyAgent], target: Vector2, roster: EnemyRoster, held: Vector2i, slots: int
 ) -> void:
+	var shooters: int = held.x
+	var swingers: int = held.y
 	want.sort_custom(func(a: EnemyAgent, b: EnemyAgent) -> bool: return _before(a, b, target))
 	for e: EnemyAgent in want:
 		if e.melee() and swingers < roster.max_melee:
 			swingers += 1
 			_grant(e)
-		elif not e.melee() and shooters < roster.max_shooters:
+		elif not e.melee() and shooters < slots:
 			shooters += 1
 			_grant(e)
 
@@ -61,6 +69,23 @@ static func holders(agents: Array[EnemyAgent], melee: bool) -> int:
 	var n: int = 0
 	for e: EnemyAgent in agents:
 		n += 1 if e.token and e.melee() == melee else 0
+	return n
+
+
+## Ranged attack tokens for `ranged_alive` non-melee squad members alive: a share of them, at
+## least max_shooters_min (n31 foes lever 1); the fixed max_shooters when no share is set. A
+## stage or test that writes its own max_shooters (prologue, arena pit rules) turns the share off.
+static func shooter_slots(roster: EnemyRoster, ranged_alive: int) -> int:
+	if roster.max_shooters_share <= 0.0:
+		return roster.max_shooters
+	return maxi(roster.max_shooters_min, ceili(roster.max_shooters_share * ranged_alive))
+
+
+## Non-melee agents alive among `agents`.
+static func ranged(agents: Array[EnemyAgent]) -> int:
+	var n: int = 0
+	for e: EnemyAgent in agents:
+		n += 1 if e.alive() and not e.melee() else 0
 	return n
 
 

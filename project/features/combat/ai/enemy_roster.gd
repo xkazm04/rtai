@@ -1,7 +1,6 @@
 class_name EnemyRoster
 extends RefCounted
-## enemies.json (gtai.enemies/1) read once into typed archetypes, weapons and squad limits,
-## times already in 60 Hz ticks (SIM-01). Archetypes and weapons are keyed by their string id.
+## enemies.json (gtai.enemies/1) as typed archetypes, weapons and squad limits, in ticks (SIM-01).
 
 const TABLE: String = "res://data/tables/enemies.json"
 const SCHEMA: String = "gtai.enemies/1"
@@ -53,6 +52,8 @@ class Archetype:
 	var acc_near: float = 0.7
 	var acc_far_m: float = 18.0
 	var acc_far: float = 0.3
+	var fight_speed_k: float = 1.0
+	var danger_m: float = 0.0
 
 	## The chance a shot at a standing target `dist_m` away hits (the accuracy curve).
 	func accuracy(dist_m: float) -> float:
@@ -63,7 +64,14 @@ class Archetype:
 
 var archetypes: Dictionary[StringName, Archetype] = {}
 var weapons: Dictionary[StringName, Weapon] = {}
-var max_shooters: int = 2
+## A stage that writes its own cap (prologue, pit rules) keeps the fixed cap and the shared rifle.
+var max_shooters: int = 2:
+	set(value):
+		max_shooters = value
+		max_shooters_share = 0.0
+		own_weapons = false
+var max_shooters_share: float = 0.0
+var max_shooters_min: int = 0
 var max_melee: int = 2
 var token_hold_ticks: int = 150
 var aim_lock_ticks: int = 12
@@ -73,7 +81,16 @@ var panic_ticks: int = 180
 var sight_m: float = 24.0
 var sight_cos: float = 0.5
 var hearing_m: float = 22.0
+var gait_split: bool = true
+var gait_min_ticks: int = 36
+var gait_settle_ticks: int = 15
+## n31 lever 5: production squad members fire their own weapon (FoeOwnGun) at own_damage.
+var own_weapons: bool = false
+var own_damage: Dictionary[StringName, float] = {}
+var fire_preset_known: bool = true
 var _explicit: Dictionary[StringName, Archetype] = {}
+var _fire_share: Dictionary[String, float] = {}
+var _fire_damage: Dictionary[String, float] = {}  # "<preset>:<weapon>"
 var _errors: Array[String] = []
 
 
@@ -95,6 +112,9 @@ static func shipped(path: String = TABLE, production: bool = false) -> EnemyRost
 			a.uses_cover = a.cover_bias > 0.0
 		r.archetypes[a.id] = a
 	r._squad(t, t.object(t.raw, "squad"))
+	var fire: String = LaunchArgs.value("--foe-fire")
+	if production and not fire.is_empty():
+		r.fire_preset_known = r.apply_fire_preset(fire)
 	r._errors.append_array(t.errors())
 	if not r.ok():
 		Log.error("enemy-ai", str(r._errors))
@@ -113,6 +133,17 @@ func archetype(id: StringName) -> Archetype:
 	return archetypes.get(id if id != &"" else &"contractor", _explicit.get(id))
 
 
+func apply_fire_preset(preset: String) -> bool:
+	if not _fire_share.has(preset):
+		Log.warn("enemy-ai", "unknown fire preset %s" % preset)
+		return false
+	max_shooters_share = _fire_share[preset]
+	for key: String in _fire_damage:
+		if key.begins_with(preset + ":"):
+			own_damage[StringName(key.get_slice(":", 1))] = _fire_damage[key]
+	return true
+
+
 func _squad(t: DataTable, s: Dictionary) -> void:
 	max_shooters = t.integer(s, "max_shooters")
 	max_melee = t.integer(s, "max_melee")
@@ -124,6 +155,31 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 	sight_m = t.num(s, "sight_m")
 	sight_cos = cos(deg_to_rad(t.num(s, "sight_deg")) * 0.5)
 	hearing_m = t.num(s, "hearing_m")
+	gait_split = t.text(s, "gait") != "legacy" if s.has("gait") else true
+	gait_min_ticks = CombatTuning.ticks(t.num(s, "gait_min_mode_s"))
+	gait_settle_ticks = CombatTuning.ticks(t.num(s, "gait_settle_s"))
+	max_shooters_share = t.num(s, "max_shooters_share") if s.has("max_shooters_share") else 0.0
+	max_shooters_min = t.integer(s, "max_shooters_min") if s.has("max_shooters_min") else 0
+	own_weapons = s.get("own_weapons", false) == true
+	var dmg: Dictionary = t.object(s, "own_weapon_damage") if s.has("own_weapon_damage") else {}
+	for wid: String in dmg:
+		own_damage[StringName(wid)] = t.num(dmg, wid)
+	_read_fire_presets(t, t.object(s, "fire_presets") if s.has("fire_presets") else {})
+
+
+func _read_fire_presets(t: DataTable, presets: Dictionary) -> void:
+	for pid: String in presets:
+		var row: Dictionary = t.object(presets, pid)
+		_fire_share[pid] = (
+			t.num(row, "max_shooters_share")
+			if row.has("max_shooters_share")
+			else max_shooters_share
+		)
+		var dmg: Dictionary = (
+			t.object(row, "own_weapon_damage") if row.has("own_weapon_damage") else {}
+		)
+		for wid: String in dmg:
+			_fire_damage["%s:%s" % [pid, wid]] = t.num(dmg, wid)
 
 
 func _archetype(t: DataTable, row: Dictionary) -> Archetype:
@@ -172,15 +228,15 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 		_errors.append("%s: tier must be an integer from 1 to 5" % a.id)
 	a.explicit_spawn = row.get("explicit_spawn", false) == true
 	a.machine = row.get("machine", false) == true
-	if row.has("placement"):
-		a.placement = StringName(t.text(row, "placement"))
+	a.placement = StringName(t.text(row, "placement")) if row.has("placement") else &"any"
 	if row.has("alt_weapon"):
 		a.alt_weapon = weapons.get(StringName(t.text(row, "alt_weapon")))
 		if a.alt_weapon == null:
 			_errors.append("%s: unknown alt_weapon" % a.id)
 	if row.has("alt_telegraph_s"):
 		a.alt_telegraph_ticks = CombatTuning.ticks(t.num(row, "alt_telegraph_s"))
-	if row.has("rear_mult"):
-		a.rear_mult = t.num(row, "rear_mult")
+	a.fight_speed_k = t.num(row, "fight_speed_k") if row.has("fight_speed_k") else 1.0
+	a.danger_m = t.num(row, "danger_m") if row.has("danger_m") else 0.0
+	a.rear_mult = t.num(row, "rear_mult") if row.has("rear_mult") else 1.0
 	if row.has("shield_arc_deg"):
 		a.shield_cos = cos(deg_to_rad(t.num(row, "shield_arc_deg") * 0.5))

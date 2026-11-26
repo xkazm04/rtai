@@ -11,8 +11,9 @@ var moves: MoveTable = MoveTable.shipped()
 var carry: MoveCarry
 var shield_cover: FoeShieldCover = FoeShieldCover.new()
 var rockets: FoeRocketFlight = FoeRocketFlight.new()
-var pit: EnemyPit
+var pit: EnemyPit = EnemyPit.new(EnemyRoster.shipped(EnemyRoster.TABLE, true), null)
 var minds: Dictionary[int, SquadMind] = {}
+var gaits: FoeGaitDrive = FoeGaitDrive.new(pit.roster)
 var plant_no_separation: bool = false
 var _map: GuardRouteMap
 var _wave: Dictionary[Fighter, bool] = {}
@@ -20,7 +21,6 @@ var _fallen: float = 0.0
 
 
 func _init(map: GuardRouteMap) -> void:
-	pit = EnemyPit.new(EnemyRoster.shipped(EnemyRoster.TABLE, true), null)
 	set_route_map(map)
 
 
@@ -114,7 +114,7 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 			mind.agent.token = false
 	minds = active
 	_schedule()
-	EnemySquad.assign(shooters, pit.rivet_pos, pit.roster)
+	EnemySquad.assign(shooters, pit.rivet_pos, pit.roster, EnemySquad.ranged(pit.agents))
 	_update_morale()
 	ordered.append_array(others)
 	return ordered
@@ -161,7 +161,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	if not plant_no_separation and not mind.mobile_goal.is_finite():
 		var gap: float = EnemyMotor.SEPARATION_GAP_M if e.melee() else SquadMind.SPACING_GAP_M
 		desired += EnemyMotor.separation(e, pit.agents, pit, gap, true)
-	EnemyMotor.steer(e, desired, pit.rivet_pos, pit)
+	gaits.steer(mind, desired, pit)
 	h.pos = e.pos
 	h.facing = e.facing
 	var shot: Shot
@@ -175,8 +175,8 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
 	if e.arch.explicit_spawn:
-		return FoeAttacks.trigger(e, h, arena)
-	var ready: bool = e.token and e.has_shot_at(pit.rivet_pos)
+		return FoeAttacks.trigger(e, h, arena, gaits.may_fire(mind, pit.tick))
+	var ready: bool = e.token and e.has_shot_at(pit.rivet_pos) and gaits.may_fire(mind, pit.tick)
 	if not ready or not _map.sight_line(h.pos, pit.rivet_pos):
 		if h.burst_left > 0:
 			mind.paused_rounds = h.burst_left
@@ -186,7 +186,7 @@ func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberG
 		h.burst_left = mind.paused_rounds
 		mind.paused_rounds = 0
 	var left: int = h.burst_left
-	var shot: Shot = GuardBrain.trigger(h, arena.tuning, rng)
+	var shot: Shot = FoeOwnGun.trigger(h, mind, arena, pit, rng)
 	if shot != null:
 		e.shot_tick = pit.tick
 	if shot != null or left > 0:

@@ -1,0 +1,694 @@
+{
+  "controls": "wheel",
+  "death_wave": 5,
+  "profile": "average",
+  "schema": "gtai.foes-waiting/1",
+  "seed": 4,
+  "wave_reached": 5,
+  "waves": [
+    {
+      "archetypes": {
+        "patrol_cop": {
+          "alive_s": 77.23,
+          "attack_m": 14.0,
+          "clear_idle_s": 46.32,
+          "clear_in_idle_s": 36.28,
+          "clear_in_s": 38.28,
+          "clear_in_unengaged_s": 21.18,
+          "clear_s": 48.32,
+          "clear_unengaged_s": 31.22,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.92,
+          "melee": false,
+          "n": 13,
+          "never_fired": 4,
+          "never_fired_clear": 4,
+          "never_fired_clear_in": 4,
+          "react_any_s": [
+            1.15,
+            1.53,
+            3.08,
+            2.08,
+            0.97,
+            0.43,
+            4.13,
+            4.93,
+            0.8
+          ],
+          "react_s": [
+            0.4,
+            0.87,
+            2.12,
+            0.62,
+            0.32,
+            0.43,
+            0.68,
+            2.15,
+            0.8
+          ],
+          "rounds": 13,
+          "shot_dist_m": [
+            10.75,
+            8.7,
+            8.36,
+            8.49,
+            5.06,
+            11.13,
+            12.51,
+            12.43,
+            11.28,
+            9.07,
+            10.84,
+            7.9,
+            4.07
+          ],
+          "token_s": 30.32
+        }
+      },
+      "damage_taken": 6.0,
+      "died": false,
+      "firing_per_s": [
+        0,
+        2,
+        0,
+        4,
+        4,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "n": 1,
+      "observed_s": 10.05,
+      "press_eligible_s": 9.35,
+      "press_s": 6.32,
+      "ranged_alive_mean": 7.68,
+      "seconds": 10.05,
+      "shots_probe": 0,
+      "shots_result": 0
+    },
+    {
+      "archetypes": {
+        "patrol_cop": {
+          "alive_s": 116.68,
+          "attack_m": 14.0,
+          "clear_idle_s": 72.62,
+          "clear_in_idle_s": 67.0,
+          "clear_in_s": 69.3,
+          "clear_in_unengaged_s": 46.38,
+          "clear_s": 74.92,
+          "clear_unengaged_s": 50.78,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.95,
+          "melee": false,
+          "n": 14,
+          "never_fired": 6,
+          "never_fired_clear": 6,
+          "never_fired_clear_in": 6,
+          "react_any_s": [
+            0.47,
+            0.82,
+            0.8,
+            1.63,
+            1.3,
+            2.02,
+            0.47,
+            4.58
+          ],
+          "react_s": [
+            0.47,
+            0.82,
+            0.8,
+            0.63,
+            1.3,
+            0.5,
+            0.47,
+            0.87
+          ],
+          "rounds": 14,
+          "shot_dist_m": [
+            5.72,
+            8.2,
+            5.02,
+            6.72,
+            12.27,
+            9.33,
+            12.81,
+            13.99,
+            4.03,
+            7.37,
+            8.24,
+            8.47,
+            7.32,
+            7.11
+          ],
+          "token_s": 46.27
+        }
+      },
+      "damage_taken": 0.0,
+      "died": false,
+      "firing_per_s": [
+        0,
+        0,
+        5,
+        1,
+        1,
+        1,
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "n": 2,
+      "observed_s": 13.0,
+      "press_eligible_s": 11.0,
+      "press_s": 9.35,
+      "ranged_alive_mean": 8.98,
+      "seconds": 13.0,
+      "shots_probe": 0,
+      "shots_result": 0
+    },
+    {
+      "archetypes": {
+        "contractor": {
+          "alive_s": 22.27,
+          "attack_m": 15.0,
+          "clear_idle_s": 18.08,
+          "clear_in_idle_s": 16.22,
+          "clear_in_s": 17.75,
+          "clear_in_unengaged_s": 6.3,
+          "clear_s": 19.62,
+          "clear_unengaged_s": 8.17,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.59,
+          "melee": false,
+          "n": 3,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            1.03,
+            1.13,
+            1.38
+          ],
+          "react_s": [
+            0.38,
+            0.47,
+            0.5
+          ],
+          "rounds": 15,
+          "shot_dist_m": [
+            11.99,
+            10.83,
+            11.03,
+            9.81,
+            10.08,
+            9.09,
+            11.5,
+            11.5,
+            11.5,
+            5.79,
+            5.34,
+            9.41,
+            7.2,
+            6.49,
+            5.75
+          ],
+          "token_s": 13.5
+        },
+        "patrol_cop": {
+          "alive_s": 24.82,
+          "attack_m": 14.0,
+          "clear_idle_s": 14.53,
+          "clear_in_idle_s": 8.33,
+          "clear_in_s": 8.93,
+          "clear_in_unengaged_s": 5.5,
+          "clear_s": 15.13,
+          "clear_unengaged_s": 11.7,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 2.01,
+          "melee": false,
+          "n": 3,
+          "never_fired": 1,
+          "never_fired_clear": 1,
+          "never_fired_clear_in": 1,
+          "react_any_s": [
+            1.65,
+            2.28
+          ],
+          "react_s": [
+            0.57,
+            1.2
+          ],
+          "rounds": 4,
+          "shot_dist_m": [
+            11.38,
+            11.04,
+            11.09,
+            10.76
+          ],
+          "token_s": 11.73
+        },
+        "riot_cop": {
+          "alive_s": 2.87,
+          "attack_m": 1.5,
+          "clear_idle_s": 2.87,
+          "clear_in_idle_s": 0.0,
+          "clear_in_s": 0.0,
+          "clear_in_unengaged_s": 0.0,
+          "clear_s": 2.87,
+          "clear_unengaged_s": 2.87,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 2.66,
+          "melee": true,
+          "n": 1,
+          "never_fired": 1,
+          "never_fired_clear": 1,
+          "never_fired_clear_in": 0,
+          "react_any_s": [],
+          "react_s": [],
+          "rounds": 0,
+          "shot_dist_m": [],
+          "token_s": 2.83
+        },
+        "rocket_trooper": {
+          "alive_s": 14.13,
+          "attack_m": 20.0,
+          "clear_idle_s": 12.02,
+          "clear_in_idle_s": 11.3,
+          "clear_in_s": 13.42,
+          "clear_in_unengaged_s": 8.9,
+          "clear_s": 14.13,
+          "clear_unengaged_s": 9.62,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.12,
+          "melee": false,
+          "n": 2,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            3.33,
+            3.38
+          ],
+          "react_s": [
+            2.65,
+            3.35
+          ],
+          "rounds": 2,
+          "shot_dist_m": [
+            15.59,
+            10.5
+          ],
+          "token_s": 5.7
+        },
+        "swat": {
+          "alive_s": 24.7,
+          "attack_m": 20.0,
+          "clear_idle_s": 15.25,
+          "clear_in_idle_s": 14.75,
+          "clear_in_s": 15.72,
+          "clear_in_unengaged_s": 5.7,
+          "clear_s": 16.22,
+          "clear_unengaged_s": 6.2,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 2.06,
+          "melee": false,
+          "n": 3,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            1.28,
+            3.13,
+            0.78
+          ],
+          "react_s": [
+            1.18,
+            1.75,
+            0.78
+          ],
+          "rounds": 10,
+          "shot_dist_m": [
+            13.12,
+            12.96,
+            12.81,
+            13.09,
+            13.57,
+            13.75,
+            4.31,
+            4.05,
+            5.37,
+            4.31
+          ],
+          "token_s": 13.48
+        }
+      },
+      "damage_taken": 29.0,
+      "died": false,
+      "firing_per_s": [
+        0,
+        5,
+        2,
+        3,
+        1,
+        2,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "n": 3,
+      "observed_s": 12.88,
+      "press_eligible_s": 9.9,
+      "press_s": 8.65,
+      "ranged_alive_mean": 6.67,
+      "seconds": 12.8833333333333,
+      "shots_probe": 0,
+      "shots_result": 0
+    },
+    {
+      "archetypes": {
+        "contractor": {
+          "alive_s": 32.43,
+          "attack_m": 15.0,
+          "clear_idle_s": 16.37,
+          "clear_in_idle_s": 14.97,
+          "clear_in_s": 15.5,
+          "clear_in_unengaged_s": 10.2,
+          "clear_s": 16.9,
+          "clear_unengaged_s": 11.6,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.69,
+          "melee": false,
+          "n": 4,
+          "never_fired": 2,
+          "never_fired_clear": 2,
+          "never_fired_clear_in": 2,
+          "react_any_s": [
+            2.22,
+            0.98
+          ],
+          "react_s": [
+            0.82,
+            0.98
+          ],
+          "rounds": 6,
+          "shot_dist_m": [
+            8.56,
+            8.39,
+            7.99,
+            6.95,
+            6.67,
+            6.55
+          ],
+          "token_s": 15.07
+        },
+        "patrol_cop": {
+          "alive_s": 13.3,
+          "attack_m": 14.0,
+          "clear_idle_s": 5.77,
+          "clear_in_idle_s": 4.48,
+          "clear_in_s": 4.78,
+          "clear_in_unengaged_s": 2.53,
+          "clear_s": 6.07,
+          "clear_unengaged_s": 3.82,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.92,
+          "melee": false,
+          "n": 2,
+          "never_fired": 1,
+          "never_fired_clear": 1,
+          "never_fired_clear_in": 1,
+          "react_any_s": [
+            1.72
+          ],
+          "react_s": [
+            0.43
+          ],
+          "rounds": 2,
+          "shot_dist_m": [
+            10.23,
+            8.23
+          ],
+          "token_s": 5.65
+        },
+        "riot_cop": {
+          "alive_s": 6.35,
+          "attack_m": 1.5,
+          "clear_idle_s": 3.72,
+          "clear_in_idle_s": 0.45,
+          "clear_in_s": 0.9,
+          "clear_in_unengaged_s": 0.0,
+          "clear_s": 4.4,
+          "clear_unengaged_s": 3.27,
+          "fired_before_clear": 2,
+          "idle_speed_mps": 2.41,
+          "melee": true,
+          "n": 2,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            0.68,
+            2.63
+          ],
+          "react_s": [],
+          "rounds": 2,
+          "shot_dist_m": [
+            2.08,
+            2.06
+          ],
+          "token_s": 3.92
+        },
+        "rocket_trooper": {
+          "alive_s": 5.13,
+          "attack_m": 20.0,
+          "clear_idle_s": 4.4,
+          "clear_in_idle_s": 4.13,
+          "clear_in_s": 4.58,
+          "clear_in_unengaged_s": 4.13,
+          "clear_s": 4.85,
+          "clear_unengaged_s": 4.4,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 2.02,
+          "melee": false,
+          "n": 1,
+          "never_fired": 1,
+          "never_fired_clear": 1,
+          "never_fired_clear_in": 1,
+          "react_any_s": [],
+          "react_s": [],
+          "rounds": 0,
+          "shot_dist_m": [],
+          "token_s": 2.52
+        },
+        "swat": {
+          "alive_s": 12.83,
+          "attack_m": 20.0,
+          "clear_idle_s": 6.38,
+          "clear_in_idle_s": 5.47,
+          "clear_in_s": 5.9,
+          "clear_in_unengaged_s": 3.63,
+          "clear_s": 6.82,
+          "clear_unengaged_s": 4.55,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 1.93,
+          "melee": false,
+          "n": 3,
+          "never_fired": 1,
+          "never_fired_clear": 1,
+          "never_fired_clear_in": 1,
+          "react_any_s": [
+            1.78,
+            0.6
+          ],
+          "react_s": [
+            0.87,
+            0.6
+          ],
+          "rounds": 5,
+          "shot_dist_m": [
+            12.69,
+            11.76,
+            9.81,
+            9.94,
+            9.92
+          ],
+          "token_s": 6.47
+        }
+      },
+      "damage_taken": 2.0,
+      "died": false,
+      "firing_per_s": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "n": 4,
+      "observed_s": 9.6,
+      "press_eligible_s": 8.28,
+      "press_s": 6.58,
+      "ranged_alive_mean": 6.64,
+      "seconds": 9.6,
+      "shots_probe": 0,
+      "shots_result": 0
+    },
+    {
+      "archetypes": {
+        "contractor": {
+          "alive_s": 2.73,
+          "attack_m": 15.0,
+          "clear_idle_s": 2.23,
+          "clear_in_idle_s": 1.07,
+          "clear_in_s": 1.33,
+          "clear_in_unengaged_s": 0.35,
+          "clear_s": 2.5,
+          "clear_unengaged_s": 1.52,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 2.19,
+          "melee": false,
+          "n": 1,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            1.78
+          ],
+          "react_s": [
+            0.62
+          ],
+          "rounds": 3,
+          "shot_dist_m": [
+            9.65,
+            8.79,
+            8.05
+          ],
+          "token_s": 2.72
+        },
+        "riot_cop": {
+          "alive_s": 8.47,
+          "attack_m": 1.5,
+          "clear_idle_s": 7.55,
+          "clear_in_idle_s": 0.0,
+          "clear_in_s": 0.28,
+          "clear_in_unengaged_s": 0.0,
+          "clear_s": 8.47,
+          "clear_unengaged_s": 6.8,
+          "fired_before_clear": 1,
+          "idle_speed_mps": 2.71,
+          "melee": true,
+          "n": 1,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            3.58
+          ],
+          "react_s": [],
+          "rounds": 2,
+          "shot_dist_m": [
+            2.12,
+            2.07
+          ],
+          "token_s": 7.22
+        },
+        "rocket_trooper": {
+          "alive_s": 8.47,
+          "attack_m": 20.0,
+          "clear_idle_s": 5.47,
+          "clear_in_idle_s": 5.47,
+          "clear_in_s": 7.63,
+          "clear_in_unengaged_s": 3.07,
+          "clear_s": 7.63,
+          "clear_unengaged_s": 3.07,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 2.11,
+          "melee": false,
+          "n": 1,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            0.83
+          ],
+          "react_s": [
+            0.83
+          ],
+          "rounds": 2,
+          "shot_dist_m": [
+            9.65,
+            8.5
+          ],
+          "token_s": 5.4
+        },
+        "war_machine": {
+          "alive_s": 8.47,
+          "attack_m": 18.0,
+          "clear_idle_s": 5.05,
+          "clear_in_idle_s": 3.98,
+          "clear_in_s": 7.23,
+          "clear_in_unengaged_s": 1.48,
+          "clear_s": 8.3,
+          "clear_unengaged_s": 2.55,
+          "fired_before_clear": 0,
+          "idle_speed_mps": 0.94,
+          "melee": false,
+          "n": 1,
+          "never_fired": 0,
+          "never_fired_clear": 0,
+          "never_fired_clear_in": 0,
+          "react_any_s": [
+            3.37
+          ],
+          "react_s": [
+            2.3
+          ],
+          "rounds": 3,
+          "shot_dist_m": [
+            9.27,
+            1.34,
+            1.34
+          ],
+          "token_s": 5.7
+        }
+      },
+      "damage_taken": 93.5000000000007,
+      "died": true,
+      "firing_per_s": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "n": 5,
+      "observed_s": 8.47,
+      "press_eligible_s": 2.73,
+      "press_s": 0.55,
+      "ranged_alive_mean": 2.32,
+      "seconds": -1.0,
+      "shots_probe": 0,
+      "shots_result": 0
+    }
+  ]
+}
