@@ -73,7 +73,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--saw-part",
 	# n7-melee: --melee-dir=off leaves a melee kill the last round's line (the before)
 	"--melee-dir",
-	# n31 melee 02: --melee-sweep tests a hit on every drawn cutting tick, in the blade's sector
+	# n31 melee 02: hit on every drawn cutting tick, blade sector; default on, =off is the before
 	"--melee-sweep",
 	# n7-melee: --kerf-glide=off snaps the camera with each Kerf blink (the before)
 	"--kerf-glide",

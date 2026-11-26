@@ -5,8 +5,10 @@ extends RefCounted
 ## weapon's chain_radius_m), lunge_m (Rivet travels this far over windup + active) and grind_ticks
 ## (the chainsaw: while the attack is held the last active tick holds and lands every grind_ticks).
 
-## n31 melee 02: `--melee-sweep` (MeleeSweep.on reads and sets it): the hit follows the drawn blade.
-static var sweep: bool = OS.get_cmdline_user_args().has("--melee-sweep")
+## n31 melee 02: the hit follows the drawn blade (MeleeSweep.on reads and sets it). On by default
+## since 02p3 (director, 2026-11-26); `--melee-sweep=off` restores the one-tick before, and the
+## old `--melee-sweep` is still accepted (a no-op).
+static var sweep: bool = default_sweep()
 
 var id: StringName = &""
 var windup: int = 1
@@ -30,6 +32,11 @@ var grind_min_ticks: int = 0
 ## n31 melee 02p3 (flag on): the drawn blade's angle range off the aim (rad, in the swing's side
 ## frame) the sweep's sector is clamped to (`sweep_arc_deg`); the default clamps nothing.
 var sweep_arc: Vector2 = Vector2(-TAU, TAU)
+
+
+## The launch default: on unless `--melee-sweep=off`.
+static func default_sweep() -> bool:
+	return not OS.get_cmdline_user_args().has("--melee-sweep=off")
 
 
 func length() -> int:

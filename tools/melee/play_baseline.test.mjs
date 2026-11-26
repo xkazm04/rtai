@@ -30,9 +30,10 @@ test('table has one line per weapon', () => {
   assert.equal(table({ claw: summarize([row({})]) }).trim().split('\n').length, 3);
 });
 
-test('--sweep passes --melee-sweep to every run, off by default', () => {
+test('--sweep passes --melee-sweep to every run; without it --melee-sweep=off (the game default is on since 02p3)', () => {
   assert.equal(parseArgs([]).sweep, false);
   assert.equal(parseArgs(['--sweep']).sweep, true);
   assert.ok(runArgs('katana', 1, 4, 'f.json', true).includes('--melee-sweep'));
   assert.ok(!runArgs('katana', 1, 4, 'f.json', false).includes('--melee-sweep'));
+  assert.ok(runArgs('katana', 1, 4, 'f.json', false).includes('--melee-sweep=off'));
 });

@@ -60,7 +60,8 @@ func test_early_strike_interrupts_dialogue_and_hands_wave_keeps_the_same_survivo
 	for entry: Dictionary in game.lines.events:
 		var skipped: bool = entry.get("skipped", false)
 		assert_true(skipped)
-	assert_eq(game.stage.arena.hostiles_alive(), 9)
+	# n31 melee 02p3b: the swept strike (melee sweep on) drops one more of the patrol
+	assert_eq(game.stage.arena.hostiles_alive(), 8)
 	assert_same(patrol.officers[1].body, survivor)
 	assert_true(survivor.exposed)
 	assert_eq(survivor.weapon, &"pistol")

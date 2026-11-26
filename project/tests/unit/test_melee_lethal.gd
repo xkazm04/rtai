@@ -99,12 +99,16 @@ func test_riot_block_shoves_and_opens_only_until_the_break_expires() -> void:
 	assert_eq(riot.hp, riot.max_hp, "the front recovers exactly on the expiry tick")
 
 
+## The one-tick before (--melee-sweep=off): the plasma's cone takes both flanks; with the sweep
+## (default since 02p3) only the drawn front: test_melee_sweep_arc.
 func test_three_in_plasma_sweep_die_once_and_rear_survives() -> void:
+	MeleeSweep.on = false
 	for degrees: int in [-100, 0, 100, 180]:
 		var f: Fighter = _fighter(&"swat")
 		f.pos = Vector2.RIGHT.rotated(deg_to_rad(degrees)) * 1.5
 	var table: MeleeTable = MeleeTable.weapon(&"plasma_sword")
 	_click(PlayerMelee.new(table))
+	MeleeSweep.on = MeleeHit.default_sweep()
 	assert_eq(arena.kills, 3)
 	assert_true(arena.hostiles[-1].alive())
 

@@ -32,9 +32,10 @@ func test_disabled_script_matches_pre_cover_stage_bytes() -> void:
 			bits |= 1 << actions.bit(&"roll")
 		stage.step(i, TickInput.new(bits, 90, 15))
 		stage.write_state(out)
+	# Re-pinned n31 melee 02p3 (2026-11-26): --melee-sweep on by default adds the sweep state.
 	assert_eq(
 		out.data_array.hex_encode().sha256_text(),
-		"2333f2285413fa8af3924424f7322c96bd1d1a905898dee4230efbd6739241a8"
+		"9f6382561997c479c6af0ea0543ab9a7a1bb994e5b59f01420ebd97c8f245116"
 	)
 
 

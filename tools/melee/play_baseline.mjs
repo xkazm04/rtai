@@ -4,7 +4,8 @@
 // then per-weapon totals: swings, hits, kills, kills per swing, damage taken, deaths, wave reached.
 //   node tools/melee/play_baseline.mjs [--label=before] [--seeds=5] [--waves=4] [--weapons=a,b]
 //     [--out=evidence/n31-melee/01-baseline] [--from=<dir of run jsons>]   (--from only aggregates)
-//     [--sweep]   (n31 melee 02: every run with --melee-sweep, the hit follows the drawn blade)
+//     [--sweep]   (n31 melee 02: every run with --melee-sweep, the hit follows the drawn blade; without it
+//                 every run gets --melee-sweep=off, the before: the game default is on since 02p3)
 // Takes the lane Godot lock (build/n31/godot.lock) around every run.
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -85,7 +86,7 @@ function takeLock(tag) {
 
 export function runArgs(weapon, seed, waves, file, sweep = false) {
   return ['tools/dev/run.mjs', 'play_baseline', `--weapon=${weapon}`, `--seed=${seed}`, `--waves=${waves}`,
-    `--result=${file}`, ...(sweep ? ['--melee-sweep'] : [])];
+    `--result=${file}`, sweep ? '--melee-sweep' : '--melee-sweep=off'];
 }
 
 function runOne(weapon, seed, waves, file, sweep) {

@@ -87,7 +87,8 @@ func _verdict(s: Quest1Session, log: ReplayLog, out: Dictionary) -> String:
 		return "not paid: state %s at beat %s, tick %d" % at
 	if log.input_changes() < 100:
 		return "too few input changes (%d): the input path was idle" % log.input_changes()
-	if log.final_hash != "c211ee9720fcc5ffc57d42f3aa33d3dbbdc159332d721fd4236c1537b15fb13a":
+	# n31 melee 02p3b: re-pinned deliberately (the melee sweep is on); quest 1's script is unchanged
+	if log.final_hash != "08e2072799320511ca53be0d518f0fd7f6d162b64c8e22d1130b65cbe07ba0b4":
 		return "quest 1 input final hash changed: " + log.final_hash
 	LaunchArgs.parse(["--controls=legacy" if s.actions.wheel else "--controls=wheel"])
 	var loaded: ReplayLog = ControlsReplay.load_for_playback(_log_path) if out.log_saved else null

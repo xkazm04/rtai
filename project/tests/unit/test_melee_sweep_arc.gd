@@ -13,7 +13,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	MeleeSweep.on = false
+	MeleeSweep.on = MeleeHit.default_sweep()
 
 
 func _ids() -> Array[StringName]:

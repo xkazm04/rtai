@@ -94,9 +94,10 @@ func test_vector_dress_tracks_the_live_bar_and_receives_the_shotgun_progress() -
 	assert_false(command._bar.visible)
 	assert_false(command._dress.visible)
 	var cycle: PrologueShotgun = game.encounter.battle.fire.shotgun
-	while cycle.shot_ticks.is_empty() and game.stage.tick < 6300:
+	while cycle.shot_ticks.is_empty() and game.stage.tick < 7800:
 		game.world.loop().step()
-	assert_eq(cycle.shot_ticks, [6205])
+	# n31 melee 02p3b: the bot's swept melee moves the first shotgun shot 6205 -> 7674
+	assert_eq(cycle.shot_ticks, [7674])
 	for elapsed: int in 25:
 		if elapsed > 0:
 			game.world.loop().step()
@@ -104,8 +105,8 @@ func test_vector_dress_tracks_the_live_bar_and_receives_the_shotgun_progress() -
 		assert_true(command._bar.visible)
 		assert_true(command._dress.visible)
 		assert_eq(command._dress.pump, cycle.pump_progress(game.stage.tick))
-		assert_eq(command._heard_shot, 6205)
-		assert_eq(command._heard_pump, 6205 if elapsed == 24 else -1)
+		assert_eq(command._heard_shot, 7674)
+		assert_eq(command._heard_pump, 7674 if elapsed == 24 else -1)
 	var boss: Fighter = game.encounter.battle.formation.boss
 	assert_same(command._meter.body, boss)
 	assert_same(command._bar.fight, command._meter)
@@ -131,7 +132,7 @@ func test_mulroney_card_hides_the_dress_and_takes_the_pump_but_the_marker_stays(
 	mode.cards = true
 	mode.art = "p55"
 	var cycle: PrologueShotgun = game.encounter.battle.fire.shotgun
-	while cycle.shot_ticks.is_empty() and game.stage.tick < 6300:
+	while cycle.shot_ticks.is_empty() and game.stage.tick < 7800:
 		game.world.loop().step()
 	var boss: Fighter = game.encounter.battle.formation.boss
 	command._process(0.0)
