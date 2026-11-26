@@ -15,11 +15,10 @@ var _hold_until: int = 0
 
 
 func sample(tick: int) -> TickInput:
-	@warning_ignore("return_value_discarded")
-	super.sample(tick)
+	var bot_input: TickInput = super.sample(tick)
 	var me: Vector2 = _stage.arena.rivet.pos
 	if not target.is_finite() or not _stage.arena.rivet.alive():
-		return TickInput.new()
+		return bot_input if not target.is_finite() else TickInput.new()
 	var to: Vector2 = target - me
 	var d: float = to.length()
 	if phase == Phase.APPROACH and d <= CLOSE_M:
