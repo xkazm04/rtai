@@ -21,6 +21,7 @@ var blasts: int = 0
 ## a view without it. Cycle 163 cell px (stance foot, 20.4 a frame); run8 330 (41 a frame).
 var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5, 330.0)
 var steer: DentStringSteer
+var deploy_pose: int = -1  # the deploy's cell (DentDropBeats.cell); -1 = the flight's own
 var _spectral: DentSpectralDrawn
 var _top: DentSpectralTop
 var _glass: DentGlass
@@ -145,8 +146,8 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 	var act: DentSpectralDrawn.Pose = DentSpectralDrawn.pose(
 		drawn.flight.hover, jab, car != null, hurt_age
 	)
-	if drawn.deploy_age >= 0:
-		act = DentSpectralDrawn.Pose.JAB
+	if deploy_pose >= 0:
+		act = deploy_pose as DentSpectralDrawn.Pose
 	_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
 	_top.visible = not _spectral.visible
 	if _spectral.visible:

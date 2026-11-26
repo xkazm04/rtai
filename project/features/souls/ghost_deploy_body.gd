@@ -80,7 +80,7 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	var pitch: float = ViewMode.shared().ground_k()
 	source.canvas_transform = Transform2D(0.0, Vector2(RES, RES * pitch), 0.0, FOOT)
 	scale = Vector2(1.0 / RES, 1.0 / (RES * pitch))
-	var yaw: float = PI * 0.5 if _drops(ghost) else ghost.facing.angle()
+	var yaw: float = PI * 0.5 if _faces_camera(ghost) else ghost.facing.angle()
 	var drawn: GhostDrawn = _body.get(&"drawn")
 	# Keep the authored follow-through cell while the apparition lingers. A charging drop
 	# (n31 Tonnage) holds its wind-up until the dump tick, the strike's own age 0.
@@ -89,10 +89,12 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	drawn.jab = ghost.form == DentStage.GHOST
 	var landed: int = stage.tick - drawn.deploy_age if struck >= 0 else -1
 	drawn.feed(1, -1, stage.tick, struck < 0, landed)
-	_stand(ghost, age, drawn.jab)
+	_stand(ghost, age, drawn.jab, struck)
 	var at: Vector2 = GhostFormBodies.place_body(drawn, Vector2.ZERO, yaw, steps, true)
 	if _body is DentBody:
-		(_body as DentBody).step(true, at, yaw, steps, stage.tick)
+		var dent: DentBody = _body as DentBody
+		dent.deploy_pose = DentDropBeats.cell(_drops(ghost), age, struck)
+		dent.step(true, at, yaw, steps, stage.tick)
 	else:
 		_body.visible = true
 		_body.position = at
@@ -101,28 +103,36 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 		_body.call(&"advance", steps * SimClock.TICK_DT)
 	if _drops(ghost) and ghost.form == HaulerStage.GHOST:
 		_beats(ghost, age, struck)
-	elif _drops(ghost):
+	elif _drops(ghost) and ghost.form == OhmStage.GHOST:
 		# n31 ghost 12: a dropped Ohm stands on the spot and rises into his hover as he fades in.
 		position += ViewMode.shared().lift_px(OHM_RISE_M * smoothstep(0.0, APPEAR_TICKS, age))
 	_wash_body(ghost, age)
 	source.render_target_update_mode = SubViewport.UPDATE_ONCE
 
 
-func _stand(ghost: GhostDeploy, age: int, jab: bool) -> void:
+func _stand(ghost: GhostDeploy, age: int, jab: bool, struck: int) -> void:
 	position = ghost.spot * SimConst.PX_PER_M
 	if ghost.form == OhmStage.GHOST and not _drops(ghost):
 		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
 		# Use the near quadrant so the fork and Rivet's gun both have a clear outline.
 		var angle: float = deg_to_rad(-30.0 if ghost.facing.x >= 0.0 else 30.0)
 		position -= ghost.facing.rotated(angle) * short_radius * SimConst.PX_PER_M
+	elif jab and _drops(ghost):
+		position = DentDropBeats.at(ghost, age, struck) * SimConst.PX_PER_M
 	elif jab:
 		var travel: float = smoothstep(0.0, 7.0, age)
 		position = ghost.origin.lerp(ghost.spot, travel) * SimConst.PX_PER_M
 
 
-## A drop is a full circle: Tonnage and Ohm face the camera (row 0, the drop strip's one row).
+## A deploy in drop mode (one press, a charge, the strike on its last tick).
 func _drops(ghost: GhostDeploy) -> bool:
 	return ghost.strike.attacks.deploy[ghost.form].drops()
+
+
+## Tonnage and Ohm drop on a full circle and face the camera (row 0); Dent rams along a lane
+## and faces it (n31 ghost 17).
+func _faces_camera(ghost: GhostDeploy) -> bool:
+	return _drops(ghost) and ghost.form != DentStage.GHOST
 
 
 ## Tonnage's drop beats (TonnageDropBeats): the fall and rise, and the strip's cell.
