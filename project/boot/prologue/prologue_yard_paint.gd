@@ -90,6 +90,13 @@ func shadows(canvas: CanvasItem, plan: PrologueYard) -> void:
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
+## The contact base under every solid wreck the canvas draws (`over_print` picks the layer).
+func bases(canvas: CanvasItem, plan: PrologueYard, over_print: bool) -> void:
+	for cover: PrologueYard.Wreck in plan.wrecks:
+		if plan.dressing.over_print.has(cover.id) == over_print:
+			PropBase.draw(canvas, cover.footprint)
+
+
 func _shadow(canvas: CanvasItem, art: Texture2D, box: Rect2, reach_m: Vector2, tint: Color) -> void:
 	var base: Vector2 = Ink.px(Vector2(box.position.x, box.end.y))
 	var reach: Vector2 = Ink.px(reach_m)

@@ -95,6 +95,7 @@ static func _draw_ground(node: Node2D, plan: PrologueYard, paint: PrologueYardPa
 static func _draw_pieces(node: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
 	var shade: float = plan.dressing.over_print_shade
 	var shaded: Color = Color(shade, shade, shade)
+	paint.bases(node, plan, true)
 	for piece: PrologueYard.Wreck in order(plan):
 		if plan.wrecks.has(piece):
 			var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
