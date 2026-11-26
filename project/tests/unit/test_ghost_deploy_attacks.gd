@@ -153,7 +153,7 @@ func test_dent_hits_the_swept_segment_and_knocks_along_it() -> void:
 	var first: Fighter = _spawn(Vector2(2, 0), &"contractor", 1.0)
 	var last: Fighter = _spawn(Vector2(5.9, 0))
 	var wide: Fighter = _spawn(Vector2(3, 2))
-	var beyond: Fighter = _spawn(Vector2(7.1, 0))
+	var beyond: Fighter = _spawn(Vector2(7.5, 0))  # 0.2 m past the cap at ram_half_m 1.3
 	var before: Vector2 = last.pos
 	_release(&"dent")
 	assert_eq(ghost.origin, Vector2.RIGHT.orthogonal() * arena.rivet.radius_m)
