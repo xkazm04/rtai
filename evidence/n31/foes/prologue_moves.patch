@@ -172,3 +172,10 @@ index 000000000..1e78f4d76
 +	assert_eq(game.encounter.patrol.squad.mind_for(h).agent.gait.mode, FoeGait.Mode.FIGHT)
 +	assert_almost_eq(got[1], 0.45 * 6.65 * SimClock.TICK_DT, 0.01, "fight walk pace")
 +	PlayerActions.shipped().install()
+diff --git a/project/tests/unit/test_prologue_panic_gait.gd.uid b/project/tests/unit/test_prologue_panic_gait.gd.uid
+new file mode 100644
+index 000000000..165f18d23
+--- /dev/null
++++ b/project/tests/unit/test_prologue_panic_gait.gd.uid
+@@ -0,0 +1 @@
++uid://5r3ytp6e18ii
