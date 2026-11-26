@@ -144,3 +144,8 @@ NEXT (session 8): REPORT is final unless something changes; only re-read it, run
 - LOOK call3 4 s both sides: cops 6-12 m off, guns up, same picture; the guns differ in rhythm and damage, not on screen (matches "rounds look like the rifle's").
 - 06:08 REPORT calls 2 and 3 have their clips; ledger 26 calls / 701 min; cites ok. No product commit since the gate (7e3ed7a46).
 NEXT: REPORT final. Only re-read it, run cites and commit by 07:40 if anything changes. No new builders.
+
+## Session 9 (07:30, STABILIZE)
+- 07:31 checked: tree clean; since the gate commit 7e3ed7a46 only inert paths changed (JOURNAL, REPORT, docs/decisions.md, evidence/**), so `gate: PASS; build/gate/7e3ed7a460f0/gate.json` still covers every product file on HEAD. cites 18/18 ok; masters frames.json 11 entries, every file exists. Other lanes: no new NEED foes. No builder running, no lane Godot.
+- DECISION foes: no change in STABILIZE; REPORT stands as written at 06:08.
+NEXT: none for this lane tonight. Director: merge notes in REPORT (need_gauntlet_flags.patch for `--foe-fire=hot`, need_gun_down.patch, prologue_moves.patch).
