@@ -286,3 +286,12 @@ NEXT (session 9, report session, written 05:38):
 1. No product commits (the gate PASS on da97ec3be is final; everything after it is evidence/JOURNAL/REPORT). If something under `project/` must change, a full re-gate is needed (17 min) and must start before 07:10.
 2. REPORT: read it top to bottom once; it is complete (gate line, What works 1-5, What does not, blocked, Calls, Merge notes, Next steps, ledger). Run `node tools/evidence/cites.mjs REPORT.md` and commit `-- REPORT.md JOURNAL.md` by 07:40.
 3. Optional evidence only: none needed. Do not start a builder after 07:00.
+
+## Session 9 (05:38 - )
+
+- 05:38 MILESTONE session start; HEAD e10051c13; tree clean under project/tools/docs; no `NEED ghost` in n23-controls, n23-prologue or n23-street journals.
+- 05:39 DECISION no product commit after the final gate PASS on da97ec3be: the one open play gap (an in-gauntlet take of a refused press) needs a scripted-press flag in `project/dev/ghost_n31/ghost_n31_take.gd` (the film tools have no input scripts), i.e. a `project/` commit at the 06:00 limit and a re-gate, against a gap the HUD probe strip already covers. Left in REPORT Next steps. Rejected: an uncommitted harness (the run law keeps every harness in the repo).
+- 05:39 Masters check: all 15 frames.json entries exist; every clip 15.2-27.7 s (ffprobe). Director look at `take-drop-main-vs-head-64ppm-dump.png`: main = teal placement ring + half-disc cracks, 3 kills; HEAD = Tonnage mid-dump inside a full dust ring, no marker, 8 kills. Cites: 23 paths, 22 ok, 1 pattern.
+- 05:39 Session 9 ledger: no builder, no Godot, no images (IMAGES 21/60). No BLOCKED, no FRICTION mem-budget.
+
+NEXT (if a session 10 runs before 07:40): nothing to build. REPORT is final; if anything changes, re-run `node tools/evidence/cites.mjs REPORT.md` and commit `-- REPORT.md JOURNAL.md`. No builder after 07:00, no `project/` commit (the gate on da97ec3be is final).
