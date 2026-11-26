@@ -40,3 +40,14 @@ Not rendered: katana, plasma_sword, electro_baton, claw. The take launch started
 spawned a Godot in 27 min (no output after the flags line; the machine was full of other lanes' Godots, most likely
 the memory-budget wait), so no fatality seconds exist for them. Stopped at 03:13 (own PIDs only). Next:
 `tools/melee/fatal_takes.sh katana plasma_sword electro_baton claw` under the lane lock on a quieter machine.
+
+## 03p6 (03:19-)
+
+`tools/melee/fatal_takes.sh` run unchanged (no self-held lock; the tool waited for 04f's lock between runs, so
+each weapon took far longer than 5 min once 04f ran). Katana rendered: `beside_fatal_katana.mp4` 1920x1080, 35.0 s.
+First fatality at 18 s (stills at 10, 14, 18, 22 s): right half (n31 fatality) shows Rivet with the blade among
+cops cut into split halves, blue pieces scattered, red pools; left half (main) whole bodies on small pools. At 14 s
+the right half already has more spray and loose pieces than the left. At 22 s a new cop is hit on the right
+half (red spray at the blade) while the left shows none.
+Plasma sword: before arm rendered (`fatalb_play_plasma_sword.mp4`), after arm still waiting for the lane lock at
+03:44; electro_baton and claw not rendered.
